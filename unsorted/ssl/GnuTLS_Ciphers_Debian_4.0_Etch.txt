@@ -1,0 +1,9 @@
+Version: 1.4.4-3+etch5
+Command: gnutls-cli -l
+
+Certificate types: X.509, OPENPGP
+Protocols: TLS1.0, TLS1.1, SSL3.0
+Ciphers: AES-256-CBC, AES-128-CBC, 3DES-CBC, ARCFOUR, ARCFOUR-40
+MACs: MD5, RMD160, SHA1
+Key exchange algorithms: RSA, RSA-EXPORT, DHE-DSS, DHE-RSA, DHE-PSK, PSK, SRP, SRP-RSA, SRP-DSS, ANON-DH
+Compression methods: DEFLATE, LZO, NULL
