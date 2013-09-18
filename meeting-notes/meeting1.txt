@@ -3,13 +3,35 @@ Erstes Treffen am 17.9., 18:30@s5
 Teilnehmer: Adi, Manuel
 
 
-Kontakte (Mit-Autoren):
+
+Was ist unser Ziel?
+=====================
+
+kurzes whitepaper, checkliste schreiben. Das whitepaper soll eine gute, *praktische* Anleitung fuer das Zielpublikum sein, wie man heutzutage, nach dem aktuellen Stand des oeffentlich bekannten Wissens, SSL und Kryptographie Einstellungen setzen sollte und wie man diverse Services, die sich auf Kryptographie verlassen (SSH, SSL, ...) haerten kann.
+
+Das Ziel ist es *nicht* Werbung fuer einen bestimmten Hersteller zu machen !
+Das whitepaper sollte uebergreifend, neutral, sachlich, kurz und praktisch sein.
+
+Wir wollen sowohl praktische Tipps fuer Sysadmins & co als auch gute krytpographische Empfehlungen (modulo dem, was wir wissen) abgeben.
+
+Wir schreiben prinzipiell auf Englisch und uebersetzen es auf Deutsch.
+
+
+
+Zeitraum
+=========
+
+ETA: Nov 2013.
+
+
+Kontakte / Potentielle Mit-Autoren:
+===================================
   - IAIK Institut Graz?
   - A-SIT?
   - Posch?
-  - CERT
-  - Adi VRVis
-  - Manuel
+  - CERT.at / GovCERT (Aaron Kaplan, Koordination)
+  - Adi Kriegisch VRVis (practical applied security)
+  - Manuel Koschuch (FH Wien)
   - SBA: ?
   - Ivan Rstic??
   - Seclab?
@@ -20,23 +42,8 @@ Wer kontaktiert wen?
   Manuel -> IAIK
   Aaron, Schisch -> Posch
   Aaron, Schisch -> SBA
-  A-Sit
-
-
-Was ist unser Ziel?
-=====================
-
-kurzes whitepaper, checkliste schreiben.
-Keine Werbung fuer einen bestimmten Hersteller
-Sowohl praktische Tipps fuer Sysadmins und co als auch gute krytpographische Empfehlungen (modulo dem, was wir wissen)
-
-Wir schreiben mal auf Englisch und uebersetzen es
-
-
-Zeitraum
-=========
-
-ETA: Nov 2013.
+  A-Sit ?
+  Aaron -> seclab (Atrox, Platzer)
 
 
 Zielgruppe
@@ -51,45 +58,55 @@ Zielgruppe
 Inhaltsverzeichnis
 ==================
 
-Disclaimer
-  aktueller Stand ... morgen kann es anders sein
+I. Disclaimer
+  aktueller Stand ... morgen kann alles anders sein
   disclaimer disclaimer disclaimer
-  Der Inhalt dieses whitepapers ist ausschliessliche die persoenliche *Meinung* der Autoren.
+  Der Inhalt dieses whitepapers ist ausschliessliche die persoenliche *Meinung* der Autoren. Wurde nach besten Wissen und Gewissen erstellt.
   Keine Garantie auf Korrektheit etc.
 
-  Disclaimer, was in dem Paper *nicht* drinnen steht
+  Disclaimer, was in dem Paper *nicht* drinnen steht bzw. was wir nicht wissen.
 
-  Veroeffentlichungsdatum angeben
+  Veroeffentlichungsdatum angeben, kein Ablaufdatum des whitepapers angeben.
 
 
-Problembeschreibung
+II. Problembeschreibung
 
-Verfahren
-  - RC4 --> weg!
+  Aktuell gibt es viel Verunsicherung bezueglich Krypto, viele Leute fragen sich, was sie derzeit noch bei SSL , SSH oder PGP einstellen koennen.
+  Welche Verfahren sind mittlerweile zu schwach? Wo gibt es Vermutungen, dass es Probleme gibt? Keylaengen? 
+  Praktische Security Probleme und RNGs: was kann man noch nehmen?
 
-Keylaengen
 
-Practical security settings
+III. Uebersicht ueber Verfahren
+  
+  - RC4  == tot?
+
+IV. Keylaengen
+
+V. RNGs
+
+  Uebersicht. Was kann man machen, um gute Randomness zu haben? 
+
+
+VI. Practical security settings fuer Services
 
   - SSL
     - apache 
     - nginx
+    - Uebersicht ueber verschiedene SSL libs: gnutls vs. openssl und andere ssl libs (matrixssl, polarssl, ...)
     - openssl.conf settings
-    - 
+    -  ...
   - SSH
   - PGP
   - PRNG settings : welcher RNG ist nicht gut?
     wie mache ich einen eigenen RNG? 
     wie verwedne ich haveEGD (http://www.issihosts.com/haveged/)
-  - SSL libs: gnutls vs. openssl und andere ssl libs (matrixssl, polarssl, ...)
   - 
 
-PKI
-  Empfehlung:
-  - wo moeglich, nur *ausschliesslich* die eigene PKI  verwenden!
+VII. PKI
+  Empfehlung.
 
 
-Werkzeuge
+VIII. Werkzeuge
   Liste von Werkzeugen
 
   - welche tools kann ich verwenden, um selber zu checken, dass das OK ist?
@@ -98,11 +115,11 @@ Werkzeuge
 
 
 
-Further Research
+IX. Further Research
   - code analysis von crypto tools
 
 
-Referenzen
+X. Referenzen
 
   - SSL Labs
   - Heise SSL settings
@@ -113,8 +130,7 @@ Referenzen
 
 Tools
 =====
-
-  --> * git + latex?  (derzeit einmal. wir koennen auf was anderes umsteigen)
-  * google docs?
+  Wir fangen mal an, alles mit git und LateX zu schreiben.
+  Wir koennen auf was anderes umsteigen, wenn notwendig.
 
 
