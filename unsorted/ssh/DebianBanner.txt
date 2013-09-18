@@ -1,0 +1,6 @@
+in Debian/Ubuntu add the following to your /etc/ssh/sshd_config:
+# disable displaying of Debian version
+DebianBanner no
+
+# this disables version strings SSH-2.0-OpenSSH_5.8p1 Debian-7ubuntu1 and uses
+# the default: SSH-2.0-OpenSSH_5.8p1

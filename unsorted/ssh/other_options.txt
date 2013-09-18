@@ -1,0 +1,8 @@
+PermitRootLogin shall be disabled (aka 'no') or at least reasonably restricted
+('without-password', 'forced-commands-only').
+
+Possible options:
+ChrootDirectory jails the user into a separate environment
+
+ForceCommand might help (especially with internal-sftp) to further limit possibilities of
+a remote use. rssh might be used as a shell to achieve similar behaviour.
