@@ -1,0 +1,50 @@
+\documentclass{llncs}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{psfrag}
+%\usepackage{graphicx}
+%\usepackage{color}
+%\usepackage{subfigure}
+%\usepackage[latin1]{inputenc}  % Sonderzeichen, Umlaute  
+\usepackage[utf8x]{inputenc}  % Sonderzeichen, Umlaute  
+
+\pagenumbering{arabic}
+\pagestyle{plain}
+
+
+\newcommand{\todo}[1]{\marginpar{\textbf{TODO!}}\parbox{\columnwidth}{\textbf{\textsc{\textcolor{red}{(TODO: #1)}}}}}
+% Auskommentieren:
+\newcommand{\ignorethis}[1]{}
+\newcommand{\needcite}{\todo{Need citation!}}
+
+
+\begin{document}
+
+\title{Applied Crypto Hardening}
+
+\author{ Manuel Koschuch\inst{1}, Adi Kriegisch\inst{2}, Leon Aaron Kaplan\inst{3}}
+\institute{
+FH Wien
+\and
+VRVis
+\and
+Computer Emergency Response Team Austria}
+
+
+\maketitle
+
+\input{abstract}
+\input{disclaimer}
+\input{motivation}
+\input{overview_common_crypto_systems}
+\input{keylengths}
+\input{RNGs}
+\input{practical_settings}
+\input{PKIs}
+\input{tools}
+\input{further_research}
+
+\bibliography{applied-crypto-hardening}
+
+\end{document}
