@@ -47,3 +47,5 @@ Fedora 13:  SSH-2.0-OpenSSH_5.4
 Fedora 14:  SSH-2.0-OpenSSH_5.5
 Fedora 15:  SSH-2.0-OpenSSH_5.6
 Fedora 16:  SSH-2.0-OpenSSH_5.8
+
+complete removal of version string seems to be not desireable: http://www.snailbook.com/faq/version-string.auto.html
