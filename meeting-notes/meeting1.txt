@@ -1,0 +1,120 @@
+
+Erstes Treffen am 17.9., 18:30@s5
+Teilnehmer: Adi, Manuel
+
+
+Kontakte (Mit-Autoren):
+  - IAIK Institut Graz?
+  - A-SIT?
+  - Posch?
+  - CERT
+  - Adi VRVis
+  - Manuel
+  - SBA: ?
+  - Ivan Rstic??
+  - Seclab?
+
+
+Wer kontaktiert wen?
+
+  Manuel -> IAIK
+  Aaron, Schisch -> Posch
+  Aaron, Schisch -> SBA
+  A-Sit
+
+
+Was ist unser Ziel?
+=====================
+
+kurzes whitepaper, checkliste schreiben.
+Keine Werbung fuer einen bestimmten Hersteller
+Sowohl praktische Tipps fuer Sysadmins und co als auch gute krytpographische Empfehlungen (modulo dem, was wir wissen)
+
+Wir schreiben mal auf Englisch und uebersetzen es
+
+
+Zeitraum
+=========
+
+ETA: Nov 2013.
+
+
+Zielgruppe
+==========
+
+  * Sysadmins
+  * KMUs
+  * power-user
+  * interessierte Oeffentlichkeit
+
+
+Inhaltsverzeichnis
+==================
+
+Disclaimer
+  aktueller Stand ... morgen kann es anders sein
+  disclaimer disclaimer disclaimer
+  Der Inhalt dieses whitepapers ist ausschliessliche die persoenliche *Meinung* der Autoren.
+  Keine Garantie auf Korrektheit etc.
+
+  Disclaimer, was in dem Paper *nicht* drinnen steht
+
+  Veroeffentlichungsdatum angeben
+
+
+Problembeschreibung
+
+Verfahren
+  - RC4 --> weg!
+
+Keylaengen
+
+Practical security settings
+
+  - SSL
+    - apache 
+    - nginx
+    - openssl.conf settings
+    - 
+  - SSH
+  - PGP
+  - PRNG settings : welcher RNG ist nicht gut?
+    wie mache ich einen eigenen RNG? 
+    wie verwedne ich haveEGD (http://www.issihosts.com/haveged/)
+  - SSL libs: gnutls vs. openssl und andere ssl libs (matrixssl, polarssl, ...)
+  - 
+
+PKI
+  Empfehlung:
+  - wo moeglich, nur *ausschliesslich* die eigene PKI  verwenden!
+
+
+Werkzeuge
+  Liste von Werkzeugen
+
+  - welche tools kann ich verwenden, um selber zu checken, dass das OK ist?
+  zB: ENT (http://www.fourmilab.ch/random/)
+  Zufallstest tools + menschl. lesbar machen (--> tool Name? Manuel?)
+
+
+
+Further Research
+  - code analysis von crypto tools
+
+
+Referenzen
+
+  - SSL Labs
+  - Heise SSL settings
+  - Debian PGP  Empfehlungen: 
+  - RFCs  BCPs
+  - IETF security working groups 
+
+
+Tools
+=====
+
+  --> * git + latex?  (derzeit einmal. wir koennen auf was anderes umsteigen)
+  * google docs?
+
+
