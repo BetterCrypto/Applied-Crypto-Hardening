@@ -90,17 +90,16 @@ V. RNGs
 VI. Practical security settings fuer Services
 
   - SSL
-    - apache 
-    - nginx
+    - apache, nginx, lighttpd
     - Uebersicht ueber verschiedene SSL libs: gnutls vs. openssl und andere ssl libs (matrixssl, polarssl, ...)
     - openssl.conf settings
-    -  ...
+    - ...
   - SSH
   - PGP
   - PRNG settings : welcher RNG ist nicht gut?
     wie mache ich einen eigenen RNG? 
     wie verwedne ich haveEGD (http://www.issihosts.com/haveged/)
-  - 
+  - $java-software: stdlib, bouncy castle, app-server (tomcat und so)
 
 VII. PKI
   Empfehlung.
@@ -112,7 +111,6 @@ VIII. Werkzeuge
   - welche tools kann ich verwenden, um selber zu checken, dass das OK ist?
   zB: ENT (http://www.fourmilab.ch/random/)
   Zufallstest tools + menschl. lesbar machen (--> tool Name? Manuel?)
-
 
 
 IX. Further Research
