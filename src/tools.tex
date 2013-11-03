@@ -4,16 +4,19 @@ This section lists tools for checking the security settings.
 
 \subsection{SSL}
 
-ssllabs.com
+ssllabs.com offers a great way to check your webserver for misconfigurations. See \url{https://www.ssllabs.com/ssltest/}.
+Furthermore, ssllabs.com has a good best practices tutorial, which focuses on avoiding the most common mistakes in SSL.
+See: \url{https://www.ssllabs.com/downloads/SSL_TLS_Deployment_Best_Practices_1.3.pdf}
+%% this breaks my pdf converter hmm
 
-
-\url{https://www.ssllabs.com/downloads/SSL_TLS_Deployment_Best_Practices_1.3.pdf}		%% this breaks my pdf converter hmm
-
+\url{http://tls.secg.org} is a tool for testing interoperability of HTTPS implementations for ECC cipher suites.
 
 \subsection{RNGs}
 
-ent
+\begin{itemize}
+\item \href{http://www.fourmilab.ch/random/}{ENT} is a pseudo random number generator sequence tester.  
+\item \href{http://www.issihosts.com/haveged/}{HaveEGD} is a tool which increases the Entropy of the Linux random number generator devices. It is based on the HAVEGE algorithm.
+\end{itemize}
 
-%havegd
 
 

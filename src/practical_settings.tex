@@ -2,14 +2,160 @@
 
 
 \subsection{SSL}
-\subsubsection{apache}
+
+At the time of this writing, SSL is defined in RFCs: 	
+
+\begin{itemize}
+\item RFC2246 - TLS1.0		
+\item RFC3268 - AES		
+\item RFC4132 - Camelia		
+\item RFC4162 - SEED		
+\item RFC4279 - PSK		
+\item RFC4346 - TLS 1.1		
+\item RFC4492 - ECC		
+\item RFC4785 - PSK\_NULL		
+\item RFC5246 - TLS 1.2		
+\item RFC5288 - AES\_GCM		
+\item RFC5289 - AES\_GCM\_SHA2\_ECC		
+\item RFC5430 - Suite B		
+\item RFC5487 - GCM\_PSK		
+\item RFC5489 - ECDHE\_PSK		
+\item RFC5932 - Camelia		
+\item RFC6101 - SSL 3.0		
+\item RFC6209 - ARIA		
+\item RFC6367 - Camelia		
+\item RFC6655 - AES\_CCM		
+\item RFC7027 - Brainpool Curves		
+\end{itemize}
+
+\subsubsection{Overview of SSL Server settings}
+
+Most Server software (Webservers, Mail servers, etc.) can be configured to prefer certain cipher suites over others. 
+We followed the recommendations by Ivan Ristic's \cite{RisticSSLTLSDeploymentBestPractices}SSL/TLS Deployment Best Practices document (section 2.2 "Use Secure Protocols") and arrived at a list of recommended cipher suites for SSL enabled servers.
+
+The results of following his adivce is a categorisation of cipher suites.
+
+\begin{center}
+\begin{tabular}{| l | l | l | l | l|}
+\hline
+& Version   & Key\_Exchange  & Cipher    & MAC       \\ \hline
+\cellcolor{green}prefer  & TLS 1.2   & DHE\_DSS   & AES\_256\_GCM   & SHA384        \\ \hline
+    &   & DHE\_RSA   & AES\_256\_CCM   & SHA256        \\ \hline
+    &   & ECDHE\_ECDSA   & AES\_256\_CBC   &       \\ \hline
+    &   & ECDHE\_RSA &   &       \\ \hline
+    &   &   &   &       \\ \hline
+\cellcolor{orange}consider    & TLS 1.1   & DH\_DSS    & AES\_128\_GCM   & SHA       \\ \hline
+    & TLS 1.0   & DH\_RSA    & AES\_128\_CCM   &       \\ \hline
+    &   & ECDH\_ECDSA    & AES\_128\_CBC   &       \\ \hline
+    &   & ECDH\_RSA  & CAMELLIA\_256\_CBC  &       \\ \hline
+    &   & RSA   & CAMELLIA\_128\_CBC  &       \\ \hline
+    &   &   &   &       \\ \hline
+\cellcolor{red}avoid   
+& SSL 3.0   & NULL  & NULL  & NULL      \\ \hline
+    &   & DH\_anon   & RC4\_128   & MD5       \\ \hline
+    &   & ECDH\_anon & 3DES\_EDE\_CBC  &       \\ \hline
+    &   &   & DES\_CBC   &       \\ \hline
+    &   &   &   &       \\ \hline
+\cellcolor{blue}{\color{white}special }
+&   & PSK   & CAMELLIA\_256\_GCM  &       \\ \hline
+    &   & DHE\_PSK   & CAMELLIA\_128\_GCM  &       \\ \hline
+    &   & RSA\_PSK   & ARIA\_256\_GCM  &       \\ \hline
+    &   & ECDHE\_PSK & ARIA\_256\_CBC  &       \\ \hline
+    &   &   & ARIA\_128\_GCM  &       \\ \hline
+    &   &   & ARIA\_128\_CBC  &       \\ \hline
+    &   &   & SEED  &       \\ \hline
+\end{tabular}
+\end{center}
+
+
+Note that the entries marked as "special" are cipher suites which are not common to all clients (webbrowsers etc).
+
+
+\subsubsection{Clients}
+ 
+Next we tested the cipher suites above on the following clients:
+
+\begin{itemize}
+\item Chrome 30.0.1599.101 Mac OS X 10.9
+\item Safari 7.0 Mac OS X 10.9
+\item Firefox 25.0 Mac OS X 10.9
+\item Internet Explorer 10 Windows 7
+\item Apple iOS 7.0.3
+\end{itemize}
+
+
+The result of testing the cipher suites with these clients gives us the following result and a preference order. 
+Should a client not be able to use a specific cipher suite, it will fall back to the next possible entry as given by the ordering.
+
+\begin{table}
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    Pref & Cipher Suite                                   & ID         & Browser                     \\ \hline
+    1    & TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA384 &     0xC024 & Safari                      \\ \hline
+    2    & TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA384   &     0xC028 & Safari                      \\ \hline
+    3    & TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA256     &     0x006B & Safari, Chrome              \\ \hline
+    4    & TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA    &     0xC00A & Safari, Chrome, Firefox, IE \\ \hline
+    5    & TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA      &     0xC014 & Safari, Chrome, Firefox, IE \\ \hline
+    6    & TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA        &     0x0039 & Safari, Chrome, Firefox     \\ \hline
+    7    & TLS\_DHE\_DSS\_WITH\_AES\_256\_CBC\_SHA        &     0x0038 & Firefox, IE                 \\ \hline
+    8    & TLS\_DHE\_RSA\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0088 & Firefox                     \\ \hline
+    9    & TLS\_DHE\_DSS\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0087 & Firefox                     \\ \hline
+    \end{tabular}
+\end{table}
+
+\FloatBarrier
+
+The same data again, specifying the OpenSSL name:
+
+\begin{table}[h]
+    \begin{tabular}{|l|l|l|}
+    \hline
+    Cipher Suite                                   & ID            & OpenSSL Name                  \\ \hline
+    TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA384 &     0xC024 &     ECDHE-ECDSA-AES256-SHA384 \\ \hline
+    TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA384   &     0xC028 &     ECDHE-RSA-AES256-SHA384   \\ \hline
+    TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA256     &     0x006B &     DHE-RSA-AES256-SHA256     \\ \hline
+    TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA    &     0xC00A &     ECDHE-ECDSA-AES256-SHA    \\ \hline
+    TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA      &     0xC014 &     ECDHE-RSA-AES256-SHA      \\ \hline
+    TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA        &     0x0039 &     DHE-RSA-AES256-SHA        \\ \hline
+    TLS\_DHE\_DSS\_WITH\_AES\_256\_CBC\_SHA        &     0x0038 &     DHE-DSS-AES256-SHA        \\ \hline
+    TLS\_DHE\_RSA\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0088 &     DHE-RSA-CAMELLIA256-SHA   \\ \hline
+    TLS\_DHE\_DSS\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0087 &     DHE-DSS-CAMELLIA256-SHA   \\ \hline
+    \end{tabular}
+\end{table}
+
+
+Based on this ordering, we can now define the corresponding settings for servers. We will start with the most common web servers
+
+\subsubsection{Apache}
+
+Note: a "\textbackslash" (backslash) denotes a line continuation which was wrapped due to formatting reasons here. Do not copy it verbatim.
+
+\begin{verbatim}
+  SSLProtocol ALL -SSLv2
+  SSLHonorCipherOrder On
+  SSLCipherSuite  ECDH+AESGCM:DH+AESGCM:\
+    ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:\
+    DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
+    ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:\
+    DHE-RSA-CAMELLIA256-SHA:DHE-DSS-CAMELLIA256-SHA:\
+    !ADH:!AECDH:!MD5:!DSS
+\end{verbatim}
+
+%XXXX   ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AES:RSA+3DES:!ADH:!AECDH:!MD5:!DSS
+
+
+
 \subsubsection{nginx}
-\subsubsection{Overview of different SSL libraries: gnutls vs. openssl vs. others}
+
+
 \subsubsection{openssl.conf settings}
+
+%\subsubsection{Differences in SSL libraries: gnutls vs. openssl vs. others}
+
 \subsubsection{IMAPS}
 \subsubsection{SMTP: opportunistic TLS}
 % do we need to documment starttls in detail?
-\subsubsection{starttls?}
+%\subsubsection{starttls?}
 
 \subsection{SSH}
 

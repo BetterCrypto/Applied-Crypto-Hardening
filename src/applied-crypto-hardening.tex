@@ -9,6 +9,15 @@
 %\usepackage[latin1]{inputenc}  % Sonderzeichen, Umlaute  
 \usepackage[utf8x]{inputenc}  % Sonderzeichen, Umlaute  
 \usepackage{hyperref}
+\usepackage{placeins}
+
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+
+\definecolor{green}{RGB}{32,113,10}
+\definecolor{orange}{RGB}{251,111,16}
+\definecolor{red}{RGB}{247,56,0}
+\definecolor{blue}{RGB}{0,28,128}
+
 
 \pagenumbering{arabic}
 \pagestyle{plain}
@@ -26,7 +35,7 @@
 
 \author{ Manuel Koschuch\inst{1}, Adi Kriegisch\inst{2}, L. Aaron Kaplan\inst{3}, Tobias Dussa\inst{4}, Heiko Reese\inst{4}}
 \institute{
-FH Wien
+FH Campus Wien
 \and
 VRVis
 \and
@@ -48,6 +57,7 @@ Karlsruhe Institute of Technology
 \input{PKIs}
 \input{tools}
 \input{further_research}
+\input{reviewers}
 
 \bibliography{applied-crypto-hardening}
 
