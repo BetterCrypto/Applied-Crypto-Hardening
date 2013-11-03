@@ -1,3 +1,5 @@
+NOW := $(shell date)
+
 all:
 	latex applied-crypto-hardening
 	# no bibtex citations atm

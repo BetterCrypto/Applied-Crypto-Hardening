@@ -19,3 +19,8 @@ $ git push origin master
 
 
 
+IMPORTANT
+=========
+
+If you reviewed the document and/or made some changes, please please add your name to the reviewers.tex file (the list of names is sorted alphabetically by last name).
+
