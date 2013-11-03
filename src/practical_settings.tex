@@ -126,7 +126,24 @@ The same data again, specifying the OpenSSL name:
 
 Based on this ordering, we can now define the corresponding settings for servers. We will start with the most common web servers
 
-\subsubsection{apache}
+\subsubsection{Apache}
+
+Note: a "\textbackslash" (backslash) denotes a line continuation which was wrapped due to formatting reasons here. Do not copy it verbatim.
+
+\begin{verbatim}
+  SSLProtocol ALL -SSLv2
+  SSLHonorCipherOrder On
+  SSLCipherSuite  ECDH+AESGCM:DH+AESGCM:\
+    ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:\
+    DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
+    ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:\
+    DHE-RSA-CAMELLIA256-SHA:DHE-DSS-CAMELLIA256-SHA:\
+    !ADH:!AECDH:!MD5:!DSS
+\end{verbatim}
+
+%XXXX   ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AES:RSA+3DES:!ADH:!AECDH:!MD5:!DSS
+
+
 
 \subsubsection{nginx}
 
