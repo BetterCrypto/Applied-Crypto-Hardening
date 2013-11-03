@@ -32,7 +32,7 @@
 \subsubsection{Overview of SSL Server settings}
 
 Most Server software (Webservers, Mail servers, etc.) can be configured to prefer certain cipher suites over others. 
-We followed the recommendations by Ivan Ristic's \cite{RisticSSLTLSDeploymentBestPractices}SSL/TLS Deployment Best Practices document (section 2.2 "Use Secure Protocols") and arrived at a list of recommended cipher suites for SSL enabled servers.
+We followed the recommendations by Ivan Ristic's SSL/TLS Deployment Best Practices\footnote{\url{https://www.ssllabs.com/projects/best-practices/index.html}} document (see section 2.2 "Use Secure Protocols") and arrived at a list of recommended cipher suites for SSL enabled servers.
 
 The results of following his adivce is a categorisation of cipher suites.
 
@@ -141,9 +141,9 @@ Note: a "\textbackslash" (backslash) denotes a line continuation which was wrapp
   SSLCipherSuite  ECDH+AESGCM:DH+AESGCM:\
     ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:\
     DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
-    ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:\
-    DHE-RSA-CAMELLIA256-SHA:DHE-DSS-CAMELLIA256-SHA:\
-    !ADH:!AECDH:!MD5:!DSS
+    ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:\
+    DHE-DSS-AES256-SHA:\DHE-RSA-CAMELLIA256-SHA:\
+    DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS
 \end{verbatim}
 
 %XXXX   ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AES:RSA+3DES:!ADH:!AECDH:!MD5:!DSS
