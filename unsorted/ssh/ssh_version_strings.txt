@@ -48,4 +48,16 @@ Fedora 14:  SSH-2.0-OpenSSH_5.5
 Fedora 15:  SSH-2.0-OpenSSH_5.6
 Fedora 16:  SSH-2.0-OpenSSH_5.8
 
+Mac OS X
+Mac OS X 10.0 (Cheetah)
+Mac OS X 10.1 (Puma)
+Mac OS X 10.2 (Jaguar)
+Mac OS X 10.3 (Panther) ***UNVERIFIED***                                                OpenSSH_3.6.1p1
+Mac OS X 10.4 (Tiger) OpenSSH_4.5p1, OpenSSL 0.9.7l 28 Sep 2006:                        SSH-2.0-OpenSSH_4.5
+Mac OS X 10.5 (Leopard) OpenSSH_5.2p1, OpenSSL 0.9.7l 28 Sep 2006:                      SSH-2.0-OpenSSH_5.2
+Mac OS X 10.6 (Snow Leopard) OpenSSH_5.2p1, OpenSSL 0.9.8y 5 Feb 2013:                  SSH-2.0-OpenSSH_5.2
+Mac OS X 10.7 (Lion) OpenSSH_5.6p1, OpenSSL 0.9.8y 5 Feb 2013:                          SSH-2.0-OpenSSH_5.6
+Mac OS X 10.8 (Mountain Lion) OpenSSH_5.9p1, OpenSSL 0.9.8y 5 Feb 2013 (ECC broken):i   SSH-2.0-OpenSSH_5.9
+Mac OS X 10.9 (Mavericks) OpenSSH_6.2p2, OSSLShim 0.9.8r 8 Dec 2011:                    SSH-2.0-OpenSSH_6.2
+
 complete removal of version string seems to be not desireable: http://www.snailbook.com/faq/version-string.auto.html
