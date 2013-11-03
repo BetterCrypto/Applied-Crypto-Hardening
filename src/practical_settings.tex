@@ -3,30 +3,31 @@
 
 \subsection{SSL}
 
-At the time of this writing, SSL is defined in RFCs: 	
-
-\begin{itemize}
-\item RFC2246 - TLS1.0		
-\item RFC3268 - AES		
-\item RFC4132 - Camelia		
-\item RFC4162 - SEED		
-\item RFC4279 - PSK		
-\item RFC4346 - TLS 1.1		
-\item RFC4492 - ECC		
-\item RFC4785 - PSK\_NULL		
-\item RFC5246 - TLS 1.2		
-\item RFC5288 - AES\_GCM		
-\item RFC5289 - AES\_GCM\_SHA2\_ECC		
-\item RFC5430 - Suite B		
-\item RFC5487 - GCM\_PSK		
-\item RFC5489 - ECDHE\_PSK		
-\item RFC5932 - Camelia		
-\item RFC6101 - SSL 3.0		
-\item RFC6209 - ARIA		
-\item RFC6367 - Camelia		
-\item RFC6655 - AES\_CCM		
-\item RFC7027 - Brainpool Curves		
-\end{itemize}
+%%% NOTE: we do not need to list this all here, can move to an appendix
+%At the time of this writing, SSL is defined in RFCs: 	
+%
+%\begin{itemize}
+%\item RFC2246 - TLS1.0		
+%\item RFC3268 - AES		
+%\item RFC4132 - Camelia		
+%\item RFC4162 - SEED		
+%\item RFC4279 - PSK		
+%\item RFC4346 - TLS 1.1		
+%\item RFC4492 - ECC		
+%\item RFC4785 - PSK\_NULL		
+%\item RFC5246 - TLS 1.2		
+%\item RFC5288 - AES\_GCM		
+%\item RFC5289 - AES\_GCM\_SHA2\_ECC		
+%\item RFC5430 - Suite B		
+%\item RFC5487 - GCM\_PSK		
+%\item RFC5489 - ECDHE\_PSK		
+%\item RFC5932 - Camelia		
+%\item RFC6101 - SSL 3.0		
+%\item RFC6209 - ARIA		
+%\item RFC6367 - Camelia		
+%\item RFC6655 - AES\_CCM		
+%\item RFC7027 - Brainpool Curves		
+%\end{itemize}
 
 \subsubsection{Overview of SSL Server settings}
 
@@ -87,7 +88,8 @@ Next we tested the cipher suites above on the following clients:
 The result of testing the cipher suites with these clients gives us the following result and a preference order. 
 Should a client not be able to use a specific cipher suite, it will fall back to the next possible entry as given by the ordering.
 
-\begin{table}
+\begin{table}[h]
+\small
     \begin{tabular}{|l|l|l|l|l|}
     \hline
     Pref & Cipher Suite                                   & ID         & Browser                     \\ \hline
@@ -108,6 +110,8 @@ Should a client not be able to use a specific cipher suite, it will fall back to
 The same data again, specifying the OpenSSL name:
 
 \begin{table}[h]
+\small
+\FloatBarrier
     \begin{tabular}{|l|l|l|}
     \hline
     Cipher Suite                                   & ID            & OpenSSL Name                  \\ \hline
@@ -122,6 +126,7 @@ The same data again, specifying the OpenSSL name:
     TLS\_DHE\_DSS\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0087 &     DHE-DSS-CAMELLIA256-SHA   \\ \hline
     \end{tabular}
 \end{table}
+
 
 
 Based on this ordering, we can now define the corresponding settings for servers. We will start with the most common web servers

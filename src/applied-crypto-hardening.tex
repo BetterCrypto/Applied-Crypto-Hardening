@@ -1,17 +1,32 @@
-\documentclass{llncs}
+%%% LaTeX Template: Two column article
+%%%
+%%% Source: http://www.howtotex.com/
+%%% Feel free to distribute this template, but please keep to referal to http://www.howtotex.com/ here.
+%%% Date: February 2011
 
-\usepackage{amsmath}
-\usepackage{amssymb}
-%\usepackage{psfrag}
-%\usepackage{graphicx}
-%\usepackage{color}
-%\usepackage{subfigure}
-%\usepackage[latin1]{inputenc}  % Sonderzeichen, Umlaute  
-\usepackage[utf8x]{inputenc}  % Sonderzeichen, Umlaute  
-\usepackage{hyperref}
-\usepackage{placeins}
+%%% Preamble
+\documentclass[	DIV=calc,%
+							paper=a4,%
+							fontsize=9pt,%
+							onecolumn]{scrartcl}	 					% KOMA-article class
 
+\usepackage{lipsum}													% Package to create dummy text
+
+\usepackage[english]{babel}										% English language/hyphenation
+\usepackage[protrusion=true,expansion=true]{microtype}				% Better typography
+\usepackage{amsmath,amsfonts,amsthm}					% Math packages
+\usepackage[pdftex]{graphicx}									% Enable pdflatex
+%\usepackage[svgnames]{xcolor}									% Enabling colors by their 'svgnames'
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption}	% Custom captions under/above floats
+\usepackage{epstopdf}												% Converts .eps to .pdf
+\usepackage{subfig}													% Subfigures
+\usepackage{booktabs}												% Nicer tables
+\usepackage{fix-cm}													% Custom fontsizes
+
+% custom changes:
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{placeins}
+\usepackage{hyperref}
 
 \definecolor{green}{RGB}{32,113,10}
 \definecolor{orange}{RGB}{251,111,16}
@@ -19,33 +34,88 @@
 \definecolor{blue}{RGB}{0,28,128}
 
 
-\pagenumbering{arabic}
-\pagestyle{plain}
+
+%%% Custom sectioning (sectsty package)
+\usepackage{sectsty}													% Custom sectioning (see below)
+\allsectionsfont{%															% Change font of al section commands
+	\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font
+	}
+
+\sectionfont{%																% Change font of \section command
+	\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font
+	}
 
 
-\newcommand{\todo}[1]{\marginpar{\textbf{TODO!}}\parbox{\columnwidth}{\textbf{\textsc{\textcolor{red}{(TODO: #1)}}}}}
-% Auskommentieren:
-\newcommand{\ignorethis}[1]{}
-\newcommand{\needcite}{\todo{Need citation!}}
+
+%%% Headers and footers
+\usepackage{fancyhdr}												% Needed to define custom headers/footers
+	\pagestyle{fancy}														% Enabling the custom headers/footers
+\usepackage{lastpage}	
+
+% Header (empty)
+\lhead{}
+\chead{}
+\rhead{}
+% Footer (you may change this to your own needs)
+\lfoot{\footnotesize Applied Crypto Hardening \textbullet ~Draft}
+\cfoot{}
+\rfoot{\footnotesize page \thepage\ of \pageref{LastPage}}	% "Page 1 of 2"
+\renewcommand{\headrulewidth}{0.0pt}
+\renewcommand{\footrulewidth}{0.4pt}
 
 
-\begin{document}
 
+%%% Creating an initial of the very first character of the content
+\usepackage{lettrine}
+\newcommand{\initial}[1]{%
+     \lettrine[lines=3,lhang=0.3,nindent=0em]{
+     				\color{DarkGoldenrod}
+     				{\textsf{#1}}}{}}
+
+
+
+%%% Title, author and date metadata
+\usepackage{titling}															% For custom titles
+
+\newcommand{\HorRule}{\color{DarkGoldenrod}%			% Creating a horizontal rule
+									  	\rule{\linewidth}{1pt}%
+										}
+
+\pretitle{\vspace{-30pt} \begin{flushleft} \HorRule 
+				\fontsize{50}{50} \usefont{OT1}{phv}{b}{n} \color{DarkRed} \selectfont 
+				}
 \title{Applied Crypto Hardening}
+\posttitle{\par\end{flushleft}\vskip 0.5em}
 
-\author{ Manuel Koschuch\inst{1}, Adi Kriegisch\inst{2}, L. Aaron Kaplan\inst{3}, Tobias Dussa\inst{4}, Heiko Reese\inst{4}}
-\institute{
-FH Campus Wien
-\and
-VRVis
-\and
-CERT.at
-\and
-Karlsruhe Institute of Technology
-}
+\preauthor{\begin{flushleft}
+					\large \lineskip 0.5em \usefont{OT1}{phv}{b}{sl} \color{DarkRed}}
+
+\author{ Manuel Koschuch, Adi Kriegisch, L. Aaron Kaplan, Tobias Dussa, Heiko Reese}
+%\institute{
+%FH Campus Wien
+%\and
+%VRVis
+%\and
+%CERT.at
+%\and
+%Karlsruhe Institute of Technology
+%}
+
+\postauthor{\footnotesize \usefont{OT1}{phv}{m}{sl} \color{Black} 
+ (FH Campus Wien, VRVis, CERT.at, Karlsruhe Institute of Technology)
+					\par\end{flushleft}\HorRule}
+
+\date{2013-11-03}
 
 
+
+%%% Begin document
+\begin{document}
 \maketitle
+\thispagestyle{fancy} 			% Enabling the custom headers/footers for the first page 
+% The first character should be within \initial{}
+%\initial{H}\textbf{ere is some sample text to show the initial in the introductory paragraph of this template article. The color and lineheight of the initial can be modified in the preamble of this document.}
+
 
 \input{abstract}
 \input{disclaimer}
