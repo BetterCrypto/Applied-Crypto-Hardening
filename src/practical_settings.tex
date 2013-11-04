@@ -169,6 +169,17 @@ Note: a "\textbackslash" (backslash) denotes a line continuation which was wrapp
 Note again, that any cipher suite starting with ECDHE  can be omitted in case of doubt.
 %% XXX NOTE TO SELF: remove from future automatically generated lists!
 
+You should redirect everything to httpS:// if possible. In Apache you can do this with the following setting inside of a VirtualHost environment:
+
+\begin{verbatim}
+  <VirtualHost *:80>
+   #...
+   RewriteEngine On
+        RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R=permanent]
+   #...
+  </VirtualHost>
+\end{verbatim}
+
 %XXXX   ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AES:RSA+3DES:!ADH:!AECDH:!MD5:!DSS
 
 
@@ -177,7 +188,7 @@ Note again, that any cipher suite starting with ECDHE  can be omitted in case of
 
 \begin{verbatim}
   ssl_prefer_server_ciphers on;
-  ssl_protocols All -SSLv2 -SSLv3; 
+  ssl_protocols -SSLv2 -SSLv3; 
   ssl_ciphers DHE+AESGCM:\
     ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:\
     DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
@@ -188,18 +199,58 @@ Note again, that any cipher suite starting with ECDHE  can be omitted in case of
   add_header                X-Frame-Options DENY
 \end{verbatim}
 
+%% XXX FIXME: do we need to specify dhparams? Parameter: ssl_dhparam = file. See: http://wiki.nginx.org/HttpSslModule#ssl_protocols
+
+
 If you decide to trust NIST's ECC curve recommendation, you can add the following line to nginx's configuration file to select special curves:
 
 \begin{verbatim}
   ssl_ecdh_curve          sect571k1;
 \end{verbatim}
 
-\subsubsection{openssl.conf settings}
+You should redirect everything to httpS:// if possible. In Nginx you can do this with the following setting:
+
+\begin{verbatim}
+  rewrite     ^(.*)   https://$host$1 permanent;
+\end{verbatim}
+
+%\subsubsection{openssl.conf settings}
 
 %\subsubsection{Differences in SSL libraries: gnutls vs. openssl vs. others}
 
-\subsubsection{IMAPS}
+\subsubsection{Dovecot}
+
+Dovecot 2.2:
+
+% Example: http://dovecot.org/list/dovecot/2013-October/092999.html
+
+\begin{verbatim}
+  ssl_cipher_list = DHE+AESGCM:\
+    ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:\
+    DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
+    ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:\
+    DHE-DSS-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:\
+    DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS
+  ssl_prefer_server_ciphers = yes
+\end{verbatim}
+
+Dovecot 2.1: Almost as good as dovecot 2.2. Does not support ssl\_prefer\_server\_ciphers
+
+
+\subsubsection{Cyrus}
+
+\subsubsection{UW}
+
+Another option to secure IMAPs servers is to place them behind an stunnel server. 
+
+% XXX config von Adi?
+% sslVersion = TLSv1
+% ciphers = EDH+CAMELLIA256:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:-AES128:!CAMELLIA128:!ECDSA:AES256-SHA:EDH+AES128;
+% options = CIPHER_SERVER_PREFERENCE
+% TIMEOUTclose = 1
+
 \subsubsection{Postfix}
+
 \subsubsection{SMTP: opportunistic TLS}
 % do we need to documment starttls in detail?
 %\subsubsection{starttls?}
