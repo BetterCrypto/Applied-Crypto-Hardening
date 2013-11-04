@@ -257,6 +257,15 @@ Another option to secure IMAPs servers is to place them behind an stunnel server
 
 \subsection{SSH}
 
+\begin{verbatim}
+	RSAAuthentication yes
+	PermitRootLogin no
+	StrictModes yes
+	Ciphers aes256-ctr
+	MACs hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
+	#NOTE: older linux systems won't support SHA2, PuTTY does not support RIPE-MD160.
+\end{verbatim}
+
 \subsection{OpenVPN}
 
 \subsection{IPSec}
