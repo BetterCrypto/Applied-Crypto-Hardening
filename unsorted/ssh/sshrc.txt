@@ -1,0 +1,9 @@
+/etc/sshrc
+~/.sshrc
+
+Commands in this file are executed by ssh when the user logs in, just before the user's shell (or command) is started.
+
+Happens after successful authentication and changing to user’s ~/:
+If ~/.ssh/rc exists, runs it; else if /etc/ssh/sshrc exists, runs it;
+
+Useful to monitor when suddenly user’s access SSH which probably shouldn’t be able to do so. (For example by sending email or a push message to administration staff.)
