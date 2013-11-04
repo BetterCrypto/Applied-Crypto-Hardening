@@ -68,7 +68,9 @@ The results of following his adivce is a categorisation of cipher suites.
 \end{tabular}
 \end{center}
 
-A remark on the ``consider'' section: the BSI (Bundesamt f\"ur Sicherheit in der Informationstechnik, Germany) recommends in its technical report TR-02102-2\footnote{\url{https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR02102/BSI-TR-02102-2_pdf.html}} to \textbf{avoid} non-ephemeral\footnote{ephemeral keys are session keys which are destroyed upon termination of the encrypted session. In TLS/SSL, they are realized by the DHE cipher suites. } keys for any communication which might contain personal or sensitive data. In this document, we follow BSI's advice and therefore only keep cipher suites containing (EC)DH\textbf{E} variants. System administrators, who can not use perfect forward secrecy can still use the cipher suites in the consider section. We however, do not recommend them in this document.
+A remark on the ``consider'' section: the BSI (Bundesamt f\"ur Sicherheit in der Informationstechnik, Germany) recommends in its technical report TR-02102-2\footnote{\url{https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR02102/BSI-TR-02102-2_pdf.html}} to \textbf{avoid} non-ephemeral\footnote{ephemeral keys are session keys which are destroyed upon termination of the encrypted session. In TLS/SSL, they are realized by the DHE cipher suites. } keys for any communication which might contain personal or sensitive data. In this document, we follow BSI's advice and therefore only keep cipher suites containing (EC)DH\textbf{E} variants. System administrators, who can not use forward secrecy can still use the cipher suites in the consider section. We however, do not recommend them in this document.
+
+%% NOTE: s/forward secrecy/perfect forward secrecy???
 
 Note that the entries marked as "special" are cipher suites which are not common to all clients (webbrowsers etc).
 
@@ -95,15 +97,16 @@ Should a client not be able to use a specific cipher suite, it will fall back to
     \begin{tabular}{|l|l|l|l|l|}
     \hline
     Pref & Cipher Suite                                   & ID         & Browser                     \\ \hline
-    1    & TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA384 &     0xC024 & Safari                      \\ \hline
-    2    & TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA384   &     0xC028 & Safari                      \\ \hline
-    3    & TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA256     &     0x006B & Safari, Chrome              \\ \hline
-    4    & TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA    &     0xC00A & Safari, Chrome, Firefox, IE \\ \hline
-    5    & TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA      &     0xC014 & Safari, Chrome, Firefox, IE \\ \hline
-    6    & TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA        &     0x0039 & Safari, Chrome, Firefox     \\ \hline
-    7    & TLS\_DHE\_DSS\_WITH\_AES\_256\_CBC\_SHA        &     0x0038 & Firefox, IE                 \\ \hline
-    8    & TLS\_DHE\_RSA\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0088 & Firefox                     \\ \hline
-    9    & TLS\_DHE\_DSS\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0087 & Firefox                     \\ \hline
+    1    & TLS\_DHE\_RSA\_WITH\_AES\_256\_GCM\_SHA384 	  &  	0x009f & OpenSSL command line client \\ \hline
+    2    & TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA384 &     0xC024 & Safari                      \\ \hline
+    3    & TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA384   &     0xC028 & Safari                      \\ \hline
+    4    & TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA256     &     0x006B & Safari, Chrome              \\ \hline
+    5    & TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA    &     0xC00A & Safari, Chrome, Firefox, IE \\ \hline
+    6    & TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA      &     0xC014 & Safari, Chrome, Firefox, IE \\ \hline
+    7    & TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA        &     0x0039 & Safari, Chrome, Firefox     \\ \hline
+    8    & TLS\_DHE\_DSS\_WITH\_AES\_256\_CBC\_SHA        &     0x0038 & Firefox, IE                 \\ \hline
+    9    & TLS\_DHE\_RSA\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0088 & Firefox                     \\ \hline
+    10   & TLS\_DHE\_DSS\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0087 & Firefox                     \\ \hline
     \end{tabular}
 \caption{Preference order of cipher suites}
 \label{table:prefOrderCipherSuites}
@@ -118,7 +121,8 @@ Table \ref{table:prefOrderOpenSSLNames} shows the same data again with specifyin
 \small
     \begin{tabular}{|l|l|l|}
     \hline
-    Cipher Suite                                   & ID            & OpenSSL Name                  \\ \hline
+    Cipher Suite                                   & ID         & OpenSSL Name                  \\ \hline
+    TLS\_DHE\_RSA\_WITH\_AES\_256\_GCM\_SHA384     &  	 0x009f & 	  DHE-RSA-AES256-GCM-SHA384 \\ \hline
     TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA384 &     0xC024 &     ECDHE-ECDSA-AES256-SHA384 \\ \hline
     TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA384   &     0xC028 &     ECDHE-RSA-AES256-SHA384   \\ \hline
     TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA256     &     0x006B &     DHE-RSA-AES256-SHA256     \\ \hline
@@ -134,6 +138,8 @@ Table \ref{table:prefOrderOpenSSLNames} shows the same data again with specifyin
 \end{table}
 \end{center}
 
+Note: the tables \ref{table:prefOrderOpenSSLNames} and \ref{table:prefOrderCipherSuites} contains Eliptic curve key exchanges. There are currently strong doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}} concerning ECC.
+If unsure, remove the cipher suites starting with ECDHE in the table above.
 
 
 Based on this ordering, we can now define the corresponding settings for servers. We will start with the most common web servers
@@ -142,16 +148,26 @@ Based on this ordering, we can now define the corresponding settings for servers
 
 Note: a "\textbackslash" (backslash) denotes a line continuation which was wrapped due to formatting reasons here. Do not copy it verbatim.
 
+%-All +TLSv1.1 +TLSv1.2
 \begin{verbatim}
-  SSLProtocol +TLSv1.1 +TLSv1.2
+  SSLProtocol All -SSLv2 -SSLv3 
   SSLHonorCipherOrder On
-  SSLCipherSuite  ECDH+AESGCM:DH+AESGCM:\
+  SSLCompression off
+  # Add six earth month HSTS header for all users...
+  Header add Strict-Transport-Security "max-age=15768000"
+  # If you want to protect all subdomains, use the following header
+  # Strict-Transport-Security: max-age=15768000 ; includeSubDomains
+
+  SSLCipherSuite  DHE+AESGCM:\
     ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:\
     DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
     ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:\
-    DHE-DSS-AES256-SHA:\DHE-RSA-CAMELLIA256-SHA:\
+    DHE-DSS-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:\
     DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS
 \end{verbatim}
+
+Note again, that any cipher suite starting with ECDHE  can be omitted in case of doubt.
+%% XXX NOTE TO SELF: remove from future automatically generated lists!
 
 %XXXX   ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AES:RSA+3DES:!ADH:!AECDH:!MD5:!DSS
 
@@ -159,12 +175,31 @@ Note: a "\textbackslash" (backslash) denotes a line continuation which was wrapp
 
 \subsubsection{nginx}
 
+\begin{verbatim}
+  ssl_prefer_server_ciphers on;
+  ssl_protocols All -SSLv2 -SSLv3; 
+  ssl_ciphers DHE+AESGCM:\
+    ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:\
+    DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
+    ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:\
+    DHE-DSS-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:\
+    DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS;
+  add_header Strict-Transport-Security max-age=2592000;
+  add_header                X-Frame-Options DENY
+\end{verbatim}
+
+If you decide to trust NIST's ECC curve recommendation, you can add the following line to nginx's configuration file to select special curves:
+
+\begin{verbatim}
+  ssl_ecdh_curve          sect571k1;
+\end{verbatim}
 
 \subsubsection{openssl.conf settings}
 
 %\subsubsection{Differences in SSL libraries: gnutls vs. openssl vs. others}
 
 \subsubsection{IMAPS}
+\subsubsection{Postfix}
 \subsubsection{SMTP: opportunistic TLS}
 % do we need to documment starttls in detail?
 %\subsubsection{starttls?}
@@ -178,3 +213,4 @@ Note: a "\textbackslash" (backslash) denotes a line continuation which was wrapp
 \subsection{PGP}
 
 \subsection{PRNG settings}
+
