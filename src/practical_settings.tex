@@ -251,6 +251,43 @@ Another option to secure IMAPs servers is to place them behind an stunnel server
 
 \subsubsection{Postfix}
 
+First, you need to generate Diffie Hellman parameters (please first take a look at the section \ref{section:PRNG}):
+
+\begin{verbatim}
+  % openssl gendh -out /etc/postfix/dh_param_512.pem -2 512
+  % openssl gendh -out /etc/postfix/dh_param_1024.pem -2 1024
+\end{verbatim}
+
+Next, we specify these DH parameters in the postfix config file:
+
+\begin{verbatim}
+  smtpd_tls_dh512_param_file = /etc/postfix/dh_param_512.pem
+  smtpd_tls_dh1024_param_file = /etc/postfix/dh_param_1024.pem
+  smtpd_tls_protocols = !SSLv2, !SSLv3
+  smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
+  tls_preempt_cipherlist = yes
+  tls_random_source = dev:/dev/urandom		
+    %% NOTE: might want to have /dev/random here + Haveged
+\end{verbatim}
+  
+For those users, who want to use ECC key exchange, it is possible to specify this via:
+\begin{verbatim}
+  smtpd_tls_eecdh_grade = ultra
+\end{verbatim}
+
+You can check the settings by specifying  smtpd\_tls\_loglevel = 1 and then check the selected ciphers with the following command:
+\begin{verbatim}
+$ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | \
+> awk '{printf("%s %s %s %s\n", $12, $13, $14, $15)}' | sort | uniq -c | sort -n
+      1 SSLv3 with cipher DHE-RSA-AES256-SHA
+     23 TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384
+     60 TLSv1 with cipher ECDHE-RSA-AES256-SHA
+    270 TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384
+    335 TLSv1 with cipher DHE-RSA-AES256-SHA
+\end{verbatim}
+
+Source: \url{http://www.postfix.org/TLS_README.html}
+
 \subsubsection{SMTP: opportunistic TLS}
 % do we need to documment starttls in detail?
 %\subsubsection{starttls?}
@@ -264,4 +301,5 @@ Another option to secure IMAPs servers is to place them behind an stunnel server
 \subsection{PGP}
 
 \subsection{PRNG settings}
+\label{section:PRNG}
 
