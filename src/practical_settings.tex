@@ -86,7 +86,7 @@ Next we tested the cipher suites above on the following clients:
 \end{itemize}
 
 
-The result of testing the cipher suites with these clients gives us the following result and a preference order. 
+The result of testing the cipher suites with these clients gives us a preference order as shown in table \ref{table:prefOrderCipherSuites}. 
 Should a client not be able to use a specific cipher suite, it will fall back to the next possible entry as given by the ordering.
 
 \begin{center}
@@ -106,12 +106,12 @@ Should a client not be able to use a specific cipher suite, it will fall back to
     9    & TLS\_DHE\_DSS\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0087 & Firefox                     \\ \hline
     \end{tabular}
 \caption{Preference order of cipher suites}
+\label{table:prefOrderCipherSuites}
 \end{table}
 \end{center}
 
-\FloatBarrier
 
-The same data again, specifying the OpenSSL name:
+Table \ref{table:prefOrderOpenSSLNames} shows the same data again with specifying the corresponding OpenSSL name.
 
 \begin{center}
 \begin{table}[h]
@@ -130,6 +130,7 @@ The same data again, specifying the OpenSSL name:
     TLS\_DHE\_DSS\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0087 &     DHE-DSS-CAMELLIA256-SHA   \\ \hline
     \end{tabular}
 \caption{Preference order of cipher suites, with OpenSSL names}
+\label{table:prefOrderOpenSSLNames}
 \end{table}
 \end{center}
 
@@ -171,6 +172,8 @@ Note: a "\textbackslash" (backslash) denotes a line continuation which was wrapp
 \subsection{SSH}
 
 \subsection{OpenVPN}
+
+\subsection{IPSec}
 
 \subsection{PGP}
 
