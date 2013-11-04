@@ -63,6 +63,7 @@ Mac OS X 10.9 (Mavericks) OpenSSH_6.2p2, OSSLShim 0.9.8r 8 Dec 2011:            
 Raspbian (Raspberry Pi Debian)
 Wheezy 2013-09-25 OpenSSH_6.0p1 Debian-4, OpenSSL 1.0.1e 11 Feb 2013:                   SSH-2.0-OpenSSH_6.0p1 Debian-4
 
-
+ARCH Linux (Raspberry Pi)
+ARCH 2013-08-13, OpenSSH_6.2p2, OpenSSL 1.0.1e 11 Feb 2013:                             SSH-2.0-OpenSSH_6.2
 
 complete removal of version string seems to be not desireable: http://www.snailbook.com/faq/version-string.auto.html
