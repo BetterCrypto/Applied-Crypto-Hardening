@@ -34,7 +34,7 @@
 Most Server software (Webservers, Mail servers, etc.) can be configured to prefer certain cipher suites over others. 
 We followed the recommendations by Ivan Ristic's SSL/TLS Deployment Best Practices\footnote{\url{https://www.ssllabs.com/projects/best-practices/index.html}} document (see section 2.2 "Use Secure Protocols") and arrived at a list of recommended cipher suites for SSL enabled servers.
 
-The results of following his adivce is a categorisation of cipher suites.
+Following Ivan Ristic's adivce we arrived at a categorisation of cipher suites.
 
 \begin{center}
 \begin{tabular}{| l | l | l | l | l|}
@@ -68,17 +68,18 @@ The results of following his adivce is a categorisation of cipher suites.
 \end{tabular}
 \end{center}
 
-A remark on the ``consider'' section: the BSI (Bundesamt f\"ur Sicherheit in der Informationstechnik, Germany) recommends in its technical report TR-02102-2\footnote{\url{https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR02102/BSI-TR-02102-2_pdf.html}} to \textbf{avoid} non-ephemeral\footnote{ephemeral keys are session keys which are destroyed upon termination of the encrypted session. In TLS/SSL, they are realized by the DHE cipher suites. } keys for any communication which might contain personal or sensitive data. In this document, we follow BSI's advice and therefore only keep cipher suites containing (EC)DH\textbf{E} variants. System administrators, who can not use forward secrecy can still use the cipher suites in the consider section. We however, do not recommend them in this document.
+A remark on the ``consider'' section: the BSI (Federal office for information security, Germany) recommends in its technical report TR-02102-2\footnote{\url{https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR02102/BSI-TR-02102-2_pdf.html}} to \textbf{avoid} non-ephemeral\footnote{ephemeral keys are session keys which are destroyed upon termination of the encrypted session. In TLS/SSL, they are realized by the DHE cipher suites. } keys for any communication which might contain personal or sensitive data. In this document, we follow BSI's advice and therefore only keep cipher suites containing (EC)DH\textbf{E} (ephemeral) variants. System administrators, who can not use forward secrecy can still use the cipher suites in the ``consider'' section. We however, do not recommend them in this document.
 
 %% NOTE: s/forward secrecy/perfect forward secrecy???
 
-Note that the entries marked as "special" are cipher suites which are not common to all clients (webbrowsers etc).
+Note that the entries marked as ``special'' are cipher suites which are not common to all clients (webbrowsers etc).
 
 
-\subsubsection{Client recommendations}
+\subsubsection{Tested clients}
  
 Next we tested the cipher suites above on the following clients:
 
+%% NOTE: we need to test with more systems!!
 \begin{itemize}
 \item Chrome 30.0.1599.101 Mac OS X 10.9
 \item Safari 7.0 Mac OS X 10.9
@@ -138,7 +139,7 @@ Table \ref{table:prefOrderOpenSSLNames} shows the same data again with specifyin
 \end{table}
 \end{center}
 
-Note: the tables \ref{table:prefOrderOpenSSLNames} and \ref{table:prefOrderCipherSuites} contains Eliptic curve key exchanges. There are currently strong doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}} concerning ECC.
+Note: the tables \ref{table:prefOrderOpenSSLNames} and \ref{table:prefOrderCipherSuites} contain Eliptic curve key exchanges. There are currently strong doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}} concerning ECC.
 If unsure, remove the cipher suites starting with ECDHE in the table above.
 
 
