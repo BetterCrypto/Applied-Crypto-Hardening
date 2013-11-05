@@ -157,6 +157,7 @@ Note: a "\textbackslash" (backslash) denotes a line continuation which was wrapp
   # Add six earth month HSTS header for all users...
   Header add Strict-Transport-Security "max-age=15768000"
   # If you want to protect all subdomains, use the following header
+  # ALL subdomains HAVE TO support https if you use this!
   # Strict-Transport-Security: max-age=15768000 ; includeSubDomains
 
   SSLCipherSuite  DHE+AESGCM:\
@@ -197,7 +198,7 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
     DHE-DSS-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:\
     DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS;
   add_header Strict-Transport-Security max-age=2592000;
-  add_header                X-Frame-Options DENY
+  add_header X-Frame-Options DENY;
 \end{verbatim}
 
 %% XXX FIXME: do we need to specify dhparams? Parameter: ssl_dhparam = file. See: http://wiki.nginx.org/HttpSslModule#ssl_protocols
