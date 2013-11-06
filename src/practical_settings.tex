@@ -139,7 +139,7 @@ Table \ref{table:prefOrderOpenSSLNames} shows the same data again with specifyin
 \end{table}
 \end{center}
 
-Note: the tables \ref{table:prefOrderOpenSSLNames} and \ref{table:prefOrderCipherSuites} contain Eliptic curve key exchanges. There are currently strong doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}} concerning ECC.
+Note: the tables \ref{table:prefOrderOpenSSLNames} and \ref{table:prefOrderCipherSuites} contain Elliptic curve key exchanges. There are currently strong doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}} concerning ECC.
 If unsure, remove the cipher suites starting with ECDHE in the table above.
 
 
@@ -157,6 +157,7 @@ Note: a "\textbackslash" (backslash) denotes a line continuation which was wrapp
   # Add six earth month HSTS header for all users...
   Header add Strict-Transport-Security "max-age=15768000"
   # If you want to protect all subdomains, use the following header
+  # ALL subdomains HAVE TO support https if you use this!
   # Strict-Transport-Security: max-age=15768000 ; includeSubDomains
 
   SSLCipherSuite  DHE+AESGCM:\
@@ -197,7 +198,7 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
     DHE-DSS-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:\
     DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS;
   add_header Strict-Transport-Security max-age=2592000;
-  add_header                X-Frame-Options DENY
+  add_header X-Frame-Options DENY;
 \end{verbatim}
 
 %% XXX FIXME: do we need to specify dhparams? Parameter: ssl_dhparam = file. See: http://wiki.nginx.org/HttpSslModule#ssl_protocols
@@ -299,10 +300,13 @@ Source: \url{http://www.postfix.org/TLS_README.html}
 	RSAAuthentication yes
 	PermitRootLogin no
 	StrictModes yes
+	HostKey /etc/ssh/ssh_host_rsa_key
 	Ciphers aes256-ctr
 	MACs hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
+	KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha1
 \end{verbatim}
 
+% XXX: curve25519-sha256@libssh.org only available upstream(!)
 Note: older linux systems won't support SHA2, PuTTY does not support RIPE-MD160.
 
 \subsection{OpenVPN}
