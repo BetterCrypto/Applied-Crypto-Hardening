@@ -2,3 +2,8 @@ Do not use NIST curves for ECC?
 
 Curves to suggest:
 sect571k1 # Koblitz and Montgomery curves should be fine.
+Curve2213
+Curve1174
+Curve25519
+Curve383187
+Curve3617
