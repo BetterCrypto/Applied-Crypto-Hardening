@@ -220,6 +220,78 @@ You should redirect everything to httpS:// if possible. In Nginx you can do this
 
 %\subsubsection{Differences in SSL libraries: gnutls vs. openssl vs. others}
 
+\subsubsection{MS IIS}
+\label{sec:ms-iis}
+
+When trying to avoid RC4 and CBC (BEAST-Attack) and requiring perfect
+forward secrecy, Microsoft Internet Information Server (IIS) supports
+ECDSA, but does not support RSA for key exchange (consider ECC suite
+B doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}}).
+
+Since \verb|ECDHE_RSA_*| is not supported, a SSL certificate based on
+elliptic curves needs to be used.
+
+The configuration of cypher suites MS IIS will use can be configured in one
+of the following ways:
+\begin{enumerate}
+\item Group Policy \footnote{\url{http://msdn.microsoft.com/en-us/library/windows/desktop/bb870930(v=vs.85).aspx}}
+\item Registry
+\item IIS Crypto~\footnote{\url{https://www.nartac.com/Products/IISCrypto/}}
+\end{enumerate}
+
+
+Table~\ref{tab:MS_IIS_Client_Support} shows the process of turning on
+one algorithm after another and the effect on the supported Clients
+tested using https://www.ssllabs.com.
+
+\verb|SSL 3.0|, \verb|SSL 2.0| and \verb|MD5| are turned off.
+\verb|TLS 1.0| and \verb|TLS 2.0| are turned on.
+
+\begin{table}[h]
+  \centering
+  \small
+  \begin{tabular}{|l|l|}
+    \hline
+    Cipher Suite & Client \\
+    \hline
+    \verb|TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256| & only IE 10,11, OpenSSL 1.0.1e \\
+    \hline
+    \verb|TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256| & Chrome 30, Opera 17, Safari 6+ \\
+    \hline
+    \verb|TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA| & FF 10-24, IE 8+, Safari 5, Java 7\\
+    \hline
+  \end{tabular}
+  \caption{Client support}
+  \label{tab:MS_IIS_Client_Support}
+\end{table}
+
+Table~\ref{tab:MS_IIS_Client_Support} shows the algoriths from
+strongest to weakest and why they need to be added in this order. For
+example insiting on SHA-2 algorithms (only first two lines) would
+eliminate all versions of Firefox, so the last line is needed to
+support this browser, but should be placed at the bottom, so capable
+browsers will choose the stronger SHA-2 algorithms.
+
+\verb|TLS_RSA_WITH_RC4_128_SHA| or equivalent should also be added if
+MS Terminal Server Connection is used (make sure to use this only in a
+trusted environment). This suite will not be used for SSL, since we do
+not use a RSA Key.
+
+
+% \verb|TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256| ... only supported by: IE 10,11, OpenSSL 1.0.1e
+% \verb|TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256| ... Chrome 30, Opera 17, Safari 6+
+% \verb|TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA| ... Firefox 10-24, IE 8+, Safari 5, Java 7
+
+
+Not supported Clients:
+\begin{enumerate}
+\item Java 6
+\item WinXP
+\item Bing
+\end{enumerate}
+
+
+
 \subsubsection{Dovecot}
 
 Dovecot 2.2:
@@ -318,3 +390,8 @@ Note: older linux systems won't support SHA2, PuTTY does not support RIPE-MD160.
 \subsection{PRNG settings}
 \label{section:PRNG}
 
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "applied-crypto-hardening"
+%%% End: 
