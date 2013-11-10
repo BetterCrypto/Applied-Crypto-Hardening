@@ -337,8 +337,30 @@ Next, we specify these DH parameters in the postfix config file:
 \begin{verbatim}
   smtpd_tls_dh512_param_file = /etc/postfix/dh_param_512.pem
   smtpd_tls_dh1024_param_file = /etc/postfix/dh_param_1024.pem
-  smtpd_tls_protocols = !SSLv2, !SSLv3
+\end{verbatim}
+
+You usually don't want restrictions on the ciphers for opportunistic
+encryption, because any encryption is better than plain text. 
+
+For submission (Port 587) or other special cases, however, you want to
+enforce strong encryption. In addition to the below entries in
+main.cf, you need to enable ``mandatory`` encryption for the
+respective service, e.g. by adding ``-o
+smtpd\_tls\_security\_level=encrypt'' to the submission smtpd in
+master.cf.
+
+% don't -- this influences opportunistic encryption
+%  smtpd_tls_protocols = !SSLv2, !SSLv3
+
+\begin{verbatim}
   smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
+  tls_ssl_options=NO_COMPRESSION
+  smtpd_tls_mandatory_ciphers=high
+  tls_high_cipherlist=DHE+AESGCM:ECDHE-ECDSA-AES256-SHA384:\
+    ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
+    ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:\
+    DHE-RSA-CAMELLIA256-SHA:DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:\
+    !MD5:!DSS
   tls_preempt_cipherlist = yes
   tls_random_source = dev:/dev/urandom		
     %% NOTE: might want to have /dev/random here + Haveged
