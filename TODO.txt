@@ -1,6 +1,15 @@
+
+Website
+========
+
+Formatting
+==========
+* one-column layout: make page margins smaller
+
+Contents
+========
 * Test all settings 
 * Test with more clients and other OSes than OSX / iPhone!!
 * document (cite) EVERYTHING! Why we chose certain values. Referneces, references, references. Otherwise it does not count!
   Srsly!!
 * .bib file is completely wrong. Make good citations/references.
-* make website
