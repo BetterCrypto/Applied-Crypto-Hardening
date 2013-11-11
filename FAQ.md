@@ -23,3 +23,7 @@ A: yes
 
 Q: I found a bug / some of your recommendations does not work for me
 A: Please get in contact with us on the mailing list
+
+Q: Is there a webpage?
+A: yes, www.bettercrypto.org
+
