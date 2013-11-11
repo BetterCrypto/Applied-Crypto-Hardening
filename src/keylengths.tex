@@ -14,3 +14,19 @@ In general, for asymmetric cryptography, any key length below 2048 bits is depre
 
 %% how about: >= 2048 bits for RSA
 %% >= 256 bits for ECC? 
+
+\subsection{Recommendations based on currently available information}
+
+Configuration A:
+strong ciphers, fewer users
+
+Do not use SHA1. Why? XXX insert literature . BSI/ ENISA page XXX
+Chaining mode: CBC.
+
+
+Configuration B:
+weaker ciphers, more users.
+
+SHA1:  allowed
+Chaining mode: CBC.
+

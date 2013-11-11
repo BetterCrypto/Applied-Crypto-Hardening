@@ -1,28 +1,54 @@
 \section{A brief overview of common crypto software}
 
-Broadly speaking, modern crypto software can placed into one of the two categories:
 
-\begin{itemize}
-\item assymetric cryptography 
-\item symmetric cryptography
-\end{itemize}
+\subsection{Cipher suites and choices}
 
-The most common crypto software implementations support both modes cryptosystems.
+In principle, system administrators who want to improve their servers need to make a hard decision between locking out some users while keeping very high cipher suite security levels or supporting as many users as possible while lowering some settings. 
+For reasonable cipher suite
 
-\subsection{Typical cryptography libraries, frameworks and tools}
 
-\begin{itemize}
-\item OpenSSL
-\item GnuTLS
-\item NSS
-\item NaCl
-\item PGP
-\item SSH
-\item TrueCrypt
-\item DM-Crypt
-\item Bitlocker % XXX: needs to be discussed! bitlocker is probably backdoored (at least some research suggests it)
-\item Apple FileVault 2
-\end{itemize}
+\subsubsection{Configuration A: strong, fewer clients}
+TLS 1.2; 
+Perfect forward secrecy
+
+XXX make a table!!! Add the clients (color coded?)
+\begin{verbatim}
+          0xC0,0x30 - ECDHE-RSA-AES256-GCM-SHA384 TLSv1.2 Kx=ECDH     Au=RSA  Enc=AESGCM(256) Mac=AEAD
+          0xC0,0x28 - ECDHE-RSA-AES256-SHA384 TLSv1.2 Kx=ECDH     Au=RSA  Enc=AES(256)  Mac=SHA384
+          0x00,0x9F - DHE-RSA-AES256-GCM-SHA384 TLSv1.2 Kx=DH       Au=RSA  Enc=AESGCM(256) Mac=AEAD
+          0x00,0x6B - DHE-RSA-AES256-SHA256   TLSv1.2 Kx=DH       Au=RSA  Enc=AES(256)  Mac=SHA256
+\end{verbatim}
+
+When to use this set of settings?
+M2M communications... You have your own PKI, corporate setting where you can control clients
+
+
+\subsubsection{Configuration B: weaker but many clients}
+
+TLS 1.2, TLS 1.1, TLS 1.0, SSLv3, -SSLv2
+
+string="EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!CAMELLIA128:!ECDSA:AES256-SHA"
+
+$\implies$ resolves to openssl ciphers -V \$string
+
+
+XXX make a table!!! Add the clients (color coded?)
+\begin{verbatim}
+          0xC0,0x30 - ECDHE-RSA-AES256-GCM-SHA384 TLSv1.2 Kx=ECDH     Au=RSA  Enc=AESGCM(256) Mac=AEAD
+          0xC0,0x2F - ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2 Kx=ECDH     Au=RSA  Enc=AESGCM(128) Mac=AEAD
+          0xC0,0x28 - ECDHE-RSA-AES256-SHA384 TLSv1.2 Kx=ECDH     Au=RSA  Enc=AES(256)  Mac=SHA384
+          0xC0,0x27 - ECDHE-RSA-AES128-SHA256 TLSv1.2 Kx=ECDH     Au=RSA  Enc=AES(128)  Mac=SHA256
+          0x00,0x9F - DHE-RSA-AES256-GCM-SHA384 TLSv1.2 Kx=DH       Au=RSA  Enc=AESGCM(256) Mac=AEAD
+          0x00,0x6B - DHE-RSA-AES256-SHA256   TLSv1.2 Kx=DH       Au=RSA  Enc=AES(256)  Mac=SHA256
+          0x00,0x9E - DHE-RSA-AES128-GCM-SHA256 TLSv1.2 Kx=DH       Au=RSA  Enc=AESGCM(128) Mac=AEAD
+          0x00,0x67 - DHE-RSA-AES128-SHA256   TLSv1.2 Kx=DH       Au=RSA  Enc=AES(128)  Mac=SHA256
+          0x00,0x88 - DHE-RSA-CAMELLIA256-SHA SSLv3 Kx=DH       Au=RSA  Enc=Camellia(256) Mac=SHA1
+          0xC0,0x14 - ECDHE-RSA-AES256-SHA    SSLv3 Kx=ECDH     Au=RSA  Enc=AES(256)  Mac=SHA1
+          0xC0,0x13 - ECDHE-RSA-AES128-SHA    SSLv3 Kx=ECDH     Au=RSA  Enc=AES(128)  Mac=SHA1
+          0x00,0x39 - DHE-RSA-AES256-SHA      SSLv3 Kx=DH       Au=RSA  Enc=AES(256)  Mac=SHA1
+          0x00,0x33 - DHE-RSA-AES128-SHA      SSLv3 Kx=DH       Au=RSA  Enc=AES(128)  Mac=SHA1
+          0x00,0x35 - AES256-SHA              SSLv3 Kx=RSA      Au=RSA  Enc=AES(256)  Mac=SHA1
+\end{verbatim}
 
 
 
