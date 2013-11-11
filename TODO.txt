@@ -5,11 +5,35 @@ Website
 Formatting
 ==========
 * one-column layout: make page margins smaller
+* add large "DRAFT" letters on top of every page.
+  git versionssnummer immer rein
+
 
 Contents
 ========
-* Test all settings 
+1. document the abstract needs that we have for the cipher settings (HSTS etc)
+   Then find the best cipher setting strings per se
+   Only then put it to all servers and keep it rather uniformely (as much as possible)
+
+2. Test all settings 
 * Test with more clients and other OSes than OSX / iPhone!!
 * document (cite) EVERYTHING! Why we chose certain values. Referneces, references, references. Otherwise it does not count!
   Srsly!!
 * .bib file is completely wrong. Make good citations/references.
+* !! important: add the version string to everything that we tested!!
+
+
+RNDG section
+------------
+- add two, three sentences
+- mention HaveGED 
+- embedded devices are a problem
+
+
+
+Contacting / who?
+=================
+* Juniper
+* Cisco
+* Leithold
+
