@@ -3,12 +3,12 @@ HOW TO USE THIS
 
 Anonymous (read-only) git cloning::
 
-  $ git clone  https://rhodecode.plunge.at/ach/ach-master
+  $ git clone  https://git.bettercrypto.org/ach-master.git
 
 
 As a registered user::
 
-  $ git clone  https://<myuser>@rhodecode.plunge.at/ach/ach-master
+  $ git clone  https://<myuser>@git.bettercrypto.org/ach-master.git
 
 where <myuser> is your username on the server. Ask for write permissions if you need them.
 

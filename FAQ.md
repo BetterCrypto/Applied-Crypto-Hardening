@@ -11,7 +11,7 @@ A: Essentially everyone. The core group of editors consists of crypologists,
 computer scientists and sysadmins
 
 Q: Where is the repository?
-A: https://rhodecode.plunge.at/ach/ach-master
+A: https://git.bettercrypto.org/ach-master.git
 
 
 Q: Where is the mailing list?
