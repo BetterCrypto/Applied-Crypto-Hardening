@@ -22,6 +22,14 @@ Contents
 * .bib file is completely wrong. Make good citations/references.
 * !! important: add the version string to everything that we tested!!
 
+Section 6
+----------
+* Exchange Server
+  - SMTP, POP, IMAP
+* Exim4 (-> Adi & Wolfgang Breya)
+* Checkpoint (-> cm)
+* Asa / Palo Alto (-> Azet)
+
 
 RNDG section
 ------------
@@ -37,3 +45,8 @@ Contacting / who?
 * Cisco
 * Leithold
 
+
+LATER / further 
+================
+* OpenLDAP (-> Adi)
+* Windows Active Directory
