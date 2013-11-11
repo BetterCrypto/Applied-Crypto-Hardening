@@ -20,13 +20,17 @@ In general, for asymmetric cryptography, any key length below 2048 bits is depre
 Configuration A:
 strong ciphers, fewer users
 
-Do not use SHA1. Why? XXX insert literature . BSI/ ENISA page XXX
-Chaining mode: CBC.
+MACs: Do not use SHA1. Why? XXX insert literature . BSI/ ENISA page XXX
+Chaining mode: CTR, GCM, CCM (in this order).  XXX add reference to literature XXX
+ciphers:     XXX add reference to literature XXX
+Key Exchange: ECDHE_RSA, DHE_RSA, ECDHE_ECDSA, (be careful about DH parameters . We want > 2048 bits) XXX FIXME: why? references to literature XXX
 
 
-Configuration B:
+\subsubsection{Configuration B}
 weaker ciphers, more users.
 
-SHA1:  allowed
-Chaining mode: CBC.
 
+MACs: SHA1:  allowed
+Chaining mode: GCM, CCM, CBC.
+ciphers:    XXX add reference to literature XXX
+Key Exchange: ECDHE_RSA, DHE_RSA, ECDHE_ECDSA, (be careful about DH parameters . We want > 2048 bits)
