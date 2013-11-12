@@ -187,6 +187,23 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
 
 \subsubsection{lighttpd}
 
+%% Note: need to be checked / reviewed
+
+%% Complete ssl.cipher-list with same algo than Apache
+%% Currently this is only the default proposed lighttpd config for SSL
+\begin{verbatim}
+  $SERVER["socket"] == "0.0.0.0:443" {
+    ssl.engine  = "enable"
+    ssl.pemfile = "/etc/lighttpd/server.pem"
+
+    ssl.cipher-list = "ECDHE-RSA-AES256-SHA384:\
+                       AES256-SHA256:RC4:HIGH:\
+                       !MD5:!aNULL:!EDH:!AESGCM"
+    ssl.honor-cipher-order = "enable"
+  }
+\end{verbatim}
+
+%% ADD Rewrite rule from tcp/80 -> tcp/443
 
 
 \subsubsection{nginx}
