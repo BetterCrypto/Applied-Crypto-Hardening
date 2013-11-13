@@ -17,7 +17,11 @@ own ciper suites based on the instructions in section
 
 \subsubsection{Configuration A: strong ciphers, fewer clients}
 
-At the time of this writing, we recommend the following set of strong cipher suites which may be useful in an environment where you do not depend on many, diverse external clients and where compatibility is not an issue.  An example of such an environment might be machine 2 machine communications or corporate environments where you can define the software which must be used.
+At the time of this writing, we recommend the following set of strong cipher
+suites which may be useful in an environment where you do not depend on many,
+diverse external clients and where compatibility is not an issue.  An example
+of such an environment might be machine 2 machine communications or corporate
+environments where you can define the software which must be used.
 
 
 We arrived at this set of cipher suites by selecting
@@ -31,9 +35,9 @@ We arrived at this set of cipher suites by selecting
 
 This results in the string:
 
-\begin{verbatim}
-EECDH+aRSA+AES256:EDH+aRSA+AES256:!SSLv3
-\end{verbatim}
+\begin{lstlisting}[breaklines]
+'EECDH+aRSA+AES256:EDH+aRSA+AES256:!SSLv3'
+\end{lstlisting}
 
 %$\implies$ resolves to 
 %
@@ -55,22 +59,39 @@ ID        & OpenSSL name                & Version & KeyEx & Auth & Cipher & Hash
 \end{center}
 
 
-Compatibility:
+\textbf{Compatibility}
 
-Only clients which support TLS1.2 are covered by this cipher suites (Chrome 30, Win 7 and Win 8.1 crypto stack, Opera 17, OpenSSL >= 1.0.1e, Safari 6 / iOS 6.0.1, Safari 7 / OS X 10.9).
+Only clients which support TLS1.2 are covered by this cipher suites (Chrome 30,
+Win 7 and Win 8.1 crypto stack, Opera 17, OpenSSL $\ge$ 1.0.1e, Safari 6 / iOS
+6.0.1, Safari 7 / OS X 10.9).
 
 
 
 \subsubsection{Configuration B: weaker ciphers, many clients}
 
-TLS 1.2, TLS 1.1, TLS 1.0, -SSLv3, -SSLv2
+In this section we propose a slighly "weaker" set of cipher suites. There are
+some known weaknesses of for example SHA-1 which is included in this this set.
+However, the advantage of this set of cipher suites is its wider compatibility
+with clients. 
 
-\todo{HOW did we arrive at this string? Constraints: which clients are supported by this string? }
 
-string="EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA"
+\textbf{In the following document, all further examples in this paper will use Configuration B}.
 
 
-$\implies$ resolves to openssl ciphers -V \$string
+We arrived at this set of cipher suites by selecting
+
+\begin{itemize}
+\item TLS 1.2, TLS 1.1, TLS 1.0
+\item allowing SHA-1
+\end{itemize}
+
+This results in the string:
+
+\begin{lstlisting}[breaklines]
+'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+\end{lstlisting}
+
+
 
 \begin{center}
 \begin{tabular}{| l | l | l | l | l| l | l |}
@@ -88,13 +109,160 @@ ID        & OpenSSL name			    & Version & KeyEx & Auth & Cipher & Hash \\ \hlin
 \end{tabular}
 \end{center}
 
-Compatibility:
+\textbf{Compatibility}
 
-Note that this cipher suites will not work with anything using Windows XP's crypto stack (IE, Outlook), Java 6, Java 7 and Android 2.3. Java 7 could be made compatible by installing the "Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files" (JCE). We could not verify yet if installing JCE also fixes the Java 7 DH-parameter length limitation (1024 bit). 
+Note that this cipher suites will not work with anything using Windows XP's
+crypto stack (IE, Outlook), Java 6, Java 7 and Android 2.3. Java 7 could be
+made compatible by installing the "Java Cryptography Extension (JCE) Unlimited
+Strength Jurisdiction Policy Files" (JCE). We could not verify yet if
+installing JCE also fixes the Java 7 DH-parameter length limitation (1024 bit). 
 
 
 
 \subsection{Chosing your own cipher suites}
 \label{section:ChosingYourOwnCipherSuites}
 \todo{ Adi... }
+
+%%% NOTE: we do not need to list this all here, can move to an appendix
+%At the time of this writing, SSL is defined in RFCs: 	
+%
+%\begin{itemize}
+%\item RFC2246 - TLS1.0		
+%\item RFC3268 - AES		
+%\item RFC4132 - Camelia		
+%\item RFC4162 - SEED		
+%\item RFC4279 - PSK		
+%\item RFC4346 - TLS 1.1		
+%\item RFC4492 - ECC		
+%\item RFC4785 - PSK\_NULL		
+%\item RFC5246 - TLS 1.2		
+%\item RFC5288 - AES\_GCM		
+%\item RFC5289 - AES\_GCM\_SHA2\_ECC		
+%\item RFC5430 - Suite B		
+%\item RFC5487 - GCM\_PSK		
+%\item RFC5489 - ECDHE\_PSK		
+%\item RFC5932 - Camelia		
+%\item RFC6101 - SSL 3.0		
+%\item RFC6209 - ARIA		
+%\item RFC6367 - Camelia		
+%\item RFC6655 - AES\_CCM		
+%\item RFC7027 - Brainpool Curves		
+%\end{itemize}
+
+\subsubsection{Overview of SSL Server settings}
+
+
+Most Server software (Webservers, Mail servers, etc.) can be configured to prefer certain cipher suites over others. 
+We followed the recommendations by Ivan Ristic's SSL/TLS Deployment Best Practices\footnote{\url{https://www.ssllabs.com/projects/best-practices/index.html}} document (see section 2.2 "Use Secure Protocols") and arrived at a list of recommended cipher suites for SSL enabled servers.
+
+Following Ivan Ristic's adivce we arrived at a categorisation of cipher suites.
+
+\begin{center}
+\begin{tabular}{| l | l | l | l | l|}
+\hline
+& Version   & Key\_Exchange  & Cipher    & MAC       \\ \hline
+\cellcolor{green}prefer  & TLS 1.2   & DHE\_DSS   & AES\_256\_GCM   & SHA384        \\ \hline
+    &   & DHE\_RSA   & AES\_256\_CCM   & SHA256        \\ \hline
+    &   & ECDHE\_ECDSA   & AES\_256\_CBC   &       \\ \hline
+    &   & ECDHE\_RSA &   &       \\ \hline
+    &   &   &   &       \\ \hline
+\cellcolor{orange}consider    & TLS 1.1   & DH\_DSS    & AES\_128\_GCM   & SHA       \\ \hline
+    & TLS 1.0   & DH\_RSA    & AES\_128\_CCM   &       \\ \hline
+    &   & ECDH\_ECDSA    & AES\_128\_CBC   &       \\ \hline
+    &   & ECDH\_RSA  & CAMELLIA\_256\_CBC  &       \\ \hline
+    &   & RSA   & CAMELLIA\_128\_CBC  &       \\ \hline
+    &   &   &   &       \\ \hline
+\cellcolor{red}avoid   
+& SSL 3.0   & NULL  & NULL  & NULL      \\ \hline
+    &   & DH\_anon   & RC4\_128   & MD5       \\ \hline
+    &   & ECDH\_anon & 3DES\_EDE\_CBC  &       \\ \hline
+    &   &   & DES\_CBC   &       \\ \hline
+    &   &   &   &       \\ \hline
+\cellcolor{blue}{\color{white}special }
+&   & PSK   & CAMELLIA\_256\_GCM  &       \\ \hline
+    &   & DHE\_PSK   & CAMELLIA\_128\_GCM  &       \\ \hline
+    &   & RSA\_PSK   & ARIA\_256\_GCM  &       \\ \hline
+    &   & ECDHE\_PSK & ARIA\_256\_CBC  &       \\ \hline
+    &   &   & ARIA\_128\_GCM  &       \\ \hline
+    &   &   & ARIA\_128\_CBC  &       \\ \hline
+    &   &   & SEED  &       \\ \hline
+\end{tabular}
+\end{center}
+
+A remark on the ``consider'' section: the BSI (Federal office for information security, Germany) recommends in its technical report TR-02102-2\footnote{\url{https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR02102/BSI-TR-02102-2_pdf.html}} to \textbf{avoid} non-ephemeral\footnote{ephemeral keys are session keys which are destroyed upon termination of the encrypted session. In TLS/SSL, they are realized by the DHE cipher suites. } keys for any communication which might contain personal or sensitive data. In this document, we follow BSI's advice and therefore only keep cipher suites containing (EC)DH\textbf{E} (ephemeral) variants. System administrators, who can not use forward secrecy can still use the cipher suites in the ``consider'' section. We however, do not recommend them in this document.
+
+%% NOTE: s/forward secrecy/perfect forward secrecy???
+
+Note that the entries marked as ``special'' are cipher suites which are not common to all clients (webbrowsers etc).
+
+
+\subsubsection{Tested clients}
+ 
+Next we tested the cipher suites above on the following clients:
+
+%% NOTE: we need to test with more systems!!
+\begin{itemize}
+\item Chrome 30.0.1599.101 Mac OS X 10.9
+\item Safari 7.0 Mac OS X 10.9
+\item Firefox 25.0 Mac OS X 10.9
+\item Internet Explorer 10 Windows 7
+\item Apple iOS 7.0.3
+\end{itemize}
+
+
+The result of testing the cipher suites with these clients gives us a preference order as shown in table \ref{table:prefOrderCipherSuites}. 
+Should a client not be able to use a specific cipher suite, it will fall back to the next possible entry as given by the ordering.
+
+\begin{center}
+\begin{table}[h]
+\small
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    Pref & Cipher Suite                                   & ID         & Browser                     \\ \hline
+    1    & TLS\_DHE\_RSA\_WITH\_AES\_256\_GCM\_SHA384 	  &  	0x009f & OpenSSL command line client \\ \hline
+    2    & TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA384 &     0xC024 & Safari                      \\ \hline
+    3    & TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA384   &     0xC028 & Safari                      \\ \hline
+    4    & TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA256     &     0x006B & Safari, Chrome              \\ \hline
+    5    & TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA    &     0xC00A & Safari, Chrome, Firefox, IE \\ \hline
+    6    & TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA      &     0xC014 & Safari, Chrome, Firefox, IE \\ \hline
+    7    & TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA        &     0x0039 & Safari, Chrome, Firefox     \\ \hline
+    8    & TLS\_DHE\_DSS\_WITH\_AES\_256\_CBC\_SHA        &     0x0038 & Firefox, IE                 \\ \hline
+    9    & TLS\_DHE\_RSA\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0088 & Firefox                     \\ \hline
+    10   & TLS\_DHE\_DSS\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0087 & Firefox                     \\ \hline
+    \end{tabular}
+\caption{Preference order of cipher suites}
+\label{table:prefOrderCipherSuites}
+\end{table}
+\end{center}
+
+
+Table \ref{table:prefOrderOpenSSLNames} shows the same data again with specifying the corresponding OpenSSL name.
+
+\begin{center}
+\begin{table}[h]
+\small
+    \begin{tabular}{|l|l|l|}
+    \hline
+    Cipher Suite                                   & ID         & OpenSSL Name                  \\ \hline
+    TLS\_DHE\_RSA\_WITH\_AES\_256\_GCM\_SHA384     &  	 0x009f & 	  DHE-RSA-AES256-GCM-SHA384 \\ \hline
+    TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA384 &     0xC024 &     ECDHE-ECDSA-AES256-SHA384 \\ \hline
+    TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA384   &     0xC028 &     ECDHE-RSA-AES256-SHA384   \\ \hline
+    TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA256     &     0x006B &     DHE-RSA-AES256-SHA256     \\ \hline
+    TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA    &     0xC00A &     ECDHE-ECDSA-AES256-SHA    \\ \hline
+    TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA      &     0xC014 &     ECDHE-RSA-AES256-SHA      \\ \hline
+    TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA        &     0x0039 &     DHE-RSA-AES256-SHA        \\ \hline
+    TLS\_DHE\_DSS\_WITH\_AES\_256\_CBC\_SHA        &     0x0038 &     DHE-DSS-AES256-SHA        \\ \hline
+    TLS\_DHE\_RSA\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0088 &     DHE-RSA-CAMELLIA256-SHA   \\ \hline
+    TLS\_DHE\_DSS\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0087 &     DHE-DSS-CAMELLIA256-SHA   \\ \hline
+    \end{tabular}
+\caption{Preference order of cipher suites, with OpenSSL names}
+\label{table:prefOrderOpenSSLNames}
+\end{table}
+\end{center}
+
+Note: the tables \ref{table:prefOrderOpenSSLNames} and \ref{table:prefOrderCipherSuites} contain Elliptic curve key exchanges. There are currently strong doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}} concerning ECC.
+If unsure, remove the cipher suites starting with ECDHE in the table above.
+
+
+Based on this ordering, we can now define the corresponding settings for servers. We will start with the most common web servers.
 
