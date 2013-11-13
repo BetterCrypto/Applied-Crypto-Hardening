@@ -1,1 +1,65 @@
 \section{Public Key Infrastructures}
+
+Public-Key Infrastructures aim to provide a way to simplify the
+verification of a certificate's trustworthiness.  In general, if the
+authenticity of a given public key is to be established by a user (say,
+Alice), it is necessary to contact the owner (say, Bob) of the public key
+directly and compare the public key's fingerprint.  This, obviously, is
+cumbersome and does not scale.
+
+In practice, there are two approaches to address this scale-out problem.
+Both solutions are based on the assumption that Alice can delegate the
+verification of the authenticity of a given public key to another party
+(say, Trent).  This requires that Alice have a certain amount of faith in
+Trent.  In particular, she must trust him to do a proper job when verifying
+authenticity.
+
+The first approach to help the scale-out problem puts a little more work on
+Alice's and Bob's shoulders.  The idea is that every user can act as a
+trusted third party to verify the authenticity of other users' public keys.
+If a number of other users have verified and signed off on the authenticity
+of Bob's public key, then Alice can be somewhat confident in the
+authenticity as well.  Obviously, the more users have verified and signed
+any given public key, the more trustworthy that key becomes; this concept
+is called a ``Web of Trust.''  On the other hand, this means that in order
+for a public key to become reasonably trustworthy in practice, it is
+necessary that a fairly large number of users need to verify its
+authenticity.  This is where the additional work for Alice and Bob comes
+in: For the entire scheme to work, it is necessary that a sufficiently
+large number of users generally participate in cross-verification and
+signing.  The number of signatures needed to obtain a given level of
+confidence in the authenticity of a public key also depends on how good a
+job participating users on average do when verifying keys.  Thus, the more
+knowledgeable, experienced and accurate users are expected to be in terms
+of key verification, the fewer signatures are necessary.  In particular,
+there is no practical way to set common standards for verification.
+
+The other approach to solve the problem of scale-out introduces a
+structured and organized set of trusted third parties called
+``Certification Authorities'' (CAs).  CAs offer verification services to
+all users, adhering to a published set of standard rules and procedures.
+Of course, each CA is free to specify its own standard operating
+procedures, which generally are referred to as ``Certification Practice
+Statement''\footnote{\url{http://en.wikipedia.org/wiki/Certification_Practice_Statement}}
+(CPS) and denotes the rules that the CA adheres to when verifying the
+authenticity of public keys.  When the authenticity of a public key has
+been established in accordance to the CA's CPS, it may issue a certificate,
+which is essentially the public key, usually combined with some
+meta-information about the owner of the key, and the CA's cryptographic
+signature by which the CA assures the accuracy of the information contained
+in the certificate.  Therefore, if Alice is sufficiently convinced that a
+given CA is doing a proper job of verification in accordance with its
+published CPS and the CPS are sufficiently strict so that Alice feels
+comfortable with the level of assurance they provide, then Alice may
+consider all public keys that that CA has issued certificates for as
+authentic.  This reduces the work that Alice has to do to verify $n$~public
+keys from $n$~verifications (one per other user) to just one verification
+(that to verify the authenticity of the CA's public key).  Accepting a CA
+as a generally-trusted mediator therefore solves the scaling problem at the
+cost of introducing an actor that magically is more trustworthy.
+
+
+
+%``Certification
+%Policy''\footnote{\url{http://en.wikipedia.org/wiki/Certificate_Policy}}
+%(CA)
