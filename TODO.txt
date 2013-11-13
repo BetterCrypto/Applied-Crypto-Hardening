@@ -4,9 +4,10 @@ Website
 
 Formatting
 ==========
-* one-column layout: make page margins smaller
-* add large "DRAFT" letters on top of every page.
+DONE * one-column layout: make page margins smaller
+DONE * add large "DRAFT" letters on top of every page.
   git versionssnummer immer rein
+* Layout of sample code (lstisting format) : make it pretty!
 
 
 Workflow
