@@ -12,6 +12,8 @@
 
 \usepackage{lipsum}													% Package to create dummy text
 
+
+
 \usepackage[english]{babel}										% English language/hyphenation
 \usepackage[protrusion=true,expansion=true]{microtype}				% Better typography
 \usepackage{amsmath,amsfonts,amsthm}					% Math packages
@@ -27,6 +29,7 @@
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage{placeins}
 \usepackage{hyperref}
+\usepackage{draftwatermark}
 
 \definecolor{green}{RGB}{32,113,10}
 \definecolor{orange}{RGB}{251,111,16}
@@ -34,6 +37,18 @@
 \definecolor{blue}{RGB}{0,28,128}
 
 \bibliographystyle{plain}
+
+
+%% \todo{} command.
+%
+% Outputs red TODOs in the document. Requires \usepackage{color}.
+%
+% Usage: \todo{Document the TODO command.}
+%
+% Comment out second line to disable.
+\newcommand{\todo}[1]{}
+\renewcommand{\todo}[1]{{\color{red} TODO: {#1}}}
+
 
 
 %%% Custom sectioning (sectsty package)
