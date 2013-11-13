@@ -1,6 +1,5 @@
 \section{Recommendations on practical settings}
 
-
 \subsection{SSL}
 
 %%% NOTE: we do not need to list this all here, can move to an appendix
@@ -147,6 +146,8 @@ Based on this ordering, we can now define the corresponding settings for servers
 
 \subsubsection{Apache}
 
+\todo{separate into Variant A and B}
+
 Note: a "\textbackslash" (backslash) denotes a line continuation which was wrapped due to formatting reasons here. Do not copy it verbatim.
 
 %-All +TLSv1.1 +TLSv1.2
@@ -187,6 +188,9 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
 
 \subsubsection{lighttpd}
 
+\todo{separate into Variant A and B}
+
+
 %% Note: need to be checked / reviewed
 
 %% Complete ssl.cipher-list with same algo than Apache
@@ -222,6 +226,9 @@ As for any other webserver, you should redirect automatically http traffic towar
 
 \subsubsection{nginx}
 
+\todo{separate into Variant A and B}
+
+
 \begin{verbatim}
   ssl_prefer_server_ciphers on;
   ssl_protocols -SSLv2 -SSLv3; 
@@ -256,6 +263,9 @@ You should redirect everything to httpS:// if possible. In Nginx you can do this
 
 \subsubsection{MS IIS}
 \label{sec:ms-iis}
+
+
+\todo{separate into Variant A and B}
 
 When trying to avoid RC4 and CBC (BEAST-Attack) and requiring perfect
 forward secrecy, Microsoft Internet Information Server (IIS) supports
@@ -328,6 +338,9 @@ Not supported Clients:
 
 \subsubsection{Dovecot}
 
+
+\todo{separate into Variant A and B}
+
 Dovecot 2.2:
 
 % Example: http://dovecot.org/list/dovecot/2013-October/092999.html
@@ -347,7 +360,11 @@ Dovecot 2.1: Almost as good as dovecot 2.2. Does not support ssl\_prefer\_server
 
 \subsubsection{Cyrus}
 
+\todo{write this subsubsection}
+
 \subsubsection{UW}
+
+\todo{write this subsubsection}
 
 Another option to secure IMAPs servers is to place them behind an stunnel server. 
 
@@ -358,6 +375,9 @@ Another option to secure IMAPs servers is to place them behind an stunnel server
 % TIMEOUTclose = 1
 
 \subsubsection{Postfix}
+
+
+\todo{separate into Variant A and B}
 
 First, you need to generate Diffie Hellman parameters (please first take a look at the section \ref{section:PRNG}):
 
@@ -419,10 +439,14 @@ $ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | \
 Source: \url{http://www.postfix.org/TLS_README.html}
 
 \subsubsection{SMTP: opportunistic TLS}
+
+\todo{write this subsubsection}
+
 % do we need to documment starttls in detail?
 %\subsubsection{starttls?}
 
 \subsection{SSH}
+
 
 \begin{verbatim}
 	RSAAuthentication yes
@@ -439,12 +463,15 @@ Note: older linux systems won't support SHA2, PuTTY does not support RIPE-MD160.
 
 \subsection{OpenVPN}
 
+\todo{write this subsection}
+
 \subsection{IPSec}
+\todo{write this subsection}
 
 \subsection{PGP}
 
-\subsection{PRNG settings}
-\label{section:PRNG}
+\todo{write this subsection}
+
 
 
 %%% Local Variables: 
