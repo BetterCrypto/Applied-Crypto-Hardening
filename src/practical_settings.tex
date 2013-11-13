@@ -19,12 +19,7 @@ Note: a "\textbackslash" (backslash) denotes a line continuation which was wrapp
   # ALL subdomains HAVE TO support https if you use this!
   # Strict-Transport-Security: max-age=15768000 ; includeSubDomains
 
-  SSLCipherSuite  DHE+AESGCM:\
-    ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:\
-    DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
-    ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:\
-    DHE-DSS-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:\
-    DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS
+  SSLCipherSuite 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
 \end{lstlisting}
 
 Note again, that any cipher suite starting with ECDHE  can be omitted in case of doubt.
@@ -59,12 +54,7 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
     ssl.use-sslv3 = "disable"
     ssl.use-compression = "disable"
     ssl.pemfile = "/etc/lighttpd/server.pem"
-    ssl.cipher-list = "DHE+AESGCM:\
-      ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:\
-      DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
-      ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:\
-      DHE-DSS-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:\
-      DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS"
+    ssl.cipher-list = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
     ssl.honor-cipher-order = "enable"
   }
 \end{lstlisting}
@@ -88,12 +78,7 @@ As for any other webserver, you should redirect automatically http traffic towar
 \begin{lstlisting}[breaklines]
   ssl_prefer_server_ciphers on;
   ssl_protocols -SSLv2 -SSLv3; 
-  ssl_ciphers DHE+AESGCM:\
-    ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:\
-    DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
-    ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:\
-    DHE-DSS-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:\
-    DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS;
+  ssl_ciphers 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA';
   add_header Strict-Transport-Security max-age=2592000;
   add_header X-Frame-Options DENY;
 \end{lstlisting}
@@ -200,12 +185,7 @@ Dovecot 2.2:
 % Example: http://dovecot.org/list/dovecot/2013-October/092999.html
 
 \begin{lstlisting}[breaklines]
-  ssl_cipher_list = DHE+AESGCM:\
-    ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:\
-    DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
-    ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:\
-    DHE-DSS-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:\
-    DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS
+  ssl_cipher_list = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
   ssl_prefer_server_ciphers = yes
 \end{lstlisting}
 
@@ -263,11 +243,7 @@ master.cf.
   smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
   tls_ssl_options=NO_COMPRESSION
   smtpd_tls_mandatory_ciphers=high
-  tls_high_cipherlist=DHE+AESGCM:ECDHE-ECDSA-AES256-SHA384:\
-    ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
-    ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:\
-    DHE-RSA-CAMELLIA256-SHA:DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:\
-    !MD5:!DSS
+  tls_high_cipherlist='EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
   tls_preempt_cipherlist = yes
   tls_random_source = dev:/dev/urandom		
     %% NOTE: might want to have /dev/random here + Haveged
