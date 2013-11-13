@@ -26,6 +26,7 @@
 \usepackage{fix-cm}													% Custom fontsizes
 \usepackage{listings}
 
+
 % custom changes:
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage{placeins}
@@ -38,6 +39,33 @@
 \definecolor{blue}{RGB}{0,28,128}
 
 \bibliographystyle{plain}
+
+
+\definecolor{Brown}{cmyk}{0,0.81,1,0.60}
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
+\definecolor{lightlightgray}{gray}{0.9}
+
+\lstset{
+language=C,                             % Code langugage
+basicstyle=\ttfamily,                   % Code font, Examples: \footnotesize, \ttfamily
+keywordstyle=\color{OliveGreen},        % Keywords font ('*' = uppercase)
+commentstyle=\color{gray},              % Comments font
+numbers=left,                           % Line nums position
+numberstyle=\tiny,                      % Line-numbers fonts
+stepnumber=1,                           % Step between two line-numbers
+numbersep=5pt,                          % How far are line-numbers from code
+backgroundcolor=\color{lightlightgray}, % Choose background color
+frame=none,                             % A frame around the code
+tabsize=2,                              % Default tab size
+captionpos=b,                           % Caption-position = bottom
+breaklines=true,                        % Automatic line breaking?
+breakatwhitespace=false,                % Automatic breaks only at whitespace?
+showspaces=false,                       % Dont make spaces visible
+showtabs=false,                         % Dont make tabls visible
+%columns=flexible,                       % Column format
+morekeywords={__global__, __device__},  % CUDA specific keywords
+}
 
 
 %% \todo{} command.

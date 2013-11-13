@@ -5,12 +5,11 @@
 
 \subsubsection{Apache}
 
-\todo{separate into Variant A and B}
 
 Note: a "\textbackslash" (backslash) denotes a line continuation which was wrapped due to formatting reasons here. Do not copy it verbatim.
 
 %-All +TLSv1.1 +TLSv1.2
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
   SSLProtocol All -SSLv2 -SSLv3 
   SSLHonorCipherOrder On
   SSLCompression off
@@ -26,35 +25,34 @@ Note: a "\textbackslash" (backslash) denotes a line continuation which was wrapp
     ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:\
     DHE-DSS-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:\
     DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS
-\end{verbatim}
+\end{lstlisting}
 
 Note again, that any cipher suite starting with ECDHE  can be omitted in case of doubt.
 %% XXX NOTE TO SELF: remove from future automatically generated lists!
 
 You should redirect everything to httpS:// if possible. In Apache you can do this with the following setting inside of a VirtualHost environment:
 
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
   <VirtualHost *:80>
    #...
    RewriteEngine On
         RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R=permanent]
    #...
   </VirtualHost>
-\end{verbatim}
+\end{lstlisting}
 
 %XXXX   ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AES:RSA+3DES:!ADH:!AECDH:!MD5:!DSS
 
 
 \subsubsection{lighttpd}
 
-\todo{separate into Variant A and B}
 
 
 %% Note: need to be checked / reviewed
 
 %% Complete ssl.cipher-list with same algo than Apache
 %% Currently this is only the default proposed lighttpd config for SSL
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
   $SERVER["socket"] == "0.0.0.0:443" {
     ssl.engine  = "enable"
     ssl.use-sslv2 = "disable"
@@ -69,11 +67,11 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
       DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS"
     ssl.honor-cipher-order = "enable"
   }
-\end{verbatim}
+\end{lstlisting}
 
 As for any other webserver, you should redirect automatically http traffic toward httpS:\footnote{That proposed configuration is directly coming from lighttpd documentation: \url{http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps}}
 
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
   $HTTP["scheme"] == "http" {
     # capture vhost name with regex conditiona -> %0 in redirect pattern
     # must be the most inner block to the redirect rule
@@ -81,14 +79,13 @@ As for any other webserver, you should redirect automatically http traffic towar
         url.redirect = (".*" => "https://%0$0")
     }
   }
-\end{verbatim}
+\end{lstlisting}
 
 \subsubsection{nginx}
 
-\todo{separate into Variant A and B}
 
 
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
   ssl_prefer_server_ciphers on;
   ssl_protocols -SSLv2 -SSLv3; 
   ssl_ciphers DHE+AESGCM:\
@@ -99,22 +96,22 @@ As for any other webserver, you should redirect automatically http traffic towar
     DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS;
   add_header Strict-Transport-Security max-age=2592000;
   add_header X-Frame-Options DENY;
-\end{verbatim}
+\end{lstlisting}
 
 %% XXX FIXME: do we need to specify dhparams? Parameter: ssl_dhparam = file. See: http://wiki.nginx.org/HttpSslModule#ssl_protocols
 
 
 If you decide to trust NIST's ECC curve recommendation, you can add the following line to nginx's configuration file to select special curves:
 
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
   ssl_ecdh_curve          sect571k1;
-\end{verbatim}
+\end{lstlisting}
 
 You should redirect everything to httpS:// if possible. In Nginx you can do this with the following setting:
 
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
   rewrite     ^(.*)   https://$host$1 permanent;
-\end{verbatim}
+\end{lstlisting}
 
 %\subsubsection{openssl.conf settings}
 
@@ -124,7 +121,6 @@ You should redirect everything to httpS:// if possible. In Nginx you can do this
 \label{sec:ms-iis}
 
 
-\todo{separate into Variant A and B}
 
 When trying to avoid RC4 and CBC (BEAST-Attack) and requiring perfect
 forward secrecy, Microsoft Internet Information Server (IIS) supports
@@ -198,13 +194,12 @@ Not supported Clients:
 \subsubsection{Dovecot}
 
 
-\todo{separate into Variant A and B}
 
 Dovecot 2.2:
 
 % Example: http://dovecot.org/list/dovecot/2013-October/092999.html
 
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
   ssl_cipher_list = DHE+AESGCM:\
     ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:\
     DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
@@ -212,7 +207,7 @@ Dovecot 2.2:
     DHE-DSS-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:\
     DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS
   ssl_prefer_server_ciphers = yes
-\end{verbatim}
+\end{lstlisting}
 
 Dovecot 2.1: Almost as good as dovecot 2.2. Does not support ssl\_prefer\_server\_ciphers
 
@@ -236,21 +231,20 @@ Another option to secure IMAPs servers is to place them behind an stunnel server
 \subsubsection{Postfix}
 
 
-\todo{separate into Variant A and B}
 
 First, you need to generate Diffie Hellman parameters (please first take a look at the section \ref{section:PRNG}):
 
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
   % openssl gendh -out /etc/postfix/dh_param_512.pem -2 512
   % openssl gendh -out /etc/postfix/dh_param_1024.pem -2 1024
-\end{verbatim}
+\end{lstlisting}
 
 Next, we specify these DH parameters in the postfix config file:
 
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
   smtpd_tls_dh512_param_file = /etc/postfix/dh_param_512.pem
   smtpd_tls_dh1024_param_file = /etc/postfix/dh_param_1024.pem
-\end{verbatim}
+\end{lstlisting}
 
 You usually don't want restrictions on the ciphers for opportunistic
 encryption, because any encryption is better than plain text. 
@@ -265,7 +259,7 @@ master.cf.
 % don't -- this influences opportunistic encryption
 %  smtpd_tls_protocols = !SSLv2, !SSLv3
 
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
   smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
   tls_ssl_options=NO_COMPRESSION
   smtpd_tls_mandatory_ciphers=high
@@ -277,15 +271,15 @@ master.cf.
   tls_preempt_cipherlist = yes
   tls_random_source = dev:/dev/urandom		
     %% NOTE: might want to have /dev/random here + Haveged
-\end{verbatim}
+\end{lstlisting}
   
 For those users, who want to use ECC key exchange, it is possible to specify this via:
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
   smtpd_tls_eecdh_grade = ultra
-\end{verbatim}
+\end{lstlisting}
 
 You can check the settings by specifying  smtpd\_tls\_loglevel = 1 and then check the selected ciphers with the following command:
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
 $ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | \
 > awk '{printf("%s %s %s %s\n", $12, $13, $14, $15)}' | sort | uniq -c | sort -n
       1 SSLv3 with cipher DHE-RSA-AES256-SHA
@@ -293,7 +287,7 @@ $ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | \
      60 TLSv1 with cipher ECDHE-RSA-AES256-SHA
     270 TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384
     335 TLSv1 with cipher DHE-RSA-AES256-SHA
-\end{verbatim}
+\end{lstlisting}
 
 Source: \url{http://www.postfix.org/TLS_README.html}
 
@@ -306,8 +300,7 @@ Source: \url{http://www.postfix.org/TLS_README.html}
 
 \subsection{SSH}
 
-
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
 	RSAAuthentication yes
 	PermitRootLogin no
 	StrictModes yes
@@ -315,7 +308,7 @@ Source: \url{http://www.postfix.org/TLS_README.html}
 	Ciphers aes256-ctr
 	MACs hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
 	KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha1
-\end{verbatim}
+\end{lstlisting}
 
 % XXX: curve25519-sha256@libssh.org only available upstream(!)
 Note: older linux systems won't support SHA2, PuTTY does not support RIPE-MD160.
