@@ -194,14 +194,21 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
 \begin{verbatim}
   $SERVER["socket"] == "0.0.0.0:443" {
     ssl.engine  = "enable"
+    ssl.use-sslv2 = "disable"
+    ssl.use-sslv3 = "disable"
+    ssl.use-compression = "disable"
     ssl.pemfile = "/etc/lighttpd/server.pem"
-
-    ssl.cipher-list = "ECDHE-RSA-AES256-SHA384:\
-                       AES256-SHA256:RC4:HIGH:\
-                       !MD5:!aNULL:!EDH:!AESGCM"
+    ssl.cipher-list = "DHE+AESGCM:\
+      ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:\
+      DHE-RSA-AES256-SHA256:ECDHE-ECDSA-AES256-SHA:\
+      ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:\
+      DHE-DSS-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:\
+      DHE-DSS-CAMELLIA256-SHA:!ADH:!AECDH:!MD5:!DSS"
     ssl.honor-cipher-order = "enable"
   }
 \end{verbatim}
+
+As for any other webserver, you should redirect automatically http traffic toward httpS:
 
 \begin{verbatim}
   $HTTP["scheme"] == "http" {
