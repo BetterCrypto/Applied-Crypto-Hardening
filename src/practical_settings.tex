@@ -208,7 +208,7 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
   }
 \end{verbatim}
 
-As for any other webserver, you should redirect automatically http traffic toward httpS:
+As for any other webserver, you should redirect automatically http traffic toward httpS:\footnote{That proposed configuration is directly coming from lighttpd documentation: \url{http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps}}
 
 \begin{verbatim}
   $HTTP["scheme"] == "http" {
