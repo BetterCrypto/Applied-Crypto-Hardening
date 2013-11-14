@@ -1,28 +1,32 @@
 \section{A note on Elliptic Curve Cryptography}
 
 Elliptic Curve Cryptogaphy (simply called ECC from now on) is a branch of 
-cryptography that emerged in the mid-80ties. Like RSA and Diffie-Hellman 
+cryptography that emerged in the mid-1980ties. Like RSA and Diffie-Hellman 
 it's security is based on the discrete logarithm problem
 \footnote{\url{http://www.mccurley.org/papers/dlog.pdf}} 
 \footnote{\url{http://en.wikipedia.org/wiki/Discrete\_logarithm}}
 \footnote{\url{http://mathworld.wolfram.com/EllipticCurve.html}}.
 Finding the descrete logarithm of an elliptic curve from it's public base
 point is thought to be infeaseble. This is known as the Elliptic Curve Descrete 
-Logarithm Problem (ECDLP). ECC and the underlying mechanisms are not easy 
+Logarithm Problem (ECDLP). ECC and the underlying mathematical foundation are not easy 
 to understand - luckily there have been some great introductions on the topic lately
 \footnote{\url{http://arstechnica.com/security/2013/10/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography}}
-\footnote{\url{https://www.imperialviolet.org/2010/12/04/ecc.html}}.
+\footnote{\url{https://www.imperialviolet.org/2010/12/04/ecc.html}}
+\footnote{\url{http://www.isg.rhul.ac.uk/~sdg/ecc.html}}.
 
 ECC provides for much stronger security with less computonally expensive
 operations in comparison to traditional PKI algorithms. (See the section 
 on keylenghts to get an idea)
 
+
 The security of ECC relies on the elliptic curves and curve points chosen
-as parameters for the algorithm in question. Even before the NSA-leak scandal
-there has been a lot of discussion regarding these parameters. A part of the
-discussion involved recommended sets of curves and curve points chosen by
-different standardization bodies such as NIST. Those parameters came under
-question from various cryptographers
+as parameters for the algorithm in question. Well before the NSA-leak scandal
+there has been a lot of discussion regarding these parameters and their 
+potential subversion. A part of the discussion involved recommended sets 
+of curves and curve points chosen by different standardization bodies such 
+as the National Institute of Standards and Technology (NIST) 
+\footnote{\url{http://www.nist.gov}}. 
+Those parameters came under question repeatedly from the cryptographers
 \footnote{\url{http://cr.yp.to/talks/2013.09.16/slides-djb-20130916-a4.pdf}}
 \footnote{\url{https://www.schneier.com/blog/archives/2013/09/the\_nsa\_is\_brea.html\#c1675929}}
 \footnote{\url{http://crypto.stackexchange.com/questions/10263/should-we-trust-the-nist-recommended-ecc-parameters}}.
@@ -34,10 +38,11 @@ with and without ECC - the reader may choose to adopt those settings
 as he finds best suited to his environment. The authors will not make
 this decision for the reader.
 
-A word of warning: One should get familiar with ECC, different curves and
+
+\textbf{A word of warning:} One should get familiar with ECC, different curves and
 parameters if one chooses to adopt ECC configurations. Since there is much 
-discussion on the security of ECC, flawed settings might compromise the 
-security of the entire system. %% find better wording for last paragraph!
+discussion on the security of ECC, flawed settings might very well compromise the 
+security of the entire system!
 
 %% mention different attacks on ECC besides flawed parameters!
 
