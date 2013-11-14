@@ -215,6 +215,7 @@ Another option to secure IMAPs servers is to place them behind an stunnel server
 
 First, you need to generate Diffie Hellman parameters (please first take a look at the section \ref{section:PRNG}):
 
+\todo{FIXME: this is a really weak setting! See also: http://postfix.1071664.n5.nabble.com/postfix-hardening-what-can-we-do-td61874.html}
 \begin{lstlisting}[breaklines]
   % openssl gendh -out /etc/postfix/dh_param_512.pem -2 512
   % openssl gendh -out /etc/postfix/dh_param_1024.pem -2 1024
