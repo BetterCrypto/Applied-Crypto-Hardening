@@ -6,9 +6,9 @@
 
 %%% Preamble
 \documentclass[	DIV=calc,%
-							paper=a4,%
-							fontsize=9pt,%
-							onecolumn]{scrartcl}	 					% KOMA-article class
+				paper=a4,%
+				fontsize=9pt,%
+				onecolumn]{scrartcl}	 					% KOMA-article class
 
 \usepackage{lipsum}													% Package to create dummy text
 
@@ -25,6 +25,12 @@
 \usepackage{booktabs}												% Nicer tables
 \usepackage{fix-cm}													% Custom fontsizes
 
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{float}
+\usepackage{subfig}
+%\usepackage{tikz}
+\usepackage{acronym}
+\usepackage{amsthm}
 \usepackage{fancyvrb}
 \usepackage{listings}
 
@@ -53,10 +59,10 @@ language=Bash,                             % Code langugage
 basicstyle=\ttfamily,                   % Code font, Examples: \footnotesize, \ttfamily
 keywordstyle=\color{OliveGreen},        % Keywords font ('*' = uppercase)
 commentstyle=\color{gray},              % Comments font
-%numbers=left,                           % Line nums position
-%numberstyle=\tiny,                      % Line-numbers fonts
-%stepnumber=1,                           % Step between two line-numbers
-%numbersep=5pt,                          % How far are line-numbers from code
+numbers=left,                           % Line nums position
+numberstyle=\tiny,                      % Line-numbers fonts
+stepnumber=1,                           % Step between two line-numbers
+numbersep=5pt,                          % How far are line-numbers from code
 backgroundcolor=\color{lightlightgray}, % Choose background color
 frame=none,                             % A frame around the code
 tabsize=2,                              % Default tab size
@@ -65,8 +71,8 @@ breaklines=true,                        % Automatic line breaking?
 breakatwhitespace=false,                % Automatic breaks only at whitespace?
 showspaces=false,                       % Dont make spaces visible
 showtabs=false,                         % Dont make tabls visible
-columns=flexible,                       % Column format
-morekeywords={__global__, __device__},  % CUDA specific keywords
+columns=fixed,                          % Column format
+morekeywords={__global__, __device__},  % 
 }
 
 
