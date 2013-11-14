@@ -1,117 +1,63 @@
 
-%% TODO:
-%% - complete with a list of implentations (Symantec, GnuPG)
-%% - plugins for mails clients
-%% - some pretty screenshots that show that it's less complicated that it appears ;)
+PGP uses assymetric encryption to protecte a sesion key which is used to encipher a message . Additionally, it signs messages via assymetric encryption and hash functions.
+Since SHA-1 as hash function has been broken already in 2005\footnote{\url{https://www.schneier.com/blog/archives/2005/02/sha1\_broken.html}}, there are a couple of settings a PGP user can change to use different hashes.
 
-\subsubsection{Introduction}
-
-Welcome in the family for asymetric protocols!  GPG (the GNU version) or PGP (the commercial version) are actually the same protocol that allows you to perform 2 operations: sign and/or encrypt.
-
-Signing is the operation to digitally proove that the text received
+When using PGP, there are a couple of things to take care of:
 \begin{itemize}
-    \item Has been signed by the one that own's the private key;
-    \item Was NOT altered since it was signed.
+\item keylengths (see the section \ref{section:keylengths})
+\item randomness (see the section \ref{section:RNGs})
+\item the choice of RSA vs. DSA 
+\item preferences for symmetric ciphers
+\item preferences for hashing
 \end{itemize}
 
-Ciphering is the operation to apply an mathematical operation that will prevent anybody except the one owning the private key corresponding to the public key used to cipher the text.
+Properly dealing with key material, passphrases and the web-of-trust  is outside of the scope of this document. The GnuPG website\footnote{\url{http://www.gnupg.org/}} has a good tutorial on PGP.
 
-With algorithm with GPG/PGP we are not using one key but actually two!  The public key and the private key.  Those key are glued forever.  One doesn't work with the other one.  Shoud you need to remember only one stuff, keep your private key top secret.  Never share it, never publish it, use a strong password to protect it.  On the contratry, share your public key as much as you can (website, business cards...).
+\subsubsection{keylenths}
+We do not recommend any key length $\le$ 2048 bits. In fact, 4096 bits are probabaly a good choice at the time of this writing.
 
-The public key will be used by the one that receive your messages to
-\begin{itemize}
-    \item Check the signature of messages you send him;
-    \item Cipher message that should be received by you and only you.
-\end{itemize}
+\subsubsection{RSA vs. DSA}
+\todo{sure?}
+RSA
 
-You will use your private key to
-\begin{itemize}
-    \item Sign messages;
-    \item Uncopher messages you receive.
-\end{itemize}
+\subsubsection{symmetric ciphers}
 
 
-\subsubsection{Key Generation}
+\subsubsection{hashing}
+Tell GnuPG to not use SHA-1.
 
-Before you start, you need a set of keys: a private and a public one.  Those are linked forever and you need both to be able to use PGP / GPG.
-There a few good user interface to manipulate the keys on Microsoft Windows, Mac OS X, Linux or any other UNIX flavor.  We will give here a few command line samples with GnuPG\footnote{===INSERT HERE A LINK TO GnuPG website===}.
+Edit \$HOME/.gnupg/gpg.conf:
 
 \begin{verbatim}
-$ gpg --gen-key
-gpg (GnuPG) 1.4.15; Copyright (C) 2013 Free Software Foundation, Inc.
-This is free software: you are free to change and redistribute it.
-There is NO WARRANTY, to the extent permitted by law.
-
-Please select what kind of key you want:
-   (1) RSA and RSA (default)
-   (2) DSA and Elgamal
-   (3) DSA (sign only)
-   (4) RSA (sign only)
-Your selection? 1
-RSA keys may be between 1024 and 4096 bits long.
-What keysize do you want? (2048) 4096
-Requested keysize is 4096 bits
-Please specify how long the key should be valid.
-         0 = key does not expire
-      <n>  = key expires in n days
-      <n>w = key expires in n weeks
-      <n>m = key expires in n months
-      <n>y = key expires in n years
-Key is valid for? (0) 365
-Key expires at Fri 14 Nov 2014 05:42:29 PM CET
-Is this correct? (y/N) Y
-
-You need a user ID to identify your key; the software constructs the user ID
-from the Real Name, Comment and Email Address in this form:
-    "Heinrich Heine (Der Dichter) <heinrichh@duesseldorf.de>"
-
-Real name: BetterCrypto.org
-Email address: foobar@bettercrypto.org
-Comment: This is a demo key
-You selected this USER-ID:
-    "BetterCrypto.org (This is a demo key) <foobar@bettercrypto.org>"
-
-Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
-You need a Passphrase to protect your secret key.
-
-gpg: checking the trustdb
-gpg: 3 marginal(s) needed, 1 complete(s) needed, PGP trust model
-gpg: depth: 0  valid:   4  signed:   2  trust: 0-, 0q, 0n, 0m, 0f, 4u
-gpg: depth: 1  valid:   2  signed:   2  trust: 2-, 0q, 0n, 0m, 0f, 0u
-gpg: next trustdb check due at 2014-11-14
-pub   4096R/18C231C8 2013-11-14 [expires: 2014-11-14]
-      Key fingerprint = FB22 DE1F 7DF3 EC70 E948  1FBD 8127 FB7D 18C2 31C8
-uid                  BetterCrypto.org (This is a demo key) <foobar@bettercrypto.org>
-sub   4096R/2B1C3246 2013-11-14 [expires: 2014-11-14]
+# according to:  https://www.debian-administration.org/users/dkg/weblog/48
+personal-digest-preferences SHA256
+cert-digest-algo SHA256
+default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed
 \end{verbatim}
 
-When using \it{gpg} to generate your keys, you are requested a few questions:
-\begin{itemize}
-    \item What will be usage of the key, RSA - RSA being the easiest and most generic choice;
-    \item How long the keys will be valid, from a day to the eternity  (can be extended);
-    \item Your name;
-    \item Your email address (other emails or aliases can be added later to the key);
-    \item Any comment you want.
-\end{itemize}
-
-The tool also ask you to pick up a password to protect your key.  That password will seve to unlock the key for signing, ciphering and unciphering operations.  Choose a strong password\footnote{===LINK TO HOW TO PICK SUCH A PASSWORD===} as it would otherwise allow someone to stole your digital capacity to proove who you are and put the privacy of your communications at risk.
-
-\subsubsection{PGP / GPG Operations}
+%\subsubsection{PGP / GPG Operations}
 
 %% Ciphering - Unciphering operations
+%%% TOO COMPLEX. Make a pointer to a good GPG tutorial
 
 %% Signing / checking signatures
+%%% TOO COMPLEX. Make a pointer to a good GPG tutorial
 
-\subsubsection{Trusted Keys}
+%\subsubsection{Trusted Keys}
 
 %%Explain that a key by himself is not trustable.  Chain of trust principle.
 
-\subsection{Available implementations and mails plugins}
+%%% TOO COMPLEX. Make a pointer to a good GPG tutorial
+
+%\subsection{Available implementations and mails plugins}
 
 %% Microsoft Windows (Symantec for Outlook? GnuPG + ....)
+%%% TOO COMPLEX. Make a pointer to a good GPG tutorial
 
 %% Linux (GnuPG + Enigmail for Thunderbird)
 
+%%% TOO COMPLEX. Make a pointer to a good GPG tutorial
 %% Mac OS X (GnuPG + GPGMail)
+%%% TOO COMPLEX. Make a pointer to a good GPG tutorial
 
 
