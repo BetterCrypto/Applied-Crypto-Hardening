@@ -45,7 +45,8 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
 %% Note: need to be checked / reviewed
 
 %% Complete ssl.cipher-list with same algo than Apache
-%% Currently this is only the default proposed lighttpd config for SSL
+\todo{FIXME: this string seems to be wrongly formatted}
+
 \begin{lstlisting}[breaklines]
   $SERVER["socket"] == "0.0.0.0:443" {
     ssl.engine  = "enable"
@@ -55,6 +56,7 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
     ssl.pemfile = "/etc/lighttpd/server.pem"
     ssl.cipher-list = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
     ssl.honor-cipher-order = "enable"
+    setenv.add-response-header  = ( "Strict-Transport-Security" => "max-age=31536000")
   }
 \end{lstlisting}
 
