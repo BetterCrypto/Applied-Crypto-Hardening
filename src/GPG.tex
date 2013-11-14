@@ -28,12 +28,12 @@ Tell GnuPG to not use SHA-1.
 
 Edit \$HOME/.gnupg/gpg.conf:
 
-\begin{verbatim}
+\begin{lstlisting}[breaklines]
 # according to:  https://www.debian-administration.org/users/dkg/weblog/48
 personal-digest-preferences SHA256
 cert-digest-algo SHA256
 default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed
-\end{verbatim}
+\end{lstlisting}
 
 %\subsubsection{PGP / GPG Operations}
 
