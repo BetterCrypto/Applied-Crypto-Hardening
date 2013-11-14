@@ -1,3 +1,9 @@
+
+%% TODO:
+%% - complete with a list of implentations (Symantec, GnuPG)
+%% - plugins for mails clients
+%% - some pretty screenshots that show that it's less complicated that it appears ;)
+
 \subsubsection{Introduction}
 
 Welcome in the family for asymetric protocols!  GPG (the GNU version) or PGP (the commercial version) are actually the same protocol that allows you to perform 2 operations: sign and/or encrypt.
@@ -27,8 +33,85 @@ You will use your private key to
 
 \subsubsection{Key Generation}
 
-\subsubsection{Operations}
+Before you start, you need a set of keys: a private and a public one.  Those are linked forever and you need both to be able to use PGP / GPG.
+There a few good user interface to manipulate the keys on Microsoft Windows, Mac OS X, Linux or any other UNIX flavor.  We will give here a few command line samples with GnuPG\footnote{===INSERT HERE A LINK TO GnuPG website===}.
+
+\begin{verbatim}
+$ gpg --gen-key
+gpg (GnuPG) 1.4.15; Copyright (C) 2013 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Please select what kind of key you want:
+   (1) RSA and RSA (default)
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+Your selection? 1
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (2048) 4096
+Requested keysize is 4096 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0) 365
+Key expires at Fri 14 Nov 2014 05:42:29 PM CET
+Is this correct? (y/N) Y
+
+You need a user ID to identify your key; the software constructs the user ID
+from the Real Name, Comment and Email Address in this form:
+    "Heinrich Heine (Der Dichter) <heinrichh@duesseldorf.de>"
+
+Real name: BetterCrypto.org
+Email address: foobar@bettercrypto.org
+Comment: This is a demo key
+You selected this USER-ID:
+    "BetterCrypto.org (This is a demo key) <foobar@bettercrypto.org>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
+You need a Passphrase to protect your secret key.
+
+gpg: checking the trustdb
+gpg: 3 marginal(s) needed, 1 complete(s) needed, PGP trust model
+gpg: depth: 0  valid:   4  signed:   2  trust: 0-, 0q, 0n, 0m, 0f, 4u
+gpg: depth: 1  valid:   2  signed:   2  trust: 2-, 0q, 0n, 0m, 0f, 0u
+gpg: next trustdb check due at 2014-11-14
+pub   4096R/18C231C8 2013-11-14 [expires: 2014-11-14]
+      Key fingerprint = FB22 DE1F 7DF3 EC70 E948  1FBD 8127 FB7D 18C2 31C8
+uid                  BetterCrypto.org (This is a demo key) <foobar@bettercrypto.org>
+sub   4096R/2B1C3246 2013-11-14 [expires: 2014-11-14]
+\end{verbatim}
+
+When using \it{gpg} to generate your keys, you are requested a few questions:
+\begin{itemize}
+    \item What will be usage of the key, RSA - RSA being the easiest and most generic choice;
+    \item How long the keys will be valid, from a day to the eternity  (can be extended);
+    \item Your name;
+    \item Your email address (other emails or aliases can be added later to the key);
+    \item Any comment you want.
+\end{itemize}
+
+The tool also ask you to pick up a password to protect your key.  That password will seve to unlock the key for signing, ciphering and unciphering operations.  Choose a strong password\footnote{===LINK TO HOW TO PICK SUCH A PASSWORD===} as it would otherwise allow someone to stole your digital capacity to proove who you are and put the privacy of your communications at risk.
+
+\subsubsection{PGP / GPG Operations}
+
+%% Ciphering - Unciphering operations
+
+%% Signing / checking signatures
 
 \subsubsection{Trusted Keys}
+
+%%Explain that a key by himself is not trustable.  Chain of trust principle.
+
+\subsection{Available implementations and mails plugins}
+
+%% Microsoft Windows (Symantec for Outlook? GnuPG + ....)
+
+%% Linux (GnuPG + Enigmail for Thunderbird)
+
+%% Mac OS X (GnuPG + GPGMail)
 
 
