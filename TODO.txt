@@ -6,7 +6,7 @@ Formatting
 ==========
 DONE * one-column layout: make page margins smaller
 DONE * add large "DRAFT" letters on top of every page.
-  git versionssnummer immer rein
+  make the git version number part of the document
 * Layout of sample code (lstisting format) : make it pretty!
 
 
@@ -27,7 +27,7 @@ Contents
 * Test with more clients and other OSes than OSX / iPhone!!
 * document (cite) EVERYTHING! Why we chose certain values. Referneces, references, references. Otherwise it does not count!
   Srsly!!
-* .bib file is completely wrong. Make good citations/references.
+* .bib file is completely wrong. Make good citations/references. Add books: Schneier, ...
 * !! important: add the version string to everything that we tested!!
 
 * two target groups:
