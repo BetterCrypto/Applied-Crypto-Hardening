@@ -137,9 +137,9 @@ installing JCE also fixes the Java 7 DH-parameter length limitation (1024 bit).
 
 \textbf{Explanation}
 
-For detailed explanation of the cipher suites chosen, please see
+For a detailed explanation of the cipher suites chosen, please see
 \ref{section:ChosingYourOwnCipherSuites}. In short, finding the perfect cipher
-string is impossible and can almost always only be a tradeoff. On the one hand
+string is impossible and must be a tradeoff. On the one hand
 there are mandatory and optional ciphers defined in a few RFCs on the other hand
 there are clients and servers only implementing subsets of the specification.
 
@@ -154,8 +154,9 @@ by copy and paste and needs to just work.
       string for SSLv3).
 \item AES256 and CAMELLIA256 count as strong ciphers at the moment; preferrably in
       GCM mode.\\
+	  \todo{add a reference here please}
       \todo{Adi: add 128bit ciphers too} \\
-      \todo{Team: discuss ordering of keys (256 -> 128 or vice versa?)}
+      \todo{Team: discuss ordering of keys (256 $\rightarrow$ 128 or vice versa?)}
 \item DHE or ECDHE for forward secrecy
 \item RSA as this will fit most of todays setup
 \item AES256-SHA as a last ressort (with this cipher at the end, even systems with
