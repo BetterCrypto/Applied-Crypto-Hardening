@@ -193,9 +193,56 @@ Dovecot 2.2:
 Dovecot 2.1: Almost as good as dovecot 2.2. Does not support ssl\_prefer\_server\_ciphers
 
 
-\subsubsection{Cyrus}
+\subsubsection{cyrus-imapd (based on 2.4.17)}
 
-\todo{write this subsubsection}
+\paragraph*{imapd.conf}\mbox{}\\
+
+To activate SSL/TLS configure your certificate with
+\begin{lstlisting}[breaklines]
+  tls_cert_file: .../cert.pem
+  tls_key_file: .../cert.key
+\end{lstlisting}
+
+Do not forget to add necessary intermediate certificates to the .pem file.\\
+
+Limiting the ciphers provided may force (especially older) clients to connect without encryption at all! Sticking to the defaults is recommended.\\
+
+If you still want to force strong encryption use
+\begin{lstlisting}[breaklines]
+  tls_cipher_list: <...recommended ciphersuite...>
+\end{lstlisting}
+
+cyrus-imapd loads hardcoded 1024 bit DH parameters using get\_rfc2409\_prime\_1024() by default. If you want to load your own DH parameters add them PEM encoded to the certificate file given in tls\_cert\_file. Do not forget to re-add them after updating your certificate.
+
+\paragraph*{cyrus.conf}\mbox{}\\
+
+To support POP3/IMAP on ports 110/143 with STARTTLS add
+\begin{lstlisting}[breaklines]
+  imap         cmd="imapd" listen="imap" prefork=3
+  pop3         cmd="pop3d" listen="pop3" prefork=1
+\end{lstlisting}
+to the SERVICES section.\\
+
+To support POP3S/IMAPS on ports 995/993 add
+\begin{lstlisting}[breaklines]
+  imaps        cmd="imapd -s" listen="imaps" prefork=3
+  pop3s        cmd="pop3d -s" listen="pop3s" prefork=1
+\end{lstlisting}
+
+\paragraph*{Limitations}\mbox{}\\
+
+cyrus-imapd currently (2.4.17, trunk) does not support elliptic curves. ECDHE will not work even if defined in your cipher list.
+A working patch to provide limited support exists (NID\_X9\_62\_prime256v1 only):
+\url{https://bugzilla.cyrusimap.org/show_bug.cgi?id=3822}\\
+
+Currently there is no way to prefer server ciphers.\\
+
+There is no way to prevent unencrypted connections on the STARTTLS ports. You can prevent usage of plaintext login by setting
+\begin{lstlisting}[breaklines]
+  allowplaintext: 0
+\end{lstlisting}
+in imapd.conf. But note that SASL PLAIN/LOGIN is still available!\\
+
 
 \subsubsection{UW}
 
@@ -268,6 +315,117 @@ $ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | \
 \end{lstlisting}
 
 Source: \url{http://www.postfix.org/TLS_README.html}
+
+\subsubsection{Exim (based on 4.82)}
+
+It is highly recommended to read
+
+\url{http://exim.org/exim-html-current/doc/html/spec_html/ch-encrypted_smtp_connections_using_tlsssl.html}
+
+first.
+
+\paragraph*{OpenSSL}
+
+\subparagraph*{server mode (incoming)}\mbox{}\\
+
+In the main config section of exim add:
+
+\begin{lstlisting}[breaklines]
+  tls_certificate = ..../cert.pem
+  tls_privatekey = ..../cert.key
+\end{lstlisting}
+don't forget to add intermediate certificates to the .pem file if needed.\\
+\\
+Tell exim to advertise STARTTLS in the EHLO answer:
+\begin{lstlisting}[breaklines]
+  tls_advertise_hosts = *
+\end{lstlisting}
+
+If you want to support legacy SMTPS on port 465, and STARTTLS on smtp(25)/submission(587) ports set
+\begin{lstlisting}[breaklines]
+  daemon_smtp_ports = smtp : smtps : submission
+  tls_on_connect_ports = 465
+\end{lstlisting}
+
+Exim already disables SSLv2 by default. We recommend to add
+\begin{lstlisting}[breaklines]
+  openssl_options = +no_sslv2 +no_compression +cipher_server_preference
+\end{lstlisting}
+
+It is not advisable to restrict the default cipher list for opportunistic encryption as used by SMTP. Do not use cipher lists recommended for HTTPS! If you still want to define one please consult the Exim documentation or ask on the exim-users mailinglist.\\
+% Exim maintainers do not recommend to change default ciphers
+% We shouldn't, too
+%use:
+%\begin{lstlisting}[breaklines]
+%  tls_require_ciphers = <...recommended ciphersuite...>
+%\end{lstlisting}
+
+If you want to request and verify client certificates from sending hosts set
+\begin{lstlisting}[breaklines]
+  tls_verify_certificates = /etc/pki/tls/certs/ca-bundle.crt
+  tls_try_verify_hosts = *
+\end{lstlisting}
+
+tls\_try\_verify\_hosts only reports the result to your logfile. If you want to disconnect such clients you have to use
+\begin{lstlisting}[breaklines]
+  tls_verify_hosts = *
+\end{lstlisting}
+
+You do not need to set dh\_parameters. exim with OpenSSL uses a 2048bit default prime defined in section 2.2 of RFC 5114.
+If you want to set your own DH parameters please read the TLS documentation of exim.\\
+
+The cipher used is written to the logfiles by default. You may want to add
+\begin{lstlisting}[breaklines]
+  log_selector = <....whatever your log_selector already contains...> \
+   +tls_certificate_verified +tls_peerdn +tls_sni
+\end{lstlisting}
+to get even more information logged.
+
+\subparagraph*{client mode (outgoing)}\mbox{}\\
+
+Exim uses opportunistic encryption in the SMTP transport by default.
+
+Client mode settings have to be done in the configuration section of the smtp transport (driver = smtp).
+
+If you want to use a client certificate (most server certificates can be used as client certificate, too) set
+\begin{lstlisting}[breaklines]
+  tls_certificate   = .../cert.pem
+  tls_privatekey    = .../cert.key
+\end{lstlisting}
+This is recommended for MTA-MTA traffic.\\
+
+%If you want to limit used ciphers set
+%\begin{lstlisting}[breaklines]
+%  tls_require_ciphers = <...recommended ciphersuite...>
+%\end{lstlisting}
+% Exim Maintainers do not recommend ciphers. We shouldn't do so, too.
+Do not limit ciphers without a very good reason. In the worst case you end up without encryption at all instead of some weak encryption. Please consult the Exim documentation if you really need to define ciphers.
+
+\paragraph*{GnuTLS}\mbox{}\\
+
+GnuTLS is different in only some respects to OpenSSL:
+\begin{list}{•}{•}
+\item tls\_require\_ciphers needs a GnuTLS priority string instead of a cipher list. It is recommended to use the defaults by not defining this option. It highly depends on the version of GnuTLS used. Therefore it is not advisable to change the defaults.
+\item There is no option like openssl\_options
+\end{list}
+
+\paragraph*{Limit SMTP AUTH to SSL connections only}\mbox{}\\
+
+It is highly recommended to limit SMTP AUTH to SSL connections only. To do so add
+\begin{lstlisting}[breaklines]
+  server_advertise_condition = ${if eq{$tls_cipher}{}{no}{yes}}
+\end{lstlisting}
+to every authenticator defined.
+
+\paragraph*{Exim string expansion}\mbox{}\\
+
+Note that most of the options accept expansion strings. This way you can eg. set cipher lists or STARTTLS advertisment conditionally. Please follow the link to the official Exim documentation to get more information.
+
+\paragraph*{Limitations}\mbox{}\\
+
+Exim currently (4.82) does not support elliptic curves with OpenSSL. This means that ECDHE is not used even if defined in your cipher list.
+There already is a working patch to provide support:\\
+\url{http://bugs.exim.org/show_bug.cgi?id=1397}
 
 \subsubsection{SMTP: opportunistic TLS}
 
