@@ -2,6 +2,12 @@
 Website
 ========
 
+BIG TOPICS
+==========
+* write a Justification section to every setting, maybe have that later in the document. 
+* move the explanations to a later part of the document. Code snippets go *first* . The target group is sysadmins, must be easily copy & paste-able. Or find a different way so that they can easily use/read the document
+* 
+
 Formatting
 ==========
 DONE * one-column layout: make page margins smaller
@@ -16,6 +22,7 @@ Workflow
 * how to keep things up to date?
 * how to automatically test  compatibility?
 * how to make sure that this document has the latest information on cipher strengths?
+
 
 Contents
 ========
