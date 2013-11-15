@@ -135,6 +135,37 @@ made compatible by installing the "Java Cryptography Extension (JCE) Unlimited
 Strength Jurisdiction Policy Files" (JCE). We could not verify yet if
 installing JCE also fixes the Java 7 DH-parameter length limitation (1024 bit). 
 
+\textbf{Explanation}
+
+For detailed explanation of the cipher suites chosen, please see
+\ref{section:ChosingYourOwnCipherSuites}. In short, finding the perfect cipher
+string is impossible and can almost always only be a tradeoff. On the one hand
+there are mandatory and optional ciphers defined in a few RFCs on the other hand
+there are clients and servers only implementing subsets of the specification.
+
+Straight forward, we wanted strong ciphers, forward secrecy
+\footnote{url{http://nmav.gnutls.org/2011/12/price-to-pay-for-perfect-forward.html}}
+and the most clients we could get while still having a cipher string that can be
+used on older servers too (think OpenSSL 0.9.8). This cipher string is meant to be used
+by copy and paste and needs to just work.
+
+\begin{itemize}
+\item TLS1.2 is preferred over TLSv1.0/SSLv3 (while still providing a useable cipher
+      string for SSLv3).
+\item AES256 and CAMELLIA256 count as strong ciphers at the moment; preferrably in
+      GCM mode.\\
+      \todo{Adi: add 128bit ciphers too} \\
+      \todo{Team: discuss ordering of keys (256 -> 128 or vice versa?)}
+\item DHE or ECDHE for forward secrecy
+\item RSA as this will fit most of todays setup
+\item AES256-SHA as a last ressort (with this cipher at the end, even systems with
+      very old versions of openssl like 0.9.8 will just work. Just forward secrecy
+      will not be used. On systems that do not support elliptic curves, that cipher
+      offers support for the Microsoft crypto libraries that only support ECDHE.
+\end{itemize}
+\todo{Adi: review "justification" when next section is written}
+
+
 
 
 \subsection{Chosing your own cipher suites}
