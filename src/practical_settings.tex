@@ -192,6 +192,9 @@ Dovecot 2.2:
 
 Dovecot 2.1: Almost as good as dovecot 2.2. Does not support ssl\_prefer\_server\_ciphers
 
+\paragraph*{Limitations}\mbox{}\\
+
+Dovecot currently does not support disabling TLS compression.
 
 \subsubsection{cyrus-imapd (based on 2.4.17)}
 
@@ -315,6 +318,15 @@ $ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | \
 \end{lstlisting}
 
 Source: \url{http://www.postfix.org/TLS_README.html}
+
+\paragraph*{Limitations}\mbox{}\\
+
+tls\_ssl\_options is supported from Postfix 2.11 onwards. You can
+leave the statement in the configuration for older versions, it will
+be ignored.
+
+tls\_preempt\_cipherlist is supported from Postfix 2.8 onwards. Again,
+you can leave the statement in for older versions.
 
 \subsubsection{Exim (based on 4.82)}
 

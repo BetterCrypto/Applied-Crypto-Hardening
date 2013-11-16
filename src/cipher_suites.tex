@@ -2,22 +2,22 @@
 
 Cipher suites are a combination of algorithms to provide for 
 Confidentiality, Integrity and Authenticity
-\footnote{url{http://en.wikipedia.org/wiki/Information\_security}} of 
+\footnote{\url{http://en.wikipedia.org/wiki/Information\_security}} of 
 communication. For example: sending encrypted data over the wire does not 
 ensure that the data can not be modified (message integrity), similarly
-encrypted data can be sent from an advesary. It is therefore paramount to
-proof that data has been sent from the desired source (message authenticity).
+encrypted data can be sent from an adversary. It is therefore paramount to
+prove that data has been sent from the desired source (message authenticity).
 This concept is known as authenticated encryption
-\footnote{url{http://en.wikipedia.org/wiki/Authenticated\_encryption}}
-\footnote{url{http://www.cs.jhu.edu/~astubble/dss/ae.pdf}}.
+\footnote{\url{http://en.wikipedia.org/wiki/Authenticated\_encryption}}
+\footnote{\url{http://www.cs.jhu.edu/~astubble/dss/ae.pdf}}.
 
 \subsection{Forward Secrecy}
 Forward Secrecy or Perfect Forward Secrecy is a property of a cipher suite 
 that ensures confidentiality even if the server key has been compromised.
-Thus if traffic has been recorded it can not be decrypted even if an advesary
+Thus if traffic has been recorded it can not be decrypted even if an adversary
 has got hold of the decryption key
-\footnote{url{http://en.wikipedia.org/wiki/Forward\_secrecy}}
-\footnote{urk{https://www.eff.org/deeplinks/2013/08/pushing-perfect-forward-secrecy-important-web-privacy-protection}}. 
+\footnote{\url{http://en.wikipedia.org/wiki/Forward\_secrecy}}
+\footnote{\url{https://www.eff.org/deeplinks/2013/08/pushing-perfect-forward-secrecy-important-web-privacy-protection}}. 
 
 \subsection{Recommended cipher suites}
 
@@ -29,7 +29,7 @@ tool to test out different settings. The authors used ssllabs.com to arrive at
 a set of cipher suites which we will recommend throught this document.
 \textbf{Caution: these settings can only represent a subjective choice of the
 authors at the time of this writing. It might be a wise choice to select your
-own ciper suites based on the instructions in section
+own cipher suites based on the instructions in section
 \ref{section:ChosingYourOwnCipherSuites}}.
 
 
@@ -79,7 +79,7 @@ ID        & OpenSSL name                & Version & KeyEx & Auth & Cipher & Hash
 
 \textbf{Compatibility}
 
-Only clients which support TLS1.2 are covered by this cipher suites (Chrome 30,
+Only clients which support TLS1.2 are covered by these cipher suites (Chrome 30,
 Win 7 and Win 8.1 crypto stack, Opera 17, OpenSSL $\ge$ 1.0.1e, Safari 6 / iOS
 6.0.1, Safari 7 / OS X 10.9).
 
@@ -129,22 +129,24 @@ ID        & OpenSSL name			    & Version & KeyEx & Auth & Cipher & Hash \\ \hlin
 
 \textbf{Compatibility}
 
-Note that this cipher suites will not work with anything using Windows XP's
+Note that these cipher suites will not work with anything using Windows XP's
 crypto stack (IE, Outlook), Java 6, Java 7 and Android 2.3. Java 7 could be
 made compatible by installing the "Java Cryptography Extension (JCE) Unlimited
-Strength Jurisdiction Policy Files" (JCE). We could not verify yet if
-installing JCE also fixes the Java 7 DH-parameter length limitation (1024 bit). 
+Strength Jurisdiction Policy Files"
+(JCE) \footnote{\url{http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html}}.
+We could not verify yet if installing JCE also fixes the Java 7
+DH-parameter length limitation (1024 bit). 
 
 \textbf{Explanation}
 
 For a detailed explanation of the cipher suites chosen, please see
 \ref{section:ChosingYourOwnCipherSuites}. In short, finding the perfect cipher
 string is impossible and must be a tradeoff. On the one hand
-there are mandatory and optional ciphers defined in a few RFCs on the other hand
+there are mandatory and optional ciphers defined in a few RFCs, on the other hand
 there are clients and servers only implementing subsets of the specification.
 
 Straight forward, we wanted strong ciphers, forward secrecy
-\footnote{url{http://nmav.gnutls.org/2011/12/price-to-pay-for-perfect-forward.html}}
+\footnote{\url{http://nmav.gnutls.org/2011/12/price-to-pay-for-perfect-forward.html}}
 and the most clients we could get while still having a cipher string that can be
 used on older servers too (think OpenSSL 0.9.8). This cipher string is meant to be used
 by copy and paste and needs to just work.
@@ -239,7 +241,7 @@ Following Ivan Ristic's adivce we arrived at a categorisation of cipher suites.
 \end{tabular}
 \end{center}
 
-A remark on the ``consider'' section: the BSI (Federal office for information security, Germany) recommends in its technical report TR-02102-2\footnote{\url{https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR02102/BSI-TR-02102-2_pdf.html}} to \textbf{avoid} non-ephemeral\footnote{ephemeral keys are session keys which are destroyed upon termination of the encrypted session. In TLS/SSL, they are realized by the DHE cipher suites. } keys for any communication which might contain personal or sensitive data. In this document, we follow BSI's advice and therefore only keep cipher suites containing (EC)DH\textbf{E} (ephemeral) variants. System administrators, who can not use forward secrecy can still use the cipher suites in the ``consider'' section. We however, do not recommend them in this document.
+A remark on the ``consider'' section: the BSI (Federal office for information security, Germany) recommends in its technical report TR-02102-2\footnote{\url{https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR02102/BSI-TR-02102-2_pdf.html}} to \textbf{avoid} non-ephemeral\footnote{Ephemeral keys are session keys which are destroyed upon termination of the encrypted session. In TLS/SSL, they are realized by the DHE cipher suites. } keys for any communication which might contain personal or sensitive data. In this document, we follow BSI's advice and therefore only keep cipher suites containing (EC)DH\textbf{E} (ephemeral) variants. System administrators, who can not use forward secrecy can still use the cipher suites in the ``consider'' section. We however, do not recommend them in this document.
 
 %% NOTE: s/forward secrecy/perfect forward secrecy???
 
