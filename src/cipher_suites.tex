@@ -2,22 +2,22 @@
 
 Cipher suites are a combination of algorithms to provide for 
 Confidentiality, Integrity and Authenticity
-\footnote{url{http://en.wikipedia.org/wiki/Information\_security}} of 
+\footnote{\url{http://en.wikipedia.org/wiki/Information\_security}} of 
 communication. For example: sending encrypted data over the wire does not 
 ensure that the data can not be modified (message integrity), similarly
 encrypted data can be sent from an advesary. It is therefore paramount to
 proof that data has been sent from the desired source (message authenticity).
 This concept is known as authenticated encryption
-\footnote{url{http://en.wikipedia.org/wiki/Authenticated\_encryption}}
-\footnote{url{http://www.cs.jhu.edu/~astubble/dss/ae.pdf}}.
+\footnote{\url{http://en.wikipedia.org/wiki/Authenticated\_encryption}}
+\footnote{\url{http://www.cs.jhu.edu/~astubble/dss/ae.pdf}}.
 
 \subsection{Forward Secrecy}
 Forward Secrecy or Perfect Forward Secrecy is a property of a cipher suite 
 that ensures confidentiality even if the server key has been compromised.
 Thus if traffic has been recorded it can not be decrypted even if an advesary
 has got hold of the decryption key
-\footnote{url{http://en.wikipedia.org/wiki/Forward\_secrecy}}
-\footnote{urk{https://www.eff.org/deeplinks/2013/08/pushing-perfect-forward-secrecy-important-web-privacy-protection}}. 
+\footnote{\url{http://en.wikipedia.org/wiki/Forward\_secrecy}}
+\footnote{\url{https://www.eff.org/deeplinks/2013/08/pushing-perfect-forward-secrecy-important-web-privacy-protection}}. 
 
 \subsection{Recommended cipher suites}
 
@@ -144,7 +144,7 @@ there are mandatory and optional ciphers defined in a few RFCs on the other hand
 there are clients and servers only implementing subsets of the specification.
 
 Straight forward, we wanted strong ciphers, forward secrecy
-\footnote{url{http://nmav.gnutls.org/2011/12/price-to-pay-for-perfect-forward.html}}
+\footnote{\url{http://nmav.gnutls.org/2011/12/price-to-pay-for-perfect-forward.html}}
 and the most clients we could get while still having a cipher string that can be
 used on older servers too (think OpenSSL 0.9.8). This cipher string is meant to be used
 by copy and paste and needs to just work.
