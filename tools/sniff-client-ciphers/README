@@ -1,0 +1,2 @@
+'sniff-client-ciphers' is a tool that takes a PCAP file and spits out
+the client ciphers if a SSL negotiation is in there.
