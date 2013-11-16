@@ -1,0 +1,4 @@
+'android-sniff-cipherlist.pl' is a tool to fire up all available
+android versions in an emulator and trigger a HTTPS request; the
+resulting PCAP files are then saved and can be analysed for the client
+cipherlist.

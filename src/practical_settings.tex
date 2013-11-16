@@ -192,6 +192,9 @@ Dovecot 2.2:
 
 Dovecot 2.1: Almost as good as dovecot 2.2. Does not support ssl\_prefer\_server\_ciphers
 
+\paragraph*{Limitations}\mbox{}\\
+
+Dovecot currently does not support disabling TLS compression.
 
 \subsubsection{cyrus-imapd (based on 2.4.17)}
 
@@ -232,10 +235,11 @@ To support POP3S/IMAPS on ports 995/993 add
 \paragraph*{Limitations}\mbox{}\\
 
 cyrus-imapd currently (2.4.17, trunk) does not support elliptic curves. ECDHE will not work even if defined in your cipher list.
-A working patch to provide limited support exists (NID\_X9\_62\_prime256v1 only):
-\url{https://bugzilla.cyrusimap.org/show_bug.cgi?id=3822}\\
 
-Currently there is no way to prefer server ciphers.\\
+Currently there is no way to prefer server ciphers or to disable compression.\\
+
+There is a working patch for all three features:
+\url{https://bugzilla.cyrusimap.org/show_bug.cgi?id=3823}\\
 
 There is no way to prevent unencrypted connections on the STARTTLS ports. You can prevent usage of plaintext login by setting
 \begin{lstlisting}[breaklines]
@@ -315,6 +319,15 @@ $ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | \
 \end{lstlisting}
 
 Source: \url{http://www.postfix.org/TLS_README.html}
+
+\paragraph*{Limitations}\mbox{}\\
+
+tls\_ssl\_options is supported from Postfix 2.11 onwards. You can
+leave the statement in the configuration for older versions, it will
+be ignored.
+
+tls\_preempt\_cipherlist is supported from Postfix 2.8 onwards. Again,
+you can leave the statement in for older versions.
 
 \subsubsection{Exim (based on 4.82)}
 
