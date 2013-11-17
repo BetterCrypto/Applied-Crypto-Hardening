@@ -469,7 +469,76 @@ Note: older linux systems won't support SHA2, PuTTY does not support RIPE-MD160.
 \todo{write this subsection}
 
 \subsection{IPSec}
-\todo{write this subsection}
+
+\paragraph*{Assumptions}\mbox{}\\
+
+We assume the usage of IKE (v1 or v2) for this document, and ESP.
+
+\paragraph*{Authentication}\mbox{}\\
+
+IPSEC authentication should optimally be performed via RSA signatures,
+with a key size of 2048 bits or more. Configuring only the trusted CA
+that issued the peer certificate provides for additional protection
+against fake certificates.
+
+If you need to use Pre-Shared Key authentication:
+
+\begin{enumerate}
+\item Choose a random PSK of 20 characters or more (\todo{length, references!})
+\item Use a separate PSK for any IPSEC connection
+\item Change the PSKs regularily
+\end{enumerate}
+
+\paragraph*{Cryptographic Suites}\mbox{}\\
+
+IPSEC Cryptographic Suites are pre-defined settings for all the
+items of a configuration; they try to provide a balanced security
+level and make setting up VPNs easier.
+
+When using any of those suites, make sure to enable ``Perfect Forward
+Secrecy`` for Phase 2, as this is not specified in the suites.
+
+\verb|Suite-B-GCM-256| \footnote{\url{http://tools.ietf.org/html/rfc6379}}
+would be roughly equivalent to ``Configuration A``, but keep in mind
+that it uses NIST elliptic curves for the Diffie-Hellman key exchange.
+
+\verb|Suite-B-GCM-128| or
+\verb|VPN-B| \footnote{\url{http://tools.ietf.org/html/rfc4308}} would
+be roughly equivalent to ``Configuration B``; again,
+\verb|Suite-B-GCM-128| uses NIST elliptic curves, \verb|VPN-B| does
+not.
+
+\paragraph*{IKE or Phase 1}\mbox{}\\
+
+IKE or Phase 1 is the mutual authentication and key exchange phase.
+
+Use only ``main mode``, as ``aggressive mode`` has known security
+vulnerabilities \footnote{\url{http://ikecrack.sourceforge.net/}}.
+
+Encryption Algorithm: AES or CAMELLIA
+
+Hash Algorithm: SHA2-256, SHA2-384 or SHA2-512
+
+DH Group: Group 14--18 (2048--8192 bit DH), or 19-21 (256--521 bit
+ECDH)
+
+Lifetime: \todo{need recommendations; 1 day seems to be common practice}
+
+\todo{what about blowfish, CAST?}
+
+\paragraph*{ESP or Phase 2}\mbox{}\\
+
+Enable ``Perfect Forward Secrecy`` with a DH Group equivalent to the
+one chosen for IKE.
+
+Encryption Algorithm: AES-GCM-16, AES-CTR, AES-CCM-16, AES-CBC, SEED
+or CAMELLIA \todo{order of this list?}
+
+Hash Algorithm: none (if using AES-GCM), HMAC-SHA-SHA256 or longer
+\todo{what about AES-XCBC-MAC?}
+
+Lifetime: \todo{need recommendations; 1--8 hours seems to be common practice}
+
 
 \subsection{PGP/ GPG - Pretty Good Privacy}
 
