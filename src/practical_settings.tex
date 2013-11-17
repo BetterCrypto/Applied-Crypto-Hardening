@@ -450,13 +450,14 @@ There already is a working patch to provide support:\\
 \subsection{SSH}
 
 \begin{lstlisting}[breaklines]
-	RSAAuthentication yes
+	Protocol 2
+	PermitEmptyPasswords no
 	PermitRootLogin no
 	StrictModes yes
 	HostKey /etc/ssh/ssh_host_rsa_key
 	Ciphers aes256-ctr
 	MACs hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
-	KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha1
+	KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1
 \end{lstlisting}
 
 % XXX: curve25519-sha256@libssh.org only available upstream(!)
