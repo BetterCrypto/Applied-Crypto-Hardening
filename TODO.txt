@@ -22,6 +22,7 @@ DONE * add large "DRAFT" letters on top of every page.
   make the git version number part of the document
 * Layout of sample code (lstisting format) : make it pretty!
 
+* make every section like the Apache section
 
 Workflow
 ========
