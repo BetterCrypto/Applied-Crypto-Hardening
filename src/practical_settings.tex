@@ -194,7 +194,10 @@ Dovecot 2.1: Almost as good as dovecot 2.2. Does not support ssl\_prefer\_server
 
 \paragraph*{Limitations}\mbox{}\\
 
-Dovecot currently does not support disabling TLS compression.
+Dovecot currently does not support disabling TLS compression. Furthermore, DH parameters
+greater than 1024bit aren't possible. Timo Sirainen is currently seeking help
+\footnote{\url{http://dovecot.org/list/dovecot/2013-September/092615.html}}
+implementing configurable DH parameters.
 
 \subsubsection{cyrus-imapd (based on 2.4.17)}
 
