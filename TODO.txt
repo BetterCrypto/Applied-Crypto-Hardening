@@ -39,6 +39,7 @@ Contents
   - key generation
   - key management , key life cycle
   - cloning of VMs
+  - common / default passphrases
 * DH parameter?
 * Further research
  - mysql, SMB, 
