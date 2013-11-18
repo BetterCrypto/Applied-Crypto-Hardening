@@ -63,6 +63,9 @@ Contents
   - Lotus Notes
   - Blackberry*
   - Windows Phone 7 ???
+  How to Test?
+  - chapter owner makes a test setup
+  - tested by: XXX , on: $date. Screenshot of SSLlabs/ $testtool. (checktls.com)
 
 * document (cite) EVERYTHING! Why we chose certain values. Referneces, references, references. Otherwise it does not count!
   Srsly!!
