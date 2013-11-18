@@ -10,6 +10,11 @@ BIG TOPICS
 
 * Write section 7.3 (-> Adi . How to chose your own cipher string + screenshots)
 
+* Decide/Discuss recommended ciphers:
+  - AES/CAMELLIA/ARIA20/...
+  - 256bit vs 128bit (security margin, ordering in recommended ciphers)
+  - DH parameters: what is our recommendation? >2048? >=2048? leave default (aka 1024)?
+
 Formatting
 ==========
 DONE * one-column layout: make page margins smaller
