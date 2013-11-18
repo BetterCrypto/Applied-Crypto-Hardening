@@ -5,7 +5,10 @@
 
 \subsubsection{Apache}
 
+\begin{description}
+\item[Tested with Version:]
 
+\item[Settings:] \mbox{}
 
 %-All +TLSv1.1 +TLSv1.2
 \begin{lstlisting}[breaklines]
@@ -24,6 +27,8 @@
 Note again, that any cipher suite starting with ECDHE  can be omitted in case of doubt.
 %% XXX NOTE TO SELF: remove from future automatically generated lists!
 
+\item[Additional settings:]
+
 You should redirect everything to httpS:// if possible. In Apache you can do this with the following setting inside of a VirtualHost environment:
 
 \begin{lstlisting}[breaklines]
@@ -35,6 +40,11 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
   </VirtualHost>
 \end{lstlisting}
 
+\item[Justification for special settings (if needed):]
+
+\item[References:]
+
+\end{description}
 %XXXX   ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AES:RSA+3DES:!ADH:!AECDH:!MD5:!DSS
 
 
@@ -468,11 +478,13 @@ Note: older linux systems won't support SHA2, PuTTY does not support RIPE-MD160.
 \\
 
 
-\subsection{OpenVPN}
-
+\subsection{VPNs}
 \todo{write this subsection}
+\subsubsection{IPSec}
 
-\subsection{IPSec}
+\todo{cm: check if there are downgrade attacks for checkpoint \& co} \\
+\todo{cm: reference the paper describing how complex IPSec is and that it can't be checked properly} \\
+\todo{cm: change this to a table format: Variant ((A,B), (recommendations, recommendations))} \\
 
 \paragraph*{Assumptions}\mbox{}\\
 
@@ -488,8 +500,8 @@ against fake certificates.
 If you need to use Pre-Shared Key authentication:
 
 \begin{enumerate}
-\item Choose a random PSK of 20 characters or more (\todo{length, references!})
-\item Use a separate PSK for any IPSEC connection
+\item Choose a \textbf{random} PSK of 20 characters or more (\todo{length, references!})
+\item Use a \textbf{separate} PSK for any IPSEC connection
 \item Change the PSKs regularily
 \end{enumerate}
 
@@ -512,6 +524,9 @@ be roughly equivalent to ``Configuration B``; again,
 \verb|Suite-B-GCM-128| uses NIST elliptic curves, \verb|VPN-B| does
 not.
 
+\todo{Aaron: make an example for how to include images}
+\todo{cm: screenshots of Checkpoint settings}
+
 \paragraph*{IKE or Phase 1}\mbox{}\\
 
 IKE or Phase 1 is the mutual authentication and key exchange phase.
@@ -528,7 +543,7 @@ ECDH)
 
 Lifetime: \todo{need recommendations; 1 day seems to be common practice}
 
-\todo{what about blowfish, CAST?}
+\todo{what about CAST?}
 
 \paragraph*{ESP or Phase 2}\mbox{}\\
 
@@ -542,6 +557,21 @@ Hash Algorithm: none (if using AES-GCM), HMAC-SHA-SHA256 or longer
 \todo{what about AES-XCBC-MAC?}
 
 Lifetime: \todo{need recommendations; 1--8 hours seems to be common practice}
+
+
+
+
+\subsubsection{OpenVPN}
+\todo{write this subsubsection}
+\subsubsection{PPTP}
+\todo{write this subsubsection}
+\subsubsection{Cisco IPSec}
+\todo{write this subsubsection}
+\subsubsection{Juniper VPN}
+\todo{write this subsubsection}
+\subsubsection{L2TP over IPSec}
+
+\todo{write this subsubsection}
 
 
 \subsection{PGP/ GPG - Pretty Good Privacy}

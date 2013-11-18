@@ -87,7 +87,7 @@ DONE * Exim4 (-> Adi & Wolfgang Breya)
 * whatsapp --> man kann nichts machen, out of scope
 * Lync: == SIP von M$. 
 * Skype: man kann ncihts machen, out of scope.
-* Wi-Fi APs, 802.1X, ... ????
+* Wi-Fi APs, 802.1X, ... ???? --> out of scope
 * Tomcats/...????
 * VPNs		???
   * PPTP
