@@ -94,8 +94,8 @@ DONE * Exim4 (-> Adi & Wolfgang Breya)
   * Cisco IPSec
   * Juniper VPN
   * L2TP over IPSec -> egal
-* SIP   -> Klaus?
-* SRTP  -> Klaus?
+* SIP   -> Klaus???
+* SRTP  -> Klaus???
 * DNSSec ??	Verweis auf BCPxxx	--> out of scope
    - DANE
 What happens at the IETF at the moment?
