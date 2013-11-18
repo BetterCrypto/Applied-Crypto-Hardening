@@ -52,7 +52,7 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
     ssl.engine  = "enable"
     ssl.use-sslv2 = "disable"
     ssl.use-sslv3 = "disable"
-    ssl.use-compression = "disable"
+    #ssl.use-compression obsolete >= 1.4.3.1
     ssl.pemfile = "/etc/lighttpd/server.pem"
     ssl.cipher-list = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
     ssl.honor-cipher-order = "enable"
