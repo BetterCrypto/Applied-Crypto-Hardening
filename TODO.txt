@@ -5,7 +5,9 @@ Website
 BIG TOPICS
 ==========
 * write a Justification section to every setting, maybe have that later in the document. 
+
 * move the explanations to a later part of the document. Code snippets go *first* . The target group is sysadmins, must be easily copy & paste-able. Or find a different way so that they can easily use/read the document
+
 * Write section 7.3 (-> Adi . How to chose your own cipher string + screenshots)
 
 Formatting
@@ -26,12 +28,35 @@ Workflow
 
 Contents
 ========
+* scan our local region of the internet for https/smtp/imaps/pop3s
+
+* Common Pitfalls: 
+  - key generation
+  - key management , key life cycle
+  - cloning of VMs
+* DH parameter?
+* Further research
+ - mysql, SMB, 
+* Wish List for software vendors?
+* sweet spot, wo koennen wir was sinnvoll machen, was waere zu viel (8192 bit keys...)
+
+
 1. document the abstract needs that we have for the cipher settings (HSTS etc)
    Then find the best cipher setting strings per se
    Only then put it to all servers and keep it rather uniformely (as much as possible)
 
 2. Test all settings 
+
 * Test with more clients and other OSes than OSX / iPhone!!
+--> clients? 
+  - thunderbird
+  - Apple Mail?
+  - Outlook *
+  - Playstation und XBox? --> LATER!
+  - Lotus Notes
+  - Blackberry*
+  - Windows Phone 7 ???
+
 * document (cite) EVERYTHING! Why we chose certain values. Referneces, references, references. Otherwise it does not count!
   Srsly!!
 * .bib file is completely wrong. Make good citations/references. Add books: Schneier, ...
@@ -45,18 +70,67 @@ Contents
 
 Section 6
 ----------
-Still missing subsubsections:
-* Exchange Server
+Definitely still missing these subsubsections:
+* Exchange Server ??  (--> bei M$ angefragt, Evtl. Beitrag von A-Trust)
   - SMTP, POP, IMAP
-* Exim4 (-> Adi & Wolfgang Breya)
+DONE * Exim4 (-> Adi & Wolfgang Breya)
 * Checkpoint (-> cm)
 * Asa / Palo Alto (-> Azet)
-* Terminal Server (VNC, TeamViewer), 
+* Terminal Server (VNC ), ??
 * Squid
-* Mobile devices:
-  - Android
-  - iPhone
-  - 
+* XMPP
+  --> verweise auf die xmpp community bzw. auf xmpp.net verweisen.
+  Empfehlung: unbedingt ejabberd updaten!!  
+
+
+----- snip ---- all protocols that we looked at --- snip ----
+* whatsapp --> man kann nichts machen, out of scope
+* Lync: == SIP von M$. 
+* Skype: man kann ncihts machen, out of scope.
+* Wi-Fi APs, 802.1X, ... ????
+* Tomcats/...????
+* VPNs		???
+  * PPTP
+  * Cisco IPSec
+  * Juniper VPN
+  * L2TP over IPSec -> egal
+* SIP   -> Klaus?
+* SRTP  -> Klaus?
+* DNSSec ??	Verweis auf BCPxxx	--> out of scope
+   - DANE
+What happens at the IETF at the moment?
+* TOR?? --> out of scope
+* S/Mime --> nachsehen, gibt es BCPs? (--> Ramin)
+* TrueCrypt, LUKS, FileVault, etc ---> out of scope
+* AFS -> out of scope
+* Kerberos --> out of scope
+* NNTP -> out of scope
+* NTPs tlsdate -> out of scope
+* BGP / OSPF --> out of scope
+* irc,silc --> out of scope
+!! * IPMI/ILO/RAC: Java --> important. Empfehlung: nie ins Internet, nur in ein eigenes mgmt VLAN, das via VPN erreichbar ist!!
+* LDAP -> out of scope
+* Moxa , APC, und co... ICS . Ethernet to serial --> out of scope
+* telnet -> DON't!!! 
+* rsyslog --> out of scope
+* ARP bei v6 spoofing -> out of scope
+* tinc?? -> out of scope
+* rsync -> nur ueber ssh fahren ausser public web mirrors
+* telnets -> out of scope
+* ftps -> out of scope
+!! * seclayer-tcp --> review von Posch & co.
+seclayer-tcp    3495/udp    # securitylayer over tcp
+seclayer-tcp    3495/tcp    # securitylayer over tcp
+* webmin -> maybe
+* plesk -> out of scope
+* phpmyadmin --> haengt am apache, out of scope
+* DSL modems -> out of scope
+* UPnP, natPmp --> out of scope
+----- snip ---- all protocols that we looked at --- snip ----
+
+
+
+
 
 
 RNDG section
