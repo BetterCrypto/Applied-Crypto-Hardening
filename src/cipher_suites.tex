@@ -102,6 +102,8 @@ We arrived at this set of cipher suites by selecting
 \begin{itemize}
 \item TLS 1.2, TLS 1.1, TLS 1.0
 \item allowing SHA-1
+\todo{AK: Note that SHA1 is considered broken but if we are in DHE, we might get around it as long as you can not calculate a SHA1 collision ``live'' on the wire}
+
 \end{itemize}
 
 This results in the string:
@@ -170,6 +172,12 @@ by copy and paste and needs to just work.
 \todo{Adi: review "justification" when next section is written}
 
 
+
+\subsection{Known insecure and weak cipher suites}
+\todo{PG: please write this section. List all known broken, obsolete, weak and insecure cipher suites}
+
+\subsection{Compatibility}
+\todo{write this section. The idea here is to document which server version (and openssl) we assumed, then list all clients which are supported for Variant A) and B)}
 
 
 \subsection{Chosing your own cipher suites}
