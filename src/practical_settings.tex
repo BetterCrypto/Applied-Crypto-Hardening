@@ -577,21 +577,21 @@ Lifetime: \todo{need recommendations; 1--8 hours seems to be common practice}
 
 \paragraph{Fine tuning at installation level}
 
-When installing an OpenVPN server instance, you are probably using \it{easy-rsa} tools to generate the crypto stuff needed.
-From the directory where you will run them, you can enhanced you configuration by changing the following variables in \it{Vars}
+When installing an OpenVPN server instance, you are probably using {\it easy-rsa} tools to generate the crypto stuff needed.
+From the directory where you will run them, you can enhance you configuration by changing the following variables in {\it Vars}
 
 \begin{lstlisting}[breaklines]
 export KEY_SIZE=2048 
 \end{lstlisting}
 
-This will enhanced the security of the key exchange steps by using RSA keys with a length of 2048 bits.
+This will enhance the security of the key exchange steps by using RSA keys with a length of 2048 bits.
 
 \todo{Shouldn't we need to reduce CA and certificate lifetime?  Per default 10y!!}
 
 
 \paragraph{Server Configuration}
 
-\todo{To wrote - locked by David}
+\todo{To write - locked by David}
 
 \begin{lstlisting}[breaklines]
 cipher AES-128-CBC   # AES
@@ -600,7 +600,7 @@ cipher AES-128-CBC   # AES
 
 \paragraph{Client Configuration}
 
-\todo{To wrote - locked by David}
+\todo{To write - locked by David}
 
 \begin{lstlisting}[breaklines]
 Hello World!
