@@ -182,7 +182,72 @@ by copy and paste and needs to just work.
 
 \subsection{Choosing your own cipher suites}
 \label{section:ChoosingYourOwnCipherSuites}
-\todo{ Adi...  you want to describe how to make your own selection of cipher suites here. The text below was simply the old text, still left here for reference.}
+
+\todo{ Adi...  you want to describe how to make your own selection of cipher suites here.}
+
+SSL/TLS cipher suites consist of a key exchange mechanism, an authentication, a
+stream cipher (or a block cipher with a chaining mode) and a message authentication
+mechanism.
+
+Many of those mechanisms are interchangeable like the key exchange in this example:
+\texttt{ECDHE-RSA-AES256-GCM-SHA384} and \texttt{DHE-RSA-AES256-GCM-SHA384}.
+To provide a decent level of security, all algorithms need to be safe (subject to
+the disclaimer in section \ref{section:disclaimer}).
+
+Note: There are some very weak cipher suites in about every crypto library, most of
+them for historic reasons like the crypto export embargo
+\footnote{\url{http://en.wikipedia.org/wiki/Export_of_cryptography_in_the_United_States}}.
+For the following chapter support of those is assumed to be disabled by having
+\texttt{!EXP:!LOW:!NULL} as part of the cipher string.
+
+\todo{Adi: add boxes for summaries like here \\ \url{http://tex.stackexchange.com/questions/99809/box-or-sidebar-for-additional-text}}
+
+\todo{Team: do we need references for all cipher suites considered weak?}
+
+\subsubsection{key exchange}
+
+RSA, DSA, DH, EDH, ECDSA, ECDH, EECDH, FORTEZZA(?).
+
+Note that Elliptic Curves in current TLS standards (up to and including TLSv1.2) are
+questioned by many experts due to the lack of documentation on how the parameters
+specifying those curves were chosen. Without the EC mechanisms many clients, especially
+those using the Windows crypto libraries will not be able to use Forward Secrecy as these
+libraries only implement the elliptic curve variant of ephemeral DH key exchange. The
+curves in question are SECP256, SECP384, SECP521 and SECP571 of which the first two
+are the only ones implemented in the Windows crypto stack and they're the only listed
+as a requirement in the RFC. %%TODO: add link to RFC
+
+Other key exchange mechanisms like Pre-Shared Key (PSK) or Secure Remote Password
+(SRP) are irrelevant for regular SSL/TLS use. \texttt{!PSK:!SRP}
+
+\subsubsection{authentication}
+
+RSA, DSA, DSS, ECDSA, ECDH, FORTEZZA(?).
+
+Other authentication mechanisms like Pre Shared Keys aren't used in SSL/TLS: \texttt{!PSK:!aNULL}
+
+\subsubsection{encryption}
+
+AES, CAMELLIA, SEED, ARIA(?), FORTEZZA(?)...
+
+Other ciphers like IDEA, RC2, RC4, 3DES or DES are weak and therefor not recommended:
+\texttt{!DES:!3DES:!RC2:!RC4:!eNULL}
+
+\subsubsection{message authentication}
+
+SHA-1 (SHA), SHA-2 (SHA256, SHA384), AEAD
+
+Note that SHA-1 is considered broken and should not be used. SHA-1 is however a the
+only still available message authentication mechanism supporting TLS1.0/SSLv3. Without
+SHA-1 most clients will be locked out.
+
+Other hash functions like MD2, MD4 or MD5 are unsafe and broken: \texttt{!MD2:!MD4:!MD5}
+
+\subsubsection{combining cipher strings}
+%% reference 'man ciphers' and 'openssl ciphers' and show some simple examples
+%% VERY IMPORTANT: hint at the IANA-list and the differences in implementations
+
+\todo{ Adi...  The text below was simply the old text, still left here for reference.}
 
 %%% NOTE: we do not need to list this all here, can move to an appendix
 %At the time of this writing, SSL is defined in RFCs: 	
