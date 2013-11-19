@@ -273,6 +273,42 @@ Another option to secure IMAPs servers is to place them behind an stunnel server
 % options = CIPHER_SERVER_PREFERENCE
 % TIMEOUTclose = 1
 
+\subsubsection{SMTP in general}
+
+SMTP usually uses opportunistic TLS. This means that an MTA will accept TLS connections when asked for it during handshake but will not require it. One should always support incoming opportunistic TLS and always try TLS handshake outgoing.\\
+
+Furthermore a mailserver can operate in three modes:
+\begin{itemize}
+\item As MSA (Mail Submission Agent) your mailserver receives mail from your clients MUAs (Mail User Agent).
+\item As receiving MTA (Mail Transmission Agent, MX)
+\item As sending MTA (SMTP client)
+\end{itemize}
+\mbox{}\\
+We recommend the following basic setup for all modes:
+\begin{itemize}
+\item correctly setup MX, A and PTR RRs without using CNAMEs at all.
+\item enable encryption (opportunistic TLS)
+\item do not use self signed certificates
+\end{itemize}
+
+For SMTP client mode we additionally recommend:
+\begin{itemize}
+\item the hostname used as HELO must match the PTR RR
+\item setup a client certificate (most server certificates are client certificates as well)
+\item either the common name or at least an alternate subject name of your certificate must match the PTR RR
+\item do not modify the cipher suite for client mode
+\end{itemize}
+
+For MSA operation we recommend:
+\begin{itemize}
+\item listen on submission port 587
+\item enforce SMTP AUTH even for local networks
+\item do not allow SMTP AUTH on unencrypted connections
+\item optionally use the recommended cipher suites if (and only if) all your connecting MUAs support them
+\end{itemize}
+
+
+
 \subsubsection{Postfix}
 
 
@@ -331,6 +367,14 @@ $ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | \
     335 TLSv1 with cipher DHE-RSA-AES256-SHA
 \end{lstlisting}
 
+To use outgoing opportunistic TLS in postfix
+
+\begin{lstlisting}[breaklines]
+    smtp_tls_note_starttls_offer = yes¬
+    smtp_tls_security_level = may¬
+\end{lstlisting}
+
+
 Source: \url{http://www.postfix.org/TLS_README.html}
 
 \paragraph*{Limitations}\mbox{}\\
@@ -341,6 +385,7 @@ be ignored.
 
 tls\_preempt\_cipherlist is supported from Postfix 2.8 onwards. Again,
 you can leave the statement in for older versions.
+
 
 \subsubsection{Exim (based on 4.82)}
 
@@ -452,20 +497,6 @@ Note that most of the options accept expansion strings. This way you can eg. set
 Exim currently (4.82) does not support elliptic curves with OpenSSL. This means that ECDHE is not used even if defined in your cipher list.
 There already is a working patch to provide support:\\
 \url{http://bugs.exim.org/show_bug.cgi?id=1397}
-
-\subsubsection{SMTP: opportunistic TLS}
-
-\todo{write this subsubsection}
-
-Opportunistic TLS means that an MTA will accept TLS connections when asked for it durgin handshake but will not require it. One should always support incoming opportunistic TLS and alwas try TLS handshake outgoing.
-
-
-To use outgoing opportunistic TLS in postfix
-
-\begin{lstlisting}[breaklines]
-    smtp_tls_note_starttls_offer = yes¬
-    smtp_tls_security_level = may¬
-\end{lstlisting}
 
 
 % do we need to documment starttls in detail?
