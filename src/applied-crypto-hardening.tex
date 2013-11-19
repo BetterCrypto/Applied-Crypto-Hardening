@@ -41,6 +41,15 @@
 \usepackage{hyperref}
 \usepackage{draftwatermark}
 
+% Add text symbols
+\usepackage{pifont}
+\newcommand{\yes}{\textcolor{green}{\ding{51}}}
+\newcommand{\no}{\textcolor{red}{\ding{55}}}
+
+% human tables
+\usepackage{booktabs}
+\renewcommand{\arraystretch}{1.25}
+
 \definecolor{green}{RGB}{32,113,10}
 \definecolor{orange}{RGB}{251,111,16}
 \definecolor{red}{RGB}{247,56,0}
@@ -137,7 +146,7 @@ morekeywords={__global__, __device__},  %
 \pretitle{\vspace{-30pt} \begin{flushleft} \HorRule 
 				\fontsize{36}{36} \usefont{OT1}{phv}{b}{n} \color{DarkRed} \selectfont 
 				}
-\title{Applied Crypto Hardening \\ \vskip 0.5em \large www.bettercrypto.org}
+			\title{Applied Crypto Hardening}% \\ \vskip 0.5em \large www.bettercrypto.org}
 \posttitle{\par\end{flushleft}\vskip 0.5em}
 
 \preauthor{\begin{flushleft}

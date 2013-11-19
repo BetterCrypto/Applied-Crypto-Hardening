@@ -67,13 +67,14 @@ This results in the string:
 
 \begin{center}
 
-\begin{tabular}{| l | l | l | l | l| l | l |}
-\hline
-ID        & OpenSSL name                & Version & KeyEx & Auth & Cipher & Hash \\ \hline
-\verb|0xC030| & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2 & ECDH  &  RSA &AESGCM(256)  & AEAD   \\ \hline
-\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2 & ECDH  &  RSA &AES(256)     & SHA384 \\ \hline
-\verb|0x009F| & DHE-RSA-AES256-GCM-SHA384   & TLSv1.2 & DH    &  RSA &AESGCM(256)  & AEAD   \\ \hline
-\verb|0x006B| & DHE-RSA-AES256-SHA256       & TLSv1.2 & DH    &  RSA &AES(256)     & SHA256 \\ \hline
+\begin{tabular}{lllllll}
+\toprule
+\textbf{ID}   & \textbf{OpenSSL Name}       & \textbf{Version} & \textbf{KeyEx} & \textbf{Auth} & \textbf{Cipher} & \textbf{Hash}\\\cmidrule(lr){1-7}
+\verb|0xC030| & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2          & ECDH           &  RSA          & AESGCM(256)     & AEAD         \\
+\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           &  RSA          & AES(256)        & SHA384       \\
+\verb|0x009F| & DHE-RSA-AES256-GCM-SHA384   & TLSv1.2          & DH             &  RSA          & AESGCM(256)     & AEAD         \\
+\verb|0x006B| & DHE-RSA-AES256-SHA256       & TLSv1.2          & DH             &  RSA          & AES(256)        & SHA256       \\
+\bottomrule
 \end{tabular}
 \end{center}
 
@@ -115,18 +116,18 @@ This results in the string:
 
 
 \begin{center}
-\begin{tabular}{| l | l | l | l | l| l | l |}
-\hline
-ID        & OpenSSL name			    & Version & KeyEx & Auth & Cipher & Hash \\ \hline
-0xC030 & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2 & ECDH  &  RSA &AESGCM(256)  & AEAD   \\ \hline
-0xC028 & ECDHE-RSA-AES256-SHA384     & TLSv1.2 & ECDH  &  RSA &AES(256)     & SHA384 \\ \hline
-0x009F & DHE-RSA-AES256-GCM-SHA384   & TLSv1.2 & DH    &  RSA &AESGCM(256)  & AEAD   \\ \hline
-0x006B & DHE-RSA-AES256-SHA256       & TLSv1.2 & DH    &  RSA &AES(256)     & SHA256 \\ \hline
-0x0088 & DHE-RSA-CAMELLIA256-SHA     & SSLv3   & DH    &  RSA &Camellia(256)& SHA1   \\ \hline
-0xC014 & ECDHE-RSA-AES256-SHA        & SSLv3   & ECDH  &  RSA &AES(256)     & SHA1   \\ \hline
-0x0039 & DHE-RSA-AES256-SHA          & SSLv3   & DH    &  RSA &AES(256)     & SHA1   \\ \hline
-0x0035 & AES256-SHA                  & SSLv3   & RSA   &  RSA &AES(256)     & SHA1   \\ \hline
-
+\begin{tabular}{lllllll}
+\toprule
+\textbf{ID}   & \textbf{OpenSSL Name}       & \textbf{Version} & \textbf{KeyEx} & \textbf{Auth} & \textbf{Cipher} & \textbf{Hash}\\\cmidrule(lr){1-7}
+\verb|0xC030| & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2          & ECDH           &  RSA          & AESGCM(256)     & AEAD         \\ 
+\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           &  RSA          & AES(256)        & SHA384       \\ 
+\verb|0x009F| & DHE-RSA-AES256-GCM-SHA384   & TLSv1.2          & DH             &  RSA          & AESGCM(256)     & AEAD         \\ 
+\verb|0x006B| & DHE-RSA-AES256-SHA256       & TLSv1.2          & DH             &  RSA          & AES(256)        & SHA256       \\ 
+\verb|0x0088| & DHE-RSA-CAMELLIA256-SHA     & SSLv3            & DH             &  RSA          & Camellia(256)   & SHA1         \\ 
+\verb|0xC014| & ECDHE-RSA-AES256-SHA        & SSLv3            & ECDH           &  RSA          & AES(256)        & SHA1         \\ 
+\verb|0x0039| & DHE-RSA-AES256-SHA          & SSLv3            & DH             &  RSA          & AES(256)        & SHA1         \\ 
+\verb|0x0035| & AES256-SHA                  & SSLv3            & RSA            &  RSA          & AES(256)        & SHA1         \\
+\bottomrule
 \end{tabular}
 \end{center}
 
@@ -284,34 +285,35 @@ We followed the recommendations by Ivan Ristic's SSL/TLS Deployment Best Practic
 Following Ivan Ristic's adivce we arrived at a categorisation of cipher suites.
 
 \begin{center}
-\begin{tabular}{| l | l | l | l | l|}
-\hline
-& Version   & Key\_Exchange  & Cipher    & MAC       \\ \hline
-\cellcolor{green}prefer  & TLS 1.2   & DHE\_DSS   & AES\_256\_GCM   & SHA384        \\ \hline
-    &   & DHE\_RSA   & AES\_256\_CCM   & SHA256        \\ \hline
-    &   & ECDHE\_ECDSA   & AES\_256\_CBC   &       \\ \hline
-    &   & ECDHE\_RSA &   &       \\ \hline
-    &   &   &   &       \\ \hline
-\cellcolor{orange}consider    & TLS 1.1   & DH\_DSS    & AES\_128\_GCM   & SHA       \\ \hline
-    & TLS 1.0   & DH\_RSA    & AES\_128\_CCM   &       \\ \hline
-    &   & ECDH\_ECDSA    & AES\_128\_CBC   &       \\ \hline
-    &   & ECDH\_RSA  & CAMELLIA\_256\_CBC  &       \\ \hline
-    &   & RSA   & CAMELLIA\_128\_CBC  &       \\ \hline
-    &   &   &   &       \\ \hline
+\begin{tabular}{lllll}
+\cmidrule[\heavyrulewidth]{2-5}
+& \textbf{Version}   & \textbf{KeyEx} & \textbf{Cipher}    & \textbf{MAC}       \\\cmidrule(lr){2-5}
+\cellcolor{green}prefer  & TLS 1.2   & DHE\_DSS   & AES\_256\_GCM   & SHA384        \\
+    &   & DHE\_RSA   & AES\_256\_CCM   & SHA256        \\
+    &   & ECDHE\_ECDSA   & AES\_256\_CBC   &       \\
+    &   & ECDHE\_RSA &   &       \\ 
+    &   &   &   &       \\
+\cellcolor{orange}consider    & TLS 1.1   & DH\_DSS    & AES\_128\_GCM   & SHA       \\
+    & TLS 1.0   & DH\_RSA    & AES\_128\_CCM   &       \\
+    &   & ECDH\_ECDSA    & AES\_128\_CBC   &       \\ 
+    &   & ECDH\_RSA  & CAMELLIA\_256\_CBC  &       \\
+    &   & RSA   & CAMELLIA\_128\_CBC  &       \\
+    &   &   &   &       \\
 \cellcolor{red}avoid   
-& SSL 3.0   & NULL  & NULL  & NULL      \\ \hline
-    &   & DH\_anon   & RC4\_128   & MD5       \\ \hline
-    &   & ECDH\_anon & 3DES\_EDE\_CBC  &       \\ \hline
-    &   &   & DES\_CBC   &       \\ \hline
-    &   &   &   &       \\ \hline
+& SSL 3.0   & NULL  & NULL  & NULL      \\
+    &   & DH\_anon   & RC4\_128   & MD5       \\
+    &   & ECDH\_anon & 3DES\_EDE\_CBC  &       \\
+    &   &   & DES\_CBC   &       \\
+    &   &   &   &       \\
 \cellcolor{blue}{\color{white}special }
-&   & PSK   & CAMELLIA\_256\_GCM  &       \\ \hline
-    &   & DHE\_PSK   & CAMELLIA\_128\_GCM  &       \\ \hline
-    &   & RSA\_PSK   & ARIA\_256\_GCM  &       \\ \hline
-    &   & ECDHE\_PSK & ARIA\_256\_CBC  &       \\ \hline
-    &   &   & ARIA\_128\_GCM  &       \\ \hline
-    &   &   & ARIA\_128\_CBC  &       \\ \hline
-    &   &   & SEED  &       \\ \hline
+&   & PSK   & CAMELLIA\_256\_GCM  &       \\
+    &   & DHE\_PSK   & CAMELLIA\_128\_GCM  &       \\
+    &   & RSA\_PSK   & ARIA\_256\_GCM  &       \\
+    &   & ECDHE\_PSK & ARIA\_256\_CBC  &       \\
+    &   &   & ARIA\_128\_GCM  &       \\
+    &   &   & ARIA\_128\_CBC  &       \\
+    &   &   & SEED  &       \\
+\cmidrule[\heavyrulewidth]{2-5}
 \end{tabular}
 \end{center}
 
@@ -339,54 +341,41 @@ Next we tested the cipher suites above on the following clients:
 The result of testing the cipher suites with these clients gives us a preference order as shown in table \ref{table:prefOrderCipherSuites}. 
 Should a client not be able to use a specific cipher suite, it will fall back to the next possible entry as given by the ordering.
 
-\begin{center}
 \begin{table}[h]
-\small
-    \begin{tabular}{|l|l|l|l|l|}
-    \hline
-    Pref & Cipher Suite                                   & ID         & Browser                     \\ \hline
-    1    & TLS\_DHE\_RSA\_WITH\_AES\_256\_GCM\_SHA384 	  &  	0x009f & OpenSSL command line client \\ \hline
-    2    & TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA384 &     0xC024 & Safari                      \\ \hline
-    3    & TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA384   &     0xC028 & Safari                      \\ \hline
-    4    & TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA256     &     0x006B & Safari, Chrome              \\ \hline
-    5    & TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA    &     0xC00A & Safari, Chrome, Firefox, IE \\ \hline
-    6    & TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA      &     0xC014 & Safari, Chrome, Firefox, IE \\ \hline
-    7    & TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA        &     0x0039 & Safari, Chrome, Firefox     \\ \hline
-    8    & TLS\_DHE\_DSS\_WITH\_AES\_256\_CBC\_SHA        &     0x0038 & Firefox, IE                 \\ \hline
-    9    & TLS\_DHE\_RSA\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0088 & Firefox                     \\ \hline
-    10   & TLS\_DHE\_DSS\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0087 & Firefox                     \\ \hline
+\centering\small
+    \begin{tabular}{cllcccc}
+    \toprule
+    \textbf{Pref}   & \textbf{Cipher Suite}                            & \textbf{ID}   & \multicolumn{4}{l}{\textbf{Supported by}}\\ 
+    \cmidrule(lr){4-7}
+                    & \textbf{OpenSSL Name}                            &               & Chrome & FF   & IE   & Safari \\
+    \cmidrule(lr){1-7}
+    \phantom{0}1    & \verb|TLS_DHE_RSA_WITH_AES_256_GCM_SHA384|     & \verb|0x009f| & \no    & \no  & \no  & \no    \\
+                    & \verb|DHE-RSA-AES256-GCM-SHA384|                      &               & &&&\\\rowcolor{lightgray}
+    \phantom{0}2    & \verb|TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384| & \verb|0xC024| & \no    & \no  & \no  & \yes   \\\rowcolor{lightgray}
+                    & \verb|ECDHE-ECDSA-AES256-SHA384|                      &               & &&&\\
+    \phantom{0}3    & \verb|TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384|   & \verb|0xC028| & \no    & \no  & \no  & \yes   \\
+                    & \verb|ECDHE-RSA-AES256-SHA384|                        &               & &&&\\\rowcolor{lightgray}
+    \phantom{0}4    & \verb|TLS_DHE_RSA_WITH_AES_256_CBC_SHA256|     & \verb|0x006B| & \yes   & \no  & \no  & \yes   \\\rowcolor{lightgray}
+                    & \verb|DHE-RSA-AES256-SHA256|                          &               & &&&\\
+    \phantom{0}5    & \verb|TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA|    & \verb|0xC00A| & \yes   & \yes & \yes & \yes   \\
+                    & \verb|ECDHE-ECDSA-AES256-SHA|                         &               & &&&\\\rowcolor{lightgray}
+    \phantom{0}6    & \verb|TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA|      & \verb|0xC014| & \yes   & \yes & \yes & \yes   \\\rowcolor{lightgray}
+                    & \verb|ECDHE-RSA-AES256-SHA|                           &               & &&&\\
+    \phantom{0}7    & \verb|TLS_DHE_RSA_WITH_AES_256_CBC_SHA|        & \verb|0x0039| & \yes   & \yes & \no  & \yes   \\
+                    & \verb|DHE-RSA-AES256-SHA|                             &               & &&&\\\rowcolor{lightgray}
+    \phantom{0}8    & \verb|TLS_DHE_DSS_WITH_AES_256_CBC_SHA|        & \verb|0x0038| & \no    & \yes & \yes & \no    \\\rowcolor{lightgray}
+                    & \verb|DHE-DSS-AES256-SHA|                             &               & &&&\\
+    \phantom{0}9    & \verb|TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA|   & \verb|0x0088| & \no    & \yes & \no  & \no    \\
+                    & \verb|DHE-RSA-CAMELLIA256-SHA|                        &               & &&&\\\rowcolor{lightgray}
+    \phantom{}10    & \verb|TLS_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA|   & \verb|0x0087| & \no    & \yes & \no  & \no    \\\rowcolor{lightgray}
+                    & \verb|DHE-DSS-CAMELLIA256-SHA|                        &               & &&&\\
+   \bottomrule
     \end{tabular}
-\caption{Preference order of cipher suites}
+\caption{Preference order of cipher suites.  All suites are supported by OpenSSL.}
 \label{table:prefOrderCipherSuites}
 \end{table}
-\end{center}
 
-
-Table \ref{table:prefOrderOpenSSLNames} shows the same data again with specifying the corresponding OpenSSL name.
-
-\begin{center}
-\begin{table}[h]
-\small
-    \begin{tabular}{|l|l|l|}
-    \hline
-    Cipher Suite                                   & ID         & OpenSSL Name                  \\ \hline
-    TLS\_DHE\_RSA\_WITH\_AES\_256\_GCM\_SHA384     &  	 0x009f & 	  DHE-RSA-AES256-GCM-SHA384 \\ \hline
-    TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA384 &     0xC024 &     ECDHE-ECDSA-AES256-SHA384 \\ \hline
-    TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA384   &     0xC028 &     ECDHE-RSA-AES256-SHA384   \\ \hline
-    TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA256     &     0x006B &     DHE-RSA-AES256-SHA256     \\ \hline
-    TLS\_ECDHE\_ECDSA\_WITH\_AES\_256\_CBC\_SHA    &     0xC00A &     ECDHE-ECDSA-AES256-SHA    \\ \hline
-    TLS\_ECDHE\_RSA\_WITH\_AES\_256\_CBC\_SHA      &     0xC014 &     ECDHE-RSA-AES256-SHA      \\ \hline
-    TLS\_DHE\_RSA\_WITH\_AES\_256\_CBC\_SHA        &     0x0039 &     DHE-RSA-AES256-SHA        \\ \hline
-    TLS\_DHE\_DSS\_WITH\_AES\_256\_CBC\_SHA        &     0x0038 &     DHE-DSS-AES256-SHA        \\ \hline
-    TLS\_DHE\_RSA\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0088 &     DHE-RSA-CAMELLIA256-SHA   \\ \hline
-    TLS\_DHE\_DSS\_WITH\_CAMELLIA\_256\_CBC\_SHA   &     0x0087 &     DHE-DSS-CAMELLIA256-SHA   \\ \hline
-    \end{tabular}
-\caption{Preference order of cipher suites, with OpenSSL names}
-\label{table:prefOrderOpenSSLNames}
-\end{table}
-\end{center}
-
-Note: the tables \ref{table:prefOrderOpenSSLNames} and \ref{table:prefOrderCipherSuites} contain Elliptic curve key exchanges. There are currently strong doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}} concerning ECC.
+Note: the above table \ref{table:prefOrderCipherSuites} contains Elliptic curve key exchanges. There are currently strong doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}} concerning ECC.
 If unsure, remove the cipher suites starting with ECDHE in the table above.
 
 
