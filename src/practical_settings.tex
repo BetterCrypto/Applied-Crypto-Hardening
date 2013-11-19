@@ -457,6 +457,17 @@ There already is a working patch to provide support:\\
 
 \todo{write this subsubsection}
 
+Opportunistic TLS means that an MTA will accept TLS connections when asked for it durgin handshake but will not require it. One should always support incoming opportunistic TLS and alwas try TLS handshake outgoing.
+
+
+To use outgoing opportunistic TLS in postfix
+
+\begin{lstlisting}[breaklines]
+    smtp_tls_note_starttls_offer = yes¬
+    smtp_tls_security_level = may¬
+\end{lstlisting}
+
+
 % do we need to documment starttls in detail?
 %\subsubsection{starttls?}
 
