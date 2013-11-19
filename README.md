@@ -13,12 +13,15 @@ As a registered user::
 where <myuser> is your username on the server. Ask for write permissions if you need them.
 
 
-
-
-Committing::
+Committing changes you made (from within repo-directory)::
 
   $ git commit -a
   $ git push origin master
+
+
+Receive latest updates for a previously cloned repository (from within repo-directory)::
+
+  $ git pull
 
 
 
