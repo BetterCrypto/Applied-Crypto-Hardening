@@ -209,7 +209,7 @@ Many algorithms allow a secure key exchange. Among those are RSA, DSA, DH, EDH, 
 ECDH, EECDH and a few others. During the key exchange, keys for authentication and for
 encryption are exchanged. For RSA and DSA those keys are the same.
 
-\begin{WrapText}
+\begin{center}
 \begin{tabular}{| l | l | l | l |}
     \toprule
  & \textbf{Key}  & \textbf{\cellcolor{orange}EC}  & \textbf{\cellcolor{green}ephemeral} \\ \cmidrule(lr){1-4}
@@ -222,10 +222,10 @@ encryption are exchanged. For RSA and DSA those keys are the same.
     \cellcolor{red}    ECDSA & DSA  & \cellcolor{orange}yes & \cellcolor{red} no         \\
 \bottomrule
 \end{tabular}
-\\
-\\
-disabled: \texttt{!PSK:!SRP}
-\end{WrapText}
+%\\
+%\\
+%disabled: \texttt{!PSK:!SRP}
+\end{center}
 
 \textbf{Ephemeral Key Exchange} uses different keys for authentication (the server's RSA
 key) and encryption (a randomly created key). This advantage is called ``Forward
@@ -234,7 +234,7 @@ gets the server key. \\
 All ephemeral key exchange mechanisms base on Diffie-Hellman algorithm and require
 pre-generated Diffe-Hellman parameter (which allow fast ephemeral key generation). It
 is important to note that the Diffie-Hellman parameters need to be at least as strong
-(speaking in number of bits) as the RSA host key. %TODO: reference!
+(speaking in number of bits) as the RSA host key. \todo{TODO: reference!}
 
 
 \textbf{Elliptic Curves}\ref{section:EllipticCurveCryptography} required by current TLS

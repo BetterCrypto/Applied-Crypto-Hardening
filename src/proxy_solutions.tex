@@ -1,0 +1,26 @@
+
+\subsubsection{General thoughts}
+\todo{sure?}
+
+Within enterprise networks and corporations with increased levels of paranoia or at least some defined security requirements it is common, NOT to allow direct connections to the public internet.
+
+For this reason proxy-solutions are installed, to intercept ans (hopefully also) scan the traffic for potential threats within the sessions.
+
+As soon as one wants to establish an encrypted connection to a server, there are three choices:
+
+\begin{itemize}
+\item Block the connection, because it cannot be scanned for threats
+\item Bypass the threat-mitigation and pass the encrypted session to the client, which results in a situation where malicious content is transferred directly to the client without visibility for the security system.
+\item Intercept (i.e. terminate) the session at the proxy, scan there and re-encrypt the session towards the client.
+\end{itemize}
+
+While the latest solution might be the most "up to date", it arises a new front in the context of this paper, because the most secure part of a client's connection could only be within the corporate network, if the proxy-server handles the connection to the destination server in an insecure manner.
+
+Conclusio: Don't forget to check your proxy solutions ssl-capabilities.
+
+\subsubsection{squid}
+\todo{sure?}
+
+\subsubsection{Bluecoat}
+\todo{sure?}
+
