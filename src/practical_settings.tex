@@ -305,8 +305,10 @@ For MSA operation we recommend:
 
 
 
-Note that (with the exception of MSA mode), it might be better to allow any cipher suite -- since any encryption is better than no encryption when it comes to opportunistic TLS.
+% Note that (with the exception of MSA mode), it might be better to allow any cipher suite -- since any encryption is better than no encryption when it comes to opportunistic TLS.
 
+We strongly recommend to allow all cipher suites for anything but MSA
+mode, because the alternative is plain text transmission.
 
 \subsubsection{Postfix}
 
