@@ -41,6 +41,17 @@
 \usepackage{hyperref}
 \usepackage{draftwatermark}
 
+% human tables
+\usepackage{booktabs}
+\renewcommand{\arraystretch}{1.25}
+
+% side box
+\usepackage{wrapfig}
+\usepackage{tcolorbox}
+\newenvironment{WrapText}[1][r]
+  {\wrapfigure{#1}{0.5\textwidth}\tcolorbox}
+  {\endtcolorbox\endwrapfigure}
+
 % Add text symbols
 \usepackage{pifont}
 \newcommand{\yes}{\textcolor{green}{\ding{51}}}
