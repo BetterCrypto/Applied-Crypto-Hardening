@@ -201,25 +201,54 @@ them for historic reasons like the crypto export embargo
 For the following chapter support of those is assumed to be disabled by having
 \texttt{!EXP:!LOW:!NULL} as part of the cipher string.
 
-\todo{Adi: add boxes for summaries like here \\ \url{http://tex.stackexchange.com/questions/99809/box-or-sidebar-for-additional-text}}
-
 \todo{Team: do we need references for all cipher suites considered weak?}
 
 \subsubsection{key exchange}
 
-RSA, DSA, DH, EDH, ECDSA, ECDH, EECDH, FORTEZZA(?).
+Many algorithms allow a secure key exchange. Among those are RSA, DSA, DH, EDH, ECDSA,
+ECDH, EECDH and a few others. During the key exchange, keys for authentication and for
+encryption are exchanged. For RSA and DSA those keys are the same.
 
-Note that Elliptic Curves in current TLS standards (up to and including TLSv1.2) are
-questioned by many experts due to the lack of documentation on how the parameters
-specifying those curves were chosen. Without the EC mechanisms many clients, especially
-those using the Windows crypto libraries will not be able to use Forward Secrecy as these
-libraries only implement the elliptic curve variant of ephemeral DH key exchange. The
-curves in question are SECP256, SECP384, SECP521 and SECP571 of which the first two
-are the only ones implemented in the Windows crypto stack and they're the only listed
-as a requirement in the RFC. %%TODO: add link to RFC
+\begin{WrapText}
+\begin{tabular}{| l | l | l | l |}
+    \toprule
+ & \textbf{Key}  & \textbf{\cellcolor{orange}EC}  & \textbf{\cellcolor{green}ephemeral} \\ \cmidrule(lr){1-4}
+    \cellcolor{red}    RSA   & RSA  & \cellcolor{green}no   & \cellcolor{red} no         \\
+    \cellcolor{red}    DH    & RSA  & \cellcolor{green}no   & \cellcolor{red} no         \\
+    \cellcolor{green}  EDH   & RSA  & \cellcolor{green}no   & \cellcolor{green} yes      \\
+    \cellcolor{red}    ECDH  & both & \cellcolor{orange}yes & \cellcolor{red} no         \\
+    \cellcolor{orange} EECDH & both & \cellcolor{orange}yes & \cellcolor{green} yes      \\
+    \cellcolor{red}    DSA   & DSA  & \cellcolor{green}no   & \cellcolor{red} no         \\
+    \cellcolor{red}    ECDSA & DSA  & \cellcolor{orange}yes & \cellcolor{red} no         \\
+\bottomrule
+\end{tabular}
+\\
+\\
+disabled: \texttt{!PSK:!SRP}
+\end{WrapText}
+
+\textbf{Ephemeral Key Exchange} uses different keys for authentication (the server's RSA
+key) and encryption (a randomly created key). This advantage is called ``Forward
+Secrecy'' and means that even recorded traffic cannot be decrypted later when someone
+gets the server key. \\
+All ephemeral key exchange mechanisms base on Diffie-Hellman algorithm and require
+pre-generated Diffe-Hellman parameter (which allow fast ephemeral key generation). It
+is important to note that the Diffie-Hellman parameters need to be at least as strong
+(speaking in number of bits) as the RSA host key. %TODO: reference!
+
+
+\textbf{Elliptic Curves}\ref{section:EllipticCurveCryptography} required by current TLS
+standards only consist of the so-called NIST-curves (\texttt{secp256r1} and
+\texttt{secp384r1}) which may be weak because the parameters that led to their generation
+weren't properly explained (by the NSA). \\
+Disabling support for Elliptic Curves leads to no ephemeral key exchange being available
+for the Windows platform. When you decide to use Elliptic Curves despite the uncertainty,
+make sure to at least use the stronger curve of the two supported by all clients
+(\texttt{secp384r1}).
+
 
 Other key exchange mechanisms like Pre-Shared Key (PSK) or Secure Remote Password
-(SRP) are irrelevant for regular SSL/TLS use. \texttt{!PSK:!SRP}
+(SRP) are irrelevant for regular SSL/TLS use.
 
 \subsubsection{authentication}
 
