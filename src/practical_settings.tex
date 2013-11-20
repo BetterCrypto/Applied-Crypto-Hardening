@@ -310,7 +310,7 @@ Note that (with the exception of MSA mode), it might be better to allow any ciph
 
 \subsubsection{Postfix}
 
-
+\todo{cm: document DANE}
 
 First, you need to generate Diffie Hellman parameters (please first take a look at the section \ref{section:PRNG}):
 
@@ -320,61 +320,69 @@ First, you need to generate Diffie Hellman parameters (please first take a look 
   % openssl gendh -out /etc/postfix/dh_param_1024.pem -2 1024
 \end{lstlisting}
 
-Next, we specify these DH parameters in the postfix config file:
+Next, we specify these DH parameters in \verb|main.cf|:
 
 \begin{lstlisting}[breaklines]
   smtpd_tls_dh512_param_file = /etc/postfix/dh_param_512.pem
   smtpd_tls_dh1024_param_file = /etc/postfix/dh_param_1024.pem
 \end{lstlisting}
 
-You usually don't want restrictions on the ciphers for opportunistic
-encryption, because any encryption is better than plain text. 
+\paragraph*{MX and SMTP client configuration}\mbox{}\\
 
-For submission (Port 587) or other special cases, however, you want to
-enforce strong encryption. In addition to the below entries in
-main.cf, you need to enable ``mandatory`` encryption for the
-respective service, e.g. by adding ``-o
-smtpd\_tls\_security\_level=encrypt'' to the submission smtpd in
-master.cf.
+As discussed above, because of opportunistic encryption we do not
+restrict the list of ciphers. There's still some steps needed to
+enable TLS, all in \verb|main.cf| \footnote{Refer to
+  \url{http://www.postfix.org/TLS_README.html} for an in-depth
+  discussion.}:
 
-% don't -- this influences opportunistic encryption
-%  smtpd_tls_protocols = !SSLv2, !SSLv3
+\begin{lstlisting}[breaklines]
+  smtpd_tls_cert_file = /etc/postfix/server.pem
+  smtpd_tls_key_file = /etc/postfix/server.key
+  # use 0 for Postfix >= 2.9, and 1 for earlier versions
+  smtpd_tls_loglevel = 0
+  # enable opportunistic TLS support in the SMTP server and client
+  smtpd_tls_security_level = may
+  smtp_tls_security_level = may
+  # if you have authentication enabled, only offer it after STARTTLS
+  smtpd_tls_auth_only = yes
+  tls_ssl_options=NO_COMPRESSION
+  tls_random_source = dev:/dev/urandom		
+\end{lstlisting}
+
+\paragraph*{MSA}\mbox{}\\
+
+For the MSA \verb|smtpd| process, we first define the ciphers that are
+acceptable for the ``mandatory'' security level, again in
+\verb|main.cf|:
 
 \begin{lstlisting}[breaklines]
   smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
-  tls_ssl_options=NO_COMPRESSION
   smtpd_tls_mandatory_ciphers=high
   tls_high_cipherlist='EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
-  tls_preempt_cipherlist = yes
-  tls_random_source = dev:/dev/urandom		
-    %% NOTE: might want to have /dev/random here + Haveged
 \end{lstlisting}
-  
-For those users, who want to use ECC key exchange, it is possible to specify this via:
+
+Then, we configure the MSA smtpd in \verb|master.cf| with two
+additional options that are only used for this instance of smtpd:
+
+\begin{lstlisting}[breaklines]
+587       inet  n       -       -       -       -       smtpd 
+        -o smtpd_tls_security_level=encrypt -o tls_preempt_cipherlist = yes
+\end{lstlisting}
+
+For those users who want to use ECC key exchange, it is possible to specify this via:
 \begin{lstlisting}[breaklines]
   smtpd_tls_eecdh_grade = ultra
 \end{lstlisting}
 
-You can check the settings by specifying  smtpd\_tls\_loglevel = 1 and then check the selected ciphers with the following command:
+You can check the settings with the following command:
 \begin{lstlisting}[breaklines]
-$ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | \
-> awk '{printf("%s %s %s %s\n", $12, $13, $14, $15)}' | sort | uniq -c | sort -n
+$ zegrep "TLS connection established from.*with cipher" | /var/log/mail.log | awk '{printf("%s %s %s %s\n", $12, $13, $14, $15)}' | sort | uniq -c | sort -n
       1 SSLv3 with cipher DHE-RSA-AES256-SHA
      23 TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384
      60 TLSv1 with cipher ECDHE-RSA-AES256-SHA
     270 TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384
     335 TLSv1 with cipher DHE-RSA-AES256-SHA
 \end{lstlisting}
-
-To use outgoing opportunistic TLS in postfix
-
-\begin{lstlisting}[breaklines]
-    smtp_tls_note_starttls_offer = yes¬
-    smtp_tls_security_level = may¬
-\end{lstlisting}
-
-
-Source: \url{http://www.postfix.org/TLS_README.html}
 
 \paragraph*{Limitations}\mbox{}\\
 
@@ -384,7 +392,6 @@ be ignored.
 
 tls\_preempt\_cipherlist is supported from Postfix 2.8 onwards. Again,
 you can leave the statement in for older versions.
-
 
 \subsubsection{Exim (based on 4.82)}
 
