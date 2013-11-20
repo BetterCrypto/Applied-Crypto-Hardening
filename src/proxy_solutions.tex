@@ -1,6 +1,7 @@
+\subsection{Intercepting proxy solutions and reverse proxies}
 
 \subsubsection{General thoughts}
-\todo{sure?}
+\todo{Write}
 
 Within enterprise networks and corporations with increased levels of paranoia or at least some defined security requirements it is common, NOT to allow direct connections to the public internet.
 
@@ -16,10 +17,22 @@ As soon as one wants to establish an encrypted connection to a server, there are
 
 While the latest solution might be the most "up to date", it arises a new front in the context of this paper, because the most secure part of a client's connection could only be within the corporate network, if the proxy-server handles the connection to the destination server in an insecure manner.
 
-Conclusio: Don't forget to check your proxy solutions ssl-capabilities.
+Conclusio: Don't forget to check your proxy solutions ssl-capabilities. Also do so for your reverse-proxies!
 
 \subsubsection{squid}
-\todo{sure?}
+\todo{Write}
+%% http://forum.pfsense.org/index.php?topic=63262.0
+
+\begin{lstlisting}[breaklines]
+		NO_SSLv2    Disallow the use of SSLv2
+		NO_SSLv3    Disallow the use of SSLv3
+		NO_TLSv1    Disallow the use of TLSv1.0
+		NO_TLSv1_1  Disallow the use of TLSv1.1
+		NO_TLSv1_2  Disallow the use of TLSv1.2
+		SINGLE_DH_USE
+				Always create a new key when using temporary/ephemeral
+				DH key exchanges
+\end{lstlisting}
 
 \subsubsection{Bluecoat}
 \todo{sure?}
