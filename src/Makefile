@@ -10,7 +10,7 @@ all:
 	#dvipdf applied-crypto-hardening.dvi
 
 html:
-       latex2html applied-crypto-hardening
+	latex2html applied-crypto-hardening
 
 
 clean:
