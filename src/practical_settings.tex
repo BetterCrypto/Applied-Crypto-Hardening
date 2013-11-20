@@ -145,17 +145,15 @@ tested using https://www.ssllabs.com.
 \begin{table}[h]
   \centering
   \small
-  \begin{tabular}{|l|l|}
-    \hline
+  \begin{tabular}{ll}
+    \toprule
     Cipher Suite & Client \\
-    \hline
+    \midrule
     \verb|TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256| & only IE 10,11, OpenSSL 1.0.1e \\
-    \hline
     \verb|TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256| & Chrome 30, Opera 17, Safari 6+ \\
-    \hline
     \verb|TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA| & FF 10-24, IE 8+, Safari 5, Java 7\\
-    \hline
-  \end{tabular}
+    \bottomrule 
+ \end{tabular}
   \caption{Client support}
   \label{tab:MS_IIS_Client_Support}
 \end{table}
@@ -273,6 +271,42 @@ Another option to secure IMAPs servers is to place them behind an stunnel server
 % options = CIPHER_SERVER_PREFERENCE
 % TIMEOUTclose = 1
 
+\subsubsection{SMTP in general}
+
+SMTP usually uses opportunistic TLS. This means that an MTA will accept TLS connections when asked for it during handshake but will not require it. One should always support incoming opportunistic TLS and always try TLS handshake outgoing.\\
+
+Furthermore a mailserver can operate in three modes:
+\begin{itemize}
+\item As MSA (Mail Submission Agent) your mailserver receives mail from your clients MUAs (Mail User Agent).
+\item As receiving MTA (Mail Transmission Agent, MX)
+\item As sending MTA (SMTP client)
+\end{itemize}
+\mbox{}\\
+We recommend the following basic setup for all modes:
+\begin{itemize}
+\item correctly setup MX, A and PTR RRs without using CNAMEs at all.
+\item enable encryption (opportunistic TLS)
+\item do not use self signed certificates
+\end{itemize}
+
+For SMTP client mode we additionally recommend:
+\begin{itemize}
+\item the hostname used as HELO must match the PTR RR
+\item setup a client certificate (most server certificates are client certificates as well)
+\item either the common name or at least an alternate subject name of your certificate must match the PTR RR
+\item do not modify the cipher suite for client mode
+\end{itemize}
+
+For MSA operation we recommend:
+\begin{itemize}
+\item listen on submission port 587
+\item enforce SMTP AUTH even for local networks
+\item do not allow SMTP AUTH on unencrypted connections
+\item optionally use the recommended cipher suites if (and only if) all your connecting MUAs support them
+\end{itemize}
+
+
+
 \subsubsection{Postfix}
 
 
@@ -331,6 +365,14 @@ $ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | \
     335 TLSv1 with cipher DHE-RSA-AES256-SHA
 \end{lstlisting}
 
+To use outgoing opportunistic TLS in postfix
+
+\begin{lstlisting}[breaklines]
+    smtp_tls_note_starttls_offer = yes¬
+    smtp_tls_security_level = may¬
+\end{lstlisting}
+
+
 Source: \url{http://www.postfix.org/TLS_README.html}
 
 \paragraph*{Limitations}\mbox{}\\
@@ -341,6 +383,7 @@ be ignored.
 
 tls\_preempt\_cipherlist is supported from Postfix 2.8 onwards. Again,
 you can leave the statement in for older versions.
+
 
 \subsubsection{Exim (based on 4.82)}
 
@@ -453,9 +496,6 @@ Exim currently (4.82) does not support elliptic curves with OpenSSL. This means 
 There already is a working patch to provide support:\\
 \url{http://bugs.exim.org/show_bug.cgi?id=1397}
 
-\subsubsection{SMTP: opportunistic TLS}
-
-\todo{write this subsubsection}
 
 % do we need to documment starttls in detail?
 %\subsubsection{starttls?}
@@ -559,11 +599,42 @@ Hash Algorithm: none (if using AES-GCM), HMAC-SHA-SHA256 or longer
 Lifetime: \todo{need recommendations; 1--8 hours seems to be common practice}
 
 
-
-
 \subsubsection{OpenVPN}
 \todo{cm: please write this subsubsection}
 \todo{WARNING - Section Writing in progress...}
+\todo{We suppose user uses easy-rsa which is roughly used in all HOWTO}
+
+\paragraph{Fine tuning at installation level}
+
+When installing an OpenVPN server instance, you are probably using {\it easy-rsa} tools to generate the crypto stuff needed.
+From the directory where you will run them, you can enhance you configuration by changing the following variables in {\it Vars}
+
+\begin{lstlisting}[breaklines]
+export KEY_SIZE=2048 
+\end{lstlisting}
+
+This will enhance the security of the key exchange steps by using RSA keys with a length of 2048 bits.
+
+\todo{Shouldn't we need to reduce CA and certificate lifetime?  Per default 10y!!}
+
+
+\paragraph{Server Configuration}
+
+\todo{To write - locked by David}
+
+\begin{lstlisting}[breaklines]
+cipher AES-128-CBC   # AES
+\end{lstlisting}
+
+
+\paragraph{Client Configuration}
+
+\todo{To write - locked by David}
+
+\begin{lstlisting}[breaklines]
+Hello World!
+\end{lstlisting}
+
 
 
 \subsubsection{PPTP}
