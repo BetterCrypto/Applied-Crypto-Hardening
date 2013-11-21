@@ -1,6 +1,6 @@
 NOW := $(shell date)
 
-all:	pdf html
+all:	pdf html md
 
 pdf:
 	pdflatex applied-crypto-hardening
@@ -14,7 +14,9 @@ pdf:
 html:
 	latex2html applied-crypto-hardening
 
+md:
+	pandoc -f latex -t markdown -o  applied-crypto-hardening.markdown applied-crypto-hardening.tex
 
 clean:
-	rm -f applied-crypto-hardening.aux applied-crypto-hardening.bbl applied-crypto-hardening.blg applied-crypto-hardening.dvi applied-crypto-hardening.log applied-crypto-hardening.pdf applied-crypto-hardening.toc 
+	rm -f applied-crypto-hardening.aux applied-crypto-hardening.bbl applied-crypto-hardening.blg applied-crypto-hardening.dvi applied-crypto-hardening.log applied-crypto-hardening.pdf applied-crypto-hardening.toc applied-crypto-hardening.markdown
 	rm -rf applied-crypto-hardening/
