@@ -17,9 +17,35 @@ While the latest solution might be the most "up to date", it arises a new front 
 Conclusio: Don't forget to check your proxy solutions ssl-capabilities. Also do so for your reverse-proxies!
 
 \subsubsection{squid}
-\todo{Write}
+
+
+As of squid-3.2.7 (01 Feb 2013) there is support for the OpenSSL NO\_Compression option within squid config (CRIME attack) and if you combine that in the config file, with an enforcement of the server cipher preferences (BEAST Attack) you are safe.
+
+\paragraph*{squid.conf}\mbox{}\\
+squid.conf
+
+\todo{UNTESTED!}
+\begin{lstlisting}[breaklines]
+options=NO_SSLv2,NO_TLSv1,NO_Compression,CIPHER_SERVER_PREFERENCE 
+cipher=ECDHE-RSA-AES128-SHA256:AES128-GCM-SHA256:RC4:HIGH:!MD5:!aNULL:!EDH [...]
+\end{lstlisting}
+
+
+
+\todo{UNTESTED!}
+\begin{lstlisting}[breaklines]
+options=NO_SSLv2,NO_TLSv1,NO_Compression,CIPHER_SERVER_PREFERENCE 
+cipher=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
+\end{lstlisting}
+
+
+
+\paragraph*{squid.conf}\mbox{}\\
+squid.conf
+
 %% http://forum.pfsense.org/index.php?topic=63262.0
 
+\todo{UNTESTED!}
 \begin{lstlisting}[breaklines]
 		NO_SSLv2    Disallow the use of SSLv2
 		NO_SSLv3    Disallow the use of SSLv3
@@ -31,8 +57,80 @@ Conclusio: Don't forget to check your proxy solutions ssl-capabilities. Also do 
 				DH key exchanges
 \end{lstlisting}
 
+\todo{Patch here? Definitely working for 3.2.6!}
+For squid Versions before 3.2.7 use this patch against a vanilla source-tree:
+
+\begin{lstlisting}[breaklines]
+--- support.cc.ini      2013-01-09 02:41:51.000000000 +0100
++++ support.cc  2013-01-21 16:13:32.549383848 +0100
+@@ -400,6 +400,11 @@
+         "NO_TLSv1_2", SSL_OP_NO_TLSv1_2
+     },
+ #endif
++#ifdef SSL_OP_NO_COMPRESSION
++    {
++        "NO_Compression", SSL_OP_NO_COMPRESSION
++    },
++#endif
+     {
+         "", 0
+     },
+\end{lstlisting}
+
+
+
 \subsubsection{Bluecoat}
-\todo{sure?}
+%% https://kb.bluecoat.com/index?page=content&id=KB5549
+\begin{description}
+\item[Tested with Version:] SGOS 6.5.x
+
+BlueCoat Proxy SG Appliances can be used as forward and reverse proxies. The reverse proxy feature is rather under-developed, and while it is possible and supported, there only seems to be limited use of this feature "in the wild" - nonetheless there are a few cipher suites to choose from, when enabling SSL features.
+
+\item[Only allow TLS 1.0,1.1 and 1.2 protocols:] \mbox{}
+
+\begin{lstlisting}[breaklines]
+$conf t
+$(config)ssl
+$(config ssl)edit ssl-device-profile default
+$(config device-profile default)protocol tlsv1 tlsv1.1 tlsv1.2
+  ok
+\end{lstlisting}
+\item[Select your accepted cipher-suites:]
+
+\begin{lstlisting}[breaklines]
+$conf t
+Enter configuration commands, one per line.  End with CTRL-Z.
+$(config)proxy-services
+$(config proxy-services)edit ReverseProxyHighCipher
+$(config ReverseProxyHighCipher)attribute cipher-suite
+Cipher#  Use        Description        Strength
+-------  ---  -----------------------  --------
+      1  yes            AES128-SHA256      High
+      2  yes            AES256-SHA256      High
+      3  yes               AES128-SHA    Medium
+      4  yes               AES256-SHA      High
+      5  yes       DHE-RSA-AES128-SHA      High
+      6  yes       DHE-RSA-AES256-SHA      High
+               [...]
+     13  yes          EXP-RC2-CBC-MD5    Export
+
+Select cipher numbers to use, separated by commas: 2,5,6
+  ok
+\end{lstlisting}
+
+The same protocols are available for forward proxy settings and should be adjusted accordingly:
+In your local policy file add the following section:
+\begin{lstlisting}[breaklines]
+<ssl>
+    DENY server.connection.negotiated_ssl_version=(SSLV2, SSLV3)
+\end{lstlisting}
+
+Disabling protocols and ciphers in a forward proxy environment could lead to unexpected results on certain (misconfigured?) webservers (i.e. ones accepting only SSLv2/3 protocol connections)
+
+\end{description} 
+
+
+
 
 \subsubsection{Pound}
 % See http://www.apsis.ch/pound
