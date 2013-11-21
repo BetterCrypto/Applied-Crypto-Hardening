@@ -2,7 +2,7 @@
 
 Within enterprise networks and corporations with increased levels of paranoia or at least some defined security requirements it is common, NOT to allow direct connections to the public internet.
 
-For this reason proxy-solutions are installed, to intercept ans (hopefully also) scan the traffic for potential threats within the sessions.
+For this reason proxy-solutions are installed, to intercept and (hopefully also) scan the traffic for potential threats within the sessions.
 
 As soon as one wants to establish an encrypted connection to a server, there are three choices:
 
@@ -35,7 +35,7 @@ cipher=ECDHE-RSA-AES128-SHA256:AES128-GCM-SHA256:RC4:HIGH:!MD5:!aNULL:!EDH [...]
 \todo{UNTESTED!}
 \begin{lstlisting}[breaklines]
 options=NO_SSLv2,NO_TLSv1,NO_Compression,CIPHER_SERVER_PREFERENCE 
-cipher=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
+cipher=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
 \end{lstlisting}
 
 

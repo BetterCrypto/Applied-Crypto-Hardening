@@ -1,4 +1,17 @@
 \section{Random Number Generators}
 \label{section:RNGs}
 
-\todo{still write this section}
+There are currently 2 practical ways to verify whether a random number generator is broken or good enough for security applications:
+
+Dieharder from Robert G. Brown is a tool that runs a large number of statistical tests on your PC against a single file which contains random numbers.
+CAcert operates a random number testing service website which also runs a number of statistical tests against sumitted files, and makes the results publically comparable.
+But please keep in mind, that such statistical tests cannot detect deliberately rigged random number generators like DRBG, they only detect broken generators like the old Debian OpenSSL.
+
+
+Embedded systems like routers often have the problem that they do not have a good random number generator, and most generators take some time to collect enough entropy, so there were recent cases of such routers where they automatically generated (bad) keys directly after bootup. In case of doubt, we suggest that you manually generate good keys on a normal Laptop/PC, and copy them over to the handicapped system.
+
+Regarding servers and virtualized and cloudified environments, be careful with cloned images and paused/cloned VM's, to make sure that they do not clone the random number pool, so that all cloned machines are generating the same key after continueing/booting them.
+
+In case you measured that your random number generator is really too slow, we suggest to take a look at HAVEGE.
+
+(All Links can be found in the Tools section)
