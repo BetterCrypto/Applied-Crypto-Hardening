@@ -34,6 +34,7 @@
 \usepackage{fancyvrb}
 \usepackage{listings}
 
+\usepackage{gitinfo}
 
 % custom changes:
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
@@ -130,7 +131,7 @@ morekeywords={__global__, __device__},  %
 \chead{}
 \rhead{}
 % Footer (you may change this to your own needs)
-\lfoot{\footnotesize Applied Crypto Hardening \textbullet ~Draft}
+\lfoot{\footnotesize Applied Crypto Hardening \textbullet ~Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName}
 \cfoot{}
 \rfoot{\footnotesize page \thepage\ of \pageref{LastPage}}	% "Page 1 of 2"
 \renewcommand{\headrulewidth}{0.0pt}
@@ -186,10 +187,10 @@ morekeywords={__global__, __device__},  %
 \date{\today}
 
 
-
 %%% Begin document
 \begin{document}
 \maketitle
+
 \thispagestyle{fancy} 			% Enabling the custom headers/footers for the first page 
 % The first character should be within \initial{}
 %\initial{H}\textbf{ere is some sample text to show the initial in the introductory paragraph of this template article. The color and lineheight of the initial can be modified in the preamble of this document.}
