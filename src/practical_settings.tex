@@ -45,6 +45,10 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
 
 \item[References:]
 
+\item[How to test:]
+
+See ssllabs in section \ref{section:Tools}
+
 \end{description}
 %XXXX   ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AES:RSA+3DES:!ADH:!AECDH:!MD5:!DSS
 
@@ -53,10 +57,16 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
 
 
 
-%% Note: need to be checked / reviewed
+\begin{description}
+\item[Tested with Version:]
+
+\todo{version?}
+
+\item[Settings:] \mbox{}
+
 
 %% Complete ssl.cipher-list with same algo than Apache
-\todo{FIXME: this string seems to be wrongly formatted}
+\todo{FIXME: this string seems to be wrongly formatted??}
 
 \begin{lstlisting}[breaklines]
   $SERVER["socket"] == "0.0.0.0:443" {
@@ -71,7 +81,10 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
   }
 \end{lstlisting}
 
-As for any other webserver, you should redirect automatically http traffic toward httpS:\footnote{That proposed configuration is directly coming from lighttpd documentation: \url{http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps}}
+
+\item[Additional settings:]
+
+As for any other webserver, you should redirect automatically http traffic toward httpS://
 
 \begin{lstlisting}[breaklines]
   $HTTP["scheme"] == "http" {
@@ -83,9 +96,27 @@ As for any other webserver, you should redirect automatically http traffic towar
   }
 \end{lstlisting}
 
+
+\item[References:] 
+\todo{add references}.
+lighttpd httpS:// redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps}
+
+% add any further references or best practice documents here
+
+\item[How to test:] See ssllabs in section \ref{section:Tools}
+
+% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+\end{description}
+
+
 \subsubsection{nginx}
 
+\begin{description}
+\item[Tested with Version:]
 
+\todo{version?}
+
+\item[Settings:] \mbox{}
 
 \begin{lstlisting}[breaklines]
   ssl_prefer_server_ciphers on;
@@ -97,6 +128,7 @@ As for any other webserver, you should redirect automatically http traffic towar
 
 %% XXX FIXME: do we need to specify dhparams? Parameter: ssl_dhparam = file. See: http://wiki.nginx.org/HttpSslModule#ssl_protocols
 
+\item[Additional settings:]
 
 If you decide to trust NIST's ECC curve recommendation, you can add the following line to nginx's configuration file to select special curves:
 
@@ -110,13 +142,28 @@ You should redirect everything to httpS:// if possible. In Nginx you can do this
   rewrite     ^(.*)   https://$host$1 permanent;
 \end{lstlisting}
 
-%\subsubsection{openssl.conf settings}
 
-%\subsubsection{Differences in SSL libraries: gnutls vs. openssl vs. others}
+\item[References:] \todo{add references}
+
+\item[How to test:] See ssllabs in section \ref{section:Tools}
+
+\end{description}
+
+
+
+
 
 \subsubsection{MS IIS}
 \label{sec:ms-iis}
 
+
+\todo{screenshots? registry key settings? }
+
+\begin{description}
+
+\item[Tested with Version:] \todo{version?}
+
+\item[Settings:] \mbox{}
 
 
 When trying to avoid RC4 and CBC (BEAST-Attack) and requiring perfect
@@ -183,6 +230,26 @@ Not supported Clients:
 \item WinXP
 \item Bing
 \end{enumerate}
+
+item[Additional settings:]
+
+%Here you can add additional settings
+
+\item[Justification for special settings (if needed):]
+
+% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+
+\item[References:]
+
+\todo{add references}
+
+% add any further references or best practice documents here
+
+\item[How to test:] See ssllabs in section \ref{section:Tools}
+
+
+\end{description}
+
 
 
 \subsection{Mail Servers}
