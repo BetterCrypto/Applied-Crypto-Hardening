@@ -23,7 +23,7 @@ ssl
 ssl-ca=/etc/mysql/ssl/ca-cert.pem
 ssl-cert=/etc/mysql/ssl/client-cert.pem
 ssl-key=/etc/mysql/ssl/client-key.pem
-ssl-cipher=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
+ssl-cipher=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
 \end{lstlisting}
 
 After restarting the server run the following query to see if the ssl settings are correct:

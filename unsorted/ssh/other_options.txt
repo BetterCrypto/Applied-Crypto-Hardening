@@ -6,3 +6,6 @@ ChrootDirectory jails the user into a separate environment
 
 ForceCommand might help (especially with internal-sftp) to further limit possibilities of
 a remote use. rssh might be used as a shell to achieve similar behaviour.
+
+Port <1100-65530>
+# We recommend to use a high and non-standard port for SSH. Test it against nmap defaults that it does not get detected
