@@ -1,6 +1,8 @@
 NOW := $(shell date)
 
-all:
+all:	pdf html
+
+pdf:
 	pdflatex applied-crypto-hardening
 	# no bibtex citations atm
 	#bibtex applied-crypto-hardening
