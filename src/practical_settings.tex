@@ -743,6 +743,8 @@ This will enhance the security of the key exchange steps by using RSA keys with 
 In the server configuration file, you can select the algorithm that will be used for traffic encryption.
 Based on previous recommendation established in that document, select AES with a 128bits key in CBC mode.
 
+\todo{really?? I thought we go for configuration A or B. Please compare with those!}
+
 \begin{lstlisting}[breaklines]
 cipher AES-128-CBC   # AES
 \end{lstlisting}
@@ -756,17 +758,19 @@ CAMELLIA-128-CBC
 CAMELLIA-192-CBC
 CAMELLIA-256-CBC
 SEED-CBC
-\end{listlisting}
+\end{lstlisting}
 
 \paragraph{Client Configuration}
 
 Client and server have to use identical configuration otherwise they can't communicate.
-The \it{cipher} directive has then to be identical in both server and client configuration.
+The {\it cipher} directive has then to be identical in both server and client configuration.
 
 \begin{lstlisting}[breaklines]
 cipher AES-128-CBC   # AES
 \end{lstlisting}
 
+\todo{what about tls-auth keys/ta.key? }. 
+\todo{what about auth sha512 ?}
 
 \subsubsection{PPTP}
 \todo{cm: please write this subsubsection}
