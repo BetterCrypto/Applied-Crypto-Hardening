@@ -1,4 +1,6 @@
 \section{Cipher suites}
+\label{section:CipherSuites}
+\todo{team: section 8 is currently a bit messy. Re-do it}
 
 Cipher suites are a combination of algorithms to provide for 
 Confidentiality, Integrity and Authenticity
@@ -30,7 +32,7 @@ a set of cipher suites which we will recommend throught this document.
 \textbf{Caution: these settings can only represent a subjective choice of the
 authors at the time of this writing. It might be a wise choice to select your
 own cipher suites based on the instructions in section
-\ref{section:ChosingYourOwnCipherSuites}}.
+\ref{section:ChoosingYourOwnCipherSuites}}.
 
 
 \subsubsection{Configuration A: strong ciphers, fewer clients}
@@ -176,6 +178,10 @@ by copy and paste and needs to just work.
 
 \subsection{Known insecure and weak cipher suites}
 \todo{PG: please write this section. List all known broken, obsolete, weak and insecure cipher suites . Or even better: find the best site which keeps track of outdated cipher suites and simply reference it. We do not want to maintain such a list ourselves!}
+
+Ciphers with 112bit or less are considered weak and aren't recommended. Note that
+\texttt{3DES} provides only 112bit of security
+\footnote{url{http://csrc.nist.gov/publications/PubsSPs.html\#800-57-part1}}.
 
 \subsection{Compatibility}
 \todo{write this section. The idea here is to first document which server (and openssl) version we assumed. Once these parameters are fixed, we then list all clients which are supported for Variant A) and B). Therefore we can document compatibilities to some extent. The sysadmin can then choose roughly what he looses or gains by omitting certain cipher suites.}

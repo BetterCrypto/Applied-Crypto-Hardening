@@ -17,7 +17,7 @@
 \usepackage[english]{babel}										% English language/hyphenation
 \usepackage[protrusion=true,expansion=true]{microtype}				% Better typography
 \usepackage{amsmath,amsfonts,amsthm}					% Math packages
-\usepackage[pdftex]{graphicx}									% Enable pdflatex
+\usepackage[pdftex]{graphicx}						% Enable pdflatex 
 %\usepackage[svgnames]{xcolor}									% Enabling colors by their 'svgnames'
 \usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption}	% Custom captions under/above floats
 \usepackage{epstopdf}												% Converts .eps to .pdf
@@ -34,11 +34,11 @@
 \usepackage{fancyvrb}
 \usepackage{listings}
 
+\usepackage{gitinfo}
 
 % custom changes:
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage{placeins}
-\usepackage{hyperref}
 \usepackage{draftwatermark}
 
 % human tables
@@ -59,6 +59,7 @@
 
 % human tables
 \usepackage{booktabs}
+
 \renewcommand{\arraystretch}{1.25}
 
 \definecolor{green}{RGB}{32,113,10}
@@ -104,7 +105,7 @@ morekeywords={__global__, __device__},  %
 %
 % Comment out second line to disable.
 \newcommand{\todo}[1]{}
-\renewcommand{\todo}[1]{{\color{red} TODO: {#1}}}
+\renewcommand{\todo}[1]{{\color{Red} TODO: {#1}}}
 
 
 %%% Custom sectioning (sectsty package)
@@ -130,7 +131,7 @@ morekeywords={__global__, __device__},  %
 \chead{}
 \rhead{}
 % Footer (you may change this to your own needs)
-\lfoot{\footnotesize Applied Crypto Hardening \textbullet ~Draft}
+\lfoot{\footnotesize Applied Crypto Hardening \textbullet ~Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName}
 \cfoot{}
 \rfoot{\footnotesize page \thepage\ of \pageref{LastPage}}	% "Page 1 of 2"
 \renewcommand{\headrulewidth}{0.0pt}
@@ -185,11 +186,13 @@ morekeywords={__global__, __device__},  %
 
 \date{\today}
 
-
+% hyperref needs to be the last package you load.
+\usepackage[pdftex,breaklinks,colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
 
 %%% Begin document
 \begin{document}
 \maketitle
+
 \thispagestyle{fancy} 			% Enabling the custom headers/footers for the first page 
 % The first character should be within \initial{}
 %\initial{H}\textbf{ere is some sample text to show the initial in the introductory paragraph of this template article. The color and lineheight of the initial can be modified in the preamble of this document.}

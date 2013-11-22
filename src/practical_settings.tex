@@ -1,4 +1,5 @@
 \section{Recommendations on practical settings}
+\label{section:PracticalSettings}
 
 
 \subsection{Webservers}
@@ -44,6 +45,10 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
 
 \item[References:]
 
+\item[How to test:]
+
+See ssllabs in section \ref{section:Tools}
+
 \end{description}
 %XXXX   ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AES:RSA+3DES:!ADH:!AECDH:!MD5:!DSS
 
@@ -52,10 +57,16 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
 
 
 
-%% Note: need to be checked / reviewed
+\begin{description}
+\item[Tested with Version:]
+
+\todo{version?}
+
+\item[Settings:] \mbox{}
+
 
 %% Complete ssl.cipher-list with same algo than Apache
-\todo{FIXME: this string seems to be wrongly formatted}
+\todo{FIXME: this string seems to be wrongly formatted??}
 
 \begin{lstlisting}[breaklines]
   $SERVER["socket"] == "0.0.0.0:443" {
@@ -70,7 +81,10 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
   }
 \end{lstlisting}
 
-As for any other webserver, you should redirect automatically http traffic toward httpS:\footnote{That proposed configuration is directly coming from lighttpd documentation: \url{http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps}}
+
+\item[Additional settings:]
+
+As for any other webserver, you should redirect automatically http traffic toward httpS://
 
 \begin{lstlisting}[breaklines]
   $HTTP["scheme"] == "http" {
@@ -82,9 +96,27 @@ As for any other webserver, you should redirect automatically http traffic towar
   }
 \end{lstlisting}
 
+
+\item[References:] 
+\todo{add references}.
+lighttpd httpS:// redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps}
+
+% add any further references or best practice documents here
+
+\item[How to test:] See ssllabs in section \ref{section:Tools}
+
+% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+\end{description}
+
+
 \subsubsection{nginx}
 
+\begin{description}
+\item[Tested with Version:]
 
+\todo{version?}
+
+\item[Settings:] \mbox{}
 
 \begin{lstlisting}[breaklines]
   ssl_prefer_server_ciphers on;
@@ -96,6 +128,7 @@ As for any other webserver, you should redirect automatically http traffic towar
 
 %% XXX FIXME: do we need to specify dhparams? Parameter: ssl_dhparam = file. See: http://wiki.nginx.org/HttpSslModule#ssl_protocols
 
+\item[Additional settings:]
 
 If you decide to trust NIST's ECC curve recommendation, you can add the following line to nginx's configuration file to select special curves:
 
@@ -109,13 +142,28 @@ You should redirect everything to httpS:// if possible. In Nginx you can do this
   rewrite     ^(.*)   https://$host$1 permanent;
 \end{lstlisting}
 
-%\subsubsection{openssl.conf settings}
 
-%\subsubsection{Differences in SSL libraries: gnutls vs. openssl vs. others}
+\item[References:] \todo{add references}
+
+\item[How to test:] See ssllabs in section \ref{section:Tools}
+
+\end{description}
+
+
+
+
 
 \subsubsection{MS IIS}
 \label{sec:ms-iis}
 
+
+\todo{screenshots? registry key settings? }
+
+\begin{description}
+
+\item[Tested with Version:] \todo{version?}
+
+\item[Settings:] \mbox{}
 
 
 When trying to avoid RC4 and CBC (BEAST-Attack) and requiring perfect
@@ -183,6 +231,26 @@ Not supported Clients:
 \item Bing
 \end{enumerate}
 
+\item[Additional settings:]
+
+%Here you can add additional settings
+
+\item[Justification for special settings (if needed):]
+
+% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+
+\item[References:]
+
+\todo{add references}
+
+% add any further references or best practice documents here
+
+\item[How to test:] See ssllabs in section \ref{section:Tools}
+
+
+\end{description}
+
+
 
 \subsection{Mail Servers}
 
@@ -247,7 +315,7 @@ To support POP3S/IMAPS on ports 995/993 add
 
 \paragraph*{Limitations}\mbox{}\\
 
-cyrus-imapd currently (2.4.17, trunk) does not support elliptic curves. ECDHE will not work even if defined in your cipher list.
+cyrus-imapd currently (2.4.17, trunk) does not support elliptic curves. ECDHE will not work even if defined in your cipher list.\\
 
 Currently there is no way to prefer server ciphers or to disable compression.\\
 
@@ -403,11 +471,9 @@ It is highly recommended to read
 
 first.
 
-\paragraph*{OpenSSL}
+\paragraph*{MSA mode (submission)}\mbox{}\\
 
-\subparagraph*{server mode (incoming)}\mbox{}\\
-
-In the main config section of exim add:
+In the main config section of Exim add:
 
 \begin{lstlisting}[breaklines]
   tls_certificate = ..../cert.pem
@@ -415,7 +481,7 @@ In the main config section of exim add:
 \end{lstlisting}
 don't forget to add intermediate certificates to the .pem file if needed.\\
 \\
-Tell exim to advertise STARTTLS in the EHLO answer:
+Tell Exim to advertise STARTTLS in the EHLO answer to everyone:
 \begin{lstlisting}[breaklines]
   tls_advertise_hosts = *
 \end{lstlisting}
@@ -425,10 +491,54 @@ If you want to support legacy SMTPS on port 465, and STARTTLS on smtp(25)/submis
   daemon_smtp_ports = smtp : smtps : submission
   tls_on_connect_ports = 465
 \end{lstlisting}
-
-Exim already disables SSLv2 by default. We recommend to add
+\mbox{}\\
+It is highly recommended to limit SMTP AUTH to SSL connections only. To do so add
 \begin{lstlisting}[breaklines]
-  openssl_options = +no_sslv2 +no_compression +cipher_server_preference
+  server_advertise_condition = ${if eq{$tls_cipher}{}{no}{yes}}
+\end{lstlisting}
+to every authenticator defined.\\
+
+Add the following rules on top of your acl\_smtp\_mail:
+\begin{lstlisting}[breaklines]
+  warn    hosts           = *
+          control         = submission/sender_retain
+\end{lstlisting}
+This switches Exim to submission mode and allows addition of missing Message-ID: and Date: headers.\\
+
+It is not advisable to restrict the default cipher list for MSA mode if you don't know all connecting MUAs. If you still want to define one please consult the Exim documentation or ask on the exim-users mailinglist.\\
+% Exim maintainers do not recommend to change default ciphers
+% I think we shouldn't, too
+%use:
+%\begin{lstlisting}[breaklines]
+%  tls_require_ciphers = <...recommended ciphersuite...>
+%\end{lstlisting}
+
+The cipher used is written to the logfiles by default. You may want to add
+\begin{lstlisting}[breaklines]
+  log_selector = <....whatever your log_selector already contains...> \
+   +tls_certificate_verified +tls_peerdn +tls_sni
+\end{lstlisting}
+to get even more TLS information logged.
+
+
+\paragraph*{server mode (incoming)}\mbox{}\\
+
+In the main config section of Exim add:
+
+\begin{lstlisting}[breaklines]
+  tls_certificate = ..../cert.pem
+  tls_privatekey = ..../cert.key
+\end{lstlisting}
+don't forget to add intermediate certificates to the .pem file if needed.\\
+\\
+Tell Exim to advertise STARTTLS in the EHLO answer to everyone:
+\begin{lstlisting}[breaklines]
+  tls_advertise_hosts = *
+\end{lstlisting}
+
+Listen on smtp(25) port only
+\begin{lstlisting}[breaklines]
+  daemon_smtp_ports = smtp
 \end{lstlisting}
 
 It is not advisable to restrict the default cipher list for opportunistic encryption as used by SMTP. Do not use cipher lists recommended for HTTPS! If you still want to define one please consult the Exim documentation or ask on the exim-users mailinglist.\\
@@ -450,17 +560,14 @@ tls\_try\_verify\_hosts only reports the result to your logfile. If you want to 
   tls_verify_hosts = *
 \end{lstlisting}
 
-You do not need to set dh\_parameters. exim with OpenSSL uses a 2048bit default prime defined in section 2.2 of RFC 5114.
-If you want to set your own DH parameters please read the TLS documentation of exim.\\
-
 The cipher used is written to the logfiles by default. You may want to add
 \begin{lstlisting}[breaklines]
   log_selector = <....whatever your log_selector already contains...> \
    +tls_certificate_verified +tls_peerdn +tls_sni
 \end{lstlisting}
-to get even more information logged.
+to get even more TLS information logged.
 
-\subparagraph*{client mode (outgoing)}\mbox{}\\
+\paragraph*{client mode (outgoing)}\mbox{}\\
 
 Exim uses opportunistic encryption in the SMTP transport by default.
 
@@ -480,21 +587,26 @@ This is recommended for MTA-MTA traffic.\\
 % Exim Maintainers do not recommend ciphers. We shouldn't do so, too.
 Do not limit ciphers without a very good reason. In the worst case you end up without encryption at all instead of some weak encryption. Please consult the Exim documentation if you really need to define ciphers.
 
+\paragraph*{OpenSSL}\mbox{}\\
+Exim already disables SSLv2 by default. We recommend to add
+\begin{lstlisting}[breaklines]
+  openssl_options = +all +no_sslv2 +no_compression +cipher_server_preference
+\end{lstlisting}
+to the main configuration.\\
+Note: +all is misleading here since OpenSSL only activates the most common workarounds. But that's how SSL\_OP\_ALL is defined.\\
+
+You do not need to set dh\_parameters. Exim with OpenSSL by default uses parameter initialization with the "2048-bit MODP Group with 224-bit Prime Order Subgroup" defined in section 2.2 of RFC 5114 (ike23).
+If you want to set your own DH parameters please read the TLS documentation of exim.\\
+
+
+
 \paragraph*{GnuTLS}\mbox{}\\
 
 GnuTLS is different in only some respects to OpenSSL:
-\begin{list}{•}{•}
+\begin{itemize}
 \item tls\_require\_ciphers needs a GnuTLS priority string instead of a cipher list. It is recommended to use the defaults by not defining this option. It highly depends on the version of GnuTLS used. Therefore it is not advisable to change the defaults.
 \item There is no option like openssl\_options
-\end{list}
-
-\paragraph*{Limit SMTP AUTH to SSL connections only}\mbox{}\\
-
-It is highly recommended to limit SMTP AUTH to SSL connections only. To do so add
-\begin{lstlisting}[breaklines]
-  server_advertise_condition = ${if eq{$tls_cipher}{}{no}{yes}}
-\end{lstlisting}
-to every authenticator defined.
+\end{itemize}
 
 \paragraph*{Exim string expansion}\mbox{}\\
 
@@ -695,11 +807,12 @@ Adi?? }
 
 \subsection{Instant Messaging Systems}
 \subsubsection{XMPP / Jabber}
+\todo{ts: Describe ejabberd configuration. Reference to Peter`s manifesto https://github.com/stpeter/manifesto}
 \subsubsection{IRC}
 
 \input{DBs}
 
-\input{proxy_solutions}
+\input{proxy_solutions} 
 
 
 
