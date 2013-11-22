@@ -924,7 +924,14 @@ cipher AES-256-CBC   # AES
 \todo{what about auth sha512 ?}
 
 \subsubsection{PPTP}
-\todo{cm: please write this subsubsection}
+
+PPTP is broken, Microsoft recommends to ``use a more secure VPN
+tunnel''\footnote{\url{http://technet.microsoft.com/en-us/security/advisory/2743314}}.
+
+There is a cloud service that cracks the underlying MS-CHAPv2
+authentication protocol for the price of USD~200\footnote{\url{https://www.cloudcracker.com/blog/2012/07/29/cracking-ms-chap-v2/}},
+and given the resulting MD4 hash, all PPTP traffic for that user can
+be decrypted.
 
 \subsubsection{Cisco IPSec}
 \todo{write this subsubsection}
