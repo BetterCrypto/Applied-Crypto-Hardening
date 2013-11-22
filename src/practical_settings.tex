@@ -429,7 +429,7 @@ acceptable for the ``mandatory'' security level, again in
 \begin{lstlisting}[breaklines]
   smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
   smtpd_tls_mandatory_ciphers=high
-  tls_high_cipherlist='EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+  tls_high_cipherlist=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
 \end{lstlisting}
 
 Then, we configure the MSA smtpd in \verb|master.cf| with two
