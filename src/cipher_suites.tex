@@ -112,7 +112,7 @@ We arrived at this set of cipher suites by selecting
 This results in the string:
 
 \begin{lstlisting}[breaklines]
-'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
 \end{lstlisting}
 
 
@@ -230,7 +230,7 @@ encryption are exchanged. For RSA and DSA those keys are the same.
 \end{tabular}
 %\\
 %\\
-%disabled: \texttt{!PSK}
+%disabled: \texttt{!PSK:!SRP}
 \end{center}
 
 \textbf{Ephemeral Key Exchange} uses different keys for authentication (the server's RSA
@@ -253,8 +253,8 @@ make sure to at least use the stronger curve of the two supported by all clients
 (\texttt{secp384r1}).
 
 
-Other key exchange mechanisms like Pre-Shared Key (PSK) 
-are irrelevant for regular SSL/TLS use.
+Other key exchange mechanisms like Pre-Shared Key (PSK) or Secure Remote Password
+(SRP) are irrelevant for regular SSL/TLS use.
 
 \subsubsection{authentication}
 
