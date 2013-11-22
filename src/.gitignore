@@ -4,4 +4,6 @@ applied-crypto-hardening.log
 applied-crypto-hardening.out
 applied-crypto-hardening.pdf
 applied-crypto-hardening.toc
+applied-crypto-hardening.markdown
 *.gummi
+applied-crypto-hardening/
