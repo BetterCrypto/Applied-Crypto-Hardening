@@ -664,7 +664,7 @@ Note: older linux systems won't support SHA2, PuTTY does not support RIPE-MD160.
 \subsection{VPNs}
 \todo{write this subsection}
 \subsubsection{IPSec in general}
-
+\label{section:IPSECgeneral}
 
 
 \todo{cm: check if there are downgrade attacks for checkpoint \& co} \\
@@ -802,8 +802,69 @@ ESP or Phase 2 is where the actual data are protected.
 
 \subsubsection{Check Point FireWall-1}
    
-\todo{Aaron: make an example for how to include images}
-\todo{cm: screenshots of Checkpoint settings}
+\begin{description}
+\item[Tested with Version:] \mbox{}
+
+\begin{itemize}
+\item R77 (should work with any currently supported version)
+\end{itemize}
+
+\item[Settings:] \mbox{}
+
+Please see section \ref{section:IPSECgeneral} for guidance on
+parameter choice. In this section, we will configure a strong setup
+according to ``Configuration A''.
+
+This is based on the concept of a ``VPN Community'', which has all the
+settings for the gateways that are included in that community.
+Communities can be found in the ``IPSEC VPN'' tab of SmartDashboard.
+
+\todo{make those graphics prettier -- whoever has the right LaTeX
+  mojo, please do!}
+
+\includegraphics{checkpoint_1.png}
+
+Either chose one of the encryption suites here, or proceed to
+``Custom Encryption...'', where you can set encryption and hash for
+Phase 1 and 2:
+
+\includegraphics{checkpoint_2.png}
+
+The Diffie-Hellman groups and Perfect Forward Secrecy Settings can be
+found under ``Advanced Settings'' / ``Advanced VPN Properties'':
+
+\includegraphics{checkpoint_3.png}
+
+\item[Additional settings:]
+
+For remote Dynamic IP Gateways, the settings are not taken from the
+community, but set in the ``Global Properties'' dialog under ``Remote
+Access'' / ``VPN Authentication and Encryption''. Via the ``Edit...''
+button, you can configure sets of algorithms that all gateways support:
+
+\includegraphics{checkpoint_4.png}
+
+Please note that these settings restrict the available algorithms for
+\textbf{all} gateways, and also influence the VPN client connections.
+
+%\item[Justification for special settings (if needed):]
+
+%\item[Limitations:]
+
+\item[References:]\mbox{}
+
+\begin{itemize}
+
+\item Check Point
+  \href{https://sc1.checkpoint.com/documents/R77/CP_R77_VPN_AdminGuide/html_frameset.htm}{VPN
+    R77 Administration Guide} (may require a
+  UserCenter account to access)
+
+\end{itemize}
+
+% \item[How to test:]
+
+\end{description}
 
 
 \subsubsection{OpenVPN}
