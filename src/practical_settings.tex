@@ -724,8 +724,7 @@ Lifetime: \todo{need recommendations; 1--8 hours seems to be common practice}
 
 \subsubsection{OpenVPN}
 \todo{cm: please write this subsubsection}
-\todo{WARNING - Section Writing in progress...}
-\todo{We suppose user uses easy-rsa which is roughly used in all HOWTO}
+\todo{We suppose user uses easy-rsa which is roughly used in all HOWTO\footnote{http://openvpn.net/index.php/open-source/documentation/howto.html}}
 
 \paragraph{Fine tuning at installation level}
 
@@ -737,27 +736,36 @@ export KEY_SIZE=2048
 \end{lstlisting}
 
 This will enhance the security of the key exchange steps by using RSA keys with a length of 2048 bits.
-
 \todo{Shouldn't we need to reduce CA and certificate lifetime?  Per default 10y!!}
-
 
 \paragraph{Server Configuration}
 
-\todo{To write - locked by David}
+In the server configuration file, you can select the algorithm that will be used for traffic encryption.
+Based on previous recommendation established in that document, select AES with a 128bits key in CBC mode.
 
 \begin{lstlisting}[breaklines]
 cipher AES-128-CBC   # AES
 \end{lstlisting}
 
+The following ciphers are avaible and recommended\footnote{You can retrieve the list of supported algorithm on your OpenVPN installation thanks to the command \it{openvpn --show-ciphers}}
+\begin{lstlisting}[breaklines]
+AES-128-CBC
+AES-192-CBC
+AES-256-CBC
+CAMELLIA-128-CBC
+CAMELLIA-192-CBC
+CAMELLIA-256-CBC
+SEED-CBC
+\end{listlisting}
 
 \paragraph{Client Configuration}
 
-\todo{To write - locked by David}
+Client and server have to use identical configuration otherwise they can't communicate.
+The \it{cipher} directive has then to be identical in both server and client configuration.
 
 \begin{lstlisting}[breaklines]
-Hello World!
+cipher AES-128-CBC   # AES
 \end{lstlisting}
-
 
 
 \subsubsection{PPTP}
