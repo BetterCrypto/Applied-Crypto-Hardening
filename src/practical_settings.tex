@@ -741,15 +741,21 @@ This will enhance the security of the key exchange steps by using RSA keys with 
 \paragraph{Server Configuration}
 
 In the server configuration file, you can select the algorithm that will be used for traffic encryption.
-Based on previous recommendation established in that document, select AES with a 128bits key in CBC mode.
-
-\todo{really?? I thought we go for configuration A or B. Please compare with those!}
+Based on previous recommendation established in that document, select AES with a 256 bits key in CBC mode.
 
 \begin{lstlisting}[breaklines]
-cipher AES-128-CBC   # AES
+cipher AES-256-CBC   # AES
+
+# TLS Authentication
+tls-auth ta.key
+tls-cipher TLS-DHE-RSA-WITH-AES-256-CBC-SHA
+
+auth SHA512
 \end{lstlisting}
 
-The following ciphers are avaible and recommended\footnote{You can retrieve the list of supported algorithm on your OpenVPN installation thanks to the command \it{openvpn --show-ciphers}}
+\todo{Explain a little bit tls-auth and auth directives + TEST}
+
+The following ciphers are avaible and recommended\footnote{You can retrieve the list of supported algorithm on your OpenVPN installation thanks to the command {\it openvpn --show-ciphers}}
 \begin{lstlisting}[breaklines]
 AES-128-CBC
 AES-192-CBC
@@ -766,7 +772,7 @@ Client and server have to use identical configuration otherwise they can't commu
 The {\it cipher} directive has then to be identical in both server and client configuration.
 
 \begin{lstlisting}[breaklines]
-cipher AES-128-CBC   # AES
+cipher AES-256-CBC   # AES
 \end{lstlisting}
 
 \todo{what about tls-auth keys/ta.key? }. 
