@@ -381,7 +381,14 @@ mode, because the alternative is plain text transmission.
 
 \subsubsection{Postfix}
 
-\todo{cm: document DANE}
+\begin{description}
+\item[Tested with Version:] \mbox{}
+
+\begin{itemize}
+\item Postfix 2.9.6 (Debian Wheezy)
+\end{itemize}
+
+\item[Settings:] \mbox{}
 
 First, you need to generate Diffie Hellman parameters (please first take a look at the section \ref{section:PRNG}):
 
@@ -402,9 +409,7 @@ Next, we specify these DH parameters in \verb|main.cf|:
 
 As discussed above, because of opportunistic encryption we do not
 restrict the list of ciphers. There's still some steps needed to
-enable TLS, all in \verb|main.cf| \footnote{Refer to
-  \url{http://www.postfix.org/TLS_README.html} for an in-depth
-  discussion.}:
+enable TLS, all in \verb|main.cf|:
 
 \begin{lstlisting}[breaklines]
   smtpd_tls_cert_file = /etc/postfix/server.pem
@@ -445,7 +450,29 @@ For those users who want to use ECC key exchange, it is possible to specify this
   smtpd_tls_eecdh_grade = ultra
 \end{lstlisting}
 
-You can check the settings with the following command:
+\item[Limitations:] \mbox{}
+
+tls\_ssl\_options is supported from Postfix 2.11 onwards. You can
+leave the statement in the configuration for older versions, it will
+be ignored.
+
+tls\_preempt\_cipherlist is supported from Postfix 2.8 onwards. Again,
+you can leave the statement in for older versions.
+
+\item[References:]
+
+Refer to \url{http://www.postfix.org/TLS_README.html} for an in-depth
+discussion.
+
+% \item[Additional settings:]
+% no additional settings
+
+% \item[Justification for special settings (if needed):]
+% no special settings
+
+\item[How to test:]
+
+You can check the effect of the settings with the following command:
 \begin{lstlisting}[breaklines]
 $ zegrep "TLS connection established from.*with cipher" | /var/log/mail.log | awk '{printf("%s %s %s %s\n", $12, $13, $14, $15)}' | sort | uniq -c | sort -n
       1 SSLv3 with cipher DHE-RSA-AES256-SHA
@@ -455,14 +482,7 @@ $ zegrep "TLS connection established from.*with cipher" | /var/log/mail.log | aw
     335 TLSv1 with cipher DHE-RSA-AES256-SHA
 \end{lstlisting}
 
-\paragraph*{Limitations}\mbox{}\\
-
-tls\_ssl\_options is supported from Postfix 2.11 onwards. You can
-leave the statement in the configuration for older versions, it will
-be ignored.
-
-tls\_preempt\_cipherlist is supported from Postfix 2.8 onwards. Again,
-you can leave the statement in for older versions.
+\end{description}
 
 \subsubsection{Exim (based on 4.82)}
 
