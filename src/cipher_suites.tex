@@ -28,7 +28,7 @@ make a hard decision between locking out some users while keeping very high
 cipher suite security levels or supporting as many users as possible while
 lowering some settings. \url{https://www.ssllabs.com/} gives administrators a
 tool to test out different settings. The authors used ssllabs.com to arrive at
-a set of cipher suites which we will recommend throught this document.
+a set of cipher suites which we will recommend throughout this document.
 \textbf{Caution: these settings can only represent a subjective choice of the
 authors at the time of this writing. It might be a wise choice to select your
 own cipher suites based on the instructions in section
@@ -67,15 +67,16 @@ This results in the string:
 
 
 
+\todo{make a column for cipher chaining mode}
 \begin{center}
 
 \begin{tabular}{lllllll}
 \toprule
-\textbf{ID}   & \textbf{OpenSSL Name}       & \textbf{Version} & \textbf{KeyEx} & \textbf{Auth} & \textbf{Cipher} & \textbf{Hash}\\\cmidrule(lr){1-7}
+\textbf{ID}   & \textbf{OpenSSL Name}       & \textbf{Version} & \textbf{KeyEx} & \textbf{Auth} & \textbf{Cipher} & \textbf{MAC}\\\cmidrule(lr){1-7}
 \verb|0xC030| & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2          & ECDH           &  RSA          & AESGCM(256)     & AEAD         \\
-\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           &  RSA          & AES(256)        & SHA384       \\
+\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           &  RSA          & AES(256) (CBC)  & SHA384       \\
 \verb|0x009F| & DHE-RSA-AES256-GCM-SHA384   & TLSv1.2          & DH             &  RSA          & AESGCM(256)     & AEAD         \\
-\verb|0x006B| & DHE-RSA-AES256-SHA256       & TLSv1.2          & DH             &  RSA          & AES(256)        & SHA256       \\
+\verb|0x006B| & DHE-RSA-AES256-SHA256       & TLSv1.2          & DH             &  RSA          & AES(256) (CBC)  & SHA256       \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -91,8 +92,8 @@ Win 7 and Win 8.1 crypto stack, Opera 17, OpenSSL $\ge$ 1.0.1e, Safari 6 / iOS
 
 \subsubsection{Configuration B: weaker ciphers, many clients}
 
-In this section we propose a slighly "weaker" set of cipher suites. There are
-some known weaknesses of for example SHA-1 which is included in this set.
+In this section we propose a slightly "weaker" set of cipher suites. For example, there are
+some known weaknesses for SHA-1 which is included in this set.
 However, the advantage of this set of cipher suites is its wider compatibility
 with clients. 
 
@@ -116,19 +117,19 @@ This results in the string:
 \end{lstlisting}
 
 
-
+\todo{make a column for cipher chaining mode}
 \begin{center}
 \begin{tabular}{lllllll}
 \toprule
-\textbf{ID}   & \textbf{OpenSSL Name}       & \textbf{Version} & \textbf{KeyEx} & \textbf{Auth} & \textbf{Cipher} & \textbf{Hash}\\\cmidrule(lr){1-7}
+\textbf{ID}   & \textbf{OpenSSL Name}       & \textbf{Version} & \textbf{KeyEx} & \textbf{Auth} & \textbf{Cipher} & \textbf{MAC}\\\cmidrule(lr){1-7}
 \verb|0xC030| & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2          & ECDH           &  RSA          & AESGCM(256)     & AEAD         \\ 
-\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           &  RSA          & AES(256)        & SHA384       \\ 
+\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           &  RSA          & AES(256) (CBC)  & SHA384       \\ 
 \verb|0x009F| & DHE-RSA-AES256-GCM-SHA384   & TLSv1.2          & DH             &  RSA          & AESGCM(256)     & AEAD         \\ 
-\verb|0x006B| & DHE-RSA-AES256-SHA256       & TLSv1.2          & DH             &  RSA          & AES(256)        & SHA256       \\ 
+\verb|0x006B| & DHE-RSA-AES256-SHA256       & TLSv1.2          & DH             &  RSA          & AES(256) (CBC)  & SHA256       \\ 
 \verb|0x0088| & DHE-RSA-CAMELLIA256-SHA     & SSLv3            & DH             &  RSA          & Camellia(256)   & SHA1         \\ 
-\verb|0xC014| & ECDHE-RSA-AES256-SHA        & SSLv3            & ECDH           &  RSA          & AES(256)        & SHA1         \\ 
-\verb|0x0039| & DHE-RSA-AES256-SHA          & SSLv3            & DH             &  RSA          & AES(256)        & SHA1         \\ 
-\verb|0x0035| & AES256-SHA                  & SSLv3            & RSA            &  RSA          & AES(256)        & SHA1         \\
+\verb|0xC014| & ECDHE-RSA-AES256-SHA        & SSLv3            & ECDH           &  RSA          & AES(256) (CBC)  & SHA1         \\ 
+\verb|0x0039| & DHE-RSA-AES256-SHA          & SSLv3            & DH             &  RSA          & AES(256) (CBC)  & SHA1         \\ 
+\verb|0x0035| & AES256-SHA                  & SSLv3            & RSA            &  RSA          & AES(256) (CBC)  & SHA1         \\
 \bottomrule
 \end{tabular}
 \end{center}
