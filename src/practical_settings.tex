@@ -22,7 +22,7 @@
   # ALL subdomains HAVE TO support https if you use this!
   # Strict-Transport-Security: max-age=15768000 ; includeSubDomains
 
-  SSLCipherSuite 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+  SSLCipherSuite 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
 \end{lstlisting}
 
 Note again, that any cipher suite starting with ECDHE  can be omitted in case of doubt.
@@ -75,7 +75,7 @@ See ssllabs in section \ref{section:Tools}
     ssl.use-sslv3 = "disable"
     #ssl.use-compression obsolete >= 1.4.3.1
     ssl.pemfile = "/etc/lighttpd/server.pem"
-    ssl.cipher-list = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+    ssl.cipher-list = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
     ssl.honor-cipher-order = "enable"
     setenv.add-response-header  = ( "Strict-Transport-Security" => "max-age=31536000")
   }
@@ -121,7 +121,7 @@ lighttpd httpS:// redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/
 \begin{lstlisting}[breaklines]
   ssl_prefer_server_ciphers on;
   ssl_protocols -SSLv2 -SSLv3; 
-  ssl_ciphers 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA';
+  ssl_ciphers 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA';
   add_header Strict-Transport-Security max-age=2592000;
   add_header X-Frame-Options DENY;
 \end{lstlisting}
@@ -206,9 +206,9 @@ tested using https://www.ssllabs.com.
   \label{tab:MS_IIS_Client_Support}
 \end{table}
 
-Table~\ref{tab:MS_IIS_Client_Support} shows the algorithms from
+Table~\ref{tab:MS_IIS_Client_Support} shows the algoriths from
 strongest to weakest and why they need to be added in this order. For
-example insisting on SHA-2 algorithms (only first two lines) would
+example insiting on SHA-2 algorithms (only first two lines) would
 eliminate all versions of Firefox, so the last line is needed to
 support this browser, but should be placed at the bottom, so capable
 browsers will choose the stronger SHA-2 algorithms.
@@ -264,7 +264,7 @@ Dovecot 2.2:
 % Example: http://dovecot.org/list/dovecot/2013-October/092999.html
 
 \begin{lstlisting}[breaklines]
-  ssl_cipher_list = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+  ssl_cipher_list = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
   ssl_prefer_server_ciphers = yes
 \end{lstlisting}
 
@@ -333,13 +333,13 @@ in imapd.conf. But note that SASL PLAIN/LOGIN is still available!\\
 
 % XXX config von Adi?
 % sslVersion = TLSv1
-% ciphers = EDH+CAMELLIA256:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:-AES128:!CAMELLIA128:!ECDSA:AES256-SHA:EDH+AES128;
+% ciphers = EDH+CAMELLIA256:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:-AES128:!CAMELLIA128:!ECDSA:AES256-SHA:EDH+AES128;
 % options = CIPHER_SERVER_PREFERENCE
 % TIMEOUTclose = 1
 
 \subsubsection{SMTP in general}
 
-SMTP usually uses opportunistic TLS. This means that an MTA will accept TLS connections when asked for it during handshake but will not require it. One should always support incoming opportunistic TLS and always try TLS handshake outgoing. For opportunistic encryption, any ciphersuite is acceptable, but you should make sure that the good ciphersuites are at the top of the list. \\
+SMTP usually uses opportunistic TLS. This means that an MTA will accept TLS connections when asked for it during handshake but will not require it. One should always support incoming opportunistic TLS and always try TLS handshake outgoing.\\
 
 Furthermore a mailserver can operate in three modes:
 \begin{itemize}
@@ -428,7 +428,7 @@ acceptable for the ``mandatory'' security level, again in
 \begin{lstlisting}[breaklines]
   smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
   smtpd_tls_mandatory_ciphers=high
-  tls_high_cipherlist='EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+  tls_high_cipherlist='EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
 \end{lstlisting}
 
 Then, we configure the MSA smtpd in \verb|master.cf| with two
