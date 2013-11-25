@@ -13,9 +13,12 @@
 
 \subsubsection{MySQL}
 
-\paragraph*{my.cnf}\mbox{}\\
+\begin{description}
+\item[Tested with Version:] with Debian 7.0 and MySQL 5.5
 
-%Tested with Debian 7.0 and MySQL 5.5
+\item[Settings:] \mbox{}
+
+\paragraph*{my.cnf}\mbox{}\\
 
 \begin{lstlisting}[breaklines]
 [mysqld]
@@ -26,17 +29,89 @@ ssl-key=/etc/mysql/ssl/client-key.pem
 ssl-cipher=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
 \end{lstlisting}
 
+\item[Additional settings:]
+
+
+\item[Justification for special settings (if needed):]
+
+% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+
+\item[References:]
+
+\todo{add references}
+
+% add any further references or best practice documents here
+
+\item[How to test:]
+
 After restarting the server run the following query to see if the ssl settings are correct:
 \begin{lstlisting}[breaklines]
 show variables like '%ssl%';
 \end{lstlisting}
 
 
+\end{description}
+
+
+
+
+
+
 \subsubsection{DB2}
 \todo{write this}
 
+
+
+
+
 \subsubsection{Postgresql}
+
+\begin{description}
+\item[Tested with Version:]
+
+\todo{version?}
+
+\item[References:]
+
+It's recommended to read 
+
+http://www.postgresql.org/docs/X.X/interactive/runtime-config-connection.html\#RUNTIME-CONFIG-CONNECTION-SECURITY
+
+Just change X.X with your preferred version e.g. 9.1
+
+\item[Settings:] \mbox{}
+
+
+To start in SSL mode the server.crt and server.key must exist in the server's data directory \$PGDATA. 
+Don't forget to set the right permission (0600) to your server.key. 
+
+Starting with version 9.2, you have the possibility to set the path.
+
+\begin{lstlisting}[breaklines]
+ssl_key_file = '/your/path/server.key'
+ssl_cert_file = '/your/path/server.crt'
+ssl_ca_file = '/your/path/root.crt'
+\end{lstlisting}
+
+\paragraph*{postgresql.conf}\mbox{}\\
+
+\begin{lstlisting}[breaklines]
+#>=8.3
+ssl = on 
+ssl_ciphers = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+\end{lstlisting}
+
+
+
+\item[How to test:]
+
 \todo{write this}
+% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+
+\end{description}
+
+
+
 
 \subsubsection{Informix}
 \todo{write this}

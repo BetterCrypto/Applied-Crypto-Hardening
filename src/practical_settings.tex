@@ -209,7 +209,7 @@ tested using https://www.ssllabs.com.
 
 Table~\ref{tab:MS_IIS_Client_Support} shows the algoriths from
 strongest to weakest and why they need to be added in this order. For
-example insiting on SHA-2 algorithms (only first two lines) would
+example insisting on SHA-2 algorithms (only first two lines) would
 eliminate all versions of Firefox, so the last line is needed to
 support this browser, but should be placed at the bottom, so capable
 browsers will choose the stronger SHA-2 algorithms.
@@ -645,32 +645,35 @@ There already is a working patch to provide support:\\
 % do we need to documment starttls in detail?
 %\subsubsection{starttls?}
 
-\subsection{SSH}
-
+\subsection{OpenSSH}
+\paragraph*{sshd_config}
 \begin{lstlisting}[breaklines]
+	# ...
+
 	Protocol 2
 	PermitEmptyPasswords no
 	PermitRootLogin no
 	StrictModes yes
 	HostKey /etc/ssh/ssh_host_rsa_key
-	Ciphers aes256-ctr
-	MACs hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
+	Ciphers aes256-gcm@openssh.com aes128-gcm@openssh.com aes256-ctr aes128-ctr
+	MACs umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
 	KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1
 \end{lstlisting}
 
 % XXX: curve25519-sha256@libssh.org only available upstream(!)
-Note: older linux systems won't support SHA2, PuTTY does not support RIPE-MD160.
+Note: Older linux systems won't support SHA2. PuTTY (Windows) does not support RIPE-MD160. Curve25519, AES-GCM and UMAC are only available upstream (OpenSSH 6.1). DSA host keys have been removed on purpose, the DSS standard does not support for DSA keys stronger than 1024bit
+\footnote{\url{https://bugzilla.mindrot.org/show_bug.cgi?id=1647}} 
+which is far below current standards (see section \ref{section:keylengths}). Legacy systems can use this configuration and simply omit unsupported ciphers, key exchange algorithms and MACs.
 \\
 
 
 \subsection{VPNs}
 \todo{write this subsection}
-\subsubsection{IPSec in general}
+\subsubsection{IPSec}
 \label{section:IPSECgeneral}
 
 
 \todo{cm: check if there are downgrade attacks for checkpoint \& co} \\
-\todo{cm: change this to a table format: Variant ((A,B), (recommendations, recommendations))} \\
 
 \begin{description}
 
@@ -870,37 +873,74 @@ Please note that these settings restrict the available algorithms for
 
 
 \subsubsection{OpenVPN}
+
+\begin{description}
+
+\item[Tested with Version:] OpenVPN 2.3.2 from Debian backports linked against openssl (libssl.so.1.0.0) 
+
 \todo{cm: please write this subsubsection}
-\todo{We suppose user uses easy-rsa which is roughly used in all HOWTO\footnote{http://openvpn.net/index.php/open-source/documentation/howto.html}}
+\todo{We suppose user uses easy-rsa which is roughly used in all HOWTO\footnote{\url{http://openvpn.net/index.php/open-source/documentation/howto.html}}}
+
+
+\item[Additional settings:] \mbox{}
 
 \paragraph{Fine tuning at installation level}
 
 When installing an OpenVPN server instance, you are probably using {\it easy-rsa} tools to generate the crypto stuff needed.
-From the directory where you will run them, you can enhance you configuration by changing the following variables in {\it Vars}
+From the directory where you will run them, you can enhance you configuration by changing the following variables in \verb|vars|:
 
 \begin{lstlisting}[breaklines]
 export KEY_SIZE=2048 
+export KEY_EXPIRE=365
+export CA_EXPIRE=1826
 \end{lstlisting}
 
-This will enhance the security of the key exchange steps by using RSA keys with a length of 2048 bits.
-\todo{Shouldn't we need to reduce CA and certificate lifetime?  Per default 10y!!}
+This will enhance the security of the key generation by using RSA keys
+with a length of 2048 bits, and set a lifetime of one year for the
+keys and five years for the CA certificate.
+
+In addition, edit the \verb|pkitool| script and replace all occurences
+of \verb|sha1| with \verb|sha256|, to sign the certificates with
+SHA256.
 
 \paragraph{Server Configuration}
 
 In the server configuration file, you can select the algorithm that will be used for traffic encryption.
 Based on previous recommendation established in that document, select AES with a 256 bits key in CBC mode.
 
+Note that TLS is used only for negotiation bla bla bla...
+
+\todo{cm: explain how openvpn crypto works; make configA/B sections/tables}
+
+\item[Settings:] \mbox{}
+
+% openvpn --show-ciphers
+% --show-tls
+
+\todo{cm: changelog 2.3.1: ``Switch to IANA names for TLS ciphers'' --
+give both types of strings?}
+
 \begin{lstlisting}[breaklines]
 cipher AES-256-CBC   # AES
 
 # TLS Authentication
 tls-auth ta.key
-tls-cipher TLS-DHE-RSA-WITH-AES-256-CBC-SHA
+tls-cipher EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
 
 auth SHA512
+
+reneg-bytes XXX
+reneg-pkts XXX
+reneg-sec XXX
+
 \end{lstlisting}
 
+% tls-cipher is a list, C&P the string!
+% what about: TLS-DHE-RSA-WITH-AES-256-CBC-SHA
+% DH params/DH key sizes
+
 \todo{Explain a little bit tls-auth and auth directives + TEST}
+\todo{also test with network-damager?}
 
 The following ciphers are avaible and recommended\footnote{You can retrieve the list of supported algorithm on your OpenVPN installation thanks to the command {\it openvpn --show-ciphers}}
 \begin{lstlisting}[breaklines]
@@ -913,6 +953,7 @@ CAMELLIA-256-CBC
 SEED-CBC
 \end{lstlisting}
 
+
 \paragraph{Client Configuration}
 
 Client and server have to use identical configuration otherwise they can't communicate.
@@ -920,32 +961,192 @@ The {\it cipher} directive has then to be identical in both server and client co
 
 \begin{lstlisting}[breaklines]
 cipher AES-256-CBC   # AES
+
+remote-cert-tls server # http://openvpn.net/index.php/open-source/documentation/howto.html#mitm
+
+tls-remote server.example.com
+
 \end{lstlisting}
 
 \todo{what about tls-auth keys/ta.key? }. 
 \todo{what about auth sha512 ?}
 
+\item[Justification for special settings (if needed):]
+
+\item[References:] \url{http://openvpn.net/index.php/open-source/documentation/security-overview.html}
+
+\item[How to test:]
+\todo{write me please}
+
+
+\end{description}
+
+
 \subsubsection{PPTP}
 
-PPTP is broken, Microsoft recommends to ``use a more secure VPN
+PPTP is considered insecure, Microsoft recommends to ``use a more secure VPN
 tunnel''\footnote{\url{http://technet.microsoft.com/en-us/security/advisory/2743314}}.
 
 There is a cloud service that cracks the underlying MS-CHAPv2
 authentication protocol for the price of USD~200\footnote{\url{https://www.cloudcracker.com/blog/2012/07/29/cracking-ms-chap-v2/}},
-and given the resulting MD4 hash, all PPTP traffic for that user can
+and given the resulting MD4 hash, all PPTP traffic for a user can
 be decrypted.
 
 \subsubsection{Cisco IPSec}
 \todo{write this subsubsection}
 
+\begin{description}
+\item[Tested with Version:] \todo{version?}
+
+\item[Settings:] \mbox{}
+
+\begin{lstlisting}[breaklines]
+    %Here goes your setting string
+\end{lstlisting}
+
+\item[Additional settings:] \mbox{}
+
+%Here you can add additional settings
+
+\begin{lstlisting}[breaklines]
+    %copy \& paste additional settings
+\end{lstlisting}
+
+\item[Justification for special settings (if needed):] \mbox{}
+
+% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+
+\item[References:] \todo{add references}
+
+% add any further references or best practice documents here
+
+\item[How to test:] 
+% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+
+\end{description}
+
+
+
+
+
+
+
 \subsubsection{Juniper VPN}
 \todo{write this subsubsection. AK: ask Hannes}
+
+
+\begin{description}
+\item[Tested with Version:] \todo{version?}
+
+\item[Settings:] \mbox{}
+
+\begin{lstlisting}[breaklines]
+    %Here goes your setting string
+\end{lstlisting}
+
+\item[Additional settings:] \mbox{}
+
+%Here you can add additional settings
+
+\begin{lstlisting}[breaklines]
+    %copy \& paste additional settings
+\end{lstlisting}
+
+\item[Justification for special settings (if needed):] \mbox{}
+
+% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+
+\item[References:] \todo{add references}
+
+% add any further references or best practice documents here
+
+\item[How to test:]
+% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+
+\end{description}
+
+
+
+
 
 \subsubsection{L2TP over IPSec}
 \todo{write this subsubsection}
 
+
+\begin{description}
+\item[Tested with Version:] \todo{version?}
+
+\item[Settings:] \mbox{}
+
+\begin{lstlisting}[breaklines]
+    %Here goes your setting string
+\end{lstlisting}
+
+\item[Additional settings:] \mbox{}
+
+%Here you can add additional settings
+
+\begin{lstlisting}[breaklines]
+    %copy \& paste additional settings
+\end{lstlisting}
+
+\item[Justification for special settings (if needed):] \mbox{}
+
+% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+
+\item[References:] \todo{add references}
+
+% add any further references or best practice documents here
+
+\item[How to test:]
+% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+
+\end{description}
+
+
+
+
+
+
 \subsubsection{Racoon}
 \todo{write this subsubsection}
+
+
+\begin{description}
+\item[Tested with Version:] \todo{version?}
+
+\item[Settings:] \mbox{}
+
+\begin{lstlisting}[breaklines]
+    %Here goes your setting string
+\end{lstlisting}
+
+\item[Additional settings:] \mbox{}
+
+%Here you can add additional settings
+
+\begin{lstlisting}[breaklines]
+    %copy \& paste additional settings
+\end{lstlisting}
+
+\item[Justification for special settings (if needed):] \mbox{}
+
+% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+
+\item[References:] \todo{add references}
+
+% add any further references or best practice documents here
+
+\item[How to test:]
+% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+
+\end{description}
+
+
+
+
+
+
 
 
 \subsection{PGP/ GPG - Pretty Good Privacy}
@@ -964,8 +1165,11 @@ seclayer-tcp    3495/tcp    # securitylayer over tcp
 
 
 \subsection{IPMI, ILO and other lights out management solutions}
-\todo{write this!! Recommendation. Empfehlung: nie ins Internet, nur in ein eigenes mgmt VLAN, das via VPN erreichbar ist!!
-Adi?? }
+
+
+We \textbf{strongly} recommend that any remote management system for servers such as ILO, IPMI and similar never be connected to a public IP address.
+Consider creating a management VLAN and access that only via a VPN.
+
 
 \subsection{SIP}
 \todo{AK: ask Klaus. Write this section, Klaus??? }
