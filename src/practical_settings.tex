@@ -870,8 +870,16 @@ Please note that these settings restrict the available algorithms for
 
 
 \subsubsection{OpenVPN}
+
+\begin{description}
+
+\item[Tested with Version:] OpenVPN 2.3.2 from Debian backports linked against openssl (libssl.so.1.0.0) 
+
 \todo{cm: please write this subsubsection}
 \todo{We suppose user uses easy-rsa which is roughly used in all HOWTO\footnote{\url{http://openvpn.net/index.php/open-source/documentation/howto.html}}}
+
+
+\item[Additional settings:] \mbox{}
 
 \paragraph{Fine tuning at installation level}
 
@@ -900,6 +908,8 @@ Based on previous recommendation established in that document, select AES with a
 Note that TLS is used only for negotiation bla bla bla...
 
 \todo{cm: explain how openvpn crypto works; make configA/B sections/tables}
+
+\item[Settings:] \mbox{}
 
 % openvpn --show-ciphers
 % --show-tls
@@ -937,6 +947,7 @@ CAMELLIA-256-CBC
 SEED-CBC
 \end{lstlisting}
 
+
 \paragraph{Client Configuration}
 
 Client and server have to use identical configuration otherwise they can't communicate.
@@ -953,6 +964,17 @@ tls-remote server.example.com
 
 \todo{what about tls-auth keys/ta.key? }. 
 \todo{what about auth sha512 ?}
+
+\item[Justification for special settings (if needed):]
+
+\item[References:] \url{http://openvpn.net/index.php/open-source/documentation/security-overview.html}
+
+\item[How to test:]
+\todo{write me please}
+
+
+\end{description}
+
 
 \subsubsection{PPTP}
 
