@@ -1,17 +1,41 @@
 \section{Cipher suites}
 \label{section:CipherSuites}
 \todo{team: section 8 is currently a bit messy. Re-do it}
+\todo{daniel: tex properly and add sources}
 
-Cipher suites are a combination of algorithms to provide for 
-Confidentiality, Integrity and Authenticity
-\footnote{\url{http://en.wikipedia.org/wiki/Information\_security}} of 
-communication. For example: sending encrypted data over the wire does not 
-ensure that the data can not be modified (message integrity), similarly
-encrypted data can be sent from an adversary. It is therefore paramount to
-prove that data has been sent from the desired source (message authenticity).
-This concept is known as authenticated encryption
-\footnote{\url{http://en.wikipedia.org/wiki/Authenticated\_encryption}}
-\footnote{\url{http://www.cs.jhu.edu/~astubble/dss/ae.pdf}}.
+A cipher suite is a standardised collection of key exchange algorithms, ciphers,
+Message authentication code (MAC) that provides authenticated encryption schemes. 
+It consists of the following components:
+
+\subsection{Key exchange protocol}
+"An (interactive) key exchange protocol is a method whereby parties who do not 
+share any secret information can generate a shared, secret key by communicating 
+over a public channel. The main property guaranteed here is that an 
+eavesdropping adversary who sees all the messages sent over the communication 
+line does not learn anything about the resulting secret key." {1} 
+Katz, Lindell Introduction to Modern cryptography
+Example: DH ECDH DHE ECDHE RSA
+
+\subsection{Authentication}
+The client authenticates the server by its certificate. Optionally the server 
+may authenticate the client certificate.
+Example: RSA ECDSA DSA
+
+\subsection{Cipher}
+The cipher is used to encrypt the message stream. It also contains the key size
+and mode used by the suite.
+
+Example: AES128 AES128\_GCM Camellia128 
+
+
+\subsection{Message authentication code (MAC)}
+A MAC ensures that the message has not been tampered with (integrity).
+Examples: SHA256 SHA384 SHA
+
+\todo{find a good visualisation for a cipher suite composition}
+
+\subsection{Authenticated encryption scheme}
+An encryption scheme which provides confidentiality, integrity and authenticity.
 
 \subsection{Forward Secrecy}
 Forward Secrecy or Perfect Forward Secrecy is a property of a cipher suite 
