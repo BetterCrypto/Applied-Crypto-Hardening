@@ -646,8 +646,10 @@ There already is a working patch to provide support:\\
 %\subsubsection{starttls?}
 
 \subsection{OpenSSH}
-
+\paragraph*{sshd_config}
 \begin{lstlisting}[breaklines]
+	# ...
+
 	Protocol 2
 	PermitEmptyPasswords no
 	PermitRootLogin no
@@ -659,9 +661,9 @@ There already is a working patch to provide support:\\
 \end{lstlisting}
 
 % XXX: curve25519-sha256@libssh.org only available upstream(!)
-Note: older linux systems won't support SHA2. PuTTY (Windows)  does not support RIPE-MD160. Curve25519, AES-GCM and UMAC are only available upstream (OpenSSH 6.1). DSA host keys have been removed on purpose, the DSS standard does not support for DSA keys stronger than 1024bit
+Note: Older linux systems won't support SHA2. PuTTY (Windows) does not support RIPE-MD160. Curve25519, AES-GCM and UMAC are only available upstream (OpenSSH 6.1). DSA host keys have been removed on purpose, the DSS standard does not support for DSA keys stronger than 1024bit
 \footnote{\url{https://bugzilla.mindrot.org/show_bug.cgi?id=1647}} 
-which is far below current standards (see section \ref{section:keylengths}).
+which is far below current standards (see section \ref{section:keylengths}). Legacy systems can use this configuration and simply omit unsupported ciphers, key exchange algorithms and MACs.
 \\
 
 
