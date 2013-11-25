@@ -120,6 +120,7 @@ What happens at the IETF at the moment?
 * irc,silc --> out of scope
 !! * IPMI/ILO/RAC: Java --> important. Empfehlung: nie ins Internet, nur in ein eigenes mgmt VLAN, das via VPN erreichbar ist!!
 * LDAP -> out of scope
+* RADIUS? -> maybe later...
 * Moxa , APC, und co... ICS . Ethernet to serial --> out of scope
 * telnet -> DON't!!! 
 * rsyslog --> out of scope
