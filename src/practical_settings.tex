@@ -653,13 +653,13 @@ There already is a working patch to provide support:\\
 	PermitRootLogin no
 	StrictModes yes
 	HostKey /etc/ssh/ssh_host_rsa_key
-	Ciphers aes256-ctr
-	MACs hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
+	Ciphers aes256-gcm@openssh.com aes128-gcm@openssh.com aes256-ctr aes128-ctr
+	MACs umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
 	KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1
 \end{lstlisting}
 
 % XXX: curve25519-sha256@libssh.org only available upstream(!)
-Note: older linux systems won't support SHA2, PuTTY does not support RIPE-MD160.
+Note: older linux systems won't support SHA2. PuTTY (Windows)  does not support RIPE-MD160. Curve25519, AES-GCM and UMAC are only available upstream (OpenSSH 6.1).
 \\
 
 
