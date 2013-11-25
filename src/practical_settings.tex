@@ -653,13 +653,13 @@ There already is a working patch to provide support:\\
 	PermitRootLogin no
 	StrictModes yes
 	HostKey /etc/ssh/ssh_host_rsa_key
-	Ciphers aes256-ctr
-	MACs hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
+	Ciphers aes256-gcm@openssh.com aes128-gcm@openssh.com aes256-ctr aes128-ctr
+	MACs umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
 	KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha1
 \end{lstlisting}
 
 % XXX: curve25519-sha256@libssh.org only available upstream(!)
-Note: older linux systems won't support SHA2, PuTTY does not support RIPE-MD160.
+Note: older linux systems won't support SHA2. PuTTY (Windows)  does not support RIPE-MD160. Curve25519, AES-GCM and UMAC are only available upstream (OpenSSH 6.1).
 \\
 
 
@@ -871,36 +871,58 @@ Please note that these settings restrict the available algorithms for
 
 \subsubsection{OpenVPN}
 \todo{cm: please write this subsubsection}
-\todo{We suppose user uses easy-rsa which is roughly used in all HOWTO\footnote{http://openvpn.net/index.php/open-source/documentation/howto.html}}
+\todo{We suppose user uses easy-rsa which is roughly used in all HOWTO\footnote{\url{http://openvpn.net/index.php/open-source/documentation/howto.html}}}
 
 \paragraph{Fine tuning at installation level}
 
 When installing an OpenVPN server instance, you are probably using {\it easy-rsa} tools to generate the crypto stuff needed.
-From the directory where you will run them, you can enhance you configuration by changing the following variables in {\it Vars}
+From the directory where you will run them, you can enhance you configuration by changing the following variables in \verb|vars|:
 
 \begin{lstlisting}[breaklines]
 export KEY_SIZE=2048 
+export KEY_EXPIRE=365
+export CA_EXPIRE=1826
 \end{lstlisting}
 
-This will enhance the security of the key exchange steps by using RSA keys with a length of 2048 bits.
-\todo{Shouldn't we need to reduce CA and certificate lifetime?  Per default 10y!!}
+This will enhance the security of the key generation by using RSA keys
+with a length of 2048 bits, and set a lifetime of one year for the
+keys and five years for the CA certificate.
+
+In addition, edit the \verb|pkitool| script and replace all occurences
+of \verb|sha1| with \verb|sha256|, to sign the certificates with
+SHA256.
 
 \paragraph{Server Configuration}
 
 In the server configuration file, you can select the algorithm that will be used for traffic encryption.
 Based on previous recommendation established in that document, select AES with a 256 bits key in CBC mode.
 
+\todo{cm: make configA/B sections/tables}
+
+% openvpn --show-ciphers
+% --show-tls
+
 \begin{lstlisting}[breaklines]
 cipher AES-256-CBC   # AES
 
 # TLS Authentication
 tls-auth ta.key
-tls-cipher TLS-DHE-RSA-WITH-AES-256-CBC-SHA
+tls-cipher EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
 
 auth SHA512
+
+reneg-bytes XXX
+reneg-pkts XXX
+reneg-sec XXX
+
 \end{lstlisting}
 
+% tls-cipher is a list, C&P the string!
+% what about: TLS-DHE-RSA-WITH-AES-256-CBC-SHA
+% DH params/DH key sizes
+
 \todo{Explain a little bit tls-auth and auth directives + TEST}
+\todo{also test with network-damager?}
 
 The following ciphers are avaible and recommended\footnote{You can retrieve the list of supported algorithm on your OpenVPN installation thanks to the command {\it openvpn --show-ciphers}}
 \begin{lstlisting}[breaklines]
@@ -920,6 +942,11 @@ The {\it cipher} directive has then to be identical in both server and client co
 
 \begin{lstlisting}[breaklines]
 cipher AES-256-CBC   # AES
+
+remote-cert-tls server # http://openvpn.net/index.php/open-source/documentation/howto.html#mitm
+
+tls-remote server.example.com
+
 \end{lstlisting}
 
 \todo{what about tls-auth keys/ta.key? }. 
