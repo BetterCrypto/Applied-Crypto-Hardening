@@ -942,6 +942,11 @@ The {\it cipher} directive has then to be identical in both server and client co
 
 \begin{lstlisting}[breaklines]
 cipher AES-256-CBC   # AES
+
+remote-cert-tls server # http://openvpn.net/index.php/open-source/documentation/howto.html#mitm
+
+tls-remote server.example.com
+
 \end{lstlisting}
 
 \todo{what about tls-auth keys/ta.key? }. 
