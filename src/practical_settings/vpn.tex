@@ -323,16 +323,93 @@ authentication protocol for the price of USD~200\footnote{\url{https://www.cloud
 and given the resulting MD4 hash, all PPTP traffic for a user can
 be decrypted.
 
-\subsubsection{Cisco IPSec}
+\subsubsection{Cisco ASA IPSec and AnyConnect (SSL/TLS)}
 \todo{write this subsubsection}
 
 \begin{description}
 \item[Tested with Version:] \todo{version?}
-
+ASA Version 9.1(3)
 \item[Settings:] \mbox{}
 
 \begin{lstlisting}[breaklines]
-    %Here goes your setting string
+crypto ipsec ikev2 ipsec-proposal AES-Fallback
+ protocol esp encryption aes-256 aes-192 aes
+ protocol esp integrity sha-512 sha-384 sha-256
+crypto ipsec ikev2 ipsec-proposal AES-GMAC-Fallback
+ protocol esp encryption aes-gmac-256 aes-gmac-192 aes-gmac
+ protocol esp integrity sha-512 sha-384 sha-256
+crypto ipsec ikev2 ipsec-proposal AES128-GMAC
+ protocol esp encryption aes-gmac
+ protocol esp integrity sha-512
+crypto ipsec ikev2 ipsec-proposal AES192-GMAC
+ protocol esp encryption aes-gcm-192
+ protocol esp integrity sha-512
+crypto ipsec ikev2 ipsec-proposal AES256-GMAC
+ protocol esp encryption aes-gmac-256
+ protocol esp integrity sha-512
+crypto ipsec ikev2 ipsec-proposal AES-GCM-Fallback
+ protocol esp encryption aes-gcm-256 aes-gcm-192 aes-gcm
+ protocol esp integrity sha-512 sha-384 sha-256
+crypto ipsec ikev2 ipsec-proposal AES128-GCM
+ protocol esp encryption aes-gcm
+ protocol esp integrity sha-512
+crypto ipsec ikev2 ipsec-proposal AES192-GCM
+ protocol esp encryption aes-gcm-192
+ protocol esp integrity sha-512
+crypto ipsec ikev2 ipsec-proposal AES256-GCM
+ protocol esp encryption aes-gcm-256
+ protocol esp integrity sha-512
+crypto ipsec ikev2 ipsec-proposal DES
+ protocol esp encryption des
+ protocol esp integrity sha-1 md5
+crypto ipsec ikev2 ipsec-proposal 3DES
+ protocol esp encryption 3des
+ protocol esp integrity sha-1 md5
+crypto ipsec ikev2 ipsec-proposal AES
+ protocol esp encryption aes
+ protocol esp integrity sha-1 md5
+crypto ipsec ikev2 ipsec-proposal AES192
+ protocol esp encryption aes-192
+ protocol esp integrity sha-1 md5
+crypto ipsec ikev2 ipsec-proposal AES256
+ protocol esp encryption aes-256
+ protocol esp integrity sha-1 md5
+crypto ipsec ikev2 sa-strength-enforcement
+crypto ipsec security-association pmtu-aging infinite
+crypto dynamic-map SYSTEM_DEFAULT_CRYPTO_MAP 65535 set pfs group5
+crypto dynamic-map SYSTEM_DEFAULT_CRYPTO_MAP 65535 set ikev2 ipsec-proposal AES256 AES192 AES
+
+crypto ikev2 policy 1
+ encryption aes-gcm-256
+ integrity null
+ group 24 14
+ prf sha512 sha384 sha256 sha
+ lifetime seconds 86400
+crypto ikev2 policy 2
+ encryption aes-gcm-256 aes-gcm-192 aes-gcm
+ integrity null
+ group 24 14 5
+ prf sha512 sha384 sha256 sha
+ lifetime seconds 86400
+crypto ikev2 policy 3
+ encryption aes-256 aes-192 aes
+ integrity sha512 sha384 sha256
+ group 24 14
+ prf sha512 sha384 sha256 sha
+ lifetime seconds 86400
+crypto ikev2 policy 4
+ encryption aes-256 aes-192 aes
+ integrity sha512 sha384 sha256 sha
+ group 24 14 5
+ prf sha512 sha384 sha256 sha
+ lifetime seconds 86400
+crypto ikev2 enable Outside-DMZ client-services port 443
+crypto ikev2 remote-access trustpoint ASDM_TrustPoint0
+
+ssl server-version tlsv1-only
+ssl client-version tlsv1-only
+ssl encryption dhe-aes256-sha1 dhe-aes128-sha1 aes256-sha1 aes128-sha1
+ssl trust-point ASDM_TrustPoint0 Outside-DMZ
 \end{lstlisting}
 
 \item[Additional settings:] \mbox{}
