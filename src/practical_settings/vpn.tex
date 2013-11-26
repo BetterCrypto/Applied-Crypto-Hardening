@@ -1,0 +1,474 @@
+%%\subsection{VPNs}
+\todo{write this subsection}
+\subsubsection{IPSec}
+\label{section:IPSECgeneral}
+
+
+\todo{cm: check if there are downgrade attacks for checkpoint \& co} \\
+
+\begin{description}
+
+\item[Settings:] \mbox{}
+
+\paragraph*{Assumptions}\mbox{}\\
+
+We assume the usage of IKE (v1 or v2) for this document, and ESP.
+
+\paragraph*{Authentication}\mbox{}\\
+
+IPSEC authentication should optimally be performed via RSA signatures,
+with a key size of 2048 bits or more. Configuring only the trusted CA
+that issued the peer certificate provides for additional protection
+against fake certificates.
+
+If you need to use Pre-Shared Key authentication:
+
+\begin{enumerate}
+\item Choose a \textbf{random}, \textbf{long enough} PSK (see below)
+\item Use a \textbf{separate} PSK for any IPSEC connection
+\item Change the PSKs regularily
+\end{enumerate}
+
+The size of the PSK should not be shorter than the output size of
+the hash algorithm used in IKE \footnote{It is used in a HMAC, see
+  \url{http://www.ietf.org/rfc/rfc2104.txt}.}.
+
+For a key composed of upper- and lowercase letters, numbers, and two
+additional symbols \footnote{64 possible values = 6 bits}, that gives
+the following minimum lengths in characters:
+
+\begin{table}[h]
+  \centering
+  \small
+  \begin{tabular}{lc}
+    \toprule
+    IKE Hash & PSK length \\
+    \midrule
+    SHA256 & 43 \\
+    SHA384 & 64 \\
+    SHA512 & 86 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph*{Cryptographic Suites}\mbox{}\\
+
+IPSEC Cryptographic Suites are pre-defined settings for all the
+items of a configuration; they try to provide a balanced security
+level and make setting up VPNs easier.
+
+When using any of those suites, make sure to enable ``Perfect Forward
+Secrecy`` for Phase 2, as this is not specified in the suites. The
+equivalents to the recommended ciphers suites in section
+\ref{section:recommendedciphers} are:
+
+\begin{table}[h]
+  \centering
+  \small
+  \begin{tabular}{lll}
+    \toprule
+    Configuration A & Configuration B & Notes\\
+    \midrule
+    \verb|Suite-B-GCM-256|\footnote{\url{http://tools.ietf.org/html/rfc6379}} &
+\verb|Suite-B-GCM-128| & Uses NIST elliptic curves
+\\ & \verb|VPN-B|\footnote{\url{http://tools.ietf.org/html/rfc4308}} &
+\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph*{IKE or Phase 1}\mbox{}\\
+
+Alternatively to the pre-defined cipher suites, you can define your
+own, as described in this and the next section.
+
+IKE or Phase 1 is the mutual authentication and key exchange phase.
+
+Use only ``main mode``, as ``aggressive mode`` has known security
+vulnerabilities \footnote{\url{http://ikecrack.sourceforge.net/}}.
+
+\todo{how to make footnotes in a table appear in the output document?}
+
+\begin{table}
+  \centering
+  \small
+  \begin{tabular}{lll}
+    \toprule
+    & Configuration A & Configuration B \\
+    \midrule
+    Mode & Main Mode & Main Mode \\
+    Encryption & AES-256 & AES-256, CAMELLIA-256 \\
+    Hash & SHA2-* & SHA2-*, SHA1 \\
+    DH Group & Group 14--18 \footnote{2048--8192 bit DH},
+    19--21\footnote{(256--521 bit ECDH)} & Group 14--21 \\
+    Lifetime & \todo{need recommendations; 1 day seems to be common
+      practice} & \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph*{ESP or Phase 2}\mbox{}\\
+
+ESP or Phase 2 is where the actual data are protected.
+
+\todo{make the tables appear right here!}
+
+\begin{table}
+  \centering
+  \small
+  \begin{tabular}{lll}
+    \toprule
+    & Configuration A & Configuration B \\
+    \midrule
+    Perfect Forward Secrecy & yes & yes \\
+    Encryption & AES-GCM-16, AES-CTR, AES-CCM-16, AES-256 & AES-GCM-16, AES-CTR, AES-CCM-16, AES-256, CAMELLIA-256 \\
+    Hash & SHA2-* (or none for AES-GCM) & SHA2-*, SHA1 (or none for AES-GCM) \\
+    DH Group & Same as Phase 1 & Same as Phase 1 \\
+    Lifetime & \todo{need recommendations; 1-8 hours is common} & \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\item[References:] \mbox{}
+
+``A Cryptographic Evaluation of IPsec'', Niels Ferguson and Bruce
+  Schneier: \url{https://www.schneier.com/paper-ipsec.pdf}
+
+\end{description}
+
+\subsubsection{Check Point FireWall-1}
+   
+\begin{description}
+\item[Tested with Version:] \mbox{}
+
+\begin{itemize}
+\item R77 (should work with any currently supported version)
+\end{itemize}
+
+\item[Settings:] \mbox{}
+
+Please see section \ref{section:IPSECgeneral} for guidance on
+parameter choice. In this section, we will configure a strong setup
+according to ``Configuration A''.
+
+This is based on the concept of a ``VPN Community'', which has all the
+settings for the gateways that are included in that community.
+Communities can be found in the ``IPSEC VPN'' tab of SmartDashboard.
+
+\todo{make those graphics prettier -- whoever has the right LaTeX
+  mojo, please do!}
+
+\includegraphics{checkpoint_1.png}
+
+Either chose one of the encryption suites here, or proceed to
+``Custom Encryption...'', where you can set encryption and hash for
+Phase 1 and 2:
+
+\includegraphics{checkpoint_2.png}
+
+The Diffie-Hellman groups and Perfect Forward Secrecy Settings can be
+found under ``Advanced Settings'' / ``Advanced VPN Properties'':
+
+\includegraphics{checkpoint_3.png}
+
+\item[Additional settings:]
+
+For remote Dynamic IP Gateways, the settings are not taken from the
+community, but set in the ``Global Properties'' dialog under ``Remote
+Access'' / ``VPN Authentication and Encryption''. Via the ``Edit...''
+button, you can configure sets of algorithms that all gateways support:
+
+\includegraphics{checkpoint_4.png}
+
+Please note that these settings restrict the available algorithms for
+\textbf{all} gateways, and also influence the VPN client connections.
+
+%\item[Justification for special settings (if needed):]
+
+%\item[Limitations:]
+
+\item[References:]\mbox{}
+
+\begin{itemize}
+
+\item Check Point
+  \href{https://sc1.checkpoint.com/documents/R77/CP_R77_VPN_AdminGuide/html_frameset.htm}{VPN
+    R77 Administration Guide} (may require a
+  UserCenter account to access)
+
+\end{itemize}
+
+% \item[How to test:]
+
+\end{description}
+
+
+\subsubsection{OpenVPN}
+
+\begin{description}
+
+\item[Tested with Version:] OpenVPN 2.3.2 from Debian backports linked against openssl (libssl.so.1.0.0) 
+
+\todo{cm: please write this subsubsection}
+\todo{We suppose user uses easy-rsa which is roughly used in all HOWTO\footnote{\url{http://openvpn.net/index.php/open-source/documentation/howto.html}}}
+
+
+\item[Additional settings:] \mbox{}
+
+\paragraph{Fine tuning at installation level}
+
+When installing an OpenVPN server instance, you are probably using {\it easy-rsa} tools to generate the crypto stuff needed.
+From the directory where you will run them, you can enhance you configuration by changing the following variables in \verb|vars|:
+
+\begin{lstlisting}[breaklines]
+export KEY_SIZE=2048 
+export KEY_EXPIRE=365
+export CA_EXPIRE=1826
+\end{lstlisting}
+
+This will enhance the security of the key generation by using RSA keys
+with a length of 2048 bits, and set a lifetime of one year for the
+keys and five years for the CA certificate.
+
+In addition, edit the \verb|pkitool| script and replace all occurences
+of \verb|sha1| with \verb|sha256|, to sign the certificates with
+SHA256.
+
+\paragraph{Server Configuration}
+
+In the server configuration file, you can select the algorithm that will be used for traffic encryption.
+Based on previous recommendation established in that document, select AES with a 256 bits key in CBC mode.
+
+Note that TLS is used only for negotiation bla bla bla...
+
+\todo{cm: explain how openvpn crypto works; make configA/B sections/tables}
+
+\item[Settings:] \mbox{}
+
+% openvpn --show-ciphers
+% --show-tls
+
+\todo{cm: changelog 2.3.1: ``Switch to IANA names for TLS ciphers'' --
+give both types of strings?}
+
+\begin{lstlisting}[breaklines]
+cipher AES-256-CBC   # AES
+
+# TLS Authentication
+tls-auth ta.key
+tls-cipher EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
+
+auth SHA512
+
+reneg-bytes XXX
+reneg-pkts XXX
+reneg-sec XXX
+
+\end{lstlisting}
+
+% tls-cipher is a list, C&P the string!
+% what about: TLS-DHE-RSA-WITH-AES-256-CBC-SHA
+% DH params/DH key sizes
+
+\todo{Explain a little bit tls-auth and auth directives + TEST}
+\todo{also test with network-damager?}
+
+The following ciphers are avaible and recommended\footnote{You can retrieve the list of supported algorithm on your OpenVPN installation thanks to the command {\it openvpn --show-ciphers}}
+\begin{lstlisting}[breaklines]
+AES-128-CBC
+AES-192-CBC
+AES-256-CBC
+CAMELLIA-128-CBC
+CAMELLIA-192-CBC
+CAMELLIA-256-CBC
+SEED-CBC
+\end{lstlisting}
+
+
+\paragraph{Client Configuration}
+
+Client and server have to use identical configuration otherwise they can't communicate.
+The {\it cipher} directive has then to be identical in both server and client configuration.
+
+\begin{lstlisting}[breaklines]
+cipher AES-256-CBC   # AES
+
+remote-cert-tls server # http://openvpn.net/index.php/open-source/documentation/howto.html#mitm
+
+tls-remote server.example.com
+
+\end{lstlisting}
+
+\todo{what about tls-auth keys/ta.key? }. 
+\todo{what about auth sha512 ?}
+
+\item[Justification for special settings (if needed):]
+
+\item[References:] \url{http://openvpn.net/index.php/open-source/documentation/security-overview.html}
+
+\item[How to test:]
+\todo{write me please}
+
+
+\end{description}
+
+
+\subsubsection{PPTP}
+
+PPTP is considered insecure, Microsoft recommends to ``use a more secure VPN
+tunnel''\footnote{\url{http://technet.microsoft.com/en-us/security/advisory/2743314}}.
+
+There is a cloud service that cracks the underlying MS-CHAPv2
+authentication protocol for the price of USD~200\footnote{\url{https://www.cloudcracker.com/blog/2012/07/29/cracking-ms-chap-v2/}},
+and given the resulting MD4 hash, all PPTP traffic for a user can
+be decrypted.
+
+\subsubsection{Cisco IPSec}
+\todo{write this subsubsection}
+
+\begin{description}
+\item[Tested with Version:] \todo{version?}
+
+\item[Settings:] \mbox{}
+
+\begin{lstlisting}[breaklines]
+    %Here goes your setting string
+\end{lstlisting}
+
+\item[Additional settings:] \mbox{}
+
+%Here you can add additional settings
+
+\begin{lstlisting}[breaklines]
+    %copy \& paste additional settings
+\end{lstlisting}
+
+\item[Justification for special settings (if needed):] \mbox{}
+
+% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+
+\item[References:] \todo{add references}
+
+% add any further references or best practice documents here
+
+\item[How to test:] 
+% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+
+\end{description}
+
+
+
+
+
+
+
+\subsubsection{Juniper VPN}
+\todo{write this subsubsection. AK: ask Hannes}
+
+
+\begin{description}
+\item[Tested with Version:] \todo{version?}
+
+\item[Settings:] \mbox{}
+
+\begin{lstlisting}[breaklines]
+    %Here goes your setting string
+\end{lstlisting}
+
+\item[Additional settings:] \mbox{}
+
+%Here you can add additional settings
+
+\begin{lstlisting}[breaklines]
+    %copy \& paste additional settings
+\end{lstlisting}
+
+\item[Justification for special settings (if needed):] \mbox{}
+
+% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+
+\item[References:] \todo{add references}
+
+% add any further references or best practice documents here
+
+\item[How to test:]
+% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+
+\end{description}
+
+
+
+
+
+\subsubsection{L2TP over IPSec}
+\todo{write this subsubsection}
+
+
+\begin{description}
+\item[Tested with Version:] \todo{version?}
+
+\item[Settings:] \mbox{}
+
+\begin{lstlisting}[breaklines]
+    %Here goes your setting string
+\end{lstlisting}
+
+\item[Additional settings:] \mbox{}
+
+%Here you can add additional settings
+
+\begin{lstlisting}[breaklines]
+    %copy \& paste additional settings
+\end{lstlisting}
+
+\item[Justification for special settings (if needed):] \mbox{}
+
+% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+
+\item[References:] \todo{add references}
+
+% add any further references or best practice documents here
+
+\item[How to test:]
+% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+
+\end{description}
+
+
+
+
+
+
+\subsubsection{Racoon}
+\todo{write this subsubsection}
+
+
+\begin{description}
+\item[Tested with Version:] \todo{version?}
+
+\item[Settings:] \mbox{}
+
+\begin{lstlisting}[breaklines]
+    %Here goes your setting string
+\end{lstlisting}
+
+\item[Additional settings:] \mbox{}
+
+%Here you can add additional settings
+
+\begin{lstlisting}[breaklines]
+    %copy \& paste additional settings
+\end{lstlisting}
+
+\item[Justification for special settings (if needed):] \mbox{}
+
+% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+
+\item[References:] \todo{add references}
+
+% add any further references or best practice documents here
+
+\item[How to test:]
+% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+
+\end{description}
