@@ -14,7 +14,7 @@
 \subsubsection{MySQL}
 
 \begin{description}
-\item[Tested with Version:] with Debian 7.0 and MySQL 5.5
+\item[Tested with Version:] Debian 7.0 and MySQL 5.5
 
 \item[Settings:] \mbox{}
 
@@ -67,23 +67,19 @@ show variables like '%ssl%';
 \subsubsection{Postgresql}
 
 \begin{description}
-\item[Tested with Version:]
-
-\todo{version?}
+\item[Tested with Version:] Debian 7.0 and PostgreSQL 9.1
 
 \item[References:]
 
 It's recommended to read 
 
-http://www.postgresql.org/docs/X.X/interactive/runtime-config-connection.html\#RUNTIME-CONFIG-CONNECTION-SECURITY
-
-Just change X.X with your preferred version e.g. 9.1
+{\small \url{http://www.postgresql.org/docs/X.X/interactive/runtime-config-connection.html\#RUNTIME-CONFIG-CONNECTION-SECURITY}}
+(please change X.X with your preferred version e.g. 9.1).
 
 \item[Settings:] \mbox{}
 
 
 To start in SSL mode the server.crt and server.key must exist in the server's data directory \$PGDATA. 
-Don't forget to set the right permission (0600) to your server.key. 
 
 Starting with version 9.2, you have the possibility to set the path.
 
@@ -104,9 +100,10 @@ ssl_ciphers = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLI
 
 
 \item[How to test:]
-
-\todo{write this}
-% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+To test your ssl settings, run psql with the sslmode parameter:
+\begin{lstlisting}[breaklines]
+psql "sslmode=require host=postgres-server dbname=database" your-username
+\end{lstlisting}
 
 \end{description}
 
