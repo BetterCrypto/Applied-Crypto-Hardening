@@ -376,8 +376,9 @@ crypto ipsec ikev2 ipsec-proposal AES256
  protocol esp integrity sha-1 md5
 crypto ipsec ikev2 sa-strength-enforcement
 crypto ipsec security-association pmtu-aging infinite
-crypto dynamic-map SYSTEM_DEFAULT_CRYPTO_MAP 65535 set pfs group5
-crypto dynamic-map SYSTEM_DEFAULT_CRYPTO_MAP 65535 set ikev2 ipsec-proposal AES256 AES192 AES
+crypto dynamic-map SYSTEM_DEFAULT_CRYPTO_MAP 65535 set pfs group14
+crypto dynamic-map SYSTEM_DEFAULT_CRYPTO_MAP 65535 set ikev2 ipsec-proposal AES256-GMAC AES192-GMAC AES128-GMAC AES-GMAC-Fallback AES256-GCM AES192-GCM AES128-GCM AES-GCM-Fallback AES-Fallback
+crypto map Outside-DMZ_map 65535 ipsec-isakmp dynamic SYSTEM_DEFAULT_CRYPTO_MAP
 
 crypto ikev2 policy 1
  encryption aes-gcm-256
