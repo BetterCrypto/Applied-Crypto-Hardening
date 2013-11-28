@@ -108,7 +108,7 @@ lighttpd httpS:// redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/
 \subsubsection{nginx}
 
 \begin{description}
-\item[Tested with Version:]
+\item[Tested with Version:] 1.4.4 with OpenSSL 1.0.1e on OS X Server 10.8.5
 
 \todo{version?}
 
@@ -123,6 +123,12 @@ lighttpd httpS:// redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/
 \end{lstlisting}
 
 %% XXX FIXME: do we need to specify dhparams? Parameter: ssl_dhparam = file. See: http://wiki.nginx.org/HttpSslModule#ssl_protocols
+
+It is recommended to specify your own Diffie-Hellman Parameters file of at least the same bit size as your RSA key. Eg. use no less than 2048bit DH parameters with a 2048bit RSA key.
+\begin{lstlisting}[breaklines]
+  ssl_dhparam file;
+\end{lstlisting}
+
 
 \item[Additional settings:]
 
