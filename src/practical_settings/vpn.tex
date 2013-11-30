@@ -207,18 +207,93 @@ Please note that these settings restrict the available algorithms for
 
 \begin{description}
 
-\item[Tested with Version:] OpenVPN 2.3.2 from Debian backports linked against openssl (libssl.so.1.0.0) 
+\item[Tested with Version:] \mbox{}\\
 
-\todo{cm: please write this subsubsection}
-\todo{We suppose user uses easy-rsa which is roughly used in all HOWTO\footnote{\url{http://openvpn.net/index.php/open-source/documentation/howto.html}}}
+\begin{itemize}
+\item OpenVPN 2.3.2 from Debian ``wheezy-backports'' linked against openssl (libssl.so.1.0.0) 
+\item OpenVPN 2.2.1 from Debian 7.0 linked against openssl (libssl.so.1.0.0) 
+\end{itemize}
+
+\item[Settings:] \mbox{}
+
+\paragraph{General}\mbox{}
+
+We describe a configuration with certificate-based authentication; see
+below for details on the \verb|easyrsa| tool to help you with that.
+
+OpenVPN uses TLS only for authentication and key exchange. The
+bulk traffic is then encrypted and authenticated with the OpenVPN
+protocol using those keys.
+
+Note that while the \verb|tls-cipher| option takes a list of ciphers
+that is then negotiated as usual with TLS, the \verb|cipher|
+and \verb|auth| options both take a single argument that must match on
+client and server.
+
+\paragraph{Server Configuration}\mbox{}
+
+% this is only a DoS-protection, out of scope:
+% # TLS Authentication
+% tls-auth ta.key
+
+\begin{lstlisting}[breaklines]
+tls-cipher ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-CAMELLIA256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:AES256-SHA
+cipher AES-256-CBC
+auth SHA384
+# generate with 'openssl dhparam -out dh2048.pem 2048':
+dh dh2048.pem
+\end{lstlisting}
+
+\paragraph{Client Configuration}\mbox{}
+
+Client and server have to use compatible configurations, otherwise they can't communicate.
+The \verb|cipher| and \verb|auth| directives have to be identical.
+
+\begin{lstlisting}[breaklines]
+tls-cipher ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-CAMELLIA256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:AES256-SHA
+cipher AES-256-CBC
+auth SHA384
+
+# http://openvpn.net/index.php/open-source/documentation/howto.html#mitm
+remote-cert-tls server
+
+tls-remote server.example.com
+\end{lstlisting}
+
+\item[Justification for special settings (if needed):] \mbox{}\\
+
+OpenVPN 2.3.1 changed the values that the \verb|tls-cipher| option
+expects from OpenSSL to IANA cipher names. That means from that
+version on you will get ``Deprecated TLS cipher name'' warnings for
+the configurations above. You cannot use the selection strings from
+section \ref{section:recommendedciphers} directly from 2.3.1 on, which
+is why we give an explicit cipher list here.
+
+The configuration shown above is compatible with all tested versions.
+
+\item[References:] \mbox{}\\
+
+\url{http://openvpn.net/index.php/open-source/documentation/security-overview.html}
+
+%\item[How to test:]
 
 
 \item[Additional settings:] \mbox{}
 
-\paragraph{Fine tuning at installation level}
+\paragraph{Key renegotiation interval}\mbox{}
 
-When installing an OpenVPN server instance, you are probably using {\it easy-rsa} tools to generate the crypto stuff needed.
-From the directory where you will run them, you can enhance you configuration by changing the following variables in \verb|vars|:
+The default for renegotiation of encryption keys is one hour
+(\verb|reneg-sec 3600|). If you
+transfer huge amounts of data over your tunnel, you might consider
+configuring a shorter interval, or switch to a byte- or packet-based
+interval (\verb|reneg-bytes| or \verb|reneg-pkts|).
+
+\paragraph{Fixing ``easy-rsa''}\mbox{}
+
+When installing an OpenVPN server instance, you are probably using
+{\it easy-rsa} to generate keys and certificates.
+The file \verb|vars| in the easyrsa installation directory has a
+number of settings that should be changed to secure values:
 
 \begin{lstlisting}[breaklines]
 export KEY_SIZE=2048 
@@ -228,86 +303,17 @@ export CA_EXPIRE=1826
 
 This will enhance the security of the key generation by using RSA keys
 with a length of 2048 bits, and set a lifetime of one year for the
-keys and five years for the CA certificate.
+server/client certificates and five years for the CA certificate.
 
 In addition, edit the \verb|pkitool| script and replace all occurences
 of \verb|sha1| with \verb|sha256|, to sign the certificates with
 SHA256.
 
-\paragraph{Server Configuration}
+\item[Limitations:] \mbox{}
 
-In the server configuration file, you can select the algorithm that will be used for traffic encryption.
-Based on previous recommendation established in that document, select AES with a 256 bits key in CBC mode.
-
-Note that TLS is used only for negotiation bla bla bla...
-
-\todo{cm: explain how openvpn crypto works; make configA/B sections/tables}
-
-\item[Settings:] \mbox{}
-
-% openvpn --show-ciphers
-% --show-tls
-
-\todo{cm: changelog 2.3.1: ``Switch to IANA names for TLS ciphers'' --
-give both types of strings?}
-
-\begin{lstlisting}[breaklines]
-cipher AES-256-CBC   # AES
-
-# TLS Authentication
-tls-auth ta.key
-tls-cipher EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
-
-auth SHA512
-
-reneg-bytes XXX
-reneg-pkts XXX
-reneg-sec XXX
-
-\end{lstlisting}
-
-% tls-cipher is a list, C&P the string!
-% what about: TLS-DHE-RSA-WITH-AES-256-CBC-SHA
-% DH params/DH key sizes
-
-\todo{Explain a little bit tls-auth and auth directives + TEST}
-\todo{also test with network-damager?}
-
-The following ciphers are avaible and recommended\footnote{You can retrieve the list of supported algorithm on your OpenVPN installation thanks to the command {\it openvpn --show-ciphers}}
-\begin{lstlisting}[breaklines]
-AES-128-CBC
-AES-192-CBC
-AES-256-CBC
-CAMELLIA-128-CBC
-CAMELLIA-192-CBC
-CAMELLIA-256-CBC
-SEED-CBC
-\end{lstlisting}
-
-
-\paragraph{Client Configuration}
-
-Client and server have to use identical configuration otherwise they can't communicate.
-The {\it cipher} directive has then to be identical in both server and client configuration.
-
-\begin{lstlisting}[breaklines]
-cipher AES-256-CBC   # AES
-
-remote-cert-tls server # http://openvpn.net/index.php/open-source/documentation/howto.html#mitm
-
-tls-remote server.example.com
-
-\end{lstlisting}
-
-\todo{what about tls-auth keys/ta.key? }. 
-\todo{what about auth sha512 ?}
-
-\item[Justification for special settings (if needed):]
-
-\item[References:] \url{http://openvpn.net/index.php/open-source/documentation/security-overview.html}
-
-\item[How to test:]
-\todo{write me please}
+Note that the ciphersuites shown by \verb|openvpn --show-tls| are {\it
+known}, but not necessarily {\it
+supported} \footnote{\url{https://community.openvpn.net/openvpn/ticket/304}}.
 
 
 \end{description}
