@@ -6,4 +6,6 @@ applied-crypto-hardening.pdf
 applied-crypto-hardening.toc
 applied-crypto-hardening.markdown
 *.gummi
+*.swp
 applied-crypto-hardening/
+gitHeadInfo.gin
