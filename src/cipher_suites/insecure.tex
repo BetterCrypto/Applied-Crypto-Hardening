@@ -1,6 +1,19 @@
 %%\subsection{Known insecure and weak cipher suites}
 \todo{PG: please write this section. List all known broken, obsolete, weak and insecure cipher suites . Or even better: find the best site which keeps track of outdated cipher suites and simply reference it. We do not want to maintain such a list ourselves!}
 
-Ciphers with 112bit or less are considered weak and aren't recommended. Note that
-\texttt{3DES} provides only 112bit of security
-\footnote{\url{http://csrc.nist.gov/publications/PubsSPs.html\#800-57-part1}}.
+%Ciphers with 112bit or less are considered weak and aren't recommended. Note that \texttt{3DES} provides only 112bit of security \footnote{\url{http://csrc.nist.gov/publications/PubsSPs.html\#800-57-part1}}.
+
+% comment Florian:
+% Please do not consider ciphers with a 112 bit key as weak. I think it is
+% fine to do not recommend 3DES, but we should not claim that it is weak.
+% In particular, 3DES with an effective keysize of 112 bits is still
+% recommended by NIST and by ECRYPT2 for medium-term protection until 2030.
+
+
+In general in this paper we do not recommend ciphers with less than 128 bit strength.
+
+One special remark is necessary for 3DES: here we want to note
+that it theoretically has 168 bit security, however based on the NIST Special
+Publication 800-57
+\footnote{\url{http://csrc.nist.gov/publications/PubsSPs.html\#800-57-part1},
+pages 63 and 64}, it is clear that 3DES is only considered 80 bits / 112 bits.
