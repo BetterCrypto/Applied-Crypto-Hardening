@@ -330,29 +330,15 @@ and given the resulting MD4 hash, all PPTP traffic for a user can
 be decrypted.
 
 \subsubsection{Cisco ASA IPSec and AnyConnect (SSL/TLS)}
-\todo{write this subsubsection}
-
+The following settings reflect our recommendations as best as possible on the Cisco ASA platform. These are - of course - just settings regarding SSL/TLS and IPSec. For further security settings regarding this platform the appropriate Cisco guides should be followed.
 \begin{description}
 \item[Tested with Version:] \todo{version?}
 ASA Version 9.1(3)
 \item[Settings:] \mbox{}
-
 \begin{lstlisting}[breaklines]
 crypto ipsec ikev2 ipsec-proposal AES-Fallback
  protocol esp encryption aes-256 aes-192 aes
  protocol esp integrity sha-512 sha-384 sha-256
-crypto ipsec ikev2 ipsec-proposal AES-GMAC-Fallback
- protocol esp encryption aes-gmac-256 aes-gmac-192 aes-gmac
- protocol esp integrity sha-512 sha-384 sha-256
-crypto ipsec ikev2 ipsec-proposal AES128-GMAC
- protocol esp encryption aes-gmac
- protocol esp integrity sha-512
-crypto ipsec ikev2 ipsec-proposal AES192-GMAC
- protocol esp encryption aes-gcm-192
- protocol esp integrity sha-512
-crypto ipsec ikev2 ipsec-proposal AES256-GMAC
- protocol esp encryption aes-gmac-256
- protocol esp integrity sha-512
 crypto ipsec ikev2 ipsec-proposal AES-GCM-Fallback
  protocol esp encryption aes-gcm-256 aes-gcm-192 aes-gcm
  protocol esp integrity sha-512 sha-384 sha-256
@@ -365,12 +351,6 @@ crypto ipsec ikev2 ipsec-proposal AES192-GCM
 crypto ipsec ikev2 ipsec-proposal AES256-GCM
  protocol esp encryption aes-gcm-256
  protocol esp integrity sha-512
-crypto ipsec ikev2 ipsec-proposal DES
- protocol esp encryption des
- protocol esp integrity sha-1 md5
-crypto ipsec ikev2 ipsec-proposal 3DES
- protocol esp encryption 3des
- protocol esp integrity sha-1 md5
 crypto ipsec ikev2 ipsec-proposal AES
  protocol esp encryption aes
  protocol esp integrity sha-1 md5
@@ -383,8 +363,9 @@ crypto ipsec ikev2 ipsec-proposal AES256
 crypto ipsec ikev2 sa-strength-enforcement
 crypto ipsec security-association pmtu-aging infinite
 crypto dynamic-map SYSTEM_DEFAULT_CRYPTO_MAP 65535 set pfs group14
-crypto dynamic-map SYSTEM_DEFAULT_CRYPTO_MAP 65535 set ikev2 ipsec-proposal AES256-GMAC AES192-GMAC AES128-GMAC AES-GMAC-Fallback AES256-GCM AES192-GCM AES128-GCM AES-GCM-Fallback AES-Fallback
+crypto dynamic-map SYSTEM_DEFAULT_CRYPTO_MAP 65535 set ikev2 ipsec-proposal AES256-GCM AES192-GCM AES128-GCM AES-GCM-Fallback AES-Fallback
 crypto map Outside-DMZ_map 65535 ipsec-isakmp dynamic SYSTEM_DEFAULT_CRYPTO_MAP
+crypto map Outside-DMZ_map interface Outside-DMZ
 
 crypto ikev2 policy 1
  encryption aes-gcm-256
@@ -428,6 +409,7 @@ ssl trust-point ASDM_TrustPoint0 Outside-DMZ
 \end{lstlisting}
 
 \item[Justification for special settings (if needed):] \mbox{}
+New IPsec policies have been defined which do not make use of ciphers that may be cause for concern. Policies have a "Fallback" option to support legacy devices.
 
 % in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
 
