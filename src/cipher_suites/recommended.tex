@@ -5,11 +5,11 @@ In principle, system administrators who want to improve their servers need to
 make a hard decision between locking out some users while keeping very high
 cipher suite security levels or supporting as many users as possible while
 lowering some settings. \url{https://www.ssllabs.com/} gives administrators a
-tool to test out different settings. The authors used ssllabs.com to arrive at
-a set of cipher suites which we will recommend throughout this document.
-\textbf{Caution: these settings can only represent a subjective choice of the
-authors at the time of this writing. It might be a wise choice to select your
-own cipher suites based on the instructions in section
+tool to test out different settings. The authors of this guide used ssllabs.com
+to arrive at a set of cipher suites which we will recommend throughout this
+document.  \textbf{Caution: these settings can only represent a subjective
+choice of the authors at the time of this writing. It might be a wise choice to
+select your own cipher suites based on the instructions in section
 \ref{section:ChoosingYourOwnCipherSuites}}.
 
 
@@ -91,10 +91,14 @@ We arrived at this set of cipher suites by selecting
 This results in the string:
 
 \begin{lstlisting}[breaklines]
-'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+old (pre 20131202): 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+
+newest 20131202:
+'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA'
+
 \end{lstlisting}
 
-
+\todo{adapt this table to the "newest" cipher string} \\
 \todo{make a column for cipher chaining mode}
 \begin{center}
 \begin{tabular}{lllllll}
@@ -142,8 +146,7 @@ by copy and paste and needs to just work.
 \item AES256 and CAMELLIA256 count as strong ciphers at the moment; preferrably in
       GCM mode.\\
 	  \todo{add a reference here please}
-      \todo{Adi: add 128bit ciphers too} \\
-      \todo{Team: discuss ordering of keys (256 $\rightarrow$ 128 or vice versa?)}
+\item AES128 and CAMELLIA128 still count as strong enough ciphers at the moment
 \item DHE or ECDHE for forward secrecy
 \item RSA as this will fit most of todays setup
 \item AES256-SHA as a last ressort (with this cipher at the end, even systems with
@@ -151,4 +154,5 @@ by copy and paste and needs to just work.
       will not be used. On systems that do not support elliptic curves, that cipher
       offers support for the Microsoft crypto libraries that only support ECDHE.
 \end{itemize}
+
 \todo{Adi: review "justification" when next section is written}
