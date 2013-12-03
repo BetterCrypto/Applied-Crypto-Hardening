@@ -11,9 +11,14 @@ BIG TOPICS
 * Write section 7.3 (-> Adi . How to chose your own cipher string + screenshots)
 
 * Decide/Discuss recommended ciphers:
-  - AES/CAMELLIA/ARIA20/...
-  - 256bit vs 128bit (security margin, ordering in recommended ciphers)
   - DH parameters: what is our recommendation? >2048? >=2048? leave default (aka 1024)?
+
+* comments from IAIK integrate (--> Aaron)
+* SHA-1 section: write why it is a problem
+* include OpenSSL names/IANA names into appendix
+* Document RNG problem in Apache (--> Pepi)
+* Oracle ?? (--> Berg?? maybe . Or aaron: ask nic.at. Or link to T-Systems paper)
+* DB2 (--> Berg. Or ask MLeyrer)
 
 Formatting
 ==========
@@ -21,6 +26,7 @@ DONE * one-column layout: make page margins smaller
 DONE * add large "DRAFT" letters on top of every page.
   make the git version number part of the document
 * Layout of sample code (lstisting format) : make it pretty!
+
 
 * make every section like the Apache section
 
@@ -162,4 +168,9 @@ Contacting / who?
 LATER / further 
 ================
 * OpenLDAP (-> Adi)
+* Radius
 * Windows Active Directory
+* SRP: not part of this document
+* \cipherA , \cipherB setting ---> does not work in our \begin{listing} environment --> maybe there is a different listing environment or use awk/sed/make/perl/python
+* What about 3270 terminal emulation? How to do crypto there? Can we? ( --> IBM sec. Stammtisch. Aaron)
+
