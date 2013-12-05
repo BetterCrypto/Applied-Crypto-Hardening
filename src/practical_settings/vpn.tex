@@ -68,7 +68,8 @@ equivalents to the recommended ciphers suites in section
     Configuration A & Configuration B & Notes\\
     \midrule
     \verb|Suite-B-GCM-256|\footnote{\url{http://tools.ietf.org/html/rfc6379}} &
-\verb|Suite-B-GCM-128| & Uses NIST elliptic curves
+\verb|Suite-B-GCM-128| & All Suite-B variants use NIST elliptic curves
+\\ \verb|Suite-B-GMAC-256| & \verb|Suite-B-GMAC-128| & 
 \\ & \verb|VPN-B|\footnote{\url{http://tools.ietf.org/html/rfc4308}} &
 \\
     \bottomrule
@@ -95,7 +96,7 @@ vulnerabilities \footnote{\url{http://ikecrack.sourceforge.net/}}.
     & Configuration A & Configuration B \\
     \midrule
     Mode & Main Mode & Main Mode \\
-    Encryption & AES-256 & AES-256, CAMELLIA-256 \\
+    Encryption & AES-256 & AES, CAMELLIA (-256 or -128) \\
     Hash & SHA2-* & SHA2-*, SHA1 \\
     DH Group & Group 14--18 \footnote{2048--8192 bit DH},
     19--21\footnote{(256--521 bit ECDH)} & Group 14--21 \\
@@ -119,7 +120,8 @@ ESP or Phase 2 is where the actual data are protected.
     & Configuration A & Configuration B \\
     \midrule
     Perfect Forward Secrecy & yes & yes \\
-    Encryption & AES-GCM-16, AES-CTR, AES-CCM-16, AES-256 & AES-GCM-16, AES-CTR, AES-CCM-16, AES-256, CAMELLIA-256 \\
+    Encryption & AES-GCM-16, AES-CTR, AES-CCM-16, AES-256 &
+  AES-GCM-16, AES-CTR, AES-CCM-16, AES-256, CAMELLIA-256, AES-128, CAMELLIA-128 \\
     Hash & SHA2-* (or none for AES-GCM) & SHA2-*, SHA1 (or none for AES-GCM) \\
     DH Group & Same as Phase 1 & Same as Phase 1 \\
     Lifetime & \todo{need recommendations; 1-8 hours is common} & \\
