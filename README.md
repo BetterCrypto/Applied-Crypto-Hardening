@@ -1,6 +1,7 @@
 # HOW TO USE THIS 
 -----------------
 
+## git.bettercrypto.org
 Anonymous (read-only) git cloning:
 
 `  $ git clone  https://git.bettercrypto.org/ach-master.git`
@@ -26,7 +27,8 @@ Receive latest updates for a previously cloned repository (from within repo-dire
 
   `$ git pull`
 
-
+## GitHub
+Fork and issue pull requests. Those will be reviewed and if accepted pushed to the main repository hosted on git.bettercrypto.org.
 
 # IMPORTANT
 -----------
