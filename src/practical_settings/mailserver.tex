@@ -19,7 +19,7 @@ Dovecot 2.1: Almost as good as dovecot 2.2. Does not support ssl\_prefer\_server
 \paragraph*{Limitations}\mbox{}\\
 
 Dovecot currently does not support disabling TLS compression. Furthermore, DH parameters
-greater than 1024bit aren't possible. The most recent version 2.2.7 of Dovecot implements
+greater than 1024bit are not supported. The most recent version 2.2.7 of Dovecot implements
 configurable DH parameter length
 \footnote{\url{http://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0}}.
 
@@ -68,7 +68,7 @@ To support POP3S/IMAPS on ports 995/993 add
 
 \paragraph*{Limitations}\mbox{}\\
 
-cyrus-imapd currently (2.4.17, trunk) does not support elliptic curves. ECDHE will not work even if defined in your cipher list.\\
+cyrus-imapd currently (2.4.17, trunk) does not support elliptic curve cryptography. Hence, ECDHE will not work even if defined in your cipher list.\\
 
 Currently there is no way to prefer server ciphers or to disable compression.\\
 
@@ -87,7 +87,7 @@ There is a working patch for all three features:
 
 \subsubsection{SMTP in general}
 
-SMTP usually uses opportunistic TLS. This means that an MTA will accept TLS connections when asked for it during handshake but will not require it. One should always support incoming opportunistic TLS and always try TLS handshake outgoing.\\
+SMTP usually makes use of opportunistic TLS. This means that an MTA will accept TLS connections when asked for it during handshake but will not require it. One should always support incoming opportunistic TLS and always try TLS handshake outgoing.\\
 
 Furthermore a mailserver can operate in three modes:
 \begin{itemize}
@@ -271,7 +271,7 @@ Add the following rules on top of your acl\_smtp\_mail:
   warn    hosts           = *
           control         = submission/sender_retain
 \end{lstlisting}
-This switches Exim to submission mode and allows addition of missing Message-ID: and Date: headers.\\
+This switches Exim to submission mode and allows addition of missing ``Message-ID'' and ``Date'' headers.\\
 
 It is not advisable to restrict the default cipher list for MSA mode if you don't know all connecting MUAs. If you still want to define one please consult the Exim documentation or ask on the exim-users mailinglist.\\
 % Exim maintainers do not recommend to change default ciphers
@@ -390,24 +390,3 @@ There already is a working patch to provide support:\\
 % do we need to documment starttls in detail?
 %\subsubsection{starttls?}
 
-\subsection{OpenSSH}
-\paragraph*{sshd_config}
-\begin{lstlisting}[breaklines]
-	# ...
-
-	Protocol 2
-	PermitEmptyPasswords no
-	PermitRootLogin no
-	StrictModes yes
-	HostKey /etc/ssh/ssh_host_rsa_key
-	ServerKeyBits 4096
-	Ciphers aes256-gcm@openssh.com aes128-gcm@openssh.com aes256-ctr aes128-ctr
-	MACs umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
-	KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
-\end{lstlisting}
-
-% XXX: curve25519-sha256@libssh.org only available upstream(!)
-Note: Older linux systems won't support SHA2. PuTTY (Windows) does not support RIPE-MD160. Curve25519, AES-GCM and UMAC are only available upstream (OpenSSH 6.1). DSA host keys have been removed on purpose, the DSS standard does not support for DSA keys stronger than 1024bit
-\footnote{\url{https://bugzilla.mindrot.org/show_bug.cgi?id=1647}} 
-which is far below current standards (see section \ref{section:keylengths}). Legacy systems can use this configuration and simply omit unsupported ciphers, key exchange algorithms and MACs.
-\\
