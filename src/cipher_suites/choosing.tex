@@ -3,28 +3,30 @@
 
 \todo{ Adi...  you want to describe how to make your own selection of cipher suites here.}
 
-SSL/TLS cipher suites consist of a key exchange mechanism, an authentication, a
-stream cipher (or a block cipher with a chaining mode) and a message authentication
-mechanism.
+%%SSL/TLS cipher suites consist of a key exchange algorithm, an authentication, a
+%%stream cipher (or a block cipher with a chaining mode) and a message authentication
+%%mechanism.
+%% ^^ commented out due to duplication (see previous section on architecture) - azet
 
-Many of those mechanisms are interchangeable like the key exchange in this example:
+Many of the parts in a ciphersuite are interchangeable. Like the key exchange algorithm in this example:
 \texttt{ECDHE-RSA-AES256-GCM-SHA384} and \texttt{DHE-RSA-AES256-GCM-SHA384}.
 To provide a decent level of security, all algorithms need to be safe (subject to
 the disclaimer in section \ref{section:disclaimer}).
 
-Note: There are some very weak cipher suites in about every crypto library, most of
-them for historic reasons like the crypto export embargo
+Note: There are some very weak cipher suites in every crypto library, most of
+them for historic reasons or due to legacy standards. The crypto export embargo
+is a good example 
 \footnote{\url{http://en.wikipedia.org/wiki/Export_of_cryptography_in_the_United_States}}.
-For the following chapter support of those is assumed to be disabled by having
+For the following chapter support of these low-security algorithms is disabled by setting
 \texttt{!EXP:!LOW:!NULL} as part of the cipher string.
 
 \todo{Team: do we need references for all cipher suites considered weak?}
 
-\subsubsection{key exchange}
+\subsubsection{Key Exchange}
 
-Many algorithms allow a secure key exchange. Among those are RSA, DSA, DH, EDH, ECDSA,
-ECDH, EECDH and a few others. During the key exchange, keys for authentication and for
-encryption are exchanged. For RSA and DSA those keys are the same.
+Many algorithms allow secure key exchange. Among those are RSA, DH, EDH, ECDSA,
+ECDH, EECDH among others. During the key exchange, keys for authentication and for
+encryption are exchanged. %%For RSA and DSA those keys are the same. %% WHAT?
 
 \todo{explain this section}
 
@@ -49,17 +51,17 @@ encryption are exchanged. For RSA and DSA those keys are the same.
 \textbf{Ephemeral Key Exchange} uses different keys for authentication (the server's RSA
 key) and encryption (a randomly created key). This advantage is called ``Forward
 Secrecy'' and means that even recorded traffic cannot be decrypted later when someone
-gets the server key. \\
-All ephemeral key exchange mechanisms base on Diffie-Hellman algorithm and require
+obtains the server key. \\
+All ephemeral key exchange schemes are based on the Diffie-Hellman algorithm and require
 pre-generated Diffe-Hellman parameter (which allow fast ephemeral key generation). It
-is important to note that the Diffie-Hellman parameters need to be at least as strong
-(speaking in number of bits) as the RSA host key. \todo{TODO: reference!}
+is important to note that the Diffie-Hellman parameter settings need to reflect at least 
+the security (speaking in number of bits) as the RSA host key. \todo{TODO: reference!}
 
 
 \textbf{Elliptic Curves}\ref{section:EllipticCurveCryptography} required by current TLS
 standards only consist of the so-called NIST-curves (\texttt{secp256r1} and
 \texttt{secp384r1}) which may be weak because the parameters that led to their generation
-weren't properly explained (by the NSA). \\
+weren't properly explained (by the NSA).\todo{TODO: reference!} \\
 Disabling support for Elliptic Curves leads to no ephemeral key exchange being available
 for the Windows platform. When you decide to use Elliptic Curves despite the uncertainty,
 make sure to at least use the stronger curve of the two supported by all clients

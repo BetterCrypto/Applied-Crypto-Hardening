@@ -2,28 +2,27 @@
 \label{section:keylengths}
 
 Recommendations on keylengths need to be adapted regularly. Since this document
-is static, we will rather refer to existing publications and websites.
-Recommending the right key length is a hit-and-miss issue.
+is static, we rather want refer to existing publications and websites.
+Recommending a safe key length is a hit-and-miss issue.
 
-\url{http://www.keylength.com/} offers a good overview of approximations for
-key size security based on recommendations by standardization bodies and
+The website \url{http://www.keylength.com/} offers a good overview of approximations for
+key lenght security based on recommendations by different standardization bodies and
 academic publications.
 
 \begin{itemize}
-\item For RSA cryptography we consider any key length below 2048 bits to be
+\item For traditional asymmetric public-key cryptography we consider any key length below 2048 bits to be
 deprectated at the time of this writing.  
-\item For ECC we consider key length below
-224 bits to be deprectated.  
-\item For symmetric algorithms, consider anything below
-128 bits to be deprecated.
+\item For elliptic curve cryptography we consider key lengths below 224 bits to be deprectated.  
+\item For symmetric algorithms we consider anything below 128 bits to be deprecated.
 \end{itemize}
 
 
-One special remark is necessary for 3DES: here we want to note that it
+One special remark is necessary for 3DES: here we want to note that 3DES
 theoretically has 168 bit security, however based on the NIST Special
 Publication 800-57
 \footnote{\url{http://csrc.nist.gov/publications/PubsSPs.html\#800-57-part1},
-pages 63 and 64}, it is clear that 3DES is only considered 80 bits / 112 bits.
+pages 63 and 64}, it is clear that 3DES can only be considered to provide for 
+80 bits / 112 bits security.
 
 
 
