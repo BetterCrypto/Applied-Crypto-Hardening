@@ -1,4 +1,59 @@
 %%\subsection{Instant Messaging Systems}
 \subsubsection{XMPP / Jabber}
 \todo{ts: Describe ejabberd configuration. Reference to Peter`s manifesto https://github.com/stpeter/manifesto}
+
+\subsubsection{Server configuration}
+
+For servers, we mostly recommend to apply what's proposed by the {\it Peter's manifesto}\footenote{https://github.com/stpeter/manifesto}.
+
+In short:
+\begin{itemize}
+    \item require the use of TLS for both client-to-server and server-to-server connections
+    \item prefer or require TLS cipher suites that enable forward secrecy
+    \item deploy certificates issued by well-known and widely-deployed certification authorities (CAs)
+\end{itemize}
+
+The last point being out-of-scope for this section, we will only cover the first two points.
+
+\paragraph{ejabberd}
+
+ejabberd is one of the popular Jabber server.  In order to be compliant with the manifesto, you should adapt your configuration\footnote{http://www.process-one.net/docs/ejabberd/guide_en.html}:
+\begin{lstlisting}[breaklines]
+{listen,
+ [
+  {5222, ejabberd_c2s, [
+                        {access, c2s},
+                        {shaper, c2s_shaper},
+                        {max_stanza_size, 65536},
+                        starttls,
+                        starttls_required, 
+                        {certfile, "/etc/ejabberd/ejabberd.pem"}
+                       ]},
+  {5269, ejabberd_s2s_in, [
+                           {shaper, s2s_shaper},
+                           {max_stanza_size, 131072}
+                          ]},
+
+  %%% Other input ports
+]}.
+{s2s_use_starttls, required_trusted}.
+{s2s_certfile, "/etc/ejabberd/ejabberd.pem"}.
+\end{lstlisting}
+
+
+\subsubsection{Chat privacy - Off-the-Record Messaging (OTR)}
+
+The OTR protocol works on top of the Jabber protocol(\footnote{https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html}).  
+It add to popular chat clients (Adium, Pidgin...) the following propoerties for chiffered chats:
+\begin{itemize}
+    \item Authentification
+    \item Integrity
+    \item Confidentiality
+    \item Forward privacy
+\end{itemize}
+
+It bascially uses Diffie-Helleman, AES and SHA1. 
+
+There are no specific configuration required but the protocol itself worth to be mentionned.
+
 \subsubsection{IRC}
