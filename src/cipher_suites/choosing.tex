@@ -3,11 +3,12 @@
 
 \todo{ Adi...  you want to describe how to make your own selection of cipher suites here.}
 
-SSL/TLS cipher suites consist of a key exchange mechanism, an authentication, a
-stream cipher (or a block cipher with a chaining mode) and a message authentication
-mechanism.
+%%SSL/TLS cipher suites consist of a key exchange algorithm, an authentication, a
+%%stream cipher (or a block cipher with a chaining mode) and a message authentication
+%%mechanism.
+%% ^^ commented out due to duplication (see previous section on architecture) - azet
 
-Many of those mechanisms are interchangeable like the key exchange in this example:
+Many of the parts in a ciphersuite are interchangeable. Like the key exchange algorithm in this example:
 \texttt{ECDHE-RSA-AES256-GCM-SHA384} and \texttt{DHE-RSA-AES256-GCM-SHA384}.
 To provide a decent level of security, all algorithms need to be safe (subject to
 the disclaimer in section \ref{section:disclaimer}).
