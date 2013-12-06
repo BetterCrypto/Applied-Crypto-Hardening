@@ -18,6 +18,14 @@ html:
 md:
 	pandoc -f latex -t markdown -o  applied-crypto-hardening.markdown applied-crypto-hardening.tex
 
+#epub:
+	 # experimental
+#	 ~/Library/texmf/tex/latex/tex4ebook/tex4ebook applied-crypto-hardening.tex
+
+epub:
+ # experimental
+	pandoc -f latex -t epub -o applied-crypto-hardening.epub applied-crypto-hardening.tex
+
 clean:
 	rm -f applied-crypto-hardening.aux applied-crypto-hardening.bbl applied-crypto-hardening.blg applied-crypto-hardening.dvi applied-crypto-hardening.log applied-crypto-hardening.pdf applied-crypto-hardening.toc applied-crypto-hardening.markdown
 	rm -rf applied-crypto-hardening/
