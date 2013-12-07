@@ -1,4 +1,3 @@
-
 %%\subsection{Database Systems}
 % This list is based on : http://en.wikipedia.org/wiki/Relational_database_management_system#Market_share
 
@@ -24,8 +23,8 @@
 [mysqld]
 ssl
 ssl-ca=/etc/mysql/ssl/ca-cert.pem
-ssl-cert=/etc/mysql/ssl/client-cert.pem
-ssl-key=/etc/mysql/ssl/client-key.pem
+ssl-cert=/etc/mysql/ssl/server-cert.pem
+ssl-key=/etc/mysql/ssl/server-key.pem
 ssl-cipher=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
 \end{lstlisting}
 
@@ -37,8 +36,8 @@ ssl-cipher=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256
 % in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
 
 \item[References:]
++{\small \url{https://dev.mysql.com/doc/refman/5.5/en/ssl-connections.html}}
 
-\todo{add references}
 
 % add any further references or best practice documents here
 
