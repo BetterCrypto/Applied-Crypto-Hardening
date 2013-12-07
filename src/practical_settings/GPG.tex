@@ -2,7 +2,8 @@
 The OpenPGP protocol
 \footnote{\url{http://tools.ietf.org/search/rfc4880}}
  uses asymmetric encryption to protect a session key which is used to encrypt a message. Additionally, it signs messages via asymmetric encryption and hash functions. %% what? - azet
-Research on SHA-1 conducted back in 2005\footnote{\url{https://www.schneier.com/blog/archives/2005/02/sha1\_broken.html}} has made clear that collision attacks are a real threat to the security of the SHA-1 hash function. These PGP settings should be adapted to avoid using SHA-1: 
+Research on SHA-1 conducted back in 2005\footnote{\url{https://www.schneier.com/blog/archives/2005/02/sha1\_broken.html}} has made clear that collision attacks are a real threat to the security of the SHA-1 hash function. PGP settings should be adapted to avoid using SHA-1.
+
 
 When using PGP, there are a couple of things to take care of:
 \begin{itemize}
