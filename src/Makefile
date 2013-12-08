@@ -28,6 +28,11 @@ epub:
  # experimental
 	pandoc -f latex -t epub -o applied-crypto-hardening.epub applied-crypto-hardening.tex
 
+upload:
+	rsync -avz --progress --no-p --no-g --no-t applied-crypto-hardening.pdf www.bettercrypto.org:/var/www/static/
+
+www:	pdf upload
+
 clean:
 	rm -f applied-crypto-hardening.aux applied-crypto-hardening.bbl \
             applied-crypto-hardening.blg applied-crypto-hardening.dvi   \
