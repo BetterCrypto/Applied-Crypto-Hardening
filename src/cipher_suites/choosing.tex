@@ -31,16 +31,16 @@ encryption are exchanged. %%For RSA and DSA those keys are the same. %% WHAT?
 \todo{explain this section}
 
 \begin{center}
-\begin{tabular}{| l | l | l | l |}
+\begin{tabular}{llll}
     \toprule
- & \textbf{Key}  & \textbf{\cellcolor{orange}EC}  & \textbf{\cellcolor{green}ephemeral} \\ \cmidrule(lr){1-4}
-    \cellcolor{red}    RSA   & RSA  & \cellcolor{green}no   & \cellcolor{red} no         \\
-    \cellcolor{red}    DH    & RSA  & \cellcolor{green}no   & \cellcolor{red} no         \\
-    \cellcolor{green}  EDH   & RSA  & \cellcolor{green}no   & \cellcolor{green} yes      \\
-    \cellcolor{red}    ECDH  & both & \cellcolor{orange}yes & \cellcolor{red} no         \\
-    \cellcolor{orange} EECDH & both & \cellcolor{orange}yes & \cellcolor{green} yes      \\
-    \cellcolor{red}    DSA   & DSA  & \cellcolor{green}no   & \cellcolor{red} no         \\
-    \cellcolor{red}    ECDSA & DSA  & \cellcolor{orange}yes & \cellcolor{red} no         \\
+          & \textbf{Key}  & \textbf{EC}  & \textbf{ephemeral} \\ \cmidrule(lr){1-4}
+   RSA    & RSA           & no           & no                 \\
+   DH     & RSA           & no           & no                 \\
+   EDH    & RSA           & no           & yes                \\
+   ECDH   & both          & yes          & no                 \\
+   EECDH  & both          & yes          & yes                \\
+   DSA    & DSA           & no           & no                 \\
+   ECDSA  & DSA           & yes          & no                 \\
 \bottomrule
 \end{tabular}
 %\\
