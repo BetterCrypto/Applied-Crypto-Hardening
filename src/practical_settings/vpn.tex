@@ -3,7 +3,7 @@
 \subsubsection{IPSec}
 \label{section:IPSECgeneral}
 
-
+% ciphersuites current 2013-12-09
 \begin{description}
 
 \item[Settings:] \mbox{}
@@ -32,8 +32,8 @@ the hash algorithm used in IKE \footnote{It is used in a HMAC, see
   \url{http://www.ietf.org/rfc/rfc2104.txt}.}.
 
 For a key composed of upper- and lowercase letters, numbers, and two
-additional symbols \footnote{64 possible values = 6 bits}, that gives
-the following minimum lengths in characters:
+additional symbols\footnote{64 possible values = 6 bits},
+table~\ref{tab:IPSEC_psk_len} gives the minimum lengths in characters.
 
 \begin{table}[h]
   \centering
@@ -47,33 +47,39 @@ the following minimum lengths in characters:
     SHA512 & 86 \\
     \bottomrule
   \end{tabular}
+  \caption{PSK lengths}
+  \label{tab:IPSEC_psk_len}
 \end{table}
 
 \paragraph*{Cryptographic Suites}\mbox{}\\
 
-IPSEC Cryptographic Suites are pre-defined settings for all the
-items of a configuration; they try to provide a balanced security
-level and make setting up VPNs easier.
+IPSEC Cryptographic Suites are pre-defined settings for all the items
+of a configuration; they try to provide a balanced security level and
+make setting up VPNs easier.
+\footnote{\url{http://tools.ietf.org/html/rfc6379}}
+\footnote{\url{http://tools.ietf.org/html/rfc4308}}
 
 When using any of those suites, make sure to enable ``Perfect Forward
 Secrecy`` for Phase 2, as this is not specified in the suites. The
 equivalents to the recommended ciphers suites in section
-\ref{section:recommendedciphers} are:
+\ref{section:recommendedciphers} are shown in
+table~\ref{tab:IPSEC_suites}.
 
 \begin{table}[h]
   \centering
   \small
-  \begin{tabular}{lll}
+  \begin{tabular}{p{2.5cm}p{2.5cm}l}
     \toprule
     Configuration A & Configuration B & Notes\\
     \midrule
-    \verb|Suite-B-GCM-256|\footnote{\url{http://tools.ietf.org/html/rfc6379}} &
-\verb|Suite-B-GCM-128| & All Suite-B variants use NIST elliptic curves
-\\ \verb|Suite-B-GMAC-256| & \verb|Suite-B-GMAC-128| & 
-\\ & \verb|VPN-B|\footnote{\url{http://tools.ietf.org/html/rfc4308}} &
-\\
+    \verb|Suite-B-GCM-256| \newline \verb|Suite-B-GMAC-256| &
+    \verb|Suite-B-GCM-128| \newline \verb|Suite-B-GMAC-128| \newline
+    \verb|VPN-B| 
+    & All Suite-B variants use NIST elliptic curves\\
     \bottomrule
   \end{tabular}
+  \caption{IPSEC Cryptographic Suites}
+  \label{tab:IPSEC_suites}
 \end{table}
 
 \paragraph*{IKE or Phase 1}\mbox{}\\
@@ -81,14 +87,13 @@ equivalents to the recommended ciphers suites in section
 Alternatively to the pre-defined cipher suites, you can define your
 own, as described in this and the next section.
 
-IKE or Phase 1 is the mutual authentication and key exchange phase.
+IKE or Phase 1 is the mutual authentication and key exchange phase;
+table~\ref{tab:IPSEC_ph1_params} shows the parameters.
 
 Use only ``main mode``, as ``aggressive mode`` has known security
 vulnerabilities \footnote{\url{http://ikecrack.sourceforge.net/}}.
 
-\todo{how to make footnotes in a table appear in the output document?}
-
-\begin{table}
+\begin{table}[h]
   \centering
   \small
   \begin{tabular}{lll}
@@ -98,21 +103,21 @@ vulnerabilities \footnote{\url{http://ikecrack.sourceforge.net/}}.
     Mode & Main Mode & Main Mode \\
     Encryption & AES-256 & AES, CAMELLIA (-256 or -128) \\
     Hash & SHA2-* & SHA2-*, SHA1 \\
-    DH Group & Group 14--18 \footnote{2048--8192 bit DH},
-    19--21\footnote{(256--521 bit ECDH)} & Group 14--21 \\
-    Lifetime & \todo{need recommendations; 1 day seems to be common
-      practice} & \\
+    DH Group & Group 14--18, 19--21 & Group 14--21 \\
+%    Lifetime & \todo{need recommendations; 1 day seems to be common
+%      practice} & \\
     \bottomrule
   \end{tabular}
+  \caption{IPSEC Phase 1 parameters}
+  \label{tab:IPSEC_ph1_params}
 \end{table}
 
 \paragraph*{ESP or Phase 2}\mbox{}\\
 
-ESP or Phase 2 is where the actual data are protected.
+ESP or Phase 2 is where the actual data are protected; recommended
+parameters are shown in table \ref{tab:IPSEC_ph2_params}.
 
-\todo{make the tables appear right here!}
-
-\begin{table}
+\begin{table}[h]
   \centering
   \small
   \begin{tabular}{lll}
@@ -120,13 +125,19 @@ ESP or Phase 2 is where the actual data are protected.
     & Configuration A & Configuration B \\
     \midrule
     Perfect Forward Secrecy & yes & yes \\
-    Encryption & AES-GCM-16, AES-CTR, AES-CCM-16, AES-256 &
-  AES-GCM-16, AES-CTR, AES-CCM-16, AES-256, CAMELLIA-256, AES-128, CAMELLIA-128 \\
+    Encryption & 
+    \parbox[t]{5cm}{\raggedright
+    \mbox{AES-GCM-16}, \mbox{AES-CTR}, \mbox{AES-CCM-16}, \mbox{AES-256}}
+    &
+    \parbox[t]{5cm}{\raggedright
+    \mbox{AES-GCM-16}, \mbox{AES-CTR}, \mbox{AES-CCM-16}, \mbox{AES-256}, \mbox{CAMELLIA-256}, \mbox{AES-128}, \mbox{CAMELLIA-128}} \\
     Hash & SHA2-* (or none for AES-GCM) & SHA2-*, SHA1 (or none for AES-GCM) \\
     DH Group & Same as Phase 1 & Same as Phase 1 \\
-    Lifetime & \todo{need recommendations; 1-8 hours is common} & \\
+%    Lifetime & \todo{need recommendations; 1-8 hours is common} & \\
     \bottomrule
   \end{tabular}
+  \caption{IPSEC Phase 2 parameters}
+  \label{tab:IPSEC_ph2_params}
 \end{table}
 
 \item[References:] \mbox{}
@@ -158,7 +169,9 @@ Communities can be found in the ``IPSEC VPN'' tab of SmartDashboard.
 \todo{make those graphics prettier -- whoever has the right LaTeX
   mojo, please do!}
 
+\begin{figure}[h]
 \includegraphics{checkpoint_1.png}
+\end{figure}
 
 Either chose one of the encryption suites here, or proceed to
 ``Custom Encryption...'', where you can set encryption and hash for
