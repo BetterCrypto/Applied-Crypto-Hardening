@@ -71,20 +71,20 @@ make sure to at least use the stronger curve of the two supported by all clients
 Other key exchange mechanisms like Pre-Shared Key (PSK) or Secure Remote Password
 (SRP) are irrelevant for regular SSL/TLS use.
 
-\subsubsection{authentication}
+\subsubsection{Authentication}
 
 RSA, DSA, DSS, ECDSA, ECDH, FORTEZZA(?).
 
 Other authentication mechanisms like Pre Shared Keys aren't used in SSL/TLS: \texttt{!PSK:!aNULL}
 
-\subsubsection{encryption}
+\subsubsection{Encryption}
 
 AES, CAMELLIA, SEED, ARIA(?), FORTEZZA(?)...
 
 Other ciphers like IDEA, RC2, RC4, 3DES or DES are weak and therefor not recommended:
 \texttt{!DES:!3DES:!RC2:!RC4:!eNULL}
 
-\subsubsection{message authentication}
+\subsubsection{Message authentication}
 
 SHA-1 (SHA), SHA-2 (SHA256, SHA384), AEAD
 
