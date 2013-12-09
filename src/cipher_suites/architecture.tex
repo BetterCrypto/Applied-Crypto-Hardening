@@ -34,7 +34,13 @@ A MAC ensures that the message has not been tampered with (integrity).
 
 Examples: SHA256, SHA384, SHA
 
-\todo{find a good visualisation for a cipher suite composition}
+
+\begin{figure}[h]
+\makebox[\textwidth]{
+\framebox[1.1\width]{DHE}--\framebox[1.1\width]{RSA}--\framebox[1.1\width]{AES256}--\framebox[1.1\width]{GCM}--\framebox[1.1\width]{SHA384} }
+\caption{Composition of a typical cipher string}
+\end{figure}
+
 
 \item{Authenticated encryption scheme:}
 An encryption scheme which provides for confidentiality, integrity and authenticity.
