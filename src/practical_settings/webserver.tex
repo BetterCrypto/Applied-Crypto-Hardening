@@ -21,7 +21,7 @@
   SSLCipherSuite 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
 \end{lstlisting}
 
-Note again, that any cipher suite starting with ECDHE  can be omitted in case of doubt.
+Note again, that any cipher suite starting with ECDHE can be omitted, if in doubt.
 %% XXX NOTE TO SELF: remove from future automatically generated lists!
 
 \item[Additional settings:]
@@ -80,7 +80,7 @@ See ssllabs in section \ref{section:Tools}
 
 \item[Additional settings:]
 
-As for any other webserver, you should redirect automatically http traffic toward httpS://
+As for any other webserver, you should automatically redirect http traffic toward httpS://
 
 \begin{lstlisting}[breaklines]
   $HTTP["scheme"] == "http" {
@@ -129,7 +129,7 @@ lighttpd httpS:// redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/
 
 %% XXX FIXME: do we need to specify dhparams? Parameter: ssl_dhparam = file. See: http://wiki.nginx.org/HttpSslModule#ssl_protocols
 
-It is recommended to specify your own Diffie-Hellman Parameters file of at least the same bit size as your RSA key. Eg. use no less than 2048bit DH parameters with a 2048bit RSA key.
+It is recommended to specify your own Diffie-Hellman Parameters file of at least the same bit size as your RSA key. E.g. use no less than 2048bit DH parameters with a 2048bit RSA key.
 \begin{lstlisting}[breaklines]
   ssl_dhparam file;
 \end{lstlisting}
@@ -181,7 +181,7 @@ B doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}}).
 Since \verb|ECDHE_RSA_*| is not supported, a SSL certificate based on
 elliptic curves needs to be used.
 
-The configuration of cipher suites MS IIS will use can be configured in one
+The configuration of cipher suites MS IIS will use, can be configured in one
 of the following ways:
 \begin{enumerate}
 \item Group Policy \footnote{\url{http://msdn.microsoft.com/en-us/library/windows/desktop/bb870930(v=vs.85).aspx}}
@@ -191,7 +191,7 @@ of the following ways:
 
 
 Table~\ref{tab:MS_IIS_Client_Support} shows the process of turning on
-one algorithm after another and the effect on the supported Clients
+one algorithm after another and the effect on the supported clients
 tested using https://www.ssllabs.com.
 
 \verb|SSL 3.0|, \verb|SSL 2.0| and \verb|MD5| are turned off.
@@ -231,7 +231,7 @@ not use a RSA Key.
 % \verb|TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA| ... Firefox 10-24, IE 8+, Safari 5, Java 7
 
 
-Not supported Clients:
+Clients not supported:
 \begin{enumerate}
 \item Java 6
 \item WinXP
