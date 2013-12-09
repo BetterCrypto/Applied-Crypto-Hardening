@@ -211,7 +211,9 @@ Please note that these settings restrict the available algorithms for
 
 \begin{itemize}
 \item OpenVPN 2.3.2 from Debian ``wheezy-backports'' linked against openssl (libssl.so.1.0.0) 
-\item OpenVPN 2.2.1 from Debian 7.0 linked against openssl (libssl.so.1.0.0) 
+\item OpenVPN 2.2.1 from Debian 7.0 linked against openssl
+    (libssl.so.1.0.0) 
+\item OpenVPN 2.3.2 for Windows
 \end{itemize}
 
 \item[Settings:] \mbox{}
@@ -236,8 +238,13 @@ client and server.
 % # TLS Authentication
 % tls-auth ta.key
 
+% previous:
+% tls-cipher
+% ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-CAMELLIA256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:AES256-SHA
+% the cipherlist here is config B without the ECDHE strings, because
+% it must fit in 256 bytes...
 \begin{lstlisting}[breaklines]
-tls-cipher ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-CAMELLIA256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:AES256-SHA
+tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
 cipher AES-256-CBC
 auth SHA384
 # generate with 'openssl dhparam -out dh2048.pem 2048':
@@ -250,7 +257,7 @@ Client and server have to use compatible configurations, otherwise they can't co
 The \verb|cipher| and \verb|auth| directives have to be identical.
 
 \begin{lstlisting}[breaklines]
-tls-cipher ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-CAMELLIA256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:AES256-SHA
+tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
 cipher AES-256-CBC
 auth SHA384
 
@@ -268,6 +275,10 @@ version on you will get ``Deprecated TLS cipher name'' warnings for
 the configurations above. You cannot use the selection strings from
 section \ref{section:recommendedciphers} directly from 2.3.1 on, which
 is why we give an explicit cipher list here.
+
+In addition, there is a 256 character limit on configuration file line
+lengths; that limits the size of cipher suites, so we dropped all
+ECDHE suites.
 
 The configuration shown above is compatible with all tested versions.
 
@@ -311,13 +322,13 @@ SHA256.
 
 \item[Limitations:] \mbox{}
 
-OpenVPN has a 256 character limit on configuration file line lengths;
-that limits then length of cipher suites.
-
 Note that the ciphersuites shown by \verb|openvpn --show-tls| are {\it
 known}, but not necessarily {\it
 supported} \footnote{\url{https://community.openvpn.net/openvpn/ticket/304}}.
 
+Which cipher suite is actually used can be seen in the logs:
+
+\verb|Control Channel: TLSv1, cipher TLSv1/SSLv3 DHE-RSA-CAMELLIA256-SHA, 2048 bit RSA|
 
 \end{description}
 
