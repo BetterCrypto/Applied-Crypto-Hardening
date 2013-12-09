@@ -65,6 +65,12 @@ file before shutdown and re-injecting the contents during the boot
 process. On the other hand this can be used for running a secondary
 entropy collector to inject entropy into the kernel entropy pool.
 
+%% specifics for libraries
+%% Openssl uses /dev/urandom. See the paper: https://factorable.net/weakkeys12.conference.pdf (section 5.2)
+%% What about other libs? 
+%% What about other OSes? 
+
+
 \subsection{Recommendations}
 
 To avoid situations where a newly deployed server hasn't enough
