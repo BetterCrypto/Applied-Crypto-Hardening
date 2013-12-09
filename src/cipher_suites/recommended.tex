@@ -100,18 +100,27 @@ This results in the OpenSSL string:
 \begin{tabular}{lllllll}
 \toprule
 \textbf{ID}   & \textbf{OpenSSL Name}       & \textbf{Version} & \textbf{KeyEx} & \textbf{Auth} & \textbf{Cipher} & \textbf{MAC}\\\cmidrule(lr){1-7}
-\verb|0xC030| & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2          & ECDH           &  RSA          & AESGCM(256)     & AEAD         \\ 
-\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           &  RSA          & AES(256) (CBC)  & SHA384       \\ 
-\verb|0x009F| & DHE-RSA-AES256-GCM-SHA384   & TLSv1.2          & DH             &  RSA          & AESGCM(256)     & AEAD         \\ 
-\verb|0x006B| & DHE-RSA-AES256-SHA256       & TLSv1.2          & DH             &  RSA          & AES(256) (CBC)  & SHA256       \\ 
-\verb|0x0088| & DHE-RSA-CAMELLIA256-SHA     & SSLv3            & DH             &  RSA          & Camellia(256)   & SHA1         \\ 
-\verb|0xC014| & ECDHE-RSA-AES256-SHA        & SSLv3            & ECDH           &  RSA          & AES(256) (CBC)  & SHA1         \\ 
-\verb|0x0039| & DHE-RSA-AES256-SHA          & SSLv3            & DH             &  RSA          & AES(256) (CBC)  & SHA1         \\ 
-\verb|0x0035| & AES256-SHA                  & SSLv3            & RSA            &  RSA          & AES(256) (CBC)  & SHA1         \\
+\verb|0x009F| & DHE-RSA-AES256-GCM-SHA384   & TLSv1.2          & DH             & RSA           & AESGCM(256)     & AEAD         \\
+\verb|0x006B| & DHE-RSA-AES256-SHA256       & TLSv1.2          & DH             & RSA           & AES(256)        & SHA256       \\
+\verb|0xC030| & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2          & ECDH           & RSA           & AESGCM(256)     & AEAD         \\
+\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           & RSA           & AES(256)        & SHA384       \\
+\verb|0x009E| & DHE-RSA-AES128-GCM-SHA256   & TLSv1.2          & DH             & RSA           & AESGCM(128)     & AEAD         \\
+\verb|0x0067| & DHE-RSA-AES128-SHA256       & TLSv1.2          & DH             & RSA           & AES(128)        & SHA256       \\
+\verb|0xC02F| & ECDHE-RSA-AES128-GCM-SHA256 & TLSv1.2          & ECDH           & RSA           & AESGCM(128)     & AEAD         \\
+\verb|0xC027| & ECDHE-RSA-AES128-SHA256     & TLSv1.2          & ECDH           & RSA           & AES(128)        & SHA256       \\
+\verb|0x0088| & DHE-RSA-CAMELLIA256-SHA     & SSLv3            & DH             & RSA           & Camellia(256)   & SHA1         \\
+\verb|0x0039| & DHE-RSA-AES256-SHA          & SSLv3            & DH             & RSA           & AES(256)        & SHA1         \\
+\verb|0xC014| & ECDHE-RSA-AES256-SHA        & SSLv3            & ECDH           & RSA           & AES(256)        & SHA1         \\
+\verb|0x0045| & DHE-RSA-CAMELLIA128-SHA     & SSLv3            & DH             & RSA           & Camellia(128)   & SHA1         \\
+\verb|0x0033| & DHE-RSA-AES128-SHA          & SSLv3            & DH             & RSA           & AES(128)        & SHA1         \\
+\verb|0xC013| & ECDHE-RSA-AES128-SHA        & SSLv3            & ECDH           & RSA           & AES(128)        & SHA1         \\
+\verb|0x0084| & CAMELLIA256-SHA             & SSLv3            & RSA            & RSA           & Camellia(256)   & SHA1         \\
+\verb|0x0035| & AES256-SHA                  & SSLv3            & RSA            & RSA           & AES(256)        & SHA1         \\
+\verb|0x0041| & CAMELLIA128-SHA             & SSLv3            & RSA            & RSA           & Camellia(128)   & SHA1         \\
+\verb|0x002F| & AES128-SHA                  & SSLv3            & RSA            & RSA           & AES(128)        & SHA1         \\
 \bottomrule
 \end{tabular}
 \end{center}
-\todo{add AES128, CAMELIA128!}
 
 \textbf{Compatibility}
 
