@@ -53,9 +53,9 @@ key) and encryption (a randomly created key). This advantage is called ``Forward
 Secrecy'' and means that even recorded traffic cannot be decrypted later when someone
 obtains the server key. \\
 All ephemeral key exchange schemes are based on the Diffie-Hellman algorithm and require
-pre-generated Diffie-Hellman parameter (which allow fast ephemeral key generation). It
+pre-generated Diffe-Hellman parameter (which allow fast ephemeral key generation). It
 is important to note that the Diffie-Hellman parameter settings need to reflect at least 
-the security (speaking in number of bits) of the RSA host key. \todo{TODO: reference!}
+the security (speaking in number of bits) as the RSA host key. \todo{TODO: reference!}
 
 
 \textbf{Elliptic Curves}\ref{section:EllipticCurveCryptography} required by current TLS
@@ -88,13 +88,13 @@ Other ciphers like IDEA, RC2, RC4, 3DES or DES are weak and therefor not recomme
 
 SHA-1 (SHA), SHA-2 (SHA256, SHA384), AEAD
 
-Note that SHA-1 is considered broken and should not be used. SHA-1 is however a the
+Note that SHA-1 is considered broken and should not be used. SHA-1 is however the
 only still available message authentication mechanism supporting TLS1.0/SSLv3. Without
 SHA-1 most clients will be locked out.
 
 Other hash functions like MD2, MD4 or MD5 are unsafe and broken: \texttt{!MD2:!MD4:!MD5}
 
-\subsubsection{combining cipher strings}
+\subsubsection{Combining cipher strings}
 %% reference 'man ciphers' and 'openssl ciphers' and show some simple examples
 %% VERY IMPORTANT: hint at the IANA-list and the differences in implementations
 
