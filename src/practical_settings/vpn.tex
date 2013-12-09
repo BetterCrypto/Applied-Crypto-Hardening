@@ -1,5 +1,4 @@
 %%\subsection{VPNs}
-\todo{write this subsection}
 \subsubsection{IPSec}
 \label{section:IPSECgeneral}
 
@@ -166,32 +165,50 @@ This is based on the concept of a ``VPN Community'', which has all the
 settings for the gateways that are included in that community.
 Communities can be found in the ``IPSEC VPN'' tab of SmartDashboard.
 
-\todo{make those graphics prettier -- whoever has the right LaTeX
-  mojo, please do!}
-
-\begin{figure}[h]
-\includegraphics{checkpoint_1.png}
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.592\textwidth]{checkpoint_1.png}
+  \caption{VPN Community encryption properties}
+  \label{fig:checkpoint_1}
 \end{figure}
 
-Either chose one of the encryption suites here, or proceed to
+Either chose one of the encryption suites in the properties dialog
+(figure \ref{fig:checkpoint_1}), or proceed to
 ``Custom Encryption...'', where you can set encryption and hash for
-Phase 1 and 2:
+Phase 1 and 2 (figure \ref{fig:checkpoint_2}).
 
-\includegraphics{checkpoint_2.png}
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.411\textwidth]{checkpoint_2.png}
+  \caption{Custom Encryption Suite Properties}
+  \label{fig:checkpoint_2}
+\end{figure}
 
 The Diffie-Hellman groups and Perfect Forward Secrecy Settings can be
-found under ``Advanced Settings'' / ``Advanced VPN Properties'':
+found under ``Advanced Settings'' / ``Advanced VPN Properties''
+(figure \ref{fig:checkpoint_3}).
 
-\includegraphics{checkpoint_3.png}
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.589\textwidth]{checkpoint_3.png}
+  \caption{Advanced VPN Properties}
+  \label{fig:checkpoint_3}
+\end{figure}
 
-\item[Additional settings:]
+\item[Additional settings:] \mbox{}
 
 For remote Dynamic IP Gateways, the settings are not taken from the
 community, but set in the ``Global Properties'' dialog under ``Remote
 Access'' / ``VPN Authentication and Encryption''. Via the ``Edit...''
-button, you can configure sets of algorithms that all gateways support:
+button, you can configure sets of algorithms that all gateways support
+(figure \ref{fig:checkpoint_4}).
 
-\includegraphics{checkpoint_4.png}
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.474\textwidth]{checkpoint_4.png}
+  \caption{Remote Access Encryption Properties}
+  \label{fig:checkpoint_4}
+\end{figure}
 
 Please note that these settings restrict the available algorithms for
 \textbf{all} gateways, and also influence the VPN client connections.
