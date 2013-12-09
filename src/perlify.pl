@@ -2,10 +2,26 @@
 
 use strict;
 
-my $cipherStrB='EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA';
+
+my $debug=1;
+
+my $cipherStrB=`cat cipherStringB.txt`;
 
 
-while (<>) {
-	$_ =~ s/\@\@\@CIPHERSTRINGB\@\@\@/$cipherStrB/g;
-	print ;
+my @files=`find . -name "*.tex.template" -print`;
+my $f;
+
+foreach  $f ( @files)  {
+	print "file = $f\n" if $debug;
+	$f =~ /(.*\.tex\.)template/;
+	my $ftex = $1;
+
+
+	open(FH,    "<", $f ) or die "could not open file $f: $!";
+	open(FHOUT, ">", $ftex ) or die "could not open file $ftex: $!";
+	
+	while (<FH>) {
+		$_ =~ s/\@\@\@CIPHERSTRINGB\@\@\@/$cipherStrB/g;
+		print FHOUT $_;
+	}
 }
