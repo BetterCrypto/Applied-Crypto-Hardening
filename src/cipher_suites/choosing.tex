@@ -61,7 +61,7 @@ the security (speaking in number of bits) as the RSA host key. \todo{TODO: refer
 \textbf{Elliptic Curves}\ref{section:EllipticCurveCryptography} required by current TLS
 standards only consist of the so-called NIST-curves (\texttt{secp256r1} and
 \texttt{secp384r1}) which may be weak because the parameters that led to their generation
-weren't properly explained (by the NSA).\todo{TODO: reference!} \\
+weren't properly explained (by the NSA).\footnote{\url{http://safecurves.cr.yp.to/rigid.html}} \\
 Disabling support for Elliptic Curves leads to no ephemeral key exchange being available
 for the Windows platform. When you decide to use Elliptic Curves despite the uncertainty,
 make sure to at least use the stronger curve of the two supported by all clients
