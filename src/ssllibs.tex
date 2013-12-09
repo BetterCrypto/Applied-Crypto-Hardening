@@ -7,17 +7,17 @@ Most if not all of the cryptographic work is done by the SSL libraries installed
 your system. Supported protocols, cipher suites and more depend on the version of
 the SSL library in use. Whenever you upgrade the SSL library, a recompile of all
 applications using that library is required to use the newly available features.
-Some features not only require a SSL library supporting it but also the application
+Some features not only require a SSL library supporting it, but also the application
 using that feature. An example for that may be Apache supporting elliptic curve
-cryptography only from version 2.4 onwards no matter if OpenSSL supported it or
+cryptography only from version 2.4 onwards, no matter if OpenSSL supported it or
 not.
 
 As you may see from the above, creating a secure setup isn't just a matter of
 configuration but also depends on several other factors with the most important
 being the SSL libraries and their support of protocols and cipher suites.
-Furthermore applications actually need to make use of those.
+Furthermore, applications actually need to make use of those.
 
-For most configuration snipplets throughout this paper we used OpenSSL's cipher
+For most configuration snippets throughout this paper we used OpenSSL's cipher
 strings. Sadly they are different from the official IANA standard names. When you
 use a different library like for example GnuTLS (which is quite common on Debian
 systems) you might need to change the cipher string. The hex code for a cipher
