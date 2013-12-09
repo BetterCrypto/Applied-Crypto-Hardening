@@ -1,20 +1,20 @@
 %%\subsection{Recommended cipher suites}
 
-In principle system administrators who want to improve their servers have ton
-make a difficult decision between locking out some users and keeping high
-cipher suite security while supporting as many users as possible.
-The website \url{https://www.ssllabs.com/} gives administrators a
-tool to test their setup. The authors made use of ssllabs.com
-to arrive at a set of cipher suites which we will recommend throughout this
-document.\\
+In principle system administrators who want to improve their communication security
+have ton make a difficult decision between effectively locking out some users and 
+keeping high cipher suite security while supporting as many users as possible.
+The website \url{https://www.ssllabs.com/} gives administrators and security engineers
+a tool to test their setup and compare compatibility with clients. The authors made 
+use of ssllabs.com to arrive at a set of cipher suites which we will recommend 
+throughout this document.\\
 
 \textbf{Caution: these settings can only represent a subjective
-choice of the authors at the time of this writing. It might be a wise choice to
-select your own cipher suites based on the instructions in section
+choice of the authors at the time of writing. It might be a wise choice to
+select your own and review cipher suites based on the instructions in section
 \ref{section:ChoosingYourOwnCipherSuites}}.
 
 
-\subsubsection{Configuration A: strong ciphers, fewer clients}
+\subsubsection{Configuration A: Strong ciphers, fewer clients}
 
 At the time of writing we recommend the following set of strong cipher
 suites which may be useful in an environment where one does not depend on many,
@@ -28,11 +28,11 @@ We arrived at this set of cipher suites by selecting:
 \begin{itemize}
 \item TLS 1.2
 \item Perfect forward secrecy / ephemeral Diffie Hellman
-\item strong Hashes (SHA-2)
-\item GCM as Authenticated Encryption scheme where possible
+\item strong MACs (SHA-2) or
+\item GCM as Authenticated Encryption scheme
 \end{itemize}
 
-This results in the string:
+This results in the OpenSSL string:
 
 \begin{lstlisting}[breaklines]
 'EECDH+aRSA+AES256:EDH+aRSA+AES256:!SSLv3'
@@ -69,25 +69,27 @@ Win 7 and Win 8.1 crypto stack, Opera 17, OpenSSL $\ge$ 1.0.1e, Safari 6 / iOS
 
 
 
-\subsubsection{Configuration B: weaker ciphers, many clients}
+\subsubsection{Configuration B: Weaker ciphers, more compatability}
 
 In this section we propose a slightly weaker set of cipher suites. 
-For example, there are some known weaknesses for SHA-1 which is included in this set.
-However, the advantage of this set of cipher suites is its wider compatibility
-with clients as well as less computational overhead.\\ 
+For example, there are some known weaknesses for the SHA-1 hash function that
+is included in this set. However, the advantage of this set of cipher suites 
+is it's higher compatibility with a more diverse set of clients as well as 
+less computational overhead.\\ 
 
-\textbf{All further examples in this paper use Configuration B}.\\
+\textbf{All further examples in this publication use Configuration B}.\\
 
 We arrived at this set of cipher suites by selecting:
 
 \begin{itemize}
 \item TLS 1.2, TLS 1.1, TLS 1.0
-\item allowing SHA-1
+\item allow SHA-1
+
 \todo{AK: Note that SHA1 is considered broken but if we are in DHE, we might get around it as long as you can not calculate a SHA1 collision ``live'' on the wire}
 
 \end{itemize}
 
-This results in the string:
+This results in the OpenSSL string:
 
 \begin{lstlisting}[breaklines]
 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA'
@@ -109,38 +111,42 @@ This results in the string:
 \bottomrule
 \end{tabular}
 \end{center}
+\todo{add AES128, CAMELIA128!}
 
 \textbf{Compatibility}
 
-Note that these cipher suites will not work with anything using Windows XP's
-crypto stack (IE, Outlook), Java 6, Java 7 and Android 2.3. Java 7 could be
-made compatible by installing the "Java Cryptography Extension (JCE) Unlimited
-Strength Jurisdiction Policy Files"
-(JCE) \footnote{\url{http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html}}.
+Note that these cipher suites will not work with Windows XP's crypto stack (e.g. IE, Outlook), 
+%%Java 6, Java 7 and Android 2.3. Java 7 could be made compatible by installing the "Java 
+%%Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files"
+%%(JCE) \footnote{\url{http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html}}.
 We could not verify yet if installing JCE also fixes the Java 7
 DH-parameter length limitation (1024 bit). 
+\todo{do that!}
 
 \textbf{Explanation}
 
 For a detailed explanation of the cipher suites chosen, please see
 \ref{section:ChoosingYourOwnCipherSuites}. In short, finding the perfect cipher
-string is impossible and must be a tradeoff. On the one hand
-there are mandatory and optional ciphers defined in a few RFCs, on the other hand
-there are clients and servers only implementing subsets of the specification.
+string is impossible and must be a tradeoff between compatibility and security. 
+On the one hand there are mandatory and optional ciphers defined in a few RFCs, 
+on the other hand there are clients and servers only implementing subsets of the 
+specification.
 
-Straight forward, we wanted strong ciphers, forward secrecy
+Straight forward, the authors wanted strong ciphers, forward secrecy
 \footnote{\url{http://nmav.gnutls.org/2011/12/price-to-pay-for-perfect-forward.html}}
-and the most clients we could get while still having a cipher string that can be
-used on older servers too (think OpenSSL 0.9.8). This cipher string is meant to be used
-by copy and paste and needs to just work.
+and the best client compatibility possible while still ensuring a cipher string that can be
+used on legacy installations (e.g. OpenSSL 0.9.8). 
+
+Our recommended cipher strings are meant to be used via copy and paste and need to work
+"out of the box".
 
 \begin{itemize}
 \item TLS1.2 is preferred over TLSv1.0/SSLv3 (while still providing a useable cipher
       string for SSLv3).
-\item AES256 and CAMELLIA256 count as strong ciphers at the moment; preferrably in
+\item AES256 and CAMELLIA256 count as very strong ciphers at the moment; preferrably in
       GCM mode.\\
 	  \todo{add a reference here please}
-\item AES128 and CAMELLIA128 still count as strong enough ciphers at the moment
+\item AES128 and CAMELLIA128 count as strong enough ciphers at the moment
 \item DHE or ECDHE for forward secrecy
 \item RSA as this will fit most of todays setup
 \item AES256-SHA as a last ressort (with this cipher at the end, even systems with
