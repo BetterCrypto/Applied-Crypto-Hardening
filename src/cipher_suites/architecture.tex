@@ -8,7 +8,8 @@ algorithms (ciphers) and Message authentication codes (MAC) that provides authen
 encryption schemes. It consists of the following components:
 
 \begin{description}
-\item{Key exchange protocol:}
+
+\item{\it Key exchange protocol:}
 ``An (interactive) key exchange protocol is a method whereby parties who do not 
 share any secret information can generate a shared, secret key by communicating 
 over a public channel. The main property guaranteed here is that an 
@@ -17,22 +18,31 @@ line does not learn anything about the resulting secret key.'' \cite{katz2008int
 
 Example: \texttt{DHE}
 
-\item{Authentication:}
+\item{\it Authentication:}
 The client authenticates the server by its certificate. Optionally the server 
 may authenticate the client certificate.
 
 Example: \texttt{RSA}
 
-\item{Cipher:}
+\item{\it Cipher:}
 The cipher is used to encrypt the message stream. It also contains the key size
 and mode used by the suite.
 
 Example: \texttt{AES256}
 
-\item{Message authentication code (MAC):}
+\item{\it Message authentication code (MAC):}
 A MAC ensures that the message has not been tampered with (integrity).
 
 Examples: \texttt{SHA256}
+
+\todo{ explain that this is either MAC ...or ... this:}
+
+\item{\it Authenticated Encryption with Associated Data (AEAD):}
+An encryption scheme which provides for confidentiality, integrity and authenticity.
+\todo{explain more? link? / reference }
+
+Examples: \texttt{AES256-GCM}
+
 
 
 \begin{figure}[h]
@@ -40,9 +50,6 @@ Examples: \texttt{SHA256}
 \framebox[1.1\width]{ \texttt{DHE} }--\framebox[1.1\width]{ \texttt{RSA} }--\framebox[1.1\width]{ \texttt{AES256} }--\framebox[1.1\width]{ \texttt{SHA256} } }
 \caption{Composition of a typical cipher string}
 \end{figure}
-
-\item{Authenticated encryption scheme:}
-An encryption scheme which provides for confidentiality, integrity and authenticity.
 
 \item {\textbf{NOTE:}} there are two naming schemes for cipher strings -- IANA names (see section \ref{section:Links}) and the more well known OpenSSL names. In this document we will always use OpenSSL names unless a specific service uses IANA names.
 
