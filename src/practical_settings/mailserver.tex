@@ -137,20 +137,35 @@ mode, because the alternative is plain text transmission.
 
 \item[Settings:] \mbox{}
 
-First, you need to generate Diffie Hellman parameters (please first take a look at the section \ref{section:RNGs}):
+%% I (cm) consider the generation of own DH parameters to be voodoo until
+%% someone can explain the contrary. They are, after all, public, and
+%% I found no research that would show that long-term use of a
+%% parameter set would weaken the DH exchange. Also notice that IPSEC
+%% uses fixed parameter sets only.
+%& 
+%% also notice the following comment from  src/tls/tls_dh.c:
+%% * Compiled-in EDH primes (the compiled-in generator is always 2). These are
+%% * used when no parameters are explicitly loaded from a site-specific file.
+%% * 
+%% * 512-bit parameters are used for export ciphers, and 1024-bit parameters are
+%% * used for non-export ciphers. An ~80-bit strong EDH key exchange is really
+%% * too weak to protect 128+ bit keys, but larger DH primes are
+%% * computationally expensive. When greater security is required, use EECDH.
 
-\todo{FIXME: this is a really weak setting! See also: http://postfix.1071664.n5.nabble.com/postfix-hardening-what-can-we-do-td61874.html}
-\begin{lstlisting}[breaklines]
-  % openssl gendh -out /etc/postfix/dh_param_512.pem -2 512
-  % openssl gendh -out /etc/postfix/dh_param_1024.pem -2 1024
-\end{lstlisting}
+%% First, you need to generate Diffie Hellman parameters (please first take a look at the section \ref{section:RNGs}):
 
-Next, we specify these DH parameters in \verb|main.cf|:
+%% \todo{FIXME: this is a really weak setting! See also: http://postfix.1071664.n5.nabble.com/postfix-hardening-what-can-we-do-td61874.html}
+%% \begin{lstlisting}[breaklines]
+%%   % openssl gendh -out /etc/postfix/dh_param_512.pem -2 512
+%%   % openssl gendh -out /etc/postfix/dh_param_1024.pem -2 1024
+%% \end{lstlisting}
 
-\begin{lstlisting}[breaklines]
-  smtpd_tls_dh512_param_file = /etc/postfix/dh_param_512.pem
-  smtpd_tls_dh1024_param_file = /etc/postfix/dh_param_1024.pem
-\end{lstlisting}
+%% Next, we specify these DH parameters in \verb|main.cf|:
+
+%% \begin{lstlisting}[breaklines]
+%%   smtpd_tls_dh512_param_file = /etc/postfix/dh_param_512.pem
+%%   smtpd_tls_dh1024_param_file = /etc/postfix/dh_param_1024.pem
+%% \end{lstlisting}
 
 \paragraph*{MX and SMTP client configuration}\mbox{}\\
 
