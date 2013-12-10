@@ -86,6 +86,7 @@ There is a working patch for all three features:
 % TIMEOUTclose = 1
 
 \subsubsection{SMTP in general}
+\label{subsection:smtp_general}
 
 SMTP usually makes use of opportunistic TLS. This means that an MTA will accept TLS connections when asked for it during handshake but will not require it. One should always support incoming opportunistic TLS and always try TLS handshake outgoing.\\
 
@@ -169,7 +170,7 @@ mode, because the alternative is plain text transmission.
 
 \paragraph*{MX and SMTP client configuration}\mbox{}\\
 
-As discussed above, because of opportunistic encryption we do not
+As discussed in section \ref{subsection:smtp_general}, because of opportunistic encryption we do not
 restrict the list of ciphers. There are still some steps needed to
 enable TLS, all in \verb|main.cf|:
 
@@ -183,8 +184,7 @@ enable TLS, all in \verb|main.cf|:
   smtp_tls_security_level = may
   # if you have authentication enabled, only offer it after STARTTLS
   smtpd_tls_auth_only = yes
-  tls_ssl_options=NO_COMPRESSION
-  tls_random_source = dev:/dev/urandom		
+  tls_ssl_options = NO_COMPRESSION
 \end{lstlisting}
 
 \paragraph*{MSA}\mbox{}\\
