@@ -5,10 +5,7 @@ Elliptic Curve Cryptogaphy (simply called ECC from now on) is a branch of
 cryptography that emerged in the mid-1980ties.
 The security of the RSA algorithm is based on the assumption that factoring 
 large primes is infeasible. Likewise the security of ECC, DH and DSA is 
-based on the discrete logrithm problem.
-\footnote{\url{http://www.mccurley.org/papers/dlog.pdf}} 
-\footnote{\url{http://en.wikipedia.org/wiki/Discrete\_logarithm}}
-\footnote{\url{http://mathworld.wolfram.com/EllipticCurve.html}}.
+based on the discrete logrithm problem\cite{Wikipedia:Discrete,McC90,WR13}.
 Finding the discrete logarithm of an elliptic curve from its public base
 point is thought to be infeasible. This is known as the Elliptic Curve Discrete 
 Logarithm Problem (ECDLP). ECC and the underlying mathematical foundation are not easy 
@@ -29,10 +26,7 @@ of curves and curve points chosen by different standardization bodies such
 as the National Institute of Standards and Technology (NIST) 
 \footnote{\url{http://www.nist.gov}}. Which were later widely implemented 
 in most common crypto libraries. Those parameters came under question 
-repeatedly from cryptographers
-\footnote{\url{http://cr.yp.to/talks/2013.09.16/slides-djb-20130916-a4.pdf}}
-\footnote{\url{https://www.schneier.com/blog/archives/2013/09/the\_nsa\_is\_brea.html\#c1675929}}
-\footnote{\url{http://crypto.stackexchange.com/questions/10263/should-we-trust-the-nist-recommended-ecc-parameters}}.
+repeatedly from cryptographers\cite{BL13,Sch13b,W13}.
 At the time of writing there is ongoing research as to the security of 
 various ECC parameters\cite{DJBSC}.
 Most software configured to rely on ECC (be it client or server) is
