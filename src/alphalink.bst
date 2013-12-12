@@ -70,7 +70,6 @@ FUNCTION {output.nonnull}
   if$
   s
 }
-
 FUNCTION {output}
 { duplicate$ empty$
     'pop$
@@ -108,17 +107,30 @@ FUNCTION {output.bibitem}
   before.all 'output.state :=
 }
 
-FUNCTION {fin.entry}
-{ add.period$
-  write$
-  newline$
-}
-
 FUNCTION {new.block}
 { output.state before.all =
     'skip$
     { after.block 'output.state := }
   if$
+}
+
+FUNCTION {output.url}
+{ url empty$
+    'skip$
+    { new.block
+      "\url{" write$
+      url write$
+      "}" write$
+      newline$
+    }
+  if$
+}
+
+FUNCTION {fin.entry}
+{ add.period$
+  write$
+  newline$
+  output.url
 }
 
 FUNCTION {new.sentence}
