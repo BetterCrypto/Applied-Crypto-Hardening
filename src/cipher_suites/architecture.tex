@@ -13,7 +13,7 @@ encryption schemes. It consists of the following components:
 ``An (interactive) key exchange protocol is a method whereby parties who do not 
 share any secret information can generate a shared, secret key by communicating 
 over a public channel. The main property guaranteed here is that an 
-eavesdroppin adversary who sees all the messages sent over the communication 
+eavesdropping adversary who sees all the messages sent over the communication 
 line does not learn anything about the resulting secret key.'' \cite{katz2008introduction}
 
 Example: \texttt{DHE}
@@ -35,13 +35,11 @@ A MAC ensures that the message has not been tampered with (integrity).
 
 Examples: \texttt{SHA256}
 
-\todo{ explain that this is either MAC ...or ... this:}
-
 \item{\it Authenticated Encryption with Associated Data (AEAD):}
-An encryption scheme which provides for confidentiality, integrity and authenticity.
-\todo{explain more? link? / reference }
+AEAD is a class of authenticated encryption block-cipher modes
+which take care of encryption as well as authentication (e.g. GCM, CCM mode). 
 
-Examples: \texttt{AES256-GCM}
+Example: \texttt{AES256-GCM}
 
 
 
@@ -51,6 +49,6 @@ Examples: \texttt{AES256-GCM}
 \caption{Composition of a typical cipher string}
 \end{figure}
 
-\item {\textbf{NOTE:}} there are two naming schemes for cipher strings -- IANA names (see section \ref{section:Links}) and the more well known OpenSSL names. In this document we will always use OpenSSL names unless a specific service uses IANA names.
+\item {\textbf{A note on nomenclature:}} there are two common naming schemes for cipher strings -- IANA names (see section \ref{section:Links}) and the more well known OpenSSL names. In this document we will always use OpenSSL names unless a specific service uses IANA names.
 
 \end{description}
