@@ -1,8 +1,26 @@
+@string {J_AM =
+    {\hyperref{http://stackexchange.com/}{}{}{Proceedings}
+     \hyperref{http://stackexchange.com/}{}{}{of}
+     \hyperref{http://stackexchange.com/}{}{}{Symposia}
+     \hyperref{http://stackexchange.com/}{}{}{in}
+     \hyperref{http://stackexchange.com/}{}{}{Applied}
+     \hyperref{http://stackexchange.com/}{}{}{Mathematics}}
+}
 @string {I_PolarSSL =
     {\hyperref{http://polarssl.org/}{}{}{PolarSSL}}
 }
+@string {I_Stackexchange =
+    {\hyperref{http://stackexchange.com/}{}{}{Stackexchange}
+     \hyperref{http://stackexchange.com/}{}{}{Q\&A}
+     \hyperref{http://stackexchange.com/}{}{}{Site}}
+}
 @string {I_Wikipedia =
     {\hyperref{http://wikipedia.org/}{}{}{Wikipedia}}
+}
+@string {I_Wolfram =
+    {\hyperref{http://mathworld.wolfram.com/}{}{}{Wolfram} 
+     \hyperref{http://mathworld.wolfram.com/}{}{}{Research} 
+     \hyperref{http://mathworld.wolfram.com/}{}{}{Mathworld}}
 }
 @string {J_TOMACS =
     {\hyperref{http://tomacs.acm.org/}{}{}{ACM}
@@ -101,19 +119,6 @@
   publisher={Chapman \& Hall/CRC}
 }
 
-@misc{rfc3526,
-  author="T. Kivinen and M. Kojo",
-  title="{More Modular Exponential (MODP) Diffie-Hellman groups for Internet Key Exchange (IKE)}",
-  series="Request for Comments",
-  number="3526",
-  howpublished="RFC 3526 (Proposed Standard)",
-  publisher="IETF",
-  organization="Internet Engineering Task Force",
-  year=2003,
-  month=may,
-    url="http://www.ietf.org/rfc/rfc3526.txt",
-}
-
 @techreport{DJBSC,
    key       = {DJB},
    title     = {SafeCurves: choosing safe curves for elliptic-curve cryptography},
@@ -126,7 +131,7 @@
 
 @techreport{Wikipedia:ExportCipher,
    key       = {Wikipedia:ExportCipher},
-   title     = {Export of cryptography in the United States},
+   title     = {Export of cryptography in the {U}nited {S}tates},
    institution = I_Wikipedia,
    year      = {2013},
    month     = Dec,
@@ -134,3 +139,95 @@
    url       = {http://en.wikipedia.org/wiki/Export_of_cryptography_in_the_United_States},
    note      = {Accessed 2013-12-09},
 }
+
+@techreport{Wikipedia:Tempest,
+   key       = {Wikipedia:Tempest},
+   title     = {Tempest (codename)},
+   institution = I_Wikipedia,
+   year      = {2013},
+   month     = Dec,
+   type      = {Wikipedia},
+   url       = {https://en.wikipedia.org/wiki/Tempest_(codename)},
+   note      = {Accessed 2013-12-12},
+}
+
+@techreport{Wikipedia:Discrete,
+   key       = {Wikipedia:Discrete},
+   title     = {Discrete logarithm},
+   institution = I_Wikipedia,
+   year      = {2013},
+   month     = Dec,
+   type      = {Wikipedia},
+   url       = {https://en.wikipedia.org/wiki/Discrete_logarithm},
+   note      = {Accessed 2013-12-12},
+}
+
+@techreport{Wikipedia:Certificate,
+   key       = {Wikipedia:Certificate},
+   title     = {Certificate Policy},
+   institution = I_Wikipedia,
+   year      = {2013},
+   month     = Dec,
+   type      = {Wikipedia},
+   url       = {https://en.wikipedia.org/wiki/Certificate_Policy},
+   note      = {Accessed 2013-12-12},
+}
+
+@techreport{Sch13,
+   author    = {Bruce Schneier},
+   title     = {The {NSA} Is Breaking Most Encryption on the Internet},
+   year      = {2013},
+   month     = Sep,
+   type      = {Blog: Schneier on Security},
+   url       = {https://www.schneier.com/blog/archives/2013/09/the_nsa_is_brea.html},
+}
+
+@techreport{Sch13b,
+   author    = {Bruce Schneier},
+   title     = {The {NSA} Is Breaking Most Encryption on the Internet},
+   year      = {2013},
+   month     = Sep,
+   type      = {Answer to Blog Comment},
+   url       = {https://www.schneier.com/blog/archives/2013/09/the_nsa_is_brea.html\#c1675929},
+}
+
+@techreport{BL13,
+   author    = {D. J. Bernstein and Tanja Lange},
+   title     = {Security dangers of the {NIST} curves},
+   year      = {2013},
+   month     = Sep,
+   type      = {Presentation slides},
+   url       = {http://cr.yp.to/talks/2013.09.16/slides-djb-20130916-a4.pdf},
+}
+
+@techreport{W13,
+   author    = {D. W.},
+   title     = {Should we trust the {NIST}-recommended {ECC} parameters?},
+   year      = {2013},
+   month     = Sep,
+   type      = {Stackexchange Question},
+   institution = I_Stackexchange,
+   url       = {http://crypto.stackexchange.com/questions/10263/should-we-trust-the-nist-recommended-ecc-parameters},
+}
+
+@inproceedings{McC90,
+   author    = {Kevin S. McCurley},
+   title     = {The Discrete Logarithm Problem},
+   booktitle = {Cryptology and Computational Number Theory, } # J_AM,
+   year      = {1990},
+   volume    = {42},
+   pages     = {49-74},
+   url       = {http://www.mccurley.org/papers/dlog.pdf},
+}
+
+@techreport{WR13,
+   key       = {Wolfram Research, Mathworld},
+   title     = {Elliptic Curve},
+   year      = {2013},
+   month     = Dec,
+   type      = {Math Dictionary Entry},
+   institution = I_Wolfram,
+   url       = {http://mathworld.wolfram.com/EllipticCurve.html},
+   note      = {Accessed 2013-12-12},
+}
+
