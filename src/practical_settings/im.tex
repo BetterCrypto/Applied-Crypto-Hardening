@@ -1,6 +1,5 @@
 %%\subsection{Instant Messaging Systems}
 \subsubsection{XMPP / Jabber}
-\todo{ts: Describe ejabberd configuration. Reference to Peter`s manifesto https://github.com/stpeter/manifesto}
 
 \subsubsection{Server configuration}
 
@@ -17,7 +16,7 @@ The last point being out-of-scope for this section, we will only cover the first
 
 \paragraph{ejabberd}
 
-ejabberd is one of the popular Jabber servers.  In order to be compliant
+ejabberd is one of the popular Jabber server.  In order to be compliant
 with the manifesto, you should adapt your
 configuration\footnote{\url{http://www.process-one.net/docs/ejabberd/guide_en.html}}:
 \begin{lstlisting}[breaklines]
@@ -46,7 +45,7 @@ configuration\footnote{\url{http://www.process-one.net/docs/ejabberd/guide_en.ht
 \subsubsection{Chat privacy - Off-the-Record Messaging (OTR)}
 
 The OTR protocol works on top of the Jabber protocol(\footnote{https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html}).  
-It adds to popular chat clients (Adium, Pidgin...) the following propoerties for ciphered chats:
+It add to popular chat clients (Adium, Pidgin...) the following propoerties for chiffered chats:
 \begin{itemize}
     \item Authentification
     \item Integrity
@@ -54,8 +53,43 @@ It adds to popular chat clients (Adium, Pidgin...) the following propoerties for
     \item Forward privacy
 \end{itemize}
 
-It basically uses Diffie-Hellman, AES and SHA1. 
+It bascially uses Diffie-Helleman, AES and SHA1. 
 
-There are no specific configurations required but the protocol itself is worth to be mentioned.
+There are no specific configuration required but the protocol itself worth to be mentionned.
 
 \subsubsection{IRC}
+
+\todo{Quick draft -- to complete / review / validate}
+
+There are numerous implementations of IRC servers.  In this section, we choose {\it Charybdis} which serve as basis for {\it ircd-seven}\footnote{https://dev.freenode.net/redmine/projects/ircd-seven}, developped and used by freenode. Freenode is actually the biggest IRC network\footnote{http://irc.netsplit.de/networks/top10.php}.  {\it Charybdis} is being part of the {\it Debian} & \it{Ubuntu} distributions.
+
+\begin{lstlisting}[breaklines]
+/* Extensions */
+# Some modules 
+#loadmodule "extensions/chm_sslonly_compat.so";
+loadmodule "extensions/extb_ssl.so";
+# Some other modules
+
+serverinfo {
+  /* Standard piece of information */
+  
+  ssl_private_key = "etc/test.key";
+  ssl_cert = "etc/test.cert";
+  ssl_dh_params = "etc/dh.pem";
+  # set ssld_count as number of cores - 1
+  ssld_count = 1; 
+};
+
+listen {
+  /* Standard ports */
+  sslport = 6697;
+
+  /* IPv6 configuration */
+};
+\end{lstlisting}
+
+
+\subsubsection{SILC}
+
+
+
