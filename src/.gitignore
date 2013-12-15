@@ -11,3 +11,4 @@ applied-crypto-hardening.markdown
 *.swp
 applied-crypto-hardening/
 gitHeadInfo.gin
+old/*
