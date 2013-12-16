@@ -34,6 +34,18 @@
 \usepackage{fancyvrb}
 \usepackage{listings}
 
+%% Epigraph patching
+\usepackage{epigraph}
+% \epigraphsize{\small}% Default
+\setlength\epigraphwidth{8cm}
+\setlength\epigraphrule{0pt}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\epigraph}{\@epitext{#1}}{\itshape\@epitext{#1}}{}{}
+\makeatother
+
+
+
 
 \usepackage{gitinfo}
 
