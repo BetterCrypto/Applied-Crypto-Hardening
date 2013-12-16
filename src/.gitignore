@@ -12,3 +12,6 @@ applied-crypto-hardening.markdown
 applied-crypto-hardening/
 gitHeadInfo.gin
 old/*
+practical_settings/*_generated.tex
+cipher_suites/*_generated.tex
+*_generated.tex

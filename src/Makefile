@@ -7,6 +7,7 @@ all:	pdf html md
 
 pdf: 
 	./update-metadata-for-gitinfo
+	./perlify.pl
 	pdflatex applied-crypto-hardening
 	bibtex applied-crypto-hardening
 	while grep -s "Rerun to get cross-references right" \
