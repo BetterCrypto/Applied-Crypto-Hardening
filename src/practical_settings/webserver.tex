@@ -1,11 +1,11 @@
 %%\subsection{Webservers}
 
+%%---------------------------------------------------------------------- 
 \subsection{Apache}
 
-\subsubsection{description}
-\subsubsection[Tested with Version:]
+\subsubsection{Tested with Version}
 
-\subsubsection[Settings:] \mbox{}
+\subsubsection{Settings} 
 
 %-All +TLSv1.1 +TLSv1.2
 \begin{lstlisting}[breaklines]
@@ -23,9 +23,9 @@
 \end{lstlisting}
 
 Note again, that any cipher suite starting with ECDHE can be omitted, if in doubt.
-%% XXX NOTE TO SELF: remove from future automatically generated lists!
 
-\subsubsection[Additional settings:]
+
+\subsubsection{Additional settings}
 
 You should redirect everything to httpS:// if possible. In Apache you can do this with the following setting inside of a VirtualHost environment:
 
@@ -38,27 +38,28 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
   </VirtualHost>
 \end{lstlisting}
 
-\subsubsection[Justification for special settings (if needed):]
+\subsubsection{Justification for special settings (if needed)}
 
-\subsubsection[References:]
+\subsubsection{References}
 
-\subsubsection[How to test:]
+\subsubsection{How to test}
 
 See ssllabs in section \ref{section:Tools}
 
-%\end{description}
+%%\end{description}
 
 
+%%---------------------------------------------------------------------- 
 \subsection{lighttpd}
 
 
 
-\begin{description}
-\item[Tested with Version:]
+%%\begin{description}
+\subsubsection{Tested with Version}
 
 \todo{version?}
 
-\item[Settings:] \mbox{}
+\subsubsection{Settings}
 
 
 %% Complete ssl.cipher-list with same algo than Apache
@@ -78,7 +79,7 @@ See ssllabs in section \ref{section:Tools}
 \end{lstlisting}
 
 
-\item[Additional settings:]
+\subsubsection{Additional settings}
 
 As for any other webserver, you should automatically redirect http traffic toward httpS://
 
@@ -93,32 +94,32 @@ As for any other webserver, you should automatically redirect http traffic towar
 \end{lstlisting}
 
 
-\item[References:] 
-\todo{add references}.
+\subsubsection{References} \todo{add references to lighttpd SSL settins documentation}.
+
 lighttpd httpS:// redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps}
 
-% add any further references or best practice documents here
 
-\item[How to test:] See ssllabs in section \ref{section:Tools}
+\subsubsection{How to test} 
+See ssllabs in section \ref{section:Tools}
 
 % describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
-\end{description}
+%\end{description}
 
 
+%%---------------------------------------------------------------------- 
 \subsection{nginx}
 
-\begin{description}
-\item[Tested with Version:] 1.4.4 with OpenSSL 1.0.1e on OS X Server 10.8.5
+%\begin{description}
+\subsubsection{Tested with Version} 
+\begin{itemize}
+\item 1.4.4 with OpenSSL 1.0.1e on OS X Server 10.8.5
+\item 1.2.1-2.2+wheezy2 with OpenSSL 1.0.1e on Debian Wheezy
+\item 1.4.4 with OpenSSL 1.0.1e on Debian Wheezy
+\item 1.2.1-2.2~bpo60+2 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
+\end{itemize}
 
-1.2.1-2.2+wheezy2 with OpenSSL 1.0.1e on Debian Wheezy
-1.4.4 with OpenSSL 1.0.1e on Debian Wheezy
-1.4.4 with OpenSSL 1.0.1e on Debian Wheezy
-1.4.4 with OpenSSL 1.0.1e on Debian Wheezy
-1.4.4 with OpenSSL 1.0.1e on Debian Wheezy
 
-\todo{version?}
-
-\item[Settings:] \mbox{}
+\subsubsection{Settings}
 
 \begin{lstlisting}[breaklines]
   ssl_prefer_server_ciphers on;
@@ -139,7 +140,7 @@ If you absolutely want to specify your own DH parameters, you can specify them v
 However, we advise you to read section \ref{section:DH} and stay with the standard IKE/IETF parameters (as long as they are $ > 1024 $ bits).
 
 
-\item[Additional settings:]
+\subsubsection{Additional settings}
 
 If you decide to trust NIST's ECC curve recommendation, you can add the following line to nginx's configuration file to select special curves:
 
@@ -154,27 +155,29 @@ You should redirect everything to httpS:// if possible. In Nginx you can do this
 \end{lstlisting}
 
 
-\item[References:] \todo{add references}
+\subsubsection{References} \todo{add references}
 
-\item[How to test:] See ssllabs in section \ref{section:Tools}
+\subsubsection{How to test}
+See ssllabs in section \ref{section:Tools}
 
-\end{description}
-
-
-
+%\end{description}
 
 
+
+
+
+%%---------------------------------------------------------------------- 
 \subsection{MS IIS}
 \label{sec:ms-iis}
 
 
 \todo{Daniel: add screenshots and registry keys}
 
-\begin{description}
+%\begin{description}
 
-\item[Tested with Version:] \todo{Daniel: add tested version}
+\subsubsection{Tested with Version} \todo{Daniel: add tested version}
 
-\item[Settings:] \mbox{}
+\subsubsection{Settings}
 
 
 When trying to avoid RC4 and CBC (BEAST-Attack) and requiring perfect
@@ -242,21 +245,22 @@ Clients not supported:
 \item Bing
 \end{enumerate}
 
-\item[Additional settings:]
+\subsubsection{Additional settings}
 
 %Here you can add additional settings
 
-\item[Justification for special settings (if needed):]
+\subsubsection{Justification for special settings (if needed)}
 
 % in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
 
-\item[References:]
+\subsubsection{References}
 
 \todo{add references}
 
 % add any further references or best practice documents here
 
-\item[How to test:] See ssllabs in section \ref{section:Tools}
+\subsubsection{How to test}
+See ssllabs in section \ref{section:Tools}
 
 
-\end{description}
+%\end{description}
