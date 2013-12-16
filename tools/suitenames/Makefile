@@ -1,5 +1,8 @@
 all: suite_names.tex
 
+install: all
+	cp suite_names.tex ../../src/
+
 .DELETE_ON_ERROR:
 
 suite_names.tex: tls-parameters-4.csv openssl-ciphers.txt template.tex buildsuites.pl
