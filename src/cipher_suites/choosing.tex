@@ -25,9 +25,9 @@ support of these low-security algorithms is disabled by setting
 \subsubsection{Key Exchange}
 
 Many algorithms allow secure key exchange.  Those are RSA, DH, EDH, ECDSA,
-ECDH, EECDH amongst others During the key exchange, keys for authentication and
-for encryption are exchanged. %%For RSA and DSA those keys are the same. %%
-WHAT?
+ECDH, EECDH amongst others. During the key exchange, keys used for authentication
+and symmetric encryption are exchanged. For RSA, DSA and ECDSA those keys are derived
+from the server's public key.
 
 \todo{explain this section}
 
@@ -75,9 +75,23 @@ Other key exchange mechanisms like Pre-Shared Key (PSK) or Secure Remote Passwor
 
 \subsubsection{Authentication}
 
-RSA, DSA, DSS, ECDSA, ECDH, FORTEZZA(?).
+RSA, DSA, DSS, ECDSA, ECDH
 
-Other authentication mechanisms like Pre Shared Keys aren't used in SSL/TLS: \texttt{!PSK:!aNULL}
+During Key Exchange the server proved that he is in control of the private key
+associated with a certain public key (the server's certificate). The client
+verifies the server's identity by comparing the signature on the certificate
+and matching it with its trust database. For details about the trust model of
+SSL/TLS please see \ref{section:PKIs}.
+
+In addition to the server providing its identity, a client might do so as well.
+That way mutual trust can be established. Another mechanism providing client
+authentication is Secure Remote Password (SRP)\todo{reference}. All those
+mechanisms require special configuration.
+
+Other authentication mechanisms like Pre Shared Keys aren't used in SSL/TLS.
+Anonymous sessions will not be discussed in this paper.
+
+\texttt{!PSK:!aNULL}
 
 \subsubsection{Encryption}
 
