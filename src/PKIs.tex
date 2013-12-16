@@ -65,14 +65,19 @@ issued a new root certificate. Now you can issue new certificates as follows:
 
 \subsection{Hardening PKI}
 \label{sec:hardeningpki}
-In recent years several CAs were compromised by attackers in order to get trusted 
-certificates for malicious activities. In 2011 the Dutch CA Diginotar was hacked and
-all certificates were revoked. Recently Google found certificates issued to them, which
-were not used by the company. The concept of PKIs heavily depends on the security of CAs. 
-If they get compromised the whole PKI system will fail.
+In recent years several CAs were compromised by attackers in order to
+get trusted certificates for malicious activities. In 2011 the Dutch
+CA Diginotar was hacked and all certificates were
+revoked~\ref{diginotar-hack}. Recently Google found certificates
+issued to them, which were not used by the
+company~\ref{googlecahack}. The concept of PKIs heavily depends on the
+security of CAs.  If they get compromised the whole PKI system will
+fail.
 
-Therefore several security enhancements were introduced by different organisations and
-vendors~\ref{tschofenig-webpki}. Currently two methods are used, DANE and Certificate Pinning.
+Therefore several security enhancements were introduced by different
+organisations and vendors~\ref{tschofenig-webpki}. Currently two
+methods are used, DANE~\ref{rfc6698} and Certificate
+Pinning~\ref{draft-ietf-websec-key-pinning}.
 
 % \subsubsection{DANE}
 % \label{sec:dane}
@@ -82,25 +87,27 @@ vendors~\ref{tschofenig-webpki}. Currently two methods are used, DANE and Certif
 
 
 
-% This section deals with settings related to trusting CAs. However, our main
-% recommendations for PKIs is: if you are able to run your own PKI and disable
-% any other CA, do so. This makes sense most in environments where any machine-to-machine
-% communication system compatibility with external entities is not an issue.
-%% azet:
-%% this needs discussion! self-signed certificates simply do not work in practices
-%% for real-world scenarios - i.e. websites that actually serve a lot of people
+% This section deals with settings related to trusting CAs. However,
+% our main recommendations for PKIs is: if you are able to run your
+% own PKI and disable any other CA, do so. This makes sense most in
+% environments where any machine-to-machine communication system
+% compatibility with external entities is not an issue.
+%% azet: this needs discussion! self-signed certificates simply do not
+%% work in practices for real-world scenarios - i.e. websites that
+%% actually serve a lot of people
 
-% A good background on PKIs can be found in 
+% A good background on PKIs can be found in
 % \footnote{\url{https://developer.mozilla.org/en/docs/Introduction_to_Public-Key_Cryptography}}
 % \footnote{\url{http://cacr.uwaterloo.ca/hac/about/chap8.pdf}}
 % \footnote{\url{http://www.verisign.com.au/repository/tutorial/cryptography/intro1.shtml}}
 % .
 
-\todo{ts: Background and Configuration (EMET) of Certificate Pinning, TLSA integration, 
-  When to use self-signed certificates, how to get certificates from public CA authorities 
-  (CACert, StartSSL), Best-practices how to create a CA and how to generate private keys/CSRs, 
-  Discussion about OCSP and CRLs. TD: Useful Firefox plugins: CipherFox, Conspiracy, Perspectives.}
+\todo{ts: Background and Configuration (EMET) of Certificate Pinning,
+  TLSA integration, When to use self-signed certificates, how to get
+  certificates from public CA authorities (CACert, StartSSL),
+  Best-practices how to create a CA and how to generate private
+  keys/CSRs, Discussion about OCSP and CRLs. TD: Useful Firefox
+  plugins: CipherFox, Conspiracy, Perspectives.}
 
 
-%``Certificate Policy''\cite{Wikipedia:Certificate_Policy}
-%(CA)
+% ``Certificate Policy''\cite{Wikipedia:Certificate_Policy} (CA)
