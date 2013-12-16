@@ -14,6 +14,7 @@ decision -> Practical [label="Yes"];
 decision -> Theory [label="No"];
 Theory -> Appendix;
 Practical -> Appendix;
+Practical -> Theory;
 
 Appendix [shape=box, label="Appendix: references, links"]
 
