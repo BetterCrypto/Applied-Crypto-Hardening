@@ -1,11 +1,11 @@
 %%\subsection{Webservers}
 
-\subsubsection{Apache}
+\subsection{Apache}
 
-\begin{description}
-\item[Tested with Version:]
+\subsubsection{description}
+\subsubsection[Tested with Version:]
 
-\item[Settings:] \mbox{}
+\subsubsection[Settings:] \mbox{}
 
 %-All +TLSv1.1 +TLSv1.2
 \begin{lstlisting}[breaklines]
@@ -25,7 +25,7 @@
 Note again, that any cipher suite starting with ECDHE can be omitted, if in doubt.
 %% XXX NOTE TO SELF: remove from future automatically generated lists!
 
-\item[Additional settings:]
+\subsubsection[Additional settings:]
 
 You should redirect everything to httpS:// if possible. In Apache you can do this with the following setting inside of a VirtualHost environment:
 
@@ -38,19 +38,18 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
   </VirtualHost>
 \end{lstlisting}
 
-\item[Justification for special settings (if needed):]
+\subsubsection[Justification for special settings (if needed):]
 
-\item[References:]
+\subsubsection[References:]
 
-\item[How to test:]
+\subsubsection[How to test:]
 
 See ssllabs in section \ref{section:Tools}
 
-\end{description}
-%XXXX   ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AES:RSA+3DES:!ADH:!AECDH:!MD5:!DSS
+%\end{description}
 
 
-\subsubsection{lighttpd}
+\subsection{lighttpd}
 
 
 
@@ -106,7 +105,7 @@ lighttpd httpS:// redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/
 \end{description}
 
 
-\subsubsection{nginx}
+\subsection{nginx}
 
 \begin{description}
 \item[Tested with Version:] 1.4.4 with OpenSSL 1.0.1e on OS X Server 10.8.5
@@ -165,7 +164,7 @@ You should redirect everything to httpS:// if possible. In Nginx you can do this
 
 
 
-\subsubsection{MS IIS}
+\subsection{MS IIS}
 \label{sec:ms-iis}
 
 
