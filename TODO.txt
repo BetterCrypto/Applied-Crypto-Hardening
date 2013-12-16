@@ -14,8 +14,9 @@ BIG TOPICS
 
 * Write section 7.3 (-> Adi . How to chose your own cipher string + screenshots)
 
-* Decide/Discuss recommended ciphers:
+DONE * Decide/Discuss recommended ciphers:
   - DH parameters: what is our recommendation? >2048? >=2048? leave default (aka 1024)?
+  --> answer: we trust IETF/IKE  as described in ECRYPT2
 
 * comments from IAIK integrate (--> Aaron)
 * SHA-1 section: write why it is a problem
@@ -26,10 +27,12 @@ BIG TOPICS
 
 Formatting
 ==========
+
 DONE * one-column layout: make page margins smaller
 DONE * add large "DRAFT" letters on top of every page.
   make the git version number part of the document
-* Layout of sample code (lstisting format) : make it pretty!
+DONE * Layout of sample code (lstisting format) : make it pretty!
+Rendering in Firefox (inline) on Windows seems to be really messed up. What happenened?
 
 
 * make every section like the Apache section
