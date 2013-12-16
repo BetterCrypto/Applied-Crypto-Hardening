@@ -29,7 +29,7 @@ private key not on the CAs system. You can generate a private key and a correspo
 certificate request as follows:
 
 \begin{lstlisting}[breaklines]
-\% openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize>
+% openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize>
 Country Name (2 letter code) [AU]:DE
 State or Province Name (full name) [Some-State]:Bavaria
 Locality Name (eg, city) []:Munich
@@ -51,16 +51,16 @@ installation or if only systems communicate with each other, which do not act wi
 a own CA can be accomplished using OpenSSL:
 
 \begin{lstlisting}
-\% cd /usr/lib/ssl/misc
-\% sudo ./CA.pl -newca
+% cd /usr/lib/ssl/misc
+% sudo ./CA.pl -newca
 \end{lstlisting}
 
 Answer the questions according to your setup. Now you have configured your basic settings and 
 issued a new root certificate. Now you can issue new certificates as follows:
 
 \begin{lstlisting}
-\% cd /usr/lib/ssl/misc
-\% sudo ./CA.pl -newreq
+% cd /usr/lib/ssl/misc
+% sudo ./CA.pl -newreq
 \end{lstlisting}
 
 \subsection{Hardening PKI}
