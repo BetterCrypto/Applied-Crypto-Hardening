@@ -36,6 +36,29 @@ your systems support on how you may get the most security out of your systems.
 
 \todo{Mac OSX /iOS crypto API? MacLemon?}
 
+\subsection{priority strings}
+
+Choosing cipher strings requires the use of an intermediate language that allows selection
+and deselection of ciphers, key exchange mechanisms, MACs and combinations of those.
+Common combinators consist of \texttt{+}, \texttt{-} and \texttt{!}
+\begin{center}
+
+\begin{tabular}{rll}
+\toprule
+\textbf{combinator} & \textbf{effect}                   & \textbf{example}\\\cmidrule(lr){1-3}
+           \verb|+| & add at this position              & \verb|+SHA256|      \\
+           \verb|-| & remove at the current position    & \verb|-SSLv3|       \\
+           \verb|!| & permanently remove from selection & \verb|!3DES|        \\
+ (OpenSSL) \verb|@| & special command                   & \verb|@STRENGTH|    \\
+  (GnuTLS) \verb|%| & special command                   & \verb|%NEW_PADDING| \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+%http://www.gnutls.org/manual/html_node/Priority-Strings.html
+%https://www.openssl.org/docs/apps/ciphers.html
+
 %%azet: 
 % I think we should neglect this section since we do 
 % not need to provide an overview of cryptography libraries 
