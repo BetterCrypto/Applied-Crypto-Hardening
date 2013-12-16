@@ -8,7 +8,9 @@
 \documentclass[	DIV=calc,%
 				paper=a4,%
 				fontsize=9pt,%
-				onecolumn]{scrartcl}	 					% KOMA-article class
+				%onecolumn]{scrartcl}	 					% KOMA-article class
+				onecolumn]{scrreprt}	 					% KOMA-article class
+				%onecolumn]{report}	 					% KOMA-article class
 
 \usepackage{lipsum}													% Package to create dummy text
 
@@ -211,13 +213,17 @@ morekeywords={__global__, __device__},  %
 %\initial{H}\textbf{ere is some sample text to show the initial in the introductory paragraph of this template article. The color and lineheight of the initial can be modified in the preamble of this document.}
 
 \input{abstract}
-\newpage
 \tableofcontents
-\newpage
+\chapter{Introduction}
 \input{howtoread}
 \input{disclaimer}
 \input{motivation}
 \input{methods}
+%%
+\chapter{Practical recommendations}
+\input{practical_settings}
+%%
+\chapter{Theory}
 \input{PKIs}
 \input{ECC}
 \input{DH}
@@ -225,7 +231,7 @@ morekeywords={__global__, __device__},  %
 \input{RNGs}
 \input{cipher_suites}
 \input{ssllibs}
-\input{practical_settings}
+\chapter{Appendix}
 \input{tools}
 \input{further_research}
 \input{links}
