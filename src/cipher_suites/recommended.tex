@@ -35,7 +35,7 @@ We arrived at this set of cipher suites by selecting:
 This results in the OpenSSL string:
 
 \begin{lstlisting}[breaklines]
-'EECDH+aRSA+AES256:EDH+aRSA+AES256:!SSLv3'
+'EDH+aRSA+AES256:EECDH+aRSA+AES256:!SSLv3'
 \end{lstlisting}
 
 %$\implies$ resolves to 
@@ -52,10 +52,10 @@ This results in the OpenSSL string:
 \begin{tabular}{lllllll}
 \toprule
 \textbf{ID}   & \textbf{OpenSSL Name}       & \textbf{Version} & \textbf{KeyEx} & \textbf{Auth} & \textbf{Cipher} & \textbf{MAC}\\\cmidrule(lr){1-7}
-\verb|0xC030| & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2          & ECDH           &  RSA          & AESGCM(256)     & AEAD         \\
-\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           &  RSA          & AES(256) (CBC)  & SHA384       \\
 \verb|0x009F| & DHE-RSA-AES256-GCM-SHA384   & TLSv1.2          & DH             &  RSA          & AESGCM(256)     & AEAD         \\
 \verb|0x006B| & DHE-RSA-AES256-SHA256       & TLSv1.2          & DH             &  RSA          & AES(256) (CBC)  & SHA256       \\
+\verb|0xC030| & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2          & ECDH           &  RSA          & AESGCM(256)     & AEAD         \\
+\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           &  RSA          & AES(256) (CBC)  & SHA384       \\
 \bottomrule
 \end{tabular}
 \end{center}
