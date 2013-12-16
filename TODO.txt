@@ -6,36 +6,38 @@ BIG TOPICS
 ==========
 
 
-* DDOS possibilities when we increase cyrpto security?? What about that?
+* clean up 9.5 "chossing your own cipher"
+
+* DDOS possibilities when we increase cyrpto security?? What about that? (--> LATER)
 
 * write a Justification section to every setting, maybe have that later in the document. 
 
 * move the explanations to a later part of the document. Code snippets go *first* . The target group is sysadmins, must be easily copy & paste-able. Or find a different way so that they can easily use/read the document
 
-* Write section 7.3 (-> Adi . How to chose your own cipher string + screenshots)
-
 DONE * Decide/Discuss recommended ciphers:
   - DH parameters: what is our recommendation? >2048? >=2048? leave default (aka 1024)?
   --> answer: we trust IETF/IKE  as described in ECRYPT2
 
-* comments from IAIK integrate (--> Aaron)
-* SHA-1 section: write why it is a problem
-* include OpenSSL names/IANA names into appendix
+* comments from IAIK integrate (--> Aaron, check again if it was done)
+* SHA-1 section: write why it is a problem (--> Florian Mendel)
+* PKI section (--> Thomas Schreck)
+* include OpenSSL names/IANA names into appendix (--> cm)
 * Document RNG problem in Apache (--> Pepi)
-* Oracle ?? (--> Berg?? maybe . Or aaron: ask nic.at. Or link to T-Systems paper)
+* Oracle ?? (--> Berg?? maybe . Or aaron: ask nic.at. Or link to T-Systems paper) --> T-Systems paper
 * DB2 (--> Berg. Or ask MLeyrer)
+
 
 Formatting
 ==========
 
 DONE * one-column layout: make page margins smaller
 DONE * add large "DRAFT" letters on top of every page.
-  make the git version number part of the document
+DONE  make the git version number part of the document
 DONE * Layout of sample code (lstisting format) : make it pretty!
 Rendering in Firefox (inline) on Windows seems to be really messed up. What happenened?
 
+* make every section like the Apache section (--> Aaron)
 
-* make every section like the Apache section
 
 Workflow
 ========
@@ -117,7 +119,7 @@ DONE * Exim4 (-> Adi & Wolfgang Breya)
   * Cisco IPSec
   * Juniper VPN
   * L2TP over IPSec -> egal
-* SIP   -> Klaus???
+* SIP   -> Klaus
 * SRTP  -> Klaus???
 * DNSSec ??	Verweis auf BCPxxx	--> out of scope
    - DANE
