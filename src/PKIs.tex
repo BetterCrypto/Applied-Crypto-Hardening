@@ -68,16 +68,16 @@ issued a new root certificate. Now you can issue new certificates as follows:
 In recent years several CAs were compromised by attackers in order to
 get trusted certificates for malicious activities. In 2011 the Dutch
 CA Diginotar was hacked and all certificates were
-revoked~\ref{diginotar-hack}. Recently Google found certificates
+revoked~\cite{diginotar-hack}. Recently Google found certificates
 issued to them, which were not used by the
-company~\ref{googlecahack}. The concept of PKIs heavily depends on the
+company~\cite{googlecahack}. The concept of PKIs heavily depends on the
 security of CAs.  If they get compromised the whole PKI system will
 fail.
 
 Therefore several security enhancements were introduced by different
-organisations and vendors~\ref{tschofenig-webpki}. Currently two
-methods are used, DANE~\ref{rfc6698} and Certificate
-Pinning~\ref{draft-ietf-websec-key-pinning}.
+organisations and vendors~\cite{tschofenig-webpki}. Currently two
+methods are used, DANE~\cite{rfc6698} and Certificate
+Pinning~\cite{draft-ietf-websec-key-pinning}.
 
 % \subsubsection{DANE}
 % \label{sec:dane}
@@ -102,12 +102,12 @@ Pinning~\ref{draft-ietf-websec-key-pinning}.
 % \footnote{\url{http://www.verisign.com.au/repository/tutorial/cryptography/intro1.shtml}}
 % .
 
-\todo{ts: Background and Configuration (EMET) of Certificate Pinning,
-  TLSA integration, When to use self-signed certificates, how to get
-  certificates from public CA authorities (CACert, StartSSL),
-  Best-practices how to create a CA and how to generate private
-  keys/CSRs, Discussion about OCSP and CRLs. TD: Useful Firefox
-  plugins: CipherFox, Conspiracy, Perspectives.}
+% \todo{ts: Background and Configuration (EMET) of Certificate Pinning,
+%   TLSA integration, When to use self-signed certificates, how to get
+%   certificates from public CA authorities (CACert, StartSSL),
+%   Best-practices how to create a CA and how to generate private
+%   keys/CSRs, Discussion about OCSP and CRLs. TD: Useful Firefox
+%   plugins: CipherFox, Conspiracy, Perspectives.}
 
 
 % ``Certificate Policy''\cite{Wikipedia:Certificate_Policy} (CA)
