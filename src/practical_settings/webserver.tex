@@ -18,10 +18,7 @@
   # ALL subdomains HAVE TO support https if you use this!
   # Strict-Transport-Security: max-age=15768000 ; includeSubDomains
 
-old:
-  SSLCipherSuite 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
-new:
-  SSLCipherSuite 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA'
+  SSLCipherSuite '@@@CIPHERSTRINGB@@@'
 
 \end{lstlisting}
 
@@ -132,11 +129,15 @@ lighttpd httpS:// redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/
 \end{lstlisting}
 
 %% XXX FIXME: do we need to specify dhparams? Parameter: ssl_dhparam = file. See: http://wiki.nginx.org/HttpSslModule#ssl_protocols
+%% NO, use IETF/IKE
 
-It is recommended to specify your own Diffie-Hellman Parameters file of at least the same bit size as your RSA key. E.g. use no less than 2048bit DH parameters with a 2048bit RSA key.
+If you absolutely want to specify your own DH parameters, you can specify them via
+
 \begin{lstlisting}[breaklines]
   ssl_dhparam file;
 \end{lstlisting}
+
+However, we advise you to read section \ref{section:DH} and stay with the standard IKE/IETF parameters (as long as they are $ > 1024 $ bits).
 
 
 \item[Additional settings:]
