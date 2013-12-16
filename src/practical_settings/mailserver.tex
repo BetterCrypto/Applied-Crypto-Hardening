@@ -252,8 +252,18 @@ you can leave the statement in for older versions.
 Refer to \url{http://www.postfix.org/TLS_README.html} for an in-depth
 discussion.
 
-% \item[Additional settings:]
-% no additional settings
+\item[Additional settings:]
+
+Postfix has two sets of built-in DH parameters that can be overridden
+with the \verb|smtpd_tls_dh512_param_file|
+and \verb|smtpd_tls_dh1024_param_file| options. The ``dh512''
+parameters are used for export ciphers, while the ``dh1024'' ones are
+used for all other ciphers.
+
+The ``bit lenght'' in those parameter names is just a name, so one
+could use stronger parameter sets; it should be possible to e.g. use the
+IKE Group14 parameters (see section \ref{section:DH}) without much
+interoperability risk, but we have not tested this yet.
 
 % \item[Justification for special settings (if needed):]
 % no special settings
