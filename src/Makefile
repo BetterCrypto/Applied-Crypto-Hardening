@@ -42,5 +42,6 @@ clean:
             applied-crypto-hardening.blg applied-crypto-hardening.dvi   \
             applied-crypto-hardening.log applied-crypto-hardening.pdf   \
             applied-crypto-hardening.toc applied-crypto-hardening.markdown
+	find . -name "*_generated.tex" -exec rm \{\} \;
 	rm -rf applied-crypto-hardening/
 	rm -rf gitHeadInfo.gin
