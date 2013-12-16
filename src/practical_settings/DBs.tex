@@ -1,7 +1,10 @@
 %%\subsection{Database Systems}
 % This list is based on : http://en.wikipedia.org/wiki/Relational_database_management_system#Market_share
 
+%% ---------------------------------------------------------------------- 
 \subsubsection{Oracle}
+
+\begin{description}
 \item[Tested with Version:] not tested
 
 \item[References:] (German)
@@ -10,13 +13,16 @@
 Please read the following pages about SSL and ciphersuites:\\
 p. 129 -Req 396 and Req 397 \\
 
+\end{description}
 
+%% ---------------------------------------------------------------------- 
 \subsubsection{SQL Server}
 \todo{write this}
 
 
 
 
+%% ---------------------------------------------------------------------- 
 \subsubsection{MySQL}
 
 \begin{description}
@@ -59,6 +65,7 @@ show variables like '%ssl%';
 \end{description}
 
 
+%% ---------------------------------------------------------------------- 
 \subsubsection{DB2}
 \begin{description}
 \item[Tested with Version:] not tested
@@ -67,7 +74,7 @@ show variables like '%ssl%';
 {\small \url{http://pic.dhe.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=%2Fcom.ibm.db2.luw.admin.sec.doc%2Fdoc%2Fc0053544.html}}
 
 
-\paragraph*{ssl_cipherspecs}\mbox{}\\
+\paragraph*{ssl\_cipherspecs}\mbox{}\\
 In the link above the whole SSL-Configuration is in-depth described. The following command shows only the recommended ciphersuites.
 \begin{lstlisting}[breaklines]
 % it's out of scope to describe the whole SSL procedure
@@ -104,6 +111,9 @@ TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
 
 \end{lstlisting}
 
+\end{description}
+
+%% ---------------------------------------------------------------------- 
 
 \subsubsection{Postgresql}
 
