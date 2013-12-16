@@ -2,7 +2,10 @@ NOW := $(shell date)
 
 all:	pdf html md
 
-pdf:
+%_generated.tex: %.tex
+	./perlify.pl
+
+pdf: 
 	./update-metadata-for-gitinfo
 	pdflatex applied-crypto-hardening
 	bibtex applied-crypto-hardening
