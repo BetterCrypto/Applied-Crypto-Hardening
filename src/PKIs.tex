@@ -7,19 +7,94 @@ used to create a signature chain from the root CA down to the server (or client)
 Accepting a CA as a generally-trusted mediator solves the trust-scaling problem
 at the cost of introducing an actor that magically is more trustworthy.
 
-This section deals with settings related to trusting CAs. However, our main
-recommendation for PKIs is: if you are able to run your own PKI and disable
-any other CA, do so. This makes sense most in environments where any machine-to-machine
-communication system compatibility with external entities is not an issue.
+In the first part of this section an overview is given, how to get a certificate from
+a trusted CA, or how to setup your own CA. In the second part recommendations will be 
+given how you can improve the security of PKIs.
+
+\section{Certificate Authorities}
+\label{sec:cas}
+In order to get a certificate, you either go to a CA which, will issue a certificate,
+or you run your own CA. In the later case you normally speak of self-signed 
+certificates. For both cases there are pro and contra points and the decision is
+as always security versus usability.
+
+\subsubsection{Signed Certificates form a trusted Certificate Authority}
+\label{sec:signcertfromca}
+Trusted certificates are mostly issued by commercial CAs, such as Verisign, Teletrust, etc.
+These certificates are mostly issued for specified time period and cost money. Nevertheless
+there are also free trusted CAs available, such as StartSSL, or CACert.
+
+If you consider getting a signed certificate from a trusted CA, you should not generate the 
+private key not on the CAs system. You can generate a private key and a corresponding 
+certificate request as follows:
+
+\begin{lstlisting}[breaklines]
+\% openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize>
+Country Name (2 letter code) [AU]:DE
+State or Province Name (full name) [Some-State]:Bavaria
+Locality Name (eg, city) []:Munich
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Example
+Organizational Unit Name (eg, section) []:Example Section
+Common Name (e.g. server FQDN or YOUR name) []:example.com
+Email Address []:admin@example.com
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:
+An optional company name []:
+\end{lstlisting}
+
+\subsubsection{Setting up your own Certificate Authority}
+\label{sec:setupownca}
+In some situations it is sufficient to use your own CA certificates. An example is a own OpenVPN
+installation or if only systems communicate with each other, which do not act with users. Creating
+a own CA can be accomplished using OpenSSL:
+
+\begin{lstlisting}
+\% cd /usr/lib/ssl/misc
+\% sudo ./CA.pl -newca
+\end{lstlisting}
+
+Answer the questions according to your setup. Now you have configured your basic settings and 
+issued a new root certificate. Now you can issue new certificates as follows:
+
+\begin{lstlisting}
+\% cd /usr/lib/ssl/misc
+\% sudo ./CA.pl -newreq
+\end{lstlisting}
+
+\subsection{Hardening PKI}
+\label{sec:hardeningpki}
+In recent years several CAs were compromised by attackers in order to get trusted 
+certificates for malicious activities. In 2011 the Dutch CA Diginotar was hacked and
+all certificates were revoked. Recently Google found certificates issued to them, which
+were not used by the company. The concept of PKIs heavily depends on the security of CAs. 
+If they get compromised the whole PKI system will fail.
+
+Therefore several security enhancements were introduced by different organisations and
+vendors~\ref{tschofenig-webpki}. Currently two methods are used, DANE and Certificate Pinning.
+
+% \subsubsection{DANE}
+% \label{sec:dane}
+
+% \subsubsection{Certificate Pinning}
+% \label{sec:certpinning}
+
+
+
+% This section deals with settings related to trusting CAs. However, our main
+% recommendations for PKIs is: if you are able to run your own PKI and disable
+% any other CA, do so. This makes sense most in environments where any machine-to-machine
+% communication system compatibility with external entities is not an issue.
 %% azet:
 %% this needs discussion! self-signed certificates simply do not work in practices
 %% for real-world scenarios - i.e. websites that actually serve a lot of people
 
-A good background on PKIs can be found in 
-\footnote{\url{https://developer.mozilla.org/en/docs/Introduction_to_Public-Key_Cryptography}}
-\footnote{\url{http://cacr.uwaterloo.ca/hac/about/chap8.pdf}}
-\footnote{\url{http://www.verisign.com.au/repository/tutorial/cryptography/intro1.shtml}}
-.
+% A good background on PKIs can be found in 
+% \footnote{\url{https://developer.mozilla.org/en/docs/Introduction_to_Public-Key_Cryptography}}
+% \footnote{\url{http://cacr.uwaterloo.ca/hac/about/chap8.pdf}}
+% \footnote{\url{http://www.verisign.com.au/repository/tutorial/cryptography/intro1.shtml}}
+% .
 
 \todo{ts: Background and Configuration (EMET) of Certificate Pinning, TLSA integration, 
   When to use self-signed certificates, how to get certificates from public CA authorities 
