@@ -1,4 +1,3 @@
-
 %%\subsection{Database Systems}
 % This list is based on : http://en.wikipedia.org/wiki/Relational_database_management_system#Market_share
 
@@ -53,15 +52,50 @@ show variables like '%ssl%';
 \end{description}
 
 
-
-
-
-
 \subsubsection{DB2}
-\todo{write this}
+\begin{description}
+\item[Tested with Version:] not tested
+
+\item[References:]
+{\small \url{http://pic.dhe.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=%2Fcom.ibm.db2.luw.admin.sec.doc%2Fdoc%2Fc0053544.html}}
 
 
+\paragraph*{ssl_cipherspecs}\mbox{}\\
+In the link above the whole SSL-Configuration is in-depth described. The following command shows only the recommended ciphersuites.
+\begin{lstlisting}[breaklines]
+% it's out of scope to describe the whole SSL procedure
+% # fully qualified path of the key database file
+%db2 update dbm cfg using SSL_SVR_KEYDB /home/dba/sqllib/security/keystore/key.kdb
+%
+%# fully qualified path of the stash file
+%db2 update dbm cfg using SSL_SVR_STASH /home/dba/sqllib/security/keystore/mydbserver.sth
+%
+%# label of the digital certificate of the server
+%db2 update dbm cfg using SSL_SVR_LABEL myselfsigned
+%
+# recommended and supported ciphersuites 
 
+db2 update dbm cfg using SSL_CIPHERSPECS 
+TLS_RSA_WITH_AES_256_CBC_SHA256,
+TLS_RSA_WITH_AES_128_GCM_SHA256,
+TLS_RSA_WITH_AES_128_CBC_SHA256,
+TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,
+TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,
+TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,
+TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,
+TLS_RSA_WITH_AES_256_GCM_SHA384,
+TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,
+TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,
+TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,
+TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,
+TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,
+TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
+TLS_RSA_WITH_AES_256_CBC_SHA,
+TLS_RSA_WITH_AES_128_CBC_SHA,
+TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
+TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
+
+\end{lstlisting}
 
 
 \subsubsection{Postgresql}
