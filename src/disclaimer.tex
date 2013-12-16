@@ -1,18 +1,112 @@
-\section{Disclaimer}
+\section{Disclaimer and scope}
 \label{section:disclaimer}
-This guide specifically does not address physical security, protecting
-software and hardware against exploits, basic IT security housekeeping,
-anti-tempest\cite{Wikipedia:Tempest} attack techniques, protecting
-against side-channel attacks, downgrade attacks, jamming the encrypted
-channel or other similar attacks which are typically employed to
-circumvent strong encryption. The authors can not overstate the
-importance of these other techniques.
 
-This guide can only describe what the authors currently \emph{believe} to be the best settings based on their personal experience. This guide was cross checked by multiple people. For a complete list, see the section \ref{section:Reviewers}. Even though, multiple specialists reviewed the guide, the authors can give \emph{no guarantee} whatsover that they made the right recommendations. Keep in mind that tomorrow there might be new attacks on some ciphers and many of the recommendations in this guide might turn out to be wrong.
+\epigraph{``A chain is no stronger than its weakest link, and life is after all a chain``}{-- William James}
 
 
-%% should we keep that sentence?
-%% The authors do not know XXX FIXME XXX list things we don't know which affect the guide? XXX
+This guide specifically does not address physical security, protecting software
+and hardware against exploits, basic IT security housekeeping, complete
+information assurance, issues with key-roll over and key management, securing client PCs and mobile devices, 
+anti-tempest\cite{Wikipedia:Tempest} attack techniques,
+protecting against different side-channel attacks (timing--, cache timing--,
+differential fault analysis or power monitoring attacks), downgrade attacks,
+jamming the encrypted channel or other similar attacks which are typically
+employed to circumvent strong encryption.  The authors can not overstate the
+importance of these other techniques.  Interested readers are advised to read
+about these attacks in detail since they give a lot of insight into other parts
+of cryptography engineering which need to be dealt with.\footnote{An easy to
+read yet very insightful recent example is the "FLUSH+RELOAD" technique \cite{yarom2013flush+} for
+leaking cryptographic keys from one virtual machine to another via L3 cache
+timing attacks.}
 
-Nevertheless, ignoring the problem at hand and keeping outdated settings for SSL, SSH, PGP is not an option. We the authors, need this document as much as the gentle reader needs it.
+This guide does not talk about the well-known insecurities of trusting a
+public-key infrastructure (PKI)\footnote{Interested readers are referred to
+\url{https://bugzilla.mozilla.org/show_bug.cgi?id=647959} or
+\url{http://www.heise.de/security/meldung/Der-ehrliche-Achmed-bittet-um-Vertrauen-1231083.html}
+(german) which brings the problem of trusting PKIs right to the point}. Nor
+does this text explain how to run your own Certificate Authority (CA). 
 
+
+For some experts in cryptography this text might seem too informal. However, we
+strive to keep the language as non-technical as possible and fitting for our
+target audience: system administrators who can collectively improve the
+security level for all of their users. 
+
+
+
+\epigraph{``Security is a process, not a product.``}{Bruce Schneier}
+
+A note on the contents: this guide can only describe what the authors currently
+\emph{believe} to be the best settings based on their personal experience and
+after intensive cross checking with literature and experts. For a complete list
+of people who reviewed this paper, see the section \ref{section:Reviewers}.
+Even though, multiple specialists reviewed the guide, the authors can give
+\emph{no guarantee whatsover} that they made the right recommendations. Keep in
+mind that tomorrow there might be new attacks on some ciphers and many of the
+recommendations in this guide might turn out to be wrong. Security is a
+process.
+
+
+We therefore recommend that system administrators keep up to date with recent
+topics in IT security and cryptography. 
+
+
+In this sense, this guide is very focused on getting the cipher strings done
+right even though there is much more to do in order to make a system more
+secure.  We the authors, need this document as much as the reader needs it.
+
+\paragraph{Scope:}
+\label{section:Scope}
+
+In this guide, we restricted ourselves to:
+\begin{itemize}
+\item Internet-facing services
+\item Commonly used services
+\item Devices which are used in business environments (this specifically excludes XBoxes, Playstations and similar consumer devices)
+\item OpenSSL 
+\end{itemize}
+
+We explicitly excluded:
+\begin{itemize}
+\item Specialized systems (such as medical devices, most embedded systems, etc.)
+\item Wireless Access Points
+\item Smart-cards/chip cards
+\item Advice on running a PKI or a CA.
+%\item Services which should be run only in an internal network and never face the Internet.
+\end{itemize}
+
+%% * whatsapp --> man kann nichts machen, out of scope
+%* Lync: == SIP von M$.
+%* Skype: man kann ncihts machen, out of scope.
+%* Wi-Fi APs, 802.1X, ... ???? --> out of scope
+%* Tomcats/...????
+%* SIP   -> Klaus???
+%* SRTP  -> Klaus???
+%* DNSSec ?? Verweis auf BCPxxx  --> out of scope
+%   - DANE
+%What happens at the IETF at the moment?
+%* TOR?? --> out of scope
+%* S/Mime --> nachsehen, gibt es BCPs? (--> Ramin)
+%* TrueCrypt, LUKS, FileVault, etc ---> out of scope
+%* AFS -> out of scope
+%* Kerberos --> out of scope
+%* NNTP -> out of scope
+%* NTPs tlsdate -> out of scope
+%* BGP / OSPF --> out of scope
+%* irc,silc --> out of scope
+%* LDAP -> out of scope
+%* Moxa , APC, und co... ICS . Ethernet to serial --> out of scope
+%* telnet -> DON't!!!
+%* rsyslog --> out of scope
+%* ARP bei v6 spoofing -> out of scope
+%* tinc?? -> out of scope
+%* rsync -> nur ueber ssh fahren ausser public web mirrors
+%* telnets -> out of scope
+%* ftps -> out of scope
+%seclayer-tcp    3495/udp    # securitylayer over tcp
+%seclayer-tcp    3495/tcp    # securitylayer over tcp
+%* webmin -> maybe
+%* plesk -> out of scope
+%* phpmyadmin --> haengt am apache, out of scope
+%* DSL modems -> out of scope
+%* UPnP, natPmp --> out of scope 
