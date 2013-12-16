@@ -18,8 +18,8 @@ foreach  $f ( @files)  {
 	my $fbasename = basename($f);
 	my $ftex = "$1_generated.tex";
 
-	my $rc=` grep -q "\@\@\@CIPHERSTRINGB\@\@\@" $f`;
-	if ($rc eq 0 and not (/$fbasename/ ~~ @exclude)) {
+	system("grep", "-q", "\@\@\@CIPHERSTRINGB\@\@\@" , $f);
+	if ($? eq 0 ) { #and not (/$fbasename/ ~~ @exclude)) {
 
 		print "file = $f\n" if $debug;
 		print "ftex = $ftex\n" if $debug;
