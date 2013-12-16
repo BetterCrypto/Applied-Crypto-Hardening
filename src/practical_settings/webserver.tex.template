@@ -132,11 +132,15 @@ lighttpd httpS:// redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/
 \end{lstlisting}
 
 %% XXX FIXME: do we need to specify dhparams? Parameter: ssl_dhparam = file. See: http://wiki.nginx.org/HttpSslModule#ssl_protocols
+%% NO, use IETF/IKE
 
-It is recommended to specify your own Diffie-Hellman Parameters file of at least the same bit size as your RSA key. E.g. use no less than 2048bit DH parameters with a 2048bit RSA key.
+If you absolutely want to specify your own DH parameters, you can specify them via
+
 \begin{lstlisting}[breaklines]
   ssl_dhparam file;
 \end{lstlisting}
+
+However, we advise you to read section \ref{section:DH} and stay with the standard IKE/IETF parameters (as long as they are $ > 1024 $ bits).
 
 
 \item[Additional settings:]

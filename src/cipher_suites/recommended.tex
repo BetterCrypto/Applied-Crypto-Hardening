@@ -71,11 +71,12 @@ Win 7 and Win 8.1 crypto stack, Opera 17, OpenSSL $\ge$ 1.0.1e, Safari 6 / iOS
 
 \subsubsection{Configuration B: Weaker ciphers, more compatability}
 
-In this section we propose a slightly weaker set of cipher suites. 
-For example, there are some known weaknesses for the SHA-1 hash function that
-is included in this set. However, the advantage of this set of cipher suites 
-is it's higher compatibility with a more diverse set of clients as well as 
-less computational overhead.\\ 
+In this section we propose a slightly weaker set of cipher suites.  For
+example, there are some known weaknesses for the SHA-1 hash function that is
+included in this set.  The advantage of this set of cipher suites is not only
+the compatibility with a broad range of clients, but also less computational
+workload on the provisioning hardware.
+\\
 
 \textbf{All further examples in this publication use Configuration B}.\\
 
@@ -150,15 +151,15 @@ Our recommended cipher strings are meant to be used via copy and paste and need 
 "out of the box".
 
 \begin{itemize}
-\item TLS1.2 is preferred over TLSv1.0/SSLv3 (while still providing a useable cipher
+\item TLSv1.2 is preferred over TLSv1.0/SSLv3 (while still providing a useable cipher
       string for SSLv3).
 \item AES256 and CAMELLIA256 count as very strong ciphers at the moment; preferrably in
       GCM mode.\\
 	  \todo{add a reference here please}
 \item AES128 and CAMELLIA128 count as strong enough ciphers at the moment
 \item DHE or ECDHE for forward secrecy
-\item RSA as this will fit most of todays setup
-\item AES256-SHA as a last ressort (with this cipher at the end, even systems with
+\item RSA as this will fit most of todays setups
+\item AES256-SHA as a last resort (with this cipher at the end, even systems with
       very old versions of openssl like 0.9.8 will just work. Just forward secrecy
       will not be used. On systems that do not support elliptic curves, that cipher
       offers support for the Microsoft crypto libraries that only support ECDHE.

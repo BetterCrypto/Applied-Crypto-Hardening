@@ -2,13 +2,13 @@
 \label{section:PKIs}
 
 Public-Key Infrastructures aim to provide a way to simplify the verification of
-a certificates trustworthiness.  For this, certificate authorities (CAs) are
+a certificate's trustworthiness.  For this, certificate authorities (CAs) are
 used to create a signature chain from the root CA down to the server (or client).
 Accepting a CA as a generally-trusted mediator solves the trust-scaling problem
 at the cost of introducing an actor that magically is more trustworthy.
 
 This section deals with settings related to trusting CAs. However, our main
-recommendations for PKIs is: if you are able to run your own PKI and disable
+recommendation for PKIs is: if you are able to run your own PKI and disable
 any other CA, do so. This makes sense most in environments where any machine-to-machine
 communication system compatibility with external entities is not an issue.
 %% azet:
