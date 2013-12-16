@@ -2,7 +2,7 @@
 \label{section:PKIs}
 
 Public-Key Infrastructures aim to provide a way to simplify the verification of
-a certificates trustworthiness.  For this, certificate authorities (CAs) are
+a certificate's trustworthiness.  For this, certificate authorities (CAs) are
 used to create a signature chain from the root CA down to the server (or client).
 Accepting a CA as a generally-trusted mediator solves the trust-scaling problem
 at the cost of introducing an actor that magically is more trustworthy.
@@ -46,8 +46,22 @@ An optional company name []:
 
 \subsubsection{Setting up your own Certificate Authority}
 \label{sec:setupownca}
-In some situations 
+In some situations it is sufficient to use your own CA certificates. An example is a own OpenVPN
+installation or if only systems communicate with each other, which do not act with users. Creating
+a own CA can be accomplished using OpenSSL:
 
+\begin{lstlisting}
+\% cd /usr/lib/ssl/misc
+\% sudo ./CA.pl -newca
+\end{lstlisting}
+
+Answer the questions according to your setup. Now you have configured your basic settings and 
+issued a new root certificate. Now you can issue new certificates as follows:
+
+\begin{lstlisting}
+\% cd /usr/lib/ssl/misc
+\% sudo ./CA.pl -newreq
+\end{lstlisting}
 
 \subsection{Hardening PKI}
 \label{sec:hardeningpki}
@@ -58,13 +72,13 @@ were not used by the company. The concept of PKIs heavily depends on the securit
 If they get compromised the whole PKI system will fail.
 
 Therefore several security enhancements were introduced by different organisations and
-vendors TODO ref auf IETF draft. Two, already used, concepts will be explained here.
+vendors~\ref{tschofenig-webpki}. Currently two methods are used, DANE and Certificate Pinning.
 
-\subsubsection{DANE}
-\label{sec:dane}
+% \subsubsection{DANE}
+% \label{sec:dane}
 
-\subsubsection{Certificate Pinning}
-\label{sec:certpinning}
+% \subsubsection{Certificate Pinning}
+% \label{sec:certpinning}
 
 
 

@@ -1,11 +1,11 @@
 %%\subsection{Webservers}
 
-\subsubsection{Apache}
+\subsection{Apache}
 
-\begin{description}
-\item[Tested with Version:]
+\subsubsection{description}
+\subsubsection[Tested with Version:]
 
-\item[Settings:] \mbox{}
+\subsubsection[Settings:] \mbox{}
 
 %-All +TLSv1.1 +TLSv1.2
 \begin{lstlisting}[breaklines]
@@ -18,17 +18,14 @@
   # ALL subdomains HAVE TO support https if you use this!
   # Strict-Transport-Security: max-age=15768000 ; includeSubDomains
 
-old:
-  SSLCipherSuite 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
-new:
-  SSLCipherSuite 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA'
+  SSLCipherSuite '@@@CIPHERSTRINGB@@@'
 
 \end{lstlisting}
 
 Note again, that any cipher suite starting with ECDHE can be omitted, if in doubt.
 %% XXX NOTE TO SELF: remove from future automatically generated lists!
 
-\item[Additional settings:]
+\subsubsection[Additional settings:]
 
 You should redirect everything to httpS:// if possible. In Apache you can do this with the following setting inside of a VirtualHost environment:
 
@@ -41,19 +38,18 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
   </VirtualHost>
 \end{lstlisting}
 
-\item[Justification for special settings (if needed):]
+\subsubsection[Justification for special settings (if needed):]
 
-\item[References:]
+\subsubsection[References:]
 
-\item[How to test:]
+\subsubsection[How to test:]
 
 See ssllabs in section \ref{section:Tools}
 
-\end{description}
-%XXXX   ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AES:RSA+3DES:!ADH:!AECDH:!MD5:!DSS
+%\end{description}
 
 
-\subsubsection{lighttpd}
+\subsection{lighttpd}
 
 
 
@@ -109,7 +105,7 @@ lighttpd httpS:// redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/
 \end{description}
 
 
-\subsubsection{nginx}
+\subsection{nginx}
 
 \begin{description}
 \item[Tested with Version:] 1.4.4 with OpenSSL 1.0.1e on OS X Server 10.8.5
@@ -132,11 +128,15 @@ lighttpd httpS:// redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/
 \end{lstlisting}
 
 %% XXX FIXME: do we need to specify dhparams? Parameter: ssl_dhparam = file. See: http://wiki.nginx.org/HttpSslModule#ssl_protocols
+%% NO, use IETF/IKE
 
-It is recommended to specify your own Diffie-Hellman Parameters file of at least the same bit size as your RSA key. E.g. use no less than 2048bit DH parameters with a 2048bit RSA key.
+If you absolutely want to specify your own DH parameters, you can specify them via
+
 \begin{lstlisting}[breaklines]
   ssl_dhparam file;
 \end{lstlisting}
+
+However, we advise you to read section \ref{section:DH} and stay with the standard IKE/IETF parameters (as long as they are $ > 1024 $ bits).
 
 
 \item[Additional settings:]
@@ -164,7 +164,7 @@ You should redirect everything to httpS:// if possible. In Nginx you can do this
 
 
 
-\subsubsection{MS IIS}
+\subsection{MS IIS}
 \label{sec:ms-iis}
 
 

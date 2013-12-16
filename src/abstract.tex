@@ -1,8 +1,12 @@
+\begin{abstract}
 \section*{Abstract}
 
 
-\epigraph{``Unfortunately, the computer security and cryptology communities have drivted apart over the last 25 years. Security people don't always understand the available crypto tools, and crypto people don't always understand the real-world problems.``}{-- Ross Anderson in \cite{anderson2008security}}
+\vskip 2em
 
+\epigraph{``Unfortunately, the computer security and cryptology communities have drifted apart over the last 25 years. Security people don't always understand the available crypto tools, and crypto people don't always understand the real-world problems.``}{-- Ross Anderson in \cite{anderson2008security}}
+
+\vskip 2em
 
 This guide arose out of the need for system administrators to have an
 updated, solid, well researched and thought-through guide for configuring SSL,
@@ -13,13 +17,14 @@ This guide is specifically written for these system administrators.
 
 \vskip 0.5em
 
-As Schneier noted\cite{Sch13},
-it seems that intelligence agencies and adversaries on the Internet are not
-breaking so much the mathematics of encryption per se, but rather use software
-and hardware weaknesses, subvert standardization processes, plant backdoors,
-rig random number generators and most of all exploit careless settings in
-server configurations and encryption systems to listen in on private
-communications. 
+As Schneier noted in \cite{Sch13}, it seems that intelligence agencies and
+adversaries on the Internet are not breaking so much the mathematics of
+encryption per se, but rather use software and hardware weaknesses, subvert
+standardization processes, plant backdoors, rig random number generators and
+most of all exploit careless settings in server configurations and encryption
+systems to listen in on private communications.  Worst of all, most
+communication on the internet is not encrypted at all by default 
+(for SMTP, opportunistic TLS would be a solution). 
 
 \vskip 0.5em
 
@@ -27,23 +32,39 @@ This guide can only address one aspect of securing our information systems:
 getting the crypto settings right to the best of the authors' current
 knowledge. Other attacks, as the above mentioned, require different protection
 schemes which are not covered in this guide. This guide is not an introduction
-to cryptography on how to use PGP nor SSL. For background information on
-cryptography, cryptoanalysis, PGP and SSL we would like to refer the reader to
-the the references (see chapter \ref{section:Links} and
-\ref{section:Suggested_Reading}) at the end of this document.
+to cryptography. For background information on cryptography and cryptoanalysis
+we would like to refer the reader to the the references in chapter
+\ref{section:Links} and \ref{section:Suggested_Reading} at the end of this
+document.
 
 \vskip 0.5em
 
-The focus of this guide is merely to give current best practices for
-configuring complex cipher suites and related parameters in a \textbf{copy \&
+The focus of this guide is merely to give current \emph{best practices for
+configuring complex cipher suites} and related parameters in a \emph{copy \&
 paste-able manner}. The guide tries to stay as concise as is possible for such
-a complex topic as cryptography. There are many excellent guides
-(\cite{ii2011ecrypt},\cite{TR02102}) and best practice documents available when
-it comes to cryptography. However none of them focuses specifically on what an
-average system administrator needs for hardening his or her systems' crypto
-settings.
+a complex topic as cryptography. Naturaly, it can not be complete. Instead,
+there are many excellent guides (\cite{ii2011ecrypt},\cite{TR02102}) and best
+practice documents available when it comes to cryptography. However none of
+them focuses specifically on what an average system administrator needs for
+hardening his or her systems' crypto settings.
 
+\vskip 0.5em
 This guide tries to fill this gap.
 
 
+%\vskip 3.5em
+%\tiny
+%The guide was produced in an open source manner: every step of editing can be
+%traced back to a specific author via our version control system.
 
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{neboltai.png}
+  \caption*{Do not talk unencrypted}
+  \label{fig:neboltai}
+\end{figure}
+
+
+\end{abstract}
