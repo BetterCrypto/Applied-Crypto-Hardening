@@ -417,7 +417,7 @@ Exim already disables SSLv2 by default. We recommend to add
 to the main configuration.\\
 Note: +all is misleading here since OpenSSL only activates the most common workarounds. But that's how SSL\_OP\_ALL is defined.\\
 
-You do not need to set dh\_parameters. Exim with OpenSSL by default uses parameter initialization with the "2048-bit MODP Group with 224-bit Prime Order Subgroup" defined in section 2.2 of RFC 5114 (ike23).
+You do not need to set dh\_parameters. Exim with OpenSSL by default uses parameter initialization with the "2048-bit MODP Group with 224-bit Prime Order Subgroup" defined in section 2.2 of RFC 5114\cite{rfc5114} (ike23).
 If you want to set your own DH parameters please read the TLS documentation of exim.\\
 
 

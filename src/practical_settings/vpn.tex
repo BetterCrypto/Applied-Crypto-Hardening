@@ -28,7 +28,7 @@ If you need to use Pre-Shared Key authentication:
 
 The size of the PSK should not be shorter than the output size of
 the hash algorithm used in IKE \footnote{It is used in a HMAC, see
-  \url{http://www.ietf.org/rfc/rfc2104.txt}.}.
+RFC2104\cite{rfc2104}.}.
 
 For a key composed of upper- and lowercase letters, numbers, and two
 additional symbols\footnote{64 possible values = 6 bits},
@@ -55,8 +55,7 @@ table~\ref{tab:IPSEC_psk_len} gives the minimum lengths in characters.
 IPSEC Cryptographic Suites are pre-defined settings for all the items
 of a configuration; they try to provide a balanced security level and
 make setting up VPNs easier.
-\footnote{\url{http://tools.ietf.org/html/rfc6379}}
-\footnote{\url{http://tools.ietf.org/html/rfc4308}}
+\footnote{RFC6379\cite{rfc6379}, RFC4308\cite{rfc4308}}
 
 When using any of those suites, make sure to enable ``Perfect Forward
 Secrecy`` for Phase 2, as this is not specified in the suites. The
