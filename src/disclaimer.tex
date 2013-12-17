@@ -21,12 +21,12 @@ with.\footnote{An easy to read yet very insightful recent example is the
 "FLUSH+RELOAD" technique \cite{yarom2013flush+} for leaking cryptographic keys
 from one virtual machine to another via L3 cache timing attacks.}
 
-This guide does not talk about the well-known insecurities of trusting a
+This guide does not talk much about the well-known insecurities of trusting a
 public-key infrastructure (PKI)\footnote{Interested readers are referred to
 \url{https://bugzilla.mozilla.org/show_bug.cgi?id=647959} or
 \url{http://www.heise.de/security/meldung/Der-ehrliche-Achmed-bittet-um-Vertrauen-1231083.html}
 (german) which brings the problem of trusting PKIs right to the point}. Nor
-does this text explain how to run your own Certificate Authority (CA). 
+does this text fully explain how to run your own Certificate Authority (CA). 
 
 Most of this zoo of information security issues are addressed in the very
 comprehensive book ``Security Engineering'' by Ross Anderson
@@ -41,7 +41,7 @@ security level for all of their users.
 
 \epigraph{``Security is a process, not a product.``}{-- Bruce Schneier}
 
-A note on the contents: this guide can only describe what the authors currently
+This guide can only describe what the authors currently
 \emph{believe} to be the best settings based on their personal experience and
 after intensive cross checking with literature and experts. For a complete list
 of people who reviewed this paper, see the section \ref{section:Reviewers}.
@@ -76,42 +76,7 @@ We explicitly excluded:
 \item Specialized systems (such as medical devices, most embedded systems, etc.)
 \item Wireless Access Points
 \item Smart-cards/chip cards
-\item Advice on running a PKI or a CA
+%\item Advice on running a PKI or a CA
 %\item Services which should be run only in an internal network and never face the Internet.
 \end{itemize}
 
-%% * whatsapp --> man kann nichts machen, out of scope
-%* Lync: == SIP von M$.
-%* Skype: man kann ncihts machen, out of scope.
-%* Wi-Fi APs, 802.1X, ... ???? --> out of scope
-%* Tomcats/...????
-%* SIP   -> Klaus???
-%* SRTP  -> Klaus???
-%* DNSSec ?? Verweis auf BCPxxx  --> out of scope
-%   - DANE
-%What happens at the IETF at the moment?
-%* TOR?? --> out of scope
-%* S/Mime --> nachsehen, gibt es BCPs? (--> Ramin)
-%* TrueCrypt, LUKS, FileVault, etc ---> out of scope
-%* AFS -> out of scope
-%* Kerberos --> out of scope
-%* NNTP -> out of scope
-%* NTPs tlsdate -> out of scope
-%* BGP / OSPF --> out of scope
-%* irc,silc --> out of scope
-%* LDAP -> out of scope
-%* Moxa , APC, und co... ICS . Ethernet to serial --> out of scope
-%* telnet -> DON't!!!
-%* rsyslog --> out of scope
-%* ARP bei v6 spoofing -> out of scope
-%* tinc?? -> out of scope
-%* rsync -> nur ueber ssh fahren ausser public web mirrors
-%* telnets -> out of scope
-%* ftps -> out of scope
-%seclayer-tcp    3495/udp    # securitylayer over tcp
-%seclayer-tcp    3495/tcp    # securitylayer over tcp
-%* webmin -> maybe
-%* plesk -> out of scope
-%* phpmyadmin --> haengt am apache, out of scope
-%* DSL modems -> out of scope
-%* UPnP, natPmp --> out of scope 
