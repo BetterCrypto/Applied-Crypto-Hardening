@@ -148,7 +148,7 @@ ListenHTTPS
     AddHeader    "Front-End-Https: on"
     Cert         "/path/to/your/cert.pem"
     ## See 'man ciphers'.
-    Ciphers     "	TLSv1.2:!SSLv3:!SSLv2:AES256:!aNULL:!eNULL:!NULL"
+    Ciphers      "TLSv1.2:TLSv1.1!SSLv3:!SSLv2:@@@CIPHERSTRINGB@@@"
     Service
         BackEnd
             Address 10.20.0.10
