@@ -1,15 +1,16 @@
 %%\subsection{Intercepting proxy solutions and reverse proxies}
 
-Within enterprise networks and corporations with increased levels of paranoia or at least some defined security requirements it is common NOT to allow direct connections to the public internet.
+Within enterprise networks and corporations with increased levels of paranoia or at least some defined security requirements it is common \textbf{not} to allow direct connections to the public internet.
 
-For this reasons proxy solutions are installed to intercept and scan the traffic for potential threats within the sessions.
+For this reason proxy solutions are deployed on corporate networks to intercept and scan the traffic for potential threats within sessions.
 
-As soon as one wants to establish an encrypted connection to a server, there are three choices:
+For encrypted traffic there are four choices:
 
 \begin{itemize}
-\item Block the connection, because it cannot be scanned for threats
-\item Bypass the threat-mitigation and pass the encrypted session to the client, which results in a situation where malicious content is transferred directly to the client without visibility for the security system.
-\item Intercept (i.e. terminate) the session at the proxy, scan there and re-encrypt the session towards the client.
+\item Block the connection because it cannot be scanned for threats.
+\item Bypass the threat-mitigation and pass the encrypted session to the client, which results in a situation where malicious content is transferred directly to the client without visibility to the security system.
+\item Intercept (i.e. terminate) the session at the proxy, scan there and re-encrypt the session towards the client (effectively MITM).
+\item Deploy special Certificate Authorities to enable Deep Packet Inspection on the wire.
 \end{itemize}
 
 While the latest solution might be the most "up to date", it arises a new front in the context of this paper, because the most secure part of a client's connection could only be within the corporate network, if the proxy-server handles the connection to the destination server in an insecure manner.
@@ -27,15 +28,7 @@ squid.conf
 \todo{UNTESTED!}
 \begin{lstlisting}[breaklines]
 options=NO_SSLv2,NO_TLSv1,NO_Compression,CIPHER_SERVER_PREFERENCE 
-cipher=ECDHE-RSA-AES128-SHA256:AES128-GCM-SHA256:RC4:HIGH:!MD5:!aNULL:!EDH [...]
-\end{lstlisting}
-
-
-
-\todo{UNTESTED!}
-\begin{lstlisting}[breaklines]
-options=NO_SSLv2,NO_TLSv1,NO_Compression,CIPHER_SERVER_PREFERENCE 
-cipher=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
+cipher=@@@CIPHERSTRINGB@@@
 \end{lstlisting}
 
 
