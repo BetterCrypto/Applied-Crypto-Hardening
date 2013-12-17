@@ -42,13 +42,10 @@ The openssh sshd\_config  man page is the best reference: \url{http://www.openss
 
 
 \item[How to test:]
-% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
-Connect with a client to an ssh server like this: \\
+Connect a client with verbose logging enabled to the SSH server \\
 \begin{lstlisting}[breaklines]
 $ ssh -vvv myserver.com
-\end{lstlisting}
-and observe the key exchange in the verbose output.
-
+\end{lstlisting}and observe the key exchange in the output.
 \end{description}
 
 \subsection{Cisco ASA}
@@ -71,10 +68,10 @@ http://www.cisco.com/en/US/docs/security/asa/asa91/configuration/general/admin\_
 
 
 \item[How to test:]
-Connect with a client to an ssh server like this: \\
+Connect a client with verbose logging enabled to the SSH server \\
 \begin{lstlisting}[breaklines]
 $ ssh -vvv myserver.com
-\end{lstlisting}and observe the key exchange in the verbose output.
+\end{lstlisting}and observe the key exchange in the output.
 \end{description}
 
 
@@ -100,8 +97,8 @@ http://www.cisco.com/en/US/docs/ios/sec\_user\_services/configuration/guide/sec\
 % add any further references or best practice documents here
 
 \item[How to test:]
-Connect with a client to an ssh server like this: \\
+Connect a client with verbose logging enabled to the SSH server \\
 \begin{lstlisting}[breaklines]
 $ ssh -vvv myserver.com
-\end{lstlisting}and observe the key exchange in the verbose output.
+\end{lstlisting}and observe the key exchange in the output.
 \end{description}
