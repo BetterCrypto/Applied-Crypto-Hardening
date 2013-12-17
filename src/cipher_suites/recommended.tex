@@ -158,9 +158,9 @@ Our recommended cipher strings are meant to be used via copy and paste and need 
 \item DHE or ECDHE for forward secrecy
 \item RSA as this will fit most of todays setups
 \item AES256-SHA as a last resort (with this cipher at the end, even systems with
-      very old versions of openssl like 0.9.8 will just work. Just forward secrecy
-      will not be used. On systems that do not support elliptic curves, that cipher
-      offers support for the Microsoft crypto libraries that only support ECDHE.
+      legacy distributions of OpenSSL will work out of the box. Forward secrecy
+      will not be available. On systems that do not support elliptic curves, that cipher
+      offers support for the Microsoft crypto libraries that only support ECDHE. \todo{what does that mean?! inconclusive!}
 \end{itemize}
 
 \todo{Adi: review "justification" when next section is written}
