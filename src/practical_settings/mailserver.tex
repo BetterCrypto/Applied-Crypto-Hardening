@@ -61,7 +61,7 @@ Limiting the ciphers provided may force (especially older) clients to connect wi
 
 If you still want to force strong encryption use
 \begin{lstlisting}[breaklines]
-  tls_cipher_list: <...recommended ciphersuite...>
+  tls_cipher_list: @@@CIPHERSTRINGB@@@
 \end{lstlisting}
 
 cyrus-imapd loads hardcoded 1024 bit DH parameters using get\_rfc2409\_prime\_1024() by default. If you want to load your own DH parameters add them PEM encoded to the certificate file given in tls\_cert\_file. Do not forget to re-add them after updating your certificate.\\
