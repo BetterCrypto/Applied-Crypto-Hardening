@@ -412,25 +412,25 @@ crypto map Outside-DMZ_map interface Outside-DMZ
 crypto ikev2 policy 1
  encryption aes-gcm-256
  integrity null
- group 24 14
+ group 14
  prf sha512 sha384 sha256 sha
  lifetime seconds 86400
 crypto ikev2 policy 2
  encryption aes-gcm-256 aes-gcm-192 aes-gcm
  integrity null
- group 24 14
+ group 14
  prf sha512 sha384 sha256 sha
  lifetime seconds 86400
 crypto ikev2 policy 3
  encryption aes-256 aes-192 aes
  integrity sha512 sha384 sha256
- group 24 14
+ group 14
  prf sha512 sha384 sha256 sha
  lifetime seconds 86400
 crypto ikev2 policy 4
  encryption aes-256 aes-192 aes
  integrity sha512 sha384 sha256 sha
- group 24 14
+ group 14
  prf sha512 sha384 sha256 sha
  lifetime seconds 86400
 crypto ikev2 enable Outside-DMZ client-services port 443
