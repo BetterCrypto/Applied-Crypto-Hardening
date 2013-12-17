@@ -72,7 +72,7 @@ See ssllabs in section \ref{section:Tools}
     ssl.use-sslv3 = "disable"
     #ssl.use-compression obsolete >= 1.4.3.1
     ssl.pemfile = "/etc/lighttpd/server.pem"
-    ssl.cipher-list = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+    ssl.cipher-list = '@@@CIPHERSTRINGB@@@'
     ssl.honor-cipher-order = "enable"
     setenv.add-response-header  = ( "Strict-Transport-Security" => "max-age=31536000")
   }
@@ -123,13 +123,10 @@ See ssllabs in section \ref{section:Tools}
 
 \begin{lstlisting}[breaklines]
   ssl_prefer_server_ciphers on;
-  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-  ssl_ciphers 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA';
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # not possible to do exclusive
+  ssl_ciphers '@@@CIPHERSTRINGB@@@';
   add_header Strict-Transport-Security max-age=2592000;
 \end{lstlisting}
-
-%% XXX FIXME: do we need to specify dhparams? Parameter: ssl_dhparam = file. See: http://wiki.nginx.org/HttpSslModule#ssl_protocols
-%% NO, use IETF/IKE
 
 If you absolutely want to specify your own DH parameters, you can specify them via
 
