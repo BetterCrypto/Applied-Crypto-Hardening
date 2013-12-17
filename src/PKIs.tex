@@ -13,20 +13,19 @@ given how you can improve the security of PKIs.
 
 \section{Certificate Authorities}
 \label{sec:cas}
-In order to get a certificate, you either go to a CA which, will issue a certificate,
-or you run your own CA. In the later case you normally speak of self-signed 
-certificates. For both cases there are pro and contra points and the decision is
+In order to get a certificate, you either go to a CA which will issue a certificate for you,
+or you run your own CA. In the latter case one normally speaks of self-signed 
+certificates. For both cases there are pros and contras and the decision is
 as always security versus usability.
 
 \subsubsection{Signed Certificates form a trusted Certificate Authority}
 \label{sec:signcertfromca}
-Trusted certificates are mostly issued by commercial CAs, such as Verisign, Teletrust, etc.
-These certificates are mostly issued for specified time period and cost money. Nevertheless
+Trusted certificates are mostly issued by commercial CAs, such as Verisign, GoDaddy, Teletrust, etc.
+These certificates are mostly issued for a specified time period and cost money. Nevertheless
 there are also free trusted CAs available, such as StartSSL, or CACert.
 
-If you consider getting a signed certificate from a trusted CA, you should not generate the 
-private key not on the CAs system. You can generate a private key and a corresponding 
-certificate request as follows:
+If you consider getting a signed certificate from a trusted CA, you should not let the CA generate the 
+private key for you. You can generate a private key and a corresponding certificate request as follows:
 
 \begin{lstlisting}[breaklines]
 % openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize>
@@ -46,9 +45,9 @@ An optional company name []:
 
 \subsubsection{Setting up your own Certificate Authority}
 \label{sec:setupownca}
-In some situations it is sufficient to use your own CA certificates. An example is a own OpenVPN
-installation or if only systems communicate with each other, which do not act with users. Creating
-a own CA can be accomplished using OpenSSL:
+In some situations it is sufficient to use your own certificate authority. An example is an OpenVPN
+installation or if only internal systems communicate with each other, without interaction with users. 
+Creating a CA can be accomplished using OpenSSL (Debian):
 
 \begin{lstlisting}
 % cd /usr/lib/ssl/misc
@@ -66,18 +65,21 @@ issued a new root certificate. Now you can issue new certificates as follows:
 \subsection{Hardening PKI}
 \label{sec:hardeningpki}
 In recent years several CAs were compromised by attackers in order to
-get trusted certificates for malicious activities. In 2011 the Dutch
-CA Diginotar was hacked and all certificates were
+get ahold of trusted certificates for malicious activities. In 2011 
+the Dutch CA Diginotar was hacked and all certificates were
 revoked~\cite{diginotar-hack}. Recently Google found certificates
 issued to them, which were not used by the
 company~\cite{googlecahack}. The concept of PKIs heavily depends on the
 security of CAs.  If they get compromised the whole PKI system will
-fail.
+fail. Some CAs tend to incorrectly issue certificates that were designated
+to do a different job than what they were intended to by the CA~\cite{gocode}.
 
 Therefore several security enhancements were introduced by different
 organisations and vendors~\cite{tschofenig-webpki}. Currently two
 methods are used, DANE~\cite{rfc6698} and Certificate
-Pinning~\cite{draft-ietf-websec-key-pinning}.
+Pinning~\cite{draft-ietf-websec-key-pinning}. Google recently proposed
+a new system to detect malicous CAs and certificates  called Certificate 
+Transparency~\cite{certtransparency}.
 
 % \subsubsection{DANE}
 % \label{sec:dane}

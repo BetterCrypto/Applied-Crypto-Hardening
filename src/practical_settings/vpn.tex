@@ -28,7 +28,8 @@ If you need to use Pre-Shared Key authentication:
 
 The size of the PSK should not be shorter than the output size of
 the hash algorithm used in IKE \footnote{It is used in a HMAC, see
-RFC2104\cite{rfc2104}.}.
+RFC2104\cite{rfc2104} and the discussion starting
+in \url{http://www.vpnc.org/ietf-ipsec/02.ipsec/msg00268.html}.}.
 
 For a key composed of upper- and lowercase letters, numbers, and two
 additional symbols\footnote{64 possible values = 6 bits},
@@ -70,8 +71,8 @@ table~\ref{tab:IPSEC_suites}.
     \toprule
     Configuration A & Configuration B & Notes\\
     \midrule
-    \verb|Suite-B-GCM-256| \newline \verb|Suite-B-GMAC-256| &
-    \verb|Suite-B-GCM-128| \newline \verb|Suite-B-GMAC-128| \newline
+    \verb|Suite-B-GCM-256| &
+    \verb|Suite-B-GCM-128| \newline
     \verb|VPN-B| 
     & All Suite-B variants use NIST elliptic curves\\
     \bottomrule
@@ -101,7 +102,7 @@ vulnerabilities \footnote{\url{http://ikecrack.sourceforge.net/}}.
     Mode & Main Mode & Main Mode \\
     Encryption & AES-256 & AES, CAMELLIA (-256 or -128) \\
     Hash & SHA2-* & SHA2-*, SHA1 \\
-    DH Group & Group 14--18, 19--21 & Group 14--21 \\
+    DH Group & Group 14, 18 & Group 14, 18 \\
 %    Lifetime & \todo{need recommendations; 1 day seems to be common
 %      practice} & \\
     \bottomrule
@@ -129,7 +130,7 @@ parameters are shown in table \ref{tab:IPSEC_ph2_params}.
     &
     \parbox[t]{5cm}{\raggedright
     \mbox{AES-GCM-16}, \mbox{AES-CTR}, \mbox{AES-CCM-16}, \mbox{AES-256}, \mbox{CAMELLIA-256}, \mbox{AES-128}, \mbox{CAMELLIA-128}} \\
-    Hash & SHA2-* (or none for AES-GCM) & SHA2-*, SHA1 (or none for AES-GCM) \\
+    Hash & SHA2-* (or none for AEAD) & SHA2-*, SHA1 (or none for AEAD) \\
     DH Group & Same as Phase 1 & Same as Phase 1 \\
 %    Lifetime & \todo{need recommendations; 1-8 hours is common} & \\
     \bottomrule
@@ -277,8 +278,6 @@ client and server.
 tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
 cipher AES-256-CBC
 auth SHA384
-# generate with 'openssl dhparam -out dh2048.pem 2048':
-dh dh2048.pem
 \end{lstlisting}
 
 \paragraph{Client Configuration}\mbox{}
@@ -414,25 +413,25 @@ crypto map Outside-DMZ_map interface Outside-DMZ
 crypto ikev2 policy 1
  encryption aes-gcm-256
  integrity null
- group 24 14
+ group 14
  prf sha512 sha384 sha256 sha
  lifetime seconds 86400
 crypto ikev2 policy 2
  encryption aes-gcm-256 aes-gcm-192 aes-gcm
  integrity null
- group 24 14 5
+ group 14
  prf sha512 sha384 sha256 sha
  lifetime seconds 86400
 crypto ikev2 policy 3
  encryption aes-256 aes-192 aes
  integrity sha512 sha384 sha256
- group 24 14
+ group 14
  prf sha512 sha384 sha256 sha
  lifetime seconds 86400
 crypto ikev2 policy 4
  encryption aes-256 aes-192 aes
  integrity sha512 sha384 sha256 sha
- group 24 14 5
+ group 14
  prf sha512 sha384 sha256 sha
  lifetime seconds 86400
 crypto ikev2 enable Outside-DMZ client-services port 443
