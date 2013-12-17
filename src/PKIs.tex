@@ -7,25 +7,39 @@ used to create a signature chain from the root CA down to the server (or client)
 Accepting a CA as a generally-trusted mediator solves the trust-scaling problem
 at the cost of introducing an actor that magically is more trustworthy.
 
-In the first part of this section an overview is given, how to get a certificate from
-a trusted CA, or how to setup your own CA. In the second part recommendations will be 
-given how you can improve the security of PKIs.
+The first part of this section addresses how to obtain a certificate.  The
+second part offers recommendations on how to improve the security of your
+PKI.
 
 \section{Certificate Authorities}
 \label{sec:cas}
-In order to get a certificate, you either go to a CA which will issue a certificate for you,
-or you run your own CA. In the latter case one normally speaks of self-signed 
-certificates. For both cases there are pros and contras and the decision is
-as always security versus usability.
+In order to get a certificate, you can find an external CA willing to issue
+a certificate for you, run your own CA, or use self-signed certificates.
+As always, there are advantages and disadvantages for every one of these
+options; a balance of security versus usability needs to be found.
 
-\subsubsection{Signed Certificates form a trusted Certificate Authority}
+\subsubsection{Certificates From an External Certificate Authority}
 \label{sec:signcertfromca}
-Trusted certificates are mostly issued by commercial CAs, such as Verisign, GoDaddy, Teletrust, etc.
-These certificates are mostly issued for a specified time period and cost money. Nevertheless
-there are also free trusted CAs available, such as StartSSL, or CACert.
 
-If you consider getting a signed certificate from a trusted CA, you should not let the CA generate the 
-private key for you. You can generate a private key and a corresponding certificate request as follows:
+There is a fairly large number of commercial CAs that will issue
+certificates for money.  Some of the most ubiquitous commercial CAs are
+Verisign, GoDaddy, and Teletrust.  However, there are also CAs that offer
+certificates for free.  The most notable examples are StartSSL, which is a
+company that offers some types of certificates for free, and CAcert, which
+is a non-profit volunteer-based organisation that does not charge at all
+for issuing certificates.  Finally, in the research and education field, a
+number of CAs exist that are generally well-known and well-accepted within
+the higher-education community.
+
+When requesting a certificate from a CA, it is vital that you generate the
+key pair yourself.  In particular, the private key should never be known to
+the CA.  If a CA offers to generate the key pair for you, you should not
+trust that CA.
+
+Generating a key pair and a certificate request can be done with a number
+of tools.  On Unixoid systems, it is likely that the OpenSSL suite is
+available to you.  In this case, you can generate a private key and a
+corresponding certificate request as follows:
 
 \begin{lstlisting}[breaklines]
 % openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize>
@@ -43,24 +57,50 @@ A challenge password []:
 An optional company name []:
 \end{lstlisting}
 
-\subsubsection{Setting up your own Certificate Authority}
+\subsubsection{Setting Up Your Own Certificate Authority}
 \label{sec:setupownca}
-In some situations it is sufficient to use your own certificate authority. An example is an OpenVPN
-installation or if only internal systems communicate with each other, without interaction with users. 
-Creating a CA can be accomplished using OpenSSL (Debian):
+In some situations it is advisable to run your own certificate authority.
+Whether this is a good idea depends on the exact circumstances.  Generally
+speaking, the more centralized the control of the systems in your
+environment, the fewer pains you will have to go through to deploy your own
+CA.  On the other hand, running your own CA maximizes the trust level that
+you can achieve because it minimizes external trust dependencies.
+
+Again using OpenSSL as an example, you can set up your own CA with the
+following commands on a Debian system:
 
 \begin{lstlisting}
 % cd /usr/lib/ssl/misc
 % sudo ./CA.pl -newca
 \end{lstlisting}
 
-Answer the questions according to your setup. Now you have configured your basic settings and 
-issued a new root certificate. Now you can issue new certificates as follows:
+Answer the questions according to your setup. Now that you have configured your basic settings and 
+issued a new root certificate, you can issue new certificates as follows:
 
 \begin{lstlisting}
 % cd /usr/lib/ssl/misc
 % sudo ./CA.pl -newreq
 \end{lstlisting}
+
+\subsubsection{Creating a Self-Signed Certificate}
+\label{sec:pki:selfsignedcert}
+If the desired trust level is very high and the number of systems involved
+is limited, the easiest way to set up a secure environment may be to use
+self-signed certificates.  A self-signed certificate is not issued by any
+CA at all, but is signed by the entity that it is issued to.  Thus, the
+organizational overhead of running a CA is eliminated at the expense of
+having to establish all trust relationships between entities manually.
+
+With OpenSSL, a self-signed certificate may be created with this command:
+
+\begin{lstlisting}
+% openssl req -new -x509 -key privkey.pem -out cacert.pem -days 1095
+\end{lstlisting}
+
+The resulting certificate will by default not be trusted by anyone at all,
+so in order to be useful, the certificate will have to be made known a
+priori to all parties that may encounter it.
+
 
 \subsection{Hardening PKI}
 \label{sec:hardeningpki}
