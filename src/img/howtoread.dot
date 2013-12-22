@@ -1,0 +1,24 @@
+digraph {
+start [label="Start"];
+
+start -> intro; 
+
+intro [shape=box, label="Introduction"];
+intro -> decision;
+
+decision [shape=diamond, label="I just want\nto copy & paste?"];
+Practical [shape=box, label="read chapter: Practical recommendations"];
+Theory [shape=box, label="To understand why\nwe chose certain settings,\n read the chapter 'Theory' first"];
+
+decision -> Practical [label="Yes", labelfloat="Yes", labeldistance=2];
+decision -> Theory [label="No", labelfloat="Yes", labeldistance=2];
+Theory -> Appendix;
+Practical -> Appendix;
+Practical -> Theory [constraint=false];
+
+Appendix [shape=box, label="Appendix: references, links"]
+
+{ rank=same; decision; Practical }
+{ rank=max; Theory; Appendix }
+
+}

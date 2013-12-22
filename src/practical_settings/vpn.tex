@@ -28,7 +28,8 @@ If you need to use Pre-Shared Key authentication:
 
 The size of the PSK should not be shorter than the output size of
 the hash algorithm used in IKE \footnote{It is used in a HMAC, see
-  \url{http://www.ietf.org/rfc/rfc2104.txt}.}.
+RFC2104\cite{rfc2104} and the discussion starting
+in \url{http://www.vpnc.org/ietf-ipsec/02.ipsec/msg00268.html}.}.
 
 For a key composed of upper- and lowercase letters, numbers, and two
 additional symbols\footnote{64 possible values = 6 bits},
@@ -55,8 +56,7 @@ table~\ref{tab:IPSEC_psk_len} gives the minimum lengths in characters.
 IPSEC Cryptographic Suites are pre-defined settings for all the items
 of a configuration; they try to provide a balanced security level and
 make setting up VPNs easier.
-\footnote{\url{http://tools.ietf.org/html/rfc6379}}
-\footnote{\url{http://tools.ietf.org/html/rfc4308}}
+\footnote{RFC6379\cite{rfc6379}, RFC4308\cite{rfc4308}}
 
 When using any of those suites, make sure to enable ``Perfect Forward
 Secrecy`` for Phase 2, as this is not specified in the suites. The
@@ -71,8 +71,8 @@ table~\ref{tab:IPSEC_suites}.
     \toprule
     Configuration A & Configuration B & Notes\\
     \midrule
-    \verb|Suite-B-GCM-256| \newline \verb|Suite-B-GMAC-256| &
-    \verb|Suite-B-GCM-128| \newline \verb|Suite-B-GMAC-128| \newline
+    \verb|Suite-B-GCM-256| &
+    \verb|Suite-B-GCM-128| \newline
     \verb|VPN-B| 
     & All Suite-B variants use NIST elliptic curves\\
     \bottomrule
@@ -102,7 +102,7 @@ vulnerabilities \footnote{\url{http://ikecrack.sourceforge.net/}}.
     Mode & Main Mode & Main Mode \\
     Encryption & AES-256 & AES, CAMELLIA (-256 or -128) \\
     Hash & SHA2-* & SHA2-*, SHA1 \\
-    DH Group & Group 14--18, 19--21 & Group 14--21 \\
+    DH Group & Group 14, 18 & Group 14, 18 \\
 %    Lifetime & \todo{need recommendations; 1 day seems to be common
 %      practice} & \\
     \bottomrule
@@ -130,7 +130,7 @@ parameters are shown in table \ref{tab:IPSEC_ph2_params}.
     &
     \parbox[t]{5cm}{\raggedright
     \mbox{AES-GCM-16}, \mbox{AES-CTR}, \mbox{AES-CCM-16}, \mbox{AES-256}, \mbox{CAMELLIA-256}, \mbox{AES-128}, \mbox{CAMELLIA-128}} \\
-    Hash & SHA2-* (or none for AES-GCM) & SHA2-*, SHA1 (or none for AES-GCM) \\
+    Hash & SHA2-* (or none for AEAD) & SHA2-*, SHA1 (or none for AEAD) \\
     DH Group & Same as Phase 1 & Same as Phase 1 \\
 %    Lifetime & \todo{need recommendations; 1-8 hours is common} & \\
     \bottomrule
@@ -278,8 +278,6 @@ client and server.
 tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
 cipher AES-256-CBC
 auth SHA384
-# generate with 'openssl dhparam -out dh2048.pem 2048':
-dh dh2048.pem
 \end{lstlisting}
 
 \paragraph{Client Configuration}\mbox{}
@@ -378,7 +376,7 @@ be decrypted.
 The following settings reflect our recommendations as best as possible on the Cisco ASA platform. These are - of course - just settings regarding SSL/TLS (i.e. Cisco AnyConnect) and IPSec. For further security settings regarding this platform the appropriate Cisco guides should be followed.
 \begin{description}
 \item[Tested with Version:] 
-9.1(3)
+9.1(3) - X-series model
 \item[Settings:] \mbox{}
 \begin{lstlisting}[breaklines]
 crypto ipsec ikev2 ipsec-proposal AES-Fallback
@@ -415,25 +413,25 @@ crypto map Outside-DMZ_map interface Outside-DMZ
 crypto ikev2 policy 1
  encryption aes-gcm-256
  integrity null
- group 24 14
+ group 14
  prf sha512 sha384 sha256 sha
  lifetime seconds 86400
 crypto ikev2 policy 2
  encryption aes-gcm-256 aes-gcm-192 aes-gcm
  integrity null
- group 24 14 5
+ group 14
  prf sha512 sha384 sha256 sha
  lifetime seconds 86400
 crypto ikev2 policy 3
  encryption aes-256 aes-192 aes
  integrity sha512 sha384 sha256
- group 24 14
+ group 14
  prf sha512 sha384 sha256 sha
  lifetime seconds 86400
 crypto ikev2 policy 4
  encryption aes-256 aes-192 aes
  integrity sha512 sha384 sha256 sha
- group 24 14 5
+ group 14
  prf sha512 sha384 sha256 sha
  lifetime seconds 86400
 crypto ikev2 enable Outside-DMZ client-services port 443
@@ -448,10 +446,15 @@ ssl trust-point ASDM_TrustPoint0 Outside-DMZ
 \item[Justification for special settings (if needed):] \mbox{}
 New IPsec policies have been defined which do not make use of ciphers that may be cause for concern. Policies have a "Fallback" option to support legacy devices.
 
-% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+3DES has been completely disabled as such Windows XP AnyConnect Clients will no longer be able to connect.
+
+The Cisco ASA platform does not currently support RSA Keys above 2048bits.
+
+Legacy ASA models (e.g. 5505, 5510, 5520, 5540, 5550) do not offer the possibility to configure for SHA256/SHA384/SHA512 nor AES-GCM for IKEv2 proposals.
 
 \item[References:] 
-\url{http://www.cisco.com/en/US/docs/security/asa/roadmap/asaroadmap.html}
+\url{http://www.cisco.com/en/US/docs/security/asa/roadmap/asaroadmap.html}\\
+\url{http://www.cisco.com/web/about/security/intelligence/nextgen_crypto.html}
 
 % add any further references or best practice documents here
 

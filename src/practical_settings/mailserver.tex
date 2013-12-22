@@ -5,23 +5,45 @@ This section documents the most common mail (SMTP) and IMAPs/POPs servers. Anoth
 \subsubsection{Dovecot}
 
 
-Dovecot 2.2:
+\begin{description}
+\item[Tested with Version:] Dovecot 2.2:
 
+\item[Settings:] \mbox{}
 % Example: http://dovecot.org/list/dovecot/2013-October/092999.html
 
 \begin{lstlisting}[breaklines]
-  ssl_cipher_list = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+  ssl_cipher_list = '@@@CIPHERSTRINGB@@@'
   ssl_prefer_server_ciphers = yes
 \end{lstlisting}
 
-Dovecot 2.1: Almost as good as dovecot 2.2. Does not support ssl\_prefer\_server\_ciphers
+\item[Additional info:] \mbox{}
 
-\paragraph*{Limitations}\mbox{}\\
+Dovecot 2.1: Almost as good as dovecot 2.2. Does not support
+ssl\_prefer\_server\_ciphers
 
-Dovecot currently does not support disabling TLS compression. Furthermore, DH parameters
-greater than 1024bit are not supported. The most recent version 2.2.7 of Dovecot implements
-configurable DH parameter length
+\item[Limitations:] \mbox{}
+
+Dovecot currently does not support disabling TLS compression. Furthermore, DH
+parameters greater than 1024bit are not supported. The most recent version
+2.2.7 of Dovecot implements configurable DH parameter length
 \footnote{\url{http://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0}}.
+
+%\item[Justification for special settings (if needed):] \mbox{}
+
+% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+
+\item[References:] \url{http://wiki2.dovecot.org/SSL}
+
+% add any further references or best practice documents here
+
+\item[How to test:]
+% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+
+\todo{FIXME}
+
+\end{description}
+
+%% ---------------------------------------------------------------------- 
 
 \subsubsection{cyrus-imapd (based on 2.4.17)}
 
@@ -39,7 +61,7 @@ Limiting the ciphers provided may force (especially older) clients to connect wi
 
 If you still want to force strong encryption use
 \begin{lstlisting}[breaklines]
-  tls_cipher_list: <...recommended ciphersuite...>
+  tls_cipher_list: @@@CIPHERSTRINGB@@@
 \end{lstlisting}
 
 cyrus-imapd loads hardcoded 1024 bit DH parameters using get\_rfc2409\_prime\_1024() by default. If you want to load your own DH parameters add them PEM encoded to the certificate file given in tls\_cert\_file. Do not forget to re-add them after updating your certificate.\\
@@ -85,6 +107,8 @@ There is a working patch for all three features:
 % options = CIPHER_SERVER_PREFERENCE
 % TIMEOUTclose = 1
 
+%% ---------------------------------------------------------------------- 
+
 \subsubsection{SMTP in general}
 \label{subsection:smtp_general}
 
@@ -126,6 +150,8 @@ For MSA operation we recommend:
 
 We strongly recommend to allow all cipher suites for anything but MSA
 mode, because the alternative is plain text transmission.
+
+%% ---------------------------------------------------------------------- 
 
 \subsubsection{Postfix}
 
@@ -196,7 +222,7 @@ acceptable for the ``mandatory'' security level, again in
 \begin{lstlisting}[breaklines]
   smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
   smtpd_tls_mandatory_ciphers=high
-  tls_high_cipherlist=EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
+  tls_high_cipherlist=@@@CIPHERSTRINGB@@@
 \end{lstlisting}
 
 Then, we configure the MSA smtpd in \verb|master.cf| with two
@@ -226,8 +252,18 @@ you can leave the statement in for older versions.
 Refer to \url{http://www.postfix.org/TLS_README.html} for an in-depth
 discussion.
 
-% \item[Additional settings:]
-% no additional settings
+\item[Additional settings:]
+
+Postfix has two sets of built-in DH parameters that can be overridden
+with the \verb|smtpd_tls_dh512_param_file|
+and \verb|smtpd_tls_dh1024_param_file| options. The ``dh512''
+parameters are used for export ciphers, while the ``dh1024'' ones are
+used for all other ciphers.
+
+The ``bit lenght'' in those parameter names is just a name, so one
+could use stronger parameter sets; it should be possible to e.g. use the
+IKE Group14 parameters (see section \ref{section:DH}) without much
+interoperability risk, but we have not tested this yet.
 
 % \item[Justification for special settings (if needed):]
 % no special settings
@@ -245,6 +281,9 @@ $ zegrep "TLS connection established from.*with cipher" | /var/log/mail.log | aw
 \end{lstlisting}
 
 \end{description}
+
+
+%% ---------------------------------------------------------------------- 
 
 \subsubsection{Exim (based on 4.82)}
 
@@ -378,7 +417,7 @@ Exim already disables SSLv2 by default. We recommend to add
 to the main configuration.\\
 Note: +all is misleading here since OpenSSL only activates the most common workarounds. But that's how SSL\_OP\_ALL is defined.\\
 
-You do not need to set dh\_parameters. Exim with OpenSSL by default uses parameter initialization with the "2048-bit MODP Group with 224-bit Prime Order Subgroup" defined in section 2.2 of RFC 5114 (ike23).
+You do not need to set dh\_parameters. Exim with OpenSSL by default uses parameter initialization with the "2048-bit MODP Group with 224-bit Prime Order Subgroup" defined in section 2.2 of RFC 5114\cite{rfc5114} (ike23).
 If you want to set your own DH parameters please read the TLS documentation of exim.\\
 
 
@@ -393,7 +432,7 @@ GnuTLS is different in only some respects to OpenSSL:
 
 \paragraph*{Exim string expansion}\mbox{}\\
 
-Note that most of the options accept expansion strings. This way you can eg. set cipher lists or STARTTLS advertisment conditionally. Please follow the link to the official Exim documentation to get more information.
+Note that most of the options accept expansion strings. This way you can eg. set cipher lists or STARTTLS advertisement conditionally. Please follow the link to the official Exim documentation to get more information.
 
 \paragraph*{Limitations}\mbox{}\\
 
@@ -404,4 +443,39 @@ There already is a working patch to provide support:\\
 
 % do we need to documment starttls in detail?
 %\subsubsection{starttls?}
+
+%% ----------------------------------------------------------------------
+\subsubsection{Exchange}
+
+\todo{FIXME: write this section}
+
+\begin{description}
+\item[Tested with Version:] \todo{version?}
+
+\item[Settings:] \mbox{}
+
+\begin{lstlisting}[breaklines]
+    %Here goes your setting string
+\end{lstlisting}
+
+\item[Additional settings:] \mbox{}
+
+%Here you can add additional settings
+
+\begin{lstlisting}[breaklines]
+    %copy \& paste additional settings
+\end{lstlisting}
+
+\item[Justification for special settings (if needed):] \mbox{}
+
+% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+
+\item[References:] \todo{add references}
+
+% add any further references or best practice documents here
+
+\item[How to test:]
+% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+
+\end{description}
 

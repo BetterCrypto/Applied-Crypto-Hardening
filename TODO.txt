@@ -6,33 +6,40 @@ BIG TOPICS
 ==========
 
 
-* DDOS possibilities when we increase cyrpto security?? What about that?
+* clean up 9.5 "chossing your own cipher"
+
+* DDOS possibilities when we increase cyrpto security?? What about that? (--> LATER)
 
 * write a Justification section to every setting, maybe have that later in the document. 
 
-* move the explanations to a later part of the document. Code snippets go *first* . The target group is sysadmins, must be easily copy & paste-able. Or find a different way so that they can easily use/read the document
+DONE * move the explanations to a later part of the document. Code snippets go *first* . The target group is sysadmins, must be easily copy & paste-able. Or find a different way so that they can easily use/read the document
 
-* Write section 7.3 (-> Adi . How to chose your own cipher string + screenshots)
-
-* Decide/Discuss recommended ciphers:
+DONE * Decide/Discuss recommended ciphers:
   - DH parameters: what is our recommendation? >2048? >=2048? leave default (aka 1024)?
+  --> answer: we trust IETF/IKE  as described in ECRYPT2
 
-* comments from IAIK integrate (--> Aaron)
-* SHA-1 section: write why it is a problem
-* include OpenSSL names/IANA names into appendix
+* comments from IAIK integrate (--> Aaron, check again if it was done)
+* SHA-1 section: write why it is a problem (--> Florian Mendel)
+* PKI section (--> Thomas Schreck)
+DONE * include OpenSSL names/IANA names into appendix (--> cm)
 * Document RNG problem in Apache (--> Pepi)
-* Oracle ?? (--> Berg?? maybe . Or aaron: ask nic.at. Or link to T-Systems paper)
-* DB2 (--> Berg. Or ask MLeyrer)
+DONE * Oracle ?? (--> Berg?? maybe . Or aaron: ask nic.at. Or link to T-Systems paper) --> T-Systems paper
+DONE * DB2 (--> Berg. Or ask MLeyrer)
+* Add AES128 to cipherStringA ?
+* re-work chapter 2 (practical settings). Add lots of references to chapter 3 to get people interested in reading the theory.
+
 
 Formatting
 ==========
+
 DONE * one-column layout: make page margins smaller
 DONE * add large "DRAFT" letters on top of every page.
-  make the git version number part of the document
-* Layout of sample code (lstisting format) : make it pretty!
+DONE  make the git version number part of the document
+DONE * Layout of sample code (lstisting format) : make it pretty!
+Rendering in Firefox (inline) on Windows seems to be really messed up. What happenened?
 
+* make every section like the Apache section (--> Aaron)
 
-* make every section like the Apache section
 
 Workflow
 ========
@@ -79,7 +86,7 @@ Contents
 
 * document (cite) EVERYTHING! Why we chose certain values. Referneces, references, references. Otherwise it does not count!
   Srsly!!
-* .bib file is completely wrong. Make good citations/references. Add books: Schneier, ...
+DONE * .bib file is completely wrong. Make good citations/references. Add books: Schneier, ...
 * !! important: add the version string to everything that we tested!!
 
 * two target groups:
@@ -88,17 +95,17 @@ Contents
 * look at TLS1.2 specs and really check if we want all of these settings
 
 
-Section 6
+Practical settings section
 ----------
 Definitely still missing these subsubsections:
 * Exchange Server ??  (--> bei M$ angefragt, Evtl. Beitrag von A-Trust)
   - SMTP, POP, IMAP
 DONE * Exim4 (-> Adi & Wolfgang Breya)
-* Checkpoint (-> cm)
+DONE * Checkpoint (-> cm)
 * Asa / Palo Alto (-> Azet)
 * Terminal Server (VNC ), ??
-* Squid
-* XMPP
+DONE * Squid
+DONE * XMPP
   --> verweise auf die xmpp community bzw. auf xmpp.net verweisen.
   Empfehlung: unbedingt ejabberd updaten!!  
 
@@ -114,7 +121,7 @@ DONE * Exim4 (-> Adi & Wolfgang Breya)
   * Cisco IPSec
   * Juniper VPN
   * L2TP over IPSec -> egal
-* SIP   -> Klaus???
+* SIP   -> Klaus
 * SRTP  -> Klaus???
 * DNSSec ??	Verweis auf BCPxxx	--> out of scope
    - DANE
@@ -147,6 +154,9 @@ seclayer-tcp    3495/tcp    # securitylayer over tcp
 * phpmyadmin --> haengt am apache, out of scope
 * DSL modems -> out of scope
 * UPnP, natPmp --> out of scope
+* SAML federated auth providers (e.g., all the REFEDS folks (https://refeds.org/)), including InCommon (http://www.incommon.org/federation/metadata.html)
+  https://wiki.shibboleth.net/confluence/display/SHIB2/TrustManagement (idea by Joe St. Sauver)
+* 
 ----- snip ---- all protocols that we looked at --- snip ----
 
 
@@ -156,9 +166,9 @@ seclayer-tcp    3495/tcp    # securitylayer over tcp
 
 RNDG section
 ------------
-- add two, three sentences
-- mention HaveGED 
-- embedded devices are a problem
+DONE - add two, three sentences
+DONE - mention HaveGED 
+DONE - embedded devices are a problem
 
 
 
@@ -175,6 +185,6 @@ LATER / further
 * Radius
 * Windows Active Directory
 * SRP: not part of this document
-* \cipherA , \cipherB setting ---> does not work in our \begin{listing} environment --> maybe there is a different listing environment or use awk/sed/make/perl/python
+DONE * \cipherA , \cipherB setting ---> does not work in our \begin{listing} environment --> maybe there is a different listing environment or use awk/sed/make/perl/python
 * What about 3270 terminal emulation? How to do crypto there? Can we? ( --> IBM sec. Stammtisch. Aaron)
 

@@ -3,3 +3,10 @@
 
 A common question is which Diffie Hellman (DH) Parameters  should be used for Diffie Hellman key exchanges\footnote{\url{http://crypto.stackexchange.com/questions/1963/how-large-should-a-diffie-hellman-p-be}}. We follow the recommendations in ECRYPT II, chapter 16.\cite{ii2011ecrypt}
 
+Where configurable, we recommend using the Diffie Hellman groups
+defined for IKE, specifically groups 14-18 (for MODP, \cite{rfc3526})
+and 19-21 (for elliptic curve DH, \cite{rfc5903}). These groups have
+been checked by many eyes and can be assumed to be secure.
+
+For convenience, we provide these parameters as PEM files. \todo{put
+  them on the server and insert URL here}.

@@ -1,7 +1,7 @@
 %%\subsection{Recommended cipher suites}
 
 In principle system administrators who want to improve their communication security
-have ton make a difficult decision between effectively locking out some users and 
+have to make a difficult decision between effectively locking out some users and 
 keeping high cipher suite security while supporting as many users as possible.
 The website \url{https://www.ssllabs.com/} gives administrators and security engineers
 a tool to test their setup and compare compatibility with clients. The authors made 
@@ -35,7 +35,7 @@ We arrived at this set of cipher suites by selecting:
 This results in the OpenSSL string:
 
 \begin{lstlisting}[breaklines]
-'EECDH+aRSA+AES256:EDH+aRSA+AES256:!SSLv3'
+'EDH+aRSA+AES256:EECDH+aRSA+AES256:!SSLv3'
 \end{lstlisting}
 
 %$\implies$ resolves to 
@@ -52,10 +52,10 @@ This results in the OpenSSL string:
 \begin{tabular}{lllllll}
 \toprule
 \textbf{ID}   & \textbf{OpenSSL Name}       & \textbf{Version} & \textbf{KeyEx} & \textbf{Auth} & \textbf{Cipher} & \textbf{MAC}\\\cmidrule(lr){1-7}
-\verb|0xC030| & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2          & ECDH           &  RSA          & AESGCM(256)     & AEAD         \\
-\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           &  RSA          & AES(256) (CBC)  & SHA384       \\
 \verb|0x009F| & DHE-RSA-AES256-GCM-SHA384   & TLSv1.2          & DH             &  RSA          & AESGCM(256)     & AEAD         \\
 \verb|0x006B| & DHE-RSA-AES256-SHA256       & TLSv1.2          & DH             &  RSA          & AES(256) (CBC)  & SHA256       \\
+\verb|0xC030| & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2          & ECDH           &  RSA          & AESGCM(256)     & AEAD         \\
+\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           &  RSA          & AES(256) (CBC)  & SHA384       \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -71,11 +71,12 @@ Win 7 and Win 8.1 crypto stack, Opera 17, OpenSSL $\ge$ 1.0.1e, Safari 6 / iOS
 
 \subsubsection{Configuration B: Weaker ciphers, more compatability}
 
-In this section we propose a slightly weaker set of cipher suites. 
-For example, there are some known weaknesses for the SHA-1 hash function that
-is included in this set. However, the advantage of this set of cipher suites 
-is it's higher compatibility with a more diverse set of clients as well as 
-less computational overhead.\\ 
+In this section we propose a slightly weaker set of cipher suites.  For
+example, there are some known weaknesses for the SHA-1 hash function that is
+included in this set.  The advantage of this set of cipher suites is not only
+the compatibility with a broad range of clients, but also less computational
+workload on the provisioning hardware.
+\\
 
 \textbf{All further examples in this publication use Configuration B}.\\
 
@@ -150,18 +151,16 @@ Our recommended cipher strings are meant to be used via copy and paste and need 
 "out of the box".
 
 \begin{itemize}
-\item TLS1.2 is preferred over TLSv1.0/SSLv3 (while still providing a useable cipher
+\item TLSv1.2 is preferred over TLSv1.0/SSLv3 (while still providing a useable cipher
       string for SSLv3).
-\item AES256 and CAMELLIA256 count as very strong ciphers at the moment; preferrably in
-      GCM mode.\\
-	  \todo{add a reference here please}
-\item AES128 and CAMELLIA128 count as strong enough ciphers at the moment
+\item AES256 and CAMELLIA256 count as very strong ciphers at the moment.
+\item AES128 and CAMELLIA128 count as strong ciphers at the moment
 \item DHE or ECDHE for forward secrecy
-\item RSA as this will fit most of todays setup
-\item AES256-SHA as a last ressort (with this cipher at the end, even systems with
-      very old versions of openssl like 0.9.8 will just work. Just forward secrecy
-      will not be used. On systems that do not support elliptic curves, that cipher
-      offers support for the Microsoft crypto libraries that only support ECDHE.
+\item RSA as this will fit most of todays setups
+\item AES256-SHA as a last resort (with this cipher at the end, even systems with
+      legacy distributions of OpenSSL will work out of the box. Forward secrecy
+      will not be available. On systems that do not support elliptic curves, that cipher
+      offers support for the Microsoft crypto libraries that only support ECDHE. \todo{what does that mean?! inconclusive!}
 \end{itemize}
 
 \todo{Adi: review "justification" when next section is written}

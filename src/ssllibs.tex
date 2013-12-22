@@ -1,8 +1,6 @@
 \section{SSL libraries}
 \label{section:ssllibs}
 
-\todo{write down that everything here is very SSL lib dependent. You might have to recompile everythign if you need to change the ssl lib}
-
 Most if not all of the cryptographic work is done by the SSL libraries installed on
 your system. Supported protocols, cipher suites and more depend on the version of
 the SSL library in use. Whenever you upgrade the SSL library, a recompile of all
@@ -30,35 +28,26 @@ in RFC5932\cite{rfc5932}.
 In any way, as a sysadmin you are required to check what the SSL libraries on
 your systems support on how you may get the most security out of your systems.
 
-\todo{anyone? How about Java? What exists here?}
+\subsection{priority strings}
 
-\todo{Anyone? Windows crypto API?}
+Choosing cipher strings requires the use of an intermediate language that allows selection
+and deselection of ciphers, key exchange mechanisms, MACs and combinations of those.
+Common combinators consist of \texttt{+}, \texttt{-} and \texttt{!}
 
-\todo{Mac OSX /iOS crypto API? MacLemon?}
+\begin{center}
+\begin{tabular}{rll}
+\toprule
+\textbf{combinator} & \textbf{effect}                   & \textbf{example}\\\cmidrule(lr){1-3}
+           \verb|+| & add at this position              & \verb|ALL:+SHA256|        \\
+           \verb|-| & remove at the current position    & \verb|ALL:-SSLv3|         \\
+           \verb|!| & permanently remove from selection & \verb|ALL:!3DES:!RC4|     \\
+ (OpenSSL) \verb|@| & special command                   & \verb|ALL:@STRENGTH|       \\
+  (GnuTLS) \verb|%| & special command                   & \verb|NORMAL:%NEW_PADDING| \\
+\bottomrule
+\end{tabular}
+\end{center}
 
-%%azet: 
-% I think we should neglect this section since we do 
-% not need to provide an overview of cryptography libraries 
-% ourselves. but we  should point to concise guides
-% for those libraries - which most of them do not have
-% in place.
-%\subsection{OpenSSL}
-%
-%\todo{adi?}
-%
-%\subsection{GnuTLS}
-%
-%\todo{adi?}
-%
-%\subsection{NaCL}
-%
-%\todo{adi?}
-%
-%\subsection{polarSSL}
-%
-%\todo{adi?}
-%
-%\subsection{matrixSSL}
-%
-%\todo{adi?}
-
+A list of special strings to use can be found in
+\url{http://www.gnutls.org/manual/html_node/Priority-Strings.html} for GnuTLS or
+\url{https://www.openssl.org/docs/apps/ciphers.html} for OpenSSL. There is, however, no
+common syntax for a cipher string throughout different SSL libraries.

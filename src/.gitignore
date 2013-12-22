@@ -11,3 +11,7 @@ applied-crypto-hardening.markdown
 *.swp
 applied-crypto-hardening/
 gitHeadInfo.gin
+old/*
+practical_settings/*_generated.tex
+cipher_suites/*_generated.tex
+*_generated.tex
