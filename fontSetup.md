@@ -1,7 +1,7 @@
 # Font Setup
 ============
 
-To use the proper font for PDF rendering you need install the necessary typefaces into your TeX distribution.
+To use the proper font for PDF rendering you need to install the necessary typefaces into your TeX distribution.
 
 
 ## Installing Open Sans
@@ -13,6 +13,9 @@ To use the proper font for PDF rendering you need install the necessary typeface
 
 
 Now you can use `make pdf` to render a PDF using the new fonts.
+
+You can find further information on Open Sans in the file `fonts/opensans/doc/fonts/opensans/opensans.pdf` and here: <http://www.ctan.org/tex-archive/fonts/opensans/>
+
 
 
 --------------------------------------------------------------------------------
