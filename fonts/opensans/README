@@ -1,0 +1,25 @@
+------------------------
+ Open Sans, version 1.2
+------------------------
+
+Open Sans is a humanist sans serif typeface designed by Steve Matteson. Open
+Sans was designed with an upright stress, open forms and a neutral, yet friendly
+appearance. It was optimized for print, web, and mobile interfaces, and has
+excellent legibility characteristics in its letterforms. This font is available
+from the Google Font Directory at
+http://code.google.com/webfonts/family?family=Open+Sans as TrueType files
+licensed under the Apache License version 2.0.
+
+This package provides support for this font family in LaTeX. It includes the
+original TrueType fonts, as well as Type 1 versions, converted for this package
+using FontForge for full support with Dvips.
+
+Installation and usage instructions are described in
+doc/fonts/opensans/opensans.pdf.
+
+This package is released under the LaTeX Project Public License, either version
+1.3c or above, with the exception of the .pfb and .sfd files, released under the
+Apache License version 2.0.
+
+If you have comments about the package, please contact Mohamed El Morabity
+(melmorabity AT fedoraproject DOT org).

@@ -1,0 +1,257 @@
+%% opensans.tex
+%% Copyright 2011 Mohamed El Morabity
+%
+% This work may be distributed and/or modified under the conditions of the LaTeX
+% Project Public License, either version 1.3 of this license or (at your option)
+% any later version. The latest version of this license is in
+% http://www.latex-project.org/lppl.txt and version 1.3 or later is part of all
+% distributions of LaTeX version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Mohamed El Morabity
+%
+% This work consists of all files listed in manifest.txt.
+
+\documentclass{article}
+
+\usepackage[american]{babel}
+\usepackage{booktabs}
+\usepackage[default,osfigures]{opensans}
+\usepackage{microtype}
+\usepackage{multirow}
+\usepackage{path}
+\usepackage{textcomp}
+\usepackage{varioref}
+\usepackage[colorlinks]{hyperref}
+
+\hypersetup{%
+  pdftitle={LaTeX support for Open Sans},%
+  pdfauthor={Mohamed El Morabity}%
+}%
+
+\newcommand{\acronym}[1]{\textsc{\lowercase{#1}}}
+\newcommand{\code}{\texttt}
+\newcommand{\command}{\texttt}
+\newcommand{\email}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
+\newcommand{\name}{}
+\newcommand{\package}{\texttt}
+\newcommand{\parameter}[1]{\textnormal{\textit{#1}}}
+\newcommand{\program}{}
+
+\title{\LaTeX{} support for Open Sans\\Version~1.2}
+
+\author{Mohamed \name{El~Morabity}\\\email{melmorabity@fedoraproject.org}}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+
+Open Sans is a humanist sans serif typeface designed by Steve
+\name{Matteson}. Open Sans was designed with an upright stress, open forms and a
+neutral, yet friendly appearance. It was optimized for print, web, and mobile
+interfaces, and has excellent legibility characteristics in its letterforms (see
+figure~\vref{styles}). This font is available from the Google Font Directory
+~\cite{opensans} as TrueType files licensed under the Apache License
+version~2.0.
+
+\begin{figure}
+  \centering
+  \fosfamily%
+  {%
+    {\fontseries{l}\selectfont Open Sans Light}\\
+    {\fontseries{l}\selectfont\itshape Open Sans Light Italic}\\
+    {\fontseries{cl}\selectfont Open Sans Condensed Light}\\
+    {\fontseries{cl}\selectfont\itshape Open Sans Condensed Light Italic}\\
+    Open Sans Regular\\
+    {\itshape Open Sans Italic}\\
+    {\fontseries{sb}\selectfont Open Sans Semibold}\\
+    {\fontseries{sb}\selectfont\itshape Open Sans Semibold Italic}\\
+    {\bfseries Open Sans Bold}\\
+    {\bfseries\itshape Open Sans Bold Italic}\\
+    {\fontseries{eb}\selectfont Open Sans Extrabold}\\
+    {\fontseries{eb}\selectfont\itshape Open Sans Extrabold Italic}%
+  }
+  \caption{Available styles for Open Sans}
+  \label{styles}
+\end{figure}
+
+This package provides support for this font in \LaTeX. It includes Type~1
+versions of the fonts, converted for this package using \program{FontForge} from
+its sources, for full support with \program{Dvips}.
+
+\section{Installation}
+
+These directions assume that your \TeX{} distribution is
+\acronym{TDS}-compliant.
+
+Once the \path|opensans.zip| archive extracted:
+\begin{enumerate}
+\item Copy \path|doc/|, \path|fonts/|, \path|source/|, and \path|tex/|
+  directories to your \path|texmf/| directory (either your local or global
+  \path|texmf/| directory).
+\item Run \command{mktexlsr} to refresh the file name database and make \TeX{}
+  aware of the new files.
+\item Run \command{updmap --enable Map=opensans.map} to make \program{Dvips},
+  \program{dvipdf} and \program{pdf\TeX} aware of the new fonts.
+\end{enumerate}
+
+Note that this package requires the \package{keyval}~\cite{keyval} and
+\package{slantsc}~\cite{slantsc} (to handle italic/slanted small caps) ones to
+work.
+
+\section{Usage}
+
+\subsection{Calling Open Sans}
+
+You can use the Open Sans font in a \LaTeX{} document by adding the command
+\begin{verbatim}
+\usepackage{opensans}
+\end{verbatim}
+to the preamble. The package supplies the \code{\char`\\fosfamily} command to
+switch the current font to Open Sans.
+
+\subsection{Options}
+
+\subsubsection{Open Sans as default (sans-serif) font}
+
+You can set \LaTeX{} to use Open Sans as standard font throughout the whole
+document by passing the \code{default} option to the package:
+\begin{verbatim}
+\usepackage[default]{opensans}
+\end{verbatim}
+To set Open Sans as default sans-serif only:
+\begin{verbatim}
+\usepackage[defaultsans]{opensans}
+\end{verbatim}
+
+\subsubsection{Font scaling}
+
+The font can be up- and downscale by any factor. This can be used to make Open
+Sans more friendly when used in company with other type faces, e.g., to adapt
+the x-height. The package option \code{scale=\parameter{ratio}} will scale the
+font according to \parameter{ratio} (1.0 by default), for example:
+\begin{verbatim}
+\usepackage[scale=0.95]{opensans}
+\end{verbatim}
+
+\subsubsection{Figure selection}
+
+Open Sans provides two different figures versions (see table~\vref{figures}):
+\begin{itemize}
+\item\emph{Lining figures} are designed to match the uppercase letters in size
+  and clor; they are used by default.
+\item\emph{Text figures} (also known as \emph{old-style figures}) are designed
+  to match the lowercase letters.
+\end{itemize}
+
+\begin{table}
+  \centering
+  \begin{tabular}{ll}
+    \toprule
+    lining figures&{\fontfamily{fos}\selectfont 0123456789}\\
+    \midrule
+    text figures&{\fontfamily{fosj}\selectfont 0123456789}\\
+    \bottomrule
+  \end{tabular}
+  \caption{Comparison between lining figures and text figures}
+  \label{figures}
+\end{table}
+
+To use text figures by default when calling \code{\char`\\fosfamily}, enable the
+\code{osfigures} package option:
+\begin{verbatim}
+\usepackage[osfigures]{opensans}
+\end{verbatim}
+To use Open Sans as default font with text figures:
+\begin{verbatim}
+\usepackage[default,osfigures]{opensans}
+\end{verbatim}
+
+\subsubsection{Encodings}
+
+The following encodings are supported:
+\begin{description}
+\item[Latin] OT1, T1, TS1 (partial)
+\item[Cyrillic] T2A, T2B, T2C, X2
+\item[Greek] LGR (monotonic only)
+\end{description}
+To use one or another encoding, give the \LaTeX{} name to the \package{fontenc}
+package as usual, as in
+\begin{verbatim}
+\usepackage[T1]{fontenc}
+\usepackage{opensans}
+\end{verbatim}
+
+Note that, as usual with OT1 encoded fonts, kerning with accented characters is
+treated poorly, if at all. Note difference in kerning between these two encoding
+in table~\vref{kerning}.
+\begin{table}
+\centering
+  \begin{tabular}{ll}
+    \toprule
+    OT1-encoded&{\fosfamily Te T\'e}\\
+    \midrule
+    T1-encoded&{\fosfamily\fontencoding{T1}\selectfont Te T\'e}\\
+    \bottomrule
+  \end{tabular}
+  \caption{Kerning with OT1 and T1 encodings}
+  \label{kerning}
+\end{table}
+It is therefore advised to always use the Open Sans fonts in any encoding than
+OT1 when typing diacritics.
+
+\subsection{Available weights and variants}
+
+Table~\vref{nfss} lists the available font series and shapes with their
+\acronym{NFSS} classification. Parenthesized combinations are provided via
+substitutions.
+\begin{table}
+  \centering
+  \begin{tabular}{llll}
+    \toprule
+    family&encoding&series&shape\\
+    \midrule 
+    \multirow{4}{*}{fos, fosj}&OT1,T1,&\multirow{4}{*}{l, lc, m, sb, b (bx), eb}&\multirow{3}{*}{n, it (sl), sc, scit (scsl)}\\
+    &T2A, T2B, T2C, X2,&&\\
+    &LGR&&\\
+    \cmidrule{2-2}
+    \cmidrule{4-4}
+    &TS1&&n, it (sl)\\
+    \bottomrule
+  \end{tabular}
+  \caption{Available font series and shapes for Open Sans; fosj corresponds to the text-figures version of the family}
+  \label{nfss}
+\end{table}
+Notice that the slanted shapes are faked ones, as well as the small capitals
+(reduced to 80\%).
+
+Samples of the font are available in the
+\href{run:opensans-samples.pdf}{\path|opensans-samples.pdf|} file.
+
+\section{Known bugs and improvements}
+
+Please send bug reports and suggestions about the Open Sans \LaTeX{} support to
+\href{mailto:melmorabity@fedoraproject.org}{Mohamed \name{El~Morabity}}.
+
+\section{License}
+
+This package is released under the \LaTeX{} project public license, either
+version~1.3c or above~\cite{lppl}. Anyway both the TrueType and Type~1 files are
+delivered under the Apache License version~2.0~\cite{asl}.
+
+\begin{thebibliography}{9}
+\bibitem{opensans} \url{http://code.google.com/webfonts/family?family=Open+Sans}
+\bibitem{keyval}
+  \url{http://www.ctan.org/tex-archive/macros/latex/required/graphics/}
+\bibitem{slantsc}
+  \url{http://www.ctan.org/tex-archive/macros/latex/contrib/slantsc/}
+\bibitem{lppl} \url{http://www.latex-project.org/lppl/lppl-1-3c.html}
+\bibitem{asl} \url{http://www.apache.org/licenses/LICENSE-2.0.html}
+\end{thebibliography}
+
+\end{document}

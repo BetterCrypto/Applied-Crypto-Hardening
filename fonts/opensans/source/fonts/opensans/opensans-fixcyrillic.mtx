@@ -1,0 +1,756 @@
+%% opensans-fixcyrillic.tex
+%% Copyright 2011 Mohamed El Morabity
+%
+% This work may be distributed and/or modified under the conditions of the LaTeX
+% Project Public License, either version 1.3 of this license or (at your option)
+% any later version. The latest version of this license is in
+% http://www.latex-project.org/lppl.txt and version 1.3 or later is part of all
+% distributions of LaTeX version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Mohamed El Morabity
+%
+% This work consists of all files listed in manifest.txt.
+
+\relax
+
+\metrics
+
+\resetglyph{CYRpalochka}
+  \glyph{uni04C0}{1000}
+\endresetglyph
+
+\resetglyph{dblgrave}
+  \glyph{uni030F}{1000}
+\endresetglyph
+
+\resetglyph{cyrbreve}
+  \glyph{cyrillicbreve}{1000}
+\endresetglyph
+
+\resetglyph{fi}
+  \glyph{uniFB01}{1000}
+\endresetglyph
+
+\resetglyph{fl}
+  \glyph{uniFB02}{1000}
+\endresetglyph
+
+\resetglyph{ffi}
+  \glyph{uniFB03}{1000}
+\endresetglyph
+
+\resetglyph{ffl}
+  \glyph{uniFB04}{1000}
+\endresetglyph
+
+\resetglyph{CYRGUP}
+  \glyph{afii10050}{1000}
+\endresetglyph
+
+\resetglyph{CYRGHCRS}
+  \glyph{uni0492}{1000}
+\endresetglyph
+
+\resetglyph{CYRDJE}
+  \glyph{afii10051}{1000}
+\endresetglyph
+
+\resetglyph{CYRTSHE}
+  \glyph{afii10060}{1000}
+\endresetglyph
+
+\resetglyph{CYRSHHA}
+  \glyph{uni04BA}{1000}
+\endresetglyph
+
+\resetglyph{CYRZHDSC}
+  \glyph{uni0496}{1000}
+\endresetglyph
+
+\resetglyph{CYRZDSC}
+  \glyph{uni0498}{1000}
+\endresetglyph
+
+\resetglyph{CYRLJE}
+  \glyph{afii10058}{1000}
+\endresetglyph
+
+\resetglyph{CYRYI}
+  \glyph{afii10056}{1000}
+\endresetglyph
+
+\resetglyph{CYRKDSC}
+  \glyph{uni049A}{1000}
+\endresetglyph
+
+\resetglyph{CYRLDSC}
+  \glyph{uni04C5}{1000}
+\endresetglyph
+
+\resetglyph{CYRKBEAK}
+  \glyph{uni04A0}{1000}
+\endresetglyph
+
+\resetglyph{CYRKVCRS}
+  \glyph{uni049C}{1000}
+\endresetglyph
+
+\resetglyph{CYRAE}
+  \glyph{uni04D4}{1000}
+\endresetglyph
+
+\resetglyph{CYRNDSC}
+  \glyph{uni04A2}{1000}
+\endresetglyph
+
+\resetglyph{CYRNG}
+  \glyph{uni04A4}{1000}
+\endresetglyph
+
+\resetglyph{CYRDZE}
+  \glyph{afii10054}{1000}
+\endresetglyph
+
+\resetglyph{CYROTLD}
+  \glyph{uni04E8}{1000}
+\endresetglyph
+
+\resetglyph{CYRSDSC}
+  \glyph{uni04AA}{1000}
+\endresetglyph
+
+\resetglyph{CYRUSHRT}
+  \glyph{afii10062}{1000}
+\endresetglyph
+
+\resetglyph{CYRY}
+  \glyph{uni04AE}{1000}
+\endresetglyph
+
+\resetglyph{CYRYHCRS}
+  \glyph{uni04B0}{1000}
+\endresetglyph
+
+\resetglyph{CYRHDSC}
+  \glyph{uni04B2}{1000}
+\endresetglyph
+
+\resetglyph{CYRDZHE}
+  \glyph{afii10145}{1000}
+\endresetglyph
+
+\resetglyph{CYRCHVCRS}
+  \glyph{uni04B8}{1000}
+\endresetglyph
+
+\resetglyph{CYRCHRDSC}
+  \glyph{uni04B6}{1000}
+\endresetglyph
+
+\resetglyph{CYRIE}
+  \glyph{afii10053}{1000}
+\endresetglyph
+
+\resetglyph{CYRSCHWA}
+  \glyph{uni04D8}{1000}
+\endresetglyph
+
+\resetglyph{CYRNJE}
+  \glyph{afii10059}{1000}
+\endresetglyph
+
+\resetglyph{CYRYO}
+  \glyph{afii10023}{1000}
+\endresetglyph
+
+\resetglyph{numero}
+  \glyph{afii61352}{1000}
+\endresetglyph
+
+\resetglyph{cyrgup}
+  \glyph{afii10098}{1000}
+\endresetglyph
+
+\resetglyph{cyrghcrs}
+  \glyph{uni0493}{1000}
+\endresetglyph
+
+\resetglyph{cyrdje}
+  \glyph{afii10099}{1000}
+\endresetglyph
+
+\resetglyph{cyrtshe}
+  \glyph{afii10108}{1000}
+\endresetglyph
+
+\resetglyph{cyrshha}
+  \glyph{uni04BB}{1000}
+\endresetglyph
+
+\resetglyph{cyrzhdsc}
+  \glyph{uni0497}{1000}
+\endresetglyph
+
+\resetglyph{cyrzdsc}
+  \glyph{uni0499}{1000}
+\endresetglyph
+
+\resetglyph{cyrlje}
+  \glyph{afii10106}{1000}
+\endresetglyph
+
+\resetglyph{cyryi}
+  \glyph{afii10104}{1000}
+\endresetglyph
+
+\resetglyph{cyrkdsc}
+  \glyph{uni049B}{1000}
+\endresetglyph
+
+\resetglyph{cyrldsc}
+  \glyph{uni04C6}{1000}
+\endresetglyph
+
+\resetglyph{cyrkbeak}
+  \glyph{uni04A1}{1000}
+\endresetglyph
+
+\resetglyph{cyrkvcrs}
+  \glyph{uni049D}{1000}
+\endresetglyph
+
+\resetglyph{cyrae}
+  \glyph{uni04D5}{1000}
+\endresetglyph
+
+\resetglyph{cyrndsc}
+  \glyph{uni04A3}{1000}
+\endresetglyph
+
+\resetglyph{cyrng}
+  \glyph{uni04A5}{1000}
+\endresetglyph
+
+\resetglyph{cyrdze}
+  \glyph{afii10102}{1000}
+\endresetglyph
+
+\resetglyph{cyrotld}
+  \glyph{uni04E9}{1000}
+\endresetglyph
+
+\resetglyph{cyrsdsc}
+  \glyph{uni04AB}{1000}
+\endresetglyph
+
+\resetglyph{cyrushrt}
+  \glyph{afii10110}{1000}
+\endresetglyph
+
+\resetglyph{cyry}
+  \glyph{uni04AF}{1000}
+\endresetglyph
+
+\resetglyph{cyryhcrs}
+  \glyph{uni04B1}{1000}
+\endresetglyph
+
+\resetglyph{cyrhdsc}
+  \glyph{uni04B3}{1000}
+\endresetglyph
+
+\resetglyph{cyrdzhe}
+  \glyph{afii10193}{1000}
+\endresetglyph
+
+\resetglyph{cyrchvcrs}
+  \glyph{uni04B9}{1000}
+\endresetglyph
+
+\resetglyph{cyrchrdsc}
+  \glyph{uni04B7}{1000}
+\endresetglyph
+
+\resetglyph{cyrie}
+  \glyph{afii10101}{1000}
+\endresetglyph
+
+\resetglyph{cyrschwa}
+  \glyph{uni04D9}{1000}
+\endresetglyph
+
+\resetglyph{cyrnje}
+  \glyph{afii10107}{1000}
+\endresetglyph
+
+\resetglyph{cyryo}
+  \glyph{afii10071}{1000}
+\endresetglyph
+
+\resetglyph{CYRA}
+  \glyph{afii10017}{1000}
+\endresetglyph
+
+\resetglyph{CYRB}
+  \glyph{afii10018}{1000}
+\endresetglyph
+
+\resetglyph{CYRV}
+  \glyph{afii10019}{1000}
+\endresetglyph
+
+\resetglyph{CYRG}
+  \glyph{afii10020}{1000}
+\endresetglyph
+
+\resetglyph{CYRD}
+  \glyph{afii10021}{1000}
+\endresetglyph
+
+\resetglyph{CYRE}
+  \glyph{afii10022}{1000}
+\endresetglyph
+
+\resetglyph{CYRZH}
+  \glyph{afii10024}{1000}
+\endresetglyph
+
+\resetglyph{CYRZ}
+  \glyph{afii10025}{1000}
+\endresetglyph
+
+\resetglyph{CYRI}
+  \glyph{afii10026}{1000}
+\endresetglyph
+
+\resetglyph{CYRISHRT}
+  \glyph{afii10027}{1000}
+\endresetglyph
+
+\resetglyph{CYRK}
+  \glyph{afii10028}{1000}
+\endresetglyph
+
+\resetglyph{CYRL}
+  \glyph{afii10029}{1000}
+\endresetglyph
+
+\resetglyph{CYRM}
+  \glyph{afii10030}{1000}
+\endresetglyph
+
+\resetglyph{CYRN}
+  \glyph{afii10031}{1000}
+\endresetglyph
+
+\resetglyph{CYRO}
+  \glyph{afii10032}{1000}
+\endresetglyph
+
+\resetglyph{CYRP}
+  \glyph{afii10033}{1000}
+\endresetglyph
+
+\resetglyph{CYRR}
+  \glyph{afii10034}{1000}
+\endresetglyph
+
+\resetglyph{CYRS}
+  \glyph{afii10035}{1000}
+\endresetglyph
+
+\resetglyph{CYRT}
+  \glyph{afii10036}{1000}
+\endresetglyph
+
+\resetglyph{CYRU}
+  \glyph{afii10037}{1000}
+\endresetglyph
+
+\resetglyph{CYRF}
+  \glyph{afii10038}{1000}
+\endresetglyph
+
+\resetglyph{CYRH}
+  \glyph{afii10039}{1000}
+\endresetglyph
+
+\resetglyph{CYRC}
+  \glyph{afii10040}{1000}
+\endresetglyph
+
+\resetglyph{CYRCH}
+  \glyph{afii10041}{1000}
+\endresetglyph
+
+\resetglyph{CYRSH}
+  \glyph{afii10042}{1000}
+\endresetglyph
+
+\resetglyph{CYRSHCH}
+  \glyph{afii10043}{1000}
+\endresetglyph
+
+\resetglyph{CYRHRDSN}
+  \glyph{afii10044}{1000}
+\endresetglyph
+
+\resetglyph{CYRERY}
+  \glyph{afii10045}{1000}
+\endresetglyph
+
+\resetglyph{CYRSFTSN}
+  \glyph{afii10046}{1000}
+\endresetglyph
+
+\resetglyph{CYREREV}
+  \glyph{afii10047}{1000}
+\endresetglyph
+
+\resetglyph{CYRYU}
+  \glyph{afii10048}{1000}
+\endresetglyph
+
+\resetglyph{CYRYA}
+  \glyph{afii10049}{1000}
+\endresetglyph
+
+\resetglyph{cyra}
+  \glyph{afii10065}{1000}
+\endresetglyph
+
+\resetglyph{cyrb}
+  \glyph{afii10066}{1000}
+\endresetglyph
+
+\resetglyph{cyrv}
+  \glyph{afii10067}{1000}
+\endresetglyph
+
+\resetglyph{cyrg}
+  \glyph{afii10068}{1000}
+\endresetglyph
+
+\resetglyph{cyrd}
+  \glyph{afii10069}{1000}
+\endresetglyph
+
+\resetglyph{cyre}
+  \glyph{afii10070}{1000}
+\endresetglyph
+
+\resetglyph{cyrzh}
+  \glyph{afii10072}{1000}
+\endresetglyph
+
+\resetglyph{cyrz}
+  \glyph{afii10073}{1000}
+\endresetglyph
+
+\resetglyph{cyri}
+  \glyph{afii10074}{1000}
+\endresetglyph
+
+\resetglyph{cyrishrt}
+  \glyph{afii10075}{1000}
+\endresetglyph
+
+\resetglyph{cyrk}
+  \glyph{afii10076}{1000}
+\endresetglyph
+
+\resetglyph{cyrl}
+  \glyph{afii10077}{1000}
+\endresetglyph
+
+\resetglyph{cyrm}
+  \glyph{afii10078}{1000}
+\endresetglyph
+
+\resetglyph{cyrn}
+  \glyph{afii10079}{1000}
+\endresetglyph
+
+\resetglyph{cyro}
+  \glyph{afii10080}{1000}
+\endresetglyph
+
+\resetglyph{cyrp}
+  \glyph{afii10081}{1000}
+\endresetglyph
+
+\resetglyph{cyrr}
+  \glyph{afii10082}{1000}
+\endresetglyph
+
+\resetglyph{cyrs}
+  \glyph{afii10083}{1000}
+\endresetglyph
+
+\resetglyph{cyrt}
+  \glyph{afii10084}{1000}
+\endresetglyph
+
+\resetglyph{cyru}
+  \glyph{afii10085}{1000}
+\endresetglyph
+
+\resetglyph{cyrf}
+  \glyph{afii10086}{1000}
+\endresetglyph
+
+\resetglyph{cyrh}
+  \glyph{afii10087}{1000}
+\endresetglyph
+
+\resetglyph{cyrc}
+  \glyph{afii10088}{1000}
+\endresetglyph
+
+\resetglyph{cyrch}
+  \glyph{afii10089}{1000}
+\endresetglyph
+
+\resetglyph{cyrsh}
+  \glyph{afii10090}{1000}
+\endresetglyph
+
+\resetglyph{cyrshch}
+  \glyph{afii10091}{1000}
+\endresetglyph
+
+\resetglyph{cyrhrdsn}
+  \glyph{afii10092}{1000}
+\endresetglyph
+
+\resetglyph{cyrery}
+  \glyph{afii10093}{1000}
+\endresetglyph
+
+\resetglyph{cyrsftsn}
+  \glyph{afii10094}{1000}
+\endresetglyph
+
+\resetglyph{cyrerev}
+  \glyph{afii10095}{1000}
+\endresetglyph
+
+\resetglyph{cyryu}
+  \glyph{afii10096}{1000}
+\endresetglyph
+
+\resetglyph{cyrya}
+  \glyph{afii10097}{1000}
+\endresetglyph
+
+\resetglyph{CYRGDSC}
+  \glyph{uni04F6}{1000}
+\endresetglyph
+
+\resetglyph{CYRGHK}
+  \glyph{uni0494}{1000}
+\endresetglyph
+
+\resetglyph{CYRABHDZE}
+  \glyph{uni04E0}{1000}
+\endresetglyph
+
+\resetglyph{CYRKHK}
+  \glyph{uni04C3}{1000}
+\endresetglyph
+
+\resetglyph{CYRLHK}
+  \glyph{uni0512}{1000}
+\endresetglyph
+
+\resetglyph{CYRNHK}
+  \glyph{uni04C7}{1000}
+\endresetglyph
+
+\resetglyph{CYRHHCRS}
+  \glyph{uni04FE}{1000}
+\endresetglyph
+
+\resetglyph{CYRHHK}
+  \glyph{uni04FC}{1000}
+\endresetglyph
+
+\resetglyph{CYRCHLDSC}
+  \glyph{uni04CB}{1000}
+\endresetglyph
+
+\resetglyph{CYREPS}
+  \glyph{uni0510}{1000}
+\endresetglyph
+
+\resetglyph{cyrgdsc}
+  \glyph{uni04F7}{1000}
+\endresetglyph
+
+\resetglyph{cyrghk}
+  \glyph{uni0495}{1000}
+\endresetglyph
+
+\resetglyph{cyrabhdze}
+  \glyph{uni04E1}{1000}
+\endresetglyph
+
+\resetglyph{cyrkhk}
+  \glyph{uni04C4}{1000}
+\endresetglyph
+
+\resetglyph{cyrlhk}
+  \glyph{uni0513}{1000}
+\endresetglyph
+
+\resetglyph{cyrnhk}
+  \glyph{uni04C8}{1000}
+\endresetglyph
+
+\resetglyph{cyrhhcrs}
+  \glyph{uni04FF}{1000}
+\endresetglyph
+
+\resetglyph{cyrhhk}
+  \glyph{uni04FD}{1000}
+\endresetglyph
+
+\resetglyph{cyrchldsc}
+  \glyph{uni04CC}{1000}
+\endresetglyph
+
+\resetglyph{cyreps}
+  \glyph{uni0511}{1000}
+\endresetglyph
+
+\resetglyph{CYRPHK}
+  \glyph{uni04A6}{1000}
+\endresetglyph
+
+\resetglyph{CYRTETSE}
+  \glyph{uni04B4}{1000}
+\endresetglyph
+
+\resetglyph{CYRTDSC}
+  \glyph{uni04AC}{1000}
+\endresetglyph
+
+\resetglyph{CYRRTICK}
+  \glyph{uni048E}{1000}
+\endresetglyph
+
+\resetglyph{CYRMDSC}
+  \glyph{uni04CD}{1000}
+\endresetglyph
+
+\resetglyph{CYRKHCRS}
+  \glyph{uni049E}{1000}
+\endresetglyph
+
+\resetglyph{CYRABHCH}
+  \glyph{uni04BC}{1000}
+\endresetglyph
+
+\resetglyph{CYRABHCHDSC}
+  \glyph{uni04BE}{1000}
+\endresetglyph
+
+\resetglyph{CYRSEMISFTSN}
+  \glyph{uni048C}{1000}
+\endresetglyph
+
+\resetglyph{CYRISHRTDSC}
+  \glyph{uni048A}{1000}
+\endresetglyph
+
+\resetglyph{CYRABHHA}
+  \glyph{uni04A8}{1000}
+\endresetglyph
+
+\resetglyph{cyrphk}
+  \glyph{uni04A7}{1000}
+\endresetglyph
+
+\resetglyph{cyrtetse}
+  \glyph{uni04B5}{1000}
+\endresetglyph
+
+\resetglyph{cyrtdsc}
+  \glyph{uni04AD}{1000}
+\endresetglyph
+
+\resetglyph{cyrrtick}
+  \glyph{uni048F}{1000}
+\endresetglyph
+
+\resetglyph{cyrmdsc}
+  \glyph{uni04CE}{1000}
+\endresetglyph
+
+\resetglyph{cyrkhcrs}
+  \glyph{uni049F}{1000}
+\endresetglyph
+
+\resetglyph{cyrabhch}
+  \glyph{uni04BD}{1000}
+\endresetglyph
+
+\resetglyph{cyrabhchdsc}
+  \glyph{uni04BF}{1000}
+\endresetglyph
+
+\resetglyph{cyrsemisftsn}
+  \glyph{uni048D}{1000}
+\endresetglyph
+
+\resetglyph{cyrishrtdsc}
+  \glyph{uni048B}{1000}
+\endresetglyph
+
+\resetglyph{cyrabhha}
+  \glyph{uni04A9}{1000}
+\endresetglyph
+
+\resetglyph{CYRII}
+  \glyph{afii10055}{1000}
+\endresetglyph
+
+\resetglyph{CYRJE}
+  \glyph{afii10057}{1000}
+\endresetglyph
+
+\resetglyph{CYRYAT}
+  \glyph{uni0462}{1000}
+\endresetglyph
+
+\resetglyph{CYRBYUS}
+  \glyph{uni046A}{1000}
+\endresetglyph
+
+\resetglyph{CYRIZH}
+  \glyph{uni0474}{1000}
+\endresetglyph
+
+\resetglyph{cyrii}
+  \glyph{afii10103}{1000}
+\endresetglyph
+
+\resetglyph{cyrje}
+  \glyph{afii10105}{1000}
+\endresetglyph
+
+\resetglyph{cyryat}
+  \glyph{uni0463}{1000}
+\endresetglyph
+
+\resetglyph{cyrbyus}
+  \glyph{uni046B}{1000}
+\endresetglyph
+
+\resetglyph{cyrizh}
+  \glyph{uni0475}{1000}
+\endresetglyph
+
+\endmetrics

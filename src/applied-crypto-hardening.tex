@@ -67,6 +67,9 @@
 \definecolor{orange}{RGB}{251,111,16}
 \definecolor{red}{RGB}{247,56,0}
 \definecolor{blue}{RGB}{0,28,128}
+\definecolor{lightgreen}{RGB}{187,218,216}
+\definecolor{intersectgreen}{RGB}{103,133,155}
+\definecolor{darkblue}{RGB}{76,87,117}
 
 \bibliographystyle{alphalink}
 
@@ -74,6 +77,17 @@
 \definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
 \definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
 \definecolor{lightlightgray}{gray}{0.9}
+
+% makes default font sans-serif
+ \renewcommand{\familydefault}{\sfdefault}
+
+% make font Open Sans
+% \usepackage{opensans}
+\usepackage[defaultsans]{opensans}
+
+% changes font encoding to T1
+% \usepackage[T1]{fontenc}
+% \usepackage{textcomp}
 
 \lstset{
 %language=Bash,                             % Code langugage
@@ -143,7 +157,7 @@ morekeywords={__global__, __device__},  %
 \usepackage{lettrine}
 \newcommand{\initial}[1]{%
      \lettrine[lines=3,lhang=0.3,nindent=0em]{
-     				\color{DarkGoldenrod}
+     				\color{darkblue}
      				{\textsf{#1}}}{}}
 
 
@@ -151,18 +165,20 @@ morekeywords={__global__, __device__},  %
 %%% Title, author and date metadata
 \usepackage{titling}															% For custom titles
 
-\newcommand{\HorRule}{\color{DarkGoldenrod}%			% Creating a horizontal rule
+\newcommand{\HorRule}{\color{darkblue}%			% Creating a horizontal rule
 									  	\rule{\linewidth}{1pt}%
 									}
+% \usefont{OT1}{phv}{b}{n}
+% \usefont{OT1}{phv}{b}{sl}
 
 \pretitle{\vspace{-30pt} \begin{flushleft} \HorRule 
-				\fontsize{36}{36} \usefont{OT1}{phv}{b}{n} \color{DarkRed} \selectfont 
+				\fontsize{36}{36}  \color{darkblue} \selectfont 
 				}
 			\title{Applied Crypto Hardening}% \\ \vskip 0.5em \large www.bettercrypto.org}
 \posttitle{\par\end{flushleft}\vskip 0.5em}
 
 \preauthor{\begin{flushleft}
-					\large \lineskip 0.5em \usefont{OT1}{phv}{b}{sl} \color{DarkRed}}
+					\large \lineskip 0.5em  \color{intersectgreen}}
 
 					\author{Wolfgang Breyha, David Durvaux, Tobias Dussa, L. Aaron
 					Kaplan, Christian Mock, Manuel Koschuch, Adi
