@@ -2,7 +2,7 @@
 
 This section documents the most common mail (SMTP) and IMAPs/POPs servers. Another option to secure IMAPs/POPs servers is to place them behind an stunnel server. 
 
-\subsubsection{Dovecot}
+\subsection{Dovecot}
 
 
 \subsubsection{Tested with Version} Dovecot 2.2
@@ -43,7 +43,7 @@ parameters greater than 1024bit are not supported. The most recent version
 
 %% ---------------------------------------------------------------------- 
 
-\subsubsection{cyrus-imapd (based on 2.4.17)}
+\subsection{cyrus-imapd (based on 2.4.17)}
 
 \subsubsection{Tested with Version} \todo{FIXME: add}
 
@@ -115,7 +115,7 @@ There is a working patch for all three features:
 
 %% ---------------------------------------------------------------------- 
 
-\subsubsection{SMTP in general}
+\subsection{SMTP in general}
 \label{subsection:smtp_general}
 
 SMTP usually makes use of opportunistic TLS. This means that an MTA will accept TLS connections when asked for it during handshake but will not require it. One should always support incoming opportunistic TLS and always try TLS handshake outgoing.\\
@@ -159,16 +159,10 @@ mode, because the alternative is plain text transmission.
 
 %% ---------------------------------------------------------------------- 
 
-\subsubsection{Postfix}
+\subsection{Postfix}
 
-\begin{description}
-\item[Tested with Version:] \mbox{}
-
-\begin{itemize}
-\item Postfix 2.9.6 (Debian Wheezy)
-\end{itemize}
-
-\item[Settings:] \mbox{}
+\subsubsection{Tested with Version} Postfix 2.9.6 (Debian Wheezy)
+\subsubsection{Settings}
 
 %% I (cm) consider the generation of own DH parameters to be voodoo until
 %% someone can explain the contrary. They are, after all, public, and
@@ -244,7 +238,7 @@ For those users who want to use ECC key exchange, it is possible to specify this
   smtpd_tls_eecdh_grade = ultra
 \end{lstlisting}
 
-\item[Limitations:] \mbox{}
+\subsubsection{Limitations}
 
 tls\_ssl\_options is supported from Postfix 2.11 onwards. You can
 leave the statement in the configuration for older versions, it will
@@ -253,12 +247,12 @@ be ignored.
 tls\_preempt\_cipherlist is supported from Postfix 2.8 onwards. Again,
 you can leave the statement in for older versions.
 
-\item[References:]
+\subsubsection{References}
 
 Refer to \url{http://www.postfix.org/TLS_README.html} for an in-depth
 discussion.
 
-\item[Additional settings:]
+\subsubsection{Additional settings}
 
 Postfix has two sets of built-in DH parameters that can be overridden
 with the \verb|smtpd_tls_dh512_param_file|
@@ -274,7 +268,8 @@ interoperability risk, but we have not tested this yet.
 % \item[Justification for special settings (if needed):]
 % no special settings
 
-\item[How to test:]
+
+\subsubsection{How to test}
 
 You can check the effect of the settings with the following command:
 \begin{lstlisting}[breaklines]
@@ -286,17 +281,14 @@ $ zegrep "TLS connection established from.*with cipher" | /var/log/mail.log | aw
     335 TLSv1 with cipher DHE-RSA-AES256-SHA
 \end{lstlisting}
 
-\end{description}
-
+\subsubsection{References} \todo{FIXME}
 
 %% ---------------------------------------------------------------------- 
 
-\subsubsection{Exim (based on 4.82)}
+\subsection{Exim (based on 4.82)}
 
 It is highly recommended to read
-
 \url{http://exim.org/exim-html-current/doc/html/spec_html/ch-encrypted_smtp_connections_using_tlsssl.html}
-
 first.
 
 \paragraph*{MSA mode (submission)}\mbox{}\\
@@ -451,7 +443,7 @@ There already is a working patch to provide support:\\
 %\subsubsection{starttls?}
 
 %% ----------------------------------------------------------------------
-\subsubsection{Exchange}
+\subsection{Exchange}
 
 \todo{FIXME: write this section}
 
