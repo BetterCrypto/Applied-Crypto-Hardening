@@ -1,10 +1,9 @@
+%%---------------------------------------------------------------------- 
 \subsection{OpenSSH}
 
+\subsubsection{Tested with Version} OpenSSH 6.1
 
-\begin{description}
-\item[Tested with Version:] OpenSSH 6.1
-
-\item[Settings:] \mbox{}
+\subsubsection{Settings}
 
 
 \paragraph*{sshd_config}
@@ -33,28 +32,36 @@ below current standards (see section \ref{section:keylengths}). Legacy systems
 can use this configuration and simply omit unsupported ciphers, key exchange
 algorithms and MACs.  
 
-\item[Additional settings:] \mbox{}
+
+\vskip 1.0em
+\subsubsection{Additional settings}
+
 
 Note that the setting \texttt{ServerKeyBits 4096}  has no effect until you re-generate new ssh host keys. There might be issues if you have users which rely on the fingerprint of the old ssh host key being stored in their clients' \texttt{.ssh/known\_hosts} file.
 
-\item[References:]
+\subsubsection{Justification for special settings (if needed)}
+
+\subsubsection{References}
+
+
 The openssh sshd\_config  man page is the best reference: \url{http://www.openssh.org/cgi-bin/man.cgi?query=sshd_config}
 
 
-\item[How to test:]
+\subsubsection{How to test}
 Connect a client with verbose logging enabled to the SSH server \\
 \begin{lstlisting}[breaklines]
 $ ssh -vvv myserver.com
 \end{lstlisting}and observe the key exchange in the output.
-\end{description}
 
+
+%%---------------------------------------------------------------------- 
 \subsection{Cisco ASA}
 
 
-\begin{description}
-\item[Tested with Version:]9.1(3) 
+\subsubsection{Tested with Version} 9.1(3)
 
-\item[Settings:] \mbox{}
+\subsubsection{Settings}
+
 \begin{lstlisting}[breaklines]
 crypto key generate rsa modulus 2048
 ssh version 2
@@ -63,25 +70,25 @@ line vty 0 4
  transport input ssh
 \end{lstlisting}
 Note: When the ASA is configured for SSH, by default both SSH versions 1 and 2 are allowed. In addition to that, only a group1 DH-key-exchange is used. This should be changed to allow only SSH version 2 and to use a key-exchnage with group14. The generated RSA key should be 2048 bit (the actual supported maximum). A non-cryptographic best practice is to reconfigure the lines to only allow SSH-logins.
-\item[References:]
+
+\subsubsection{References}
 \url{http://www.cisco.com/en/US/docs/security/asa/asa91/configuration/general/admin\_management.html }
 
+\subsubsection{How to test}
 
-\item[How to test:]
 Connect a client with verbose logging enabled to the SSH server \\
 \begin{lstlisting}[breaklines]
 $ ssh -vvv myserver.com
 \end{lstlisting}and observe the key exchange in the output.
-\end{description}
 
 
+%---------------------------------------------------------------------- 
 \subsection{Cisco IOS}
 
+\subsubsection{Tested with Version} 15.0, 15.1, 15.2
 
-\begin{description}
-\item[Tested with Version:] 15.0, 15.1, 15.2
+\subsubsection{Settings}
 
-\item[Settings:] \mbox{}
 \begin{lstlisting}[breaklines]
 crypto key generate rsa modulus 2048 label SSH-KEYS
 ip ssh rsa keypair-name SSH-KEYS
@@ -91,14 +98,13 @@ ip ssh dh min size 2048
 Note: Same as with the ASA, also on IOS by default both SSH versions 1 and 2 are allowed and the DH-key-exchange only use a DH-group of 768 Bit.
 In IOS, a dedicated Key-pair can be bound to SSH to reduce the usage of individual keys-pairs.
 
-\item[References:]
-http://www.cisco.com/en/US/docs/ios/sec\_user\_services/configuration/guide/sec\_secure\_shell\_v2.html 
+\subsubsection{References}
+\url{http://www.cisco.com/en/US/docs/ios/sec\_user\_services/configuration/guide/sec\_secure\_shell\_v2.html }
 
 % add any further references or best practice documents here
 
-\item[How to test:]
+\subsubsection{How to test}
 Connect a client with verbose logging enabled to the SSH server \\
 \begin{lstlisting}[breaklines]
 $ ssh -vvv myserver.com
 \end{lstlisting}and observe the key exchange in the output.
-\end{description}
