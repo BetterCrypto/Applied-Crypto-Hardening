@@ -27,7 +27,7 @@ Note again, that any cipher suite starting with ECDHE can be omitted, if in doub
 
 \subsubsection{Additional settings}
 
-You should redirect everything to httpS:// if possible. In Apache you can do this with the following setting inside of a VirtualHost environment:
+You might want to redirect everything to httpS:// if possible. In Apache you can do this with the following setting inside of a VirtualHost environment:
 
 \begin{lstlisting}[breaklines]
   <VirtualHost *:80>
@@ -81,7 +81,7 @@ See section \ref{section:Tools}
 
 \subsubsection{Additional settings}
 
-As for any other webserver, you should automatically redirect http traffic toward httpS://
+As for any other webserver, you might want to automatically redirect http traffic toward httpS://
 
 \begin{lstlisting}[breaklines]
   $HTTP["scheme"] == "http" {
@@ -145,7 +145,7 @@ If you decide to trust NIST's ECC curve recommendation, you can add the followin
   ssl_ecdh_curve          secp384r1;
 \end{lstlisting}
 
-You should redirect everything to httpS:// if possible. In Nginx you can do this with the following setting:
+You might want to redirect everything to httpS:// if possible. In Nginx you can do this with the following setting:
 
 \begin{lstlisting}[breaklines]
   rewrite     ^(.*)   https://$host$1 permanent;
