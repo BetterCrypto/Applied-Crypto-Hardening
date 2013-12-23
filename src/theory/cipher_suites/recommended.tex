@@ -61,7 +61,7 @@ This results in the OpenSSL string:
 \end{center}
 
 
-\textbf{Compatibility}
+\paragraph*{Compatibility:}
 
 Only clients which support TLS 1.2 are covered by these cipher suites (Chrome 30,
 Win 7 and Win 8.1 crypto stack, Opera 17, OpenSSL $\ge$ 1.0.1e, Safari 6 / iOS
@@ -85,9 +85,6 @@ We arrived at this set of cipher suites by selecting:
 \begin{itemize}
 \item TLS 1.2, TLS 1.1, TLS 1.0
 \item allowing SHA-1 (see the comments on SHA-1 in section \ref{section:SHA})
-
-% \todo{AK: Note that SHA1 is considered broken but if we are in DHE, we might get around it as long as you can not calculate a SHA1 collision ``live'' on the wire}
-% FIXED: see section "SHA-1"
 
 \end{itemize}
 
@@ -125,7 +122,7 @@ This results in the OpenSSL string:
 \end{tabular}
 \end{center}
 
-\textbf{Compatibility}
+\paragraph*{Compatibility: }
 
 Note that these cipher suites will not work with Windows XP's crypto stack (e.g. IE, Outlook), 
 %%Java 6, Java 7 and Android 2.3. Java 7 could be made compatible by installing the "Java 
@@ -135,7 +132,7 @@ We could not verify yet if installing JCE also fixes the Java 7
 DH-parameter length limitation (1024 bit). 
 \todo{do that!}
 
-\textbf{Explanation}
+\paragraph*{Explanation: }
 
 For a detailed explanation of the cipher suites chosen, please see
 \ref{section:ChoosingYourOwnCipherSuites}. In short, finding the perfect cipher
