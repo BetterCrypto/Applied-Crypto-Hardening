@@ -5,12 +5,21 @@
 
 \epigraph{``The generation of random numbers is too important to be left to chance.''}{-- Robert R. Coveyou}
 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{img/random_number.png}
+  \caption{xkcd, source: \url{http://imgs.xkcd.com/comics/random_number.png}, license: CC-BY-NC}
+  \label{fig:dilbertRNG}
+\end{figure}
+
+
+
 A good source of random numbers is essential for many crypto
 operations. The key feature of a good random number generator is the
 non-predictability of the generated numbers. This means that hardware
 support for generating entropy is essential.
 
-\todo{Other architectures, BSD, Windows?}
 
 Hardware random number generators in operating systems or standalone
 components collect entropy from various random events mostly by using
@@ -50,6 +59,8 @@ time when entropy is low keeps this low-entropy situation for hours
 leading to predictable session keys\cite{HDWH12}.
 
 \subsection{Linux}
+
+\todo{Other architectures, BSD, Windows?}
 
 On Linux there are two devices that return random bytes when read, the
 \verb+/dev/random+ can block until sufficient entropy has been collected
