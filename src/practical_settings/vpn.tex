@@ -1,11 +1,13 @@
 %%\subsection{VPNs}
-\subsubsection{IPSec}
+
+% ---------------------------------------------------------------------- 
+\subsection{IPSec}
 \label{section:IPSECgeneral}
 
 % ciphersuites current 2013-12-09
-\begin{description}
+%\begin{description}
 
-\item[Settings:] \mbox{}
+\subsubsection{Settings}
 
 \paragraph*{Assumptions}\mbox{}\\
 
@@ -139,14 +141,15 @@ parameters are shown in table \ref{tab:IPSEC_ph2_params}.
   \label{tab:IPSEC_ph2_params}
 \end{table}
 
-\item[References:] \mbox{}
+\subsubsection{References}
+
 
 ``A Cryptographic Evaluation of IPsec'', Niels Ferguson and Bruce
   Schneier: \url{https://www.schneier.com/paper-ipsec.pdf}
 
-\end{description}
 
-\subsubsection{Check Point FireWall-1}
+%---------------------------------------------------------------------- 
+\subsection{Check Point FireWall-1}
    
 \begin{description}
 \item[Tested with Version:] \mbox{}
@@ -234,7 +237,8 @@ Please note that these settings restrict the available algorithms for
 
 
 %% cipherstrings current 2013-12-09
-\subsubsection{OpenVPN}
+% ---------------------------------------------------------------------- 
+\subsection{OpenVPN}
 
 \begin{description}
 
@@ -363,7 +367,8 @@ Which cipher suite is actually used can be seen in the logs:
 \end{description}
 
 
-\subsubsection{PPTP}
+% ---------------------------------------------------------------------- 
+\subsection{PPTP}
 
 PPTP is considered insecure, Microsoft recommends to ``use a more secure VPN
 tunnel''\footnote{\url{http://technet.microsoft.com/en-us/security/advisory/2743314}}.
@@ -373,7 +378,8 @@ authentication protocol for the price of USD~200\footnote{\url{https://www.cloud
 and given the resulting MD4 hash, all PPTP traffic for a user can
 be decrypted.
 
-\subsubsection{Cisco ASA}
+% ---------------------------------------------------------------------- 
+\subsection{Cisco ASA}
 The following settings reflect our recommendations as best as possible on the Cisco ASA platform. These are - of course - just settings regarding SSL/TLS (i.e. Cisco AnyConnect) and IPSec. For further security settings regarding this platform the appropriate Cisco guides should be followed.
 \begin{description}
 \item[Tested with Version:] 
@@ -470,111 +476,22 @@ Legacy ASA models (e.g. 5505, 5510, 5520, 5540, 5550) do not offer the possibili
 
 
 
-%%\subsubsection{Juniper VPN}
+% ---------------------------------------------------------------------- 
+%%\subsection{Juniper VPN}
 %%\todo{write this subsubsection. AK: ask Hannes}
 
 
-%%\begin{description}
-%%\item[Tested with Version:] \todo{version?}
-
-%%\item[Settings:] \mbox{}
-
-%%\begin{lstlisting}[breaklines]
-%%    %Here goes your setting string
-%%\end{lstlisting}
-
-%%\item[Additional settings:] \mbox{}
-
-%Here you can add additional settings
-
-%%\begin{lstlisting}[breaklines]
-%%    %copy \& paste additional settings
-%%\end{lstlisting}
-
-%%\item[Justification for special settings (if needed):] \mbox{}
-
-% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
-
-%%\item[References:] \todo{add references}
-
-% add any further references or best practice documents here
-
-%%\item[How to test:]
-% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
-
-%%\end{description}
 
 
-
-\subsubsection{L2TP over IPSec}
+% ---------------------------------------------------------------------- 
+\subsection{L2TP over IPSec}
 \todo{write this subsubsection}
 
 
-\begin{description}
-\item[Tested with Version:] \todo{version?}
-
-\item[Settings:] \mbox{}
-
-\begin{lstlisting}[breaklines]
-    %Here goes your setting string
-\end{lstlisting}
-
-\item[Additional settings:] \mbox{}
-
-%Here you can add additional settings
-
-\begin{lstlisting}[breaklines]
-    %copy \& paste additional settings
-\end{lstlisting}
-
-\item[Justification for special settings (if needed):] \mbox{}
-
-% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
-
-\item[References:] \todo{add references}
-
-% add any further references or best practice documents here
-
-\item[How to test:]
-% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
-
-\end{description}
 
 
-
-
-
-
-\subsubsection{Racoon}
+% ---------------------------------------------------------------------- 
+\subsection{Racoon}
 \todo{write this subsubsection}
 
 
-\begin{description}
-\item[Tested with Version:] \todo{version?}
-
-\item[Settings:] \mbox{}
-
-\begin{lstlisting}[breaklines]
-    %Here goes your setting string
-\end{lstlisting}
-
-\item[Additional settings:] \mbox{}
-
-%Here you can add additional settings
-
-\begin{lstlisting}[breaklines]
-    %copy \& paste additional settings
-\end{lstlisting}
-
-\item[Justification for special settings (if needed):] \mbox{}
-
-% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
-
-\item[References:] \todo{add references}
-
-% add any further references or best practice documents here
-
-\item[How to test:]
-% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
-
-\end{description}
