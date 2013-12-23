@@ -49,7 +49,6 @@
 
 
 
-
 \usepackage{gitinfo}
 
 % custom changes:
@@ -92,6 +91,14 @@
 \definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
 \definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
 \definecolor{lightlightgray}{gray}{0.9}
+
+\usepackage{titlesec}
+%\allsectionsfont{\color{darkblue}\itshape\underline}
+%\sectionfont{\color{darkblue}\itshape\selectfont}
+%\subsectionfont{\color{darkblue}\itshape\selectfont}
+\renewcommand*\sectfont{\sffamily\color{darkblue}\mdseries}
+%\renewcommand*\sectfont{\rmfamily\mdseries\itshape}
+
 
 % makes default font sans-serif
  \renewcommand{\familydefault}{\sfdefault}
@@ -219,7 +226,7 @@ morekeywords={__global__, __device__},  %
 \date{\today}
 
 % hyperref needs to be the last package you load.
-\usepackage[pdftex,breaklinks,colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[pdftex,breaklinks,colorlinks,linkcolor=darkblue,citecolor=blue,urlcolor=blue]{hyperref}
 
 
 %%% Begin document
