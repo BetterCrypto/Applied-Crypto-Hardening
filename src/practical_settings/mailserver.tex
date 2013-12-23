@@ -2,6 +2,53 @@
 
 This section documents the most common mail (SMTP) and IMAPs/POPs servers. Another option to secure IMAPs/POPs servers is to place them behind an stunnel server. 
 
+
+%% ---------------------------------------------------------------------- 
+
+\subsection{SMTP in general}
+\label{subsection:smtp_general}
+
+SMTP usually makes use of opportunistic TLS. This means that an MTA will accept TLS connections when asked for it during handshake but will not require it. One should always support incoming opportunistic TLS and always try TLS handshake outgoing.\\
+
+Furthermore a mailserver can operate in three modes:
+\begin{itemize}
+\item As MSA (Mail Submission Agent) your mailserver receives mail from your clients MUAs (Mail User Agent).
+\item As receiving MTA (Mail Transmission Agent, MX)
+\item As sending MTA (SMTP client)
+\end{itemize}
+\mbox{}\\
+We recommend the following basic setup for all modes:
+\begin{itemize}
+\item correctly setup MX, A and PTR RRs without using CNAMEs at all.
+\item enable encryption (opportunistic TLS)
+\item do not use self signed certificates
+\end{itemize}
+
+For SMTP client mode we additionally recommend:
+\begin{itemize}
+\item the hostname used as HELO must match the PTR RR
+\item setup a client certificate (most server certificates are client certificates as well)
+\item either the common name or at least an alternate subject name of your certificate must match the PTR RR
+\item do not modify the cipher suite for client mode
+\end{itemize}
+
+For MSA operation we recommend:
+\begin{itemize}
+\item listen on submission port 587
+\item enforce SMTP AUTH even for local networks
+\item do not allow SMTP AUTH on unencrypted connections
+\item optionally use the recommended cipher suites if (and only if) all your connecting MUAs support them
+\end{itemize}
+
+
+
+% Note that (with the exception of MSA mode), it might be better to allow any cipher suite -- since any encryption is better than no encryption when it comes to opportunistic TLS.
+
+We strongly recommend to allow all cipher suites for anything but MSA
+mode, because the alternative is plain text transmission.
+
+%% ---------------------------------------------------------------------- 
+
 \subsection{Dovecot}
 
 
@@ -37,8 +84,9 @@ parameters greater than 1024bit are not supported. The most recent version
 
 \subsubsection{How to test}
 % describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
-
-\todo{FIXME}
+\begin{lstlisting}[breaklines]
+ openssl s_client -crlf -connect SERVER.TLD:993
+\end{lstlisting}
 
 
 %% ---------------------------------------------------------------------- 
@@ -98,12 +146,10 @@ Currently there is no way to prefer server ciphers or to disable compression.\\
 There is a working patch for all three features:
 \url{https://bugzilla.cyrusimap.org/show_bug.cgi?id=3823}\\
 
-\subsubsection{References}
-\todo{FIXME}
-
 \subsubsection{How to test}
-\todo{FIXME}
-
+\begin{lstlisting}[breaklines]
+  openssl s_client -crlf -connect SERVER.TLD:993
+\end{lstlisting}
 
 
 
@@ -112,52 +158,6 @@ There is a working patch for all three features:
 % ciphers = EDH+CAMELLIA256:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:-AES128:!CAMELLIA128:!ECDSA:AES256-SHA:EDH+AES128;
 % options = CIPHER_SERVER_PREFERENCE
 % TIMEOUTclose = 1
-
-%% ---------------------------------------------------------------------- 
-
-\subsection{SMTP in general}
-\label{subsection:smtp_general}
-
-SMTP usually makes use of opportunistic TLS. This means that an MTA will accept TLS connections when asked for it during handshake but will not require it. One should always support incoming opportunistic TLS and always try TLS handshake outgoing.\\
-
-Furthermore a mailserver can operate in three modes:
-\begin{itemize}
-\item As MSA (Mail Submission Agent) your mailserver receives mail from your clients MUAs (Mail User Agent).
-\item As receiving MTA (Mail Transmission Agent, MX)
-\item As sending MTA (SMTP client)
-\end{itemize}
-\mbox{}\\
-We recommend the following basic setup for all modes:
-\begin{itemize}
-\item correctly setup MX, A and PTR RRs without using CNAMEs at all.
-\item enable encryption (opportunistic TLS)
-\item do not use self signed certificates
-\end{itemize}
-
-For SMTP client mode we additionally recommend:
-\begin{itemize}
-\item the hostname used as HELO must match the PTR RR
-\item setup a client certificate (most server certificates are client certificates as well)
-\item either the common name or at least an alternate subject name of your certificate must match the PTR RR
-\item do not modify the cipher suite for client mode
-\end{itemize}
-
-For MSA operation we recommend:
-\begin{itemize}
-\item listen on submission port 587
-\item enforce SMTP AUTH even for local networks
-\item do not allow SMTP AUTH on unencrypted connections
-\item optionally use the recommended cipher suites if (and only if) all your connecting MUAs support them
-\end{itemize}
-
-
-
-% Note that (with the exception of MSA mode), it might be better to allow any cipher suite -- since any encryption is better than no encryption when it comes to opportunistic TLS.
-
-We strongly recommend to allow all cipher suites for anything but MSA
-mode, because the alternative is plain text transmission.
-
-%% ---------------------------------------------------------------------- 
 
 \subsection{Postfix}
 
@@ -279,6 +279,10 @@ $ zegrep "TLS connection established from.*with cipher" | /var/log/mail.log | aw
      60 TLSv1 with cipher ECDHE-RSA-AES256-SHA
     270 TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384
     335 TLSv1 with cipher DHE-RSA-AES256-SHA
+\end{lstlisting}
+
+\begin{lstlisting}[breaklines]
+ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 \end{lstlisting}
 
 \subsubsection{References} \todo{FIXME}
@@ -438,9 +442,11 @@ Exim currently (4.82) does not support elliptic curves with OpenSSL. This means 
 There already is a working patch to provide support:\\
 \url{http://bugs.exim.org/show_bug.cgi?id=1397}
 
+\paragraph*{How to test}\mbox{}\\
+\begin{lstlisting}[breaklines]
+ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
+\end{lstlisting}
 
-% do we need to documment starttls in detail?
-%\subsubsection{starttls?}
 
 %% ----------------------------------------------------------------------
 \subsection{Exchange}
