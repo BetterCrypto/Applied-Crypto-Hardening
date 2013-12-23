@@ -2,114 +2,10 @@
 
 This section documents the most common mail (SMTP) and IMAPs/POPs servers. Another option to secure IMAPs/POPs servers is to place them behind an stunnel server. 
 
-\subsubsection{Dovecot}
-
-
-\begin{description}
-\item[Tested with Version:] Dovecot 2.2:
-
-\item[Settings:] \mbox{}
-% Example: http://dovecot.org/list/dovecot/2013-October/092999.html
-
-\begin{lstlisting}[breaklines]
-  ssl_cipher_list = '@@@CIPHERSTRINGB@@@'
-  ssl_prefer_server_ciphers = yes
-\end{lstlisting}
-
-\item[Additional info:] \mbox{}
-
-Dovecot 2.1: Almost as good as dovecot 2.2. Does not support
-ssl\_prefer\_server\_ciphers
-
-\item[Limitations:] \mbox{}
-
-Dovecot currently does not support disabling TLS compression. Furthermore, DH
-parameters greater than 1024bit are not supported. The most recent version
-2.2.7 of Dovecot implements configurable DH parameter length
-\footnote{\url{http://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0}}.
-
-%\item[Justification for special settings (if needed):] \mbox{}
-
-% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
-
-\item[References:] \url{http://wiki2.dovecot.org/SSL}
-
-% add any further references or best practice documents here
-
-\item[How to test:]
-% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
-
-\todo{FIXME}
-
-\end{description}
 
 %% ---------------------------------------------------------------------- 
 
-\subsubsection{cyrus-imapd (based on 2.4.17)}
-
-\paragraph*{imapd.conf}\mbox{}\\
-
-To activate SSL/TLS configure your certificate with
-\begin{lstlisting}[breaklines]
-  tls_cert_file: .../cert.pem
-  tls_key_file: .../cert.key
-\end{lstlisting}
-
-Do not forget to add necessary intermediate certificates to the .pem file.\\
-
-Limiting the ciphers provided may force (especially older) clients to connect without encryption at all! Sticking to the defaults is recommended.\\
-
-If you still want to force strong encryption use
-\begin{lstlisting}[breaklines]
-  tls_cipher_list: @@@CIPHERSTRINGB@@@
-\end{lstlisting}
-
-cyrus-imapd loads hardcoded 1024 bit DH parameters using get\_rfc2409\_prime\_1024() by default. If you want to load your own DH parameters add them PEM encoded to the certificate file given in tls\_cert\_file. Do not forget to re-add them after updating your certificate.\\
-
-To prevent unencrypted connections on the STARTTLS ports you can set
-\begin{lstlisting}[breaklines]
-  allowplaintext: 0
-\end{lstlisting}
-This way MUAs can only authenticate after STARTTLS if you only provide plaintext and SASL PLAIN login methods. Therefore providing CRAM-MD5 or DIGEST-MD5 methods is not recommended.\\
-
-\paragraph*{cyrus.conf}\mbox{}\\
-
-To support POP3/IMAP on ports 110/143 with STARTTLS add
-\begin{lstlisting}[breaklines]
-  imap         cmd="imapd" listen="imap" prefork=3
-  pop3         cmd="pop3d" listen="pop3" prefork=1
-\end{lstlisting}
-to the SERVICES section.\\
-
-To support POP3S/IMAPS on ports 995/993 add
-\begin{lstlisting}[breaklines]
-  imaps        cmd="imapd -s" listen="imaps" prefork=3
-  pop3s        cmd="pop3d -s" listen="pop3s" prefork=1
-\end{lstlisting}
-
-
-\paragraph*{Limitations}\mbox{}\\
-
-cyrus-imapd currently (2.4.17, trunk) does not support elliptic curve cryptography. Hence, ECDHE will not work even if defined in your cipher list.\\
-
-Currently there is no way to prefer server ciphers or to disable compression.\\
-
-There is a working patch for all three features:
-\url{https://bugzilla.cyrusimap.org/show_bug.cgi?id=3823}\\
-
-
-
-
-
-% XXX config von Adi?
-% sslVersion = TLSv1
-% ciphers = EDH+CAMELLIA256:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:-AES128:!CAMELLIA128:!ECDSA:AES256-SHA:EDH+AES128;
-% options = CIPHER_SERVER_PREFERENCE
-% TIMEOUTclose = 1
-
-%% ---------------------------------------------------------------------- 
-
-\subsubsection{SMTP in general}
+\subsection{SMTP in general}
 \label{subsection:smtp_general}
 
 SMTP usually makes use of opportunistic TLS. This means that an MTA will accept TLS connections when asked for it during handshake but will not require it. One should always support incoming opportunistic TLS and always try TLS handshake outgoing.\\
@@ -153,16 +49,120 @@ mode, because the alternative is plain text transmission.
 
 %% ---------------------------------------------------------------------- 
 
-\subsubsection{Postfix}
+\subsection{Dovecot}
 
-\begin{description}
-\item[Tested with Version:] \mbox{}
 
-\begin{itemize}
-\item Postfix 2.9.6 (Debian Wheezy)
-\end{itemize}
+\subsubsection{Tested with Version} Dovecot 2.2
 
-\item[Settings:] \mbox{}
+\subsubsection{Settings}
+% Example: http://dovecot.org/list/dovecot/2013-October/092999.html
+
+\begin{lstlisting}[breaklines]
+  ssl_cipher_list = '@@@CIPHERSTRINGB@@@'
+  ssl_prefer_server_ciphers = yes
+\end{lstlisting}
+
+\subsubsection{Additional info}
+
+Dovecot 2.1: Almost as good as dovecot 2.2. Does not support
+ssl\_prefer\_server\_ciphers
+
+\subsubsection{Limitations}
+
+Dovecot currently does not support disabling TLS compression. Furthermore, DH
+parameters greater than 1024bit are not supported. The most recent version
+2.2.7 of Dovecot implements configurable DH parameter length
+\footnote{\url{http://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0}}.
+
+%\item[Justification for special settings (if needed):] \mbox{}
+
+% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
+
+\subsubsection{References} \url{http://wiki2.dovecot.org/SSL}
+
+% add any further references or best practice documents here
+
+\subsubsection{How to test}
+% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
+\begin{lstlisting}[breaklines]
+ openssl s_client -crlf -connect SERVER.TLD:993
+\end{lstlisting}
+
+
+%% ---------------------------------------------------------------------- 
+
+\subsection{cyrus-imapd (based on 2.4.17)}
+
+\subsubsection{Tested with Version} \todo{FIXME: add}
+
+\subsubsection{Settings}
+\paragraph*{imapd.conf}\mbox{}\\
+
+To activate SSL/TLS configure your certificate with
+\begin{lstlisting}[breaklines]
+  tls_cert_file: .../cert.pem
+  tls_key_file: .../cert.key
+\end{lstlisting}
+
+Do not forget to add necessary intermediate certificates to the .pem file.\\
+
+Limiting the ciphers provided may force (especially older) clients to connect without encryption at all! Sticking to the defaults is recommended.\\
+
+If you still want to force strong encryption use
+\begin{lstlisting}[breaklines]
+  tls_cipher_list: @@@CIPHERSTRINGB@@@
+\end{lstlisting}
+
+cyrus-imapd loads hardcoded 1024 bit DH parameters using get\_rfc2409\_prime\_1024() by default. If you want to load your own DH parameters add them PEM encoded to the certificate file given in tls\_cert\_file. Do not forget to re-add them after updating your certificate.\\
+
+To prevent unencrypted connections on the STARTTLS ports you can set
+\begin{lstlisting}[breaklines]
+  allowplaintext: 0
+\end{lstlisting}
+This way MUAs can only authenticate after STARTTLS if you only provide plaintext and SASL PLAIN login methods. Therefore providing CRAM-MD5 or DIGEST-MD5 methods is not recommended.\\
+
+\paragraph*{cyrus.conf}\mbox{}\\
+
+To support POP3/IMAP on ports 110/143 with STARTTLS add
+\begin{lstlisting}[breaklines]
+  imap         cmd="imapd" listen="imap" prefork=3
+  pop3         cmd="pop3d" listen="pop3" prefork=1
+\end{lstlisting}
+to the SERVICES section.\\
+
+To support POP3S/IMAPS on ports 995/993 add
+\begin{lstlisting}[breaklines]
+  imaps        cmd="imapd -s" listen="imaps" prefork=3
+  pop3s        cmd="pop3d -s" listen="pop3s" prefork=1
+\end{lstlisting}
+
+
+\subsubsection{Limitations}
+
+cyrus-imapd currently (2.4.17, trunk) does not support elliptic curve cryptography. Hence, ECDHE will not work even if defined in your cipher list.\\
+
+Currently there is no way to prefer server ciphers or to disable compression.\\
+
+There is a working patch for all three features:
+\url{https://bugzilla.cyrusimap.org/show_bug.cgi?id=3823}\\
+
+\subsubsection{How to test}
+\begin{lstlisting}[breaklines]
+  openssl s_client -crlf -connect SERVER.TLD:993
+\end{lstlisting}
+
+
+
+% XXX config von Adi?
+% sslVersion = TLSv1
+% ciphers = EDH+CAMELLIA256:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:-AES128:!CAMELLIA128:!ECDSA:AES256-SHA:EDH+AES128;
+% options = CIPHER_SERVER_PREFERENCE
+% TIMEOUTclose = 1
+
+\subsection{Postfix}
+
+\subsubsection{Tested with Version} Postfix 2.9.6 (Debian Wheezy)
+\subsubsection{Settings}
 
 %% I (cm) consider the generation of own DH parameters to be voodoo until
 %% someone can explain the contrary. They are, after all, public, and
@@ -238,7 +238,7 @@ For those users who want to use ECC key exchange, it is possible to specify this
   smtpd_tls_eecdh_grade = ultra
 \end{lstlisting}
 
-\item[Limitations:] \mbox{}
+\subsubsection{Limitations}
 
 tls\_ssl\_options is supported from Postfix 2.11 onwards. You can
 leave the statement in the configuration for older versions, it will
@@ -247,12 +247,12 @@ be ignored.
 tls\_preempt\_cipherlist is supported from Postfix 2.8 onwards. Again,
 you can leave the statement in for older versions.
 
-\item[References:]
+\subsubsection{References}
 
 Refer to \url{http://www.postfix.org/TLS_README.html} for an in-depth
 discussion.
 
-\item[Additional settings:]
+\subsubsection{Additional settings}
 
 Postfix has two sets of built-in DH parameters that can be overridden
 with the \verb|smtpd_tls_dh512_param_file|
@@ -268,7 +268,8 @@ interoperability risk, but we have not tested this yet.
 % \item[Justification for special settings (if needed):]
 % no special settings
 
-\item[How to test:]
+
+\subsubsection{How to test}
 
 You can check the effect of the settings with the following command:
 \begin{lstlisting}[breaklines]
@@ -280,17 +281,18 @@ $ zegrep "TLS connection established from.*with cipher" | /var/log/mail.log | aw
     335 TLSv1 with cipher DHE-RSA-AES256-SHA
 \end{lstlisting}
 
-\end{description}
+\begin{lstlisting}[breaklines]
+ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
+\end{lstlisting}
 
+\subsubsection{References} \todo{FIXME}
 
 %% ---------------------------------------------------------------------- 
 
-\subsubsection{Exim (based on 4.82)}
+\subsection{Exim (based on 4.82)}
 
 It is highly recommended to read
-
 \url{http://exim.org/exim-html-current/doc/html/spec_html/ch-encrypted_smtp_connections_using_tlsssl.html}
-
 first.
 
 \paragraph*{MSA mode (submission)}\mbox{}\\
@@ -440,42 +442,16 @@ Exim currently (4.82) does not support elliptic curves with OpenSSL. This means 
 There already is a working patch to provide support:\\
 \url{http://bugs.exim.org/show_bug.cgi?id=1397}
 
+\paragraph*{How to test}\mbox{}\\
+\begin{lstlisting}[breaklines]
+ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
+\end{lstlisting}
 
-% do we need to documment starttls in detail?
-%\subsubsection{starttls?}
 
 %% ----------------------------------------------------------------------
-\subsubsection{Exchange}
+\subsection{Exchange}
 
 \todo{FIXME: write this section}
 
-\begin{description}
-\item[Tested with Version:] \todo{version?}
 
-\item[Settings:] \mbox{}
-
-\begin{lstlisting}[breaklines]
-    %Here goes your setting string
-\end{lstlisting}
-
-\item[Additional settings:] \mbox{}
-
-%Here you can add additional settings
-
-\begin{lstlisting}[breaklines]
-    %copy \& paste additional settings
-\end{lstlisting}
-
-\item[Justification for special settings (if needed):] \mbox{}
-
-% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
-
-\item[References:] \todo{add references}
-
-% add any further references or best practice documents here
-
-\item[How to test:]
-% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
-
-\end{description}
 
