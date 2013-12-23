@@ -5,10 +5,9 @@ This section documents the most common mail (SMTP) and IMAPs/POPs servers. Anoth
 \subsubsection{Dovecot}
 
 
-\begin{description}
-\item[Tested with Version:] Dovecot 2.2:
+\subsubsection{Tested with Version} Dovecot 2.2
 
-\item[Settings:] \mbox{}
+\subsubsection{Settings}
 % Example: http://dovecot.org/list/dovecot/2013-October/092999.html
 
 \begin{lstlisting}[breaklines]
@@ -16,12 +15,12 @@ This section documents the most common mail (SMTP) and IMAPs/POPs servers. Anoth
   ssl_prefer_server_ciphers = yes
 \end{lstlisting}
 
-\item[Additional info:] \mbox{}
+\subsubsection{Additional info}
 
 Dovecot 2.1: Almost as good as dovecot 2.2. Does not support
 ssl\_prefer\_server\_ciphers
 
-\item[Limitations:] \mbox{}
+\subsubsection{Limitations}
 
 Dovecot currently does not support disabling TLS compression. Furthermore, DH
 parameters greater than 1024bit are not supported. The most recent version
@@ -32,21 +31,23 @@ parameters greater than 1024bit are not supported. The most recent version
 
 % in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
 
-\item[References:] \url{http://wiki2.dovecot.org/SSL}
+\subsubsection{References} \url{http://wiki2.dovecot.org/SSL}
 
 % add any further references or best practice documents here
 
-\item[How to test:]
+\subsubsection{How to test}
 % describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
 
 \todo{FIXME}
 
-\end{description}
 
 %% ---------------------------------------------------------------------- 
 
 \subsubsection{cyrus-imapd (based on 2.4.17)}
 
+\subsubsection{Tested with Version} \todo{FIXME: add}
+
+\subsubsection{Settings}
 \paragraph*{imapd.conf}\mbox{}\\
 
 To activate SSL/TLS configure your certificate with
@@ -88,7 +89,7 @@ To support POP3S/IMAPS on ports 995/993 add
 \end{lstlisting}
 
 
-\paragraph*{Limitations}\mbox{}\\
+\subsubsection{Limitations}
 
 cyrus-imapd currently (2.4.17, trunk) does not support elliptic curve cryptography. Hence, ECDHE will not work even if defined in your cipher list.\\
 
@@ -97,6 +98,11 @@ Currently there is no way to prefer server ciphers or to disable compression.\\
 There is a working patch for all three features:
 \url{https://bugzilla.cyrusimap.org/show_bug.cgi?id=3823}\\
 
+\subsubsection{References}
+\todo{FIXME}
+
+\subsubsection{How to test}
+\todo{FIXME}
 
 
 
@@ -449,33 +455,5 @@ There already is a working patch to provide support:\\
 
 \todo{FIXME: write this section}
 
-\begin{description}
-\item[Tested with Version:] \todo{version?}
 
-\item[Settings:] \mbox{}
-
-\begin{lstlisting}[breaklines]
-    %Here goes your setting string
-\end{lstlisting}
-
-\item[Additional settings:] \mbox{}
-
-%Here you can add additional settings
-
-\begin{lstlisting}[breaklines]
-    %copy \& paste additional settings
-\end{lstlisting}
-
-\item[Justification for special settings (if needed):] \mbox{}
-
-% in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
-
-\item[References:] \todo{add references}
-
-% add any further references or best practice documents here
-
-\item[How to test:]
-% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
-
-\end{description}
 
