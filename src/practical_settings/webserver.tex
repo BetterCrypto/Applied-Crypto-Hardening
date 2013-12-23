@@ -3,12 +3,18 @@
 %%---------------------------------------------------------------------- 
 \subsection{Apache}
 
-\subsubsection{Tested with Version} \todo{FIXME: add}
+\subsubsection{Tested with Versions} \todo{FIXME: add}
+%\begin{itemize}
+%\end{itemize}
 
 \subsubsection{Settings} 
 
+Enabled modules \emph{SSL} and \emph{Headers} are required.
+
 %-All +TLSv1.1 +TLSv1.2
 \begin{lstlisting}[breaklines]
+  SSLCertificateFile server.crt
+  SSLCertificateKeyFile server.key
   SSLProtocol All -SSLv2 -SSLv3 
   SSLHonorCipherOrder On
   SSLCompression off
@@ -39,9 +45,10 @@ You might want to redirect everything to httpS:// if possible. In Apache you can
   </VirtualHost>
 \end{lstlisting}
 
-\subsubsection{Justification for special settings (if needed)}
-
 \subsubsection{References}
+\begin{itemize}
+	\item Apache SSL/TLS Encryption: \url{http://httpd.apache.org/docs/2.2/ssl/}
+\end{itemize}
 
 \subsubsection{How to test}
 
@@ -56,24 +63,26 @@ See section \ref{section:Tools}
 
 
 %%\begin{description}
-\subsubsection{Tested with Version}
+The config option \emph{honor-cipher-order} is available since 1.4.30, the supported ciphers depend on the used OpenSSL-version (at runtime). ECDH has to be available in OpenSSL at compile-time, which should be default. SSL compression should by deactivated by default at compile-time (if not, it's active).
 
-\todo{version?}
+Support for other SSL-libraries like GnuTLS will be available in the upcoming 2.x branch, which is currently under developement.
+
+\subsubsection{Tested with Versions}
+\begin{itemize}
+\item lighttpd/1.4.31-4 with OpenSSL 1.0.1e on Debian Wheezy
+\item lighttpd/1.4.33 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
+\item lighttpd/1.4.28-2 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
+\end{itemize}
 
 \subsubsection{Settings}
-
-
-%% Complete ssl.cipher-list with same algo than Apache
-\todo{FIXME: this string seems to be wrongly formatted??}
 
 \begin{lstlisting}[breaklines]
   $SERVER["socket"] == "0.0.0.0:443" {
     ssl.engine  = "enable"
     ssl.use-sslv2 = "disable"
     ssl.use-sslv3 = "disable"
-    #ssl.use-compression obsolete >= 1.4.3.1
     ssl.pemfile = "/etc/lighttpd/server.pem"
-    ssl.cipher-list = '@@@CIPHERSTRINGB@@@'
+    ssl.cipher-list = "@@@CIPHERSTRINGB@@@"
     ssl.honor-cipher-order = "enable"
     setenv.add-response-header  = ( "Strict-Transport-Security" => "max-age=31536000")
   }
@@ -82,7 +91,7 @@ See section \ref{section:Tools}
 
 \subsubsection{Additional settings}
 
-As for any other webserver, you might want to automatically redirect http traffic toward httpS://
+As for any other webserver, you should redirect automatically HTTP traffic towards HTTPS. It is also recommended to set the environment variable \emph{HTTPS}, so the applications run by the webserver can easily detect, that HTTPS is in use.
 
 \begin{lstlisting}[breaklines]
   $HTTP["scheme"] == "http" {
@@ -92,18 +101,25 @@ As for any other webserver, you might want to automatically redirect http traffi
         url.redirect = (".*" => "https://%0$0")
     }
   }
+  # Set the environment variable properly
+  setenv.add-environment = (
+	    "HTTPS" => "on"
+	)
+  }
 \end{lstlisting}
 
 
-\subsubsection{References} \todo{add references to lighttpd SSL settins documentation}.
-
-lighttpd httpS:// redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps}
-
+\subsubsection{References} 
+\begin{itemize}
+	\item HTTPS redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps}
+	\item Lighttpd Docs SSL: \url{http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs\_SSL}
+	\item Release 1.4.30 (How to mitigate BEAST attack) \url{http://redmine.lighttpd.net/projects/lighttpd/wiki/Release-1\_4\_30}
+	\item SSL Compression disabled by default: \url{http://redmine.lighttpd.net/issues/2445}
+\end{itemize}
 
 \subsubsection{How to test} 
 See section \ref{section:Tools}
 
-% describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
 %\end{description}
 
 
