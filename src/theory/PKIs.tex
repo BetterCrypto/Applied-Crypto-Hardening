@@ -48,6 +48,11 @@ for issuing certificates.  Finally, in the research and education field, a
 number of CAs exist that are generally well-known and well-accepted within
 the higher-education community.
 
+A large number of CAs is pre-installed in client software's or
+operating system's``trust stores''; depending on your application, you
+have to select your CA according to this, or have a mechanism to
+distribute the chosen CA's root certificate to the clients.
+
 When requesting a certificate from a CA, it is vital that you generate the
 key pair yourself.  In particular, the private key should never be known to
 the CA.  If a CA offers to generate the key pair for you, you should not
