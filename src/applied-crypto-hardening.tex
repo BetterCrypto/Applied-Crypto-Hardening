@@ -24,7 +24,6 @@
 \usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption}	% Custom captions under/above floats
 \usepackage{epstopdf}												% Converts .eps to .pdf
 \usepackage{subfig}													% Subfigures
-\usepackage{booktabs}												% Nicer tables
 \usepackage{fix-cm}													% Custom fontsizes
 
 \usepackage[usenames,dvipsnames]{color}
@@ -72,11 +71,8 @@
 \newcommand{\yes}{\textcolor{green}{\ding{51}}}
 \newcommand{\no}{\textcolor{red}{\ding{55}}}
 
-% human tables
-\usepackage{booktabs}
 
-\renewcommand{\arraystretch}{1.25}
-
+% Colours
 \definecolor{green}{RGB}{32,113,10}
 \definecolor{orange}{RGB}{251,111,16}
 \definecolor{red}{RGB}{247,56,0}
@@ -147,11 +143,13 @@ morekeywords={__global__, __device__},  %
 %%% Custom sectioning (sectsty package)
 \usepackage{sectsty}													% Custom sectioning (see below)
 \allsectionsfont{%															% Change font of al section commands
-	\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font
+	%\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font 
+\bfseries 															% should make it Open Sans Bold
 	}
 
 \sectionfont{%																% Change font of \section command
-	\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font
+	%\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font
+\bfseries 	
 	}
 
 % use more of the page
@@ -193,14 +191,15 @@ morekeywords={__global__, __device__},  %
 
 
 \pretitle{\vspace{-30pt} \begin{flushleft} \HorRule 
-				\fontsize{36}{36}  \color{darkblue} \selectfont 
+				\fontsize{35}{36} \bfseries \color{darkblue} \selectfont 
 				}
 			\title{Applied Crypto Hardening}% \\ \vskip 0.5em \large www.bettercrypto.org}
 \posttitle{\par\end{flushleft}\vskip 0.5em}
 
 \preauthor{\begin{flushleft}
-					\large \lineskip 0.5em  \color{intersectgreen}}
-
+					\large \lineskip 0.5em  
+					\color{intersectgreen}}
+					%\vskip 0.5em
 					\author{Wolfgang Breyha, David Durvaux, Tobias Dussa, L. Aaron
 					Kaplan, Florian Mendel, Christian Mock, Manuel Koschuch, Adi
 					Kriegisch, Ulrich P\"oschl, Ramin Sabet, Berg San, Ralf Schlatterbeck, 
@@ -218,11 +217,14 @@ morekeywords={__global__, __device__},  %
 
 \setlength{\parindent}{0cm}
 
-\postauthor{\footnotesize  \color{Black} 
-\\ \vskip 0.5em  (University of Vienna, CERT.be, KIT-CERT, CERT.at, IAIK, coretec.at, FH Campus Wien, VRVis, MilCERT Austria, A-Trust, , Runtux.com, Friedrich-Alexander University Erlangen-Nuremberg, azet.org, maclemon.at)
+\postauthor{\footnotesize  \color{Black}  \vskip 2.5em
+  (University of Vienna, CERT.be, KIT-CERT, CERT.at, IAIK, coretec.at, FH Campus Wien, VRVis, MilCERT Austria, A-Trust, Runtux.com, Friedrich-Alexander University Erlangen-Nuremberg, azet.org, maclemon.at)
 					\par\end{flushleft}\HorRule}
 
 \date{\today}
+
+%tell TeX where to look for graphics/logos
+\graphicspath{ {/img/} }
 
 % hyperref needs to be the last package you load.
 \usepackage[pdftex,breaklinks,colorlinks,linkcolor=darkblue,citecolor=blue,urlcolor=blue]{hyperref}
@@ -235,6 +237,9 @@ morekeywords={__global__, __device__},  %
 \thispagestyle{fancy} 			% Enabling the custom headers/footers for the first page 
 % The first character should be within \initial{}
 %\initial{H}\textbf{ere is some sample text to show the initial in the introductory paragraph of this template article. The color and lineheight of the initial can be modified in the preamble of this document.}
+
+% add logo graphic
+%\includegraphics{img/logo}
 
 \input{neboltai}
 \input{acknowledgements}
