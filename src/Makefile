@@ -2,12 +2,8 @@ NOW := $(shell date)
 
 all:	pdf html md
 
-%_generated.tex: %.tex
-	./perlify.pl
-
 pdf: 
 	./update-metadata-for-gitinfo
-	./perlify.pl
 	pdflatex applied-crypto-hardening
 	bibtex applied-crypto-hardening
 	while grep -s "Rerun to get cross-references right" \

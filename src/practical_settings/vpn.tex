@@ -278,7 +278,7 @@ client and server.
 % ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-CAMELLIA256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-SHA:AES256-SHA
 % the cipherlist here is config B without the ECDHE strings, because
 % it must fit in 256 bytes...
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
 cipher AES-256-CBC
 auth SHA384
@@ -290,7 +290,7 @@ Client and server have to use compatible configurations, otherwise they can't co
 The \verb|cipher| and \verb|auth| directives have to be identical.
 
 \todo{FIXME: we should use the CIPHERSTRINGB  macro here}
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
 cipher AES-256-CBC
 auth SHA384
@@ -340,7 +340,7 @@ When installing an OpenVPN server instance, you are probably using
 The file \verb|vars| in the easyrsa installation directory has a
 number of settings that should be changed to secure values:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 export KEY_SIZE=4096
 export KEY_EXPIRE=365
 export CA_EXPIRE=1826
@@ -385,7 +385,7 @@ The following settings reflect our recommendations as best as possible on the Ci
 \item[Tested with Version:] 
 9.1(3) - X-series model
 \item[Settings:] \mbox{}
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 crypto ipsec ikev2 ipsec-proposal AES-Fallback
  protocol esp encryption aes-256 aes-192 aes
  protocol esp integrity sha-512 sha-384 sha-256

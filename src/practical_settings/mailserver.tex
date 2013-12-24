@@ -61,8 +61,8 @@ mode, because the alternative is plain text transmission.
 \subsubsection{Settings}
 % Example: http://dovecot.org/list/dovecot/2013-October/092999.html
 
-\begin{lstlisting}[breaklines]
-  ssl_cipher_list = '@@@CIPHERSTRINGB@@@'
+\begin{lstlisting}
+  ssl_cipher_list = '%*\cipherstringB*)'
   ssl_prefer_server_ciphers = yes
 \end{lstlisting}
 
@@ -88,7 +88,7 @@ parameters greater than 1024bit are not supported. The most recent version
 
 \subsubsection{How to test}
 % describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
  openssl s_client -crlf -connect SERVER.TLD:993
 \end{lstlisting}
 
@@ -103,7 +103,7 @@ parameters greater than 1024bit are not supported. The most recent version
 \paragraph*{imapd.conf}\mbox{}\\
 
 To activate SSL/TLS configure your certificate with
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   tls_cert_file: .../cert.pem
   tls_key_file: .../cert.key
 \end{lstlisting}
@@ -113,14 +113,14 @@ Do not forget to add necessary intermediate certificates to the .pem file.\\
 Limiting the ciphers provided may force (especially older) clients to connect without encryption at all! Sticking to the defaults is recommended.\\
 
 If you still want to force strong encryption use
-\begin{lstlisting}[breaklines]
-  tls_cipher_list: @@@CIPHERSTRINGB@@@
+\begin{lstlisting}
+  tls_cipher_list: %*\cipherstringB*)
 \end{lstlisting}
 
 cyrus-imapd loads hardcoded 1024 bit DH parameters using get\_rfc2409\_prime\_1024() by default. If you want to load your own DH parameters add them PEM encoded to the certificate file given in tls\_cert\_file. Do not forget to re-add them after updating your certificate.\\
 
 To prevent unencrypted connections on the STARTTLS ports you can set
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   allowplaintext: 0
 \end{lstlisting}
 This way MUAs can only authenticate after STARTTLS if you only provide plaintext and SASL PLAIN login methods. Therefore providing CRAM-MD5 or DIGEST-MD5 methods is not recommended.\\
@@ -128,14 +128,14 @@ This way MUAs can only authenticate after STARTTLS if you only provide plaintext
 \paragraph*{cyrus.conf}\mbox{}\\
 
 To support POP3/IMAP on ports 110/143 with STARTTLS add
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   imap         cmd="imapd" listen="imap" prefork=3
   pop3         cmd="pop3d" listen="pop3" prefork=1
 \end{lstlisting}
 to the SERVICES section.\\
 
 To support POP3S/IMAPS on ports 995/993 add
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   imaps        cmd="imapd -s" listen="imaps" prefork=3
   pop3s        cmd="pop3d -s" listen="pop3s" prefork=1
 \end{lstlisting}
@@ -151,7 +151,7 @@ There is a working patch for all three features:
 \url{https://bugzilla.cyrusimap.org/show_bug.cgi?id=3823}\\
 
 \subsubsection{How to test}
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   openssl s_client -crlf -connect SERVER.TLD:993
 \end{lstlisting}
 
@@ -186,14 +186,14 @@ There is a working patch for all three features:
 %% First, you need to generate Diffie Hellman parameters (please first take a look at the section \ref{section:RNGs}):
 
 %% \todo{FIXME: this is a really weak setting! See also: http://postfix.1071664.n5.nabble.com/postfix-hardening-what-can-we-do-td61874.html}
-%% \begin{lstlisting}[breaklines]
+%% \begin{lstlisting}
 %%   % openssl gendh -out /etc/postfix/dh_param_512.pem -2 512
 %%   % openssl gendh -out /etc/postfix/dh_param_1024.pem -2 1024
 %% \end{lstlisting}
 
 %% Next, we specify these DH parameters in \verb|main.cf|:
 
-%% \begin{lstlisting}[breaklines]
+%% \begin{lstlisting}
 %%   smtpd_tls_dh512_param_file = /etc/postfix/dh_param_512.pem
 %%   smtpd_tls_dh1024_param_file = /etc/postfix/dh_param_1024.pem
 %% \end{lstlisting}
@@ -204,7 +204,7 @@ As discussed in section \ref{subsection:smtp_general}, because of opportunistic 
 restrict the list of ciphers. There are still some steps needed to
 enable TLS, all in \verb|main.cf|:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   smtpd_tls_cert_file = /etc/postfix/server.pem
   smtpd_tls_key_file = /etc/postfix/server.key
   # use 0 for Postfix >= 2.9, and 1 for earlier versions
@@ -223,22 +223,22 @@ For the MSA \verb|smtpd| process, we first define the ciphers that are
 acceptable for the ``mandatory'' security level, again in
 \verb|main.cf|:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
   smtpd_tls_mandatory_ciphers=high
-  tls_high_cipherlist=@@@CIPHERSTRINGB@@@
+  tls_high_cipherlist=%*\cipherstringB*)
 \end{lstlisting}
 
 Then, we configure the MSA smtpd in \verb|master.cf| with two
 additional options that are only used for this instance of smtpd:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 587       inet  n       -       -       -       -       smtpd 
         -o smtpd_tls_security_level=encrypt -o tls_preempt_cipherlist = yes
 \end{lstlisting}
 
 For those users who want to use ECC key exchange, it is possible to specify this via:
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   smtpd_tls_eecdh_grade = ultra
 \end{lstlisting}
 
@@ -276,7 +276,7 @@ interoperability risk, but we have not tested this yet.
 \subsubsection{How to test}
 
 You can check the effect of the settings with the following command:
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 $ zegrep "TLS connection established from.*with cipher" | /var/log/mail.log | awk '{printf("%s %s %s %s\n", $12, $13, $14, $15)}' | sort | uniq -c | sort -n
       1 SSLv3 with cipher DHE-RSA-AES256-SHA
      23 TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384
@@ -285,7 +285,7 @@ $ zegrep "TLS connection established from.*with cipher" | /var/log/mail.log | aw
     335 TLSv1 with cipher DHE-RSA-AES256-SHA
 \end{lstlisting}
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
  openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 \end{lstlisting}
 
@@ -303,31 +303,31 @@ first.
 
 In the main config section of Exim add:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   tls_certificate = ..../cert.pem
   tls_privatekey = ..../cert.key
 \end{lstlisting}
 don't forget to add intermediate certificates to the .pem file if needed.\\
 \\
 Tell Exim to advertise STARTTLS in the EHLO answer to everyone:
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   tls_advertise_hosts = *
 \end{lstlisting}
 
 If you want to support legacy SMTPS on port 465, and STARTTLS on smtp(25)/submission(587) ports set
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   daemon_smtp_ports = smtp : smtps : submission
   tls_on_connect_ports = 465
 \end{lstlisting}
 \mbox{}\\
 It is highly recommended to limit SMTP AUTH to SSL connections only. To do so add
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   server_advertise_condition = ${if eq{$tls_cipher}{}{no}{yes}}
 \end{lstlisting}
 to every authenticator defined.\\
 
 Add the following rules on top of your acl\_smtp\_mail:
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   warn    hosts           = *
           control         = submission/sender_retain
 \end{lstlisting}
@@ -337,12 +337,12 @@ It is not advisable to restrict the default cipher list for MSA mode if you don'
 % Exim maintainers do not recommend to change default ciphers
 % I think we shouldn't, too
 %use:
-%\begin{lstlisting}[breaklines]
+%\begin{lstlisting}
 %  tls_require_ciphers = <...recommended ciphersuite...>
 %\end{lstlisting}
 
 The cipher used is written to the logfiles by default. You may want to add
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   log_selector = <....whatever your log_selector already contains...> \
    +tls_certificate_verified +tls_peerdn +tls_sni
 \end{lstlisting}
@@ -353,19 +353,19 @@ to get even more TLS information logged.
 
 In the main config section of Exim add:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   tls_certificate = ..../cert.pem
   tls_privatekey = ..../cert.key
 \end{lstlisting}
 don't forget to add intermediate certificates to the .pem file if needed.\\
 \\
 Tell Exim to advertise STARTTLS in the EHLO answer to everyone:
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   tls_advertise_hosts = *
 \end{lstlisting}
 
 Listen on smtp(25) port only
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   daemon_smtp_ports = smtp
 \end{lstlisting}
 
@@ -373,23 +373,23 @@ It is not advisable to restrict the default cipher list for opportunistic encryp
 % Exim maintainers do not recommend to change default ciphers
 % We shouldn't, too
 %use:
-%\begin{lstlisting}[breaklines]
+%\begin{lstlisting}
 %  tls_require_ciphers = <...recommended ciphersuite...>
 %\end{lstlisting}
 
 If you want to request and verify client certificates from sending hosts set
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   tls_verify_certificates = /etc/pki/tls/certs/ca-bundle.crt
   tls_try_verify_hosts = *
 \end{lstlisting}
 
 tls\_try\_verify\_hosts only reports the result to your logfile. If you want to disconnect such clients you have to use
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   tls_verify_hosts = *
 \end{lstlisting}
 
 The cipher used is written to the logfiles by default. You may want to add
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   log_selector = <....whatever your log_selector already contains...> \
    +tls_certificate_verified +tls_peerdn +tls_sni
 \end{lstlisting}
@@ -402,14 +402,14 @@ Exim uses opportunistic encryption in the SMTP transport by default.
 Client mode settings have to be done in the configuration section of the smtp transport (driver = smtp).
 
 If you want to use a client certificate (most server certificates can be used as client certificate, too) set
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   tls_certificate   = .../cert.pem
   tls_privatekey    = .../cert.key
 \end{lstlisting}
 This is recommended for MTA-MTA traffic.\\
 
 %If you want to limit used ciphers set
-%\begin{lstlisting}[breaklines]
+%\begin{lstlisting}
 %  tls_require_ciphers = <...recommended ciphersuite...>
 %\end{lstlisting}
 % Exim Maintainers do not recommend ciphers. We shouldn't do so, too.
@@ -417,7 +417,7 @@ Do not limit ciphers without a very good reason. In the worst case you end up wi
 
 \paragraph*{OpenSSL}\mbox{}\\
 Exim already disables SSLv2 by default. We recommend to add
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   openssl_options = +all +no_sslv2 +no_compression +cipher_server_preference
 \end{lstlisting}
 to the main configuration.\\
@@ -447,7 +447,7 @@ There already is a working patch to provide support:\\
 \url{http://bugs.exim.org/show_bug.cgi?id=1397}
 
 \paragraph*{How to test}\mbox{}\\
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
  openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 \end{lstlisting}
 

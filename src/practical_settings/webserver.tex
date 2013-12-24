@@ -13,7 +13,7 @@ Please note, that any cipher suite starting with ECDHE can be omitted, if in dou
 \subsubsection{Settings}
 Enabled modules \emph{SSL} and \emph{Headers} are required.
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   SSLCertificateFile server.crt
   SSLCertificateKeyFile server.key
   SSLProtocol All -SSLv2 -SSLv3 
@@ -27,7 +27,7 @@ Enabled modules \emph{SSL} and \emph{Headers} are required.
   # ALL subdomains HAVE TO support https if you use this!
   # Header always set Strict-Transport-Security "max-age=15768000; includeSubDomains"
 
-  SSLCipherSuite '@@@CIPHERSTRINGB@@@'
+  SSLCipherSuite '%*\cipherstringB*)'
 \end{lstlisting}
 
 
@@ -35,7 +35,7 @@ Enabled modules \emph{SSL} and \emph{Headers} are required.
 You might want to redirect everything to \emph{https://} if possible. In Apache
 you can do this with the following setting inside of a VirtualHost environment:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   <VirtualHost *:80>
     RewriteEngine On
     RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R=permanent]
@@ -63,13 +63,13 @@ See section \ref{section:Tools}
 
 
 \subsubsection{Settings}
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   $SERVER["socket"] == "0.0.0.0:443" {
     ssl.engine  = "enable"
     ssl.use-sslv2 = "disable"
     ssl.use-sslv3 = "disable"
     ssl.pemfile = "/etc/lighttpd/server.pem"
-    ssl.cipher-list = "@@@CIPHERSTRINGB@@@"
+    ssl.cipher-list = "%*\cipherstringB*)"
     ssl.honor-cipher-order = "enable"
     setenv.add-response-header  = ( "Strict-Transport-Security" => "max-age=15768000") # six months
     # use this only if all subdomains support HTTPS!
@@ -83,7 +83,7 @@ As for any other webserver, you might want to automatically redirect http
 traffic towards \emph{https://}. It is also recommended to set the environment
 variable \emph{HTTPS}, PHP applications can then detect that HTTPS is in use.
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   $HTTP["scheme"] == "http" {
     # capture vhost name with regex conditiona -> %0 in redirect pattern
     # must be the most inner block to the redirect rule
@@ -135,15 +135,15 @@ See section \ref{section:Tools}
 
 
 \subsubsection{Settings}
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   ssl_prefer_server_ciphers on;
   ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # not possible to do exclusive
-  ssl_ciphers '@@@CIPHERSTRINGB@@@';
+  ssl_ciphers '%*\cipherstringB*)';
   add_header Strict-Transport-Security "max-age=15768000; includeSubDomains"
 \end{lstlisting}
 
 If you absolutely want to specify your own DH parameters, you can specify them via
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   ssl_dhparam file;
 \end{lstlisting}
 
@@ -154,13 +154,13 @@ However, we advise you to read section \ref{section:DH} and stay with the standa
 \subsubsection{Additional settings}
 If you decide to trust NIST's ECC curve recommendation, you can add the following line to nginx's configuration file to select special curves:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   ssl_ecdh_curve          secp384r1;
 \end{lstlisting}
 
 You might want to redirect everything to httpS:// if possible. In Nginx you can do this with the following setting:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
   rewrite     ^(.*)   https://$host$1 permanent;
 \end{lstlisting}
 
