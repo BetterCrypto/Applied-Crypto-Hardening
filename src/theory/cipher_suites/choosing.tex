@@ -62,7 +62,7 @@ the security (speaking in number of bits) as the RSA host key. \todo{TODO: refer
 \textbf{Elliptic Curves} (see section \ref{section:EllipticCurveCryptography})
 required by current TLS standards only consist of the so-called NIST-curves
 (\texttt{secp256r1} and \texttt{secp384r1}) which may be weak because the
-parameters that led to their generation weren't properly explained by the
+parameters that led to their generation were not properly explained by the
 authors\cite{DJBSC}. \\ Disabling support for Elliptic Curves leads to no
 ephemeral key exchange being available for the Windows platform. When you
 decide to use Elliptic Curves despite the uncertainty, make sure to at least
@@ -88,7 +88,7 @@ That way mutual trust can be established. Another mechanism providing client
 authentication is Secure Remote Password (SRP)\todo{reference}. All those
 mechanisms require special configuration.
 
-Other authentication mechanisms like Pre Shared Keys aren't used in SSL/TLS.
+Other authentication mechanisms like Pre Shared Keys are not used in SSL/TLS.
 Anonymous sessions will not be discussed in this paper.
 
 \texttt{!PSK:!aNULL}
