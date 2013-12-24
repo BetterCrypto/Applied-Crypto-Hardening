@@ -7,21 +7,22 @@
 mathematics to become confused through the countless number of possible
 exceptions.''}{-- Felix Klein }
 
+\todo{cm says: factoring primes is impossible by definition!}
 Elliptic Curve Cryptography (simply called ECC from now on) is a branch of
 cryptography that emerged in the mid-1980s.  The security of the RSA
-algorithm is based on the assumption that factoring large primes is infeasible.
-Likewise the security of ECC, DH and DSA is based on the discrete logarithm
+algorithm is based on the assumption that factoring large numbers is infeasible.
+Likewise, the security of ECC, DH and DSA is based on the discrete logarithm
 problem\cite{Wikipedia:Discrete,McC90,WR13}.  Finding the discrete logarithm of
 an elliptic curve from its public base point is thought to be infeasible. This
 is known as the Elliptic Curve Discrete Logarithm Problem (ECDLP). ECC and the
-underlying mathematical foundation are not easy to understand - luckily there
+underlying mathematical foundation are not easy to understand - luckily, there
 have been some great introductions on the topic lately
 \footnote{\url{http://arstechnica.com/security/2013/10/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography}}
 \footnote{\url{https://www.imperialviolet.org/2010/12/04/ecc.html}}
 \footnote{\url{http://www.isg.rhul.ac.uk/~sdg/ecc.html}}.
 
 ECC provides for much stronger security with less computationally expensive
-operations in comparison to traditional PKI algorithms (See the Section
+operations in comparison to traditional asymmetric algorithms (See the Section
 \ref{section:keylengths}).
 
 
@@ -31,9 +32,9 @@ there has been a lot of discussion regarding these parameters and their
 potential subversion. A part of the discussion involved recommended sets of
 curves and curve points chosen by different standardization bodies such as the
 National Institute of Standards and Technology (NIST)
-\footnote{\url{http://www.nist.gov}}. Which were later widely implemented in
+\footnote{\url{http://www.nist.gov}} which were later widely implemented in
 most common crypto libraries. Those parameters came under question repeatedly
-from cryptographers\cite{BL13,Sch13b,W13}.  At the time of writing there is
+from cryptographers\cite{BL13,Sch13b,W13}.  At the time of writing, there is
 ongoing research as to the security of various ECC parameters\cite{DJBSC}.
 Most software configured to rely on ECC (be it client or server) is not able to
 promote or black-list certain curves. It is the hope of the authors that such
