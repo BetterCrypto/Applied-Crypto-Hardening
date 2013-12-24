@@ -26,7 +26,7 @@ certificates for money.  Some of the most ubiquitous commercial CAs are
 Verisign, GoDaddy, and Teletrust.  However, there are also CAs that offer
 certificates for free.  The most notable examples are StartSSL, which is a
 company that offers some types of certificates for free, and CAcert, which
-is a non-profit volunteer-based organisation that does not charge at all
+is a non-profit volunteer-based organization that does not charge at all
 for issuing certificates.  Finally, in the research and education field, a
 number of CAs exist that are generally well-known and well-accepted within
 the higher-education community.
@@ -36,10 +36,10 @@ key pair yourself.  In particular, the private key should never be known to
 the CA.  If a CA offers to generate the key pair for you, you should not
 trust that CA.
 
-Generating a key pair and a certificate request can be done with a number
-of tools.  On Unixoid systems, it is likely that the OpenSSL suite is
-available to you.  In this case, you can generate a private key and a
-corresponding certificate request as follows:
+Generating a key pair and a certificate request can be done with a number of
+tools.  On Unix-like systems, it is likely that the OpenSSL suite is available
+to you.  In this case, you can generate a private key and a corresponding
+certificate request as follows:
 
 \begin{lstlisting}[breaklines]
 % openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize>
@@ -104,21 +104,21 @@ priori to all parties that may encounter it.
 
 \subsection{Hardening PKI}
 \label{sec:hardeningpki}
-In recent years several CAs were compromised by attackers in order to
-get ahold of trusted certificates for malicious activities. In 2011 
-the Dutch CA Diginotar was hacked and all certificates were
-revoked~\cite{diginotar-hack}. Recently Google found certificates
-issued to them, which were not used by the
+
+In recent years several CAs were compromised by attackers in order to get a
+hold of trusted certificates for malicious activities. In 2011 the Dutch CA
+Diginotar was hacked and all certificates were revoked~\cite{diginotar-hack}.
+Recently Google found certificates issued to them, which were not used by the
 company~\cite{googlecahack}. The concept of PKIs heavily depends on the
-security of CAs.  If they get compromised the whole PKI system will
-fail. Some CAs tend to incorrectly issue certificates that were designated
-to do a different job than what they were intended to by the CA~\cite{gocode}.
+security of CAs.  If they get compromised the whole PKI system will fail. Some
+CAs tend to incorrectly issue certificates that were designated to do a
+different job than what they were intended to by the CA~\cite{gocode}.
 
 Therefore several security enhancements were introduced by different
-organisations and vendors~\cite{tschofenig-webpki}. Currently two
+organizations and vendors~\cite{tschofenig-webpki}. Currently two
 methods are used, DANE~\cite{rfc6698} and Certificate
 Pinning~\cite{draft-ietf-websec-key-pinning}. Google recently proposed
-a new system to detect malicous CAs and certificates  called Certificate 
+a new system to detect malicious CAs and certificates  called Certificate 
 Transparency~\cite{certtransparency}.
 
 % \subsubsection{DANE}
