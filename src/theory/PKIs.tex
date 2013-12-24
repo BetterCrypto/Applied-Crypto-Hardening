@@ -105,6 +105,10 @@ issued a new root certificate, you can issue new certificates as follows:
 % sudo ./CA.pl -newreq
 \end{lstlisting}
 
+Alternatively, software such as TinyCA\cite{Wikipedia:TinyCA} that
+acts as a ``wrapper'' around OpenSSL and tries to make life easier is
+available.
+
 \subsubsection{Creating a Self-Signed Certificate}
 \label{sec:pki:selfsignedcert}
 If the desired trust level is very high and the number of systems involved
