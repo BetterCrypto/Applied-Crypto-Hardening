@@ -26,7 +26,7 @@ The last point being out-of-scope for this section, we will only cover the first
 ejabberd is one of the popular Jabber server.  In order to be compliant
 with the manifesto, you should adapt your
 configuration\footnote{\url{http://www.process-one.net/docs/ejabberd/guide_en.html}}:
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 {listen,
  [
   {5222, ejabberd_c2s, [
@@ -83,7 +83,7 @@ There are no specific configurations required but the protocol itself is worth t
 
 There are numerous implementations of IRC servers.  In this section, we choose {\it Charybdis} which serve as basis for {\it ircd-seven}\footnote{https://dev.freenode.net/redmine/projects/ircd-seven}, developed and used by freenode. Freenode is actually the biggest IRC network\footnote{http://irc.netsplit.de/networks/top10.php}.  {\it Charybdis} is being part of the {\it Debian} \& {\it Ubuntu} distributions.
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 /* Extensions */
 # Some modules 
 #loadmodule "extensions/chm_sslonly_compat.so";

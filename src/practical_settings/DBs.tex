@@ -31,7 +31,7 @@ p. 129 -Req 396 and Req 397 \\
 
 \paragraph*{my.cnf}\mbox{}\\
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 [mysqld]
 ssl
 ssl-ca=/etc/mysql/ssl/ca-cert.pem
@@ -54,7 +54,7 @@ ssl-cipher=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256
 \item[How to test:]
 
 After restarting the server run the following query to see if the ssl settings are correct:
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 show variables like '%ssl%';
 \end{lstlisting}
 
@@ -73,7 +73,7 @@ show variables like '%ssl%';
 
 \paragraph*{ssl\_cipherspecs}\mbox{}\\
 In the link above the whole SSL-configuration is described in-depth. The following command shows only how to set the recommended ciphersuites.
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 # recommended and supported ciphersuites 
 
 db2 update dbm cfg using SSL_CIPHERSPECS 
@@ -121,7 +121,7 @@ To start in SSL mode the server.crt and server.key must exist in the server's da
 
 Starting with version 9.2, you have the possibility to set the path.
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 ssl_key_file = '/your/path/server.key'
 ssl_cert_file = '/your/path/server.crt'
 ssl_ca_file = '/your/path/root.crt'
@@ -129,7 +129,7 @@ ssl_ca_file = '/your/path/root.crt'
 
 \paragraph*{postgresql.conf}\mbox{}\\
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 #>=8.3
 ssl = on 
 ssl_ciphers = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
@@ -139,7 +139,7 @@ ssl_ciphers = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLI
 
 \item[How to test:]
 To test your ssl settings, run psql with the sslmode parameter:
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 psql "sslmode=require host=postgres-server dbname=database" your-username
 \end{lstlisting}
 
