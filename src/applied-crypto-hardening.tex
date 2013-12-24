@@ -24,7 +24,6 @@
 \usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption}	% Custom captions under/above floats
 \usepackage{epstopdf}												% Converts .eps to .pdf
 \usepackage{subfig}													% Subfigures
-\usepackage{booktabs}												% Nicer tables
 \usepackage{fix-cm}													% Custom fontsizes
 
 \usepackage[usenames,dvipsnames]{color}
@@ -72,11 +71,8 @@
 \newcommand{\yes}{\textcolor{green}{\ding{51}}}
 \newcommand{\no}{\textcolor{red}{\ding{55}}}
 
-% human tables
-\usepackage{booktabs}
 
-\renewcommand{\arraystretch}{1.25}
-
+% Colours
 \definecolor{green}{RGB}{32,113,10}
 \definecolor{orange}{RGB}{251,111,16}
 \definecolor{red}{RGB}{247,56,0}
@@ -147,11 +143,13 @@ morekeywords={__global__, __device__},  %
 %%% Custom sectioning (sectsty package)
 \usepackage{sectsty}													% Custom sectioning (see below)
 \allsectionsfont{%															% Change font of al section commands
-	\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font
+	%\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font 
+\bfseries 															% should make it Open Sans Bold
 	}
 
 \sectionfont{%																% Change font of \section command
-	\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font
+	%\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font
+\bfseries 	
 	}
 
 % use more of the page
