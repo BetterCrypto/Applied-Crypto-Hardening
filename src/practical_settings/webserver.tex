@@ -6,7 +6,7 @@ Please note, that any cipher suite starting with ECDHE can be omitted, if in dou
 
 \subsubsection{Tested with Versions}
 \begin{itemize}
-  \item Apache2/2.2.22-13 with OpenSSL 1.0.1e on Debian Wheezy (Forward Secrecy does not work on Windows!)
+  \item Apache2/2.2.22-13 with OpenSSL 1.0.1e on Debian Wheezy (ciphers with Forward Secrecy are not chosen with Internet Explorer on Windows)
 \end{itemize}
 
 
@@ -150,7 +150,6 @@ If you absolutely want to specify your own DH parameters, you can specify them v
 However, we advise you to read section \ref{section:DH} and stay with the standard IKE/IETF parameters (as long as they are \textgreater 1024 bits).
 
 
-\vspace{0.5em} % tempoary workaround
 \subsubsection{Additional settings}
 If you decide to trust NIST's ECC curve recommendation, you can add the following line to nginx's configuration file to select special curves:
 
@@ -158,7 +157,7 @@ If you decide to trust NIST's ECC curve recommendation, you can add the followin
   ssl_ecdh_curve          secp384r1;
 \end{lstlisting}
 
-You might want to redirect everything to httpS:// if possible. In Nginx you can do this with the following setting:
+You might want to redirect everything to \emph{https://} if possible. In Nginx you can do this with the following setting:
 
 \begin{lstlisting}
   rewrite     ^(.*)   https://$host$1 permanent;

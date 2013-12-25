@@ -1,8 +1,8 @@
 %%\subsection{Instant Messaging Systems}
-\subsubsection{XMPP / Jabber}
+%\subsubsection{XMPP / Jabber}
 
 
-\subsubsection{General server configuration recommendations}
+\subsection{General server configuration recommendations}
 
 For servers, we mostly recommend to apply what's proposed by the {\it Peter's manifesto}\footnote{https://github.com/stpeter/manifesto}.
 
@@ -15,17 +15,18 @@ In short:
 
 The last point being out-of-scope for this section, we will only cover the first two points.
 
-\paragraph{ejabberd}
 
-\begin{description}
-\item[Tested with Version:] Debian Wheezy 2.1.10-4+deb7u1
+%%---------------------------------------------------------------------- 
+\subsection{ejabberd}
+\subsubsection{Tested with Version}
+\begin{itemize}
+  \item Debian Wheezy 2.1.10-4+deb7u1
+\end{itemize}
 
-\item[Settings:] \mbox{}
 
-
-ejabberd is one of the popular Jabber server.  In order to be compliant
-with the manifesto, you should adapt your
-configuration\footnote{\url{http://www.process-one.net/docs/ejabberd/guide_en.html}}:
+\subsubsection{Settings}
+ejabberd is one of the popular Jabber server. In order to be compliant
+with the manifesto, you should adapt your configuration\footnote{\url{http://www.process-one.net/docs/ejabberd/guide_en.html}}:
 \begin{lstlisting}
 {listen,
  [
@@ -48,21 +49,22 @@ configuration\footnote{\url{http://www.process-one.net/docs/ejabberd/guide_en.ht
 {s2s_certfile, "/etc/ejabberd/ejabberd.pem"}.
 \end{lstlisting}
 
-\item[Additional settings:]
 
+\subsubsection{Additional settings}
 Older Versions of ejabberd ($ < $ 2.0.0) need to be patched\footnote{\url{http://hyperstruct.net/2007/06/20/installing-the-startcom-ssl-certificate-in-ejabberd/}} to be able to parse all of the certificates in the CA chain.
 
 Newer versions of ejabberd now support specifying the cipher string in the config file. See the commit message: \url{https://github.com/processone/ejabberd/commit/1dd94ac0d06822daa8c394ea2da20d91c8209124}. However, this change did not yet make it into the stable release at the time of this writing. 
 
 
-\item[References:] 
-
-\item[How to test:] \url{https://xmpp.net} is a practical website to test Jabber Server configurations.
-
-\end{description}
+\subsubsection{References}
 
 
-\subsubsection{Chat privacy - Off-the-Record Messaging (OTR)}
+\subsubsection{How to test}
+\url{https://xmpp.net} is a practical website to test Jabber Server configurations.
+
+
+%%---------------------------------------------------------------------- 
+\subsection{Chat privacy - Off-the-Record Messaging (OTR)}
 
 The OTR protocol works on top of the Jabber protocol\footnote{\url{https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html}}.  
 It adds to popular chat clients (Adium, Pidgin...) the following properties for encrypted chats:
@@ -75,13 +77,15 @@ It adds to popular chat clients (Adium, Pidgin...) the following properties for 
 
 It basically uses Diffie-Hellman, AES and SHA1. Communicating over an insecure instant messaging network, OTR can be used for end to end encryption.
 
-There are no specific configurations required but the protocol itself is worth to be mentioned.
+There are no specific configurations required but the protocol itself is worth being mentioned.
 
-\subsubsection{IRC}
+
+%%---------------------------------------------------------------------- 
+\subsection{Charybdis}
 
 \todo{Quick draft -- to complete / review / validate}
 
-There are numerous implementations of IRC servers.  In this section, we choose {\it Charybdis} which serve as basis for {\it ircd-seven}\footnote{https://dev.freenode.net/redmine/projects/ircd-seven}, developed and used by freenode. Freenode is actually the biggest IRC network\footnote{http://irc.netsplit.de/networks/top10.php}.  {\it Charybdis} is being part of the {\it Debian} \& {\it Ubuntu} distributions.
+There are numerous implementations of IRC servers.  In this section, we choose \emph{Charybdis} which serve as basis for \emph{ircd-seven}\footnote{https://dev.freenode.net/redmine/projects/ircd-seven}, developed and used by freenode. Freenode is actually the biggest IRC network\footnote{http://irc.netsplit.de/networks/top10.php}. \emph{Charybdis} is being part of the \emph{Debian} \& \emph{Ubuntu} distributions.
 
 \begin{lstlisting}
 /* Extensions */
@@ -109,7 +113,8 @@ listen {
 \end{lstlisting}
 
 
-\subsubsection{SILC}
+%%---------------------------------------------------------------------- 
+\subsection{SILC}
 
 SILC\footnote{\url{http://www.silcnet.org/} and
 \url{https://en.wikipedia.org/wiki/SILC_(protocol)}} is instant messaging
