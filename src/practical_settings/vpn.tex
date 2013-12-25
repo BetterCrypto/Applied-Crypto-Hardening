@@ -10,11 +10,9 @@
 \subsubsection{Settings}
 
 \paragraph*{Assumptions}\mbox{}\\
-
 We assume the use of IKE (v1 or v2) and ESP for this document.
 
 \paragraph*{Authentication}\mbox{}\\
-
 IPSEC authentication should optimally be performed via RSA signatures,
 with a key size of 2048 bits or more. Configuring only the trusted CA
 that issued the peer certificate provides for additional protection
@@ -54,7 +52,6 @@ table~\ref{tab:IPSEC_psk_len} gives the minimum lengths in characters.
 \end{table}
 
 \paragraph*{Cryptographic Suites}\mbox{}\\
-
 IPSEC Cryptographic Suites are pre-defined settings for all the items
 of a configuration; they try to provide a balanced security level and
 make setting up VPNs easier.
@@ -150,16 +147,15 @@ parameters are shown in table \ref{tab:IPSEC_ph2_params}.
 
 %---------------------------------------------------------------------- 
 \subsection{Check Point FireWall-1}
-   
-\begin{description}
-\item[Tested with Version:] \mbox{}
 
+
+\subsubsection{Tested with Version}
 \begin{itemize}
-\item R77 (should work with any currently supported version)
+  \item R77 (should work with any currently supported version)
 \end{itemize}
 
-\item[Settings:] \mbox{}
 
+\subsubsection{Settings}
 Please see section \ref{section:IPSECgeneral} for guidance on
 parameter choice. In this section, we will configure a strong setup
 according to ``Configuration A''.
@@ -198,8 +194,8 @@ found under ``Advanced Settings'' / ``Advanced VPN Properties''
   \label{fig:checkpoint_3}
 \end{figure}
 
-\item[Additional settings:] \mbox{}
 
+\subsubsection{Additional settings}
 For remote Dynamic IP Gateways, the settings are not taken from the
 community, but set in the ``Global Properties'' dialog under ``Remote
 Access'' / ``VPN Authentication and Encryption''. Via the ``Edit...''
@@ -216,45 +212,34 @@ button, you can configure sets of algorithms that all gateways support
 Please note that these settings restrict the available algorithms for
 \textbf{all} gateways, and also influence the VPN client connections.
 
-%\item[Justification for special settings (if needed):]
+%\subsubsection{Justification for special settings (if needed)}
 
-%\item[Limitations:]
+%\subsubsection{Limitations}
 
-\item[References:]\mbox{}
-
+\subsubsection{References}
 \begin{itemize}
-
 \item Check Point
-  \href{https://sc1.checkpoint.com/documents/R77/CP_R77_VPN_AdminGuide/html_frameset.htm}{VPN
-    R77 Administration Guide} (may require a
-  UserCenter account to access)
-
+  \href{https://sc1.checkpoint.com/documents/R77/CP_R77_VPN_AdminGuide/html_frameset.htm}{VPN R77 Administration Guide} (may require a UserCenter account to access)
 \end{itemize}
 
-% \item[How to test:]
-
-\end{description}
+% \subsubsection{How to test}
 
 
 %% cipherstrings current 2013-12-09
 % ---------------------------------------------------------------------- 
 \subsection{OpenVPN}
 
-\begin{description}
 
-\item[Tested with Version:] \mbox{}\\
-
+\subsubsection{Tested with Version}
 \begin{itemize}
-\item OpenVPN 2.3.2 from Debian ``wheezy-backports'' linked against openssl (libssl.so.1.0.0) 
-\item OpenVPN 2.2.1 from Debian 7.0 linked against openssl
-    (libssl.so.1.0.0) 
-\item OpenVPN 2.3.2 for Windows
+  \item OpenVPN 2.3.2 from Debian ``wheezy-backports'' linked against openssl (libssl.so.1.0.0) 
+  \item OpenVPN 2.2.1 from Debian 7.0 linked against openssl (libssl.so.1.0.0) 
+  \item OpenVPN 2.3.2 for Windows
 \end{itemize}
 
-\item[Settings:] \mbox{}
 
-\paragraph{General}\mbox{}
-
+\subsubsection{Settings}
+\paragraph{General}\mbox{}\\
 We describe a configuration with certificate-based authentication; see
 below for details on the \verb|easyrsa| tool to help you with that.
 
@@ -267,26 +252,25 @@ that is then negotiated as usual with TLS, the \verb|cipher|
 and \verb|auth| options both take a single argument that must match on
 client and server.
 
-\paragraph{Server Configuration}\mbox{}
+\paragraph{Server Configuration}\mbox{}\\
 
 % the cipherlist here is config B without the ECDHE strings, because
 % it must fit in 256 bytes...
 % DO NOT CHANGE TO THE CIPHERSTRING MACRO!
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
 cipher AES-256-CBC
 auth SHA384
 \end{lstlisting}
 
-\paragraph{Client Configuration}\mbox{}
-
+\paragraph{Client Configuration}\mbox{}\\
 Client and server have to use compatible configurations, otherwise they can't communicate.
 The \verb|cipher| and \verb|auth| directives have to be identical.
 
 % the cipherlist here is config B without the ECDHE strings, because
 % it must fit in 256 bytes...
 % DO NOT CHANGE TO THE CIPHERSTRING MACRO!
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
 cipher AES-256-CBC
 auth SHA384
@@ -297,8 +281,7 @@ remote-cert-tls server
 tls-remote server.example.com
 \end{lstlisting}
 
-\item[Justification for special settings (if needed):] \mbox{}\\
-
+\subsubsection{Justification for special settings}
 OpenVPN 2.3.1 changed the values that the \verb|tls-cipher| option
 expects from OpenSSL to IANA cipher names. That means from that
 version on you will get ``Deprecated TLS cipher name'' warnings for
@@ -312,31 +295,31 @@ ECDHE suites.
 
 The configuration shown above is compatible with all tested versions.
 
-\item[References:] \mbox{}\\
 
-\url{http://openvpn.net/index.php/open-source/documentation/security-overview.html}
+\subsubsection{References}
+\begin{itemize}
+  \item OpenVPN Documentation: \emph{Security Overview} \url{http://openvpn.net/index.php/open-source/documentation/security-overview.html}
+\end{itemize}
 
-%\item[How to test:]
+%\subsubsection{How to test}
 
 
-\item[Additional settings:] \mbox{}
+\subsubsection{Additional settings}
 
-\paragraph{Key renegotiation interval}\mbox{}
-
+\paragraph{Key renegotiation interval}\mbox{}\\
 The default for renegotiation of encryption keys is one hour
 (\verb|reneg-sec 3600|). If you
 transfer huge amounts of data over your tunnel, you might consider
 configuring a shorter interval, or switch to a byte- or packet-based
 interval (\verb|reneg-bytes| or \verb|reneg-pkts|).
 
-\paragraph{Fixing ``easy-rsa''}\mbox{}
-
+\paragraph{Fixing ``easy-rsa''}\mbox{}\\
 When installing an OpenVPN server instance, you are probably using
 {\it easy-rsa} to generate keys and certificates.
 The file \verb|vars| in the easyrsa installation directory has a
 number of settings that should be changed to secure values:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 export KEY_SIZE=4096
 export KEY_EXPIRE=365
 export CA_EXPIRE=1826
@@ -350,8 +333,8 @@ In addition, edit the \verb|pkitool| script and replace all occurences
 of \verb|sha1| with \verb|sha256|, to sign the certificates with
 SHA256.
 
-\item[Limitations:] \mbox{}
 
+\subsubsection{Limitations}
 Note that the ciphersuites shown by \verb|openvpn --show-tls| are {\it
 known}, but not necessarily {\it
 supported} \footnote{\url{https://community.openvpn.net/openvpn/ticket/304}}.
@@ -359,8 +342,6 @@ supported} \footnote{\url{https://community.openvpn.net/openvpn/ticket/304}}.
 Which cipher suite is actually used can be seen in the logs:
 
 \verb|Control Channel: TLSv1, cipher TLSv1/SSLv3 DHE-RSA-CAMELLIA256-SHA, 2048 bit RSA|
-
-\end{description}
 
 
 % ---------------------------------------------------------------------- 
@@ -381,7 +362,7 @@ The following settings reflect our recommendations as best as possible on the Ci
 \item[Tested with Version:] 
 9.1(3) - X-series model
 \item[Settings:] \mbox{}
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 crypto ipsec ikev2 ipsec-proposal AES-Fallback
  protocol esp encryption aes-256 aes-192 aes
  protocol esp integrity sha-512 sha-384 sha-256

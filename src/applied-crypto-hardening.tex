@@ -17,6 +17,7 @@
 
 
 \usepackage[english]{babel}										% English language/hyphenation
+\usepackage[utf8]{inputenc}										% UTF-8 as input-encoding
 \usepackage[protrusion=true,expansion=true]{microtype}				% Better typography
 \usepackage{amsmath,amsfonts,amsthm}					% Math packages
 \usepackage[pdftex]{graphicx}						% Enable pdflatex 
@@ -33,6 +34,7 @@
 \usepackage{acronym}
 \usepackage{amsthm}
 \usepackage{fancyvrb}
+\usepackage{upquote}												% For correct single quotes in listings
 \usepackage{listings}
 \usepackage{longtable}
 
@@ -107,6 +109,16 @@
 % \usepackage[T1]{fontenc}
 % \usepackage{textcomp}
 
+% This block is for listings
+\usepackage[framemethod=TikZ]{mdframed} % mdframed is used to draw a grey box
+\mdfdefinestyle{listingstyle}{
+  backgroundcolor=black!10,outerlinewidth=0,outerlinecolor=black,
+  innerleftmargin=0,innerrightmargin=0,innertopmargin=0pt,innerbottommargin=0pt
+}
+\usepackage{amssymb}% for \curvearrowright
+% Insert a grey box behind the listing for uniform background color (The \cipherstring would the listing and the background would turn white)
+\BeforeBeginEnvironment{lstlisting}{\vspace{0.2cm}\begin{mdframed}[style=listingstyle]}
+\AfterEndEnvironment{lstlisting}{\end{mdframed}}
 \lstset{
 %language=Bash,                             % Code langugage
 basicstyle=\ttfamily,                   % Code font, Examples: \footnotesize, \ttfamily
@@ -123,9 +135,13 @@ captionpos=b,                           % Caption-position = bottom
 breaklines=true,                        % Automatic line breaking?
 breakatwhitespace=false,                % Automatic breaks only at whitespace?
 showspaces=false,                       % Dont make spaces visible
+showstringspaces=false,
 showtabs=false,                         % Dont make tabls visible
-columns=fixed,                          % Column format
+columns=fullflexible,                   % Column format: no spaces are inserted for monospaced appearance
 morekeywords={__global__, __device__},  % 
+escapeinside={\%*}{*)},                 % Escape TeX commands inside %* and *)
+prebreak=\mbox{$\curvearrowright$},     % Disply curved arrow before linebreak
+xrightmargin=1.8pt,
 }
 
 
@@ -202,7 +218,7 @@ morekeywords={__global__, __device__},  %
 					%\vskip 0.5em
 					\author{Wolfgang Breyha, David Durvaux, Tobias Dussa, L. Aaron
 					Kaplan, Florian Mendel, Christian Mock, Manuel Koschuch, Adi
-					Kriegisch, Ulrich P\"oschl, Ramin Sabet, Berg San, Ralf Schlatterbeck, 
+					Kriegisch, Ulrich Pöschl, Ramin Sabet, Berg San, Ralf Schlatterbeck, 
 					Thomas Schreck, Aaron Zauner, Pepi Zawodsky}
 %\institute{
 %FH Campus Wien
@@ -229,6 +245,9 @@ morekeywords={__global__, __device__},  %
 % hyperref needs to be the last package you load.
 \usepackage[pdftex,breaklinks,colorlinks,linkcolor=darkblue,citecolor=blue,urlcolor=blue]{hyperref}
 
+% CIPHERSTRING
+\usepackage{seqsplit} % Use Sequence split. Basically it inserts between every character pair a box with zero width to allow linebreaks everywhere. Better solution wanted, but is there any better?
+\newcommand{\cipherstringB}{\seqsplit{EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA}}
 
 %%% Begin document
 \begin{document}

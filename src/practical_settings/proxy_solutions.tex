@@ -26,9 +26,9 @@ As of squid-3.2.7 (01 Feb 2013) there is support for the OpenSSL NO\_Compression
 squid.conf
 
 \todo{UNTESTED!}
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 options=NO_SSLv2,NO_TLSv1,NO_Compression,CIPHER_SERVER_PREFERENCE 
-cipher=@@@CIPHERSTRINGB@@@
+cipher=%*\cipherstringB*)
 \end{lstlisting}
 
 
@@ -39,7 +39,7 @@ squid.conf
 %% http://forum.pfsense.org/index.php?topic=63262.0
 
 \todo{UNTESTED!}
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 		NO_SSLv2    Disallow the use of SSLv2
 		NO_SSLv3    Disallow the use of SSLv3
 		NO_TLSv1    Disallow the use of TLSv1.0
@@ -53,7 +53,7 @@ squid.conf
 \todo{Patch here? Definitely working for 3.2.6!}
 For squid Versions before 3.2.7 use this patch against a vanilla source-tree:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 --- support.cc.ini      2013-01-09 02:41:51.000000000 +0100
 +++ support.cc  2013-01-21 16:13:32.549383848 +0100
 @@ -400,6 +400,11 @@
@@ -81,7 +81,7 @@ BlueCoat Proxy SG Appliances can be used as forward and reverse proxies. The rev
 
 \item[Only allow TLS 1.0,1.1 and 1.2 protocols:] \mbox{}
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 $conf t
 $(config)ssl
 $(config ssl)edit ssl-device-profile default
@@ -91,7 +91,7 @@ $(config device-profile default)protocol tlsv1 tlsv1.1 tlsv1.2
 
 \item[Select your accepted cipher-suites:] \mbox{}
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 $conf t
 Enter configuration commands, one per line.  End with CTRL-Z.
 $(config)proxy-services
@@ -114,7 +114,7 @@ Select cipher numbers to use, separated by commas: 2,5,6
 
 The same protocols are available for forward proxy settings and should be adjusted accordingly:
 In your local policy file add the following section:
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 <ssl>
     DENY server.connection.negotiated_ssl_version=(SSLV2, SSLV3)
 \end{lstlisting}
@@ -132,7 +132,7 @@ Disabling protocols and ciphers in a forward proxy environment could lead to une
 
 Pound 2.6
 	
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 # HTTP Listener, redirects to HTTPS
 ListenHTTP
     Address 10.10.0.10
@@ -148,7 +148,7 @@ ListenHTTPS
     AddHeader    "Front-End-Https: on"
     Cert         "/path/to/your/cert.pem"
     ## See 'man ciphers'.
-    Ciphers      "TLSv1.2:TLSv1.1:!SSLv3:!SSLv2:@@@CIPHERSTRINGB@@@"
+    Ciphers      "TLSv1.2:TLSv1.1:!SSLv3:!SSLv2:%*\cipherstringB*)"
     Service
         BackEnd
             Address 10.20.0.10

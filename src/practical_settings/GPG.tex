@@ -17,7 +17,7 @@ Properly dealing with key material, passphrases and the web-of-trust is outside 
 \subsubsection{Hashing}
 Avoid SHA-1 in GnuPG. Edit \$HOME/.gnupg/gpg.conf:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 # according to:  https://www.debian-administration.org/users/dkg/weblog/48
 personal-digest-preferences SHA256
 cert-digest-algo SHA256
