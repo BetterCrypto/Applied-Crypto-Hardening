@@ -1,15 +1,33 @@
 \section{Public Key Infrastructures}
 \label{section:PKIs}
 
-Public-Key Infrastructures aim to provide a way to simplify the verification of
-a certificate's trustworthiness.  For this, certificate authorities (CAs) are
-used to create a signature chain from the root CA down to the server (or client).
-Accepting a CA as a generally-trusted mediator solves the trust-scaling problem
-at the cost of introducing an actor that magically is more trustworthy.
+Public-Key Infrastructures try to solve the problem of verifying
+whether a public key belongs to a given entity, so as to prevent Man
+In The Middle attacks.
 
-The first part of this section addresses how to obtain a certificate.  The
-second part offers recommendations on how to improve the security of your
-PKI.
+There are two approaches to achieve that: {\it Certificate Authorities}
+and the {\it Web of Trust}.
+
+Certificate Authorities (CAs) sign end-entities' certificates, thereby
+associating some kind of identity (e.g. a domain name or an email
+address) with a public key. CAs are used with TLS and S/MIME
+certificates, and the CA system has a big list of possible and real
+problems which are summarized in section \ref{sec:hardeningpki} and
+\cite{https13}.
+
+The Web of Trust is a decentralized system where people sign each
+others keys, so that there is a high chance that there is a ``trust
+path'' from one key to another. This is used with PGP keys, and while
+it avoids most of the problems of the CA system, it is more
+cumbersome.
+
+As alternatives to these public systems, there are two more choices:
+running a private CA, and manually trusting keys (as it is used with
+SSH keys or manually trusted keys in web browsers).
+
+The first part of this section addresses how to obtain a certificate
+in the CA system. The second part offers recommendations on how to
+improve the security of your PKI.
 
 \subsection{Certificate Authorities}
 \label{sec:cas}
@@ -30,6 +48,11 @@ is a non-profit volunteer-based organization that does not charge at all
 for issuing certificates.  Finally, in the research and education field, a
 number of CAs exist that are generally well-known and well-accepted within
 the higher-education community.
+
+A large number of CAs is pre-installed in client software's or
+operating system's``trust stores''; depending on your application, you
+have to select your CA according to this, or have a mechanism to
+distribute the chosen CA's root certificate to the clients.
 
 When requesting a certificate from a CA, it is vital that you generate the
 key pair yourself.  In particular, the private key should never be known to
@@ -81,6 +104,10 @@ issued a new root certificate, you can issue new certificates as follows:
 % cd /usr/lib/ssl/misc
 % sudo ./CA.pl -newreq
 \end{lstlisting}
+
+Alternatively, software such as TinyCA\cite{Wikipedia:TinyCA} that
+acts as a ``wrapper'' around OpenSSL and tries to make life easier is
+available.
 
 \subsubsection{Creating a Self-Signed Certificate}
 \label{sec:pki:selfsignedcert}

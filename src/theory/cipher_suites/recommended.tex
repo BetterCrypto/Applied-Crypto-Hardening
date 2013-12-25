@@ -16,11 +16,11 @@ throughout this document.\\
 
 \subsubsection{Configuration A: Strong ciphers, fewer clients}
 
-At the time of writing we recommend the following set of strong cipher
+At the time of writing, our recommendation is to use the following set of strong cipher
 suites which may be useful in an environment where one does not depend on many,
 different clients and where compatibility is not a big issue.  An example
 of such an environment might be machine-to-machine communication or corporate
-deployments where software that is to be used can be defined freely.
+deployments where software that is to be used can be defined without restrictions.
 
 
 We arrived at this set of cipher suites by selecting:
@@ -69,12 +69,12 @@ Win 7 and Win 8.1 crypto stack, Opera 17, OpenSSL $\ge$ 1.0.1e, Safari 6 / iOS
 
 
 
-\subsubsection{Configuration B: Weaker ciphers, more compatibility}
+\subsubsection{Configuration B: Weaker ciphers but better compatibility}
 
 In this section we propose a slightly weaker set of cipher suites.  For
-example, there are some known weaknesses for the SHA-1 hash function that is
+example, there are known weaknesses for the SHA-1 hash function that is
 included in this set.  The advantage of this set of cipher suites is not only
-the compatibility with a broad range of clients, but also less computational
+better compatibility with a broad range of clients, but also less computational
 workload on the provisioning hardware.
 \\
 
@@ -135,8 +135,8 @@ DH-parameter length limitation (1024 bit).
 \paragraph*{Explanation: }
 
 For a detailed explanation of the cipher suites chosen, please see
-\ref{section:ChoosingYourOwnCipherSuites}. In short, finding the perfect cipher
-string is impossible and must be a tradeoff between compatibility and security. 
+\ref{section:ChoosingYourOwnCipherSuites}. In short, finding a single perfect cipher
+string is practically impossible and there must be a tradeoff between compatibility and security. 
 On the one hand there are mandatory and optional ciphers defined in a few RFCs, 
 on the other hand there are clients and servers only implementing subsets of the 
 specification.

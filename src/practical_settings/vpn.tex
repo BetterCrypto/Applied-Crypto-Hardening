@@ -101,7 +101,7 @@ vulnerabilities \footnote{\url{http://ikecrack.sourceforge.net/}}.
     Mode & Main Mode & Main Mode \\
     Encryption & AES-256 & AES, CAMELLIA (-256 or -128) \\
     Hash & SHA2-* & SHA2-*, SHA1 \\
-    DH Group & Group 14, 18 & Group 14, 18 \\
+    DH Group & Group 14-18 & Group 14-18 \\
 %    Lifetime & \todo{need recommendations; 1 day seems to be common
 %      practice} & \\
     \bottomrule
@@ -272,9 +272,8 @@ auth SHA384
 Client and server have to use compatible configurations, otherwise they can't communicate.
 The \verb|cipher| and \verb|auth| directives have to be identical.
 
-\todo{FIXME: we should use the CIPHERSTRINGB  macro here}
 \begin{lstlisting}
-tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
+tls-cipher %*CIPHERSTRINGB*)
 cipher AES-256-CBC
 auth SHA384
 

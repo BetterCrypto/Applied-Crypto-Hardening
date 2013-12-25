@@ -1,7 +1,7 @@
 digraph {
 //ranksep=".9 equally";
 //rankdir="LR";
-start [label="Start"];
+start [shape=circle, label="Start"];
 
 start -> intro; 
 

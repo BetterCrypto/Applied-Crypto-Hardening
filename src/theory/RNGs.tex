@@ -62,7 +62,7 @@ leading to predictable session keys\cite{HDWH12}.
 
 \todo{Other architectures, BSD, Windows?}
 
-On Linux there are two devices that return random bytes when read, the
+On Linux there are two devices that return random bytes when read; the
 \verb+/dev/random+ can block until sufficient entropy has been collected
 while \verb+/dev/urandom+ will not block and return whatever (possibly
 insufficient) entropy has been collected so far.
@@ -86,17 +86,17 @@ entropy collector to inject entropy into the kernel entropy pool.
 
 \subsection{Recommendations}
 
-To avoid situations where a newly deployed server has not enough
+To avoid situations where a newly deployed server doesn't have enough
 entropy it is recommended to generate keys (e.g. for SSL or SSH) on
-a system with enough entropy available and transfer the generated keys
+a system with a sufficient amount of entropy available and transfer the generated keys
 to the server.  This is especially advisable for small embedded devices
 or virtual machines.
 
 For embedded devices and virtual machines deploying additional userspace
 software that generates entropy and feeds this to kernel entropy pool
 (e.g. by writing to \verb+/dev/random+ on Linux) is recommended. Note
-that only a process run as root can update the entropy counters in the
-kernel, each non-root user-process can feed entropy to the pool but
+that only a process with root rights can update the entropy counters in the
+kernel; non-root or user processes can still feed entropy to the pool but
 cannot update the counters\cite{Wikipedia:/dev/random}.
 
 For Linux the \verb+haveged+

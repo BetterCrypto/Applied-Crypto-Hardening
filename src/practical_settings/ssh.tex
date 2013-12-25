@@ -17,8 +17,7 @@
 	KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
 \end{lstlisting}
 
-% XXX: curve25519-sha256@libssh.org only available upstream(!)
-Note: Older Linux systems won't support SHA2. PuTTY (Windows) does not support
+\textbf{Note:} Older Linux systems won't support SHA2. PuTTY (Windows) does not support
 RIPE-MD160. Curve25519, AES-GCM and UMAC are only available upstream (OpenSSH
 6.1). DSA host keys have been removed on purpose, the DSS standard does not
 support for DSA keys stronger than 1024bit
@@ -27,7 +26,7 @@ below current standards (see section \ref{section:keylengths}). Legacy systems
 can use this configuration and simply omit unsupported ciphers, key exchange
 algorithms and MACs.  
 \subsubsection{Additional settings}
-Note that the setting \texttt{ServerKeyBits 4096}  has no effect until you re-generate new ssh host keys. There might be issues if you have users which rely on the fingerprint of the old ssh host key being stored in their clients' \texttt{.ssh/known\_hosts} file.
+The setting \texttt{ServerKeyBits 4096}  has no effect until you re-generate new ssh host keys. There might be issues if you have users which rely on the fingerprint of the old ssh host key being stored in their clients' \texttt{.ssh/known\_hosts} file.
 %\subsubsection{Justification for special settings (if needed)}
 \subsubsection{References}
 The openssh sshd\_config  man page is the best reference: \url{http://www.openssh.org/cgi-bin/man.cgi?query=sshd_config}

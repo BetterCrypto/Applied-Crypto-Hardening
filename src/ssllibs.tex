@@ -10,7 +10,7 @@ using that feature. An example for that may be Apache supporting elliptic curve
 cryptography only from version 2.4 onwards, no matter if OpenSSL supported it or
 not.
 
-As you may see from the above, creating a secure setup isn't just a matter of
+As explained above, creating a secure setup isn't just a matter of
 configuration but also depends on several other factors with the most important
 being the SSL libraries and their support of protocols and cipher suites.
 Furthermore, applications actually need to make use of those.
@@ -23,9 +23,10 @@ string however is common to all versions and and library implementations:
 \texttt{TLS\_RSA\_CAMELLIA\_256\_CBC\_SHA1} in GnuTLS is equivalent to
 \texttt{CAMELLIA256-SHA} in OpenSSL and \texttt{TLS\_RSA\_WITH\_CAMELLIA\_256\_CBC\_SHA}
 in the IANA standard with the hex code \texttt{0x00,0x84} as specified
-in RFC5932\cite{rfc5932}.
+in RFC5932\cite{rfc5932}. Section \ref{section:cipher_suite_names}
+lists all currently defined cipher suites with their codes and both names.
 
-In any way, as a sysadmin you are required to check what the SSL libraries on
+Regardless of this clash of nomenclature, as a sysadmin you are required to check what the SSL libraries on
 your systems support on how you may get the most security out of your systems.
 
 \subsection{priority strings}
