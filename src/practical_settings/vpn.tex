@@ -214,7 +214,7 @@ Please note that these settings restrict the available algorithms for
 
 %\subsubsection{Justification for special settings (if needed)}
 
-%\subsubsectionLimitations}
+%\subsubsection{Limitations}
 
 \subsubsection{References}
 \begin{itemize}
@@ -257,6 +257,7 @@ client and server.
 % the cipherlist here is config B without the ECDHE strings, because
 % it must fit in 256 bytes...
 % DO NOT CHANGE TO THE CIPHERSTRING MACRO!
+\begin{lstlisting}
 tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
 cipher AES-256-CBC
 auth SHA384
