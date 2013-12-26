@@ -1,0 +1,127 @@
+%% opensans-samples.tex
+%% Copyright 2011 Mohamed El Morabity
+%
+% This work may be distributed and/or modified under the conditions of the LaTeX
+% Project Public License, either version 1.3 of this license or (at your option)
+% any later version. The latest version of this license is in
+% http://www.latex-project.org/lppl.txt and version 1.3 or later is part of all
+% distributions of LaTeX version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Mohamed El Morabity
+%
+% This work consists of all files listed in manifest.txt.
+
+\documentclass{article}
+
+\usepackage[greek,russian,francais,american]{babel}
+\usepackage[LGR,T2A,T1,OT1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage{microtype}
+\usepackage{opensans}
+\usepackage{textcomp}
+
+\newcommand{\latinSample}{%
+  \foreignlanguage{francais}{%
+    Tous les êtres humains naissent libres et égaux en dignité et en droits. Ils
+    sont doués de raison et de conscience et doivent agir les uns envers les
+    autres dans un esprit de fraternité.%
+  }%
+}
+
+\newcommand{\cyrillicSample}{%
+  \foreignlanguage{russian}{%
+    Все люди рождаются свободными и равными в своем достоинстве и правах. Они
+    наделены разумом и совестью и должны поступать в отношении друг друга в духе
+    братства.%
+  }%
+}
+
+\newcommand{\greekSample}{%
+  \foreignlanguage{greek}{%
+    'Ολοι οι άνθρωποι γεννιούνται ελεύθεροι και ίσοι στην αξιοπρέπεια και τα
+    δικαιώματα. Είναι προικισμένοι με λογική και συνείδηση, και οφείλουν να
+    συμπεριφέρονται μεταξύ τους με πνεύμα αδελφοσύνης.%
+  }%
+}
+
+\newcommand{\miscSample}{%
+  0123456789 \oldstylenums{0123456789} ff fi fl ffi ffl \textperthousand{}
+  \textcopyright{} \textregistered{} \texttrademark{} \texteuro{}
+  \textsterling{} \textyen\\%
+}
+
+\newcommand{\fontSample}[2]{%
+  {\usefont{T1}{fos}{#1}{#2}\latinSample}
+
+  {\usefont{T2A}{fos}{#1}{#2}\cyrillicSample}
+
+  {\usefont{LGR}{fos}{#1}{#2}\greekSample}
+
+  {\fontfamily{fos}\fontseries{#1}\fontshape{#2}\selectfont\miscSample}\\%
+}
+
+\begin{document}
+
+\section*{Opensans Light}
+
+\fontSample{l}{n}
+
+\fontSample{l}{it}
+
+\fontSample{l}{sc}
+
+\fontSample{l}{scit}
+
+\section*{Opensans Condensed Light}
+
+\fontSample{cl}{n}
+
+\fontSample{cl}{it}
+
+\fontSample{cl}{sc}
+
+\fontSample{cl}{scit}
+
+\section*{Opensans Regular}
+
+\fontSample{m}{n}
+
+\fontSample{m}{it}
+
+\fontSample{m}{sc}
+
+\fontSample{m}{scit}
+
+\section*{Opensans Semibold}
+
+\fontSample{sb}{n}
+
+\fontSample{sb}{it}
+
+\fontSample{sb}{sc}
+
+\fontSample{sb}{scit}
+
+\section*{Opensans Bold}
+
+\fontSample{b}{n}
+
+\fontSample{b}{it}
+
+\fontSample{b}{sc}
+
+\fontSample{b}{scit}
+
+\section*{Opensans Extrabold}
+
+\fontSample{eb}{n}
+
+\fontSample{eb}{it}
+
+\fontSample{eb}{sc}
+
+\fontSample{eb}{scit}
+
+\end{document}

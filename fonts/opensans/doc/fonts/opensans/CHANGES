@@ -1,0 +1,5 @@
+Changelog for version 1.1:
+	- fix bad weight substitution when using light weight and slanted shape
+
+Changelog for version 1.2:
+	- remove unneeded call to textcomp package in opensans.sty

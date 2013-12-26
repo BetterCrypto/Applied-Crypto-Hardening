@@ -8,7 +8,9 @@
 \documentclass[	DIV=calc,%
 				paper=a4,%
 				fontsize=9pt,%
-				onecolumn]{scrartcl}	 					% KOMA-article class
+				%onecolumn]{scrartcl}	 					% KOMA-article class
+				onecolumn]{scrreprt}	 					% KOMA-article class
+				%onecolumn]{report}	 					% KOMA-article class
 
 \usepackage{lipsum}													% Package to create dummy text
 
@@ -22,7 +24,6 @@
 \usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption}	% Custom captions under/above floats
 \usepackage{epstopdf}												% Converts .eps to .pdf
 \usepackage{subfig}													% Subfigures
-\usepackage{booktabs}												% Nicer tables
 \usepackage{fix-cm}													% Custom fontsizes
 
 \usepackage[usenames,dvipsnames]{color}
@@ -33,6 +34,19 @@
 \usepackage{amsthm}
 \usepackage{fancyvrb}
 \usepackage{listings}
+\usepackage{longtable}
+
+%% Epigraph patching
+\usepackage{epigraph}
+% \epigraphsize{\small}% Default
+\setlength\epigraphwidth{8cm}
+\setlength\epigraphrule{0pt}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\epigraph}{\@epitext{#1}}{\itshape\@epitext{#1}}{}{}
+\makeatother
+
+
 
 \usepackage{gitinfo}
 
@@ -47,7 +61,7 @@
 
 % side box
 \usepackage{wrapfig}
-\usepackage{tcolorbox}
+%\usepackage{tcolorbox}
 \newenvironment{WrapText}[1][r]
   {\wrapfigure{#1}{0.5\textwidth}\tcolorbox}
   {\endtcolorbox\endwrapfigure}
@@ -57,15 +71,15 @@
 \newcommand{\yes}{\textcolor{green}{\ding{51}}}
 \newcommand{\no}{\textcolor{red}{\ding{55}}}
 
-% human tables
-\usepackage{booktabs}
 
-\renewcommand{\arraystretch}{1.25}
-
+% Colours
 \definecolor{green}{RGB}{32,113,10}
 \definecolor{orange}{RGB}{251,111,16}
 \definecolor{red}{RGB}{247,56,0}
 \definecolor{blue}{RGB}{0,28,128}
+\definecolor{lightgreen}{RGB}{187,218,216}
+\definecolor{intersectgreen}{RGB}{103,133,155}
+\definecolor{darkblue}{RGB}{76,87,117}
 
 \bibliographystyle{alphalink}
 
@@ -74,8 +88,27 @@
 \definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
 \definecolor{lightlightgray}{gray}{0.9}
 
+\usepackage{titlesec}
+%\allsectionsfont{\color{darkblue}\itshape\underline}
+%\sectionfont{\color{darkblue}\itshape\selectfont}
+%\subsectionfont{\color{darkblue}\itshape\selectfont}
+\renewcommand*\sectfont{\sffamily\color{darkblue}\mdseries}
+%\renewcommand*\sectfont{\rmfamily\mdseries\itshape}
+
+
+% makes default font sans-serif
+ \renewcommand{\familydefault}{\sfdefault}
+
+% make font Open Sans
+% \usepackage{opensans}
+\usepackage[defaultsans]{opensans}
+
+% changes font encoding to T1
+% \usepackage[T1]{fontenc}
+% \usepackage{textcomp}
+
 \lstset{
-language=Bash,                             % Code langugage
+%language=Bash,                             % Code langugage
 basicstyle=\ttfamily,                   % Code font, Examples: \footnotesize, \ttfamily
 keywordstyle=\color{OliveGreen},        % Keywords font ('*' = uppercase)
 commentstyle=\color{gray},              % Comments font
@@ -110,11 +143,13 @@ morekeywords={__global__, __device__},  %
 %%% Custom sectioning (sectsty package)
 \usepackage{sectsty}													% Custom sectioning (see below)
 \allsectionsfont{%															% Change font of al section commands
-	\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font
+	%\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font 
+\bfseries 															% should make it Open Sans Bold
 	}
 
 \sectionfont{%																% Change font of \section command
-	\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font
+	%\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font
+\bfseries 	
 	}
 
 % use more of the page
@@ -142,7 +177,7 @@ morekeywords={__global__, __device__},  %
 \usepackage{lettrine}
 \newcommand{\initial}[1]{%
      \lettrine[lines=3,lhang=0.3,nindent=0em]{
-     				\color{DarkGoldenrod}
+     				\color{darkblue}
      				{\textsf{#1}}}{}}
 
 
@@ -150,22 +185,25 @@ morekeywords={__global__, __device__},  %
 %%% Title, author and date metadata
 \usepackage{titling}															% For custom titles
 
-\newcommand{\HorRule}{\color{DarkGoldenrod}%			% Creating a horizontal rule
+\newcommand{\HorRule}{\color{darkblue}%			% Creating a horizontal rule
 									  	\rule{\linewidth}{1pt}%
 									}
 
+
 \pretitle{\vspace{-30pt} \begin{flushleft} \HorRule 
-				\fontsize{36}{36} \usefont{OT1}{phv}{b}{n} \color{DarkRed} \selectfont 
+				\fontsize{35}{36} \bfseries \color{darkblue} \selectfont 
 				}
 			\title{Applied Crypto Hardening}% \\ \vskip 0.5em \large www.bettercrypto.org}
 \posttitle{\par\end{flushleft}\vskip 0.5em}
 
 \preauthor{\begin{flushleft}
-					\large \lineskip 0.5em \usefont{OT1}{phv}{b}{sl} \color{DarkRed}}
-
+					\large \lineskip 0.5em  
+					\color{intersectgreen}}
+					%\vskip 0.5em
 					\author{Wolfgang Breyha, David Durvaux, Tobias Dussa, L. Aaron
-					Kaplan, Christian Mock, Manuel Koschuch, Adi
-					Kriegisch, Ramin Sabet, Berg San, Ralf Schlatterbeck, Aaron Zauner, Pepi Zawodsky}
+					Kaplan, Florian Mendel, Christian Mock, Manuel Koschuch, Adi
+					Kriegisch, Ulrich P\"oschl, Ramin Sabet, Berg San, Ralf Schlatterbeck, 
+					Thomas Schreck, Aaron Zauner, Pepi Zawodsky}
 %\institute{
 %FH Campus Wien
 %\and
@@ -179,45 +217,61 @@ morekeywords={__global__, __device__},  %
 
 \setlength{\parindent}{0cm}
 
-\postauthor{\footnotesize \usefont{OT1}{phv}{m}{sl} \color{Black} 
-\\ \vskip 0.5em  (University of Vienna, CERT.be, KIT-CERT, CERT.at, coretec.at, FH Campus Wien, VRVis, A-Trust, Runtux.com, azet.org, maclemon.at)
+\postauthor{\footnotesize  \color{Black}  \vskip 2.5em
+  (University of Vienna, CERT.be, KIT-CERT, CERT.at, IAIK, coretec.at, FH Campus Wien, VRVis, MilCERT Austria, A-Trust, Runtux.com, Friedrich-Alexander University Erlangen-Nuremberg, azet.org, maclemon.at)
 					\par\end{flushleft}\HorRule}
 
 \date{\today}
 
+%tell TeX where to look for graphics/logos
+\graphicspath{ {/img/} }
+
 % hyperref needs to be the last package you load.
-\usepackage[pdftex,breaklinks,colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage[pdftex,breaklinks,colorlinks,linkcolor=darkblue,citecolor=blue,urlcolor=blue]{hyperref}
+
 
 %%% Begin document
 \begin{document}
+% add logo graphic
+%\includegraphics[scale=0.5]{img/logo}
+
 \maketitle
+
 
 \thispagestyle{fancy} 			% Enabling the custom headers/footers for the first page 
 % The first character should be within \initial{}
 %\initial{H}\textbf{ere is some sample text to show the initial in the introductory paragraph of this template article. The color and lineheight of the initial can be modified in the preamble of this document.}
 
+
+
+\input{neboltai}
+\input{acknowledgements}
 \input{abstract}
-\newpage
 \tableofcontents
-\newpage
+\chapter{Introduction}
+\label{chapter:Intro}
+\input{whoshouldread}
+\input{related_publications}
 \input{howtoread}
 \input{disclaimer}
 \input{motivation}
 \input{methods}
-\input{scope}
-\input{PKIs}
-\input{ECC}
-\input{keylengths}
-\input{RNGs}
-\input{cipher_suites}
-\input{ssllibs}
+%%
+\chapter{Practical recommendations}
+\label{chapter:PracticalSettings}
 \input{practical_settings}
+%%
+\chapter{Theory}
+%\epigraph{``Number theorists are like lotus-eaters - having tasted this food they can never give it up.''}{-- Leopold Kronecker}
+\label{chapter:Theory}
+\input{theory}
+\chapter{Appendix}
 \input{tools}
-\input{further_research}
 \input{links}
 \input{suggested_reading}
-\input{acknowledgements}
-\input{reviewers}
+\input{cipher_suite_names}
+\input{further_research}
+%\input{reviewers}
 \input{bib}
 
 \end{document}

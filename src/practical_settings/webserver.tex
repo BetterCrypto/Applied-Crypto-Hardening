@@ -1,14 +1,23 @@
 %%\subsection{Webservers}
 
-\subsubsection{Apache}
+%%---------------------------------------------------------------------- 
+\subsection{Apache}
 
-\begin{description}
-\item[Tested with Version:]
+\subsubsection{Tested with Versions} 
+\begin{itemize}
+\item Apache 2.4.6 linked against OpenSSL 1.0.1e, Debian jessie
+\end{itemize}
 
-\item[Settings:] \mbox{}
+
+\subsubsection{Settings} 
+
+Enabled modules \emph{SSL} and \emph{Headers} are required.
+
 
 %-All +TLSv1.1 +TLSv1.2
 \begin{lstlisting}[breaklines]
+  SSLCertificateFile server.crt
+  SSLCertificateKeyFile server.key
   SSLProtocol All -SSLv2 -SSLv3 
   SSLHonorCipherOrder On
   SSLCompression off
@@ -18,15 +27,17 @@
   # ALL subdomains HAVE TO support https if you use this!
   # Strict-Transport-Security: max-age=15768000 ; includeSubDomains
 
-  SSLCipherSuite 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+  SSLCipherSuite '@@@CIPHERSTRINGB@@@'
+
 \end{lstlisting}
 
-Note again, that any cipher suite starting with ECDHE  can be omitted in case of doubt.
-%% XXX NOTE TO SELF: remove from future automatically generated lists!
+Note that any cipher suite starting with ECDHE can be omitted, if in doubt.
 
-\item[Additional settings:]
 
-You should redirect everything to httpS:// if possible. In Apache you can do this with the following setting inside of a VirtualHost environment:
+\vskip 1.0em
+\subsubsection{Additional settings}
+
+You might want to redirect everything to httpS:// if possible. In Apache you can do this with the following setting inside of a VirtualHost environment:
 
 \begin{lstlisting}[breaklines]
   <VirtualHost *:80>
@@ -37,28 +48,34 @@ You should redirect everything to httpS:// if possible. In Apache you can do thi
   </VirtualHost>
 \end{lstlisting}
 
-\item[Justification for special settings (if needed):]
+%\subsubsection{Justification for special settings (if needed)}
 
-\item[References:]
-
-\item[How to test:]
-
-See ssllabs in section \ref{section:Tools}
-
-\end{description}
-%XXXX   ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AES:RSA+3DES:!ADH:!AECDH:!MD5:!DSS
+\subsubsection{References}
+\url{https://httpd.apache.org/docs/2.4/ssl/}
 
 
-\subsubsection{lighttpd}
+\subsubsection{How to test}
+
+See section \ref{section:Tools}
+
+%%\end{description}
+
+
+%%---------------------------------------------------------------------- 
+\subsection{lighttpd}
 
 
 
-\begin{description}
-\item[Tested with Version:]
+%%\begin{description}
+\subsubsection{Tested with Version}
+\begin{itemize}
+\item lighttpd/1.4.31-4 with OpenSSL 1.0.1e on Debian Wheezy
+\item lighttpd/1.4.33 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
+\item lighttpd/1.4.28-2 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
+\end{itemize}
 
-\todo{version?}
 
-\item[Settings:] \mbox{}
+\subsubsection{Settings}
 
 
 %% Complete ssl.cipher-list with same algo than Apache
@@ -71,16 +88,21 @@ See ssllabs in section \ref{section:Tools}
     ssl.use-sslv3 = "disable"
     #ssl.use-compression obsolete >= 1.4.3.1
     ssl.pemfile = "/etc/lighttpd/server.pem"
-    ssl.cipher-list = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+    ssl.cipher-list = '@@@CIPHERSTRINGB@@@'
     ssl.honor-cipher-order = "enable"
     setenv.add-response-header  = ( "Strict-Transport-Security" => "max-age=31536000")
   }
 \end{lstlisting}
 
 
-\item[Additional settings:]
+\subsubsection{Additional settings}
 
-As for any other webserver, you should redirect automatically http traffic toward httpS://
+As for any other webserver, you might want to automatically redirect http
+traffic toward httpS:// It is also recommended to set the environment variable
+\emph{HTTPS}, so the applications run by the webserver can easily detect, that
+HTTPS is in use.
+
+
 
 \begin{lstlisting}[breaklines]
   $HTTP["scheme"] == "http" {
@@ -90,52 +112,77 @@ As for any other webserver, you should redirect automatically http traffic towar
         url.redirect = (".*" => "https://%0$0")
     }
   }
+  # Set the environment variable properly
+  setenv.add-environment = (
+            "HTTPS" => "on"
+        )
+  }
 \end{lstlisting}
 
 
-\item[References:] 
-\todo{add references}.
-lighttpd httpS:// redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps}
+\subsubsection{Additional information} 
+The config option \emph{honor-cipher-order} is available since 1.4.30, the
+supported ciphers depend on the used OpenSSL-version (at runtime). ECDH has to
+be available in OpenSSL at compile-time, which should be default. SSL
+compression should by deactivated by default at compile-time (if not, it's
+active).
 
-% add any further references or best practice documents here
+Support for other SSL-libraries like GnuTLS will be available in the upcoming
+2.x branch, which is currently under development.
 
-\item[How to test:] See ssllabs in section \ref{section:Tools}
+
+\subsubsection{References} 
+
+\begin{itemize}
+        \item HTTPS redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps}
+        \item Lighttpd Docs SSL: \url{http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs\_SSL}
+        \item Release 1.4.30 (How to mitigate BEAST attack) \url{http://redmine.lighttpd.net/projects/lighttpd/wiki/Release-1\_4\_30}
+        \item SSL Compression disabled by default: \url{http://redmine.lighttpd.net/issues/2445}
+\end{itemize}
+
+
+
+
+\subsubsection{How to test} 
+See section \ref{section:Tools}
 
 % describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
-\end{description}
+%\end{description}
 
 
-\subsubsection{nginx}
+%%---------------------------------------------------------------------- 
+\subsection{nginx}
 
-\begin{description}
-\item[Tested with Version:] 1.4.4 with OpenSSL 1.0.1e on OS X Server 10.8.5
+%\begin{description}
+\subsubsection{Tested with Version} 
+\begin{itemize}
+\item 1.4.4 with OpenSSL 1.0.1e on OS X Server 10.8.5
+\item 1.2.1-2.2+wheezy2 with OpenSSL 1.0.1e on Debian Wheezy
+\item 1.4.4 with OpenSSL 1.0.1e on Debian Wheezy
+\item 1.2.1-2.2~bpo60+2 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
+\end{itemize}
 
-1.2.1-2.2+wheezy2 with OpenSSL 1.0.1e on Debian Wheezy
-1.4.4 with OpenSSL 1.0.1e on Debian Wheezy
-1.4.4 with OpenSSL 1.0.1e on Debian Wheezy
-1.4.4 with OpenSSL 1.0.1e on Debian Wheezy
-1.4.4 with OpenSSL 1.0.1e on Debian Wheezy
 
-\todo{version?}
-
-\item[Settings:] \mbox{}
+\subsubsection{Settings}
 
 \begin{lstlisting}[breaklines]
   ssl_prefer_server_ciphers on;
-  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-  ssl_ciphers 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA';
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # not possible to do exclusive
+  ssl_ciphers '@@@CIPHERSTRINGB@@@';
   add_header Strict-Transport-Security max-age=2592000;
 \end{lstlisting}
 
-%% XXX FIXME: do we need to specify dhparams? Parameter: ssl_dhparam = file. See: http://wiki.nginx.org/HttpSslModule#ssl_protocols
+If you absolutely want to specify your own DH parameters, you can specify them via
 
-It is recommended to specify your own Diffie-Hellman Parameters file of at least the same bit size as your RSA key. Eg. use no less than 2048bit DH parameters with a 2048bit RSA key.
 \begin{lstlisting}[breaklines]
   ssl_dhparam file;
 \end{lstlisting}
 
+However, we advise you to read section \ref{section:DH} and stay with the standard IKE/IETF parameters (as long as they are $ > 1024 $ bits).
 
-\item[Additional settings:]
+\vskip 0.5em
+
+\subsubsection{Additional settings}
 
 If you decide to trust NIST's ECC curve recommendation, you can add the following line to nginx's configuration file to select special curves:
 
@@ -143,34 +190,38 @@ If you decide to trust NIST's ECC curve recommendation, you can add the followin
   ssl_ecdh_curve          secp384r1;
 \end{lstlisting}
 
-You should redirect everything to httpS:// if possible. In Nginx you can do this with the following setting:
+You might want to redirect everything to httpS:// if possible. In Nginx you can do this with the following setting:
 
 \begin{lstlisting}[breaklines]
   rewrite     ^(.*)   https://$host$1 permanent;
 \end{lstlisting}
 
 
-\item[References:] \todo{add references}
+\subsubsection{References} 
+\begin{itemize}
+\item \url{http://nginx.org/en/docs/http/ngx_http_ssl_module.html}
+\item \url{http://wiki.nginx.org/HttpSslModule}
+\end{itemize}
 
-\item[How to test:] See ssllabs in section \ref{section:Tools}
-
-\end{description}
-
+\subsubsection{How to test}
+See section \ref{section:Tools}
 
 
 
 
-\subsubsection{MS IIS}
+
+%%---------------------------------------------------------------------- 
+\subsection{MS IIS}
 \label{sec:ms-iis}
 
 
 \todo{Daniel: add screenshots and registry keys}
 
-\begin{description}
+%\begin{description}
 
-\item[Tested with Version:] \todo{Daniel: add tested version}
+\subsubsection{Tested with Version} \todo{Daniel: add tested version}
 
-\item[Settings:] \mbox{}
+\subsubsection{Settings}
 
 
 When trying to avoid RC4 and CBC (BEAST-Attack) and requiring perfect
@@ -181,7 +232,7 @@ B doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}}).
 Since \verb|ECDHE_RSA_*| is not supported, a SSL certificate based on
 elliptic curves needs to be used.
 
-The configuration of cipher suites MS IIS will use can be configured in one
+The configuration of cipher suites MS IIS will use, can be configured in one
 of the following ways:
 \begin{enumerate}
 \item Group Policy \footnote{\url{http://msdn.microsoft.com/en-us/library/windows/desktop/bb870930(v=vs.85).aspx}}
@@ -191,7 +242,7 @@ of the following ways:
 
 
 Table~\ref{tab:MS_IIS_Client_Support} shows the process of turning on
-one algorithm after another and the effect on the supported Clients
+one algorithm after another and the effect on the supported clients
 tested using https://www.ssllabs.com.
 
 \verb|SSL 3.0|, \verb|SSL 2.0| and \verb|MD5| are turned off.
@@ -213,7 +264,7 @@ tested using https://www.ssllabs.com.
   \label{tab:MS_IIS_Client_Support}
 \end{table}
 
-Table~\ref{tab:MS_IIS_Client_Support} shows the algoriths from
+Table~\ref{tab:MS_IIS_Client_Support} shows the algorithms from
 strongest to weakest and why they need to be added in this order. For
 example insisting on SHA-2 algorithms (only first two lines) would
 eliminate all versions of Firefox, so the last line is needed to
@@ -231,28 +282,29 @@ not use a RSA Key.
 % \verb|TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA| ... Firefox 10-24, IE 8+, Safari 5, Java 7
 
 
-Not supported Clients:
+Clients not supported:
 \begin{enumerate}
 \item Java 6
 \item WinXP
 \item Bing
 \end{enumerate}
 
-\item[Additional settings:]
+\subsubsection{Additional settings}
 
 %Here you can add additional settings
 
-\item[Justification for special settings (if needed):]
+\subsubsection{Justification for special settings (if needed)}
 
 % in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
 
-\item[References:]
+\subsubsection{References}
 
 \todo{add references}
 
 % add any further references or best practice documents here
 
-\item[How to test:] See ssllabs in section \ref{section:Tools}
+\subsubsection{How to test}
+See section \ref{section:Tools}
 
 
-\end{description}
+%\end{description}

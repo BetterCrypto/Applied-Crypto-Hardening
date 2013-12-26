@@ -1,0 +1,2 @@
+This Makefile builds a comparison table of IANA and OpenSSL
+ciphersuite names.

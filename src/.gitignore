@@ -4,8 +4,14 @@ applied-crypto-hardening.log
 applied-crypto-hardening.out
 applied-crypto-hardening.pdf
 applied-crypto-hardening.toc
+applied-crypto-hardening.bbl
+applied-crypto-hardening.blg
 applied-crypto-hardening.markdown
 *.gummi
 *.swp
 applied-crypto-hardening/
 gitHeadInfo.gin
+old/*
+practical_settings/*_generated.tex
+cipher_suites/*_generated.tex
+*_generated.tex

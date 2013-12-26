@@ -1,8 +1,26 @@
+@string {J_AM =
+    {\hyperref{http://stackexchange.com/}{}{}{Proceedings}
+     \hyperref{http://stackexchange.com/}{}{}{of}
+     \hyperref{http://stackexchange.com/}{}{}{Symposia}
+     \hyperref{http://stackexchange.com/}{}{}{in}
+     \hyperref{http://stackexchange.com/}{}{}{Applied}
+     \hyperref{http://stackexchange.com/}{}{}{Mathematics}}
+}
 @string {I_PolarSSL =
     {\hyperref{http://polarssl.org/}{}{}{PolarSSL}}
 }
+@string {I_Stackexchange =
+    {\hyperref{http://stackexchange.com/}{}{}{Stackexchange}
+     \hyperref{http://stackexchange.com/}{}{}{Q\&A}
+     \hyperref{http://stackexchange.com/}{}{}{Site}}
+}
 @string {I_Wikipedia =
     {\hyperref{http://wikipedia.org/}{}{}{Wikipedia}}
+}
+@string {I_Wolfram =
+    {\hyperref{http://mathworld.wolfram.com/}{}{}{Wolfram} 
+     \hyperref{http://mathworld.wolfram.com/}{}{}{Research} 
+     \hyperref{http://mathworld.wolfram.com/}{}{}{Mathworld}}
 }
 @string {J_TOMACS =
     {\hyperref{http://tomacs.acm.org/}{}{}{ACM}
@@ -88,5 +106,247 @@
    type      = {Technical Background},
    url       = {http://www.issihosts.com/haveged/},
    note      = {Accessed 2013-12-06},
+}
+
+@book{katz2008introduction,
+  title={Introduction to modern cryptography},
+  author={Katz, J. and Lindell, Y.},
+  isbn={9781584885511},
+  lccn={2007017861},
+  series={Chapman and Hall/CRC Cryptography and Network Security Series},
+  url={http://books.google.at/books?id=WIc\_AQAAIAAJ},
+  year={2008},
+  publisher={Chapman \& Hall/CRC}
+}
+
+@techreport{DJBSC,
+   key       = {DJB},
+   title     = {SafeCurves: choosing safe curves for elliptic-curve cryptography},
+   year      = {2013},
+   month     = Dec,
+   type      = {Technical Background},
+   url       = {http://safecurves.cr.yp.to/rigid.html},
+   note      = {Accessed 2013-12-09},
+}
+
+@techreport{Wikipedia:ExportCipher,
+   key       = {Wikipedia:ExportCipher},
+   title     = {Export of cryptography in the {U}nited {S}tates},
+   institution = I_Wikipedia,
+   year      = {2013},
+   month     = Dec,
+   type      = {Wikipedia},
+   url       = {http://en.wikipedia.org/wiki/Export_of_cryptography_in_the_United_States},
+   note      = {Accessed 2013-12-09},
+}
+
+@article{ii2011ecrypt,
+   title     = {ECRYPT II},
+   author    = {II, ECRYPT and SYM, D},
+   year      = {2012},
+   url       = {http://www.ecrypt.eu.org/documents/D.SPA.20.pdf},
+   pages     = {79-86},
+}
+
+@techreport{Wikipedia:Tempest,
+   key       = {Wikipedia:Tempest},
+   title     = {Tempest (codename)},
+   institution = I_Wikipedia,
+   year      = {2013},
+   month     = Dec,
+   type      = {Wikipedia},
+   url       = {https://en.wikipedia.org/wiki/Tempest_(codename)},
+   note      = {Accessed 2013-12-12},
+}
+
+@techreport{Wikipedia:Discrete,
+   key       = {Wikipedia:Discrete},
+   title     = {Discrete logarithm},
+   institution = I_Wikipedia,
+   year      = {2013},
+   month     = Dec,
+   type      = {Wikipedia},
+   url       = {https://en.wikipedia.org/wiki/Discrete_logarithm},
+   note      = {Accessed 2013-12-12},
+}
+
+@techreport{Wikipedia:Certificate,
+   key       = {Wikipedia:Certificate},
+   title     = {Certificate Policy},
+   institution = I_Wikipedia,
+   year      = {2013},
+   month     = Dec,
+   type      = {Wikipedia},
+   url       = {https://en.wikipedia.org/wiki/Certificate_Policy},
+   note      = {Accessed 2013-12-12},
+}
+
+@techreport{Sch13,
+   author    = {Bruce Schneier},
+   title     = {The {NSA} Is Breaking Most Encryption on the Internet},
+   year      = {2013},
+   month     = Sep,
+   type      = {Blog: Schneier on Security},
+   url       = {https://www.schneier.com/blog/archives/2013/09/the_nsa_is_brea.html},
+}
+
+@techreport{Sch13b,
+   author    = {Bruce Schneier},
+   title     = {The {NSA} Is Breaking Most Encryption on the Internet},
+   year      = {2013},
+   month     = Sep,
+   type      = {Answer to Blog Comment},
+   url       = {https://www.schneier.com/blog/archives/2013/09/the_nsa_is_brea.html\#c1675929},
+}
+
+@techreport{BL13,
+   author    = {D. J. Bernstein and Tanja Lange},
+   title     = {Security dangers of the {NIST} curves},
+   year      = {2013},
+   month     = Sep,
+   type      = {Presentation slides},
+   url       = {http://cr.yp.to/talks/2013.09.16/slides-djb-20130916-a4.pdf},
+}
+
+@techreport{W13,
+   author    = {D. W.},
+   title     = {Should we trust the {NIST}-recommended {ECC} parameters?},
+   year      = {2013},
+   month     = Sep,
+   type      = {Stackexchange Question},
+   institution = I_Stackexchange,
+   url       = {http://crypto.stackexchange.com/questions/10263/should-we-trust-the-nist-recommended-ecc-parameters},
+}
+
+@inproceedings{McC90,
+   author    = {Kevin S. McCurley},
+   title     = {The Discrete Logarithm Problem},
+   booktitle = {Cryptology and Computational Number Theory, } # J_AM,
+   year      = {1990},
+   volume    = {42},
+   pages     = {49-74},
+   url       = {http://www.mccurley.org/papers/dlog.pdf},
+}
+
+@techreport{WR13,
+   key       = {Wolfram Research, Mathworld},
+   title     = {Elliptic Curve},
+   year      = {2013},
+   month     = Dec,
+   type      = {Math Dictionary Entry},
+   institution = I_Wolfram,
+   url       = {http://mathworld.wolfram.com/EllipticCurve.html},
+   note      = {Accessed 2013-12-12},
+}
+
+@misc{yarom2013flush+,
+  title      = {Flush+ Reload: a high resolution, low noise, L3 cache side-channel attack},
+  author     = {Yarom, Yuval and Falkner, Katrina},
+  year       = {2013},
+  publisher  = {Cryptology ePrint Archive, Report 2013/448, 2013. http://eprint. iacr. org/2013/448/. 3},
+  url        = {http://eprint.iacr.org/2013/448.pdf}
+}
+
+@techreport{TR02102,
+  title      = {BSI TR-02102 Kryptographische Verfahren},
+  author     = {Bundesamt f\"ur Sicherheit in der Informationstechnik (BSI)},
+  year       = {2013},
+  month      = {Jan},
+  url        = {https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR02102/BSI-TR-02102_pdf}
+}
+
+@techreport{ENISA2013,
+  title      = {ENISA - Algorithms, Key Sizes and Parameters Report},
+  author     = {{ENISA and Vincent Rijmen, Nigel P. Smart, Bogdan warinschi, Gaven Watson}},
+  year       = {2013},
+  month      = {Oct},
+  url        = {http://www.enisa.europa.eu/activities/identity-and-trust/library/deliverables/algorithms-key-sizes-and-parameters-report},
+}
+  
+@book{anderson2008security,
+  title      = {Security engineering},
+  author     = {Anderson, Ross},
+  year       = {2008},
+  publisher  = {Wiley.com},
+  url        = {http://www.cl.cam.ac.uk/~rja14/book.html},
+}
+
+@misc{tschofenig-webpki,
+  author = {{H. Tschofenig and E. Lear}},
+  title = {{Evolving the Web Public Key Infrastructure}},
+  howpublished = {\url{http://tools.ietf.org/html/draft-tschofenig-iab-webpki-evolution-01.txt}},
+  year = 2013,
+  month = Nov,
+}
+
+@misc{diginotar-hack,
+  author = {{Elinor Mills}},
+  title = {{Fraudulent Google certificate points to Internet attack}},
+  howpublished = {\url{http://news.cnet.com/8301-27080\_3-20098894-245/fraudulent-google-certificate-points-to-internet-attack/}},
+  year = 2011,
+  month = Aug,
+}
+
+@misc{googlecahack,
+  author = {{Damon Poeter}},
+  title = {{Fake Google Certificate Puts Gmail at Risk}},
+  howpublished = {\url{http://www.pcmag.com/article2/0,2817,2392063,00.asp}},
+  year = 2011,
+  month = Aug,
+}
+
+@misc{draft-ietf-websec-key-pinning,
+  author = {{C. Evans and C. Palmer}},
+  title = {{Public Key Pinning Extension for HTTP}},
+  howpublished = {\url{http://tools.ietf.org/html/draft-ietf-websec-key-pinning-09}},
+  year = 2013,
+  month = Nov,
+}
+
+@misc{gocode,
+  author = {{Adam Langley, et. al.}},
+  title = {{Go X.509 Verification Source Code}},
+  howpublished = {\url{https://code.google.com/p/go/source/browse/src/pkg/crypto/x509/verify.go#173}},
+  year = 2013,
+  month = 12,
+}
+
+@misc{certtransparency,
+  author = {{Adam Langley, Ben Laurie, Emilia Kasper}},
+  title = {{Certificate Transparency}},
+  howpublished = "\url{http://www.certificate-transparency.org}
+		\url{http://datatracker.ietf.org/doc/rfc6962/}",
+  year = 2013,
+  month = 07,
+}
+
+@misc{snowdenGuardianGreenwald,
+  author = {{Glenn Greenwald}},
+  title = {{Edward Snowden: NSA whistleblower answers reader questions}},
+  howpublished = "\url{http://www.theguardian.com/world/2013/jun/17/edward-snowden-nsa-files-whistleblower},
+		\url{http://www.theguardian.com/world/2013/jun/17/edward-snowden-nsa-files-whistleblower}",
+  year = 2013,
+  month = 07,
+  day = 17,
+}
+
+@InProceedings{https13,
+	author = {Zakir Durumeric and James Kasten and Michael Bailey and J. Alex Halderman},
+	title = {Analysis of the {HTTPS} Certificate Ecosystem},
+	booktitle = {Proceedings of the 13th Internet Measurement Conference},
+	month = oct,
+	year = {2013},
+        url = {https://jhalderm.com/pub/papers/https-imc13.pdf},
+}
+
+@techreport{Wikipedia:TinyCA,
+   key       = {Wikipedia:TinyCA},
+   title     = {TinyCA},
+   institution = I_Wikipedia,
+   year      = {2013},
+   month     = Dec,
+   type      = {Wikipedia},
+   url       = {http://en.wikipedia.org/wiki/TinyCA},
+   note      = {Accessed 2013-12-24},
 }
 

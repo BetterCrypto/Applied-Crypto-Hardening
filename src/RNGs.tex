@@ -3,6 +3,8 @@
 
 % This section was authored by Ralf Schlatterbeck (Ralf Schlatterbeck <rsc@runtux.com>)
 
+\epigraph{``The generation of random numbers is too important to be left to chance.''}{-- Robert R. Coveyou}
+
 A good source of random numbers is essential for many crypto
 operations. The key feature of a good random number generator is the
 non-predictability of the generated numbers. This means that hardware
@@ -64,6 +66,12 @@ keeping entropy across reboots by storing output of /dev/random into a
 file before shutdown and re-injecting the contents during the boot
 process. On the other hand this can be used for running a secondary
 entropy collector to inject entropy into the kernel entropy pool.
+
+%% specifics for libraries
+%% Openssl uses /dev/urandom. See the paper: https://factorable.net/weakkeys12.conference.pdf (section 5.2)
+%% What about other libs? 
+%% What about other OSes? 
+
 
 \subsection{Recommendations}
 
