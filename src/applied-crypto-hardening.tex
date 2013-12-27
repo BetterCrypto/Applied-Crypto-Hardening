@@ -98,9 +98,13 @@
 \renewcommand*\sectfont{\sffamily\color{darkblue}\mdseries}
 %\renewcommand*\sectfont{\rmfamily\mdseries\itshape}
 
+
 % changes font encoding to T1
 \usepackage[T1]{fontenc}
 \usepackage{textcomp}
+% For searchable pdfs
+\input glyphtounicode
+\pdfgentounicode=1
 
 % make font Open Sans
 \usepackage[defaultsans]{opensans}
