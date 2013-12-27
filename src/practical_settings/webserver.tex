@@ -13,7 +13,6 @@
 
 Enabled modules \emph{SSL} and \emph{Headers} are required.
 
-
 %-All +TLSv1.1 +TLSv1.2
 \begin{lstlisting}[breaklines]
   SSLCertificateFile server.crt
@@ -33,8 +32,6 @@ Enabled modules \emph{SSL} and \emph{Headers} are required.
 
 Note that any cipher suite starting with ECDHE can be omitted, if in doubt.
 
-
-\vskip 1.0em
 \subsubsection{Additional settings}
 
 You might want to redirect everything to httpS:// if possible. In Apache you can do this with the following setting inside of a VirtualHost environment:
@@ -179,8 +176,6 @@ If you absolutely want to specify your own DH parameters, you can specify them v
 \end{lstlisting}
 
 However, we advise you to read section \ref{section:DH} and stay with the standard IKE/IETF parameters (as long as they are $ > 1024 $ bits).
-
-\vskip 0.5em
 
 \subsubsection{Additional settings}
 
