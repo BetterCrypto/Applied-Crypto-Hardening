@@ -166,8 +166,16 @@ morekeywords={__global__, __device__},  %
 %tell TeX where to look for graphics/logos
 \graphicspath{ {/img/} }
 
-% hyperref needs to be the last package you load.
-\usepackage[pdftex,breaklinks,colorlinks,linkcolor=darkblue,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{hyperref}
+\hypersetup{%
+  breaklinks,%
+  colorlinks,%
+  linkcolor=darkblue,citecolor=blue,urlcolor=blue,%
+  breaklinks=true,
+  unicode,%
+  final
+}
+\urlstyle{same}
 
 % Package to create dummy text
 \usepackage{blindtext}
