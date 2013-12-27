@@ -12,15 +12,14 @@
 
 %%% Preamble
 \RequirePackage{fix-cm}
-\documentclass[	DIV=calc,%
-				paper=a4,%
-				fontsize=9pt,%
-				%onecolumn]{scrartcl}	 					% KOMA-article class
-				onecolumn]{scrreprt}	 					% KOMA-article class
-				%onecolumn]{report}	 					% KOMA-article class
-
-
+\documentclass{scrreprt}
 \usepackage[utf8]{inputenc}
+
+\KOMAoptions{paper=a4%
+  ,fontsize=10pt
+  ,DIV=12%
+}
+
 
 \usepackage[english]{babel}										% English language/hyphenation
 \usepackage[final,babel=true]{microtype}[2011/08/18]
