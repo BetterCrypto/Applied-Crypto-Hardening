@@ -33,7 +33,8 @@
 \usepackage[english]{babel}
 \usepackage[final,babel=true]{microtype}[2011/08/18]
 \usepackage{graphicx}
-\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption}
+
+
 \usepackage{epstopdf}
 \usepackage{subfig}
 
@@ -99,6 +100,11 @@
 
 % makes default font sans-serif
  \renewcommand{\familydefault}{\sfdefault}
+
+\setcapindent{1em}
+\addtokomafont{caption}{\small\itshape}
+\addtokomafont{captionlabel}{\bfseries}
+
 
 %
 % Fonts are loaded, now is the right time for mictorype.
