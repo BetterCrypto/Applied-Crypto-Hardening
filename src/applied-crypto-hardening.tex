@@ -157,18 +157,6 @@ morekeywords={__global__, __device__},  %
 \renewcommand{\headrulewidth}{0.0pt}
 \renewcommand{\footrulewidth}{0.4pt}
 
-
-% customized spaces between text and footnotes
-\setlength{\skip\footins}{3\baselineskip}
-
-
-%%% Creating an initial of the very first character of the content
-\usepackage{lettrine}
-\newcommand{\initial}[1]{%
-     \lettrine[lines=3,lhang=0.3,nindent=0em]{
-     				\color{darkblue}
-     				{\textsf{#1}}}{}}
-
 %%% Title, author and date metadata
 \usepackage{titling}												% For custom titles
 
@@ -195,8 +183,6 @@ morekeywords={__global__, __device__},  %
 
 
 \thispagestyle{fancy} 			% Enabling the custom headers/footers for the first page 
-% The first character should be within \initial{}
-%\initial{H}\textbf{ere is some sample text to show the initial in the introductory paragraph of this template article. The color and lineheight of the initial can be modified in the preamble of this document.}
 
 % new title page
 \input{./title.tex}
