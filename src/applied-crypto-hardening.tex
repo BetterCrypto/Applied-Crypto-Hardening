@@ -139,23 +139,28 @@ morekeywords={__global__, __device__},  %
 
 \addtokomafont{disposition}{\color{darkblue}\bfseries}
 % use more of the page
-\usepackage{fullpage}
+%\usepackage{fullpage}
 
-%%% Headers and footers
-\usepackage{fancyhdr}								% Needed to define custom headers/footers
-	\pagestyle{fancy}								% Enabling the custom headers/footers
-\usepackage{lastpage}	
+% Detect if we can use the brand new scrlayer
+% else use the good old scrpage2
+\newif\ifscrlayer
+{\def\tempa#1 v#2 #3!{\ifdim #2pt>3.11pt\relax \global\scrlayertrue\else \scrlayerfalse\fi}
+\expandafter\tempa\KOMAScriptVersion!}
+\ifscrlayer
+\usepackage[footsepline]{scrlayer-scrpage}
+\else
+\usepackage[footsepline]{scrpage2}
+\fi
 
-% Header (empty)
-\lhead{}
-\chead{}
-\rhead{}
-% Footer (you may change this to your own needs)
-\lfoot{\footnotesize Applied Crypto Hardening \textbullet ~Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName}
-\cfoot{}
-\rfoot{\footnotesize page \thepage\ of \pageref{LastPage}}	% "Page 1 of 2"
-\renewcommand{\headrulewidth}{0.0pt}
-\renewcommand{\footrulewidth}{0.4pt}
+\usepackage{lastpage}
+
+\ifoot%
+[{\footnotesize Applied Crypto Hardening \textbullet ~Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName}]%
+{{\footnotesize Applied Crypto Hardening \textbullet ~Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName}}
+\cfoot[]{}
+\ofoot%
+[{\footnotesize page \thepage\ of \pageref{LastPage}}]%
+{{\footnotesize page \thepage\ of \pageref{LastPage}}}
 
 % Creating a horizontal rule
 \newcommand{\HorRule}{\color{darkblue}%
@@ -183,10 +188,7 @@ morekeywords={__global__, __device__},  %
 \begin{document}
 
 %\maketitle
-
-
-\thispagestyle{fancy} 			% Enabling the custom headers/footers for the first page 
-
+\pagestyle{scrheadings}
 % new title page
 \input{./title.tex}
 
