@@ -88,6 +88,29 @@
 % Bibliography
 \bibliographystyle{alphalink}
 
+% Disable single lines at the start of a paragraph (Schusterjungen)
+\clubpenalty = 10000
+% Disable single lines at the end of a paragraph (Hurenkinder)
+\widowpenalty = 10000 
+\displaywidowpenalty = 10000 % formulas
+\setlength{\textfloatsep}{\baselineskip}
+\setlength{\floatsep}{\baselineskip}
+
+\frenchspacing
+\raggedbottom
+
+% Better float parameters: (from the TeX FAQ)
+\renewcommand{\topfraction}{.85}
+\renewcommand{\bottomfraction}{.7}
+\renewcommand{\textfraction}{.15}
+\renewcommand{\floatpagefraction}{.66}
+\renewcommand{\dbltopfraction}{.66}
+\renewcommand{\dblfloatpagefraction}{.66}
+\setcounter{topnumber}{9}
+\setcounter{bottomnumber}{9}
+\setcounter{totalnumber}{20}
+\setcounter{dbltopnumber}{9}
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "../applied-crypto-hardening"
