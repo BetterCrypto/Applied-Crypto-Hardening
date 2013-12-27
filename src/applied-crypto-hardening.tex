@@ -42,8 +42,11 @@
 \setlength\epigraphwidth{8cm}
 \setlength\epigraphrule{0pt}
 \usepackage{etoolbox}
+\providecommand{\epitextfont}{\itshape}
+\providecommand{\episourcefont}{}
 \makeatletter
-\patchcmd{\epigraph}{\@epitext{#1}}{\itshape\@epitext{#1}}{}{}
+\patchcmd{\@epitext}{#1}{{\epitextfont #1}}{}{}
+\patchcmd{\@episource}{#1}{{\episourcefont --- #1}}{}{}
 \makeatother
 
 
@@ -220,7 +223,7 @@ morekeywords={__global__, __device__},  %
 \input{practical_settings}
 %%
 \chapter{Theory}
-%\epigraph{``Number theorists are like lotus-eaters - having tasted this food they can never give it up.''}{-- Leopold Kronecker}
+%\epigraph{``Number theorists are like lotus-eaters - having tasted this food they can never give it up.''}{Leopold Kronecker}
 \label{chapter:Theory}
 \input{theory}
 \chapter{Appendix}
