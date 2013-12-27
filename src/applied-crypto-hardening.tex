@@ -131,34 +131,24 @@ morekeywords={__global__, __device__},  %
 
 
 %% \todo{} command.
-%
 % Outputs red TODOs in the document. Requires \usepackage{color}.
-%
 % Usage: \todo{Document the TODO command.}
-%
 % Comment out second line to disable.
 \newcommand{\todo}[1]{}
 \renewcommand{\todo}[1]{{\color{Red} TODO: {#1}}}
 
 
 %%% Custom sectioning (sectsty package)
-\usepackage{sectsty}													% Custom sectioning (see below)
-\allsectionsfont{%															% Change font of al section commands
-	%\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font 
-\bfseries 															% should make it Open Sans Bold
-	}
-
-\sectionfont{%																% Change font of \section command
-	%\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font
-\bfseries 	
-	}
+\usepackage{sectsty}	
+\allsectionsfont{\bfseries}
+\sectionfont{\bfseries}
 
 % use more of the page
 \usepackage{fullpage}
 
 %%% Headers and footers
-\usepackage{fancyhdr}												% Needed to define custom headers/footers
-	\pagestyle{fancy}														% Enabling the custom headers/footers
+\usepackage{fancyhdr}								% Needed to define custom headers/footers
+	\pagestyle{fancy}								% Enabling the custom headers/footers
 \usepackage{lastpage}	
 
 % Header (empty)
@@ -173,6 +163,9 @@ morekeywords={__global__, __device__},  %
 \renewcommand{\footrulewidth}{0.4pt}
 
 
+% customized spaces between text and footnotes
+\setlength{\skip\footins}{3\baselineskip}
+
 
 %%% Creating an initial of the very first character of the content
 \usepackage{lettrine}
@@ -181,48 +174,14 @@ morekeywords={__global__, __device__},  %
      				\color{darkblue}
      				{\textsf{#1}}}{}}
 
-
-
 %%% Title, author and date metadata
-\usepackage{titling}															% For custom titles
+\usepackage{titling}												% For custom titles
 
-\newcommand{\HorRule}{\color{darkblue}%			% Creating a horizontal rule
-									  	\rule{\linewidth}{1pt}%
-									}
+%defines horizontal rule for title
+\newcommand{\HorRule}{\color{darkblue}\rule{\linewidth}{1pt}}
 
-
-\pretitle{\vspace{-30pt} \begin{flushleft} \HorRule 
-				\fontsize{35}{36} \bfseries \color{darkblue} \selectfont 
-				}
-			\title{Applied Crypto Hardening}% \\ \vskip 0.5em \large www.bettercrypto.org}
-\posttitle{\par\end{flushleft}\vskip 0.5em}
-
-\preauthor{\begin{flushleft}
-					\large \lineskip 0.5em  
-					\color{intersectgreen}}
-					%\vskip 0.5em
-					\author{Wolfgang Breyha, David Durvaux, Tobias Dussa, L. Aaron
-					Kaplan, Florian Mendel, Christian Mock, Manuel Koschuch, Adi
-					Kriegisch, Ulrich P\"oschl, Ramin Sabet, Berg San, Ralf Schlatterbeck, 
-					Thomas Schreck, Aaron Zauner, Pepi Zawodsky}
-%\institute{
-%FH Campus Wien
-%\and
-%VRVis
-%\and
-%CERT.at
-%\and
-%Karlsruhe Institute of Technology
-%}
-
-
+% no indent on first line of a paragraph
 \setlength{\parindent}{0cm}
-
-\postauthor{\footnotesize  \color{Black}  \vskip 2.5em
-  (University of Vienna, CERT.be, KIT-CERT, CERT.at, IAIK, coretec.at, FH Campus Wien, VRVis, MilCERT Austria, A-Trust, Runtux.com, Friedrich-Alexander University Erlangen-Nuremberg, azet.org, maclemon.at)
-					\par\end{flushleft}\HorRule}
-
-\date{\today}
 
 %tell TeX where to look for graphics/logos
 \graphicspath{ {/img/} }
