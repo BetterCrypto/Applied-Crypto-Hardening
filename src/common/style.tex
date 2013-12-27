@@ -57,15 +57,20 @@
 
 % Listings
 \lstset{
+%  literate={###CIPHERSTRINGB###}{{\CIPHERSTRINGB}}254,
   basicstyle=\ttfamily,
   keywordstyle=\color{OliveGreen},
   commentstyle=\color{gray},
   backgroundcolor=\color{lightlightgray},
+  upquote=true,
   tabsize=2,
   captionpos=b,
   breaklines=true,
   breakatwhitespace=false,
+  inputencoding=utf8,
+  prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
   morekeywords={__global__, __device__},% 
+  escapechar=\`,
 }
 
 
