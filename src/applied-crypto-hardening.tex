@@ -14,6 +14,13 @@
 \RequirePackage{fix-cm}
 \documentclass{scrreprt}
 \usepackage[utf8]{inputenc}
+% changes font encoding to T1
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+% For searchable pdfs
+\input glyphtounicode
+\pdfgentounicode=1
+\usepackage{fixltx2e}
 
 \KOMAoptions{paper=a4%
   ,fontsize=10pt%
@@ -44,8 +51,6 @@
 \addtokomafont{dictumtext}{\itshape}
 \setkomafont{dictumauthor}{\normalfont}
 \renewcommand{\dictumwidth}{8cm}
-
-
 
 \usepackage{gitinfo}
 
@@ -87,12 +92,6 @@
 \definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
 \definecolor{lightlightgray}{gray}{0.9}
 
-% changes font encoding to T1
-\usepackage[T1]{fontenc}
-\usepackage{textcomp}
-% For searchable pdfs
-\input glyphtounicode
-\pdfgentounicode=1
 
 % make font Open Sans
 \usepackage[defaultsans]{opensans}
