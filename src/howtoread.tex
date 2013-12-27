@@ -9,13 +9,39 @@ While chapter \ref{chapter:PracticalSettings} is intended to serve as a copy \& 
 %We start with some general remarks in sections \ref{section:DH},\ref{section:EllipticCurveCryptography},\ref{section:keylengths} on 
 %If you are a system administrator and want to quickly update your services, jump right to section \ref{section:PracticalSettings}. However, we recommend that you take some time and first read through the theory part (chapter \ref{chapter:Theory}), especially section \ref{section:CipherSuites} on how to choose your own cipher string and then adapt the settings in section \ref{section:PracticalSettings} to your own needs.
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.65\textwidth]{img/howtoread}
-  %\caption{Screenshot of \url{http://www.keylength.com} for 128 bit symmetric key size equivalents}
-  \label{fig:howtoread}
-\end{figure}
-
+\tikzstyle{terminator} = [ellipse, draw,  minimum height=2em,
+    text width=4.5em, text badly centered, inner sep=0pt]
+\tikzstyle{decision} = [diamond, draw,aspect=2,
+     text width=10em, text badly centered, node distance=8em, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw,inner sep=0pt,
+     text width=17em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, very thick, -latex']
+\tikzstyle{decision answer}=[near start,color=black]
+\begin{tikzpicture}[scale=1, node distance = 6em, auto]
+    % Place nodes
+    \node [terminator] (start) {Start};
+    \node [block, right of=start, text width=7em, node distance=8em] (intro) {%
+      \nameref{chapter:Intro}};
+    \node [decision, below of=intro] (evaluate) {%
+      No time, I just want to copy \& paste};
+    \node [block, right of=evaluate, node distance=20em] (practical1) {%
+      read \nameref{chapter:PracticalSettings}};
+    \node [block, below of=evaluate,node distance=8em ] (theory) {%
+      To understand why we chose certain settings, read
+      \nameref{chapter:Theory} first};
+    \node [block, right of=theory, node distance=20em] (practical2) {%
+      re-read \nameref{chapter:PracticalSettings}};
+    \node [block, below of =practical2] (appendix) {%
+      \hyperref[appendix]{Appendix}: references, links};
+    % Draw edges
+    \path [line] (start) -- (intro);
+    \path [line] (intro) -- (evaluate);
+    \path [line] (evaluate) -- node [decision answer]  {yes} (practical1);
+    \path [line] (evaluate) -- node [decision answer]  {no} (theory);
+    \path [line] (practical1) -- (theory);
+    \path [line] (theory) -- (practical2);
+    \path [line] (practical2) -- (appendix);
+\end{tikzpicture}
 
 %%% Local Variables: 
 %%% mode: latex
