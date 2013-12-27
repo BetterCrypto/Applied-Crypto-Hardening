@@ -95,18 +95,15 @@
 \renewcommand*\sectfont{\sffamily\color{darkblue}\mdseries}
 %\renewcommand*\sectfont{\rmfamily\mdseries\itshape}
 
-
-% makes default font sans-serif
- \renewcommand{\familydefault}{\sfdefault}
+% changes font encoding to T1
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
 
 % make font Open Sans
 \usepackage[defaultsans]{opensans}
 
-% changes font encoding to T1 -> to get the right text quotes for code strings
-%\usepackage[T1]{fontenc}
-\usepackage[TS1,T1]{fontenc}
-\usepackage{textcomp}
-\usepackage{upquote}
+% makes default font sans-serif
+ \renewcommand{\familydefault}{\sfdefault}
 
 \lstset{
 %language=Bash,                             % Code langugage
