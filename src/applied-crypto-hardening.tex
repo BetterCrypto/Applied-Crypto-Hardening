@@ -157,14 +157,17 @@ morekeywords={__global__, __device__},  %
 \renewcommand{\headrulewidth}{0.0pt}
 \renewcommand{\footrulewidth}{0.4pt}
 
-%%% Title, author and date metadata
-\usepackage{titling}												% For custom titles
+% Creating a horizontal rule
+\newcommand{\HorRule}{\color{darkblue}%
+  \rule{\linewidth}{1pt}%
+}
 
 %defines horizontal rule for title
 \newcommand{\HorRule}{\color{darkblue}\rule{\linewidth}{1pt}}
 
-% no indent on first line of a paragraph
 \setlength{\parindent}{0cm}
+
+\date{\today}
 
 %tell TeX where to look for graphics/logos
 \graphicspath{ {/img/} }
