@@ -142,15 +142,19 @@ morekeywords={__global__, __device__},  %
 
 \addtokomafont{disposition}{\color{darkblue}\bfseries}
 \usepackage[footsepline]{scrpage2}
+\setkomafont{pagefoot}{\normalfont\sffamily\footnotesize}
 \usepackage{lastpage}
 
 \ifoot%
-[{\footnotesize Applied Crypto Hardening \textbullet ~Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName}]%
-{{\footnotesize Applied Crypto Hardening \textbullet ~Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName}}
+[Applied Crypto Hardening \textbullet{} Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName]%
+{Applied Crypto Hardening \textbullet{} Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName}
 \cfoot[]{}
 \ofoot%
-[{\footnotesize page \thepage\ of \pageref{LastPage}}]%
-{{\footnotesize page \thepage\ of \pageref{LastPage}}}
+[page \thepage\ of \pageref{LastPage}]%
+{page \thepage\ of \pageref{LastPage}}
+
+\renewcommand*{\chapterpagestyle}{scrheadings}
+
 
 % Creating a horizontal rule
 \newcommand{\HorRule}{\color{darkblue}%
