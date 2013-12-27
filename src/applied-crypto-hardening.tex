@@ -100,12 +100,13 @@
  \renewcommand{\familydefault}{\sfdefault}
 
 % make font Open Sans
-% \usepackage{opensans}
 \usepackage[defaultsans]{opensans}
 
-% changes font encoding to T1
-% \usepackage[T1]{fontenc}
-% \usepackage{textcomp}
+% changes font encoding to T1 -> to get the right text quotes for code strings
+%\usepackage[T1]{fontenc}
+\usepackage[TS1,T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{upquote}
 
 \lstset{
 %language=Bash,                             % Code langugage
