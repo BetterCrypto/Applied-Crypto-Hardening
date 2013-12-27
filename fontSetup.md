@@ -3,8 +3,13 @@
 
 To use the proper font for PDF rendering you need to install the necessary typefaces into your TeX distribution.
 
+## Installing Open Sans for TeXLive/MacTeX (> 2011)
 
-## Installing Open Sans
+* `tlmgr install opensans` (with `sudo`, if applicable)
+* Or, on MacTeX, use the _TeX Live Utility_ to search for 'opensans'
+
+
+## Installing Open Sans manually
 
 1. Find your texmf directory: `kpsewhich -var-value TEXMFHOME`
 2. Copy the font folders from the `fonts/opensans` directory in the repository to the respective folders your texmf folder. Be careful not to replace any existing contents in there.
