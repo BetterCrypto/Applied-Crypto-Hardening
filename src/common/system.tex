@@ -23,6 +23,53 @@
   ,parskip=true%
 }
 
+% Language
+\usepackage[english]{babel}
+
+% Color
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{color}
+
+% Packages for fonts
+\usepackage{lmodern}
+\usepackage[defaultsans]{opensans}
+\usepackage[final,babel=true]{microtype}[2011/08/18]
+
+\usepackage{pifont}
+\newcommand{\yes}{\textcolor{green}{\ding{51}}}
+\newcommand{\no}{\textcolor{red}{\ding{55}}}
+
+% Figures and graphics
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{placeins}
+\usepackage{wrapfig}
+
+% Tables
+\usepackage{longtable}
+\usepackage{booktabs}
+\renewcommand{\arraystretch}{1.25}
+
+
+% Verbatims and listings
+\usepackage{fancyvrb}
+\usepackage{listings}
+
+% The page
+\usepackage[footsepline]{scrpage2}
+\usepackage{lastpage}
+
+% Misc
+\usepackage{draftwatermark}
+\usepackage{gitinfo}
+\usepackage{hyperref}
+% Package to create dummy text
+\usepackage{blindtext}
+% debug page layout
+%\usepackage{showframe}
+
 
 %%% Local Variables: 
 %%% mode: latex

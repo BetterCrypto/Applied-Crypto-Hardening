@@ -15,22 +15,6 @@
 \documentclass{scrreprt}
 \input{common/system}
 
-\usepackage[english]{babel}
-\usepackage[final,babel=true]{microtype}[2011/08/18]
-\usepackage{graphicx}
-
-
-\usepackage{epstopdf}
-\usepackage{subfig}
-
-\usepackage[usenames,dvipsnames]{color}
-\usepackage{float}
-\usepackage{subfig}
-\usepackage{acronym}
-\usepackage{fancyvrb}
-\usepackage{listings}
-\usepackage{longtable}
-
 % Epigraph / dictum
 \renewcommand*{\dictumrule}{}
 \renewcommand*{\dictumauthorformat}[1]{--- #1}
@@ -38,30 +22,6 @@
 \addtokomafont{dictumtext}{\itshape}
 \setkomafont{dictumauthor}{\normalfont}
 \renewcommand{\dictumwidth}{8cm}
-
-\usepackage{gitinfo}
-
-% custom changes:
-\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
-\usepackage{placeins}
-\usepackage{draftwatermark}
-
-% human tables
-\usepackage{booktabs}
-\renewcommand{\arraystretch}{1.25}
-
-% side box
-\usepackage{wrapfig}
-%\usepackage{tcolorbox}
-\newenvironment{WrapText}[1][r]
-  {\wrapfigure{#1}{0.5\textwidth}\tcolorbox}
-  {\endtcolorbox\endwrapfigure}
-
-% Add text symbols
-\usepackage{pifont}
-\newcommand{\yes}{\textcolor{green}{\ding{51}}}
-\newcommand{\no}{\textcolor{red}{\ding{55}}}
-
 
 % Colours
 \definecolor{green}{RGB}{32,113,10}
@@ -78,10 +38,6 @@
 \definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
 \definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
 \definecolor{lightlightgray}{gray}{0.9}
-
-
-% make font Open Sans
-\usepackage[defaultsans]{opensans}
 
 % makes default font sans-serif
  \renewcommand{\familydefault}{\sfdefault}
@@ -126,9 +82,7 @@ morekeywords={__global__, __device__},  %
 \renewcommand{\todo}[1]{{\color{Red} TODO: {#1}}}
 
 \addtokomafont{disposition}{\color{darkblue}\bfseries}
-\usepackage[footsepline]{scrpage2}
 \setkomafont{pagefoot}{\normalfont\sffamily\footnotesize}
-\usepackage{lastpage}
 
 \ifoot%
 [Applied Crypto Hardening \textbullet{} Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName]%
@@ -151,7 +105,6 @@ morekeywords={__global__, __device__},  %
 %tell TeX where to look for graphics/logos
 \graphicspath{ {/img/} }
 
-\usepackage{hyperref}
 \hypersetup{%
   breaklinks,%
   colorlinks,%
@@ -162,19 +115,13 @@ morekeywords={__global__, __device__},  %
 }
 \urlstyle{same}
 
-% Package to create dummy text
-\usepackage{blindtext}
-% debug page layout
-%\usepackage{showframe}
 
 %%% Begin document
 \begin{document}
-
 %\maketitle
 \pagestyle{scrheadings}
 % new title page
 \input{title.tex}
-
 
 
 \input{neboltai}
