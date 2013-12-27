@@ -1,0 +1,88 @@
+%%%
+%%% system.tex
+%%% Stylistic configuration
+%%%
+
+% Colors
+\definecolor{green}{RGB}{32,113,10}
+\definecolor{orange}{RGB}{251,111,16}
+\definecolor{red}{RGB}{247,56,0}
+\definecolor{blue}{RGB}{0,28,128}
+\definecolor{lightgreen}{RGB}{187,218,216}
+\definecolor{intersectgreen}{RGB}{103,133,155}
+\definecolor{darkblue}{RGB}{76,87,117}
+\definecolor{Brown}{cmyk}{0,0.81,1,0.60}
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
+\definecolor{lightlightgray}{gray}{0.9}
+
+%%% Fonts
+% Fonts are loaded, now is the right time for mictorype.
+\microtypesetup{stretch=9,shrink=15,step=3,tracking=smallcaps,letterspace=75}
+% makes default font sans-serif
+ \renewcommand{\familydefault}{\sfdefault}
+
+% Captions
+\setcapindent{1em}
+\addtokomafont{caption}{\small\itshape}
+\addtokomafont{captionlabel}{\bfseries}
+
+% Section headers
+\addtokomafont{disposition}{\color{darkblue}\bfseries}
+
+
+% Page foot
+\setkomafont{pagefoot}{\normalfont\sffamily\footnotesize}
+\ifoot%
+[Applied Crypto Hardening \textbullet{} Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName]%
+{Applied Crypto Hardening \textbullet{} Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName}
+\cfoot[]{}
+\ofoot%
+[page \thepage\ of \pageref{LastPage}]%
+{page \thepage\ of \pageref{LastPage}}
+\renewcommand*{\chapterpagestyle}{scrheadings}
+
+% Epigraph / dictum
+\newcommand*{\epigraph}[3][]{\dictum[#3]{#2}\bigskip}
+\renewcommand*{\dictumrule}{}
+\renewcommand*{\dictumauthorformat}[1]{--- #1}
+\addtokomafont{dictumtext}{\itshape}
+\setkomafont{dictumauthor}{\normalfont}
+\renewcommand{\dictumwidth}{8cm}
+
+% Graphics
+%tell TeX where to look for graphics/logos
+\graphicspath{ {/img/} }
+
+% Listings
+\lstset{
+  basicstyle=\ttfamily,
+  keywordstyle=\color{OliveGreen},
+  commentstyle=\color{gray},
+  backgroundcolor=\color{lightlightgray},
+  tabsize=2,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false,
+  morekeywords={__global__, __device__},% 
+}
+
+
+% Hyperref styles
+\hypersetup{%
+  breaklinks,%
+  colorlinks,%
+  linkcolor=darkblue,citecolor=blue,urlcolor=blue,%
+  breaklinks=true,
+  unicode,%
+  final
+}
+\urlstyle{same}
+
+% Bibliography
+\bibliographystyle{alphalink}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../applied-crypto-hardening"
+%%% End: 

@@ -14,64 +14,7 @@
 \RequirePackage{fix-cm}
 \documentclass{scrreprt}
 \input{common/system}
-
-% Epigraph / dictum
-\renewcommand*{\dictumrule}{}
-\renewcommand*{\dictumauthorformat}[1]{--- #1}
-\newcommand*{\epigraph}[3][]{\dictum[#3]{#2}\bigskip}
-\addtokomafont{dictumtext}{\itshape}
-\setkomafont{dictumauthor}{\normalfont}
-\renewcommand{\dictumwidth}{8cm}
-
-% Colours
-\definecolor{green}{RGB}{32,113,10}
-\definecolor{orange}{RGB}{251,111,16}
-\definecolor{red}{RGB}{247,56,0}
-\definecolor{blue}{RGB}{0,28,128}
-\definecolor{lightgreen}{RGB}{187,218,216}
-\definecolor{intersectgreen}{RGB}{103,133,155}
-\definecolor{darkblue}{RGB}{76,87,117}
-
-\bibliographystyle{alphalink}
-
-\definecolor{Brown}{cmyk}{0,0.81,1,0.60}
-\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
-\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
-\definecolor{lightlightgray}{gray}{0.9}
-
-% makes default font sans-serif
- \renewcommand{\familydefault}{\sfdefault}
-
-\setcapindent{1em}
-\addtokomafont{caption}{\small\itshape}
-\addtokomafont{captionlabel}{\bfseries}
-
-
-%
-% Fonts are loaded, now is the right time for mictorype.
-\microtypesetup{stretch=9,shrink=15,step=3,tracking=smallcaps,letterspace=75}
-
-
-\lstset{
-%language=Bash,                             % Code langugage
-basicstyle=\ttfamily,                   % Code font, Examples: \footnotesize, \ttfamily
-keywordstyle=\color{OliveGreen},        % Keywords font ('*' = uppercase)
-commentstyle=\color{gray},              % Comments font
-%numbers=left,                           % Line nums position
-%numberstyle=\tiny,                      % Line-numbers fonts
-%stepnumber=1,                           % Step between two line-numbers
-%numbersep=5pt,                          % How far are line-numbers from code
-backgroundcolor=\color{lightlightgray}, % Choose background color
-frame=none,                             % A frame around the code
-tabsize=2,                              % Default tab size
-captionpos=b,                           % Caption-position = bottom
-breaklines=true,                        % Automatic line breaking?
-breakatwhitespace=false,                % Automatic breaks only at whitespace?
-showspaces=false,                       % Dont make spaces visible
-showtabs=false,                         % Dont make tabls visible
-columns=fixed,                          % Column format
-morekeywords={__global__, __device__},  % 
-}
+\input{common/style}
 
 
 %% \todo{} command.
@@ -81,20 +24,6 @@ morekeywords={__global__, __device__},  %
 \newcommand{\todo}[1]{}
 \renewcommand{\todo}[1]{{\color{Red} TODO: {#1}}}
 
-\addtokomafont{disposition}{\color{darkblue}\bfseries}
-\setkomafont{pagefoot}{\normalfont\sffamily\footnotesize}
-
-\ifoot%
-[Applied Crypto Hardening \textbullet{} Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName]%
-{Applied Crypto Hardening \textbullet{} Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName}
-\cfoot[]{}
-\ofoot%
-[page \thepage\ of \pageref{LastPage}]%
-{page \thepage\ of \pageref{LastPage}}
-
-\renewcommand*{\chapterpagestyle}{scrheadings}
-
-
 % Creating a horizontal rule
 \newcommand{\HorRule}{\color{darkblue}%
   \rule{\linewidth}{1pt}%
@@ -102,28 +31,12 @@ morekeywords={__global__, __device__},  %
 
 \date{\today}
 
-%tell TeX where to look for graphics/logos
-\graphicspath{ {/img/} }
-
-\hypersetup{%
-  breaklinks,%
-  colorlinks,%
-  linkcolor=darkblue,citecolor=blue,urlcolor=blue,%
-  breaklinks=true,
-  unicode,%
-  final
-}
-\urlstyle{same}
-
-
 %%% Begin document
 \begin{document}
 %\maketitle
 \pagestyle{scrheadings}
 % new title page
 \input{title.tex}
-
-
 \input{neboltai}
 \input{acknowledgements}
 \input{abstract}
