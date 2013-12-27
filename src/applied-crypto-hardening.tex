@@ -91,14 +91,6 @@
 \definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
 \definecolor{lightlightgray}{gray}{0.9}
 
-\usepackage{titlesec}
-%\allsectionsfont{\color{darkblue}\itshape\underline}
-%\sectionfont{\color{darkblue}\itshape\selectfont}
-%\subsectionfont{\color{darkblue}\itshape\selectfont}
-\renewcommand*\sectfont{\sffamily\color{darkblue}\mdseries}
-%\renewcommand*\sectfont{\rmfamily\mdseries\itshape}
-
-
 % changes font encoding to T1
 \usepackage[T1]{fontenc}
 \usepackage{textcomp}
@@ -146,7 +138,7 @@ morekeywords={__global__, __device__},  %
 \newcommand{\todo}[1]{}
 \renewcommand{\todo}[1]{{\color{Red} TODO: {#1}}}
 
-\addtokomafont{disposition}{\bfseries}
+\addtokomafont{disposition}{\color{darkblue}\bfseries}
 % use more of the page
 \usepackage{fullpage}
 
