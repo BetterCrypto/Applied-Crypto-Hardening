@@ -41,18 +41,13 @@
 \usepackage{listings}
 \usepackage{longtable}
 
-%% Epigraph patching
-\usepackage{epigraph}
-% \epigraphsize{\small}% Default
-\setlength\epigraphwidth{8cm}
-\setlength\epigraphrule{0pt}
-\usepackage{etoolbox}
-\providecommand{\epitextfont}{\itshape}
-\providecommand{\episourcefont}{}
-\makeatletter
-\patchcmd{\@epitext}{#1}{{\epitextfont #1}}{}{}
-\patchcmd{\@episource}{#1}{{\episourcefont --- #1}}{}{}
-\makeatother
+% Epigraph / dictum
+\renewcommand*{\dictumrule}{}
+\renewcommand*{\dictumauthorformat}[1]{--- #1}
+\newcommand*{\epigraph}[3][]{\dictum[#3]{#2}\bigskip}
+\addtokomafont{dictumtext}{\itshape}
+\setkomafont{dictumauthor}{\normalfont}
+\renewcommand{\dictumwidth}{8cm}
 
 
 
