@@ -16,7 +16,7 @@ algorithms need to be safe (subject to the disclaimer in section
 
 Note: There are some very weak cipher suites in every crypto library, most of
 them for historic reasons or due to legacy standards. The crypto export embargo
-is a good example\cite{Wikipedia:ExportCipher}.  For the following chapter
+is a good example~\cite{Wikipedia:ExportCipher}.  For the following chapter
 support of these low-security algorithms is disabled by setting
 \texttt{!EXP:!LOW:!NULL} as part of the cipher string.
 
@@ -63,7 +63,7 @@ the security (speaking in number of bits) as the RSA host key. \todo{TODO: refer
 required by current TLS standards only consist of the so-called NIST-curves
 (\texttt{secp256r1} and \texttt{secp384r1}) which may be weak because the
 parameters that led to their generation were not properly explained by the
-authors\cite{DJBSC}. \\ Disabling support for Elliptic Curves leads to no
+authors~\cite{DJBSC}. Disabling support for Elliptic Curves leads to no
 ephemeral key exchange being available for the Windows platform. When you
 decide to use Elliptic Curves despite the uncertainty, make sure to at least
 use the stronger curve of the two supported by all clients
