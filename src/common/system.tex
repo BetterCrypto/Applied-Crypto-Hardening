@@ -40,7 +40,7 @@
 \newcommand{\no}{\textcolor{red}{\ding{55}}}
 
 % Figures and graphics
-\usepackage{graphicx}
+\usepackage[final]{graphicx}
 \usepackage{epstopdf}
 \usepackage{float}
 \usepackage{subfig}
@@ -55,7 +55,7 @@
 
 % Verbatims and listings
 \usepackage{fancyvrb}
-\usepackage{listings}
+\usepackage[final]{listings}
 
 % The page
 \usepackage[footsepline]{scrpage2}
@@ -64,12 +64,24 @@
 % Misc
 \usepackage{draftwatermark}
 \usepackage{gitinfo}
+\usepackage{catchfile}
 \usepackage{hyperref}
-% Package to create dummy text
-\usepackage{blindtext}
-% debug page layout
-%\usepackage{showframe}
 
+% for development
+\usepackage{ifdraft}
+\ifdraft{%
+  %% Heavy debugging
+  %\usepackage{showframe}
+  \usepackage{blindtext}
+  \usepackage{draftwatermark}
+  \SetWatermarkLightness{0.95}
+  %\AtEndDocument{\listoftodos}
+}{
+  \let\blindtext\relax
+  \let\Blindtext\relax
+  \let\blinddocument\relax
+  \let\Blinddocument\relax
+}
 
 %%% Local Variables: 
 %%% mode: latex
