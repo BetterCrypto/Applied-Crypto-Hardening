@@ -135,20 +135,7 @@ morekeywords={__global__, __device__},  %
 \renewcommand{\todo}[1]{{\color{Red} TODO: {#1}}}
 
 \addtokomafont{disposition}{\color{darkblue}\bfseries}
-% use more of the page
-%\usepackage{fullpage}
-
-% Detect if we can use the brand new scrlayer
-% else use the good old scrpage2
-\newif\ifscrlayer
-{\def\tempa#1 v#2 #3!{\ifdim #2pt>3.11pt\relax \global\scrlayertrue\else \scrlayerfalse\fi}
-\expandafter\tempa\KOMAScriptVersion!}
-\ifscrlayer
-\usepackage[footsepline]{scrlayer-scrpage}
-\else
 \usepackage[footsepline]{scrpage2}
-\fi
-
 \usepackage{lastpage}
 
 \ifoot%
