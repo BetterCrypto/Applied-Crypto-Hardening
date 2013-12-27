@@ -22,7 +22,7 @@
 \usepackage[utf8]{inputenc}
 
 \usepackage[english]{babel}										% English language/hyphenation
-\usepackage[protrusion=true,expansion=true]{microtype}				% Better typography
+\usepackage[final,babel=true]{microtype}[2011/08/18]
 \usepackage{amsmath,amsfonts,amsthm}					% Math packages
 \usepackage[pdftex]{graphicx}						% Enable pdflatex 
 %\usepackage[svgnames]{xcolor}									% Enabling colors by their 'svgnames'
@@ -112,6 +112,11 @@
 
 % makes default font sans-serif
  \renewcommand{\familydefault}{\sfdefault}
+
+%
+% Fonts are loaded, now is the right time for mictorype.
+\microtypesetup{stretch=9,shrink=15,step=3,tracking=smallcaps,letterspace=75}
+
 
 \lstset{
 %language=Bash,                             % Code langugage
@@ -244,3 +249,7 @@ morekeywords={__global__, __device__},  %
 \input{bib}
 
 \end{document}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
