@@ -1,14 +1,13 @@
-\newpage
 \section{Disclaimer and scope}
 \label{section:disclaimer}
+\label{sec:disclaimer-scope}
 
-\epigraph{``A chain is no stronger than its weakest link, and life is after all a chain''}{-- William James}
-
+\epigraph{``A chain is no stronger than its weakest link, and life is after all a chain''}{William James}
 \epigraph{``Encryption works. Properly implemented strong crypto systems are
 one of the few things that you can rely on. Unfortunately, endpoint security is
-so terrifically weak that NSA can frequently find ways around it.''}{-- Edward
+so terrifically weak that NSA can frequently find ways around it.''}{Edward
 Snowden, answering questions live on the Guardian's
-website\cite{snowdenGuardianGreenwald}}
+website~\cite{snowdenGuardianGreenwald}}
 
 
 This guide specifically does not address physical security, protecting software
@@ -16,7 +15,7 @@ and hardware against exploits, basic IT security housekeeping, information
 assurance techniques, traffic analysis attacks, issues with key-roll over and
 key management, securing client PCs and mobile devices (theft, loss), proper
 OPSec\footnote{\url{http://en.wikipedia.org/wiki/Operations_security}}, social
-engineering attacks, anti-tempest\cite{Wikipedia:Tempest} attack techniques,
+engineering attacks, anti-tempest~\cite{Wikipedia:Tempest} attack techniques,
 protecting against different side-channel attacks (timing--, cache timing--,
 differential fault analysis, differential power analysis or power monitoring
 attacks), downgrade attacks, jamming the encrypted channel or other similar
@@ -25,10 +24,9 @@ authors can not overstate the importance of these other techniques.  Interested
 readers are advised to read about these attacks in detail since they give a lot
 of insight into other parts of cryptography engineering which need to be dealt
 with.\footnote{An easy to read yet very insightful recent example is the
-"FLUSH+RELOAD" technique \cite{yarom2013flush+} for leaking cryptographic keys
+"FLUSH+RELOAD" technique~\cite{yarom2013flush+} for leaking cryptographic keys
 from one virtual machine to another via L3 cache timing attacks.}
 
-\vskip 0.5em
 This guide does not talk much about the well-known insecurities of trusting a
 public-key infrastructure (PKI)\footnote{Interested readers are referred to
 \url{https://bugzilla.mozilla.org/show_bug.cgi?id=647959} or
@@ -37,32 +35,28 @@ public-key infrastructure (PKI)\footnote{Interested readers are referred to
 does this text fully explain how to run your own Certificate Authority (CA). 
 
 
-\vskip 0.5em
 Most of this zoo of information security issues are addressed in the very
-comprehensive book ``Security Engineering'' by Ross Anderson
-\cite{anderson2008security}. 
+comprehensive book ``Security Engineering'' by Ross Anderson~\cite{anderson2008security}. 
 
 For some experts in cryptography this text might seem too informal. However, we
 strive to keep the language as non-technical as possible and fitting for our
 target audience: system administrators who can collectively improve the
 security level for all of their users. 
 
-\vskip 0.5em
 
 
-\epigraph{``Security is a process, not a product.''}{-- Bruce Schneier}
+\epigraph{``Security is a process, not a product.''}{Bruce Schneier}
 
 This guide can only describe what the authors currently
 \emph{believe} to be the best settings based on their personal experience and
 after intensive cross checking with literature and experts. For a complete list
-of people who reviewed this paper, see the section \ref{section:Reviewers}.
+of people who reviewed this paper, see the \nameref{section:Reviewers}.
 Even though multiple specialists reviewed the guide, the authors can give
 \emph{no guarantee whatsoever} that they made the right recommendations. Keep in
 mind that tomorrow there might be new attacks on some ciphers and many of the
 recommendations in this guide might turn out to be wrong. Security is a
 process.
 
-\vskip 0.5em
 
 We therefore recommend that system administrators keep up to date with recent
 topics in IT security and cryptography. 
@@ -72,7 +66,7 @@ In this sense, this guide is very focused on getting the cipher strings done
 right even though there is much more to do in order to make a system more
 secure.  We the authors, need this document as much as the reader needs it.
 
-\paragraph{Scope:}
+\subsection*{Scope}
 \label{section:Scope}
 
 In this guide, we restricted ourselves to:
@@ -92,3 +86,8 @@ We explicitly excluded:
 %\item Services which should be run only in an internal network and never face the Internet.
 \end{itemize}
 
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "applied-crypto-hardening"
+%%% End: 

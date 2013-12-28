@@ -9,33 +9,33 @@ authenticated encryption schemes. It consists of the following components:
 
 \begin{description}
 
-\item{\it Key exchange protocol:}
+\item[Key exchange protocol:]
 ``An (interactive) key exchange protocol is a method whereby parties who do not 
 share any secret information can generate a shared, secret key by communicating 
 over a public channel. The main property guaranteed here is that an 
 eavesdropping adversary who sees all the messages sent over the communication 
-line does not learn anything about the resulting secret key.'' \cite{katz2008introduction}
+line does not learn anything about the resulting secret key.''~\cite{katz2008introduction}
 
 Example: \texttt{DHE}
 
-\item{\it Authentication:}
+\item[Authentication:]
 The client authenticates the server by its certificate. Optionally the server 
 may authenticate the client certificate.
 
 Example: \texttt{RSA}
 
-\item{\it Cipher:}
+\item[Cipher:]
 The cipher is used to encrypt the message stream. It also contains the key size
 and mode used by the suite.
 
 Example: \texttt{AES256}
 
-\item{\it Message authentication code (MAC):}
+\item[Message authentication code (MAC):]
 A MAC ensures that the message has not been tampered with (integrity).
 
 Examples: \texttt{SHA256}
 
-\item{\it Authenticated Encryption with Associated Data (AEAD):}
+\item[Authenticated Encryption with Associated Data (AEAD):]
 AEAD is a class of authenticated encryption block-cipher modes
 which take care of encryption as well as authentication (e.g. GCM, CCM mode). 
 
@@ -48,7 +48,6 @@ Example: \texttt{AES256-GCM}
 \framebox[1.1\width]{ \texttt{DHE} }--\framebox[1.1\width]{ \texttt{RSA} }--\framebox[1.1\width]{ \texttt{AES256} }--\framebox[1.1\width]{ \texttt{SHA256} } }
 \caption{Composition of a typical cipher string}
 \end{figure}
-
-\item {\textbf{A note on nomenclature:}} there are two common naming schemes for cipher strings -- IANA names (see section \ref{section:Links}) and the more well known OpenSSL names. In this document we will always use OpenSSL names unless a specific service uses IANA names.
-
 \end{description}
+%
+\paragraph*{A note on nomenclature:} there are two common naming schemes for cipher strings -- IANA names (see section \ref{section:Links}) and the more well known OpenSSL names. In this document we will always use OpenSSL names unless a specific service uses IANA names.

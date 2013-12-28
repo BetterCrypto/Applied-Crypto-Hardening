@@ -5,15 +5,14 @@ Public-Key Infrastructures try to solve the problem of verifying
 whether a public key belongs to a given entity, so as to prevent Man
 In The Middle attacks.
 
-There are two approaches to achieve that: {\it Certificate Authorities}
-and the {\it Web of Trust}.
+There are two approaches to achieve that: \emph{Certificate Authorities}
+and the \emph{Web of Trust}.
 
 Certificate Authorities (CAs) sign end-entities' certificates, thereby
 associating some kind of identity (e.g. a domain name or an email
 address) with a public key. CAs are used with TLS and S/MIME
 certificates, and the CA system has a big list of possible and real
-problems which are summarized in section \ref{sec:hardeningpki} and
-\cite{https13}.
+problems which are summarized in section \ref{sec:hardeningpki} and~\cite{https13}.
 
 The Web of Trust is a decentralized system where people sign each
 others keys, so that there is a high chance that there is a ``trust
@@ -105,7 +104,7 @@ issued a new root certificate, you can issue new certificates as follows:
 % sudo ./CA.pl -newreq
 \end{lstlisting}
 
-Alternatively, software such as TinyCA\cite{Wikipedia:TinyCA} that
+Alternatively, software such as TinyCA~\cite{Wikipedia:TinyCA} that
 acts as a ``wrapper'' around OpenSSL and tries to make life easier is
 available.
 
@@ -179,4 +178,4 @@ Transparency~\cite{certtransparency}.
 %   plugins: CipherFox, Conspiracy, Perspectives.}
 
 
-% ``Certificate Policy''\cite{Wikipedia:Certificate_Policy} (CA)
+% ``Certificate Policy''~\cite{Wikipedia:Certificate_Policy} (CA)

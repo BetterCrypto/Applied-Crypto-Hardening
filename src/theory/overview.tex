@@ -2,18 +2,17 @@
 \label{sec:TheoryOverview}
 
 
-\epigraph{``The balance between freedom and security is a delicate one.''}{-- Mark Udall, american politician}
+\epigraph{``The balance between freedom and security is a delicate one.''}{Mark Udall, american politician}
 
 This chapter provides the necessary background information on why chapter \ref{chapter:PracticalSettings} recommended \textit{cipher string B}.
 
-\vskip 0.5em
-We start off by explaining the structure of cipher strings in section \ref{subsection:architecture} (architecture) and define Perfect Forward Secrecy (PFS) in \ref{subsection:PFS}. Next we present \textit{Cipher String A} and \textit{Cipher String B} in section \ref{section:recommendedciphers}. This concludes the section on cipher strings. In theory, the reader should now be able to construct his or her own cipher string. However, the question why certain settings were chosen still remains. To answer this part, we need to look at recommended keylengths, problems in specific algorithms and hash functions and other cryptographic parameters. As mentioned initially in section \ref{section:relatedPublications}, the ENISA (\cite{ENISA2013}), ECRYPT 2 (\cite{ii2011ecrypt}) and BSI (\cite{TR02102}) reports go much more into these topics and should be consulted in addition.
+We start off by explaining the structure of cipher strings in section \ref{subsection:architecture} (architecture) and define Perfect Forward Secrecy (PFS) in \ref{subsection:PFS}. Next we present \textit{Cipher String A} and \textit{Cipher String B} in section \ref{section:recommendedciphers}. This concludes the section on cipher strings. In theory, the reader should now be able to construct his or her own cipher string. However, the question why certain settings were chosen still remains. To answer this part, we need to look at recommended keylengths, problems in specific algorithms and hash functions and other cryptographic parameters. As mentioned initially in section \ref{section:relatedPublications}, the ENISA~\cite{ENISA2013}, ECRYPT 2~\cite{ii2011ecrypt} and BSI~\cite{TR02102} reports go much more into these topics and should be consulted in addition.
 
-\vskip 0.5em
-We try to answer the questions by explaining issues with random number generators (section \ref{section:RNGs}), keylengths (section \ref{section:keylengths}), current issues in ECC (section \ref{section:EllipticCurveCryptography}), a note of warning on SHA-1 (section \ref{section:SHA}) and some comments on Diffie Hellman key exchanges (section \ref{section:DH}). All of this is important in understanding why certain choices were made for \textit{Cipher String A and B}. However, for most system administrators, the question of compatibility is one of the most pressing ones. Having the freedom to be compatible with any client (even running on outdated operating systems) of course, reduces the security of our cipher strings. We address these topics in section \ref{subsection:compatibility}. 
-All these sections will allow a system administrator to balance his or her needs for strong encryption with usability and compatibility.
+We try to answer the questions by explaining issues with random number generators (section \ref{section:RNGs}), keylengths (section \ref{section:keylengths}), current issues in ECC (section \ref{section:EllipticCurveCryptography}), a note of warning on SHA-1 (section \ref{section:SHA}) and some comments on Diffie Hellman key exchanges (section \ref{section:DH}). All of this is important in understanding why certain choices were made for \textit{Cipher String A and B}. However, for most system administrators, the question of compatibility is one of the most pressing ones.  Having the freedom to be compatible with any client (even running on outdated operating systems) of course, reduces the security of our cipher strings. We address these topics in section \ref{subsection:compatibility}. All these sections will allow a system administrator to balance his or her needs for strong encryption with usability and compatibility.
 
-\vskip 0.5em
+Last but not least, we finish this chapter by talking about issues in PKIs (section \ref{section:PKIs}), Certificate Authorities and on hardening a PKI.  Note that these last few topics deserve a book on their own. Hence this guide can only mention a few current topics in this area.
 
-Last but not least, we finish this chapter by talking about issues in PKIs (section \ref{section:PKIs}), Certificate Authorities and on hardening a PKI. Note that these last few topics deserve a book on their own. Hence this guide can only mention a few current topics in this area.
-
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../applied-crypto-hardening"
+%%% End: 

@@ -1,210 +1,15 @@
-%%% LaTeX Template: Two column article
 %%%
-%%% Source: http://www.howtotex.com/
-%%% Feel free to distribute this template, but please keep to referal to http://www.howtotex.com/ here.
-%%% Date: February 2011
+%%% Applied Crypto Hardening
+%%% bettercrypto.org
+%%%
+\RequirePackage{fix-cm}
+\documentclass[draft]{scrreprt}
+\input{common/system}
+\input{common/style}
+\input{common/commands}
 
-%%% Preamble
-\documentclass[	DIV=calc,%
-				paper=a4,%
-				fontsize=9pt,%
-				%onecolumn]{scrartcl}	 					% KOMA-article class
-				onecolumn]{scrreprt}	 					% KOMA-article class
-				%onecolumn]{report}	 					% KOMA-article class
-
-\usepackage{lipsum}													% Package to create dummy text
-
-
-
-\usepackage[english]{babel}										% English language/hyphenation
-\usepackage[protrusion=true,expansion=true]{microtype}				% Better typography
-\usepackage{amsmath,amsfonts,amsthm}					% Math packages
-\usepackage[pdftex]{graphicx}						% Enable pdflatex 
-%\usepackage[svgnames]{xcolor}									% Enabling colors by their 'svgnames'
-\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption}	% Custom captions under/above floats
-\usepackage{epstopdf}												% Converts .eps to .pdf
-\usepackage{subfig}													% Subfigures
-\usepackage{fix-cm}													% Custom fontsizes
-
-\usepackage[usenames,dvipsnames]{color}
-\usepackage{float}
-\usepackage{subfig}
-%\usepackage{tikz}
-\usepackage{acronym}
-\usepackage{amsthm}
-\usepackage{fancyvrb}
-\usepackage{listings}
-\usepackage{longtable}
-
-%% Epigraph patching
-\usepackage{epigraph}
-% \epigraphsize{\small}% Default
-\setlength\epigraphwidth{8cm}
-\setlength\epigraphrule{0pt}
-\usepackage{etoolbox}
-\makeatletter
-\patchcmd{\epigraph}{\@epitext{#1}}{\itshape\@epitext{#1}}{}{}
-\makeatother
-
-
-
-\usepackage{gitinfo}
-
-% custom changes:
-\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
-\usepackage{placeins}
-\usepackage{draftwatermark}
-
-% human tables
-\usepackage{booktabs}
-\renewcommand{\arraystretch}{1.25}
-
-% side box
-\usepackage{wrapfig}
-%\usepackage{tcolorbox}
-\newenvironment{WrapText}[1][r]
-  {\wrapfigure{#1}{0.5\textwidth}\tcolorbox}
-  {\endtcolorbox\endwrapfigure}
-
-% Add text symbols
-\usepackage{pifont}
-\newcommand{\yes}{\textcolor{green}{\ding{51}}}
-\newcommand{\no}{\textcolor{red}{\ding{55}}}
-
-
-% Colours
-\definecolor{green}{RGB}{32,113,10}
-\definecolor{orange}{RGB}{251,111,16}
-\definecolor{red}{RGB}{247,56,0}
-\definecolor{blue}{RGB}{0,28,128}
-\definecolor{lightgreen}{RGB}{187,218,216}
-\definecolor{intersectgreen}{RGB}{103,133,155}
-\definecolor{darkblue}{RGB}{76,87,117}
-
-\bibliographystyle{alphalink}
-
-\definecolor{Brown}{cmyk}{0,0.81,1,0.60}
-\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
-\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
-\definecolor{lightlightgray}{gray}{0.9}
-
-\usepackage{titlesec}
-%\allsectionsfont{\color{darkblue}\itshape\underline}
-%\sectionfont{\color{darkblue}\itshape\selectfont}
-%\subsectionfont{\color{darkblue}\itshape\selectfont}
-\renewcommand*\sectfont{\sffamily\color{darkblue}\mdseries}
-%\renewcommand*\sectfont{\rmfamily\mdseries\itshape}
-
-
-% makes default font sans-serif
- \renewcommand{\familydefault}{\sfdefault}
-
-% make font Open Sans
-\usepackage[defaultsans]{opensans}
-
-% changes font encoding to T1 -> to get the right text quotes for code strings
-%\usepackage[T1]{fontenc}
-\usepackage[TS1,T1]{fontenc}
-\usepackage{textcomp}
-\usepackage{upquote}
-
-\lstset{
-%language=Bash,                             % Code langugage
-basicstyle=\ttfamily,                   % Code font, Examples: \footnotesize, \ttfamily
-keywordstyle=\color{OliveGreen},        % Keywords font ('*' = uppercase)
-commentstyle=\color{gray},              % Comments font
-%numbers=left,                           % Line nums position
-%numberstyle=\tiny,                      % Line-numbers fonts
-%stepnumber=1,                           % Step between two line-numbers
-%numbersep=5pt,                          % How far are line-numbers from code
-backgroundcolor=\color{lightlightgray}, % Choose background color
-frame=none,                             % A frame around the code
-tabsize=2,                              % Default tab size
-captionpos=b,                           % Caption-position = bottom
-breaklines=true,                        % Automatic line breaking?
-breakatwhitespace=false,                % Automatic breaks only at whitespace?
-showspaces=false,                       % Dont make spaces visible
-showtabs=false,                         % Dont make tabls visible
-columns=fixed,                          % Column format
-morekeywords={__global__, __device__},  % 
-}
-
-
-%% \todo{} command.
-% Outputs red TODOs in the document. Requires \usepackage{color}.
-% Usage: \todo{Document the TODO command.}
-% Comment out second line to disable.
-\newcommand{\todo}[1]{}
-\renewcommand{\todo}[1]{{\color{Red} TODO: {#1}}}
-
-
-%%% Custom sectioning (sectsty package)
-\usepackage{sectsty}	
-\allsectionsfont{\bfseries}
-\sectionfont{\bfseries}
-
-% use more of the page
-\usepackage{fullpage}
-
-%%% Headers and footers
-\usepackage{fancyhdr}								% Needed to define custom headers/footers
-	\pagestyle{fancy}								% Enabling the custom headers/footers
-\usepackage{lastpage}	
-
-% Header (empty)
-\lhead{}
-\chead{}
-\rhead{}
-% Footer (you may change this to your own needs)
-\lfoot{\footnotesize Applied Crypto Hardening \textbullet ~Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName}
-\cfoot{}
-\rfoot{\footnotesize page \thepage\ of \pageref{LastPage}}	% "Page 1 of 2"
-\renewcommand{\headrulewidth}{0.0pt}
-\renewcommand{\footrulewidth}{0.4pt}
-
-
-% customized spaces between text and footnotes
-\setlength{\skip\footins}{3\baselineskip}
-
-
-%%% Creating an initial of the very first character of the content
-\usepackage{lettrine}
-\newcommand{\initial}[1]{%
-     \lettrine[lines=3,lhang=0.3,nindent=0em]{
-     				\color{darkblue}
-     				{\textsf{#1}}}{}}
-
-%%% Title, author and date metadata
-\usepackage{titling}												% For custom titles
-
-%defines horizontal rule for title
-\newcommand{\HorRule}{\color{darkblue}\rule{\linewidth}{1pt}}
-
-% no indent on first line of a paragraph
-\setlength{\parindent}{0cm}
-
-%tell TeX where to look for graphics/logos
-\graphicspath{ {/img/} }
-
-% hyperref needs to be the last package you load.
-\usepackage[pdftex,breaklinks,colorlinks,linkcolor=darkblue,citecolor=blue,urlcolor=blue]{hyperref}
-
-
-%%% Begin document
 \begin{document}
-
-%\maketitle
-
-
-\thispagestyle{fancy} 			% Enabling the custom headers/footers for the first page 
-% The first character should be within \initial{}
-%\initial{H}\textbf{ere is some sample text to show the initial in the introductory paragraph of this template article. The color and lineheight of the initial can be modified in the preamble of this document.}
-
-% new title page
-\input{./title.tex}
-
-
-
+\input{title}
 \input{neboltai}
 \input{acknowledgements}
 \input{abstract}
@@ -223,10 +28,11 @@ morekeywords={__global__, __device__},  %
 \input{practical_settings}
 %%
 \chapter{Theory}
-%\epigraph{``Number theorists are like lotus-eaters - having tasted this food they can never give it up.''}{-- Leopold Kronecker}
+%\epigraph{``Number theorists are like lotus-eaters - having tasted this food they can never give it up.''}{Leopold Kronecker}
 \label{chapter:Theory}
 \input{theory}
-\chapter{Appendix}
+\appendix
+\label{appendix}
 \input{tools}
 \input{links}
 \input{suggested_reading}
@@ -236,3 +42,7 @@ morekeywords={__global__, __device__},  %
 \input{bib}
 
 \end{document}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

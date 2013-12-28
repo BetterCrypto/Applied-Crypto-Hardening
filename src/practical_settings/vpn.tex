@@ -30,7 +30,7 @@ If you need to use Pre-Shared Key authentication:
 
 The size of the PSK should not be shorter than the output size of
 the hash algorithm used in IKE \footnote{It is used in a HMAC, see
-RFC2104\cite{rfc2104} and the discussion starting
+RFC2104~\cite{rfc2104} and the discussion starting
 in \url{http://www.vpnc.org/ietf-ipsec/02.ipsec/msg00268.html}.}.
 
 For a key composed of upper- and lowercase letters, numbers, and two
@@ -58,7 +58,7 @@ table~\ref{tab:IPSEC_psk_len} gives the minimum lengths in characters.
 IPSEC Cryptographic Suites are pre-defined settings for all the items
 of a configuration; they try to provide a balanced security level and
 make setting up VPNs easier.
-\footnote{RFC6379\cite{rfc6379}, RFC4308\cite{rfc4308}}
+\footnote{RFC6379~\cite{rfc6379}, RFC4308~\cite{rfc4308}}
 
 When using any of those suites, make sure to enable ``Perfect Forward
 Secrecy`` for Phase 2, as this is not specified in the suites. The
@@ -332,7 +332,7 @@ interval (\verb|reneg-bytes| or \verb|reneg-pkts|).
 \paragraph{Fixing ``easy-rsa''}\mbox{}
 
 When installing an OpenVPN server instance, you are probably using
-{\it easy-rsa} to generate keys and certificates.
+\emph{easy-rsa} to generate keys and certificates.
 The file \verb|vars| in the easyrsa installation directory has a
 number of settings that should be changed to secure values:
 
@@ -352,9 +352,9 @@ SHA256.
 
 \item[Limitations:] \mbox{}
 
-Note that the ciphersuites shown by \verb|openvpn --show-tls| are {\it
-known}, but not necessarily {\it
-supported} \footnote{\url{https://community.openvpn.net/openvpn/ticket/304}}.
+  Note that the ciphersuites shown by \verb|openvpn --show-tls| are
+  \emph{known}, but not necessarily \emph{supported}
+  \footnote{\url{https://community.openvpn.net/openvpn/ticket/304}}.
 
 Which cipher suite is actually used can be seen in the logs:
 
