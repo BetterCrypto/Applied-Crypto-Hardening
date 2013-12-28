@@ -35,8 +35,8 @@ p. 129 -Req 396 and Req 397 \\
 [mysqld]
 ssl
 ssl-ca=/etc/mysql/ssl/ca-cert.pem
-ssl-cert=/etc/mysql/ssl/client-cert.pem
-ssl-key=/etc/mysql/ssl/client-key.pem
+ssl-cert=/etc/mysql/ssl/server-cert.pem
+ssl-key=/etc/mysql/ssl/server-key.pem
 ssl-cipher=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
 \end{lstlisting}
 
@@ -49,7 +49,6 @@ ssl-cipher=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256
 
 \item[References:]
 {\small \url{https://dev.mysql.com/doc/refman/5.5/en/ssl-connections.html}}
-
 
 \item[How to test:]
 
@@ -111,8 +110,9 @@ TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
 
 It's recommended to read 
 
-{\small \url{http://www.postgresql.org/docs/X.X/interactive/runtime-config-connection.html\#RUNTIME-CONFIG-CONNECTION-SECURITY}}
-(please change X.X with your preferred version e.g. 9.1).
+{\small \url{http://www.postgresql.org/docs/current/static/runtime-config-connection.html#RUNTIME-CONFIG-CONNECTION-SECURITY}}
+{\small \url{http://www.postgresql.org/docs/current/static/ssl-tcp.html}}
+{\small \url{http://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html}}
 
 \item[Settings:] \mbox{}
 
