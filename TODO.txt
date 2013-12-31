@@ -47,6 +47,8 @@ Workflow
 * how to keep things up to date?
 * how to automatically test  compatibility?
 * how to make sure that this document has the latest information on cipher strengths?
+* !! GPG sign every PDF !!
+* store the keys in DNS
 
 
 Contents

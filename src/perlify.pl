@@ -4,7 +4,7 @@ use strict;
 use File::Basename;
 
 my $debug=1;
-my @exclude=('DH.tex', 'ECC.tex', 'LATER.tex', 'PKIs.tex', 'RNGs.tex', 'abstract.tex', 'acknowledgements.tex', 'applied-crypto-hardening.tex', 'bib.tex', 'cipher_suites.tex', 'disclaimer.tex', 'further_research.tex', 'howtoread.tex', 'keylengths.tex', 'links.tex', 'methods.tex', 'motivation.tex', 'practical_settings.tex', 'reviewers.tex', 'scope.tex', 'ssllibs.tex', 'suggested_reading.tex', 'template.tex', 'tools.tex');
+my @exclude=('DH.tex', 'ECC.tex', 'LATER.tex', 'PKIs.tex', 'RNGs.tex', 'abstract.tex', 'acknowledgements.tex', 'applied-crypto-hardening.tex', 'bib.tex', 'cipher_suites.tex', 'disclaimer.tex', 'further_research.tex', 'howtoread.tex', 'keylengths.tex', 'links.tex', 'methods.tex', 'motivation.tex', 'practical_settings.tex', 'scope.tex', 'ssllibs.tex', 'suggested_reading.tex', 'template.tex', 'tools.tex');
 
 my $cipherStrB=`cat cipherStringB.txt`;
 chomp $cipherStrB;
