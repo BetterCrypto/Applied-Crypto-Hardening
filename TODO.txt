@@ -48,7 +48,7 @@ Workflow
 * how to automatically test  compatibility?
 * how to make sure that this document has the latest information on cipher strengths?
 * !! GPG sign every PDF !!
-* store the keys in DNS
+* store the keys in DNS: see RFC 4398
 
 
 Contents
