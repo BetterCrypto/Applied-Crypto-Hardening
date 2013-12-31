@@ -342,7 +342,7 @@ It is not advisable to restrict the default cipher list for MSA mode if you don'
 
 The cipher used is written to the logfiles by default. You may want to add
 \begin{lstlisting}[breaklines]
-  log_selector = <....whatever your log_selector already contains...> \
+  log_selector = <whatever your log_selector already contains> \
    +tls_certificate_verified +tls_peerdn +tls_sni
 \end{lstlisting}
 to get even more TLS information logged.
@@ -389,7 +389,7 @@ tls\_try\_verify\_hosts only reports the result to your logfile. If you want to 
 
 The cipher used is written to the logfiles by default. You may want to add
 \begin{lstlisting}[breaklines]
-  log_selector = <....whatever your log_selector already contains...> \
+  log_selector = <whatever your log_selector already contains> \
    +tls_certificate_verified +tls_peerdn +tls_sni
 \end{lstlisting}
 to get even more TLS information logged.
