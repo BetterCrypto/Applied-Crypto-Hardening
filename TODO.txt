@@ -1,4 +1,3 @@
-
 Website
 ========
 
@@ -72,6 +71,8 @@ Contents
    Only then put it to all servers and keep it rather uniformely (as much as possible)
 
 2. Test all settings 
+
+* Test especially with non-Debian-OS!
 
 * Test with more clients and other OSes than OSX / iPhone!!
 --> clients? 
