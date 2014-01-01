@@ -183,10 +183,10 @@ If you decide to trust NIST's ECC curve recommendation, you can add the followin
   ssl_ecdh_curve          secp384r1;
 \end{lstlisting}
 
-You might want to redirect everything to httpS:// if possible. In Nginx you can do this with the following setting:
+You might want to redirect everything to http\textbf{s}:// if possible. In Nginx you can do this with the following setting:
 
 \begin{lstlisting}[breaklines]
-  rewrite     ^(.*)   https://$host$1 permanent;
+  return 301 https://$host$request_uri;
 \end{lstlisting}
 
 
