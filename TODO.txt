@@ -12,6 +12,10 @@ BIG TOPICS
 
 * write a Justification section to every setting, maybe have that later in the document. 
 
+* more focus on these sections:
+  - GPG
+  - SSH : do we need a client subsection? 
+
 DONE * move the explanations to a later part of the document. Code snippets go *first* . The target group is sysadmins, must be easily copy & paste-able. Or find a different way so that they can easily use/read the document
 
 DONE * Decide/Discuss recommended ciphers:
@@ -39,6 +43,9 @@ DONE * Layout of sample code (lstisting format) : make it pretty!
 Rendering in Firefox (inline) on Windows seems to be really messed up. What happenened?
 
 * make every section like the Apache section (--> Aaron)
+
+* make a HTML Version of the document. It is much easier to copy & paste from than from PDFs.
+
 
 
 Workflow
