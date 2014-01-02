@@ -1,12 +1,12 @@
 This section discusses various implementations of the Kerberos 5 authentication protocol
-on Unix systems as well as on Microsoft Windows. 
+on Unix and Unix-like systems as well as on Microsoft Windows. 
 
 \subsection{Overview}
 \label{subsection:kerberos_overview}
 
 Kerberos provides mutual authentication of two communicating parties, e.g. a user using a network service. The authentication process is mediated by a trusted third party, the Kerberos key distribution centre (KDC). Kerberos implements secure single-sign-on across a large number of network protocols and operating systems. Optionally, Kerberos can be used to create encrypted communications channels between the user and service.
 
-A short overview over Kerberos terminology and functions will be provided, for a more complete discussion refer to \url{http://web.mit.edu/kerberos/papers.html}
+No overview over Kerberos terminology and functions will be provided, for a discussion refer to \url{http://web.mit.edu/kerberos/papers.html}. Common criticism of Kerberos 
 
 % describe realm, login, ticket exchanges here? would be quite lengthy and necessarily incomplete, so currently left out
 
@@ -14,11 +14,15 @@ The Kerberos protocol over time has been extended with a variety of extensions a
 
 Only the Kerberos 5 protocol and implementation will be discussed. Kerberos 4 is obsolete, insecure and its use is strongly discouraged.
 
-\subsection{Relations to other Protocols}
+\subsubsection{Relations to other Protocols}
+\label{subsubsection:kerberos_relation_to_other_protocols}
 
 \paragraph{DNS considerations}
-Kerberos relies on a trustworthy DNS infrastructure. The identity of a service is tied to its DNS name, similarly the realm a client belongs to as well as the KDC, kpasswd and kerberos-adm servers may be specified in DNS TXT and SRV records. Spoofed DNS entries will cause denial-of-service situations and may endanger the security of a Kerberos realm.
+Kerberos relies on a trustworthy DNS infrastructure. The identity of a service is tied to its DNS name, similarly the realm a client belongs to as well as the KDC, kpasswd and kerberos-adm servers may be specified in DNS TXT and SRV records. Spoofed DNS entries will cause denial-of-service situations and might endanger the security of a Kerberos realm.
+% "might endanger" according to the following source:
 % http://web.mit.edu/kerberos/krb5-latest/doc/admin/realm_config.html
+% unfortunately no further details beyond the suspicion of vulnerability are provided
+% mentions possible redirection to a compromised realm in setups with trust relations: http://www.ietf.org/proceedings/48/I-D/cat-krb-dns-locate-02.txt
 
 Therefore it is strongly recommended to use DNSSEC. \todo{link to DNSSEC section as soon as there is one} If that is not possible, at least ensure that all servers and clients in a realm use a trustworthy DNS server contacted via secure network links.
 
@@ -27,10 +31,57 @@ Tickets in Kerberos are created with a limited, strictly enforced lifetime. This
 
 It is therefore necessary that all clients and servers agree on the current time. It is recommended to use NTP on a trustworthy server via secure network links. \todo{link to NTP section as soon as there is one}
 
+\subsection{Implementations}
+\label{subsection:kerberos_implementations}
+
+\paragraph{Cryptographic Algorithms in Kerberos Implementations}
+
+\begin{table}[h]
+	\centering
+	\small
+	\begin{tabular}{l|llll}
+		\toprule
+		ID & Algorithm & MIT & Heimdal & GNU Shishi & MS ActiveDirectory \\
+		\mitrule
+		1 & des-cbc-crc             & yes            & yes & yes & yes \\
+		2 & des-cbc-md4             & yes            & yes & yes & no  \\
+		3 & des-cbc-md5             & yes            & yes & yes & yes \\
+		6 & des3-cbc-none           & no             & yes & yes & no  \\
+		7 & des3-cbc-sha1           & no             & yes & no  & no  \\
+		16 & des3-cbc-sha1-kd\footnote{In MIT krb5 and Heimdal aliased to des3-hmac-sha1 and des3-cbc-sha1, colliding with the official string for enctype 7 which is referred to as old-des3-cbc-sha1 or similar.} & yes            & yes & yes & no  \\
+		17 & aes128-cts-hmac-sha1-96 & yes            & yes & yes & yes, since Win Vista, Win Server 2008 \\
+		18 & aes256-cts-hmac-sha1-96 & yes            & yes & yes & yes, since Win 7, Win Server 2008R2 \\
+		23 & rc4-hmac                & yes            & yes & yes & yes \\
+		24 & rc4-hmac-exp            & yes            & no  & yes & yes \\
+		25 & camellia128-cts-cmac    & yes, since 1.9 & no  & no  & no  \\
+		26 & camellia256-cts-cmac    & yes, since 1.9 & no  & no  & no  \\
+		\bottomrule
+	\end{tabular}
+	\caption{Commonly supported Kerberos encryption types by implementation}
+	\label{tab:Kerberos_enctypes}
+\end{table}
+% AES enctypes: http://tools.ietf.org/html/rfc3962
+% Camellia enctypes: http://tools.ietf.org/html/rfc6803
+% enctype numbers list: http://tools.ietf.org/html/rfc3961#section-8
+% recommended settings: http://tools.ietf.org/html/rfc4120#section-8.2
+% MIT krb5 1.9: http://web.mit.edu/kerberos/krb5-1.9/
+% Java enctype support: http://docs.oracle.com/javase/7/docs/technotes/guides/security/jgss/jgss-features.html
+% Shishi enctype support: http://www.gnu.org/software/shishi/manual/shishi.html#Cryptographic-Overview
+% enctype alias collision in MIT krb5: see src/lib/crypto/krb/etypes.c line 84 and src/include/krb5/krb5.hin line 438 compared to RFC3961
+% in Heimdal, HEIM_WEAK_CRYPTO and DES3_OLD_ENCTYPE disable some DES and old 3DES algorithms at build time (lib/krb5/crypto-algs.c in source)
+
 \subsubsection{MIT krb5}
 
 \subsubsection{Heimdal Kerberos 5}
+\todo{research and write Heimdal Kerberos section}
 
 \subsubsection{GNU Shishi}
+\todo{research and write GNU Shishi section}
 
 \subsubsection{Microsoft ActiveDirectory}
+\todo{research and write MS AD section}
+
+% encryption type setting for a user account: http://blogs.msdn.com/b/openspecification/archive/2011/05/31/windows-configurations-for-kerberos-supported-encryption-type.aspx
+% hunting down DES: http://blogs.technet.com/b/askds/archive/2010/10/19/hunting-down-des-in-order-to-securely-deploy-kerberos.aspx
+% supported subset of encryption types, extension documentation: http://msdn.microsoft.com/en-us/library/cc233855.aspx
+
