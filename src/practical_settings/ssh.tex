@@ -42,8 +42,6 @@ $ ssh -vvv myserver.com
 crypto key generate rsa modulus 2048
 ssh version 2
 ssh key-exchange group dh-group14-sha1
-line vty 0 4
- transport input ssh
 \end{lstlisting}
 Note: When the ASA is configured for SSH, by default both SSH versions 1 and 2 are allowed. In addition to that, only a group1 DH-key-exchange is used. This should be changed to allow only SSH version 2 and to use a key-exchange with group14. The generated RSA key should be 2048 bit (the actual supported maximum). A non-cryptographic best practice is to reconfigure the lines to only allow SSH-logins.
 \subsubsection{References}
