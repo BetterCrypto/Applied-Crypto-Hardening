@@ -94,7 +94,7 @@ Contents
   - chapter owner makes a test setup
   - tested by: XXX , on: $date. Screenshot of SSLlabs/ $testtool. (checktls.com)
 
-* document (cite) EVERYTHING! Why we chose certain values. Referneces, references, references. Otherwise it does not count!
+* document (cite) EVERYTHING! Why we chose certain values. References, references, references. Otherwise it does not count!
   Srsly!!
 DONE * .bib file is completely wrong. Make good citations/references. Add books: Schneier, ...
 * !! important: add the version string to everything that we tested!!
