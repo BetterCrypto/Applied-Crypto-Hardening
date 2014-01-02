@@ -1,0 +1,36 @@
+This section discusses various implementations of the Kerberos 5 authentication protocol
+on Unix systems as well as on Microsoft Windows. 
+
+\subsection{Overview}
+\label{subsection:kerberos_overview}
+
+Kerberos provides mutual authentication of two communicating parties, e.g. a user using a network service. The authentication process is mediated by a trusted third party, the Kerberos key distribution centre (KDC). Kerberos implements secure single-sign-on across a large number of network protocols and operating systems. Optionally, Kerberos can be used to create encrypted communications channels between the user and service.
+
+A short overview over Kerberos terminology and functions will be provided, for a more complete discussion refer to \url{http://web.mit.edu/kerberos/papers.html}
+
+% describe realm, login, ticket exchanges here? would be quite lengthy and necessarily incomplete, so currently left out
+
+The Kerberos protocol over time has been extended with a variety of extensions and Kerberos implementations provide additional services in addition to the aforementioned KDC. All discussed implementations provide support for trust relations between multiple realms, an administrative network service (kerberos-adm, kadmind) as well as a password changing service (kpasswd). Sometimes, alternative database backends for ticket storage, X.509 and SmartCard authentication are provided. Of those, only administrative and password changing services will be discussed.
+
+Only the Kerberos 5 protocol and implementation will be discussed. Kerberos 4 is obsolete, insecure and its use is strongly discouraged.
+
+\subsections{Relations to other Protocols}
+
+\paragraph{DNS considerations}
+Kerberos relies on a trustworthy DNS infrastructure. The identity of a service is tied to its DNS name, similarly the realm a client belongs to as well as the KDC, kpasswd and kerberos-adm servers may be specified in DNS TXT and SRV records. Spoofed DNS entries will cause denial-of-service situations and may endanger the security of a Kerberos realm.
+% http://web.mit.edu/kerberos/krb5-latest/doc/admin/realm_config.html
+
+Therefore it is strongly recommended to use DNSSEC. \todo{link to DNSSEC section as soon as there is one} If that is not possible, at least ensure that all servers and clients in a realm use a trustworthy DNS server contacted via secure network links.
+
+\paragraph{NTP considerations}
+Tickets in Kerberos are created with a limited, strictly enforced lifetime. This limits an attacker's window of opportunity for various attacks such as the decryption of tickets in sniffed network traffic or the use of tickets read from a client computer's memory.
+
+It is therefore necessary that all clients and servers agree on the current time. It is recommended to use NTP on a trustworthy server via secure network links. \todo{link to NTP section as soon as there is one}
+
+\subsubsection{MIT krb5}
+
+\subsubsection{Heimdal Kerberos 5}
+
+\subsubsection{GNU Shishi}
+
+\subsubsection{Microsoft ActiveDirectory}
