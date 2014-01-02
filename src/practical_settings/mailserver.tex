@@ -278,7 +278,7 @@ interoperability risk, but we have not tested this yet.
 
 You can check the effect of the settings with the following command:
 \begin{lstlisting}[breaklines]
-$ zegrep "TLS connection established from.*with cipher" | /var/log/mail.log | awk '{printf("%s %s %s %s\n", $12, $13, $14, $15)}' | sort | uniq -c | sort -n
+$ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | awk '{printf("%s %s %s %s\n", $12, $13, $14, $15)}' | sort | uniq -c | sort -n
       1 SSLv3 with cipher DHE-RSA-AES256-SHA
      23 TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384
      60 TLSv1 with cipher ECDHE-RSA-AES256-SHA
