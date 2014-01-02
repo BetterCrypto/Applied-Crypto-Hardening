@@ -1,5 +1,4 @@
-# HOW TO USE THIS 
------------------
+# HOW TO USE THIS
 
 ## git.bettercrypto.org
 Anonymous (read-only) git cloning:
@@ -14,7 +13,7 @@ As a registered user:
 Where `<myuser>` is your username on the server. Ask for write permissions if you need them.
 
 
-Committing changes you made (from within repo-directory)::
+Committing changes you made (from within repo-directory):
 
 
 ```
@@ -23,7 +22,7 @@ $ git push origin master
 ```
 
 
-Receive latest updates for a previously cloned repository (from within repo-directory)::
+Receive latest updates for a previously cloned repository (from within repo-directory):
 
   `$ git pull`
 
@@ -31,8 +30,7 @@ Receive latest updates for a previously cloned repository (from within repo-dire
 Fork and issue pull requests. Those will be reviewed and if accepted pushed to the main repository hosted on git.bettercrypto.org.
 
 # IMPORTANT
------------
 
-If you reviewed the document and/or made some changes, please please add your name to the `reviewers.tex` file (the list of names is sorted alphabetically by last name).
+If you reviewed the document and/or made some changes, please add your name to the `reviewers.tex` file (the list of names is sorted alphabetically by last name).
 
-Please also read the FAQ!!
+Please also read the [FAQ](FAQ.md)!!
