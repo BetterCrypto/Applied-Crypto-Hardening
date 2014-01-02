@@ -187,6 +187,12 @@ Contacting / who?
 * Cisco
 * Leithold
 
+Formats to export
+=================
+Requested by many people on Twitter
+    * Plain TXT version for use on headless servers
+    * HTML version for better reading in browsers and always up-to-date
+    * EPUB version for comfortable reading on tablets and ebook readers
 
 LATER / further 
 ================
