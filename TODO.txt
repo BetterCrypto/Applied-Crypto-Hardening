@@ -45,7 +45,7 @@ Rendering in Firefox (inline) on Windows seems to be really messed up. What happ
 * make every section like the Apache section (--> Aaron)
 
 * make a HTML Version of the document. It is much easier to copy & paste from than from PDFs.
-
+* Add Timestamp and git shorthash, not only date, to the title page of the document. Easier to check if you version of the document is current!
 
 
 Workflow
