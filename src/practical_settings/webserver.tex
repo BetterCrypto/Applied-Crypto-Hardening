@@ -34,7 +34,7 @@ Note that any cipher suite starting with ECDHE can be omitted, if in doubt.
 
 \subsubsection{Additional settings}
 
-You might want to redirect everything to httpS:// if possible. In Apache you can do this with the following setting inside of a VirtualHost environment:
+You might want to redirect everything to http\textbf{s}:// if possible. In Apache you can do this with the following setting inside of a VirtualHost environment:
 
 \begin{lstlisting}[breaklines]
   <VirtualHost *:80>
@@ -95,7 +95,7 @@ See appendix \ref{cha:tools}
 \subsubsection{Additional settings}
 
 As for any other webserver, you might want to automatically redirect http
-traffic toward httpS:// It is also recommended to set the environment variable
+traffic toward http\textbf{s}:// It is also recommended to set the environment variable
 \emph{HTTPS}, so the applications run by the webserver can easily detect, that
 HTTPS is in use.
 
