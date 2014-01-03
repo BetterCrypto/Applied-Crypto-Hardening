@@ -36,30 +36,37 @@ It is therefore necessary that all clients and servers agree on the current time
 
 \paragraph{Cryptographic Algorithms in Kerberos Implementations}
 
+The encryption algorithms (commonly abbreviated 'etypes' or 'enctypes') in Kerberos exchanges are subject to negotiation between both sides of an exchange. Similarly, a ticket granting ticket (TGT), which is usually obtained on initial login, can only be issued if the principal contains a version of the password encrypted with an etype that is available both on the KDC and on the client where the login happens. Therefore, to ensure interoperability among components using different implementations as shown in table \ref{table:Kerberos_enctypes}, a selection of available etypes is necessary. However, the negotiation process may be subject to downgrade attacks and weak hashing algorithms endanger integrity protection and password security. This means that the des3-cbc-sha1-kd or rc4-hmac algorithms should not be used, except if there is a concrete and unavoidable need to do so. Other des3-*, des-* and rc4-hmac-exp algorithms should never be used.
+
+Along the lines of cipher string B, the following etypes are recommended: aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac.
+
+\todo{say something about salt types, eg discourage the null salt type?}
+
 \begin{table}[h]
 	\centering
 	\small
-	\begin{tabular}{l|llll}
+	\begin{tabular}{ll|llll}
 		\toprule
 		ID & Algorithm & MIT & Heimdal & GNU Shishi & MS ActiveDirectory \\
-		\mitrule
-		1 & des-cbc-crc             & yes            & yes & yes & yes \\
-		2 & des-cbc-md4             & yes            & yes & yes & no  \\
-		3 & des-cbc-md5             & yes            & yes & yes & yes \\
-		6 & des3-cbc-none           & no             & yes & yes & no  \\
-		7 & des3-cbc-sha1           & no             & yes & no  & no  \\
-		16 & des3-cbc-sha1-kd\footnote{In MIT krb5 and Heimdal aliased to des3-hmac-sha1 and des3-cbc-sha1, colliding with the official string for enctype 7 which is referred to as old-des3-cbc-sha1 or similar.} & yes            & yes & yes & no  \\
-		17 & aes128-cts-hmac-sha1-96 & yes            & yes & yes & yes, since Win Vista, Win Server 2008 \\
-		18 & aes256-cts-hmac-sha1-96 & yes            & yes & yes & yes, since Win 7, Win Server 2008R2 \\
+		\midrule
+		1  & des-cbc-crc             & yes            & yes & yes & yes \\
+		2  & des-cbc-md4             & yes            & yes & yes & no  \\
+		3  & des-cbc-md5             & yes            & yes & yes & yes \\
+		6  & des3-cbc-none           & no             & yes & yes & no  \\
+		7  & des3-cbc-sha1           & no             & yes, {\tiny named old-des3-cbc-sha1} & no  & no  \\
+		16 & des3-cbc-sha1-kd & yes, {\tiny alias des3-cbc-sha1, des3-hmac-sha1} & yes, {\tiny named des3-cbc-sha1} & yes & no  \\
+		17 & aes128-cts-hmac-sha1-96 & yes            & yes & yes & yes, {\tiny since Vista, Server 2008} \\
+		18 & aes256-cts-hmac-sha1-96 & yes            & yes & yes & yes, {\tiny since 7, Server 2008R2} \\
 		23 & rc4-hmac                & yes            & yes & yes & yes \\
 		24 & rc4-hmac-exp            & yes            & no  & yes & yes \\
 		25 & camellia128-cts-cmac    & yes, since 1.9 & no  & no  & no  \\
 		26 & camellia256-cts-cmac    & yes, since 1.9 & no  & no  & no  \\
 		\bottomrule
 	\end{tabular}
-	\caption{Commonly supported Kerberos encryption types by implementation}
+	\caption{Commonly supported Kerberos encryption types by implementation. Algorithm names according to RFC3961, except where aliases can be used or the algorithm is named differently altogether as stated.}
 	\label{tab:Kerberos_enctypes}
 \end{table}
+% \footnote{In MIT krb5 and Heimdal aliased to des3-hmac-sha1 and des3-cbc-sha1, colliding with the official string for enctype 7 which is referred to as old-des3-cbc-sha1 or similar.}
 % AES enctypes: http://tools.ietf.org/html/rfc3962
 % Camellia enctypes: http://tools.ietf.org/html/rfc6803
 % enctype numbers list: http://tools.ietf.org/html/rfc3961#section-8
@@ -69,11 +76,42 @@ It is therefore necessary that all clients and servers agree on the current time
 % Shishi enctype support: http://www.gnu.org/software/shishi/manual/shishi.html#Cryptographic-Overview
 % enctype alias collision in MIT krb5: see src/lib/crypto/krb/etypes.c line 84 and src/include/krb5/krb5.hin line 438 compared to RFC3961
 % in Heimdal, HEIM_WEAK_CRYPTO and DES3_OLD_ENCTYPE disable some DES and old 3DES algorithms at build time (lib/krb5/crypto-algs.c in source)
+% etype recommendations, downgrade attacks and more: http://media.blackhat.com/bh-us-10/presentations/Stender_Engel_Hill/BlackHat-USA-2010-Stender-Engel-Hill-Attacking-Kerberos-Deployments-slides.pdf
+
+\paragraph{Existing installations}
+
+The configuration samples below assume new installations without preexisting principals.
+
+For existing installations:
+\begin{itemize}
+	\item Be aware that for existing setups, the master\_key\_type can not be changed easily since it requires a manual conversion of the database. When in doubt, leave it as it is. \todo{database conversion howto}
+	\item When changing the list of supported\_enctypes, principals where all enctypes are no longer supported will cease to work.
+	\item Be aware that Kerberos 4 is obsolete and should not be used.
+	\item Principals with weak enctypes pose an increased risk for password bruteforce attacks if an attacker gains access to the database.
+\end{itemize}
+
+To get rid of principals with unsupported or weak enctypes, a password change is usually the easiest way. Service principals can simply be recreated. \todo{force password change for old enctypes howto?}
 
 \subsubsection{MIT krb5}
 
+\paragraph{KDC configuration}
+In \verb#/etc/krb5kdc/kdc.conf# set the following in your realm's configuration:
+\begin{lstlisting}[breaklines]
+default_principal_flags = +preauth
+master_key_type = aes256-cts-hmac-sha1-96
+supported_enctypes = aes256-cts-hmac-sha1-96:normal camellia256-cts-cmac:normal aes128-cts-hmac-sha1-96:normal camellia128-cts-cmac:normal
+\end{lstlisting}
+
 \subsubsection{Heimdal Kerberos 5}
 \todo{research and write Heimdal Kerberos section}
+
+% In \verb#/etc/krb5.conf# set in the \[libdefaults\] section:
+% \begin{lstlisting}[breaklines]
+%[libdefaults] 
+% 	default\_etypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
+% 	default\_as\_etypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
+% 	default\_tgs\_etypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
+% \end{listlisting}
 
 \subsubsection{GNU Shishi}
 \todo{research and write GNU Shishi section}
