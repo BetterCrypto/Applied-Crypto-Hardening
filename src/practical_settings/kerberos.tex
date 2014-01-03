@@ -101,6 +101,17 @@ default_principal_flags = +preauth
 master_key_type = aes256-cts-hmac-sha1-96
 supported_enctypes = aes256-cts-hmac-sha1-96:normal camellia256-cts-cmac:normal aes128-cts-hmac-sha1-96:normal camellia128-cts-cmac:normal
 \end{lstlisting}
+\todo{TODO: recommendations for lifetime, proxiable, forwardable}
+
+In \verb#/etc/krb5.conf# set in the \[libdefaults\] section:
+\begin{lstlisting}[breaklines]
+[libdefaults] 
+	allow_weak_crypto = false
+	permitted_enctypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
+	default_tkt_enctypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
+	default_tgs_enctypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
+\end{listlisting}
+\todo{verify MIT client config}
 
 \subsubsection{Heimdal Kerberos 5}
 \todo{research and write Heimdal Kerberos section}
