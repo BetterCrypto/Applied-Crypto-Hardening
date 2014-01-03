@@ -108,7 +108,6 @@ HTTPS is in use.
     $HTTP["host"] =~ ".*" {
         url.redirect = (".*" => "https://%0$0")
     }
-  }
   # Set the environment variable properly
   setenv.add-environment = (
             "HTTPS" => "on"
