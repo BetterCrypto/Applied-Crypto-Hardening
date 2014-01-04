@@ -16,26 +16,6 @@
 \definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
 \definecolor{lightlightgray}{gray}{0.9}
 
-% Draft stuff
-\ifdraft{
-  % Ensure that everything is neatly set up for us
-  \AtBeginDocument{
-    \def\draftInfo{%
-      Draft revision\gitVtags: \gitAbbrevHash{} %
-      (\gitCommitterIsoDate) \gitCommitterName}
-    \sbox{\draftWatermark}{%
-      \includegraphics[width=\paperwidth]{img/draft}}
-    \sbox{\draftPageLine}{%
-      \colorbox{black!10}{%
-        % enlarge box vertically by 2/3 lines
-        \raisebox{0pt}%
-        [\dimexpr .33\baselineskip + \height]%
-        [\dimexpr .33\baselineskip + \depth]{%
-          \makebox[\paperwidth]{\color{black!50}\draftInfo}}}}
-  }
-}{}
-
-
 %%% Fonts
 % Fonts are loaded, now is the right time for mictorype.
 \microtypesetup{stretch=9,shrink=15,step=3,tracking=smallcaps,letterspace=75}
@@ -50,13 +30,12 @@
 % Section headers
 \addtokomafont{disposition}{\color{darkblue}\bfseries}
 
+
 % Page foot
 \setkomafont{pagefoot}{\normalfont\sffamily\footnotesize}
 \ifoot%
-[Applied Crypto Hardening\ifdraft{ % Space!
-  \textbullet{} \draftInfo}{}]%
-{Applied Crypto Hardening \ifdraft{ % Space!
-    \textbullet{} \draftInfo}{}}
+[Applied Crypto Hardening \textbullet{} Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName]%
+{Applied Crypto Hardening \textbullet{} Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName}
 \cfoot[]{}
 \ofoot%
 [page \thepage\ of \pageref{LastPage}]%
