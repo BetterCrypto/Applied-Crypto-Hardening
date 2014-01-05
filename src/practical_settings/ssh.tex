@@ -14,9 +14,6 @@
 	Ciphers aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
 	MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
 	KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
-
-	# In addition, you can whitelist only specific users for SSH login
-	# AllowUsers user1 user2
 \end{lstlisting}
 
 \textbf{Note:} Older Linux systems won't support SHA2. PuTTY (Windows) does not support
