@@ -1,6 +1,6 @@
 %%---------------------------------------------------------------------- 
 \subsection{OpenSSH}
-\subsubsection{Tested with Version} OpenSSH 6.1
+\subsubsection{Tested with Version} OpenSSH 6.4
 \subsubsection{Settings}
 \paragraph*{sshd\_config}
 \begin{lstlisting}[breaklines]
@@ -12,7 +12,7 @@
 	StrictModes yes
 	HostKey /etc/ssh/ssh_host_rsa_key
 	Ciphers aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes128-ctr
-	MACs umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
+	MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
 	KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
 \end{lstlisting}
 
