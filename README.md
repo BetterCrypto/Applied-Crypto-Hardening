@@ -31,6 +31,6 @@ Fork and issue pull requests. Those will be reviewed and if accepted pushed to t
 
 # IMPORTANT
 
-If you reviewed the document and/or made some changes, please add your name to the `reviewers.tex` file (the list of names is sorted alphabetically by last name).
+If you reviewed the document and/or made some changes, please add your name to `src/acknowledgements.tex` (the list of names is sorted alphabetically by last name).
 
 Please also read the [FAQ](FAQ.md)!!
