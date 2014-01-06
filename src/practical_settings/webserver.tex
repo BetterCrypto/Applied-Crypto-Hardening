@@ -210,7 +210,34 @@ See appendix \ref{cha:tools}
 
 
 \todo{Daniel: add screenshots and registry keys}
-
+Instead of using the IIS Crypto Tool the configuration can be set
+using the Windows Registry. The following Registry keys apply to the
+newer Versions of Windows (Windows 7, Windows Server 2008, Windows
+Server 2008 R2, Windows Server 2012 and Windows Server 2012 R2). For detailed
+information about the older versions see the Microsoft knowlagebase
+article. \footnote{\url{http://support.microsoft.com/kb/245030/en-us}}
+\begin{lstlisting}[breaklines]
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Ciphers] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\CipherSuites] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Hashes] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\KeyExchangeAlgorithms] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Protocols] 
+\end{lstlisting}
+Windows Server 2008 supports the following protocols:
+\begin{enumerate}
+\item SSL 2.0
+\item SSL 3.0
+\item TLS 1.0
+\end{enumerate}
+Windows Server 2008 R2 and newer and Windows 7 and newer support the following protocols:
+\begin{enumerate}
+\item SSL 2.0
+\item SSL 3.0
+\item TLS 1.0
+\item TLS 1.1
+\item TLS 1.2
+\end{enumerate}
 %\begin{description}
 
 \subsubsection{Tested with Version} \todo{Daniel: add tested version}
@@ -294,7 +321,10 @@ Clients not supported:
 \subsubsection{References}
 
 \todo{add references}
-
+\begin{itemize}
+\item \url{http://support.microsoft.com/kb/245030/en-us}
+\item \url{http://support.microsoft.com/kb/187498/en-us}
+\end{itemize}
 % add any further references or best practice documents here
 
 \subsubsection{How to test}
