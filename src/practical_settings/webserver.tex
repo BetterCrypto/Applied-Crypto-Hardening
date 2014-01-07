@@ -30,7 +30,9 @@ Enabled modules \emph{SSL} and \emph{Headers} are required.
 
 \end{lstlisting}
 
-Note that any cipher suite starting with ECDHE can be omitted, if in doubt.
+Note that any cipher suite starting with EECDH can be omitted, if in doubt.
+(Compared to the theory section, EECDH in Apache and ECDHE in OpenSSL are
+synonyms~\footnote{https://www.mail-archive.com/openssl-dev@openssl.org/msg33405.html})
 
 \subsubsection{Additional settings}
 
@@ -108,7 +110,6 @@ HTTPS is in use.
     $HTTP["host"] =~ ".*" {
         url.redirect = (".*" => "https://%0$0")
     }
-  }
   # Set the environment variable properly
   setenv.add-environment = (
             "HTTPS" => "on"

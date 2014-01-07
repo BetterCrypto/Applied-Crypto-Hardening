@@ -1,6 +1,6 @@
 %%---------------------------------------------------------------------- 
 \subsection{OpenSSH}
-\subsubsection{Tested with Version} OpenSSH 6.1
+\subsubsection{Tested with Version} OpenSSH 6.4
 \subsubsection{Settings}
 \paragraph*{sshd\_config}
 \begin{lstlisting}[breaklines]
@@ -58,15 +58,20 @@ $ ssh -vvv myserver.com
 \subsubsection{Tested with Version} 15.0, 15.1, 15.2
 \subsubsection{Settings}
 \begin{lstlisting}[breaklines]
-crypto key generate rsa modulus 2048 label SSH-KEYS
+crypto key generate rsa modulus 4096 label SSH-KEYS
 ip ssh rsa keypair-name SSH-KEYS
 ip ssh version 2
 ip ssh dh min size 2048
+
+line vty 0 15
+transport input ssh
+
 \end{lstlisting}
 Note: Same as with the ASA, also on IOS by default both SSH versions 1 and 2 are allowed and the DH-key-exchange only use a DH-group of 768 Bit.
 In IOS, a dedicated Key-pair can be bound to SSH to reduce the usage of individual keys-pairs.
+From IOS Version 15.0 onwards, 4096 Bit rsa keys are supported and should be used according to the paradigm "use longest supported key". Also, do not forget to disable telnet vty access.
 \subsubsection{References}
-\url{http://www.cisco.com/en/US/docs/ios/sec\_user\_services/configuration/guide/sec\_secure\_shell\_v2.html }
+\url{http://www.cisco.com/en/US/docs/ios/sec\_user\_services/configuration/guide/sec\_cfg\_secure\_shell.html }
 % add any further references or best practice documents here
 \subsubsection{How to test}
 Connect a client with verbose logging enabled to the SSH server \\
