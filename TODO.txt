@@ -24,7 +24,7 @@ DONE * Decide/Discuss recommended ciphers:
   --> answer: we trust IETF/IKE  as described in ECRYPT2
 
 * comments from IAIK integrate (--> Aaron, check again if it was done)
-* SHA-1 section: write why it is a problem (--> Florian Mendel)
+DONE * SHA-1 section: write why it is a problem (--> Florian Mendel)
 * PKI section (--> Thomas Schreck)
 DONE * include OpenSSL names/IANA names into appendix (--> cm)
 * Document RNG problem in Apache (--> Pepi)
@@ -212,4 +212,12 @@ LATER / further
 DONE * SRP: not part of this document. But we did not exclude it in our cipher string :)
 DONE * \cipherA , \cipherB setting ---> does not work in our \begin{listing} environment --> maybe there is a different listing environment or use awk/sed/make/perl/python
 * What about 3270 terminal emulation? How to do crypto there? Can we? ( --> IBM sec. Stammtisch. Aaron)
+
+
+* client/users-guide:
+  * PGP 
+  * ssh client settings
+  * OTR ?
+  * public key infrastructure
+  * certificate handling
 
