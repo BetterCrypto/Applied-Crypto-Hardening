@@ -32,6 +32,12 @@ DONE * DB2 (--> Berg. Or ask MLeyrer)
 * re-work chapter 2 (practical settings). Add lots of references to chapter 3 to get people interested in reading the theory.
 
 
+Website
+=======
+People with outdated browsers (winXP) etc can't see our webpage. --> make a landing page explaining 
+how to updated the browser :)
+
+
 Formatting
 ==========
 
@@ -45,6 +51,14 @@ Rendering in Firefox (inline) on Windows seems to be really messed up. What happ
 
 * make a HTML Version of the document. It is much easier to copy & paste from than from PDFs.
 * Add Timestamp and git shorthash, not only date, to the title page of the document. Easier to check if you version of the document is current!
+
+
+Formats to export
+=================
+Requested by many people on Twitter
+    * Plain TXT version for use on headless servers
+    * HTML version for better reading in browsers and always up-to-date
+    * EPUB version for comfortable reading on tablets and ebook readers
 
 
 Workflow
@@ -187,13 +201,6 @@ Contacting / who?
 * Juniper
 * Cisco
 * Leithold
-
-Formats to export
-=================
-Requested by many people on Twitter
-    * Plain TXT version for use on headless servers
-    * HTML version for better reading in browsers and always up-to-date
-    * EPUB version for comfortable reading on tablets and ebook readers
 
 LATER / further 
 ================
