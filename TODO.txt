@@ -209,7 +209,7 @@ LATER / further
 * OpenLDAP (-> Adi)
 * Radius
 * Windows Active Directory
-* SRP: not part of this document
+DONE * SRP: not part of this document. But we did not exclude it in our cipher string :)
 DONE * \cipherA , \cipherB setting ---> does not work in our \begin{listing} environment --> maybe there is a different listing environment or use awk/sed/make/perl/python
 * What about 3270 terminal emulation? How to do crypto there? Can we? ( --> IBM sec. Stammtisch. Aaron)
 
