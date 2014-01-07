@@ -245,7 +245,7 @@ Windows Server 2008 R2 and newer and Windows 7 and newer support the following p
 \item TLS 1.2
 \end{itemize}
 
-The srandard chipher order for TLS1.0 of Windows Server 2003 and Windows XP
+The srandard chipher order for TLS1.0 of Windows Server 2003 and Windows XP \footnote{\url{http://msdn.microsoft.com/en-us/library/windows/desktop/aa380512(v=vs.85).aspx}}
 \begin{itemize}
 \item TLS_RSA_WITH_RC4_128_MD5
 \item TLS_RSA_WITH_RC4_128_SHA
@@ -262,7 +262,8 @@ The srandard chipher order for TLS1.0 of Windows Server 2003 and Windows XP
 \item TLS_RSA_WITH_NULL_SHA
 \end{itemize}
 
-the standard chipher order for Windows 
+the standard chipher order for Windows schannel.dll \footnote{\url{http://msdn.microsoft.com/en-us/library/windows/desktop/aa374757(v=vs.85).aspx}}
+%%% i think this is for Windows Server 2008 R2 ab above. i will confirm in the near future.
 \begin{table}[h]
   \centering
   \small
@@ -343,6 +344,8 @@ They must be added as necessary.
 \begin{itemize}
 \item Windows Server 2012 R2 and Windows 8.1 using IE11 and Chrome 31
 \item Windows Server 2012 R2 and MacOS 10.9.1 using Safari 7 and Chrome 31
+%%% I used the FIPS 140 configuration of IIS Crypto. Should i test this with the standard configuration a & b?
+%%% I can test this down to windows 7 an Server 2008 ... Windows XP ist no longer supported by Microsoft so i dont care.
 \end{itemize}
 
 \subsubsection{Settings}
