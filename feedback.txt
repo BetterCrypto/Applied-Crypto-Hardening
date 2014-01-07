@@ -69,3 +69,6 @@ Github pull requests
 Other
 ======
 
+  * personal mail: sign every PDF via PGP
+    and put the pub key / hash in DNS
+
