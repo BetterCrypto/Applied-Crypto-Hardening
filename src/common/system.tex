@@ -64,7 +64,6 @@
 \usepackage{lastpage}
 
 % Misc
-%\usepackage{draftwatermark}
 \usepackage{gitinfo}
 \usepackage{catchfile}
 \usepackage{hyperref}
@@ -75,9 +74,17 @@
   %% Heavy debugging
   %\usepackage{showframe}
   \usepackage{blindtext}
-  \usepackage{draftwatermark}
-  \SetWatermarkLightness{0.95}
-  %\AtEndDocument{\listoftodos}
+  \usepackage{eso-pic}
+  \newsavebox{\draftPageLine}
+  \newsavebox{\draftWatermark}
+  \AddToShipoutPicture{%
+    \AtPageLowerLeft{\usebox{\draftWatermark}}
+    \AtPageUpperLeft{%
+      \raisebox{-\height}[\height][0pt]{\usebox{\draftPageLine}}}%
+    \AtPageLowerLeft{%
+      \raisebox{\depth}[\height][0pt]{\usebox{\draftPageLine}}}%
+  }
+  % \AtEndDocument{\listoftodos}
 }{
   \let\blindtext\relax
   \let\Blindtext\relax
