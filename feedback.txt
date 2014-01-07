@@ -1,6 +1,16 @@
 Attempt at collecting feedback from the public announcement 27th of Dec 2013
 =============================================================================
 
+
+Overall big issues
+==================
+* copy & paste is a problem for many
+* WinXP is locked out -> we know that. How about writing a subsection on the SNI default host trick?
+* cipherString A,B,C option? Like Mozilla requested? With *big* disclaimer that the most compatibile one is the most insecure one.
+* pull in sebix's pull requests
+* short tutorial for non-git gurus on cherry picking
+
+
 Newspapers 
 ===========
 
