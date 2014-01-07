@@ -208,8 +208,12 @@ See appendix \ref{cha:tools}
 \subsection{MS IIS}
 \label{sec:ms-iis}
 
+To configure SSL/TLS on Windows Server you can use IIS Crypto~\footnote{\url{https://www.nartac.com/Products/IISCrypto/}}
+Simply start the Programm no installation required. The tool changes the registry keys described below.
+A restart ist required for the changes to take effect.
 
-\todo{Daniel: add screenshots and registry keys}
+\todo add iis crypto screenshot here
+
 Instead of using the IIS Crypto Tool the configuration can be set
 using the Windows Registry. The following Registry keys apply to the
 newer Versions of Windows (Windows 7, Windows Server 2008, Windows
@@ -224,12 +228,14 @@ article. \footnote{\url{http://support.microsoft.com/kb/245030/en-us}}
   [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\KeyExchangeAlgorithms] 
   [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Protocols] 
 \end{lstlisting}
-Windows Server 2008 supports the following protocols:
+
+Windows Server 2008 and Windows XP supports the following protocols:
 \begin{enumerate}
 \item SSL 2.0
 \item SSL 3.0
 \item TLS 1.0
 \end{enumerate}
+
 Windows Server 2008 R2 and newer and Windows 7 and newer support the following protocols:
 \begin{enumerate}
 \item SSL 2.0
@@ -241,10 +247,12 @@ Windows Server 2008 R2 and newer and Windows 7 and newer support the following p
 %\begin{description}
 
 \subsubsection{Tested with Version} \todo{Daniel: add tested version}
+
 \begin{enumerate}
 \item Windows Server 2012 R2 and Windows 8.1 using IE11 and Chrome 31
 \item Windows Server 2012 R2 and MacOS 10.9.1 using Safari 7 and Chrome 31
 \end{enumerate}
+
 \subsubsection{Settings}
 
 
@@ -271,6 +279,7 @@ tested using https://www.ssllabs.com.
 
 \verb|SSL 3.0|, \verb|SSL 2.0| and \verb|MD5| are turned off.
 \verb|TLS 1.0| and \verb|TLS 2.0| are turned on.
+%%% Lets use the common name for TLS 1.2
 
 \begin{table}[h]
   \centering
@@ -324,10 +333,12 @@ Clients not supported:
 \subsubsection{References}
 
 \todo{add references}
+
 \begin{itemize}
 \item \url{http://support.microsoft.com/kb/245030/en-us}
 \item \url{http://support.microsoft.com/kb/187498/en-us}
 \end{itemize}
+
 % add any further references or best practice documents here
 
 \subsubsection{How to test}
