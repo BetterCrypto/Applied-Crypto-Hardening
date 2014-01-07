@@ -8,7 +8,7 @@
 
 	Protocol 2
 	PermitEmptyPasswords no
-	PermitRootLogin no
+	PermitRootLogin no # or 'without-password' to allow SSH key based login
 	StrictModes yes
 	HostKey /etc/ssh/ssh_host_rsa_key
 	Ciphers aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes128-ctr
