@@ -420,6 +420,18 @@ Clients not supported:
 \subsubsection{Additional settings}
 
 %Here you can add additional settings
+You might want to redirect everything to http\textbf{s}:// if possible. In IIS you can do this with the following setting by Powershell:
+
+\begin{lstlisting}[breaklines]
+Set-WebConfiguration -Location "$WebSiteName/$WebApplicationName" `
+    -Filter 'system.webserver/security/access' `
+    -Value "SslRequireCert"
+\end{lstlisting}
+
+or using the GUI as shown in figure XXX
+\todo add screenshot here
+
+
 
 \subsubsection{Justification for special settings (if needed)}
 
