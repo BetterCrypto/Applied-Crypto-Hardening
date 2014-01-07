@@ -19,13 +19,13 @@
 \subsubsection{Settings}
 \paragraph*{sshd\_config}
 \begin{lstlisting}[breaklines]
-        # ...
+	# ...
 
-        Protocol 2
-        PermitEmptyPasswords no
-        PermitRootLogin no # or 'without-password' to allow SSH key based login
-        StrictModes yes
-        HostKey /etc/ssh/ssh_host_rsa_key
+	Protocol 2
+	PermitEmptyPasswords no
+	PermitRootLogin no # or 'without-password' to allow SSH key based login
+	StrictModes yes
+	HostKey /etc/ssh/ssh_host_rsa_key
 	Ciphers aes256-ctr,aes128-ctr
 	MACs hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
 	KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
