@@ -54,8 +54,9 @@ mode, because the alternative is plain text transmission.
 
 \subsubsection{Tested with Version} 
 \begin{itemize}
+\item Dovecot 2.1.17, Debian Wheezy (without ``ssl\_prefer\_server\_ciphers'' setting)
 \item Dovecot 2.2
-\item 2.0.19apple1 on OS X Server 10.8.5 (without ssl\_prefer\_server\_ciphers)
+\item 2.0.19apple1 on OS X Server 10.8.5 (without ``ssl\_prefer\_server\_ciphers'' setting)
 \end{itemize}
 
 \subsubsection{Settings}
@@ -166,7 +167,11 @@ There is a working patch for all three features:
 
 \subsection{Postfix}
 
-\subsubsection{Tested with Version} Postfix 2.9.6 (Debian 7.0)
+\subsubsection{Tested with Version}
+\begin{itemize}
+\item Postfix 2.9.6, Debian Wheezy
+\end{itemize}
+
 \subsubsection{Settings}
 
 %% I (cm) consider the generation of own DH parameters to be voodoo until
