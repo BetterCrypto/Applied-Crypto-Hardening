@@ -2,6 +2,9 @@ NOW := $(shell date)
 
 all:	pdf html md
 
+once:
+	pdflatex applied-crypto-hardening
+
 pdf: 
 	./update-metadata-for-gitinfo
 	pdflatex applied-crypto-hardening
@@ -46,4 +49,4 @@ clean:
 			applied-crypto-hardening.out
 	rm -rf applied-crypto-hardening/
 	rm -rf gitHeadInfo.gin
-	rm applied-crypto-hardening.txt
+	if [ -f "applied-crypto-hardening.txt" ]; then rm "applied-crypto-hardening.txt"; fi
