@@ -7,33 +7,33 @@ This section documents the most common mail (SMTP) and IMAPs/POPs servers. Anoth
 SMTP usually makes use of opportunistic TLS. This means that an MTA will accept TLS connections when asked for it during handshake but will not require it. One should always support incoming opportunistic TLS and always try TLS handshake outgoing.
 
 Furthermore a mailserver can operate in three modes:
-\begin{itemize}
+\begin{itemize*}
   \item As MSA (Mail Submission Agent) your mailserver receives mail from your clients MUAs (Mail User Agent).
   \item As receiving MTA (Mail Transmission Agent, MX)
   \item As sending MTA (SMTP client)
-\end{itemize}
+\end{itemize*}
 We recommend the following basic setup for all modes:
-\begin{itemize}
+\begin{itemize*}
   \item correctly setup MX, A and PTR RRs without using CNAMEs at all.
   \item enable encryption (opportunistic TLS)
   \item do not use self signed certificates
-\end{itemize}
+\end{itemize*}
 
 For SMTP client mode we additionally recommend:
-\begin{itemize}
+\begin{itemize*}
   \item the hostname used as HELO must match the PTR RR
   \item setup a client certificate (most server certificates are client certificates as well)
   \item either the common name or at least an alternate subject name of your certificate must match the PTR RR
   \item do not modify the cipher suite for client mode
-\end{itemize}
+\end{itemize*}
 
 For MSA operation we recommend:
-\begin{itemize}
+\begin{itemize*}
   \item listen on submission port 587
   \item enforce SMTP AUTH even for local networks
   \item do not allow SMTP AUTH on unencrypted connections
   \item optionally use the recommended cipher suites if (and only if) all your connecting MUAs support them
-\end{itemize}
+\end{itemize*}
 
 
 % Note that (with the exception of MSA mode), it might be better to allow any cipher suite -- since any encryption is better than no encryption when it comes to opportunistic TLS.
@@ -46,11 +46,11 @@ mode, because the alternative is plain text transmission.
 
 
 \subsubsection{Tested with Version} 
-\begin{itemize}
+\begin{itemize*}
   \item Dovecot 2.1.17, Debian Wheezy (without ``ssl\_prefer\_server\_ciphers'' setting)
   \item Dovecot 2.2
   \item 2.0.19apple1 on OS X Server 10.8.5 (without ``ssl\_prefer\_server\_ciphers'' setting)
-\end{itemize}
+\end{itemize*}
 
 \subsubsection{Settings}
 % Example: http://dovecot.org/list/dovecot/2013-October/092999.html
@@ -75,9 +75,9 @@ parameters greater than 1024bit are not supported. The most recent version
 % in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
 
 \subsubsection{References}
-\begin{itemize}
+\begin{itemize*}
   \item \url{http://wiki2.dovecot.org/SSL}
-\end{itemize}
+\end{itemize*}
 
 % add any further references or best practice documents here
 
@@ -91,9 +91,9 @@ openssl s_client -crlf -connect SERVER.TLD:993
 %% ----------------------------------------------------------------------
 \subsection{cyrus-imapd}
 \subsubsection{Tested with Versions}
-\begin{itemize}
+\begin{itemize*}
   \item 2.4.17
-\end{itemize}
+\end{itemize*}
 
 \subsubsection{Settings}
 \paragraphDiamond{imapd.conf}
@@ -161,9 +161,9 @@ openssl s_client -crlf -connect SERVER.TLD:993
 \subsection{Postfix}
 
 \subsubsection{Tested with Versions}
-\begin{itemize}
+\begin{itemize*}
   \item Postfix 2.9.6, Debian Wheezy
-\end{itemize}
+\end{itemize*}
 
 
 \subsubsection{Settings}
@@ -417,10 +417,10 @@ If you want to set your own DH parameters please read the TLS documentation of e
 
 \paragraphDiamond{GnuTLS}
 GnuTLS is different in only some respects to OpenSSL:
-\begin{itemize}
+\begin{itemize*}
   \item tls\_require\_ciphers needs a GnuTLS priority string instead of a cipher list. It is recommended to use the defaults by not defining this option. It highly depends on the version of GnuTLS used. Therefore it is not advisable to change the defaults.
   \item There is no option like openssl\_options
-\end{itemize}
+\end{itemize*}
 
 \paragraphDiamond{Exim string expansion}
 Note that most of the options accept expansion strings. This way you can e.g. set cipher lists or STARTTLS advertisement conditionally. Please follow the link to the official Exim documentation to get more information.

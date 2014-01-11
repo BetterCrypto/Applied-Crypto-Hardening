@@ -54,9 +54,9 @@ $ ssh -vvv myserver.com
 %%---------------------------------------------------------------------- 
 \subsection{Cisco ASA}
 \subsubsection{Tested with Versions}
-\begin{itemize}
+\begin{itemize*}
   \item 9.1(3)
-\end{itemize}
+\end{itemize*}
 
 
 \subsubsection{Settings}
@@ -68,9 +68,9 @@ ssh key-exchange group dh-group14-sha1
 Note: When the ASA is configured for SSH, by default both SSH versions 1 and 2 are allowed. In addition to that, only a group1 DH-key-exchange is used. This should be changed to allow only SSH version 2 and to use a key-exchange with group14. The generated RSA key should be 2048 bit (the actual supported maximum). A non-cryptographic best practice is to reconfigure the lines to only allow SSH-logins.
 
 \subsubsection{References}
-\begin{itemize}
+\begin{itemize*}
   \item \url{http://www.cisco.com/en/US/docs/security/asa/asa91/configuration/general/admin\_management.html }
-\end{itemize}
+\end{itemize*}
 
 \subsubsection{How to test}
 Connect a client with verbose logging enabled to the SSH server
@@ -82,9 +82,9 @@ $ ssh -vvv myserver.com
 %---------------------------------------------------------------------- 
 \subsection{Cisco IOS}
 \subsubsection{Tested with Versions}
-\begin{itemize}
+\begin{itemize*}
   \item 15.0, 15.1, 15.2
-\end{itemize}
+\end{itemize*}
 
 
 \subsubsection{Settings}
@@ -103,9 +103,9 @@ From IOS Version 15.0 onwards, 4096 Bit rsa keys are supported and should be use
 
 
 \subsubsection{References}
-\begin{itemize}
+\begin{itemize*}
   \item \url{http://www.cisco.com/en/US/docs/ios/sec\_user\_services/configuration/guide/sec\_cfg\_secure\_shell.html}
-\end{itemize}
+\end{itemize*}
 % add any further references or best practice documents here
 
 \subsubsection{How to test}

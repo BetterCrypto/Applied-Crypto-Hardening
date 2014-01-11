@@ -25,12 +25,12 @@ deployments where software that is to be used can be defined without restriction
 
 We arrived at this set of cipher suites by selecting:
 
-\begin{itemize}
+\begin{itemize*}
   \item TLS 1.2
   \item Perfect forward secrecy / ephemeral Diffie Hellman
   \item strong MACs (SHA-2) or
   \item GCM as Authenticated Encryption scheme
-\end{itemize}
+\end{itemize*}
 
 This results in the OpenSSL string:
 
@@ -82,10 +82,10 @@ workload on the provisioning hardware.
 
 We arrived at this set of cipher suites by selecting:
 
-\begin{itemize}
+\begin{itemize*}
   \item TLS 1.2, TLS 1.1, TLS 1.0
   \item allowing SHA-1 (see the comments on SHA-1 in section \ref{section:SHA})
-\end{itemize}
+\end{itemize*}
 
 This results in the OpenSSL string:
 
@@ -148,7 +148,7 @@ used on legacy installations (e.g. OpenSSL 0.9.8).
 Our recommended cipher strings are meant to be used via copy and paste and need to work
 "out of the box".
 
-\begin{itemize}
+\begin{itemize*}
   \item TLSv1.2 is preferred over TLSv1.0 (while still providing a useable cipher
       string for TLSv1.0 servers).
   \item AES256 and CAMELLIA256 count as very strong ciphers at the moment.
@@ -161,4 +161,4 @@ Our recommended cipher strings are meant to be used via copy and paste and need 
       Note however that this cipher suite will not provide forward secrecy. It
       is meant to provide the same client coverage (eg. support Microsoft crypto
       libraries) on legacy setups.
-\end{itemize}
+\end{itemize*}

@@ -135,19 +135,19 @@ parameters are shown in table \ref{tab:IPSEC_ph2_params}.
 \end{table}
 
 \subsubsection{References}
-\begin{itemize}
+\begin{itemize*}
   \item ``A Cryptographic Evaluation of IPsec'', Niels Ferguson and Bruce
     Schneier: \url{https://www.schneier.com/paper-ipsec.pdf}
-\end{itemize}
+\end{itemize*}
 
 
 %---------------------------------------------------------------------- 
 \subsection{Check Point FireWall-1}
 
 \subsubsection{Tested with Versions}
-\begin{itemize}
+\begin{itemize*}
   \item R77 (should work with any currently supported version)
-\end{itemize}
+\end{itemize*}
 
 \subsubsection{Settings}
 Please see section \ref{section:IPSECgeneral} for guidance on
@@ -211,9 +211,9 @@ Please note that these settings restrict the available algorithms for
 %\subsubsection{Limitations}
 
 \subsubsection{References}
-\begin{itemize}
+\begin{itemize*}
   \item Check Point \href{https://sc1.checkpoint.com/documents/R77/CP_R77_VPN_AdminGuide/html_frameset.htm}{VPN R77 Administration Guide} (may require a UserCenter account to access)
-\end{itemize}
+\end{itemize*}
 
 %\subsubsection{How to test}
 
@@ -222,12 +222,12 @@ Please note that these settings restrict the available algorithms for
 \subsection{OpenVPN}
 
 \subsubsection{Tested with Versions}
-\begin{itemize}
+\begin{itemize*}
   \item OpenVPN 2.3.2 from Debian ``wheezy-backports'' linked against openssl (libssl.so.1.0.0) 
   \item OpenVPN 2.2.1 from Debian Wheezy linked against openssl
     (libssl.so.1.0.0) 
   \item OpenVPN 2.3.2 for Windows
-\end{itemize}
+\end{itemize*}
 
 \subsubsection{Settings}
 
@@ -289,9 +289,9 @@ The configuration shown above is compatible with all tested versions.
 
 
 \subsubsection{References}
-\begin{itemize}
+\begin{itemize*}
   \item OpenVPN Documentation: \emph{Security Overview} \url{http://openvpn.net/index.php/open-source/documentation/security-overview.html}
-\end{itemize}
+\end{itemize*}
 
 %\subsubsection{How to test}
 
@@ -352,9 +352,9 @@ The following settings reflect our recommendations as best as possible on the Ci
 
 
 \subsubsection{Tested with Versions}
-\begin{itemize}
+\begin{itemize*}
   \item 9.1(3) - X-series model
-\end{itemize}
+\end{itemize*}
 
 \subsubsection{Settings}
 \begin{lstlisting}
@@ -432,10 +432,10 @@ The Cisco ASA platform does not currently support RSA Keys above 2048bits.
 Legacy ASA models (e.g. 5505, 5510, 5520, 5540, 5550) do not offer the possibility to configure for SHA256/SHA384/SHA512 nor AES-GCM for IKEv2 proposals.
 
 \subsubsection{References}
-\begin{itemize}
+\begin{itemize*}
   \item \url{http://www.cisco.com/en/US/docs/security/asa/roadmap/asaroadmap.html}\\
   \item \url{http://www.cisco.com/web/about/security/intelligence/nextgen_crypto.html}
-\end{itemize}
+\end{itemize*}
 
 % add any further references or best practice documents here
 

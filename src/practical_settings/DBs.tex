@@ -8,9 +8,9 @@
 
 
 \subsubsection{References}
-\begin{itemize}
+\begin{itemize*}
   \item Technical safety requirements by \emph{Deutsche Telekom AG} (German). Please read section 17.12 or pages 129 and following (Req 396 and Req 397) about SSL and ciphersuites \url{http://www.telekom.com/static/-/155996/7/technische-sicherheitsanforderungen-si}
-\end{itemize}
+\end{itemize*}
 
 
 
@@ -25,9 +25,9 @@
 
 
 \subsubsection{Tested with Versions}
-\begin{itemize}
+\begin{itemize*}
   \item Debian Wheezy and MySQL 5.5
-\end{itemize}
+\end{itemize*}
 
 
 \subsubsection{Settings}
@@ -50,9 +50,9 @@ ssl-cipher=%*\cipherStringB*)
 
 
 \subsubsection{References}
-\begin{itemize}
+\begin{itemize*}
   \item MySQL Documentation on SSl Connections: \url{https://dev.mysql.com/doc/refman/5.5/en/ssl-connections.html}
-\end{itemize}
+\end{itemize*}
 
 
 \subsubsection{How to test}
@@ -69,9 +69,9 @@ show variables like '%ssl%';
 
 
 \subsubsection{References}
-\begin{itemize}
+\begin{itemize*}
   \item IMB Db2 Documentation on \emph{Supported cipher suites} \url{http://pic.dhe.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=\%2Fcom.ibm.db2.luw.admin.sec.doc\%2Fdoc\%2Fc0053544.html}
-\end{itemize}
+\end{itemize*}
 
 
 \subsubsection{Settings}
@@ -106,18 +106,18 @@ TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
 
 \subsection{PostgreSQL}
 \subsubsection{Tested with Versions}
-\begin{itemize}
+\begin{itemize*}
   \item Debian Wheezy and PostgreSQL 9.1
   \item Linux Mint 14 nadia / Ubuntu 12.10 quantal with PostgreSQL 9.1+136 and OpenSSL 1.0.1c
-\end{itemize}
+\end{itemize*}
 
 
 \subsubsection{References}
-\begin{itemize}
+\begin{itemize*}
   \item It's recommended to read \url{http://www.postgresql.org/docs/9.1/interactive/runtime-config-connection.html\#RUNTIME-CONFIG-CONNECTION-SECURITY} (please edit the version with your preferred one).
   \item PostgreSQL Documentation on \emph{Secure TCP/IP Connections with SSL}: \url{http://www.postgresql.org/docs/9.1/static/ssl-tcp.html}
   \item PostgreSQL Documentation on \emph{host-based authentication}: \url{http://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html}
-\end{itemize}
+\end{itemize*}
 
 
 \subsubsection{Settings}

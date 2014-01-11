@@ -6,10 +6,10 @@ Note that any cipher suite starting with EECDH can be omitted, if in doubt.
 synonyms~\footnote{https://www.mail-archive.com/openssl-dev@openssl.org/msg33405.html})
 
 \subsubsection{Tested with Versions}
-\begin{itemize}
+\begin{itemize*}
   \item Apache 2.2.22 linked against OpenSSL 1.0.1e, Debian Wheezy
   \item Apache 2.4.6 linked against OpenSSL 1.0.1e, Debian Jessie
-\end{itemize}
+\end{itemize*}
 
 \subsubsection{Settings}
 Enabled modules \emph{SSL} and \emph{Headers} are required.
@@ -43,9 +43,9 @@ you can do this with the following setting inside of a VirtualHost environment:
 %\subsubsection{Justification for special settings (if needed)}
 
 \subsubsection{References}
-\begin{itemize}
+\begin{itemize*}
   \item Apache2 Docs on SSL and TLS: \url{https://httpd.apache.org/docs/2.4/ssl/}
-\end{itemize}
+\end{itemize*}
 
 
 \subsubsection{How to test}
@@ -58,11 +58,11 @@ See appendix \ref{cha:tools}
 \todo{sebix: add/test ssl.ec-curve and ssl.dh-file; see \url{http://redmine.lighttpd.net/projects/1/wiki/Docsr\_SSL\#Diffie-Hellman-and-Elliptic-Curve-Diffie-Hellman-parameters}}
 
 \subsubsection{Tested with Versions}
-\begin{itemize}
+\begin{itemize*}
   \item lighttpd/1.4.31-4 with OpenSSL 1.0.1e on Debian Wheezy
   \item lighttpd/1.4.33 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
   \item lighttpd/1.4.28-2 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
-\end{itemize}
+\end{itemize*}
 
 
 \subsubsection{Settings}
@@ -114,12 +114,12 @@ Support for other SSL-libraries like GnuTLS will be available in the upcoming
 
 
 \subsubsection{References} 
-\begin{itemize}
+\begin{itemize*}
   \item HTTPS redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps}
   \item Lighttpd Docs SSL: \url{http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs\_SSL}
   \item Release 1.4.30 (How to mitigate BEAST attack) \url{http://redmine.lighttpd.net/projects/lighttpd/wiki/Release-1\_4\_30}
   \item SSL Compression disabled by default: \url{http://redmine.lighttpd.net/issues/2445}
-\end{itemize}
+\end{itemize*}
 
 
 \subsubsection{How to test} 
@@ -130,12 +130,12 @@ See appendix \ref{cha:tools}
 \subsection{nginx}
 
 \subsubsection{Tested with Version} 
-\begin{itemize}
+\begin{itemize*}
   \item 1.4.4 with OpenSSL 1.0.1e on OS X Server 10.8.5
   \item 1.2.1-2.2+wheezy2 with OpenSSL 1.0.1e on Debian Wheezy
   \item 1.4.4 with OpenSSL 1.0.1e on Debian Wheezy
   \item 1.2.1-2.2~bpo60+2 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
-\end{itemize}
+\end{itemize*}
 
 
 \subsubsection{Settings}
@@ -171,10 +171,10 @@ return 301 https://$host$request_uri;
 
 
 \subsubsection{References} 
-\begin{itemize}
+\begin{itemize*}
   \item \url{http://nginx.org/en/docs/http/ngx_http_ssl_module.html}
   \item \url{http://wiki.nginx.org/HttpSslModule}
-\end{itemize}
+\end{itemize*}
 
 \subsubsection{How to test}
 See appendix \ref{cha:tools}

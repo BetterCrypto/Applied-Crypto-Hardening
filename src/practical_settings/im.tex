@@ -4,20 +4,20 @@
 For servers, we mostly recommend to apply what's proposed by the \emph{Peter's manifesto}\footnote{\url{https://github.com/stpeter/manifesto}}.
 
 In short:
-\begin{itemize}
+\begin{itemize*}
     \item require the use of TLS for both client-to-server and server-to-server connections
     \item prefer or require TLS cipher suites that enable forward secrecy
     \item deploy certificates issued by well-known and widely-deployed certification authorities (CAs)
-\end{itemize}
+\end{itemize*}
 
 The last point being out-of-scope for this section, we will only cover the first two points.
 
 \subsection{ejabberd}
 
 \subsubsection{Tested with Versions}
-\begin{itemize}
+\begin{itemize*}
   \item Debian Wheezy 2.1.10-4+deb7u1
-\end{itemize}
+\end{itemize*}
 
 \subsubsection{Settings}
 ejabberd is one of the popular Jabber server. In order to be compliant
@@ -54,9 +54,9 @@ Newer versions of ejabberd now support specifying the cipher string in the confi
 
 
 \subsubsection{How to test}
-\begin{itemize}
+\begin{itemize*}
   \item \url{https://xmpp.net} is a practical website to test Jabber server configurations.
-\end{itemize}
+\end{itemize*}
 
 
 %%---------------------------------------------------------------------- 
@@ -64,12 +64,12 @@ Newer versions of ejabberd now support specifying the cipher string in the confi
 
 The OTR protocol works on top of the Jabber protocol\footnote{\url{https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html}}.  
 It adds to popular chat clients (Adium, Pidgin...) the following properties for encrypted chats:
-\begin{itemize}
+\begin{itemize*}
   \item Authentication
   \item Integrity
   \item Confidentiality
   \item Forward secrecy
-\end{itemize}
+\end{itemize*}
 
 It basically uses Diffie-Hellman, AES and SHA1. Communicating over an insecure instant messaging network, OTR can be used for end to end encryption.
 

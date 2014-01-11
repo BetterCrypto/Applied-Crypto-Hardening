@@ -6,12 +6,12 @@ For this reason proxy solutions are deployed on corporate networks to intercept 
 
 For encrypted traffic there are four options:
 
-\begin{itemize}
+\begin{itemize*}
   \item Block the connection because it cannot be scanned for threats.
   \item Bypass the threat-mitigation and pass the encrypted session to the client, which results in a situation where malicious content is transferred directly to the client without visibility to the security system.
   \item Intercept (i.e. terminate) the session at the proxy, scan there and re-encrypt the session towards the client (effectively MITM).
   \item Deploy special Certificate Authorities to enable Deep Packet Inspection on the wire.
-\end{itemize}
+\end{itemize*}
 
 While the latest solution might be the most "up to date", it arises a new front in the context of this paper, because the most secure part of a client's connection could only be within the corporate network, if the proxy-server handles the connection to the destination server in an insecure manner.
 
@@ -71,9 +71,9 @@ For squid Versions before 3.2.7 use this patch against a vanilla source-tree:
 \subsubsection{Bluecoat}
 %% https://kb.bluecoat.com/index?page=content&id=KB5549
 \subsubsection{Tested with Versions}
-\begin{itemize}
+\begin{itemize*}
   \item SGOS 6.5.x
-\end{itemize}
+\end{itemize*}
 
 BlueCoat Proxy SG Appliances can be used as forward and reverse proxies. The reverse proxy feature is rather under-developed, and while it is possible and supported, there only seems to be limited use of this feature "in the wild" - nonetheless there are a few cipher suites to choose from, when enabling SSL features.
 
@@ -126,9 +126,9 @@ Disabling protocols and ciphers in a forward proxy environment could lead to une
 % See https://help.ubuntu.com/community/Pound
 
 \subsubsection{Tested with Versions}
-\begin{itemize}
+\begin{itemize*}
   \item Pound 2.6
-\end{itemize}
+\end{itemize*}
 
 \begin{lstlisting}
 # HTTP Listener, redirects to HTTPS
