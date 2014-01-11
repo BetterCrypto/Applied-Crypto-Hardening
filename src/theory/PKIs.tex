@@ -117,10 +117,15 @@ CA at all, but is signed by the entity that it is issued to.  Thus, the
 organizational overhead of running a CA is eliminated at the expense of
 having to establish all trust relationships between entities manually.
 
-With OpenSSL, a self-signed certificate may be created with this command:
+With OpenSSL, you can self-sign a previously created certificate with this command:
 
 \begin{lstlisting}
 % openssl req -new -x509 -key privkey.pem -out cacert.pem -days 1095
+\end{lstlisting}
+
+You can also create a self-signed certificate in just one command:
+\begin{lstlisting}
+openssl req -new -x509 -keyout privkey.pem -out cacert.pem -days 1095 -nodes -newkey rsa:<keysize>
 \end{lstlisting}
 
 The resulting certificate will by default not be trusted by anyone at all,
