@@ -20,6 +20,11 @@ md:
 	pandoc -f latex -t markdown -o applied-crypto-hardening.markdown \
             applied-crypto-hardening.tex
 
+# experimental
+txt:
+	detex applied-crypto-hardening > applied-crypto-hardening.txt
+
+
 #epub:
 	 # experimental
 #	 ~/Library/texmf/tex/latex/tex4ebook/tex4ebook applied-crypto-hardening.tex
@@ -39,6 +44,6 @@ clean:
             applied-crypto-hardening.log applied-crypto-hardening.pdf   \
             applied-crypto-hardening.toc applied-crypto-hardening.markdown \
 			applied-crypto-hardening.out
-	find . -name "*_generated.tex" -exec rm \{\} \;
 	rm -rf applied-crypto-hardening/
 	rm -rf gitHeadInfo.gin
+	rm applied-crypto-hardening.txt

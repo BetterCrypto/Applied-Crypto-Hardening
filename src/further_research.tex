@@ -1,11 +1,8 @@
-\newpage
-\section{Further research}
-\label{section:furtherresearch}
+\chapter{Further research}
+\label{cha:further-research}
 The following is a list of services, software packages, hardware devices or protocols that we considered documenting but either did not manage to document yet or might be able to document later. We encourage input from the Internet community. 
 
-\vline{}
-
-\begin{minipage}[b]{0.5\linewidth}
+\begin{multicols}{3}
 \begin{itemize}
 \item whatsapp (might be problematic\\ since a user/admin can't change anything)
 \item Lync
@@ -28,13 +25,9 @@ The following is a list of services, software packages, hardware devices or prot
 \item LDAP
 \item seclayer-tcp
 \item Commerical network equipment vendors
-\end{itemize}
-\end{minipage}
-\begin{minipage}[b]{0.5\linewidth}
-\begin{itemize}
 \item RADIUS 
 \item Moxa , APC, und co... ICS . Ethernet to serial 
-\item telnet (only sensible reocmmendation: \emph{DON't!!})
+\item telnet (only sensible recommendation: \emph{DON't!!})
 \item rsyslog 
 \item v6 spoofing (look at work by Ferndo Gont, Marc Heuse, et. al.)
 \item tinc
@@ -48,12 +41,13 @@ The following is a list of services, software packages, hardware devices or prot
 \item phpmyadmin (same as webmin)
 \item DSL modems (where to start?)
 \item UPnP, natPmp 
-\item SAML federated auth providers (e.g., all the REFEDS folks (\url{https://refeds.org/})), including InCommon (\url{http://www.incommon.org/federation/metadata.html})
-  \url{https://wiki.shibboleth.net/confluence/display/SHIB2/TrustManagement} 
+\item SAML federated auth providers \footnote{e.g., all the REFEDS folks (\url{https://refeds.org/})), including InCommon (\url{http://www.incommon.org/federation/metadata.html}
+  \url{https://wiki.shibboleth.net/confluence/display/SHIB2/TrustManagement} }
+\item Microsoft SQL Server
 \end{itemize}
-\end{minipage}
+\end{multicols}
 
-
-
-
-
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "applied-crypto-hardening"
+%%% End: 

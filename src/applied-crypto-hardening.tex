@@ -1,265 +1,16 @@
-%%% LaTeX Template: Two column article
 %%%
-%%% Source: http://www.howtotex.com/
-%%% Feel free to distribute this template, but please keep to referal to http://www.howtotex.com/ here.
-%%% Date: February 2011
+%%% Applied Crypto Hardening
+%%% bettercrypto.org
+%%%
+\RequirePackage{fix-cm}
+\documentclass[draft]{scrreprt}
+%\documentclass{scrreprt} 	% uncomment this if you want to make a final version (and remove the DRAFT watermark)
+\input{common/system}
+\input{common/style}
+\input{common/commands}
 
-%%% Preamble
-\documentclass[	DIV=calc,%
-				paper=a4,%
-				fontsize=9pt,%
-				%onecolumn]{scrartcl}	 					% KOMA-article class
-				onecolumn]{scrreprt}	 					% KOMA-article class
-				%onecolumn]{report}	 					% KOMA-article class
-
-\usepackage{lipsum}													% Package to create dummy text
-
-
-
-\usepackage[english]{babel}										% English language/hyphenation
-\usepackage[utf8]{inputenc}										% UTF-8 as input-encoding
-\usepackage[protrusion=true,expansion=true]{microtype}				% Better typography
-\usepackage{amsmath,amsfonts,amsthm}					% Math packages
-\usepackage[pdftex]{graphicx}						% Enable pdflatex 
-%\usepackage[svgnames]{xcolor}									% Enabling colors by their 'svgnames'
-\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption}	% Custom captions under/above floats
-\usepackage{epstopdf}												% Converts .eps to .pdf
-\usepackage{subfig}													% Subfigures
-\usepackage{fix-cm}													% Custom fontsizes
-
-\usepackage[usenames,dvipsnames]{color}
-\usepackage{float}
-\usepackage{subfig}
-%\usepackage{tikz}
-\usepackage{acronym}
-\usepackage{amsthm}
-\usepackage{fancyvrb}
-\usepackage{upquote}												% For correct single quotes in listings
-\usepackage{listings}
-\usepackage{longtable}
-
-%% Epigraph patching
-\usepackage{epigraph}
-% \epigraphsize{\small}% Default
-\setlength\epigraphwidth{8cm}
-\setlength\epigraphrule{0pt}
-\usepackage{etoolbox}
-\makeatletter
-\patchcmd{\epigraph}{\@epitext{#1}}{\itshape\@epitext{#1}}{}{}
-\makeatother
-
-
-
-\usepackage{gitinfo}
-
-% custom changes:
-\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
-\usepackage{placeins}
-\usepackage{draftwatermark}
-
-% human tables
-\usepackage{booktabs}
-\renewcommand{\arraystretch}{1.25}
-
-% side box
-\usepackage{wrapfig}
-%\usepackage{tcolorbox}
-\newenvironment{WrapText}[1][r]
-  {\wrapfigure{#1}{0.5\textwidth}\tcolorbox}
-  {\endtcolorbox\endwrapfigure}
-
-% Add text symbols
-\usepackage{pifont}
-\newcommand{\yes}{\textcolor{green}{\ding{51}}}
-\newcommand{\no}{\textcolor{red}{\ding{55}}}
-
-
-% Colours
-\definecolor{green}{RGB}{32,113,10}
-\definecolor{orange}{RGB}{251,111,16}
-\definecolor{red}{RGB}{247,56,0}
-\definecolor{blue}{RGB}{0,28,128}
-\definecolor{lightgreen}{RGB}{187,218,216}
-\definecolor{intersectgreen}{RGB}{103,133,155}
-\definecolor{darkblue}{RGB}{76,87,117}
-
-\bibliographystyle{alphalink}
-
-\definecolor{Brown}{cmyk}{0,0.81,1,0.60}
-\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
-\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
-\definecolor{lightlightgray}{gray}{0.9}
-
-\usepackage{titlesec}
-%\allsectionsfont{\color{darkblue}\itshape\underline}
-%\sectionfont{\color{darkblue}\itshape\selectfont}
-%\subsectionfont{\color{darkblue}\itshape\selectfont}
-\renewcommand*\sectfont{\sffamily\color{darkblue}\mdseries}
-%\renewcommand*\sectfont{\rmfamily\mdseries\itshape}
-
-
-% makes default font sans-serif
- \renewcommand{\familydefault}{\sfdefault}
-
-% make font Open Sans
-% \usepackage{opensans}
-\usepackage[defaultsans]{opensans}
-
-% changes font encoding to T1
-% \usepackage[T1]{fontenc}
-% \usepackage{textcomp}
-
-% This block is for listings
-\usepackage[framemethod=TikZ]{mdframed} % mdframed is used to draw a grey box
-\mdfdefinestyle{listingstyle}{
-  backgroundcolor=black!10,outerlinewidth=0,outerlinecolor=black,
-  innerleftmargin=0,innerrightmargin=0,innertopmargin=0pt,innerbottommargin=0pt
-}
-\usepackage{amssymb}% for \curvearrowright
-% Insert a grey box behind the listing for uniform background color (The \cipherstring would the listing and the background would turn white)
-\BeforeBeginEnvironment{lstlisting}{\vspace{0.2cm}\begin{mdframed}[style=listingstyle]}
-\AfterEndEnvironment{lstlisting}{\end{mdframed}}
-\lstset{
-%language=Bash,                             % Code langugage
-basicstyle=\ttfamily,                   % Code font, Examples: \footnotesize, \ttfamily
-keywordstyle=\color{OliveGreen},        % Keywords font ('*' = uppercase)
-commentstyle=\color{gray},              % Comments font
-%numbers=left,                           % Line nums position
-%numberstyle=\tiny,                      % Line-numbers fonts
-%stepnumber=1,                           % Step between two line-numbers
-%numbersep=5pt,                          % How far are line-numbers from code
-backgroundcolor=\color{lightlightgray}, % Choose background color
-frame=none,                             % A frame around the code
-tabsize=2,                              % Default tab size
-captionpos=b,                           % Caption-position = bottom
-breaklines=true,                        % Automatic line breaking?
-breakatwhitespace=false,                % Automatic breaks only at whitespace?
-showspaces=false,                       % Dont make spaces visible
-showstringspaces=false,
-showtabs=false,                         % Dont make tabls visible
-columns=fullflexible,                   % Column format: no spaces are inserted for monospaced appearance
-morekeywords={__global__, __device__},  % 
-escapeinside={\%*}{*)},                 % Escape TeX commands inside %* and *)
-prebreak=\mbox{$\curvearrowright$},     % Disply curved arrow before linebreak
-xrightmargin=1.8pt,
-}
-
-
-%% \todo{} command.
-%
-% Outputs red TODOs in the document. Requires \usepackage{color}.
-%
-% Usage: \todo{Document the TODO command.}
-%
-% Comment out second line to disable.
-\newcommand{\todo}[1]{}
-\renewcommand{\todo}[1]{{\color{Red} TODO: {#1}}}
-
-
-%%% Custom sectioning (sectsty package)
-\usepackage{sectsty}													% Custom sectioning (see below)
-\allsectionsfont{%															% Change font of al section commands
-	%\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font 
-\bfseries 															% should make it Open Sans Bold
-	}
-
-\sectionfont{%																% Change font of \section command
-	%\usefont{OT1}{phv}{b}{n}%										% bch-b-n: CharterBT-Bold font
-\bfseries 	
-	}
-
-% use more of the page
-\usepackage{fullpage}
-
-%%% Headers and footers
-\usepackage{fancyhdr}												% Needed to define custom headers/footers
-	\pagestyle{fancy}														% Enabling the custom headers/footers
-\usepackage{lastpage}	
-
-% Header (empty)
-\lhead{}
-\chead{}
-\rhead{}
-% Footer (you may change this to your own needs)
-\lfoot{\footnotesize Applied Crypto Hardening \textbullet ~Draft revision\gitVtags: \gitAbbrevHash{} (\gitCommitterIsoDate) \gitCommitterName}
-\cfoot{}
-\rfoot{\footnotesize page \thepage\ of \pageref{LastPage}}	% "Page 1 of 2"
-\renewcommand{\headrulewidth}{0.0pt}
-\renewcommand{\footrulewidth}{0.4pt}
-
-
-
-%%% Creating an initial of the very first character of the content
-\usepackage{lettrine}
-\newcommand{\initial}[1]{%
-     \lettrine[lines=3,lhang=0.3,nindent=0em]{
-     				\color{darkblue}
-     				{\textsf{#1}}}{}}
-
-
-
-%%% Title, author and date metadata
-\usepackage{titling}															% For custom titles
-
-\newcommand{\HorRule}{\color{darkblue}%			% Creating a horizontal rule
-									  	\rule{\linewidth}{1pt}%
-									}
-
-
-\pretitle{\vspace{-30pt} \begin{flushleft} \HorRule 
-				\fontsize{35}{36} \bfseries \color{darkblue} \selectfont 
-				}
-			\title{Applied Crypto Hardening}% \\ \vskip 0.5em \large www.bettercrypto.org}
-\posttitle{\par\end{flushleft}\vskip 0.5em}
-
-\preauthor{\begin{flushleft}
-					\large \lineskip 0.5em  
-					\color{intersectgreen}}
-					%\vskip 0.5em
-					\author{Wolfgang Breyha, David Durvaux, Tobias Dussa, L. Aaron
-					Kaplan, Florian Mendel, Christian Mock, Manuel Koschuch, Adi
-					Kriegisch, Ulrich Pöschl, Ramin Sabet, Berg San, Ralf Schlatterbeck, 
-					Thomas Schreck, Aaron Zauner, Pepi Zawodsky}
-%\institute{
-%FH Campus Wien
-%\and
-%VRVis
-%\and
-%CERT.at
-%\and
-%Karlsruhe Institute of Technology
-%}
-
-
-\setlength{\parindent}{0cm}
-
-\postauthor{\footnotesize  \color{Black}  \vskip 2.5em
-  (University of Vienna, CERT.be, KIT-CERT, CERT.at, IAIK, coretec.at, FH Campus Wien, VRVis, MilCERT Austria, A-Trust, Runtux.com, Friedrich-Alexander University Erlangen-Nuremberg, azet.org, maclemon.at)
-					\par\end{flushleft}\HorRule}
-
-\date{\today}
-
-%tell TeX where to look for graphics/logos
-\graphicspath{ {/img/} }
-
-% hyperref needs to be the last package you load.
-\usepackage[pdftex,breaklinks,colorlinks,linkcolor=darkblue,citecolor=blue,urlcolor=blue]{hyperref}
-
-% CIPHERSTRING
-\usepackage{seqsplit} % Use Sequence split. Basically it inserts between every character pair a box with zero width to allow linebreaks everywhere. Better solution wanted, but is there any better?
-\newcommand{\cipherstringB}{\seqsplit{EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA}}
-
-%%% Begin document
 \begin{document}
-\maketitle
-
-\thispagestyle{fancy} 			% Enabling the custom headers/footers for the first page 
-% The first character should be within \initial{}
-%\initial{H}\textbf{ere is some sample text to show the initial in the introductory paragraph of this template article. The color and lineheight of the initial can be modified in the preamble of this document.}
-
-% add logo graphic
-%\includegraphics{img/logo}
-
+\input{title}
 \input{neboltai}
 \input{acknowledgements}
 \input{abstract}
@@ -278,10 +29,11 @@ xrightmargin=1.8pt,
 \input{practical_settings}
 %%
 \chapter{Theory}
-%\epigraph{``Number theorists are like lotus-eaters - having tasted this food they can never give it up.''}{-- Leopold Kronecker}
+%\epigraph{``Number theorists are like lotus-eaters - having tasted this food they can never give it up.''}{Leopold Kronecker}
 \label{chapter:Theory}
 \input{theory}
-\chapter{Appendix}
+\appendix
+\label{appendix}
 \input{tools}
 \input{links}
 \input{suggested_reading}
@@ -291,3 +43,7 @@ xrightmargin=1.8pt,
 \input{bib}
 
 \end{document}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

@@ -1,4 +1,3 @@
-
 Website
 ========
 
@@ -6,11 +5,17 @@ BIG TOPICS
 ==========
 
 
+* be consistent: 2048 RSA < 128 bit symmetric cipher strength. We should aim at 128+ bits symmetric strength. --> fix RSA 2048 in the document. Upgrade to 3072
+
 * clean up 9.5 "chossing your own cipher"
 
 * DDOS possibilities when we increase cyrpto security?? What about that? (--> LATER)
 
 * write a Justification section to every setting, maybe have that later in the document. 
+
+* more focus on these sections:
+  - GPG
+  - SSH : do we need a client subsection? 
 
 DONE * move the explanations to a later part of the document. Code snippets go *first* . The target group is sysadmins, must be easily copy & paste-able. Or find a different way so that they can easily use/read the document
 
@@ -19,7 +24,7 @@ DONE * Decide/Discuss recommended ciphers:
   --> answer: we trust IETF/IKE  as described in ECRYPT2
 
 * comments from IAIK integrate (--> Aaron, check again if it was done)
-* SHA-1 section: write why it is a problem (--> Florian Mendel)
+DONE * SHA-1 section: write why it is a problem (--> Florian Mendel)
 * PKI section (--> Thomas Schreck)
 DONE * include OpenSSL names/IANA names into appendix (--> cm)
 * Document RNG problem in Apache (--> Pepi)
@@ -27,6 +32,12 @@ DONE * Oracle ?? (--> Berg?? maybe . Or aaron: ask nic.at. Or link to T-Systems 
 DONE * DB2 (--> Berg. Or ask MLeyrer)
 * Add AES128 to cipherStringA ?
 * re-work chapter 2 (practical settings). Add lots of references to chapter 3 to get people interested in reading the theory.
+
+
+Website
+=======
+People with outdated browsers (winXP) etc can't see our webpage. --> make a landing page explaining 
+how to updated the browser :)
 
 
 Formatting
@@ -40,6 +51,17 @@ Rendering in Firefox (inline) on Windows seems to be really messed up. What happ
 
 * make every section like the Apache section (--> Aaron)
 
+* make a HTML Version of the document. It is much easier to copy & paste from than from PDFs.
+* Add Timestamp and git shorthash, not only date, to the title page of the document. Easier to check if you version of the document is current!
+
+
+Formats to export
+=================
+Requested by many people on Twitter
+    * Plain TXT version for use on headless servers
+    * HTML version for better reading in browsers and always up-to-date
+    * EPUB version for comfortable reading on tablets and ebook readers
+
 
 Workflow
 ========
@@ -47,6 +69,8 @@ Workflow
 * how to keep things up to date?
 * how to automatically test  compatibility?
 * how to make sure that this document has the latest information on cipher strengths?
+* !! GPG sign every PDF !!
+* store the keys in DNS: see RFC 4398
 
 
 Contents
@@ -71,6 +95,8 @@ Contents
 
 2. Test all settings 
 
+* Test especially with non-Debian-OS!
+
 * Test with more clients and other OSes than OSX / iPhone!!
 --> clients? 
   - thunderbird
@@ -84,7 +110,7 @@ Contents
   - chapter owner makes a test setup
   - tested by: XXX , on: $date. Screenshot of SSLlabs/ $testtool. (checktls.com)
 
-* document (cite) EVERYTHING! Why we chose certain values. Referneces, references, references. Otherwise it does not count!
+* document (cite) EVERYTHING! Why we chose certain values. References, references, references. Otherwise it does not count!
   Srsly!!
 DONE * .bib file is completely wrong. Make good citations/references. Add books: Schneier, ...
 * !! important: add the version string to everything that we tested!!
@@ -178,13 +204,20 @@ Contacting / who?
 * Cisco
 * Leithold
 
-
 LATER / further 
 ================
 * OpenLDAP (-> Adi)
 * Radius
 * Windows Active Directory
-* SRP: not part of this document
+DONE * SRP: not part of this document. But we did not exclude it in our cipher string :)
 DONE * \cipherA , \cipherB setting ---> does not work in our \begin{listing} environment --> maybe there is a different listing environment or use awk/sed/make/perl/python
 * What about 3270 terminal emulation? How to do crypto there? Can we? ( --> IBM sec. Stammtisch. Aaron)
+
+
+* client/users-guide:
+  * PGP 
+  * ssh client settings
+  * OTR ?
+  * public key infrastructure
+  * certificate handling
 

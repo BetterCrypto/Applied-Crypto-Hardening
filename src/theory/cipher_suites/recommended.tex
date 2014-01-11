@@ -92,7 +92,7 @@ This results in the OpenSSL string:
 
 %'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA'
 \begin{lstlisting}
-%*\cipherstringB*)
+%*\cipherStringB*)
 \end{lstlisting}
 
 \todo{make a column for cipher chaining mode}
@@ -150,16 +150,16 @@ Our recommended cipher strings are meant to be used via copy and paste and need 
 "out of the box".
 
 \begin{itemize}
-\item TLSv1.2 is preferred over TLSv1.0/SSLv3 (while still providing a useable cipher
-      string for SSLv3).
+\item TLSv1.2 is preferred over TLSv1.0 (while still providing a useable cipher
+      string for TLSv1.0 servers).
 \item AES256 and CAMELLIA256 count as very strong ciphers at the moment.
 \item AES128 and CAMELLIA128 count as strong ciphers at the moment
 \item DHE or ECDHE for forward secrecy
 \item RSA as this will fit most of today's setups
-\item AES256-SHA as a last resort (with this cipher at the end, even systems with
-      legacy distributions of OpenSSL will work out of the box. Forward secrecy
-      will not be available. On systems that do not support elliptic curves, that cipher
-      offers support for the Microsoft crypto libraries that only support ECDHE. \todo{what does that mean?! inconclusive!}
+\item AES256-SHA as a last resort: with this cipher at the end, even server
+      systems with very old OpenSSL versions will work out of the box (version 0.9.8 for example does not
+      provide support for ECC and TLSv1.1 or above). \\
+      Note however that this cipher suite will not provide forward secrecy. It
+      is meant to provide the same client coverage (eg. support Microsoft crypto
+      libraries) on legacy setups.
 \end{itemize}
-
-\todo{Adi: review "justification" when next section is written}

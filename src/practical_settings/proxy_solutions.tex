@@ -23,18 +23,16 @@ Conclusion: Don't forget to check your proxy solutions SSL-capabilities. Also do
 As of squid-3.2.7 (01 Feb 2013) there is support for the OpenSSL NO\_Compression option within squid config (CRIME attack) and if you combine that in the config file, with an enforcement of the server cipher preferences (BEAST Attack) you are safe.
 
 \paragraph*{squid.conf}\mbox{}\\
-squid.conf
 
 \todo{UNTESTED!}
 \begin{lstlisting}
 options=NO_SSLv2,NO_TLSv1,NO_Compression,CIPHER_SERVER_PREFERENCE 
-cipher=%*\cipherstringB*)
+cipher=%*\cipherStringB*)
 \end{lstlisting}
 
 
 
 \paragraph*{squid.conf}\mbox{}\\
-squid.conf
 
 %% http://forum.pfsense.org/index.php?topic=63262.0
 
@@ -148,7 +146,7 @@ ListenHTTPS
     AddHeader    "Front-End-Https: on"
     Cert         "/path/to/your/cert.pem"
     ## See 'man ciphers'.
-    Ciphers      "TLSv1.2:TLSv1.1:!SSLv3:!SSLv2:%*\cipherstringB*)"
+    Ciphers      "TLSv1.2:TLSv1.1:!SSLv3:!SSLv2:%*\cipherStringB*)"
     Service
         BackEnd
             Address 10.20.0.10

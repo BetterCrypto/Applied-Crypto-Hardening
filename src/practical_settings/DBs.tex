@@ -13,8 +13,8 @@
 
 
 %% ---------------------------------------------------------------------- 
-\subsection{SQL Server}
-\todo{write this}
+%%\subsection{SQL Server}
+%%\todo{write this}
 
 
 
@@ -22,7 +22,7 @@
 \subsection{MySQL}
 \subsubsection{Tested with Version}
 \begin{itemize}
-  \item Debian 7.0 and MySQL 5.5
+  \item Debian Wheezy and MySQL 5.5
 \end{itemize}
 
 
@@ -32,9 +32,9 @@
 [mysqld]
 ssl
 ssl-ca=/etc/mysql/ssl/ca-cert.pem
-ssl-cert=/etc/mysql/ssl/client-cert.pem
-ssl-key=/etc/mysql/ssl/client-key.pem
-ssl-cipher=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
+ssl-cert=/etc/mysql/ssl/server-cert.pem
+ssl-key=/etc/mysql/ssl/server-key.pem
+ssl-cipher=@@@CIPHERSTRINGB@@@
 \end{lstlisting}
 
 %\subsubsection{Additional settings}
@@ -110,6 +110,7 @@ TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
 \begin{itemize}
   \item It's recommended to read {\small \url{http://www.postgresql.org/docs/9.1/interactive/runtime-config-connection.html\#RUNTIME-CONFIG-CONNECTION-SECURITY}} (please edit the version with your preferred one).
   \item PostgreSQL Documentation on \emph{Secure TCP/IP Connections with SSL}: \url{http://www.postgresql.org/docs/9.1/static/ssl-tcp.html}
+  \item PostgreSQL Documentation on \emph{host-based authentication}: \url{http://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html}
 \end{itemize}
 
 
@@ -129,7 +130,7 @@ ssl_ca_file = '/your/path/root.crt'
 \begin{lstlisting}
 #>=8.3
 ssl = on 
-ssl_ciphers = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
+ssl_ciphers = '@@@CIPHERSTRINGB@@@'
 \end{lstlisting}
 
 

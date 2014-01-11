@@ -1,11 +1,26 @@
-applied-crypto-hardening.aux
+# LaTeX
+*.aux
+*.bbl
+*.blg
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.log
+*.lof
+*.lot
+*.lol
+*.out
+*.toc
+*.fdb_latexmk
+*.pdfsync
+*.synctex.gz
+# specific 
 applied-crypto-hardening.dvi
-applied-crypto-hardening.log
-applied-crypto-hardening.out
 applied-crypto-hardening.pdf
-applied-crypto-hardening.toc
-applied-crypto-hardening.bbl
-applied-crypto-hardening.blg
 applied-crypto-hardening.markdown
 *.gummi
 *.swp
@@ -15,3 +30,4 @@ old/*
 practical_settings/*_generated.tex
 cipher_suites/*_generated.tex
 *_generated.tex
+

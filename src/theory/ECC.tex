@@ -1,17 +1,17 @@
 \section{A note on Elliptic Curve Cryptography}
 \label{section:EllipticCurveCryptography}
 
-%\epigraph{``Mathematics is the queen of the sciences and number theory is the queen of mathematics.''}{-- Carl Friedrich Gauss}
+%\epigraph{``Mathematics is the queen of the sciences and number theory is the queen of mathematics.''}{Carl Friedrich Gauss}
 
 \epigraph{``Everyone knows what a curve is, until he has studied enough
 mathematics to become confused through the countless number of possible
-exceptions.''}{-- Felix Klein }
+exceptions.''}{Felix Klein }
 
 Elliptic Curve Cryptography (simply called ECC from now on) is a branch of
 cryptography that emerged in the mid-1980s.  The security of the RSA
 algorithm is based on the assumption that factoring large numbers is infeasible.
 Likewise, the security of ECC, DH and DSA is based on the discrete logarithm
-problem\cite{Wikipedia:Discrete,McC90,WR13}.  Finding the discrete logarithm of
+problem~\cite{Wikipedia:Discrete,McC90,WR13}.  Finding the discrete logarithm of
 an elliptic curve from its public base point is thought to be infeasible. This
 is known as the Elliptic Curve Discrete Logarithm Problem (ECDLP). ECC and the
 underlying mathematical foundation are not easy to understand - luckily, there
@@ -30,8 +30,8 @@ curves and curve points chosen by different standardization bodies such as the
 National Institute of Standards and Technology (NIST)
 \footnote{\url{http://www.nist.gov}} which were later widely implemented in
 most common crypto libraries. Those parameters came under question repeatedly
-from cryptographers\cite{BL13,Sch13b,W13}.  At the time of writing, there is
-ongoing research as to the security of various ECC parameters\cite{DJBSC}.
+from cryptographers~\cite{BL13,Sch13b,W13}.  At the time of writing, there is
+ongoing research as to the security of various ECC parameters~\cite{DJBSC}.
 Most software configured to rely on ECC (be it client or server) is not able to
 promote or black-list certain curves. It is the hope of the authors that such
 functionality will be deployed widely soon.  The authors of this paper include

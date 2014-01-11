@@ -4,7 +4,7 @@
 Q: I want to review the document. What do I need to do?
 
 A: `git clone` the document, make changes, send us a diff
-Do not forget to add your name to `reviewers.tex`!
+Do not forget to add your name to `src/acknowledgements.tex`!
 
 
 

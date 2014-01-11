@@ -1,12 +1,14 @@
 %%---------------------------------------------------------------------- 
-Please note, that any cipher suite starting with ECDHE can be omitted, if in doubt.
+Note that any cipher suite starting with EECDH can be omitted, if in doubt.
+(Compared to the theory section, EECDH in Apache and ECDHE in OpenSSL are
+synonyms~\footnote{https://www.mail-archive.com/openssl-dev@openssl.org/msg33405.html})
 
 \subsection{Apache}
 
-
-\subsubsection{Tested with Versions}
+\subsubsection{Tested with Versions} 
 \begin{itemize}
-  \item Apache2/2.2.22-13 with OpenSSL 1.0.1e on Debian Wheezy (ciphers with Forward Secrecy are not chosen with Internet Explorer on Windows)
+  \item Apache 2.2.22 linked against OpenSSL 1.0.1e, Debian Wheezy
+  \item Apache 2.4.6 linked against OpenSSL 1.0.1e, Debian Jessie
 \end{itemize}
 
 
@@ -27,9 +29,8 @@ Enabled modules \emph{SSL} and \emph{Headers} are required.
   # ALL subdomains HAVE TO support https if you use this!
   # Header always set Strict-Transport-Security "max-age=15768000; includeSubDomains"
 
-  SSLCipherSuite '%*\cipherstringB*)'
+  SSLCipherSuite '%*\cipherStringB*)'
 \end{lstlisting}
-
 
 \subsubsection{Additional settings}
 You might want to redirect everything to \emph{https://} if possible. In Apache
@@ -49,12 +50,14 @@ you can do this with the following setting inside of a VirtualHost environment:
 
 \subsubsection{How to test}
 
-See section \ref{section:Tools}
+See appendix \ref{cha:tools}
 
 %%---------------------------------------------------------------------- 
 \subsection{lighttpd}
 
+
 \subsubsection{Tested with Versions}
+\todo{sebix: add/test ssl.ec-curve and ssl.dh-file; see \url{http://redmine.lighttpd.net/projects/1/wiki/Docsr\_SSL\#Diffie-Hellman-and-Elliptic-Curve-Diffie-Hellman-parameters}}
 \begin{itemize}
   \item lighttpd/1.4.31-4 with OpenSSL 1.0.1e on Debian Wheezy
   \item lighttpd/1.4.33 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
@@ -69,7 +72,7 @@ See section \ref{section:Tools}
     ssl.use-sslv2 = "disable"
     ssl.use-sslv3 = "disable"
     ssl.pemfile = "/etc/lighttpd/server.pem"
-    ssl.cipher-list = "%*\cipherstringB*)"
+    ssl.cipher-list = "%*\cipherStringB*)"
     ssl.honor-cipher-order = "enable"
     setenv.add-response-header  = ( "Strict-Transport-Security" => "max-age=15768000") # six months
     # use this only if all subdomains support HTTPS!
@@ -79,9 +82,10 @@ See section \ref{section:Tools}
 
 
 \subsubsection{Additional settings}
-As for any other webserver, you might want to automatically redirect http
+As for any other webserver, you might want to automatically redirect \emph{http://}
 traffic towards \emph{https://}. It is also recommended to set the environment
-variable \emph{HTTPS}, PHP applications can then detect that HTTPS is in use.
+variable \emph{HTTPS}, PHP applications run by the webserver can then detect,
+that HTTPS is in use.
 
 \begin{lstlisting}
   $HTTP["scheme"] == "http" {
@@ -119,7 +123,8 @@ Support for other SSL-libraries like GnuTLS will be available in the upcoming
 \end{itemize}
 
 \subsubsection{How to test} 
-See section \ref{section:Tools}
+See appendix \ref{cha:tools}
+
 
 %%---------------------------------------------------------------------- 
 \subsection{nginx}
@@ -138,7 +143,7 @@ See section \ref{section:Tools}
 \begin{lstlisting}
   ssl_prefer_server_ciphers on;
   ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # not possible to do exclusive
-  ssl_ciphers '%*\cipherstringB*)';
+  ssl_ciphers '%*\cipherStringB*)';
   add_header Strict-Transport-Security "max-age=15768000; includeSubDomains"
 \end{lstlisting}
 
@@ -160,7 +165,7 @@ If you decide to trust NIST's ECC curve recommendation, you can add the followin
 You might want to redirect everything to \emph{https://} if possible. In Nginx you can do this with the following setting:
 
 \begin{lstlisting}
-  rewrite     ^(.*)   https://$host$1 permanent;
+  return 301 https://$host$request_uri;
 \end{lstlisting}
 
 
@@ -171,7 +176,7 @@ You might want to redirect everything to \emph{https://} if possible. In Nginx y
 \end{itemize}
 
 \subsubsection{How to test}
-See section \ref{section:Tools}
+See appendix \ref{cha:tools}
 
 %%---------------------------------------------------------------------- 
 \subsection{MS IIS}
@@ -261,6 +266,11 @@ Clients not supported:
 % add any further references or best practice documents here
 
 \subsubsection{How to test}
-See section \ref{section:Tools}
+See appendix \ref{cha:tools}
 
 %\end{description}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../applied-crypto-hardening"
+%%% End: 

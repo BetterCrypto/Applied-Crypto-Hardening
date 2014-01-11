@@ -54,15 +54,16 @@ mode, because the alternative is plain text transmission.
 
 \subsubsection{Tested with Version} 
 \begin{itemize}
+\item Dovecot 2.1.17, Debian Wheezy (without ``ssl\_prefer\_server\_ciphers'' setting)
 \item Dovecot 2.2
-\item 2.0.19apple1 on OS X Server 10.8.5 (without ssl\_prefer\_server\_ciphers)
+\item 2.0.19apple1 on OS X Server 10.8.5 (without ``ssl\_prefer\_server\_ciphers'' setting)
 \end{itemize}
 
 \subsubsection{Settings}
 % Example: http://dovecot.org/list/dovecot/2013-October/092999.html
 
 \begin{lstlisting}
-  ssl_cipher_list = '%*\cipherstringB*)'
+  ssl_cipher_list = '%*\cipherStringB*)'
   ssl_prefer_server_ciphers = yes
 \end{lstlisting}
 
@@ -115,7 +116,7 @@ Limiting the ciphers provided may force (especially older) clients to connect wi
 
 If you still want to force strong encryption use
 \begin{lstlisting}
-  tls_cipher_list: %*\cipherstringB*)
+  tls_cipher_list: %*\cipherStringB*)
 \end{lstlisting}
 
 cyrus-imapd loads hardcoded 1024 bit DH parameters using get\_rfc2409\_prime\_1024() by default. If you want to load your own DH parameters add them PEM encoded to the certificate file given in tls\_cert\_file. Do not forget to re-add them after updating your certificate.\\
@@ -166,7 +167,11 @@ There is a working patch for all three features:
 
 \subsection{Postfix}
 
-\subsubsection{Tested with Version} Postfix 2.9.6 (Debian Wheezy)
+\subsubsection{Tested with Version}
+\begin{itemize}
+\item Postfix 2.9.6, Debian Wheezy
+\end{itemize}
+
 \subsubsection{Settings}
 
 %% I (cm) consider the generation of own DH parameters to be voodoo until
@@ -227,7 +232,7 @@ acceptable for the ``mandatory'' security level, again in
 \begin{lstlisting}
   smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
   smtpd_tls_mandatory_ciphers=high
-  tls_high_cipherlist=%*\cipherstringB*)
+  tls_high_cipherlist=%*\cipherStringB*)
 \end{lstlisting}
 
 Then, we configure the MSA smtpd in \verb|master.cf| with two
@@ -278,7 +283,7 @@ interoperability risk, but we have not tested this yet.
 
 You can check the effect of the settings with the following command:
 \begin{lstlisting}
-$ zegrep "TLS connection established from.*with cipher" | /var/log/mail.log | awk '{printf("%s %s %s %s\n", $12, $13, $14, $15)}' | sort | uniq -c | sort -n
+$ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | awk '{printf("%s %s %s %s\n", $12, $13, $14, $15)}' | sort | uniq -c | sort -n
       1 SSLv3 with cipher DHE-RSA-AES256-SHA
      23 TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384
      60 TLSv1 with cipher ECDHE-RSA-AES256-SHA
@@ -342,7 +347,7 @@ It is not advisable to restrict the default cipher list for MSA mode if you don'
 
 The cipher used is written to the logfiles by default. You may want to add
 \begin{lstlisting}
-  log_selector = <....whatever your log_selector already contains...> \
+  log_selector = <whatever your log_selector already contains> \
    +tls_certificate_verified +tls_peerdn +tls_sni
 \end{lstlisting}
 to get even more TLS information logged.
@@ -389,7 +394,7 @@ tls\_try\_verify\_hosts only reports the result to your logfile. If you want to 
 
 The cipher used is written to the logfiles by default. You may want to add
 \begin{lstlisting}
-  log_selector = <....whatever your log_selector already contains...> \
+  log_selector = <whatever your log_selector already contains> \
    +tls_certificate_verified +tls_peerdn +tls_sni
 \end{lstlisting}
 to get even more TLS information logged.
@@ -422,7 +427,7 @@ Exim already disables SSLv2 by default. We recommend to add
 to the main configuration.\\
 Note: +all is misleading here since OpenSSL only activates the most common workarounds. But that's how SSL\_OP\_ALL is defined.\\
 
-You do not need to set dh\_parameters. Exim with OpenSSL by default uses parameter initialization with the "2048-bit MODP Group with 224-bit Prime Order Subgroup" defined in section 2.2 of RFC 5114\cite{rfc5114} (ike23).
+You do not need to set dh\_parameters. Exim with OpenSSL by default uses parameter initialization with the "2048-bit MODP Group with 224-bit Prime Order Subgroup" defined in section 2.2 of RFC 5114~\cite{rfc5114} (ike23).
 If you want to set your own DH parameters please read the TLS documentation of exim.\\
 
 
