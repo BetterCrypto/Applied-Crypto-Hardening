@@ -154,7 +154,7 @@ If you absolutely want to specify your own DH parameters, you can specify them v
 ssl_dhparam file;
 \end{lstlisting}
 
-However, we advise you to read section \ref{section:DH} and stay with the standard IKE/IETF parameters (as long as they are \textgreater bits).
+However, we advise you to read section \ref{section:DH} and stay with the standard IKE/IETF parameters (as long as they are \textgreater 1024 bits).
 
 \subsubsection{Additional settings}
 If you decide to trust NIST's ECC curve recommendation, you can add the following line to nginx's configuration file to select special curves:
