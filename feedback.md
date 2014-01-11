@@ -23,6 +23,10 @@ Mailing list (ACH)
   * Mail Kurt Roeckx th of Jan: be consistent: 2048 RSA < 128 bit symmetric cipher strength. We should aim at 128+ bits symmetric strength. --> fix RSA 2048 in the document. Upgrade to 3072
 
 
+Jabber
+======
+  * briefly explain in one sentence, why compression is turned off. 
+
 Twitter
 ========
 (@bettercrypto account)
