@@ -104,7 +104,7 @@ Contents
   - Outlook *
   - Playstation und XBox? --> LATER!
   - Lotus Notes
-  - Blackberry*
+  - Blackberry\*
   - Windows Phone 7 ???
   How to Test?
   - chapter owner makes a test setup
@@ -190,7 +190,7 @@ seclayer-tcp    3495/tcp    # securitylayer over tcp
 
 
 
-RNDG section
+RNG section
 ------------
 DONE - add two, three sentences
 DONE - mention HaveGED 
@@ -202,7 +202,6 @@ Contacting / who?
 =================
 * Juniper
 * Cisco
-* Leithold
 
 LATER / further 
 ================
