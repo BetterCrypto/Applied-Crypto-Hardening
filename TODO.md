@@ -1,5 +1,3 @@
-Website
-========
 
 BIG TOPICS
 ==========
