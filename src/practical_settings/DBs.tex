@@ -68,12 +68,6 @@ show variables like '%ssl%';
 \todo{not tested}
 
 
-\subsubsection{References}
-\begin{itemize*}
-  \item IMB Db2 Documentation on \emph{Supported cipher suites} \url{http://pic.dhe.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=\%2Fcom.ibm.db2.luw.admin.sec.doc\%2Fdoc\%2Fc0053544.html}
-\end{itemize*}
-
-
 \subsubsection{Settings}
 \paragraph*{ssl\_cipherspecs}
 In the link above the whole SSL-configuration is described in-depth. The following command shows only how to set the recommended ciphersuites.
@@ -102,6 +96,11 @@ TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
 \end{lstlisting}
 
 
+\subsubsection{References}
+\begin{itemize*}
+  \item IMB Db2 Documentation on \emph{Supported cipher suites} \url{http://pic.dhe.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=\%2Fcom.ibm.db2.luw.admin.sec.doc\%2Fdoc\%2Fc0053544.html}
+\end{itemize*}
+
 %% ---------------------------------------------------------------------- 
 
 \subsection{PostgreSQL}
@@ -109,14 +108,6 @@ TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
 \begin{itemize*}
   \item Debian Wheezy and PostgreSQL 9.1
   \item Linux Mint 14 nadia / Ubuntu 12.10 quantal with PostgreSQL 9.1+136 and OpenSSL 1.0.1c
-\end{itemize*}
-
-
-\subsubsection{References}
-\begin{itemize*}
-  \item It's recommended to read \url{http://www.postgresql.org/docs/9.1/interactive/runtime-config-connection.html\#RUNTIME-CONFIG-CONNECTION-SECURITY} (please edit the version with your preferred one).
-  \item PostgreSQL Documentation on \emph{Secure TCP/IP Connections with SSL}: \url{http://www.postgresql.org/docs/9.1/static/ssl-tcp.html}
-  \item PostgreSQL Documentation on \emph{host-based authentication}: \url{http://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html}
 \end{itemize*}
 
 
@@ -137,6 +128,14 @@ ssl_ca_file = '/your/path/root.crt'
 ssl = on 
 ssl_ciphers = '%*\cipherStringB*)'
 \end{lstlisting}
+
+
+\subsubsection{References}
+\begin{itemize*}
+  \item It's recommended to read \url{http://www.postgresql.org/docs/9.1/interactive/runtime-config-connection.html\#RUNTIME-CONFIG-CONNECTION-SECURITY} (please edit the version with your preferred one).
+  \item PostgreSQL Documentation on \emph{Secure TCP/IP Connections with SSL}: \url{http://www.postgresql.org/docs/9.1/static/ssl-tcp.html}
+  \item PostgreSQL Documentation on \emph{host-based authentication}: \url{http://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html}
+\end{itemize*}
 
 
 \subsubsection{How to test}

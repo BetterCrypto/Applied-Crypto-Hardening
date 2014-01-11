@@ -339,7 +339,6 @@ to get even more TLS information logged.
 
 
 \paragraphDiamond{server mode (incoming)}
-
 In the main config section of Exim add:
 
 \begin{lstlisting}
@@ -430,7 +429,7 @@ Exim currently (4.82) does not support elliptic curves with OpenSSL. This means 
 There already is a working patch to provide support:
 \url{http://bugs.exim.org/show_bug.cgi?id=1397}
 
-\paragraphDiamond{How to test}
+\subsubsection{How to test}
 \begin{lstlisting}
 openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 \end{lstlisting}

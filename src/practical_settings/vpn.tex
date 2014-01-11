@@ -244,7 +244,7 @@ that is then negotiated as usual with TLS, the \verb|cipher|
 and \verb|auth| options both take a single argument that must match on
 client and server.
 
-\paragraphDiamond{Server Configuration}
+\paragraph*{Server Configuration}
 % the cipherlist here is config B without the ECDHE strings, because
 % it must fit in 256 bytes...
 % DO NOT CHANGE TO THE CIPHERSTRING MACRO!
@@ -254,8 +254,7 @@ cipher AES-256-CBC
 auth SHA384
 \end{lstlisting}
 
-\paragraph{Client Configuration}\mbox{}
-
+\paragraphDiamond{Client Configuration}
 Client and server have to use compatible configurations, otherwise they can't communicate.
 The \verb|cipher| and \verb|auth| directives have to be identical.
 
@@ -298,16 +297,14 @@ The configuration shown above is compatible with all tested versions.
 
 \subsubsection{Additional settings}
 
-\paragraph{Key renegotiation interval}\mbox{}
-
+\paragraphDiamond{Key renegotiation interval}
 The default for renegotiation of encryption keys is one hour
 (\verb|reneg-sec 3600|). If you
 transfer huge amounts of data over your tunnel, you might consider
 configuring a shorter interval, or switch to a byte- or packet-based
 interval (\verb|reneg-bytes| or \verb|reneg-pkts|).
 
-\paragraph{Fixing ``easy-rsa''}\mbox{}
-
+\paragraphDiamond{Fixing ``easy-rsa''}
 When installing an OpenVPN server instance, you are probably using
 \emph{easy-rsa} to generate keys and certificates.
 The file \verb|vars| in the easyrsa installation directory has a
@@ -433,7 +430,7 @@ Legacy ASA models (e.g. 5505, 5510, 5520, 5540, 5550) do not offer the possibili
 
 \subsubsection{References}
 \begin{itemize*}
-  \item \url{http://www.cisco.com/en/US/docs/security/asa/roadmap/asaroadmap.html}\\
+  \item \url{http://www.cisco.com/en/US/docs/security/asa/roadmap/asaroadmap.html}
   \item \url{http://www.cisco.com/web/about/security/intelligence/nextgen_crypto.html}
 \end{itemize*}
 

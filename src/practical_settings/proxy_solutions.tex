@@ -22,18 +22,15 @@ Conclusion: Don't forget to check your proxy solutions SSL-capabilities. Also do
 As of squid-3.2.7 (01 Feb 2013) there is support for the OpenSSL NO\_Compression option within squid config (CRIME attack) and if you combine that in the config file, with an enforcement of the server cipher preferences (BEAST Attack) you are safe.
 
 
-\paragraphDiamond{squid.conf}
-
+\paragraph*{squid.conf}
 \todo{UNTESTED!}
 \begin{lstlisting}
 options=NO_SSLv2,NO_TLSv1,NO_Compression,CIPHER_SERVER_PREFERENCE 
 cipher=%*\cipherStringB*)
 \end{lstlisting}
 
-\paragraphDiamond{squid.conf}
-
+\paragraph*{squid.conf}
 %% http://forum.pfsense.org/index.php?topic=63262.0
-
 \todo{UNTESTED!}
 \begin{lstlisting}
 		NO_SSLv2    Disallow the use of SSLv2
@@ -77,8 +74,7 @@ For squid Versions before 3.2.7 use this patch against a vanilla source-tree:
 
 BlueCoat Proxy SG Appliances can be used as forward and reverse proxies. The reverse proxy feature is rather under-developed, and while it is possible and supported, there only seems to be limited use of this feature "in the wild" - nonetheless there are a few cipher suites to choose from, when enabling SSL features.
 
-\paragraph{Only allow TLS 1.0,1.1 and 1.2 protocols:} \mbox{}
-
+\paragraph*{Only allow TLS 1.0,1.1 and 1.2 protocols:}
 \begin{lstlisting}
 $conf t
 $(config)ssl
@@ -87,8 +83,7 @@ $(config device-profile default)protocol tlsv1 tlsv1.1 tlsv1.2
   ok
 \end{lstlisting}
 
-\paragraph*{Select your accepted cipher-suites:} \mbox{}
-
+\paragraph*{Select your accepted cipher-suites:}
 \begin{lstlisting}
 $conf t
 Enter configuration commands, one per line.  End with CTRL-Z.
@@ -130,6 +125,7 @@ Disabling protocols and ciphers in a forward proxy environment could lead to une
   \item Pound 2.6
 \end{itemize*}
 
+\subsubsection{Settings}
 \begin{lstlisting}
 # HTTP Listener, redirects to HTTPS
 ListenHTTP
