@@ -55,8 +55,6 @@ See appendix \ref{cha:tools}
 %%---------------------------------------------------------------------- 
 \subsection{lighttpd}
 
-\todo{sebix: add/test ssl.ec-curve and ssl.dh-file; see \url{http://redmine.lighttpd.net/projects/1/wiki/Docsr\_SSL\#Diffie-Hellman-and-Elliptic-Curve-Diffie-Hellman-parameters}}
-
 \subsubsection{Tested with Versions}
 \begin{itemize*}
   \item lighttpd/1.4.31-4 with OpenSSL 1.0.1e on Debian Wheezy
@@ -80,6 +78,14 @@ $SERVER["socket"] == "0.0.0.0:443" {
 }
 \end{lstlisting}
 
+Starting with lighttpd version 1.4.29 Diffie-Hellman and Elliptic-Curve Diffie-Hellman key agreement protocols are supported.
+By default, elliptic curve "prime256v1" (also "secp256r1") will be used, if no other is given.
+To select special curves, it is possible to set them using the configuration options \verb|ssl.dh-file| and \verb|ssl.ec-curve|.
+\begin{lstlisting}
+ssl.dh-file = "/etc/lighttpd/ssl/dh2048.pem"
+ssl.ec-curve = "secp521r1"
+\end{lstlisting}
+Please read section \ref{section:DH} for more information on Diffie Hellman key exchange and elliptic curves.
 
 \subsubsection{Additional settings}
 As for any other webserver, you might want to automatically redirect \emph{http://}
