@@ -1,0 +1,138 @@
+This section discusses various implementations of the Kerberos 5 authentication protocol
+on Unix and Unix-like systems as well as on Microsoft Windows. 
+
+\subsection{Overview}
+\label{subsection:kerberos_overview}
+
+Kerberos provides mutual authentication of two communicating parties, e.g. a user using a network service. The authentication process is mediated by a trusted third party, the Kerberos key distribution centre (KDC). Kerberos implements secure single-sign-on across a large number of network protocols and operating systems. Optionally, Kerberos can be used to create encrypted communications channels between the user and service.
+
+\paragraph{Recommended reading}
+An understanding of the Kerberos protocol is necessary for properly implementing a Kerberos setup. Also, in the following section some knowledge about the inner workings of Kerberos is assumed. Therefore we strongly recommend reading this excellent introduction first: \url{http://gost.isi.edu/publications/kerberos-neuman-tso.html}.
+No further overview over Kerberos terminology and functions will be provided, for a discussion and a selection of relevant papers refer to \url{http://web.mit.edu/kerberos/papers.html}.
+
+% describe realm, login, ticket exchanges here? would be quite lengthy and necessarily incomplete, so currently left out
+
+The Kerberos protocol over time has been extended with a variety of extensions and Kerberos implementations provide additional services in addition to the aforementioned KDC. All discussed implementations provide support for trust relations between multiple realms, an administrative network service (kerberos-adm, kadmind) as well as a password changing service (kpasswd). Sometimes, alternative database backends for ticket storage, X.509 and SmartCard authentication are provided. Of those, only administrative and password changing services will be discussed.
+
+Only the Kerberos 5 protocol and implementation will be discussed. Kerberos 4 is obsolete, insecure and its use is strongly discouraged.
+
+\subsubsection{Relations to other Protocols}
+\label{subsubsection:kerberos_relation_to_other_protocols}
+
+\paragraph{DNS considerations}
+Kerberos relies on a trustworthy DNS infrastructure. The identity of a service is tied to its DNS name, similarly the realm a client belongs to as well as the KDC, kpasswd and kerberos-adm servers may be specified in DNS TXT and SRV records. Spoofed DNS entries will cause denial-of-service situations and might endanger the security of a Kerberos realm.
+% "might endanger" according to the following source:
+% http://web.mit.edu/kerberos/krb5-latest/doc/admin/realm_config.html
+% unfortunately no further details beyond the suspicion of vulnerability are provided
+% mentions possible redirection to a compromised realm in setups with trust relations: http://www.ietf.org/proceedings/48/I-D/cat-krb-dns-locate-02.txt
+
+Therefore it is strongly recommended to use DNSSEC. \todo{link to DNSSEC section as soon as there is one} If that is not possible, at least ensure that all servers and clients in a realm use a trustworthy DNS server contacted via secure network links.
+
+\paragraph{NTP considerations}
+Tickets in Kerberos are created with a limited, strictly enforced lifetime. This limits an attacker's window of opportunity for various attacks such as the decryption of tickets in sniffed network traffic or the use of tickets read from a client computer's memory.
+
+It is therefore necessary that all clients and servers agree on the current time. It is recommended to use NTP on a trustworthy server via secure network links. \todo{link to NTP section as soon as there is one}
+
+\subsection{Implementations}
+\label{subsection:kerberos_implementations}
+
+\paragraph{Cryptographic Algorithms in Kerberos Implementations}
+
+The encryption algorithms (commonly abbreviated 'etypes' or 'enctypes') in Kerberos exchanges are subject to negotiation between both sides of an exchange. Similarly, a ticket granting ticket (TGT), which is usually obtained on initial login, can only be issued if the principal contains a version of the password encrypted with an etype that is available both on the KDC and on the client where the login happens. Therefore, to ensure interoperability among components using different implementations as shown in table \ref{table:Kerberos_enctypes}, a selection of available etypes is necessary. However, the negotiation process may be subject to downgrade attacks and weak hashing algorithms endanger integrity protection and password security. This means that the des3-cbc-sha1-kd or rc4-hmac algorithms should not be used, except if there is a concrete and unavoidable need to do so. Other des3-*, des-* and rc4-hmac-exp algorithms should never be used.
+
+Along the lines of cipher string B, the following etypes are recommended: aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac.
+
+\todo{say something about salt types, eg discourage the null salt type?}
+
+\begin{table}[h]
+	\centering
+	\small
+	\begin{tabular}{ll|llll}
+		\toprule
+		ID & Algorithm & MIT & Heimdal & GNU Shishi & MS ActiveDirectory \\
+		\midrule
+		1  & des-cbc-crc             & yes            & yes & yes & yes \\
+		2  & des-cbc-md4             & yes            & yes & yes & no  \\
+		3  & des-cbc-md5             & yes            & yes & yes & yes \\
+		6  & des3-cbc-none           & no             & yes & yes & no  \\
+		7  & des3-cbc-sha1           & no             & yes, {\tiny named old-des3-cbc-sha1} & no  & no  \\
+		16 & des3-cbc-sha1-kd & yes, {\tiny alias des3-cbc-sha1, des3-hmac-sha1} & yes, {\tiny named des3-cbc-sha1} & yes & no  \\
+		17 & aes128-cts-hmac-sha1-96 & yes            & yes & yes & yes, {\tiny since Vista, Server 2008} \\
+		18 & aes256-cts-hmac-sha1-96 & yes            & yes & yes & yes, {\tiny since 7, Server 2008R2} \\
+		23 & rc4-hmac                & yes            & yes & yes & yes \\
+		24 & rc4-hmac-exp            & yes            & no  & yes & yes \\
+		25 & camellia128-cts-cmac    & yes, since 1.9 & no  & no  & no  \\
+		26 & camellia256-cts-cmac    & yes, since 1.9 & no  & no  & no  \\
+		\bottomrule
+	\end{tabular}
+	\caption{Commonly supported Kerberos encryption types by implementation. Algorithm names according to RFC3961, except where aliases can be used or the algorithm is named differently altogether as stated.}
+	\label{tab:Kerberos_enctypes}
+\end{table}
+% \footnote{In MIT krb5 and Heimdal aliased to des3-hmac-sha1 and des3-cbc-sha1, colliding with the official string for enctype 7 which is referred to as old-des3-cbc-sha1 or similar.}
+% AES enctypes: http://tools.ietf.org/html/rfc3962
+% Camellia enctypes: http://tools.ietf.org/html/rfc6803
+% enctype numbers list: http://tools.ietf.org/html/rfc3961#section-8
+% recommended settings: http://tools.ietf.org/html/rfc4120#section-8.2
+% MIT krb5 1.9: http://web.mit.edu/kerberos/krb5-1.9/
+% Java enctype support: http://docs.oracle.com/javase/7/docs/technotes/guides/security/jgss/jgss-features.html
+% Shishi enctype support: http://www.gnu.org/software/shishi/manual/shishi.html#Cryptographic-Overview
+% enctype alias collision in MIT krb5: see src/lib/crypto/krb/etypes.c line 84 and src/include/krb5/krb5.hin line 438 compared to RFC3961
+% in Heimdal, HEIM_WEAK_CRYPTO and DES3_OLD_ENCTYPE disable some DES and old 3DES algorithms at build time (lib/krb5/crypto-algs.c in source)
+% etype recommendations, downgrade attacks and more: http://media.blackhat.com/bh-us-10/presentations/Stender_Engel_Hill/BlackHat-USA-2010-Stender-Engel-Hill-Attacking-Kerberos-Deployments-slides.pdf
+
+\paragraph{Existing installations}
+
+The configuration samples below assume new installations without preexisting principals.
+
+For existing installations:
+\begin{itemize}
+	\item Be aware that for existing setups, the master\_key\_type can not be changed easily since it requires a manual conversion of the database. When in doubt, leave it as it is. \todo{database conversion howto}
+	\item When changing the list of supported\_enctypes, principals where all enctypes are no longer supported will cease to work.
+	\item Be aware that Kerberos 4 is obsolete and should not be used.
+	\item Principals with weak enctypes pose an increased risk for password bruteforce attacks if an attacker gains access to the database.
+\end{itemize}
+
+To get rid of principals with unsupported or weak enctypes, a password change is usually the easiest way. Service principals can simply be recreated. \todo{force password change for old enctypes howto?}
+
+\subsubsection{MIT krb5}
+
+\paragraph{KDC configuration}
+In \verb#/etc/krb5kdc/kdc.conf# set the following in your realm's configuration:
+\begin{lstlisting}[breaklines]
+default_principal_flags = +preauth
+master_key_type = aes256-cts-hmac-sha1-96
+supported_enctypes = aes256-cts-hmac-sha1-96:normal camellia256-cts-cmac:normal aes128-cts-hmac-sha1-96:normal camellia128-cts-cmac:normal
+\end{lstlisting}
+\todo{TODO: recommendations for lifetime, proxiable, forwardable}
+
+In \verb#/etc/krb5.conf# set in the \[libdefaults\] section:
+\begin{lstlisting}[breaklines]
+[libdefaults] 
+	allow_weak_crypto = false
+	permitted_enctypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
+	default_tkt_enctypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
+	default_tgs_enctypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
+\end{listlisting}
+\todo{verify MIT client config}
+
+\subsubsection{Heimdal Kerberos 5}
+\todo{research and write Heimdal Kerberos section}
+
+% In \verb#/etc/krb5.conf# set in the \[libdefaults\] section:
+% \begin{lstlisting}[breaklines]
+%[libdefaults] 
+% 	default\_etypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
+% 	default\_as\_etypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
+% 	default\_tgs\_etypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
+% \end{listlisting}
+
+\subsubsection{GNU Shishi}
+\todo{research and write GNU Shishi section}
+
+\subsubsection{Microsoft ActiveDirectory}
+\todo{research and write MS AD section}
+
+% encryption type setting for a user account: http://blogs.msdn.com/b/openspecification/archive/2011/05/31/windows-configurations-for-kerberos-supported-encryption-type.aspx
+% hunting down DES: http://blogs.technet.com/b/askds/archive/2010/10/19/hunting-down-des-in-order-to-securely-deploy-kerberos.aspx
+% supported subset of encryption types, extension documentation: http://msdn.microsoft.com/en-us/library/cc233855.aspx
+
