@@ -1,34 +1,34 @@
 %%---------------------------------------------------------------------- 
 \subsection{OpenSSH}
-\subsubsection{Tested with Version} OpenSSH 6.4 (Debian jessie)
+\subsubsection{Tested with Version} OpenSSH 6.4 (Debian Jessie)
 \subsubsection{Settings}
 \paragraph*{sshd\_config}
-\begin{lstlisting}
-	# ...
+\begin{lstlisting}[breaklines]
+# ...
 
-	Protocol 2
-	PermitEmptyPasswords no
-	PermitRootLogin no # or 'without-password' to allow SSH key based login
-	StrictModes yes
-	HostKey /etc/ssh/ssh_host_rsa_key
-	Ciphers aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes128-ctr
-	MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
-	KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
+Protocol 2
+PermitEmptyPasswords no
+PermitRootLogin no # or 'without-password' to allow SSH key based login
+StrictModes yes
+HostKey /etc/ssh/ssh_host_rsa_key
+Ciphers aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes128-ctr
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
+KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
 \end{lstlisting}
 \subsubsection{Tested with Version} OpenSSH 6.0p1 (Debian wheezy)
 \subsubsection{Settings}
 \paragraph*{sshd\_config}
 \begin{lstlisting}[breaklines]
-	# ...
+# ...
 
-	Protocol 2
-	PermitEmptyPasswords no
-	PermitRootLogin no # or 'without-password' to allow SSH key based login
-	StrictModes yes
-	HostKey /etc/ssh/ssh_host_rsa_key
-	Ciphers aes256-ctr,aes128-ctr
-	MACs hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
-	KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
+Protocol 2
+PermitEmptyPasswords no
+PermitRootLogin no # or 'without-password' to allow SSH key based login
+StrictModes yes
+HostKey /etc/ssh/ssh_host_rsa_key
+Ciphers aes256-ctr,aes128-ctr
+MACs hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
+KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
 \end{lstlisting}
 
 \textbf{Note:} Older Linux systems won't support SHA2. PuTTY (Windows) does not support
@@ -39,11 +39,13 @@ support for DSA keys stronger than 1024bit
 below current standards (see section \ref{section:keylengths}). Legacy systems
 can use this configuration and simply omit unsupported ciphers, key exchange
 algorithms and MACs.  
+
 %\subsubsection{Justification for special settings (if needed)}
 \subsubsection{References}
 The openssh sshd\_config  man page is the best reference: \url{http://www.openssh.org/cgi-bin/man.cgi?query=sshd_config}
+
 \subsubsection{How to test}
-Connect a client with verbose logging enabled to the SSH server \\
+Connect a client with verbose logging enabled to the SSH server
 \begin{lstlisting}
 $ ssh -vvv myserver.com
 \end{lstlisting}and observe the key exchange in the output.
@@ -51,7 +53,12 @@ $ ssh -vvv myserver.com
 
 %%---------------------------------------------------------------------- 
 \subsection{Cisco ASA}
-\subsubsection{Tested with Version} 9.1(3)
+\subsubsection{Tested with Versions}
+\begin{itemize}
+  \item 9.1(3)
+\end{itemize}
+
+
 \subsubsection{Settings}
 \begin{lstlisting}
 crypto key generate rsa modulus 2048
@@ -59,10 +66,14 @@ ssh version 2
 ssh key-exchange group dh-group14-sha1
 \end{lstlisting}
 Note: When the ASA is configured for SSH, by default both SSH versions 1 and 2 are allowed. In addition to that, only a group1 DH-key-exchange is used. This should be changed to allow only SSH version 2 and to use a key-exchange with group14. The generated RSA key should be 2048 bit (the actual supported maximum). A non-cryptographic best practice is to reconfigure the lines to only allow SSH-logins.
+
 \subsubsection{References}
-\url{http://www.cisco.com/en/US/docs/security/asa/asa91/configuration/general/admin\_management.html }
+\begin{itemize}
+  \item \url{http://www.cisco.com/en/US/docs/security/asa/asa91/configuration/general/admin\_management.html }
+\end{itemize}
+
 \subsubsection{How to test}
-Connect a client with verbose logging enabled to the SSH server \\
+Connect a client with verbose logging enabled to the SSH server
 \begin{lstlisting}
 $ ssh -vvv myserver.com
 \end{lstlisting}and observe the key exchange in the output.
@@ -70,27 +81,35 @@ $ ssh -vvv myserver.com
 
 %---------------------------------------------------------------------- 
 \subsection{Cisco IOS}
-\subsubsection{Tested with Version} 15.0, 15.1, 15.2
+\subsubsection{Tested with Versions}
+\begin{itemize}
+  \item 15.0, 15.1, 15.2
+\end{itemize}
+
+
 \subsubsection{Settings}
 \begin{lstlisting}
 crypto key generate rsa modulus 4096 label SSH-KEYS
-\begin{lstlisting}[breaklines]
 ip ssh rsa keypair-name SSH-KEYS
 ip ssh version 2
 ip ssh dh min size 2048
 
 line vty 0 15
 transport input ssh
-
 \end{lstlisting}
 Note: Same as with the ASA, also on IOS by default both SSH versions 1 and 2 are allowed and the DH-key-exchange only use a DH-group of 768 Bit.
 In IOS, a dedicated Key-pair can be bound to SSH to reduce the usage of individual keys-pairs.
 From IOS Version 15.0 onwards, 4096 Bit rsa keys are supported and should be used according to the paradigm "use longest supported key". Also, do not forget to disable telnet vty access.
+
+
 \subsubsection{References}
-\url{http://www.cisco.com/en/US/docs/ios/sec\_user\_services/configuration/guide/sec\_cfg\_secure\_shell.html }
+\begin{itemize}
+  \item \url{http://www.cisco.com/en/US/docs/ios/sec\_user\_services/configuration/guide/sec\_cfg\_secure\_shell.html}
+\end{itemize}
 % add any further references or best practice documents here
+
 \subsubsection{How to test}
-Connect a client with verbose logging enabled to the SSH server \\
+Connect a client with verbose logging enabled to the SSH server
 \begin{lstlisting}
 $ ssh -vvv myserver.com
 \end{lstlisting}and observe the key exchange in the output.

@@ -3,13 +3,15 @@
 
 %% ---------------------------------------------------------------------- 
 \subsection{Oracle}
-%\subsubsection{Tested with Version}
+\subsubsection{Tested with Versions}
 \todo{not tested yet}
+
 
 \subsubsection{References}
 \begin{itemize}
   \item Technical safety requirements by \emph{Deutsche Telekom AG} (German). Please read section 17.12 or pages 129 and following (Req 396 and Req 397) about SSL and ciphersuites \url{http://www.telekom.com/static/-/155996/7/technische-sicherheitsanforderungen-si}
 \end{itemize}
+
 
 
 %% ---------------------------------------------------------------------- 
@@ -20,7 +22,9 @@
 
 %% ---------------------------------------------------------------------- 
 \subsection{MySQL}
-\subsubsection{Tested with Version}
+
+
+\subsubsection{Tested with Versions}
 \begin{itemize}
   \item Debian Wheezy and MySQL 5.5
 \end{itemize}
@@ -34,8 +38,9 @@ ssl
 ssl-ca=/etc/mysql/ssl/ca-cert.pem
 ssl-cert=/etc/mysql/ssl/server-cert.pem
 ssl-key=/etc/mysql/ssl/server-key.pem
-ssl-cipher=@@@CIPHERSTRINGB@@@
+ssl-cipher=%*\cipherStringB*)
 \end{lstlisting}
+
 
 %\subsubsection{Additional settings}
 
@@ -71,7 +76,7 @@ show variables like '%ssl%';
 
 \subsubsection{Settings}
 \paragraph*{ssl\_cipherspecs}
-In the link above the whole SSL-configuration is described in-depth. The following command shows only how to set the recommended ciphersuites:
+In the link above the whole SSL-configuration is described in-depth. The following command shows only how to set the recommended ciphersuites.
 \begin{lstlisting}
 # recommended and supported ciphersuites 
 
@@ -98,17 +103,18 @@ TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
 
 
 %% ---------------------------------------------------------------------- 
+
 \subsection{PostgreSQL}
 \subsubsection{Tested with Versions}
 \begin{itemize}
-  \item Debian 7.0 and PostgreSQL 9.1
+  \item Debian Wheezy and PostgreSQL 9.1
   \item Linux Mint 14 nadia / Ubuntu 12.10 quantal with PostgreSQL 9.1+136 and OpenSSL 1.0.1c
 \end{itemize}
 
 
 \subsubsection{References}
 \begin{itemize}
-  \item It's recommended to read {\small \url{http://www.postgresql.org/docs/9.1/interactive/runtime-config-connection.html\#RUNTIME-CONFIG-CONNECTION-SECURITY}} (please edit the version with your preferred one).
+  \item It's recommended to read \url{http://www.postgresql.org/docs/9.1/interactive/runtime-config-connection.html\#RUNTIME-CONFIG-CONNECTION-SECURITY} (please edit the version with your preferred one).
   \item PostgreSQL Documentation on \emph{Secure TCP/IP Connections with SSL}: \url{http://www.postgresql.org/docs/9.1/static/ssl-tcp.html}
   \item PostgreSQL Documentation on \emph{host-based authentication}: \url{http://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html}
 \end{itemize}
@@ -125,12 +131,11 @@ ssl_cert_file = '/your/path/server.crt'
 ssl_ca_file = '/your/path/root.crt'
 \end{lstlisting}
 
-
-\paragraph*{postgresql.conf}\mbox{}\\
+\paragraphDiamond{postgresql.conf}
 \begin{lstlisting}
 #>=8.3
 ssl = on 
-ssl_ciphers = '@@@CIPHERSTRINGB@@@'
+ssl_ciphers = '%*\cipherStringB*)'
 \end{lstlisting}
 
 

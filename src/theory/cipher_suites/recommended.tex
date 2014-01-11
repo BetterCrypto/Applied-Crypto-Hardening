@@ -6,7 +6,7 @@ keeping high cipher suite security while supporting as many users as possible.
 The website \url{https://www.ssllabs.com/} gives administrators and security engineers
 a tool to test their setup and compare compatibility with clients. The authors made 
 use of ssllabs.com to arrive at a set of cipher suites which we will recommend 
-throughout this document.\\
+throughout this document.
 
 %\textbf{Caution: these settings can only represent a subjective
 %choice of the authors at the time of writing. It might be a wise choice to
@@ -26,10 +26,10 @@ deployments where software that is to be used can be defined without restriction
 We arrived at this set of cipher suites by selecting:
 
 \begin{itemize}
-\item TLS 1.2
-\item Perfect forward secrecy / ephemeral Diffie Hellman
-\item strong MACs (SHA-2) or
-\item GCM as Authenticated Encryption scheme
+  \item TLS 1.2
+  \item Perfect forward secrecy / ephemeral Diffie Hellman
+  \item strong MACs (SHA-2) or
+  \item GCM as Authenticated Encryption scheme
 \end{itemize}
 
 This results in the OpenSSL string:
@@ -76,16 +76,15 @@ example, there are known weaknesses for the SHA-1 hash function that is
 included in this set.  The advantage of this set of cipher suites is not only
 better compatibility with a broad range of clients, but also less computational
 workload on the provisioning hardware.
-\\
+
 
 \textbf{All further examples in this publication use Configuration B}.\\
 
 We arrived at this set of cipher suites by selecting:
 
 \begin{itemize}
-\item TLS 1.2, TLS 1.1, TLS 1.0
-\item allowing SHA-1 (see the comments on SHA-1 in section \ref{section:SHA})
-
+  \item TLS 1.2, TLS 1.1, TLS 1.0
+  \item allowing SHA-1 (see the comments on SHA-1 in section \ref{section:SHA})
 \end{itemize}
 
 This results in the OpenSSL string:
@@ -150,15 +149,15 @@ Our recommended cipher strings are meant to be used via copy and paste and need 
 "out of the box".
 
 \begin{itemize}
-\item TLSv1.2 is preferred over TLSv1.0 (while still providing a useable cipher
+  \item TLSv1.2 is preferred over TLSv1.0 (while still providing a useable cipher
       string for TLSv1.0 servers).
-\item AES256 and CAMELLIA256 count as very strong ciphers at the moment.
-\item AES128 and CAMELLIA128 count as strong ciphers at the moment
-\item DHE or ECDHE for forward secrecy
-\item RSA as this will fit most of today's setups
-\item AES256-SHA as a last resort: with this cipher at the end, even server
+  \item AES256 and CAMELLIA256 count as very strong ciphers at the moment.
+  \item AES128 and CAMELLIA128 count as strong ciphers at the moment
+  \item DHE or ECDHE for forward secrecy
+  \item RSA as this will fit most of today's setups
+  \item AES256-SHA as a last resort: with this cipher at the end, even server
       systems with very old OpenSSL versions will work out of the box (version 0.9.8 for example does not
-      provide support for ECC and TLSv1.1 or above). \\
+      provide support for ECC and TLSv1.1 or above). \newline
       Note however that this cipher suite will not provide forward secrecy. It
       is meant to provide the same client coverage (eg. support Microsoft crypto
       libraries) on legacy setups.

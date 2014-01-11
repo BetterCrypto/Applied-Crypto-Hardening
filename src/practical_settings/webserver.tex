@@ -1,35 +1,32 @@
 %%---------------------------------------------------------------------- 
+\subsection{Apache}
+
 Note that any cipher suite starting with EECDH can be omitted, if in doubt.
 (Compared to the theory section, EECDH in Apache and ECDHE in OpenSSL are
 synonyms~\footnote{https://www.mail-archive.com/openssl-dev@openssl.org/msg33405.html})
 
-\subsection{Apache}
-
-\subsubsection{Tested with Versions} 
+\subsubsection{Tested with Versions}
 \begin{itemize}
   \item Apache 2.2.22 linked against OpenSSL 1.0.1e, Debian Wheezy
   \item Apache 2.4.6 linked against OpenSSL 1.0.1e, Debian Jessie
 \end{itemize}
 
-
 \subsubsection{Settings}
 Enabled modules \emph{SSL} and \emph{Headers} are required.
 
 \begin{lstlisting}
-  SSLCertificateFile server.crt
-  SSLCertificateKeyFile server.key
-  SSLProtocol All -SSLv2 -SSLv3 
-  SSLHonorCipherOrder On
-  SSLCompression off
-  SSLSessionCache shmcb:${APACHE_RUN_DIR}/ssl_scache(512000)
-  SSLSessionCacheTimeout 300
-  # Add six earth month HSTS header for all users...
-  Header always set Strict-Transport-Security "max-age=15768000"
-  # If you want to protect all subdomains, use the following header
-  # ALL subdomains HAVE TO support https if you use this!
-  # Header always set Strict-Transport-Security "max-age=15768000; includeSubDomains"
+SSLCertificateFile server.crt
+SSLCertificateKeyFile server.key
+SSLProtocol All -SSLv2 -SSLv3 
+SSLHonorCipherOrder On
+SSLCompression off
+# Add six earth month HSTS header for all users...
+Header add Strict-Transport-Security "max-age=15768000"
+# If you want to protect all subdomains, use the following header
+# ALL subdomains HAVE TO support https if you use this!
+# Strict-Transport-Security: max-age=15768000 ; includeSubDomains
 
-  SSLCipherSuite '%*\cipherStringB*)'
+SSLCipherSuite '%*\cipherStringB*)'
 \end{lstlisting}
 
 \subsubsection{Additional settings}
@@ -37,27 +34,30 @@ You might want to redirect everything to \emph{https://} if possible. In Apache
 you can do this with the following setting inside of a VirtualHost environment:
 
 \begin{lstlisting}
-  <VirtualHost *:80>
-    RewriteEngine On
-    RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R=permanent]
-  </VirtualHost>
+<VirtualHost *:80>
+  RewriteEngine On
+  RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R=permanent]
+</VirtualHost>
 \end{lstlisting}
+
+%\subsubsection{Justification for special settings (if needed)}
 
 \subsubsection{References}
 \begin{itemize}
   \item Apache2 Docs on SSL and TLS: \url{https://httpd.apache.org/docs/2.4/ssl/}
 \end{itemize}
 
-\subsubsection{How to test}
 
+\subsubsection{How to test}
 See appendix \ref{cha:tools}
+
 
 %%---------------------------------------------------------------------- 
 \subsection{lighttpd}
 
+\todo{sebix: add/test ssl.ec-curve and ssl.dh-file; see \url{http://redmine.lighttpd.net/projects/1/wiki/Docsr\_SSL\#Diffie-Hellman-and-Elliptic-Curve-Diffie-Hellman-parameters}}
 
 \subsubsection{Tested with Versions}
-\todo{sebix: add/test ssl.ec-curve and ssl.dh-file; see \url{http://redmine.lighttpd.net/projects/1/wiki/Docsr\_SSL\#Diffie-Hellman-and-Elliptic-Curve-Diffie-Hellman-parameters}}
 \begin{itemize}
   \item lighttpd/1.4.31-4 with OpenSSL 1.0.1e on Debian Wheezy
   \item lighttpd/1.4.33 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
@@ -67,42 +67,40 @@ See appendix \ref{cha:tools}
 
 \subsubsection{Settings}
 \begin{lstlisting}
-  $SERVER["socket"] == "0.0.0.0:443" {
-    ssl.engine  = "enable"
-    ssl.use-sslv2 = "disable"
-    ssl.use-sslv3 = "disable"
-    ssl.pemfile = "/etc/lighttpd/server.pem"
-    ssl.cipher-list = "%*\cipherStringB*)"
-    ssl.honor-cipher-order = "enable"
-    setenv.add-response-header  = ( "Strict-Transport-Security" => "max-age=15768000") # six months
-    # use this only if all subdomains support HTTPS!
-    # setenv.add-response-header  = ( "Strict-Transport-Security" => "max-age=15768000; includeSubDomains")
-  }
+$SERVER["socket"] == "0.0.0.0:443" {
+  ssl.engine  = "enable"
+  ssl.use-sslv2 = "disable"
+  ssl.use-sslv3 = "disable"
+  ssl.pemfile = "/etc/lighttpd/server.pem"
+  ssl.cipher-list = "%*\cipherStringB*)"
+  ssl.honor-cipher-order = "enable"
+  setenv.add-response-header  = ( "Strict-Transport-Security" => "max-age=15768000") # six months
+  # use this only if all subdomains support HTTPS!
+  # setenv.add-response-header  = ( "Strict-Transport-Security" => "max-age=15768000; includeSubDomains")
+}
 \end{lstlisting}
 
 
 \subsubsection{Additional settings}
 As for any other webserver, you might want to automatically redirect \emph{http://}
-traffic towards \emph{https://}. It is also recommended to set the environment
-variable \emph{HTTPS}, PHP applications run by the webserver can then detect,
+traffic toward \emph{https://}. It is also recommended to set the environment variable
+\emph{HTTPS}, so the PHP applications run by the webserver can easily detect,
 that HTTPS is in use.
 
 \begin{lstlisting}
-  $HTTP["scheme"] == "http" {
-    # capture vhost name with regex conditiona -> %0 in redirect pattern
-    # must be the most inner block to the redirect rule
-    $HTTP["host"] =~ ".*" {
-        url.redirect = (".*" => "https://%0$0")
-    }
+$HTTP["scheme"] == "http" {
+  # capture vhost name with regex conditiona -> %0 in redirect pattern
+  # must be the most inner block to the redirect rule
+  $HTTP["host"] =~ ".*" {
+    url.redirect = (".*" => "https://%0$0")
   }
-  server.modules += ( "mod_setenv" ) # if not already activated before
-  $HTTP["scheme"] == "https" {
-    # Set the environment variable properly
-    setenv.add-environment = (
-      "HTTPS" => "on"
-    )
-  }
+  # Set the environment variable properly
+  setenv.add-environment = (
+    "HTTPS" => "on"
+  )
+}
 \end{lstlisting}
+
 
 \subsubsection{Additional information} 
 The config option \emph{honor-cipher-order} is available since 1.4.30, the
@@ -114,6 +112,7 @@ active).
 Support for other SSL-libraries like GnuTLS will be available in the upcoming
 2.x branch, which is currently under development.
 
+
 \subsubsection{References} 
 \begin{itemize}
   \item HTTPS redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps}
@@ -122,13 +121,13 @@ Support for other SSL-libraries like GnuTLS will be available in the upcoming
   \item SSL Compression disabled by default: \url{http://redmine.lighttpd.net/issues/2445}
 \end{itemize}
 
+
 \subsubsection{How to test} 
 See appendix \ref{cha:tools}
 
 
 %%---------------------------------------------------------------------- 
 \subsection{nginx}
-
 
 \subsubsection{Tested with Version} 
 \begin{itemize}
@@ -141,31 +140,33 @@ See appendix \ref{cha:tools}
 
 \subsubsection{Settings}
 \begin{lstlisting}
-  ssl_prefer_server_ciphers on;
-  ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # not possible to do exclusive
-  ssl_ciphers '%*\cipherStringB*)';
-  add_header Strict-Transport-Security "max-age=15768000; includeSubDomains"
+ssl_prefer_server_ciphers on;
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # not possible to do exclusive
+ssl_ciphers '%*\cipherStringB*)';
+add_header Strict-Transport-Security max-age=15768000; # six months
+# use this only if all subdomains support HTTPS!
+# add_header Strict-Transport-Security "max-age=15768000; includeSubDomains"
 \end{lstlisting}
 
 If you absolutely want to specify your own DH parameters, you can specify them via
+
 \begin{lstlisting}
-  ssl_dhparam file;
+ssl_dhparam file;
 \end{lstlisting}
 
-However, we advise you to read section \ref{section:DH} and stay with the standard IKE/IETF parameters (as long as they are \textgreater 1024 bits).
-
+However, we advise you to read section \ref{section:DH} and stay with the standard IKE/IETF parameters (as long as they are \textgreater bits).
 
 \subsubsection{Additional settings}
 If you decide to trust NIST's ECC curve recommendation, you can add the following line to nginx's configuration file to select special curves:
 
 \begin{lstlisting}
-  ssl_ecdh_curve          secp384r1;
+ssl_ecdh_curve          secp384r1;
 \end{lstlisting}
 
 You might want to redirect everything to \emph{https://} if possible. In Nginx you can do this with the following setting:
 
 \begin{lstlisting}
-  return 301 https://$host$request_uri;
+return 301 https://$host$request_uri;
 \end{lstlisting}
 
 
@@ -178,17 +179,17 @@ You might want to redirect everything to \emph{https://} if possible. In Nginx y
 \subsubsection{How to test}
 See appendix \ref{cha:tools}
 
+
 %%---------------------------------------------------------------------- 
 \subsection{MS IIS}
 \label{sec:ms-iis}
-
 \todo{Daniel: add screenshots and registry keys}
+
 
 \subsubsection{Tested with Version} \todo{Daniel: add tested version}
 
 
 \subsubsection{Settings}
-
 When trying to avoid RC4 and CBC (BEAST-Attack) and requiring perfect
 forward secrecy, Microsoft Internet Information Server (IIS) supports
 ECDSA, but does not support RSA for key exchange (consider ECC suite
@@ -204,6 +205,7 @@ of the following ways:
   \item Registry
   \item IIS Crypto~\footnote{\url{https://www.nartac.com/Products/IISCrypto/}}
 \end{enumerate}
+
 
 Table~\ref{tab:MS_IIS_Client_Support} shows the process of turning on
 one algorithm after another and the effect on the supported clients
@@ -265,10 +267,9 @@ Clients not supported:
 
 % add any further references or best practice documents here
 
+
 \subsubsection{How to test}
 See appendix \ref{cha:tools}
-
-%\end{description}
 
 %%% Local Variables: 
 %%% mode: latex

@@ -17,6 +17,8 @@
   \rule{\linewidth}{1pt}%
 }
 
+\newcommand*{\paragraphDiamond}[1]{\paragraph{#1} \hspace{-6pt} \ensuremath{\diamond} }
+
 %%% CIPHERSTRING
 \usepackage{seqsplit} % Use Sequence split. Basically it inserts between every character pair a box with zero width to allow linebreaks everywhere. Better solution wanted, but is there any better?
 \CatchFileDef{\cipherStringB}{common/cipherStringB.tex}{\endlinechar=-1 }%
