@@ -121,7 +121,6 @@ allowplaintext: 0
 This way MUAs can only authenticate after STARTTLS if you only provide plaintext and SASL PLAIN login methods. Therefore providing CRAM-MD5 or DIGEST-MD5 methods is not recommended.
 
 \paragraphDiamond{cyrus.conf}
-
 To support POP3/IMAP on ports 110/143 with STARTTLS add
 \begin{lstlisting}
 imap         cmd="imapd" listen="imap" prefork=3
@@ -137,7 +136,6 @@ pop3s        cmd="pop3d -s" listen="pop3s" prefork=1
 
 
 \subsubsection{Limitations}
-
 cyrus-imapd currently (2.4.17, trunk) does not support elliptic curve cryptography. Hence, ECDHE will not work even if defined in your cipher list.
 
 Currently there is no way to prefer server ciphers or to disable compression.
