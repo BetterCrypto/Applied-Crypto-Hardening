@@ -467,7 +467,72 @@ Legacy ASA models (e.g. 5505, 5510, 5520, 5540, 5550) do not offer the possibili
 \end{description}
 
 
+% ---------------------------------------------------------------------- 
+\subsection{Openswan}
+\begin{description}
+\item[Tested with Version:]
+Openswan 2.6.39 (on Gentoo)
+\item[Settings:] \mbox{}
+NB: The available algorithms depend on your kernel configuration (when using protostack=netkey) and/or
+build-time options.
 
+To list the supported algorithms
+\begin{lstlisting}[breaklines]
+$ ipsec auto --status | less
+\end{lstlisting}and look for 'algorithm ESP/IKE' at the beginning.
+
+\begin{lstlisting}[breaklines]
+aggrmode=no
+# ike format: cipher-hash;dhgroup
+# recommended ciphers:
+# - aes
+# recommended hashes:
+# - sha2_256 with at least 43 byte PSK
+# - sha2_512 with at least 86 byte PSK
+# recommended dhgroups:
+# - modp2048 = DH14
+# - modp3072 = DH15
+# - modp4096 = DH16
+# - modp6144 = DH17
+# - modp8192 = DH18
+ike=aes-sha2_256;modp2048
+type=tunnel
+phase2=esp
+# esp format: cipher-hash;dhgroup
+# recommended ciphers configuration A:
+# - aes_gcm_c-256 = AES_GCM_16
+# - aes_ctr-256
+# - aes_ccm_c-256 = AES_CCM_16
+# - aes-256 
+# additional ciphers configuration B:
+# - camellia-256
+# - aes-128
+# - camellia-128
+# recommended hashes configuration A:
+# - sha2-256
+# - sha2-384
+# - sha2-512
+# - null (only with GCM/CCM ciphers)
+# additional hashes configuration B:
+# - sha1
+# recommended dhgroups: same as above
+phase2alg=aes_gcm_c-256-sha2_256;modp2048
+salifetime=8h
+pfs=yes
+auto=ignore
+\end{lstlisting}
+
+
+
+\item[How to test:]
+Start the vpn and using
+\begin{lstlisting}[breaklines]
+$ ipsec auto --status | less
+\end{lstlisting}and look for 'IKE algorithms wanted/found' and 'ESP algrorithms wanted/loaded'
+
+\item[References:]
+\url{https://www.openswan.org/}
+\end{description}
 
 
 
