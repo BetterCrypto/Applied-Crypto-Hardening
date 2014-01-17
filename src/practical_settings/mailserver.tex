@@ -96,7 +96,7 @@ openssl s_client -crlf -connect SERVER.TLD:993
 \end{itemize*}
 
 \subsubsection{Settings}
-\paragraphDiamond{imapd.conf}
+\paragraph{imapd.conf:}
 To activate SSL/TLS configure your certificate with
 \begin{lstlisting}
 tls_cert_file: .../cert.pem
@@ -120,7 +120,7 @@ allowplaintext: 0
 \end{lstlisting}
 This way MUAs can only authenticate after STARTTLS if you only provide plaintext and SASL PLAIN login methods. Therefore providing CRAM-MD5 or DIGEST-MD5 methods is not recommended.
 
-\paragraphDiamond{cyrus.conf}
+\paragraph{cyrus.conf:}
 To support POP3/IMAP on ports 110/143 with STARTTLS add
 \begin{lstlisting}
 imap         cmd="imapd" listen="imap" prefork=3
@@ -196,7 +196,7 @@ openssl s_client -crlf -connect SERVER.TLD:993
 %%   smtpd_tls_dh1024_param_file = /etc/postfix/dh_param_1024.pem
 %% \end{lstlisting}
 
-\paragraphDiamond{MX and SMTP client configuration}
+\paragraph{MX and SMTP client configuration:}
 As discussed in section \ref{subsection:smtp_general}, because of opportunistic encryption we do not
 restrict the list of ciphers. There are still some steps needed to
 enable TLS, all in \verb|main.cf|:
@@ -290,7 +290,7 @@ It is highly recommended to read
 \url{http://exim.org/exim-html-current/doc/html/spec_html/ch-encrypted_smtp_connections_using_tlsssl.html}
 first.
 
-\paragraphDiamond{MSA mode (submission)}
+\paragraph{MSA mode (submission):}
 In the main config section of Exim add:
 
 \begin{lstlisting}
@@ -338,7 +338,7 @@ log_selector = <whatever your log_selector already contains> +tls_certificate_ve
 to get even more TLS information logged.
 
 
-\paragraphDiamond{server mode (incoming)}
+\paragraph{server mode (incoming):}
 In the main config section of Exim add:
 
 \begin{lstlisting}
@@ -382,7 +382,7 @@ log_selector = <whatever your log_selector already contains> +tls_certificate_ve
 \end{lstlisting}
 to get even more TLS information logged.
 
-\paragraphDiamond{client mode (outgoing)}
+\paragraph{client mode (outgoing):}
 Exim uses opportunistic encryption in the SMTP transport by default.
 
 Client mode settings have to be done in the configuration section of the smtp transport (driver = smtp).
@@ -401,7 +401,7 @@ This is recommended for MTA-MTA traffic.
 % Exim Maintainers do not recommend ciphers. We shouldn't do so, too.
 Do not limit ciphers without a very good reason. In the worst case you end up without encryption at all instead of some weak encryption. Please consult the Exim documentation if you really need to define ciphers.
 
-\paragraphDiamond{OpenSSL}
+\paragraph{OpenSSL:}
 Exim already disables SSLv2 by default. We recommend to add
 \begin{lstlisting}
 openssl_options = +all +no_sslv2 +no_compression +cipher_server_preference
@@ -414,17 +414,17 @@ You do not need to set dh\_parameters. Exim with OpenSSL by default uses paramet
 If you want to set your own DH parameters please read the TLS documentation of exim.
 
 
-\paragraphDiamond{GnuTLS}
+\paragraph{GnuTLS:}
 GnuTLS is different in only some respects to OpenSSL:
 \begin{itemize*}
   \item tls\_require\_ciphers needs a GnuTLS priority string instead of a cipher list. It is recommended to use the defaults by not defining this option. It highly depends on the version of GnuTLS used. Therefore it is not advisable to change the defaults.
   \item There is no option like openssl\_options
 \end{itemize*}
 
-\paragraphDiamond{Exim string expansion}
+\paragraph{Exim string expansion:}
 Note that most of the options accept expansion strings. This way you can e.g. set cipher lists or STARTTLS advertisement conditionally. Please follow the link to the official Exim documentation to get more information.
 
-\paragraphDiamond{Limitations}
+\paragraph{Limitations:}
 Exim currently (4.82) does not support elliptic curves with OpenSSL. This means that ECDHE is not used even if defined in your cipher list.
 There already is a working patch to provide support:
 \url{http://bugs.exim.org/show_bug.cgi?id=1397}

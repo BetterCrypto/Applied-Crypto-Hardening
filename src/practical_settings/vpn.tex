@@ -6,10 +6,10 @@
 
 \subsubsection{Settings}
 
-\paragraphDiamond{Assumptions}
+\paragraph{Assumptions:}
 We assume the use of IKE (v1 or v2) and ESP for this document.
 
-\paragraphDiamond{Authentication}
+\paragraph{Authentication:}
 IPSEC authentication should optimally be performed via RSA signatures,
 with a key size of 2048 bits or more. Configuring only the trusted CA
 that issued the peer certificate provides for additional protection
@@ -48,7 +48,7 @@ table~\ref{tab:IPSEC_psk_len} gives the minimum lengths in characters.
   \label{tab:IPSEC_psk_len}
 \end{table}
 
-\paragraphDiamond{Cryptographic Suites}
+\paragraph{Cryptographic Suites:}
 IPSEC Cryptographic Suites are pre-defined settings for all the items
 of a configuration; they try to provide a balanced security level and
 make setting up VPNs easier.
@@ -77,7 +77,7 @@ table~\ref{tab:IPSEC_suites}.
   \label{tab:IPSEC_suites}
 \end{table}
 
-\paragraphDiamond{IKE or Phase 1}
+\paragraph{IKE or Phase 1:}
 
 Alternatively to the pre-defined cipher suites, you can define your
 own, as described in this and the next section.
@@ -107,7 +107,7 @@ vulnerabilities \footnote{\url{http://ikecrack.sourceforge.net/}}.
   \label{tab:IPSEC_ph1_params}
 \end{table}
 
-\paragraphDiamond{ESP or Phase 2}
+\paragraph{ESP or Phase 2:}
 ESP or Phase 2 is where the actual data are protected; recommended
 parameters are shown in table \ref{tab:IPSEC_ph2_params}.
 
@@ -231,7 +231,7 @@ Please note that these settings restrict the available algorithms for
 
 \subsubsection{Settings}
 
-\paragraphDiamond{General}
+\paragraph{General:}
 We describe a configuration with certificate-based authentication; see
 below for details on the \verb|easyrsa| tool to help you with that.
 
@@ -254,7 +254,7 @@ cipher AES-256-CBC
 auth SHA384
 \end{lstlisting}
 
-\paragraphDiamond{Client Configuration}
+\paragraph{Client Configuration:}
 Client and server have to use compatible configurations, otherwise they can't communicate.
 The \verb|cipher| and \verb|auth| directives have to be identical.
 
@@ -297,14 +297,14 @@ The configuration shown above is compatible with all tested versions.
 
 \subsubsection{Additional settings}
 
-\paragraphDiamond{Key renegotiation interval}
+\paragraph{Key renegotiation interval:}
 The default for renegotiation of encryption keys is one hour
 (\verb|reneg-sec 3600|). If you
 transfer huge amounts of data over your tunnel, you might consider
 configuring a shorter interval, or switch to a byte- or packet-based
 interval (\verb|reneg-bytes| or \verb|reneg-pkts|).
 
-\paragraphDiamond{Fixing ``easy-rsa''}
+\paragraph{Fixing ``easy-rsa'':}
 When installing an OpenVPN server instance, you are probably using
 \emph{easy-rsa} to generate keys and certificates.
 The file \verb|vars| in the easyrsa installation directory has a
