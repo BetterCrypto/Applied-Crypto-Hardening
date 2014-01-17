@@ -204,17 +204,19 @@ enable TLS, all in \verb|main.cf|:
 \begin{lstlisting}
 smtpd_tls_cert_file = /etc/postfix/server.pem
 smtpd_tls_key_file = /etc/postfix/server.key
+smtpd_tls_loglevel = 1
 # use 0 for Postfix >= 2.9, and 1 for earlier versions
 smtpd_tls_loglevel = 0
 # enable opportunistic TLS support in the SMTP server and client
 smtpd_tls_security_level = may
 smtp_tls_security_level = may
+smtp_tls_loglevel = 1
 # if you have authentication enabled, only offer it after STARTTLS
 smtpd_tls_auth_only = yes
 tls_ssl_options = NO_COMPRESSION
 \end{lstlisting}
 
-\paragraphDiamond{MSA}
+\paragraph{MSA:}
 For the MSA \verb|smtpd| process, we first define the ciphers that are
 acceptable for the ``mandatory'' security level, again in
 \verb|main.cf|:
