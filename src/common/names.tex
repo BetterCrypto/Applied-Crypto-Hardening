@@ -1,0 +1,40 @@
+%%%
+%%% names.tex
+%%% All acronyms and names to be defined as used in the text
+%%%
+
+% Terms to index
+\doindex{Linux}
+\doindex{Diffie--Hellman}
+\doindex{elliptic curve}
+% Acronyms
+\newacronym{API}{api}{%
+  application programming interface}
+\newacronym{DH}{dh\alsoidx{Diffie--Hellman}}{%
+  Diffie--Hellman key exchange}
+\newacronym{DSA}{dsa}{%
+  Digital Signature Algorithm}
+\newacronym{ECC}{ecc\alsoidx{elliptic curve}}{%
+  elliptic curve cryptography}
+\newacronym{ECDH}{ecdh\alsoidx{Diffie--Hellman}\alsoidx{elliptic curve}}{%
+  elliptic curve Diffie--Hellman}
+\newacronym{ECDSA}{ecdsa}{...}
+\newacronym{EDH}{edh}{...}
+\newacronym{EECDH}{eecdh\alsoidx{Diffie--Hellman}\alsoidx{elliptic curve}}{%
+  elliptic curve ephemeral Diffie--Hellman}
+\newacronym{PFS}{pfs}{%
+  perfect forward secrecy}
+\newacronym{RSA}{rsa}{}
+
+% Glossary entries
+\newglossaryentry{firewall}{%
+  name=firewall,
+  description={technological barrier designed to prevent unauthorized or
+    unwanted communications between computer networks or hosts[duckduckgo]}
+}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../applied-crypto-hardening"
+%%% End: 
