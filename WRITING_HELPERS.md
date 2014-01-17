@@ -129,11 +129,11 @@ A selection:
 Internally, `\idx` uses `\gls` (see above) with special treating, so we provide the following mapping:
 
 * `\idx` → `\gls`
-* `\idx` → `\Gls`
-* `\idx` → `\GLS`
-* `\idx` → `\glspl`
-* `\idx` → `\Glspl`
-* `\idx` → `\GLSpl`
+* `\Idx` → `\Gls`
+* `\IDX` → `\GLS`
+* `\idxpl` → `\glspl`
+* `\Idxpl` → `\Glspl`
+* `\IDXpl` → `\GLSpl`
 
 The form `|indexword|` is a shortcut for `\idx{indexword}` and behaves the same.
 To pass optional arguments to `idx` (and hence `\gls`), use the form
