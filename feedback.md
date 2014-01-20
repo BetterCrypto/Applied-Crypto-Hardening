@@ -9,6 +9,7 @@ Overall big issues
 * cipherString A,B,C option? Like Mozilla requested? With *big* disclaimer that the most compatibile one is the most insecure one.
 * pull in sebix's pull requests
 * short tutorial for non-git gurus on cherry picking
+* add an index / glossary
 
 
 Newspapers 
