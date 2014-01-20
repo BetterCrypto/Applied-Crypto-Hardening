@@ -97,11 +97,22 @@ Contents
   Mysql: put in \%*\cipherstringB*) in the config!
   Oracle: mark this as "we do not test this here, since we only reference other papers for Oracle so far"
   DB2: mark this as "we do not test this here, since we only reference other papers for Oracle so far"
+  sed -i /IMB Db2/IBM DB2/g
+
+* theory/PKI.tex line 120: "a previously created certificate" --> "a previously created key"!
+
 
 * Webservers:
   Header Strict-Transport-Security "... includeSubDomains": we need to meed to mention that this can be a big pitfall.
   Also do some more research on this!
   For example: http://tools.ietf.org/html/draft-ietf-websec-strict-transport-sec#section-6.1
+  fix lighttpd HTTP redirection and env vars
+  lighthttpd: ssl.ec-curve = "secp384"
+    ssl.dh-file = "/etc/lighttpd/dhparams-group16.pem"
+	ssl.ec-curve = "secp384r1"
+
+* GPG.tex:
+  keep it "Howto" not "How-to"
 
 * IM:
   fix the subsubsection{XMPP/ Jabber} part. There seems to be a mix up here ? Maybe? --> check again
