@@ -30,6 +30,7 @@ DONE * Oracle ?? (--> Berg?? maybe . Or aaron: ask nic.at. Or link to T-Systems 
 DONE * DB2 (--> Berg. Or ask MLeyrer)
 * Add AES128 to cipherStringA ?
 * re-work chapter 2 (practical settings). Add lots of references to chapter 3 to get people interested in reading the theory.
+* Document : add license
 
 
 Website
@@ -41,6 +42,8 @@ how to updated the browser :)
 Formatting
 ==========
 
+* check all http:// URLs that we reference - check if they are also reachable via httpS:// and if so, change our reference
+* make style guide
 DONE * one-column layout: make page margins smaller
 DONE * add large "DRAFT" letters on top of every page.
 DONE  make the git version number part of the document
@@ -78,6 +81,13 @@ Contents
   Header Strict-Transport-Security "... includeSubDomains": we need to meed to mention that this can be a big pitfall.
   Also do some more research on this!
   For example: http://tools.ietf.org/html/draft-ietf-websec-strict-transport-sec#section-6.1
+
+* Tools: 
+  mention that sslscan (the tool) does not understand all cipherstrings! For example SHA2-\* is missing
+  --> recommend something better
+
+* re-write PKI section: make it *much* shorter. Reference: https://www.cs.auckland.ac.nz/~pgut001/pubs/pkitutorial.pdf and 
+  https://en.wikipedia.org/wiki/X.509#Problems_with_certificate_authorities.
 
 * scan our local region of the internet for https/smtp/imaps/pop3s
 
