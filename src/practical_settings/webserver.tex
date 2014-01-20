@@ -209,12 +209,150 @@ See appendix \ref{cha:tools}
 \subsection{MS IIS}
 \label{sec:ms-iis}
 
+To configure SSL/TLS on Windows Server you can use IIS Crypto~\footnote{\url{https://www.nartac.com/Products/IISCrypto/}}
+Simply start the Programm no installation required. The tool changes the registry keys described below.
+A restart ist required for the changes to take effect.
 
-\todo{Daniel: add screenshots and registry keys}
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.411\textwidth]{img/IISCryptoFIPS1402.png}
+  \caption{IIS Crypto Tool}
+  \label{fig:IISCryptoFIPS1402}
+\end{figure}
+
+Instead of using the IIS Crypto Tool the configuration can be set
+using the Windows Registry. The following Registry keys apply to the
+newer Versions of Windows (Windows 7, Windows Server 2008, Windows
+Server 2008 R2, Windows Server 2012 and Windows Server 2012 R2). For detailed
+information about the older versions see the Microsoft knowlagebase
+article. \footnote{\url{http://support.microsoft.com/kb/245030/en-us}}
+\begin{lstlisting}[breaklines]
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Ciphers] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\CipherSuites] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Hashes] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\KeyExchangeAlgorithms] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Protocols] 
+\end{lstlisting}
+
+Windows Server 2008 and Windows XP supports the following protocols:
+\begin{itemize}
+\item SSL 2.0
+\item SSL 3.0
+\item TLS 1.0
+\end{itemize}
+
+Windows Server 2008 R2 and newer and Windows 7 and newer support the following protocols:
+\begin{itemize}
+\item SSL 2.0
+\item SSL 3.0
+\item TLS 1.0
+\item TLS 1.1
+\item TLS 1.2
+\end{itemize}
+
+The srandard chipher order for TLS1.0 of Windows Server 2003 and Windows XP \footnote{\url{http://msdn.microsoft.com/en-us/library/windows/desktop/aa380512(v=vs.85).aspx}}
+\begin{itemize}
+\item TLS_RSA_WITH_RC4_128_MD5
+\item TLS_RSA_WITH_RC4_128_SHA
+\item TLS_RSA_WITH_3DES_EDE_CBC_SHA
+\item TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA
+\item TLS_RSA_WITH_DES_CBC_SHA
+\item TLS_DHE_DSS_WITH_DES_CBC_SHA
+\item TLS_RSA_EXPORT1024_WITH_RC4_56_SHA
+\item TLS_RSA_EXPORT1024_WITH_DES_CBC_SHA
+\item TLS_DHE_DSS_EXPORT1024_WITH_DES_CBC_SHA
+\item TLS_RSA_EXPORT_WITH_RC4_40_MD5
+\item TLS_RSA_EXPORT_WITH_RC2_CBC_40_MD5
+\item TLS_RSA_WITH_NULL_MD5
+\item TLS_RSA_WITH_NULL_SHA
+\end{itemize}
+
+the standard chipher order for Windows schannel.dll \footnote{\url{http://msdn.microsoft.com/en-us/library/windows/desktop/aa374757(v=vs.85).aspx}}
+%%% i think this is for Windows Server 2008 R2 ab above. i will confirm in the near future.
+\begin{table}[h]
+  \centering
+  \small
+  \begin{tabular}{ll}
+    \toprule
+    Cipher suite	FIPS mode enabled	Exchange	Encryption	Hash	Protocols\\
+    \midrule
+\verb |TLS_RSA_WITH_AES_128_CBC_SHA256|Yes|TLS 1.2|RSA|AES|SHA256\\
+\verb |TLS_RSA_WITH_AES_128_CBC_SHA|Yes|TLS 1.2, TLS 1.1, TLS 1.0|RSA|AES|SHA1\\
+\verb |TLS_RSA_WITH_AES_256_CBC_SHA256|Yes|TLS 1.2|RSA|AES|SHA256\\
+\verb |TLS_RSA_WITH_AES_256_CBC_SHA|Yes|TLS 1.2, TLS 1.1, TLS 1.0|RSA|AES|SHA1\\
+\verb |TLS_RSA_WITH_RC4_128_SHA|No|TLS 1.2, TLS 1.1, TLS 1.0, SSL 3.0|RSA|RC4|SHA1\\
+\verb |TLS_RSA_WITH_3DES_EDE_CBC_SHA|Yes|TLS 1.2, TLS 1.1, TLS 1.0|RSA|3DES|SHA1\\
+\verb |TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256|Yes|TLS 1.2|ECDH_P256|AES|SHA256\\
+\verb |TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P384|Yes|TLS 1.2|ECDH_P384|AES|SHA256\\
+\verb |TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA_P256|Yes|TLS 1.2, TLS 1.1, TLS 1.0|ECDH_P256|AES|SHA1\\
+\verb |TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA_P384|Yes|TLS 1.2, TLS 1.1, TLS 1.0|ECDH_P384|AES|SHA1\\
+\verb |TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA_P256|Yes|TLS 1.2, TLS 1.1, TLS 1.0|ECDH_P256|AES|SHA1\\
+\verb |TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA_P384|Yes|TLS 1.2, TLS 1.1, TLS 1.0|ECDH_P384|AES|SHA1\\
+\verb |TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256_P256|Yes|TLS 1.2|ECDH_P256|AES|SHA256\\
+\verb |TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384_P384|Yes|TLS 1.2|ECDH_P384|AES|SHA384\\
+\verb |TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256_P256|Yes|TLS 1.2|ECDH_P256|AES|SHA256\\
+\verb |TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA_P256|Yes|TLS 1.2, TLS 1.1, TLS 1.0|ECDH_P256|AES|SHA1\\
+\verb |TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA_P384|Yes|TLS 1.2, TLS 1.1, TLS 1.0|ECDH_P384|AES|SHA1\\
+\verb |TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA_P256|Yes|TLS 1.2, TLS 1.1, TLS 1.0|ECDH_P256|AES|SHA1\\
+\verb |TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA_P384|Yes|TLS 1.2, TLS 1.1, TLS 1.0|AES|SHA1\\
+\verb |TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384_P384|Yes|TLS 1.2|ECDH_P384|AES|SHA384\\
+\verb |TLS_DHE_DSS_WITH_AES_128_CBC_SHA256|Yes|TLS 1.2|DH|AES|SHA256v
+\verb |TLS_DHE_DSS_WITH_AES_128_CBC_SHA|Yes|TLS 1.2, TLS 1.1, TLS 1.0|DH|AES|SHA1\\
+\verb |TLS_DHE_DSS_WITH_AES_256_CBC_SHA256|Yes|TLS 1.2|DH|AES|SHA256\\
+\verb |TLS_DHE_DSS_WITH_AES_256_CBC_SHA|Yes|TLS 1.2, TLS 1.1, TLS 1.0|DH|AES|SHA1\\
+\verb |TLS_DHE_DSS_WITH_3DES_EDE_CBC_SHA|Yes|TLS 1.2, TLS 1.1, TLS 1.0, SSL 3.0|DH|3DES|SHA1\\
+\verb |TLS_RSA_WITH_RC4_128_MD5|No|TLS 1.2, TLS 1.1, TLS 1.0, SSL 3.0|RSA|RC4|MD5\\
+\verb |SSL_CK_RC4_128_WITH_MD5|No|SSL 2.0|RSA|RC4|MD5\\
+\verb |SSL_CK_DES_192_EDE3_CBC_WITH_MD5|No|SSL 2.0|RSA|3DES|MD5\\
+\verb |TLS_RSA_WITH_NULL_SHA256|No|TLS 1.2|RSA|NULL|SHA256\\
+\verb |TLS_RSA_WITH_NULL_SHA|No|TLS 1.2, TLS 1.1, TLS 1.0, SSL 3.0|RSA|NULL|SHA1\\
+ \bottomrule 
+ \end{tabular}
+  \caption{Client support}
+  \label{tab:MS_IIS_Client_Support}
+\end{table}
+Note that the the following cipher suites are supported, but they are not enabled by default.
+They must be added as necessary. 
+
+\begin{itemize}
+\item TLS_RSA_EXPORT_WITH_RC4_40_MD5
+\item TLS_RSA_EXPORT1024_WITH_RC4_56_SHA
+\item TLS_RSA_EXPORT1024_WITH_DES_CBC_SHA
+\item SSL_CK_RC4_128_EXPORT40_MD5
+\item SSL_CK_DES_64_CBC_WITH_MD5
+\item TLS_RSA_WITH_DES_CBC_SHA
+\item TLS_RSA_WITH_NULL_MD5
+\item TLS_RSA_WITH_NULL_SHA
+\item TLS_DHE_DSS_EXPORT1024_WITH_DES_CBC_SHA
+\item TLS_DHE_DSS_WITH_DES_CBC_SHA
+\item TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA_P521
+\item TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA_P521
+\item TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256_P384
+\item TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256_P521
+\item TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384_P521
+\item TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256_P384
+\item TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256_P521
+\item TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384_P521
+\item TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256_P384
+\item TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA_P521
+\item TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA_P521
+\item TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P521
+\item TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256
+\item TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384
+\item TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P521
+\end{itemize}
 
 %\begin{description}
 
 \subsubsection{Tested with Version} \todo{Daniel: add tested version}
+
+\begin{itemize}
+\item Windows Server 2012 R2 and Windows 8.1 using IE11 and Chrome 31
+\item Windows Server 2012 R2 and MacOS 10.9.1 using Safari 7 and Chrome 31
+%%% I used the FIPS 140 configuration of IIS Crypto. Should i test this with the standard configuration a & b?
+%%% I can test this down to windows 7 an Server 2008 ... Windows XP ist no longer supported by Microsoft so i dont care.
+\end{itemize}
 
 \subsubsection{Settings}
 
@@ -231,7 +369,7 @@ The configuration of cipher suites MS IIS will use, can be configured in one
 of the following ways:
 \begin{enumerate}
 \item Group Policy \footnote{\url{http://msdn.microsoft.com/en-us/library/windows/desktop/bb870930(v=vs.85).aspx}}
-\item Registry
+\item Registry \footnote{\url{http://support.microsoft.com/kb/245030/en-us}}
 \item IIS Crypto~\footnote{\url{https://www.nartac.com/Products/IISCrypto/}}
 \end{enumerate}
 
@@ -242,6 +380,7 @@ tested using https://www.ssllabs.com.
 
 \verb|SSL 3.0|, \verb|SSL 2.0| and \verb|MD5| are turned off.
 \verb|TLS 1.0| and \verb|TLS 2.0| are turned on.
+%%% Lets use the common name for TLS 1.2
 
 \begin{table}[h]
   \centering
@@ -287,6 +426,18 @@ Clients not supported:
 \subsubsection{Additional settings}
 
 %Here you can add additional settings
+You might want to redirect everything to http\textbf{s}:// if possible. In IIS you can do this with the following setting by Powershell:
+
+\begin{lstlisting}[breaklines]
+Set-WebConfiguration -Location "$WebSiteName/$WebApplicationName" `
+    -Filter 'system.webserver/security/access' `
+    -Value "SslRequireCert"
+\end{lstlisting}
+
+or using the GUI as shown in figure XXX
+\todo add screenshot here
+
+
 
 \subsubsection{Justification for special settings (if needed)}
 
@@ -295,6 +446,11 @@ Clients not supported:
 \subsubsection{References}
 
 \todo{add references}
+
+\begin{itemize}
+\item \url{http://support.microsoft.com/kb/245030/en-us}
+\item \url{http://support.microsoft.com/kb/187498/en-us}
+\end{itemize}
 
 % add any further references or best practice documents here
 
