@@ -1,5 +1,5 @@
 % ---------------------------------------------------------------------- 
-\subsection{IPSec}
+\subsection{IPsec}
 \label{section:IPSECgeneral}
 
 % ciphersuites current 2013-12-09
@@ -320,7 +320,7 @@ This will enhance the security of the key generation by using RSA keys
 with a length of 4096 bits, and set a lifetime of one year for the
 server/client certificates and five years for the CA certificate. \textbf{NOTE: 4096 bits is only an example of how to do this with easy-rsa.} See also section \ref{section:keylengths} for a discussion on keylengths.
 
-In addition, edit the \verb|pkitool| script and replace all occurences
+In addition, edit the \verb|pkitool| script and replace all occurrences
 of \verb|sha1| with \verb|sha256|, to sign the certificates with
 SHA256.
 
@@ -345,7 +345,7 @@ be decrypted.
 
 % ---------------------------------------------------------------------- 
 \subsection{Cisco ASA}
-The following settings reflect our recommendations as best as possible on the Cisco ASA platform. These are - of course - just settings regarding SSL/TLS (i.e. Cisco AnyConnect) and IPSec. For further security settings regarding this platform the appropriate Cisco guides should be followed.
+The following settings reflect our recommendations as best as possible on the Cisco ASA platform. These are - of course - just settings regarding SSL/TLS (i.e. Cisco AnyConnect) and IPsec. For further security settings regarding this platform the appropriate Cisco guides should be followed.
 
 
 \subsubsection{Tested with Versions}
@@ -505,7 +505,7 @@ Start the vpn and using
 \begin{lstlisting}
 $ ipsec auto --status | less
 \end{lstlisting}
-and look for 'IKE algorithms wanted/found' and 'ESP algrorithms wanted/loaded'.
+and look for 'IKE algorithms wanted/found' and 'ESP algorithms wanted/loaded'.
 
 \subsubsection{References}
 \todo{more specific References}
