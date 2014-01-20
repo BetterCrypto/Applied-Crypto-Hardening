@@ -2,12 +2,11 @@ NOW := $(shell date)
 
 all:	pdf html md
 
-%_generated.tex: %.tex
-	./perlify.pl
+once:
+	pdflatex applied-crypto-hardening
 
 pdf: 
 	./update-metadata-for-gitinfo
-	./perlify.pl
 	pdflatex applied-crypto-hardening
 	bibtex applied-crypto-hardening
 	while grep -s "Rerun to get cross-references right" \
@@ -48,7 +47,6 @@ clean:
             applied-crypto-hardening.log applied-crypto-hardening.pdf   \
             applied-crypto-hardening.toc applied-crypto-hardening.markdown \
 			applied-crypto-hardening.out
-	find . -name "*_generated.tex" -exec rm \{\} \;
 	rm -rf applied-crypto-hardening/
 	rm -rf gitHeadInfo.gin
-	rm applied-crypto-hardening.txt
+	if [ -f "applied-crypto-hardening.txt" ]; then rm "applied-crypto-hardening.txt"; fi

@@ -36,12 +36,12 @@ be generated.
 This typically occurs for embedded devices and virtual machines.
 Embedded devices lack some entropy sources other devices have, e.g.:
 
-\begin{itemize}
-\item No persistent clock, so boot-time is not contributing to the
+\begin{itemize*}
+  \item No persistent clock, so boot-time is not contributing to the
     initial RNG state
-\item No hard-disk: No entropy from hard-disk timing, no way to store
+  \item No hard-disk: No entropy from hard-disk timing, no way to store
     entropy between reboots
-\end{itemize}
+\end{itemize*}
 
 Virtual machines emulate some hardware components so that the
 generated entropy is over-estimated. The most critical component that

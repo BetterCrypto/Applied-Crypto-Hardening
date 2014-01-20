@@ -5,21 +5,21 @@ Research on SHA-1 conducted back in 2005\footnote{\url{https://www.schneier.com/
 
 
 When using PGP, there are a couple of things to take care of:
-\begin{itemize}
-\item keylengths (see section \ref{section:keylengths})
-\item randomness (see section \ref{section:RNGs})
-\item preference of symmetric encryption algorithm (see section \ref{section:CipherSuites})
-\item preference of hash function (see section \ref{section:CipherSuites})
-\end{itemize}
+\begin{itemize*}
+  \item keylengths (see section \ref{section:keylengths})
+  \item randomness (see section \ref{section:RNGs})
+  \item preference of symmetric encryption algorithm (see section \ref{section:CipherSuites})
+  \item preference of hash function (see section \ref{section:CipherSuites})
+\end{itemize*}
 
 Properly dealing with key material, passphrases and the web-of-trust is outside of the scope of this document. The GnuPG website\footnote{\url{http://www.gnupg.org/}} has a good tutorial on PGP.
 
-This \href{https://www.debian-administration.org/users/dkg/weblog/48}{Debian Howto} is a great resource on upgrading your old PGP key as well as on safe default settings. This section is built based on the Debian Howto.
+This \href{https://www.debian-administration.org/users/dkg/weblog/48}{Debian How-to} is a great resource on upgrading your old PGP key as well as on safe default settings. This section is built based on the Debian How-to.
 
 \subsubsection{Hashing}
 Avoid SHA-1 in GnuPG. Edit \$HOME/.gnupg/gpg.conf:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 personal-digest-preferences SHA256
 cert-digest-algo SHA256
 default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed
