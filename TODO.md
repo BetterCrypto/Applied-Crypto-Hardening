@@ -32,6 +32,7 @@ DONE * DB2 (--> Berg. Or ask MLeyrer)
 * re-work chapter 2 (practical settings). Add lots of references to chapter 3 to get people interested in reading the theory.
 * Document : add license
 
+* compare gv.at Richtlinien with our recommendations.
 
 Website
 =======
@@ -55,7 +56,10 @@ Rendering in Firefox (inline) on Windows seems to be really messed up. What happ
 * make a HTML Version of the document. It is much easier to copy & paste from than from PDFs.
 * Add Timestamp and git shorthash, not only date, to the title page of the document. Easier to check if you version of the document is current!
 
-* \usepackage[utf8]{inputencoding} and all the other \usepackage things in applied-crypto-hardening.tex should be reviewed and we should take a look if it should't all be in common/*.tex
+* \usepackage[utf8]{inputencoding} and all the other \usepackage things in applied-crypto-hardening.tex should be reviewed and we should take a look if it should't all be in common/\*.tex
+
+* check epigraph: why is the "---" gone? Is it gone?
+
 
 Formats to export
 =================
@@ -78,17 +82,52 @@ Workflow
 Contents
 ========
 
+* disclaimer.tex:
+  add "we don't deal with ICS devices. Nonono"
+ 
+* CipherStringB: 
+  src/commons/cipherstringb.tex --> remove the "!SRP"
+
+* Mailserver.tex:
+  Add "Dovecot" in front of 2.0.19apple1 
+  Postfix section: smtpd_tls_loglevel = 1 instead of = 0
+
 * DBs:
   Postgresql: put in \%*\cipherstringB*) in the config!
+  Mysql: put in \%*\cipherstringB*) in the config!
+  Oracle: mark this as "we do not test this here, since we only reference other papers for Oracle so far"
+  DB2: mark this as "we do not test this here, since we only reference other papers for Oracle so far"
 
 * Webservers:
   Header Strict-Transport-Security "... includeSubDomains": we need to meed to mention that this can be a big pitfall.
   Also do some more research on this!
   For example: http://tools.ietf.org/html/draft-ietf-websec-strict-transport-sec#section-6.1
 
+* IM:
+  fix the subsubsection{XMPP/ Jabber} part. There seems to be a mix up here ? Maybe? --> check again
+
+* SSH:
+  openssh - remark that ServerKeyBits  might still be useful. Add a note that sometimes old keys are very very old and 1024 bits. 
+
 * Tools: 
   mention that sslscan (the tool) does not understand all cipherstrings! For example SHA2-\* is missing
   --> recommend something better
+
+  - tools -> section SSL \& TLS: "lever your https" --> that's not a sentence. Fix it
+  - make this more uniform: the \url in the itemized list should always be either always at the beginnig or always at the end. 
+
+* theory/DH.tex
+  check the formatting of \cite[chapter16]{ii2011ecrypt}
+  same section: group 19-21 (256--521 bit ECC )... we need to mention it! We can not ignore it!
+
+* cipher\_suites/architecture.tex:
+   IANA nomencalture part: make a reference to the appendix here
+
+* .gitignore: add title.log
+
+
+* epigraph balance between freedom and security is a delicate one --> remove this epigraph. It's not so fitting.
+
 
 * re-write PKI section: make it *much* shorter. Reference: https://www.cs.auckland.ac.nz/~pgut001/pubs/pkitutorial.pdf and 
   https://en.wikipedia.org/wiki/X.509#Problems_with_certificate_authorities.
