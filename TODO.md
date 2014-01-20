@@ -73,6 +73,12 @@ Workflow
 
 Contents
 ========
+
+* Webservers:
+  Header Strict-Transport-Security "... includeSubDomains": we need to meed to mention that this can be a big pitfall.
+  Also do some more research on this!
+  For example: http://tools.ietf.org/html/draft-ietf-websec-strict-transport-sec#section-6.1
+
 * scan our local region of the internet for https/smtp/imaps/pop3s
 
 * Common Pitfalls: 
