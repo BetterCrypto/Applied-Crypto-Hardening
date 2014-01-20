@@ -55,6 +55,7 @@ Rendering in Firefox (inline) on Windows seems to be really messed up. What happ
 * make a HTML Version of the document. It is much easier to copy & paste from than from PDFs.
 * Add Timestamp and git shorthash, not only date, to the title page of the document. Easier to check if you version of the document is current!
 
+* \usepackage[utf8]{inputencoding} and all the other \usepackage things in applied-crypto-hardening.tex should be reviewed and we should take a look if it should't all be in common/*.tex
 
 Formats to export
 =================
@@ -76,6 +77,9 @@ Workflow
 
 Contents
 ========
+
+* DBs:
+  Postgresql: put in \%*\cipherstringB*) in the config!
 
 * Webservers:
   Header Strict-Transport-Security "... includeSubDomains": we need to meed to mention that this can be a big pitfall.
