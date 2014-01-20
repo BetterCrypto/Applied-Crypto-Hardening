@@ -51,5 +51,4 @@ clean:
 	find . -name "*_generated.tex" -exec rm \{\} \;
 	rm -rf applied-crypto-hardening/
 	rm -rf gitHeadInfo.gin
-	find . -name "applied-crypto-hardening.txt" -exec rm \{\} \;
-
+	rm applied-crypto-hardening.txt
