@@ -17,7 +17,10 @@
   \rule{\linewidth}{1pt}%
 }
 
-\CatchFileDef{\CIPHERSTRINGB}{cipherStringB.txt}{\endlinechar=-1 }%
+%%% CIPHERSTRING
+\usepackage{seqsplit} % Use Sequence split. Basically it inserts between every character pair a box with zero width to allow linebreaks everywhere. Better solution wanted, but is there any better?
+\CatchFileDef{\cipherStringB}{common/cipherStringB.tex}{\endlinechar=-1 }%
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "../applied-crypto-hardening"

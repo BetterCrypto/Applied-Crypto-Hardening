@@ -2,42 +2,37 @@
 
 Within enterprise networks and corporations with increased levels of paranoia or at least some defined security requirements it is common \textbf{not} to allow direct connections to the public internet.
 
-For this reason proxy solutions are deployed on corporate networks to intercept and scan the traffic for potential threats within sessions.\\
+For this reason proxy solutions are deployed on corporate networks to intercept and scan the traffic for potential threats within sessions.
 
 For encrypted traffic there are four options:
 
-\begin{itemize}
-\item Block the connection because it cannot be scanned for threats.
-\item Bypass the threat-mitigation and pass the encrypted session to the client, which results in a situation where malicious content is transferred directly to the client without visibility to the security system.
-\item Intercept (i.e. terminate) the session at the proxy, scan there and re-encrypt the session towards the client (effectively MITM).
-\item Deploy special Certificate Authorities to enable Deep Packet Inspection on the wire.
-\end{itemize}
+\begin{itemize*}
+  \item Block the connection because it cannot be scanned for threats.
+  \item Bypass the threat-mitigation and pass the encrypted session to the client, which results in a situation where malicious content is transferred directly to the client without visibility to the security system.
+  \item Intercept (i.e. terminate) the session at the proxy, scan there and re-encrypt the session towards the client (effectively MITM).
+  \item Deploy special Certificate Authorities to enable Deep Packet Inspection on the wire.
+\end{itemize*}
 
 While the latest solution might be the most "up to date", it arises a new front in the context of this paper, because the most secure part of a client's connection could only be within the corporate network, if the proxy-server handles the connection to the destination server in an insecure manner.
 
 Conclusion: Don't forget to check your proxy solutions SSL-capabilities. Also do so for your reverse proxies!
 
-\subsubsection{squid}
-
-
+%% ---------------------------------------------------------------------- 
+\subsection{squid}
 As of squid-3.2.7 (01 Feb 2013) there is support for the OpenSSL NO\_Compression option within squid config (CRIME attack) and if you combine that in the config file, with an enforcement of the server cipher preferences (BEAST Attack) you are safe.
 
-\paragraph*{squid.conf}\mbox{}\\
 
+\paragraph*{squid.conf}
 \todo{UNTESTED!}
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 options=NO_SSLv2,NO_TLSv1,NO_Compression,CIPHER_SERVER_PREFERENCE 
-cipher=@@@CIPHERSTRINGB@@@
+cipher=%*\cipherStringB*)
 \end{lstlisting}
 
-
-
-\paragraph*{squid.conf}\mbox{}\\
-
+\paragraph*{squid.conf}
 %% http://forum.pfsense.org/index.php?topic=63262.0
-
 \todo{UNTESTED!}
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 		NO_SSLv2    Disallow the use of SSLv2
 		NO_SSLv3    Disallow the use of SSLv3
 		NO_TLSv1    Disallow the use of TLSv1.0
@@ -51,7 +46,7 @@ cipher=@@@CIPHERSTRINGB@@@
 \todo{Patch here? Definitely working for 3.2.6!}
 For squid Versions before 3.2.7 use this patch against a vanilla source-tree:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 --- support.cc.ini      2013-01-09 02:41:51.000000000 +0100
 +++ support.cc  2013-01-21 16:13:32.549383848 +0100
 @@ -400,6 +400,11 @@
@@ -69,17 +64,18 @@ For squid Versions before 3.2.7 use this patch against a vanilla source-tree:
 \end{lstlisting}
 
 
-
+%% ---------------------------------------------------------------------- 
 \subsubsection{Bluecoat}
 %% https://kb.bluecoat.com/index?page=content&id=KB5549
-\begin{description}
-\item[Tested with Version:] SGOS 6.5.x
+\subsubsection{Tested with Versions}
+\begin{itemize*}
+  \item SGOS 6.5.x
+\end{itemize*}
 
 BlueCoat Proxy SG Appliances can be used as forward and reverse proxies. The reverse proxy feature is rather under-developed, and while it is possible and supported, there only seems to be limited use of this feature "in the wild" - nonetheless there are a few cipher suites to choose from, when enabling SSL features.
 
-\item[Only allow TLS 1.0,1.1 and 1.2 protocols:] \mbox{}
-
-\begin{lstlisting}[breaklines]
+\paragraph*{Only allow TLS 1.0,1.1 and 1.2 protocols:}
+\begin{lstlisting}
 $conf t
 $(config)ssl
 $(config ssl)edit ssl-device-profile default
@@ -87,9 +83,8 @@ $(config device-profile default)protocol tlsv1 tlsv1.1 tlsv1.2
   ok
 \end{lstlisting}
 
-\item[Select your accepted cipher-suites:] \mbox{}
-
-\begin{lstlisting}[breaklines]
+\paragraph*{Select your accepted cipher-suites:}
+\begin{lstlisting}
 $conf t
 Enter configuration commands, one per line.  End with CTRL-Z.
 $(config)proxy-services
@@ -112,25 +107,26 @@ Select cipher numbers to use, separated by commas: 2,5,6
 
 The same protocols are available for forward proxy settings and should be adjusted accordingly:
 In your local policy file add the following section:
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 <ssl>
     DENY server.connection.negotiated_ssl_version=(SSLV2, SSLV3)
 \end{lstlisting}
 
 Disabling protocols and ciphers in a forward proxy environment could lead to unexpected results on certain (misconfigured?) webservers (i.e. ones accepting only SSLv2/3 protocol connections)
 
-\end{description} 
 
-
-
-
-\subsubsection{Pound}
+%% ---------------------------------------------------------------------- 
+\subsection{Pound}
 % See http://www.apsis.ch/pound
 % See https://help.ubuntu.com/community/Pound
 
-Pound 2.6
-	
-\begin{lstlisting}[breaklines]
+\subsubsection{Tested with Versions}
+\begin{itemize*}
+  \item Pound 2.6
+\end{itemize*}
+
+\subsubsection{Settings}
+\begin{lstlisting}
 # HTTP Listener, redirects to HTTPS
 ListenHTTP
     Address 10.10.0.10
@@ -146,7 +142,7 @@ ListenHTTPS
     AddHeader    "Front-End-Https: on"
     Cert         "/path/to/your/cert.pem"
     ## See 'man ciphers'.
-    Ciphers      "TLSv1.2:TLSv1.1:!SSLv3:!SSLv2:@@@CIPHERSTRINGB@@@"
+    Ciphers      "TLSv1.2:TLSv1.1:!SSLv3:!SSLv2:%*\cipherStringB*)"
     Service
         BackEnd
             Address 10.20.0.10
@@ -155,3 +151,4 @@ ListenHTTPS
     End
 End
 \end{lstlisting}
+
