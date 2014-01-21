@@ -49,4 +49,4 @@ clean:
 			applied-crypto-hardening.out
 	rm -rf applied-crypto-hardening/
 	rm -rf gitHeadInfo.gin
-	if [ -f "applied-crypto-hardening.txt" ]; then rm "applied-crypto-hardening.txt"; fi
+	rm -f applied-crypto-hardening.txt
