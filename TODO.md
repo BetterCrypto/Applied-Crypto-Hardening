@@ -1,3 +1,8 @@
+Bug Fixes
+=========
+Reported by: @Wims80 http://twitter.com/wims80/status/425770704693239808
+Section Apache 2.1.1 recommends Rewrite instead of Redirect. Should be 301! (We correctly recommend 301 in the nginx section.)
+
 
 BIG TOPICS
 ==========
