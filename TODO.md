@@ -44,6 +44,8 @@ Website
 People with outdated browsers (winXP) etc can't see our webpage. --> make a landing page explaining 
 how to updated the browser :)
 
+Improve the wording on the cert.at Mailing list website so people don't get confused and know that they ended up on the correct site and list.
+
 
 Formatting
 ==========
