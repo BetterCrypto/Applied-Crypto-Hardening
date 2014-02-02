@@ -26,7 +26,7 @@ The aim of Kerberos is to unify authentication across a wide range of services, 
 	\item KDCs must be available. An attacker is able to inhibit authentication for services and users by cutting off their access to a KDC.
 	\item Users' passwords must be secure. Since Kerberos is a single-sign-on mechanism, a single password may enable an attacker to access a large number of services.
 	\item Service keytabs need to be secured against unauthorized access similarly to SSL/TLS server certificates. Obtaining a service keytab enables an attacker to impersonate a service.
-	\item DNS infrastructure must be secure and reliable. Hosts that provide services need consistent forward and reverse DNS entries. Especially avoid LDAP replication and database backends. LDAP enlarges the attack surface of your KDC and facilitates unauthorized access to the principal database e.g. by ACL misconfiguration. The identity of a service is tied to its DNS name, similarly the realm a client belongs to as well as the KDC, kpasswd and kerberos-adm servers may be specified in DNS TXT and SRV records. Spoofed DNS entries will cause denial-of-service situations and might endanger the security of a Kerberos realm.
+	\item DNS infrastructure must be secure and reliable. Hosts that provide services need consistent forward and reverse DNS entries. The identity of a service is tied to its DNS name, similarly the realm a client belongs to as well as the KDC, kpasswd and kerberos-adm servers may be specified in DNS TXT and SRV records. Spoofed DNS entries will cause denial-of-service situations and might endanger the security of a Kerberos realm.
 % "might endanger" according to the following source:
 % http://web.mit.edu/kerberos/krb5-latest/doc/admin/realm_config.html
 % unfortunately no further details beyond the suspicion of vulnerability are provided
@@ -41,7 +41,7 @@ Therefore we suggest:
 	\item Restrict physical and administrative access to the KDCs as severely as possible. E.g. ssh access should be limited to responsible adminstrators and trusted networks. 
 	\item Encrypt and secure the KDCs backups.
 	\item Replicate your primary KDC to at least one secondary KDC.
-	\item Prefer easy-to-secure replication (propagation in Kerberos terms) methods.
+	\item Prefer easy-to-secure replication (propagation in Kerberos terms) methods.Especially avoid LDAP replication and database backends. LDAP enlarges the attack surface of your KDC and facilitates unauthorized access to the principal database e.g. by ACL misconfiguration.
 	\item Use DNSSEC. \todo{link to DNSSEC section as soon as there is one} If that is not possible, at least ensure that all servers and clients in a realm use a trustworthy DNS server contacted via secure network links.
 	\item Use NTP on a trustworthy server via secure network links. \todo{link to NTP section as soon as there is one}
 	\item Avoid services that require the user to enter a password which is then checked against Kerberos. Prefer services that are able to use authentication via service tickets, usually not requiring the user to enter a password except for the initial computer login to obtain a ticket-granting-ticket (TGT). This limits the ability of attackers to spy out passwords through compromised services.
