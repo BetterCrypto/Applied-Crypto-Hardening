@@ -44,6 +44,7 @@ Therefore we suggest:
 	\item Prefer easy-to-secure replication (propagation in Kerberos terms) methods.
 	\item Use DNSSEC. \todo{link to DNSSEC section as soon as there is one} If that is not possible, at least ensure that all servers and clients in a realm use a trustworthy DNS server contacted via secure network links.
 	\item Use NTP on a trustworthy server via secure network links. \todo{link to NTP section as soon as there is one}
+	\item Avoid services that require the user to enter a password which is then checked against Kerberos. Prefer services that are able to use authentication via service tickets, usually not requiring the user to enter a password except for the initial computer login to obtain a ticket-granting-ticket (TGT). This limits the ability of attackers to spy out passwords through compromised services.
 \end{itemize}
 
 \subsection{Implementations}
