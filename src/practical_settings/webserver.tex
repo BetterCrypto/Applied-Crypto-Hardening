@@ -40,6 +40,34 @@ you can do this with the following setting inside of a VirtualHost environment:
 </VirtualHost>
 \end{lstlisting}
 
+In case you want to catch those old clients that do not support the recommended
+cipher string (eg. WinXP or Java 6) you might use their inability to understand
+SNI to create a catchall page with a default SSL server:
+
+begin{lstlisting}
+# Debian: add this to /etc/apache2/ports.conf
+NameVirtualHost *:443
+Listen 443
+
+# This needs to be the first virtual host entry; on Debian systems put this
+# in /etc/apache2/sites-enabled/000-default-ssl
+<VirtualHost *:443>
+    DocumentRoot /var/www/bad-ssl
+    SSLEngine on
+    SSLProtocol All
+    SSLCipherSuite ALL:!ADH:!NULL:!EXPORT:+HIGH:+MEDIUM:+LOW:+SSLv3
+    SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
+    SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+</VirtualHost>
+\end{lstlisting}
+
+The catchall virtual server needs to be the first server in the config. On the
+default page you should provide information about upgrading the browser to the
+user. You also should not use snakeoil certificates (as in the snipplet above)
+but the very same certificate as you use for the real service. In case you
+provide several virtual servers via SNI, the certificate for the catchall page
+needs to include all their names.
+
 %\subsubsection{Justification for special settings (if needed)}
 
 \subsubsection{References}
