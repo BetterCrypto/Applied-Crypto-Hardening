@@ -49,6 +49,9 @@ SNI to create a catchall page with a default SSL server:
 NameVirtualHost *:443
 Listen 443
 
+# this setting is needed to allow non SNI aware clients to connect too
+SSLStrictSNIVHostCheck off
+
 # This needs to be the first virtual host entry; on Debian systems put this
 # in /etc/apache2/sites-enabled/000-default-ssl
 <VirtualHost *:443>
