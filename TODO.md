@@ -6,7 +6,7 @@ Section Apache 2.1.1 recommends Rewrite instead of Redirect. Should be 301! (We 
 
 2014-02-11 19:41
 OpenVPN cipher string doesn't work with 2.3.2 according to: @bong0.
-Openvpn deprecated cipher string from the pdf. Therefore @bong0 hacked a script converting log messages to a sed expresseion https://gist.github.com/bong0/8941764 to run over an existing config file.
+Openvpn deprecated cipher string from the pdf. Therefore @bong0 hacked a script converting log messages to a sed expression https://gist.github.com/bong0/8941764 to run over an existing config file.
 output:
 tls-cipher TLS-DHE-RSA-WITH-AES-256-GCM-SHA384:TLS-DHE-RSA-WITH-AES-256-CBC-SHA256:TLS-DHE-RSA-WITH-AES-128-GCM-SHA256:TLS-DHE-RSA-WITH-AES-128-CBC-SHA256:TLS-DHE-RSA-WITH-CAMELLIA-256-CBC-SHA:TLS-DHE-RSA-WITH-AES-256-CBC-SHA:TLS-DHE-RSA-WITH-CAMELLIA-128-CBC-SHA:TLS-DHE-RSA-WITH-AES-128-CBC-SHA:TLS-RSA-WITH-CAMELLIA-256-CBC-SHA:TLS-RSA-WITH-AES-256-CBC-SHA:TLS-RSA-WITH-CAMELLIA-128-CBC-SHA:TLS-RSA-WITH-AES-128-CBC-SHA
 http://twitter.com/bong0/status/433306823001526272
