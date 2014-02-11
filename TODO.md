@@ -10,6 +10,9 @@ tlc-cipher TLS-DHE-RSA-WITH-AES-256-GCM-SHA384:TLS-DHE-RSA-WITH-AES-256-CBC-SHA2
 http://twitter.com/bong0/status/433306823001526272
 http://twitter.com/bong0/status/433307537375387648
 http://nopaste.info/d194fdaa78.html
+guid string produces deprecated warning, no errors.
+user's OpenVPN linked against OpenSSL 1.0.0. on Wheezy backport.
+http://packages.debian.org/wheezy-backports/openvpn
 
 
 BIG TOPICS
