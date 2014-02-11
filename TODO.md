@@ -4,6 +4,14 @@ Reported by: @Wims80 http://twitter.com/wims80/status/425770704693239808
 Section Apache 2.1.1 recommends Rewrite instead of Redirect. Should be 301! (We correctly recommend 301 in the nginx section.)
 
 
+2014-02-11 19:41
+OpenVPN cipher string doesn't work with 2.3.2 according to: @bong0.
+tlc-cipher TLS-DHE-RSA-WITH-AES-256-GCM-SHA384:TLS-DHE-RSA-WITH-AES-256-CBC-SHA256:TLS-DHE-RSA-WITH-AES-128-GCM-SHA256:TLS-DHE-RSA-WITH-AES-128-CBC-SHA256:TLS-DHE-RSA-WITH-CAMELLIA-256-CBC-SHA:TLS-DHE-RSA-WITH-AES-256-CBC-SHA:TLS-DHE-RSA-WITH-CAMELLIA-128-CBC-SHA:TLS-DHE-RSA-WITH-AES-128-CBC-SHA:TLS-RSA-WITH-CAMELLIA-256-CBC-SHA:TLS-RSA-WITH-AES-256-CBC-SHA:TLS-RSA-WITH-CAMELLIA-128-CBC-SHA:TLS-RSA-WITH-AES-128-CBC-SHA
+http://twitter.com/bong0/status/433306823001526272
+http://twitter.com/bong0/status/433307537375387648
+http://nopaste.info/d194fdaa78.html
+
+
 BIG TOPICS
 ==========
 
