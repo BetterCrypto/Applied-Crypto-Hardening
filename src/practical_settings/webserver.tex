@@ -182,7 +182,7 @@ ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # not possible to do exclusive
 ssl_ciphers '%*\cipherStringB*)';
 add_header Strict-Transport-Security max-age=15768000; # six months
 # use this only if all subdomains support HTTPS!
-# add_header Strict-Transport-Security "max-age=15768000; includeSubDomains"
+# add_header Strict-Transport-Security "max-age=15768000; includeSubDomains";
 \end{lstlisting}
 
 If you absolutely want to specify your own DH parameters, you can specify them via
