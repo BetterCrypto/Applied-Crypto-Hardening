@@ -34,7 +34,7 @@ my $outputdir = shift || die $usage;
 my $apilevel = shift || die $usage;
 
 # versions indexed by API level
-# source: http://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels
+# source: https://developer.android.com/guide/topics/manifest/uses-sdk-element.html#ApiLevels
 my %androidversion = ( 2 => '1.1',
 		       3 => '1.5',
 		       4 => '1.6',
