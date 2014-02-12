@@ -46,6 +46,9 @@ how to updated the browser :)
 
 Improve the wording on the cert.at Mailing list website so people don't get confused and know that they ended up on the correct site and list.
 
+LANGUAGES
+=========
+* translate to french and other european languages
 
 Formatting
 ==========
