@@ -26,11 +26,9 @@ The aim of Kerberos is to unify authentication across a wide range of services, 
 	\item KDCs must be available. An attacker is able to inhibit authentication for services and users by cutting off their access to a KDC.
 	\item Users' passwords must be secure. Since Kerberos is a single-sign-on mechanism, a single password may enable an attacker to access a large number of services.
 	\item Service keytabs need to be secured against unauthorized access similarly to SSL/TLS server certificates. Obtaining a service keytab enables an attacker to impersonate a service.
-	\item DNS infrastructure must be secure and reliable. Hosts that provide services need consistent forward and reverse DNS entries. The identity of a service is tied to its DNS name, similarly the realm a client belongs to as well as the KDC, kpasswd and kerberos-adm servers may be specified in DNS TXT and SRV records. Spoofed DNS entries will cause denial-of-service situations and might endanger the security of a Kerberos realm.
-% "might endanger" according to the following source:
-% http://web.mit.edu/kerberos/krb5-latest/doc/admin/realm_config.html
-% unfortunately no further details beyond the suspicion of vulnerability are provided
-% mentions possible redirection to a compromised realm in setups with trust relations: http://www.ietf.org/proceedings/48/I-D/cat-krb-dns-locate-02.txt
+	\item DNS infrastructure must be secure and reliable. Hosts that provide services need consistent forward and reverse DNS entries. The identity of a service is tied to its DNS name, similarly the realm a client belongs to as well as the KDC, kpasswd and kerberos-adm servers may be specified in DNS TXT and SRV records. Spoofed DNS entries will cause denial-of-service situations and might endanger\cite{MITKrbDoc:realm_config,IETF:cat-krb-dns-locate-02} the security of a Kerberos realm.
+% "might endanger" according to MITKrbDoc:realm_config, unfortunately no further details beyond the suspicion of vulnerability are provided
+% IETF:cat-krb-dns-locate-02 mentions possible redirection to a compromised realm in setups with trust relations 
 	\item Clients and servers in Kerberos realms need to have synchronized clocks. Tickets in Kerberos are created with a limited, strictly enforced lifetime. This limits an attacker's window of opportunity for various attacks such as the decryption of tickets in sniffed network traffic or the use of tickets read from a client computer's memory. Kerberos will refuse tickets with old timestamps or timestamps in the future. This would enable an attacker with access to a systems clock to deny access to a service or all users logging in from a specific host.
 \end{itemize}
 
@@ -52,7 +50,7 @@ Therefore we suggest:
 
 \paragraph{Cryptographic Algorithms in Kerberos Implementations}
 
-The encryption algorithms (commonly abbreviated 'etypes' or 'enctypes') in Kerberos exchanges are subject to negotiation between both sides of an exchange. Similarly, a ticket granting ticket (TGT), which is usually obtained on initial login, can only be issued if the principal contains a version of the password encrypted with an etype that is available both on the KDC and on the client where the login happens. Therefore, to ensure interoperability among components using different implementations as shown in table \ref{table:Kerberos_enctypes}, a selection of available etypes is necessary. However, the negotiation process may be subject to downgrade attacks and weak hashing algorithms endanger integrity protection and password security. This means that the des3-cbc-sha1-kd or rc4-hmac algorithms should not be used, except if there is a concrete and unavoidable need to do so. Other des3-*, des-* and rc4-hmac-exp algorithms should never be used.
+The encryption algorithms (commonly abbreviated 'etypes' or 'enctypes') in Kerberos exchanges are subject to negotiation between both sides of an exchange. Similarly, a ticket granting ticket (TGT), which is usually obtained on initial login, can only be issued if the principal contains a version of the password encrypted with an etype that is available both on the KDC and on the client where the login happens. Therefore, to ensure interoperability among components using different implementations as shown in table \ref{table:Kerberos_enctypes}, a selection of available etypes is necessary. However, the negotiation process may be subject to downgrade attacks\cite{AttKerbDepl} and weak hashing algorithms endanger integrity protection and password security. This means that the des3-cbc-sha1-kd or rc4-hmac algorithms should not be used, except if there is a concrete and unavoidable need to do so. Other des3-*, des-* and rc4-hmac-exp algorithms should never be used.
 
 Along the lines of cipher string B, the following etypes are recommended: aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac.
 
@@ -79,20 +77,17 @@ Along the lines of cipher string B, the following etypes are recommended: aes256
 		26 & camellia256-cts-cmac    & yes, since 1.9 & no  & no  & no  \\
 		\bottomrule
 	\end{tabular}
-	\caption{Commonly supported Kerberos encryption types by implementation. Algorithm names according to RFC3961, except where aliases can be used or the algorithm is named differently altogether as stated.}
+	\caption{Commonly supported Kerberos encryption types by implementation. Algorithm names according to RFC3961, except where aliases can be used or the algorithm is named differently altogether as stated\cite{rfc3962,rfc6803,rfc3961,rfc4120,rfc4120,krb519,JavaJGSS,ShishiEnctypes}.}
 	\label{tab:Kerberos_enctypes}
 \end{table}
 % \footnote{In MIT krb5 and Heimdal aliased to des3-hmac-sha1 and des3-cbc-sha1, colliding with the official string for enctype 7 which is referred to as old-des3-cbc-sha1 or similar.}
-% AES enctypes: http://tools.ietf.org/html/rfc3962
-% Camellia enctypes: http://tools.ietf.org/html/rfc6803
-% enctype numbers list: http://tools.ietf.org/html/rfc3961#section-8
-% recommended settings: http://tools.ietf.org/html/rfc4120#section-8.2
-% MIT krb5 1.9: http://web.mit.edu/kerberos/krb5-1.9/
-% Java enctype support: http://docs.oracle.com/javase/7/docs/technotes/guides/security/jgss/jgss-features.html
-% Shishi enctype support: http://www.gnu.org/software/shishi/manual/shishi.html#Cryptographic-Overview
+% AES enctypes: rfc3962
+% Camellia enctypes: rfc3962
+% enctype numbers list: rfc6803
+% recommended settings: rfc3961
 % enctype alias collision in MIT krb5: see src/lib/crypto/krb/etypes.c line 84 and src/include/krb5/krb5.hin line 438 compared to RFC3961
 % in Heimdal, HEIM_WEAK_CRYPTO and DES3_OLD_ENCTYPE disable some DES and old 3DES algorithms at build time (lib/krb5/crypto-algs.c in source)
-% etype recommendations, downgrade attacks and more: http://media.blackhat.com/bh-us-10/presentations/Stender_Engel_Hill/BlackHat-USA-2010-Stender-Engel-Hill-Attacking-Kerberos-Deployments-slides.pdf
+% etype recommendations, downgrade attacks and more: AttKerbDepl
 
 \paragraph{Existing installations}
 
