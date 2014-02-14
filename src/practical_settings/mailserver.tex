@@ -232,7 +232,7 @@ additional options that are only used for this instance of smtpd:
 
 \begin{lstlisting}
 587       inet  n       -       -       -       -       smtpd 
-        -o smtpd_tls_security_level=encrypt -o tls_preempt_cipherlist = yes
+        -o smtpd_tls_security_level=encrypt -o tls_preempt_cipherlist=yes
 \end{lstlisting}
 
 For those users who want to use ECC key exchange, it is possible to specify this via:
