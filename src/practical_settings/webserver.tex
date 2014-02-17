@@ -40,37 +40,6 @@ you can do this with the following setting inside of a VirtualHost environment:
 </VirtualHost>
 \end{lstlisting}
 
-In case you want to catch those old clients that do not support the recommended
-cipher string (eg. WinXP or Java 6) you might use their inability to understand
-SNI to create a catchall page with a default SSL server:
-
-\begin{lstlisting}
-# Debian: add this to /etc/apache2/ports.conf
-NameVirtualHost *:443
-Listen 443
-
-# this setting is needed to allow non SNI aware clients to connect too
-SSLStrictSNIVHostCheck off
-
-# This needs to be the first virtual host entry; on Debian systems put this
-# in /etc/apache2/sites-enabled/000-default-ssl
-<VirtualHost *:443>
-    DocumentRoot /var/www/bad-ssl
-    SSLEngine on
-    SSLProtocol All
-    SSLCipherSuite ALL:!ADH:!NULL:!EXPORT:+HIGH:+MEDIUM:+LOW:+SSLv3
-    SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
-    SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
-</VirtualHost>
-\end{lstlisting}
-
-The catchall virtual server needs to be the first server in the config. On the
-default page you should provide information about upgrading the browser to the
-user. You also should not use snakeoil certificates (as in the snipplet above)
-but the very same certificate as you use for the real service. In case you
-provide several virtual servers via SNI, the certificate for the catchall page
-needs to include all their names.
-
 %\subsubsection{Justification for special settings (if needed)}
 
 \subsubsection{References}
@@ -206,35 +175,6 @@ You might want to redirect everything to \emph{https://} if possible. In Nginx y
 return 301 https://$host$request_uri;
 \end{lstlisting}
 
-In case you want to catch those old clients that do not support the recommended
-cipher string (eg. WinXP or Java 6) you might use their inability to understand
-SNI to create a catchall page with a default SSL server:
-
-\begin{lstlisting}
-server {
-    listen 443 default;
-    listen [::]:443 default ipv6only=on;
-    root /var/www/bad-ssl;
-    index index.html
-    ssl on;
-    ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
-    ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
-
-    ssl_session_timeout 5m;
-
-    ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
-    ssl_ciphers ALL:!ADH:!NULL:!EXPORT:+HIGH:+MEDIUM:+LOW:+SSLv3;
-}
-\end{lstlisting}
-
-The real service then needs to be in its own server definition omitting the
-\texttt{default} keyword in the \texttt{listen} directive. On the default page
-you should provide information about upgrading the browser to the user. You
-should not use snakeoil certificates (as in the snipplet above) but the very
-same certificate as you use for the real service. In case you provide several
-virtual servers via SNI, the certificate for the catchall page needs to include
-all their names.
-
 \subsubsection{References} 
 \begin{itemize*}
   \item \url{http://nginx.org/en/docs/http/ngx_http_ssl_module.html}
@@ -335,6 +275,79 @@ Clients not supported:
 
 \subsubsection{How to test}
 See appendix \ref{cha:tools}
+
+%%---------------------------------------------------------------------- 
+\subsection{Supporting older clients}
+
+Older clients like Internet Explorer on Windows XP (actually the Windows XP
+crypto stack), Java 6 and Java 7 aren't supported by the recommended Variant B
+cipher string.
+To catch most of those old clients you might use their inability to understand
+SNI to create a catchall page with a default SSL server. On the default page
+you should provide information about upgrading their browser to the user.
+This will not work with Java 7 because Java 7 understands SNI.
+
+\subsubsection{Apache}
+
+Create a default SSL server:
+
+\begin{lstlisting}
+# Debian: add this to /etc/apache2/ports.conf
+NameVirtualHost *:443
+Listen 443
+
+# this setting is needed to allow non SNI aware clients to connect too
+SSLStrictSNIVHostCheck off
+
+# This needs to be the first virtual host entry; on Debian systems put this
+# in /etc/apache2/sites-enabled/000-default-ssl
+<VirtualHost *:443>
+    DocumentRoot /var/www/bad-ssl
+    SSLEngine on
+    SSLProtocol All
+    SSLCipherSuite ALL:!ADH:!NULL:!EXPORT:+HIGH:+MEDIUM:+LOW:+SSLv3
+    SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
+    SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+</VirtualHost>
+\end{lstlisting}
+
+The catchall virtual server needs to be the first server in the config.
+You also should not use snakeoil certificates (as in the snipplet above)
+but the very same certificate as you use for the real service. In case you
+provide several virtual servers via SNI, the certificate for the catchall page
+needs to include all their names.
+
+\subsubsection{lighttpd}
+
+\todo{someone needs to write that section or we just omit it}
+
+\subsubsection{nginx}
+
+Create a default SSL server:
+
+\begin{lstlisting}
+server {
+    listen 443 default;
+    listen [::]:443 default ipv6only=on;
+    root /var/www/bad-ssl;
+    index index.html
+    ssl on;
+    ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
+    ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
+
+    ssl_session_timeout 5m;
+
+    ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers ALL:!ADH:!NULL:!EXPORT:+HIGH:+MEDIUM:+LOW:+SSLv3;
+}
+\end{lstlisting}
+
+The real service then needs to be in its own server definition omitting the
+\texttt{default} keyword in the \texttt{listen} directive.
+You should not use snakeoil certificates (as in the snipplet above) but the
+very same certificate as you use for the real service. In case you provide
+several virtual servers via SNI, the certificate for the catchall page needs
+to include all their names.
 
 %%% Local Variables: 
 %%% mode: latex
