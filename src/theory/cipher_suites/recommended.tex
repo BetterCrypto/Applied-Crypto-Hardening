@@ -63,11 +63,14 @@ This results in the OpenSSL string:
 
 \paragraph*{Compatibility:}
 
-Only clients which support TLS 1.2 are covered by these cipher suites (Chrome 30,
-Win 7 and Win 8.1 crypto stack, Opera 17, OpenSSL $\ge$ 1.0.1e, Safari 6 / iOS
-6.0.1, Safari 7 / OS X 10.9).
+At the time of this writing only Win 7 and Win 8.1 crypto stack, Opera 17,
+OpenSSL $\ge$ 1.0.1e, Safari 6 / iOS 6.0.1 and Safar 7 / OS X 10.9
+are covered by that cipher string.
 
+\todo{does Opera 17 really work with that cipher string?}
 
+In case you need to support other/different clients, see
+\ref{section:ChoosingYourOwnCipherSuites}.
 
 \subsubsection{Configuration B: Weaker ciphers but better compatibility}
 
