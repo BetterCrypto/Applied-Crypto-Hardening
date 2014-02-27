@@ -15,6 +15,15 @@ user's OpenVPN linked against OpenSSL 1.0.0. on Wheezy backport.
 http://packages.debian.org/wheezy-backports/openvpn
 
 
+2014-02-27 22:59
+I think we should add the supported SSL / TLS versions from Microsoft IIS.
+http://twitter.com/gegch/status/439156512599322625
+
+
+
+
+
+
 BIG TOPICS
 ==========
 
