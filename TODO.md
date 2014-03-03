@@ -19,6 +19,8 @@ BIG TOPICS
 ==========
 
 
+* Blackhat presentation on RSA problems!! -> ECC + ECDSA instead (recommendation of P.Zimmermann @STRINT workshop 2014)
+
 * be consistent: 2048 RSA < 128 bit symmetric cipher strength. We should aim at 128+ bits symmetric strength. --> fix RSA 2048 in the document. Upgrade to 3072
 
 * clean up 9.5 "chossing your own cipher"
