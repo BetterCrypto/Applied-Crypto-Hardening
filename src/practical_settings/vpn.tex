@@ -32,21 +32,16 @@ For a key composed of upper- and lowercase letters, numbers, and two
 additional symbols\footnote{64 possible values = 6 bits},
 table~\ref{tab:IPSEC_psk_len} gives the minimum lengths in characters.
 
-\begin{table}[h]
-  \centering
-  \small
-  \begin{tabular}{lc}
-    \toprule
-    IKE Hash & PSK length \\
-    \midrule
-    SHA256 & 43 \\
-    SHA384 & 64 \\
-    SHA512 & 86 \\
-    \bottomrule
-  \end{tabular}
-  \caption{PSK lengths}
-  \label{tab:IPSEC_psk_len}
-\end{table}
+
+\ctable[%
+caption={PSK lengths},
+label=tab:IPSEC_psk_len,
+]{lc}{}{
+\FL    IKE Hash & PSK length
+\ML    SHA256 & 43
+\NN    SHA384 & 64
+\NN    SHA512 & 86
+\LL}
 
 \paragraph{Cryptographic Suites:}
 IPSEC Cryptographic Suites are pre-defined settings for all the items
@@ -60,23 +55,16 @@ equivalents to the recommended ciphers suites in section
 \ref{section:recommendedciphers} are shown in
 table~\ref{tab:IPSEC_suites}.
 
-\begin{table}[h]
-  \centering
-  \small
-  \begin{tabular}{p{2.5cm}p{2.5cm}l}
-    \toprule
-    Configuration A & Configuration B & Notes\\
-    \midrule
-    \verb|Suite-B-GCM-256| &
-    \verb|Suite-B-GCM-128| \newline
-    \verb|VPN-B| 
-    & All Suite-B variants use NIST elliptic curves\\
-    \bottomrule
-  \end{tabular}
-  \caption{IPSEC Cryptographic Suites}
-  \label{tab:IPSEC_suites}
-\end{table}
-
+\ctable[%
+caption={IPSEC Cryptographic Suites},
+label=tab:IPSEC_suites,
+]{>{\raggedright}p{3cm}>{\raggedright}p{3cm}l}{}{
+\FL    Configuration A & Configuration B & Notes
+\ML
+    \texttt{Suite-B-GCM-256} &
+    \texttt{Suite-B-GCM-128} \newline \texttt{VPN-B} &
+    All Suite-B variants use NIST elliptic curves
+\LL}
 \paragraph{IKE or Phase 1:}
 
 Alternatively to the pre-defined cipher suites, you can define your
@@ -88,51 +76,35 @@ table~\ref{tab:IPSEC_ph1_params} shows the parameters.
 Use only ``main mode``, as ``aggressive mode`` has known security
 vulnerabilities \footnote{\url{http://ikecrack.sourceforge.net/}}.
 
-\begin{table}[h]
-  \centering
-  \small
-  \begin{tabular}{lll}
-    \toprule
-    & Configuration A & Configuration B \\
-    \midrule
-    Mode & Main Mode & Main Mode \\
-    Encryption & AES-256 & AES, CAMELLIA (-256 or -128) \\
-    Hash & SHA2-* & SHA2-*, SHA1 \\
-    DH Group & Group 14-18 & Group 14-18 \\
-%    Lifetime & \todo{need recommendations; 1 day seems to be common
-%      practice} & \\
-    \bottomrule
-  \end{tabular}
-  \caption{IPSEC Phase 1 parameters}
-  \label{tab:IPSEC_ph1_params}
-\end{table}
+\ctable[%
+caption={IPSEC Phase 1 parameters},
+label=tab:IPSEC_ph1_params,
+]{lll}{}{%
+\FL    & Configuration A & Configuration B
+\ML    Mode & Main Mode & Main Mode
+\NN    Encryption & AES-256 & AES, CAMELLIA (-256 or -128)
+\NN    Hash & SHA2-* & SHA2-*, SHA1
+\NN    DH Group & Group 14-18 & Group 14-18
+%\NN    Lifetime & \todo{need recommendations; 1 day seems to be common practice} &
+\LL}
 
 \paragraph{ESP or Phase 2:}
 ESP or Phase 2 is where the actual data are protected; recommended
 parameters are shown in table \ref{tab:IPSEC_ph2_params}.
 
-\begin{table}[h]
-  \centering
-  \small
-  \begin{tabular}{lll}
-    \toprule
-    & Configuration A & Configuration B \\
-    \midrule
-    Perfect Forward Secrecy & yes & yes \\
-    Encryption & 
-    \parbox[t]{5cm}{\raggedright
-    \mbox{AES-GCM-16}, \mbox{AES-CTR}, \mbox{AES-CCM-16}, \mbox{AES-256}}
-    &
-    \parbox[t]{5cm}{\raggedright
-    \mbox{AES-GCM-16}, \mbox{AES-CTR}, \mbox{AES-CCM-16}, \mbox{AES-256}, \mbox{CAMELLIA-256}, \mbox{AES-128}, \mbox{CAMELLIA-128}} \\
-    Hash & SHA2-* (or none for AEAD) & SHA2-*, SHA1 (or none for AEAD) \\
-    DH Group & Same as Phase 1 & Same as Phase 1 \\
-%    Lifetime & \todo{need recommendations; 1-8 hours is common} & \\
-    \bottomrule
-  \end{tabular}
-  \caption{IPSEC Phase 2 parameters}
-  \label{tab:IPSEC_ph2_params}
-\end{table}
+\ctable[%
+caption={IPSEC Phase 2 parameters},
+label=tab:IPSEC_ph2_params,
+]{l>{\raggedright}p{4.5cm}>{\raggedright}p{6cm}}{}{%
+\FL    & Configuration A & Configuration B
+\ML    Perfect Forward Secrecy & \yes & \yes
+\NN    Encryption & %
+    \mbox{AES-GCM-16}, \mbox{AES-CTR}, \mbox{AES-CCM-16}, \mbox{AES-256} &%
+    \mbox{AES-GCM-16}, \mbox{AES-CTR}, \mbox{AES-CCM-16}, \mbox{AES-256}, \mbox{CAMELLIA-256}, \mbox{AES-128}, \mbox{CAMELLIA-128}
+\NN    Hash & SHA2-* (or none for AEAD) & SHA2-*, SHA1 (or none for AEAD)
+\NN    DH Group & Same as Phase 1 & Same as Phase 1
+%\NN    Lifetime & \todo{need recommendations; 1-8 hours is common} &
+\LL}
 
 \subsubsection{References}
 \begin{itemize*}
@@ -231,7 +203,7 @@ Please note that these settings restrict the available algorithms for
 
 \subsubsection{Settings}
 
-\paragraph{General:}
+\paragraph{General}
 We describe a configuration with certificate-based authentication; see
 below for details on the \verb|easyrsa| tool to help you with that.
 

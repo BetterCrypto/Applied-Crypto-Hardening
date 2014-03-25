@@ -219,21 +219,15 @@ tested using https://www.ssllabs.com.
 \verb|SSL 3.0|, \verb|SSL 2.0| and \verb|MD5| are turned off.
 \verb|TLS 1.0| and \verb|TLS 2.0| are turned on.
 
-\begin{table}[h]
-  \centering
-  \small
-  \begin{tabular}{ll}
-    \toprule
-    Cipher Suite & Client \\
-    \midrule
-    \verb|TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256| & only IE 10,11, OpenSSL 1.0.1e \\
-    \verb|TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256| & Chrome 30, Opera 17, Safari 6+ \\
-    \verb|TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA| & FF 10-24, IE 8+, Safari 5, Java 7\\
-    \bottomrule 
-  \end{tabular}
-  \caption{Client support}
-  \label{tab:MS_IIS_Client_Support}
-\end{table}
+\ctable[%
+caption={Client support},
+label=tab:MS_IIS_Client_Support,
+]{ll}{}{%
+\FL    Cipher Suite & Client
+\ML    \lstinline+TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256+ & only IE 10,11, OpenSSL 1.0.1e
+\NN    \lstinline+TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256+ & Chrome 30, Opera 17, Safari 6+
+\NN    \lstinline+TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA+ & FF 10-24, IE 8+, Safari 5, Java 7
+\LL}
 
 Table~\ref{tab:MS_IIS_Client_Support} shows the algorithms from
 strongest to weakest and why they need to be added in this order. For

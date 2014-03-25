@@ -36,9 +36,9 @@
 \usepackage[defaultsans]{opensans}
 \usepackage[final,babel=true]{microtype}[2011/08/18]
 
+
+
 \usepackage{pifont}
-\newcommand{\yes}{\textcolor{green}{\ding{51}}}
-\newcommand{\no}{\textcolor{red}{\ding{55}}}
 
 % Figures and graphics
 \usepackage{graphicx}
@@ -52,26 +52,41 @@
 
 % Tables
 \usepackage{longtable}
-\usepackage{booktabs}
+\usepackage{ctable}
+% ctable is dumb sometimes
+\renewcommand{\tmark}[1][a]{%
+  \rlap{\hbox{\@textsuperscript{\rmfamily\itshape #1}}}}
 \renewcommand{\arraystretch}{1.25}
+\definecolor{tableshadecolor}{rgb}{0.93,0.93,0.93}
+\providecommand*\tablefontcommand{}
+\providecommand*\tableinsidecommand[1][2]{%
+  \def\yes{\textcolor{green}{\ding{52}}\relax\xspace}\relax%
+  \def\no{\textcolor{red}{\ding{56}}\relax\xspace}\relax%
+  \rowcolors*{#1}{tableshadecolor}{}\tablefontcommand%
+}
+\setupctable{pos=htbp,doinside=\tableinsidecommand,table,notespar}
+
 \usepackage{multicol}
 
 % Verbatims and listings
 \usepackage{fancyvrb}
-\usepackage[final]{listings}
+\usepackage{listings}
 
 % The page
 \usepackage[footsepline]{scrpage2}
 \usepackage{lastpage}
 
 % Misc
+\usepackage{xspace}
 \usepackage{gitinfo}
 \usepackage{catchfile}
+\usepackage{marginnote}
 \usepackage{hyperref}
 
 % for development
 \usepackage{ifdraft}
 \ifdraft{%
+  \errorcontextlines=999
   %% Heavy debugging
   %\usepackage{showframe}
   \usepackage{blindtext}
@@ -92,6 +107,7 @@
   \let\blinddocument\relax
   \let\Blinddocument\relax
 }
+
 
 %%% Local Variables: 
 %%% mode: latex
