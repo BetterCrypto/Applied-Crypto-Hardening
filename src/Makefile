@@ -41,6 +41,7 @@ epub:
 
 upload:
 	rsync -avz --progress --no-p --no-g --no-t applied-crypto-hardening.pdf www.bettercrypto.org:/var/www/static/
+	rsync -avz --progress --no-p --no-g --no-t configuration www.bettercrypto.org:/var/www/static/
 
 www:	pdf upload
 

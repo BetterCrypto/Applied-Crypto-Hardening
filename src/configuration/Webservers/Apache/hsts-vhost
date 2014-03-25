@@ -1,0 +1,4 @@
+<VirtualHost *:80>
+  RewriteEngine On
+  RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R=permanent]
+</VirtualHost>

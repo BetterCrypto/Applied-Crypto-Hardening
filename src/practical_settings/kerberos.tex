@@ -105,24 +105,17 @@ For existing installations:
 To get rid of principals with unsupported or weak enctypes, a password change is usually the easiest way. Service principals can simply be recreated. \todo{force password change for old enctypes howto?}
 
 \subsubsection{MIT krb5}
-
+% hack.
+\gdef\currentsubsectionname{krb5}
 \paragraph{KDC configuration}
-In \verb#/etc/krb5kdc/kdc.conf# set the following in your realm's configuration:
-\begin{lstlisting}[breaklines]
-default_principal_flags = +preauth
-master_key_type = aes256-cts-hmac-sha1-96
-supported_enctypes = aes256-cts-hmac-sha1-96:normal camellia256-cts-cmac:normal aes128-cts-hmac-sha1-96:normal camellia128-cts-cmac:normal
-\end{lstlisting}
+In \verb#/etc/krb5kdc/kdc.conf# set the following in your realm's
+configuration:
+\configfile{kdc.conf}{14-15}{Encryption flags for MIT krb5 KDC}
 \todo{TODO: recommendations for lifetime, proxiable, forwardable}
 
-In \verb#/etc/krb5.conf# set in the \[libdefaults\] section:
-\begin{lstlisting}[breaklines]
-[libdefaults] 
-	allow_weak_crypto = false
-	permitted_enctypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
-	default_tkt_enctypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
-	default_tgs_enctypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
-\end{lstlisting}
+In \verb#/etc/krb5.conf# set in the [libdefaults] section:
+
+\configfile{krb5.conf}{1-1,22-25}{Encryption flags for MIT krb5 client}
 \todo{verify MIT client config}
 
 \subsubsection{Heimdal Kerberos 5}

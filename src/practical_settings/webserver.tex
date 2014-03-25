@@ -14,31 +14,13 @@ synonyms~\footnote{https://www.mail-archive.com/openssl-dev@openssl.org/msg33405
 \subsubsection{Settings}
 Enabled modules \emph{SSL} and \emph{Headers} are required.
 
-\begin{lstlisting}
-SSLCertificateFile server.crt
-SSLCertificateKeyFile server.key
-SSLProtocol All -SSLv2 -SSLv3 
-SSLHonorCipherOrder On
-SSLCompression off
-# Add six earth month HSTS header for all users...
-Header add Strict-Transport-Security "max-age=15768000"
-# If you want to protect all subdomains, use the following header
-# ALL subdomains HAVE TO support HTTPS if you use this!
-# Strict-Transport-Security: max-age=15768000 ; includeSubDomains
-
-SSLCipherSuite '%*\cipherStringB*)'
-\end{lstlisting}
+\configfile{default-ssl}{162-170}{SSL configuration for an Apache vhost}
 
 \subsubsection{Additional settings}
 You might want to redirect everything to \emph{https://} if possible. In Apache
 you can do this with the following setting inside of a VirtualHost environment:
 
-\begin{lstlisting}
-<VirtualHost *:80>
-  RewriteEngine On
-  RewriteRule ^.*$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R=permanent]
-</VirtualHost>
-\end{lstlisting}
+\configfile{hsts-vhost}{}{https auto-redirect vhost}
 
 %\subsubsection{Justification for special settings (if needed)}
 
@@ -64,27 +46,14 @@ See appendix \ref{cha:tools}
 
 
 \subsubsection{Settings}
-\begin{lstlisting}
-$SERVER["socket"] == "0.0.0.0:443" {
-  ssl.engine  = "enable"
-  ssl.use-sslv2 = "disable"
-  ssl.use-sslv3 = "disable"
-  ssl.pemfile = "/etc/lighttpd/server.pem"
-  ssl.cipher-list = "%*\cipherStringB*)"
-  ssl.honor-cipher-order = "enable"
-  setenv.add-response-header  = ( "Strict-Transport-Security" => "max-age=15768000") # six months
-  # use this only if all subdomains support HTTPS!
-  # setenv.add-response-header  = ( "Strict-Transport-Security" => "max-age=15768000; includeSubDomains")
-}
-\end{lstlisting}
+\configfile{10-ssl.conf}{3-14}{SSL configuration for lighttpd}
 
 Starting with lighttpd version 1.4.29 Diffie-Hellman and Elliptic-Curve Diffie-Hellman key agreement protocols are supported.
 By default, elliptic curve "prime256v1" (also "secp256r1") will be used, if no other is given.
 To select special curves, it is possible to set them using the configuration options \verb|ssl.dh-file| and \verb|ssl.ec-curve|.
-\begin{lstlisting}
-ssl.dh-file = "/etc/lighttpd/ssl/dh2048.pem"
-ssl.ec-curve = "secp521r1"
-\end{lstlisting}
+
+\configfile{10-ssl-dh.conf}{11-12}{SSL EC/DH configuration for lighttpd}
+
 Please read section \ref{section:DH} for more information on Diffie Hellman key exchange and elliptic curves.
 
 \subsubsection{Additional settings}
@@ -93,20 +62,7 @@ traffic toward \emph{https://}. It is also recommended to set the environment va
 \emph{HTTPS}, so the PHP applications run by the webserver can easily detect,
 that HTTPS is in use.
 
-\begin{lstlisting}
-$HTTP["scheme"] == "http" {
-  # capture vhost name with regex condition -> %0 in redirect pattern
-  # must be the most inner block to the redirect rule
-  $HTTP["host"] =~ ".*" {
-    url.redirect = (".*" => "https://%0$0")
-  }
-  # Set the environment variable properly
-  setenv.add-environment = (
-    "HTTPS" => "on"
-  )
-}
-\end{lstlisting}
-
+\configfile{11-hsts.conf}{}{https auto-redirect configuration}
 
 \subsubsection{Additional information} 
 The config option \emph{honor-cipher-order} is available since 1.4.30, the
@@ -145,15 +101,7 @@ See appendix \ref{cha:tools}
 
 
 \subsubsection{Settings}
-\begin{lstlisting}
-ssl_prefer_server_ciphers on;
-ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # not possible to do exclusive
-ssl_ciphers '%*\cipherStringB*)';
-add_header Strict-Transport-Security max-age=15768000; # six months
-# use this only if all subdomains support HTTPS!
-# add_header Strict-Transport-Security "max-age=15768000; includeSubDomains";
-\end{lstlisting}
-
+\configfile{default}{113-118}{SSL settings for nginx}
 If you absolutely want to specify your own DH parameters, you can specify them via
 
 \begin{lstlisting}
@@ -165,15 +113,11 @@ However, we advise you to read section \ref{section:DH} and stay with the standa
 \subsubsection{Additional settings}
 If you decide to trust NIST's ECC curve recommendation, you can add the following line to nginx's configuration file to select special curves:
 
-\begin{lstlisting}
-ssl_ecdh_curve          secp384r1;
-\end{lstlisting}
+\configfile{default-ec}{119-119}{SSL EC/DH settings for nginx}
 
 You might want to redirect everything to \emph{https://} if possible. In Nginx you can do this with the following setting:
 
-\begin{lstlisting}
-return 301 https://$host$request_uri;
-\end{lstlisting}
+\configfile{default-hsts}{29-29}{https auto-redirect in nginx}
 
 \subsubsection{References} 
 \begin{itemize*}
@@ -272,6 +216,8 @@ See appendix \ref{cha:tools}
 
 %%---------------------------------------------------------------------- 
 \subsection{Supporting older clients}
+% hack.
+\gdef\currentsectionname{Webservers-legacy}
 
 Older clients like Internet Explorer on Windows XP (actually the Windows XP
 crypto stack), Java 6 and Java 7 aren't supported by the recommended Variant B
@@ -282,28 +228,13 @@ you should provide information about upgrading their browser to the user.
 This will not work with Java 7 because Java 7 understands SNI.
 
 \subsubsection{Apache}
+% hack.
+\gdef\currentsubsectionname{Apache}
 
 Create a default SSL server:
 
-\begin{lstlisting}
-# Debian: add this to /etc/apache2/ports.conf
-NameVirtualHost *:443
-Listen 443
-
-# this setting is needed to allow non SNI aware clients to connect too
-SSLStrictSNIVHostCheck off
-
-# This needs to be the first virtual host entry; on Debian systems put this
-# in /etc/apache2/sites-enabled/000-default-ssl
-<VirtualHost *:443>
-    DocumentRoot /var/www/bad-ssl
-    SSLEngine on
-    SSLProtocol All
-    SSLCipherSuite ALL:!ADH:!NULL:!EXPORT:+HIGH:+MEDIUM:+LOW:+SSLv3
-    SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
-    SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
-</VirtualHost>
-\end{lstlisting}
+\configfile{ports.conf}{12-13}{SNI for SSL on Apache}
+\configfile{000-default-ssl}{2-14}{SNI catchall on Apache}
 
 The catchall virtual server needs to be the first server in the config.
 You also should not use snakeoil certificates (as in the snipplet above)
@@ -312,29 +243,17 @@ provide several virtual servers via SNI, the certificate for the catchall page
 needs to include all their names.
 
 \subsubsection{lighttpd}
+% hack.
+\gdef\currentsubsectionname{lighttpd}
 
 \todo{someone needs to write that section or we just omit it}
 
 \subsubsection{nginx}
+% hack.
+\gdef\currentsubsectionname{nginx}
 
 Create a default SSL server:
-
-\begin{lstlisting}
-server {
-    listen 443 default;
-    listen [::]:443 default ipv6only=on;
-    root /var/www/bad-ssl;
-    index index.html
-    ssl on;
-    ssl_certificate /etc/ssl/certs/ssl-cert-snakeoil.pem;
-    ssl_certificate_key /etc/ssl/private/ssl-cert-snakeoil.key;
-
-    ssl_session_timeout 5m;
-
-    ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
-    ssl_ciphers ALL:!ADH:!NULL:!EXPORT:+HIGH:+MEDIUM:+LOW:+SSLv3;
-}
-\end{lstlisting}
+\configfile{default}{125-139}{SNI catchall on nginx}
 
 The real service then needs to be in its own server definition omitting the
 \texttt{default} keyword in the \texttt{listen} directive.

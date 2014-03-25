@@ -12,8 +12,12 @@
 \documentclass{scrreprt}
 \fi
 \input{common/system}
+\input{common/lstautounindent}
 \input{common/style}
 \input{common/commands}
+\input{common/configfiles}
+
+\configurationbaseurl{https://bettercrypto.org/static/}
 
 \begin{document}
 \input{title}
@@ -21,6 +25,7 @@
 \input{acknowledgements}
 \input{abstract}
 \tableofcontents
+\lstlistoflistings
 \chapter{Introduction}
 \label{chapter:Intro}
 \input{whoshouldread}
@@ -29,10 +34,14 @@
 \input{disclaimer}
 \input{motivation}
 \input{methods}
+\input{conventions}
 %%
+
 \chapter{Practical recommendations}
 \label{chapter:PracticalSettings}
+\startconfigfiles
 \input{practical_settings}
+\stopconfigfiles
 %%
 \chapter{Theory}
 %\epigraph{``Number theorists are like lotus-eaters - having tasted this food they can never give it up.''}{Leopold Kronecker}

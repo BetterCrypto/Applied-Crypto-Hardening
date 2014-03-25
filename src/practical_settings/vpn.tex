@@ -24,7 +24,7 @@ If you need to use Pre-Shared Key authentication:
 \end{enumerate}
 
 The size of the PSK should not be shorter than the output size of
-the hash algorithm used in IKE \footnote{It is used in a HMAC, see
+the hash algorithm used in IKE\footnote{It is used in a HMAC, see
 RFC2104~\cite{rfc2104} and the discussion starting
 in \url{http://www.vpnc.org/ietf-ipsec/02.ipsec/msg00268.html}.}.
 
@@ -216,33 +216,21 @@ that is then negotiated as usual with TLS, the \verb|cipher|
 and \verb|auth| options both take a single argument that must match on
 client and server.
 
-\paragraph*{Server Configuration}
+\paragraph{Server Configuration}
+~\\
 % the cipherlist here is config B without the ECDHE strings, because
 % it must fit in 256 bytes...
 % DO NOT CHANGE TO THE CIPHERSTRING MACRO!
-\begin{lstlisting}
-tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
-cipher AES-256-CBC
-auth SHA384
-\end{lstlisting}
+\configfile{server.conf}{248-250}{Cipher configuration for OpenVPN (Server)}
 
-\paragraph{Client Configuration:}
+\paragraph{Client Configuration}
 Client and server have to use compatible configurations, otherwise they can't communicate.
 The \verb|cipher| and \verb|auth| directives have to be identical.
 
 % the cipherlist here is config B without the ECDHE strings, because
 % it must fit in 256 bytes...
 % DO NOT CHANGE TO THE CIPHERSTRING MACRO!
-\begin{lstlisting}
-tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
-cipher AES-256-CBC
-auth SHA384
-
-# https://openvpn.net/index.php/open-source/documentation/howto.html#mitm
-remote-cert-tls server
-
-tls-remote server.example.com
-\end{lstlisting}
+\configfile{client.conf}{44-45,115-121}{Cipher and TLS configuration for OpenVPN (Server)}
 
 \subsubsection{Justification for special settings}
 OpenVPN 2.3.1 changed the values that the \verb|tls-cipher| option
@@ -269,24 +257,21 @@ The configuration shown above is compatible with all tested versions.
 
 \subsubsection{Additional settings}
 
-\paragraph{Key renegotiation interval:}
+\paragraph{Key renegotiation interval}
 The default for renegotiation of encryption keys is one hour
 (\verb|reneg-sec 3600|). If you
 transfer huge amounts of data over your tunnel, you might consider
 configuring a shorter interval, or switch to a byte- or packet-based
 interval (\verb|reneg-bytes| or \verb|reneg-pkts|).
 
-\paragraph{Fixing ``easy-rsa'':}
+\paragraph{Fixing ``easy-rsa''}
 When installing an OpenVPN server instance, you are probably using
 \emph{easy-rsa} to generate keys and certificates.
 The file \verb|vars| in the easyrsa installation directory has a
 number of settings that should be changed to secure values:
 
-\begin{lstlisting}
-export KEY_SIZE=4096
-export KEY_EXPIRE=365
-export CA_EXPIRE=1826
-\end{lstlisting}
+\configfile{vars}{53-53,56-56,59-59}{Sane default values for OpenVPN (easy-rsa)}
+
 
 This will enhance the security of the key generation by using RSA keys
 with a length of 4096 bits, and set a lifetime of one year for the
@@ -503,10 +488,7 @@ Generate keys with
 tincd -n NETNAME -K8196
 \end{lstlisting}
 Old keys will not be deleted (but disabled), you have to delete them manually. Add the following lines to your tinc.conf on all machines
-\begin{lstlisting}[breaklines]
-Cipher = aes-256-cbc
-Digest = SHA512
-\end{lstlisting}
+\configfile{tinc.conf}{3-4}{Cipher and digest selection in tinc}
 
 \paragraph*{References}\mbox{}\\
 \begin{itemize}

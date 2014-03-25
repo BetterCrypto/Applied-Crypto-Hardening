@@ -73,17 +73,6 @@
 % Graphics
 %tell TeX where to look for graphics/logos
 \graphicspath{ {/img/} }
-
-% This block is for listings
-\usepackage[framemethod=TikZ]{mdframed} % mdframed is used to draw a grey box
-\mdfdefinestyle{listingstyle}{
-  backgroundcolor=black!10,outerlinewidth=0,outerlinecolor=black,
-  innerleftmargin=9pt,innerrightmargin=0,innertopmargin=9pt,innerbottommargin=2pt
-}
-%\usepackage{amssymb}% for \curvearrowright
-% Insert a grey box behind the listing for uniform background color (The \cipherstring would the listing and the background would turn white)
-\BeforeBeginEnvironment{lstlisting}{\vspace{0.2cm}\begin{mdframed}[style=listingstyle]}
-\AfterEndEnvironment{lstlisting}{\end{mdframed}}
 % Listings
 \lstset{
   basicstyle=\ttfamily,
@@ -94,6 +83,7 @@
   showstringspaces=false,
   tabsize=2,
   captionpos=b,
+  frame=single,
   breaklines=true,
   breakatwhitespace=false,
   inputencoding=utf8,
@@ -102,16 +92,13 @@
   columns=fullflexible,                   % Column format: no spaces are inserted for monospaced appearance
   breakindent=10pt,
   morekeywords={__global__, __device__},% 
+  % breakautoindent=false,
+  prebreak=\raisebox{0ex}[0ex][0ex]{{\color{red}\textbackslash}},
+  postbreak=\raisebox{0ex}[0ex][0ex]{{\color{red}\textbackslash}},
   escapechar=\`,
   escapeinside={\%*}{*)},                 % Escape TeX commands inside %* and *)
-%  prebreak=\mbox{$\curvearrowright$},     % Disply curved arrow before linebreak
-  prebreak=\small\symbol{'134},
-}
-
-% red warning box (for SSH section)
-\mdfdefinestyle{warningboxstyle}{
-  backgroundcolor=pink!20,
-  innerleftmargin=9pt,innerrightmargin=9pt,innertopmargin=9pt,innerbottommargin=9pt
+% %  prebreak=\mbox{$\curvearrowright$},     % Disply curved arrow before linebreak
+%   prebreak=\small\symbol{'134},
 }
 
 % Hyperref styles
