@@ -1,3 +1,5 @@
+% hack.
+\gdef\currentsectionname{IM}
 %%---------------------------------------------------------------------- 
 \subsection{General server configuration recommendations}
 
@@ -22,28 +24,10 @@ The last point being out-of-scope for this section, we will only cover the first
 \subsubsection{Settings}
 ejabberd is one of the popular Jabber server. In order to be compliant
 with the manifesto, you should adapt your configuration\footnote{\url{http://www.process-one.net/docs/ejabberd/guide_en.html}}:
-\begin{lstlisting}
-{listen,
- [
-  {5222, ejabberd_c2s, [
-                        {access, c2s},
-                        {shaper, c2s_shaper},
-                        {max_stanza_size, 65536},
-                        starttls,
-                        starttls_required, 
-                        {certfile, "/etc/ejabberd/ejabberd.pem"}
-                       ]},
-  {5269, ejabberd_s2s_in, [
-                           {shaper, s2s_shaper},
-                           {max_stanza_size, 131072}
-                          ]},
 
-  %%% Other input ports
-]}.
-{s2s_use_starttls, required_trusted}.
-{s2s_certfile, "/etc/ejabberd/ejabberd.pem"}.
-\end{lstlisting}
-
+\configfile{ejabberd.cfg}{108-109,111-111,120-126,172-172,179-179,184-184}{%
+  TLS setup for ejabberd}
+% 
 \subsubsection{Additional settings}
 Older Versions of ejabberd ($ < $ 2.0.0) need to be patched\footnote{\url{http://hyperstruct.net/2007/06/20/installing-the-startcom-ssl-certificate-in-ejabberd/}} to be able to parse all of the certificates in the CA chain.
 
@@ -79,31 +63,7 @@ There are no specific configurations required but the protocol itself is worth t
 %%---------------------------------------------------------------------- 
 \subsection{Charybdis}
 There are numerous implementations of IRC servers.  In this section, we choose \emph{Charybdis} which serves as basis for \emph{ircd-seven}\footnote{\url{https://dev.freenode.net/redmine/projects/ircd-seven}}, developed and used by freenode. Freenode is actually the biggest IRC network\footnote{\url{http://irc.netsplit.de/networks/top10.php}}. \emph{Charybdis} is part of the \emph{Debian} \& \emph{Ubuntu} distributions.
-
-\begin{lstlisting}
-/* Extensions */
-# Some modules 
-#loadmodule "extensions/chm_sslonly_compat.so";
-loadmodule "extensions/extb_ssl.so";
-# Some other modules
-
-serverinfo {
-  /* Standard piece of information */
-  
-  ssl_private_key = "etc/test.key";
-  ssl_cert = "etc/test.cert";
-  ssl_dh_params = "etc/dh.pem";
-  # set ssld_count as number of cores - 1
-  ssld_count = 1; 
-};
-
-listen {
-  /* Standard ports */
-  sslport = 6697;
-
-  /* IPv6 configuration */
-};
-\end{lstlisting}
+\configfile{ircd.conf}{12-12,15-15,24-24,44-44,60-60,63-63,66-66,74-75,83-83,132-132,138-138,144-144}{SSL relevant configuration for Charybdis/ircd-seven}
 
 
 %%---------------------------------------------------------------------- 

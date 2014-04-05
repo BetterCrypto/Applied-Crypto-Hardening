@@ -13,12 +13,13 @@ on [% timestamp %].
 
 The list of OpenSSL Ciphers was generated with [% openssl_version %].
 
+{\rowcolors*{2}{tableshadecolor}{}
 \begin{longtable}{lll}
   \toprule
   Code & IANA Name & OpenSSL Name \\
   \midrule\endhead
+  \bottomrule\endfoot
   [% FOREACH row IN table %]
-  \verb|[% row.0 %]| & \verb|[% row.1 %]| & \verb|[% row.2 %]| \\
+  \texttt{[% row.0 %]} & \verb|[% row.1 %]| & \texttt{[% row.2 %]} \\
   [% END %]
-  \bottomrule
-\end{longtable}
+\end{longtable}}

@@ -31,21 +31,17 @@ from the server's public key.
 
 \todo{explain this section}
 
-\begin{center}
-\begin{tabular}{llll}
-    \toprule
-          & \textbf{Key}  & \textbf{EC}  & \textbf{ephemeral} \\ \cmidrule(lr){1-4}
-   RSA    & RSA           & no           & no                 \\
-   DH     & RSA           & no           & no                 \\
-   EDH    & RSA           & no           & yes                \\
-   ECDH   & both          & yes          & no                 \\
-   EECDH  & both          & yes          & yes                \\
-   DSA    & DSA           & no           & no                 \\
-   ECDSA  & DSA           & yes          & no                 \\
-\bottomrule
-\end{tabular}
+\ctable[caption={Key exchange algorithms}]{llll}{}{%
+\FL          & \textbf{Key}  & \textbf{EC}  & \textbf{ephemeral}
+\ML   RSA    & RSA           & \no           & \no
+\NN   DH     & RSA           & \no           & \no
+\NN   EDH    & RSA           & \no           & \yes
+\NN   ECDH   & both          & \yes          & \no
+\NN   EECDH  & both          & \yes          & \yes
+\NN   DSA    & DSA           & \no           & \no
+\NN   ECDSA  & DSA           & \yes          & \no
+\LL}
 %disabled: \texttt{!PSK:!SRP}
-\end{center}
 
 \textbf{Ephemeral Key Exchange} uses different keys for authentication (the server's RSA
 key) and encryption (a randomly created key). This advantage is called ``Forward

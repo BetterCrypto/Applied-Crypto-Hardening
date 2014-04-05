@@ -56,30 +56,31 @@ Along the lines of cipher string B, the following etypes are recommended: aes256
 
 \todo{say something about salt types, eg discourage the null salt type?}
 
-\begin{table}[h]
-	\centering
-	\small
-	\begin{tabular}{ll|llll}
-		\toprule
-		ID & Algorithm & MIT & Heimdal & GNU Shishi & MS ActiveDirectory \\
-		\midrule
-		1  & des-cbc-crc             & yes            & yes & yes & yes \\
-		2  & des-cbc-md4             & yes            & yes & yes & no  \\
-		3  & des-cbc-md5             & yes            & yes & yes & yes \\
-		6  & des3-cbc-none           & no             & yes & yes & no  \\
-		7  & des3-cbc-sha1           & no             & yes, {\tiny named old-des3-cbc-sha1} & no  & no  \\
-		16 & des3-cbc-sha1-kd & yes, {\tiny alias des3-cbc-sha1, des3-hmac-sha1} & yes, {\tiny named des3-cbc-sha1} & yes & no  \\
-		17 & aes128-cts-hmac-sha1-96 & yes            & yes & yes & yes, {\tiny since Vista, Server 2008} \\
-		18 & aes256-cts-hmac-sha1-96 & yes            & yes & yes & yes, {\tiny since 7, Server 2008R2} \\
-		23 & rc4-hmac                & yes            & yes & yes & yes \\
-		24 & rc4-hmac-exp            & yes            & no  & yes & yes \\
-		25 & camellia128-cts-cmac    & yes, since 1.9 & no  & no  & no  \\
-		26 & camellia256-cts-cmac    & yes, since 1.9 & no  & no  & no  \\
-		\bottomrule
-	\end{tabular}
-	\caption{Commonly supported Kerberos encryption types by implementation. Algorithm names according to RFC3961, except where aliases can be used or the algorithm is named differently altogether as stated\cite{rfc3962,rfc6803,rfc3961,rfc4120,rfc4120,krb519,JavaJGSS,ShishiEnctypes}.}
-	\label{tab:Kerberos_enctypes}
-\end{table}
+\ctable[%
+caption={Commonly supported Kerberos encryption types by implementation. Algorithm names according to RFC3961, except where aliases can be used or the algorithm is named differently altogether as stated~\cite{rfc3962,rfc6803,rfc3961,rfc4120,rfc4120,krb519,JavaJGSS,ShishiEnctypes}.},
+label=tab:Kerberos_enctypes,
+]{rl|llll}{%
+\tnote[a]{named old-des3-cbc-sha1}
+\tnote[b]{alias des3-cbc-sha1, des3-hmac-sha1}
+\tnote[c]{named des3-cbc-sha1}
+\tnote[d]{since Vista, Server 2008}
+\tnote[e]{since 7, Server 2008R2}
+\tnote[f]{since 1.9}
+}{%
+\FL   ID & Algorithm               & MIT           & Heimdal       & GNU Shishi & MS ActiveDirectory
+\ML    1 & des-cbc-crc             & \yes          & \yes          & \yes       & \yes
+\NN    2 & des-cbc-md4             & \yes          & \yes          & \yes       & \no
+\NN    3 & des-cbc-md5             & \yes          & \yes          & \yes       & \yes
+\NN    6 & des3-cbc-none           & \no           & \yes          & \yes       & \no
+\NN    7 & des3-cbc-sha1           & \no           & \yes\tnote[a] & \no        & \no
+\NN   16 & des3-cbc-sha1-kd        & \yes\tnote[b] & \yes\tnote[c] & \yes       & \no
+\NN   17 & aes128-cts-hmac-sha1-96 & \yes          & \yes          & \yes       & \yes\tnote[d]
+\NN   18 & aes256-cts-hmac-sha1-96 & \yes          & \yes          & \yes       & \yes\tnote[e]
+\NN   23 & rc4-hmac                & \yes          & \yes          & \yes       & \yes
+\NN   24 & rc4-hmac-exp            & \yes          & \no           & \yes       & \yes
+\NN   25 & camellia128-cts-cmac    & \yes\tnote[f] & \no           & \no        & \no
+\NN   26 & camellia256-cts-cmac    & \yes\tnote[f] & \no           & \no        & \no
+\LL}
 % \footnote{In MIT krb5 and Heimdal aliased to des3-hmac-sha1 and des3-cbc-sha1, colliding with the official string for enctype 7 which is referred to as old-des3-cbc-sha1 or similar.}
 % AES enctypes: rfc3962
 % Camellia enctypes: rfc3962
@@ -104,24 +105,17 @@ For existing installations:
 To get rid of principals with unsupported or weak enctypes, a password change is usually the easiest way. Service principals can simply be recreated. \todo{force password change for old enctypes howto?}
 
 \subsubsection{MIT krb5}
-
+% hack.
+\gdef\currentsubsectionname{krb5}
 \paragraph{KDC configuration}
-In \verb#/etc/krb5kdc/kdc.conf# set the following in your realm's configuration:
-\begin{lstlisting}[breaklines]
-default_principal_flags = +preauth
-master_key_type = aes256-cts-hmac-sha1-96
-supported_enctypes = aes256-cts-hmac-sha1-96:normal camellia256-cts-cmac:normal aes128-cts-hmac-sha1-96:normal camellia128-cts-cmac:normal
-\end{lstlisting}
+In \verb#/etc/krb5kdc/kdc.conf# set the following in your realm's
+configuration:
+\configfile{kdc.conf}{14-15}{Encryption flags for MIT krb5 KDC}
 \todo{TODO: recommendations for lifetime, proxiable, forwardable}
 
-In \verb#/etc/krb5.conf# set in the \[libdefaults\] section:
-\begin{lstlisting}[breaklines]
-[libdefaults] 
-	allow_weak_crypto = false
-	permitted_enctypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
-	default_tkt_enctypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
-	default_tgs_enctypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
-\end{lstlisting}
+In \verb#/etc/krb5.conf# set in the [libdefaults] section:
+
+\configfile{krb5.conf}{1-1,22-25}{Encryption flags for MIT krb5 client}
 \todo{verify MIT client config}
 
 \subsubsection{Heimdal Kerberos 5}

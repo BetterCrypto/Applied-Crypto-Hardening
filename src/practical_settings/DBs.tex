@@ -1,3 +1,5 @@
+%hack.
+\gdef\currentsectionname{DBs}
 %%\subsection{Database Systems}
 % This list is based on : https://en.wikipedia.org/wiki/Relational_database_management_system#Market_share
 
@@ -33,15 +35,7 @@
 
 
 \subsubsection{Settings}
-\paragraph*{my.cnf}
-\begin{lstlisting}
-[mysqld]
-ssl
-ssl-ca=/etc/mysql/ssl/ca-cert.pem
-ssl-cert=/etc/mysql/ssl/server-cert.pem
-ssl-key=/etc/mysql/ssl/server-key.pem
-ssl-cipher=%*\cipherStringB*)
-\end{lstlisting}
+\configfile{my.cnf}{31-31,104-109}{SSL configuration fo MySQL}
 
 
 %\subsubsection{Additional settings}
@@ -53,7 +47,7 @@ ssl-cipher=%*\cipherStringB*)
 
 \subsubsection{References}
 \begin{itemize*}
-  \item MySQL Documentation on SSl Connections: \url{https://dev.mysql.com/doc/refman/5.5/en/ssl-connections.html}
+  \item MySQL Documentation on SSL Connections: \url{https://dev.mysql.com/doc/refman/5.5/en/ssl-connections.html}
 \end{itemize*}
 
 
@@ -116,22 +110,13 @@ TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
 
 
 \subsubsection{Settings}
+\configfile{9.1/postgresql.conf}{80-81}{Enabling SSL in PostgreSQL}
+
 To start in SSL mode the server.crt and server.key must exist in the server's data directory \$PGDATA.
 
 Starting with version 9.2, you have the possibility to set the path manually.
+\configfile{9.3/postgresql.conf}{85-87}{Certificate locations in PostgreSQL \(\geq\) 9.2}
 
-\begin{lstlisting}
-ssl_key_file = '/your/path/server.key'
-ssl_cert_file = '/your/path/server.crt'
-ssl_ca_file = '/your/path/root.crt'
-\end{lstlisting}
-
-\paragraph*{postgresql.conf}
-\begin{lstlisting}
-#>=8.3
-ssl = on 
-ssl_ciphers = '%*\cipherStringB*)'
-\end{lstlisting}
 
 
 \subsubsection{References}
