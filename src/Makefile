@@ -1,17 +1,20 @@
 NOW := $(shell date)
 
+TEXMFHOME ?={./texmf,$(shell kpsewhich -var-value TEXMFHOME)}
+LATEX = TEXMFHOME=${TEXMFHOME} pdflatex
+
 all:	pdf html md
 
 once:
-	pdflatex applied-crypto-hardening
+	${LATEX} applied-crypto-hardening
 
 pdf: 
 	./update-metadata-for-gitinfo
-	pdflatex applied-crypto-hardening
+	${LATEX} applied-crypto-hardening
 	bibtex applied-crypto-hardening
 	while grep -s "Rerun to get cross-references right" \
         applied-crypto-hardening.log ; do \
-	    pdflatex applied-crypto-hardening ; \
+	    ${LATEX} applied-crypto-hardening ; \
 	done
 	#dvipdfm -z 9 applied-crypto-hardening
 	#dvipdf applied-crypto-hardening.dvi
@@ -38,6 +41,7 @@ epub:
 
 upload:
 	rsync -avz --progress --no-p --no-g --no-t applied-crypto-hardening.pdf www.bettercrypto.org:/var/www/static/
+	rsync -avz --progress --no-p --no-g --no-t configuration www.bettercrypto.org:/var/www/static/
 
 www:	pdf upload
 

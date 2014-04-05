@@ -1,0 +1,33 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{array}
+\usepackage[default,type1]{sourcecodepro}
+\usepackage[T1]{fontenc}
+\usepackage[margin=0mm,paperheight=25mm,paperwidth=170mm]{geometry}
+
+\newcommand*\spA{abcde}
+\newcommand*\spB{01469}
+\newcommand*\spr[1][\spA]{& #1 & #1 & #1 & #1 & #1 & #1 \\}
+
+\begin{document}
+\centering
+\begin{tabular}{
+		l 
+		>{\fontseries{el}\fontshape{n}\selectfont}c
+		>{\fontseries{l}\fontshape{n}\selectfont}c
+		>{\fontseries{m}\fontshape{n}\selectfont}c
+		>{\fontseries{sb}\fontshape{n}\selectfont}c
+		>{\fontseries{b}\fontshape{n}\selectfont}c
+		>{\fontseries{k}\fontshape{n}\selectfont}c }
+	& ExtraLight & Light & Regular & Semibold & Bold & Black \\
+	normal               \spr
+%	italic               \spr[\itshape\spA]
+%	small-caps           \spr[\scshape\spA]
+	capitals             \spr[\MakeUppercase\spA]
+	lining               \spr[\spB]
+%	lining italic        \spr[\itshape\spB]
+%	lining small-caps    \spr[\scshape\spB]
+	old-style            \spr[\oldstylenums{\spB}]
+%	old-style italic     \spr[\oldstylenums{\itshape\spB}]
+%	old-style small-caps \spr[\oldstylenums{\scshape\spB}]
+\end{tabular}
+\end{document}
