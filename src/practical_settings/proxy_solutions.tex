@@ -151,4 +151,26 @@ ListenHTTPS
     End
 End
 \end{lstlisting}
+%% ---------------------------------------------------------------------- 
+\subsection{Apache Traffic Server}
+As of v4.2 there is support for forward secrecy trough elliptic curve ciphers. Previous versions
+had no support for forward secrecy. Also v4.2 adds support for setting HSTS and configuring TLS
+minor versions on or off.
 
+\paragraph*{records.config}
+\begin{lstlisting}
+
+CONFIG proxy.config.ssl.SSLv2 INT 0
+CONFIG proxy.config.ssl.SSLv3 INT 0
+CONFIG proxy.config.ssl.TLSv1 INT 1
+CONFIG proxy.config.ssl.server.honor_cipher_order INT 1
+CONFIG proxy.config.ssl.compression INT 0
+CONFIG proxy.config.ssl.server.cipher_suite STRING %*\cipherStringB*)
+
+# The below options are only available after v4.2, and can be used to further
+# harden the config:
+#CONFIG proxy.config.ssl.TLSv1_1 INT 1
+#CONFIG proxy.config.ssl.TLSv1_2 INT 1
+#CONFIG proxy.config.ssl.hsts_max_age INT -1
+#CONFIG proxy.config.ssl.hsts_include_subdomains INT 0
+\end{lstlisting}
