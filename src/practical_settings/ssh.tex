@@ -8,6 +8,40 @@
 
 \subsection{OpenSSH}
 
+\subsubsection{Tested with Version} OpenSSH 6.6p1 (Gentoo)
+\subsubsection{Settings}
+\paragraph*{sshd\_config}
+\begin{lstlisting}[breaklines]
+# ...
+
+Protocol 2
+
+PermitEmptyPasswords no
+PermitRootLogin no # or 'without-password' to allow SSH key based login
+StrictModes yes
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ec25519_key
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes128-ctr
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
+KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
+\end{lstlisting}
+\textbf{Note:} OpenSSH 6.6p1 now supports Curve25519
+
+\subsubsection{Tested with Version} OpenSSH 6.0p1 (Debian wheezy)
+\subsubsection{Settings}
+\paragraph*{sshd\_config}
+\begin{lstlisting}[breaklines]
+# ...
+
+Protocol 2
+PermitEmptyPasswords no
+PermitRootLogin no # or 'without-password' to allow SSH key based login
+StrictModes yes
+HostKey /etc/ssh/ssh_host_rsa_key
+Ciphers aes256-ctr,aes128-ctr
+MACs hmac-sha2-512,hmac-sha2-256,hmac-ripemd160
+KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
+\end{lstlisting}
 \subsubsection{Tested with Version} OpenSSH 6.4 (Debian Jessie)
 \subsubsection{Settings}
 \paragraph*{sshd\_config}
@@ -41,7 +75,7 @@ KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,d
 
 \textbf{Note:} Older Linux systems won't support SHA2. PuTTY (Windows) does not support
 RIPE-MD160. Curve25519, AES-GCM and UMAC are only available upstream (OpenSSH
-6.2). DSA host keys have been removed on purpose, the DSS standard does not
+6.6p1). DSA host keys have been removed on purpose, the DSS standard does not
 support for DSA keys stronger than 1024bit
 \footnote{\url{https://bugzilla.mindrot.org/show_bug.cgi?id=1647}} which is far
 below current standards (see section \ref{section:keylengths}). Legacy systems
