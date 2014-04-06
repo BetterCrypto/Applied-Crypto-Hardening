@@ -113,6 +113,22 @@
 }
 \urlstyle{same}
 
+% Glossary
+\setupglossaries{shortcuts,index,nohypertypes={index}}
+\glstoctrue
+\setacronymstyle{long-sc-short}
+% as per documentation
+\newglossarystyle{achindex}{%
+ \setglossarystyle{mcolindex}%
+\renewcommand*{\glsnamefont}[1]{\textmd{##1}}
+ \renewcommand*{\glsgroupheading}[1]{%
+    \item\textbf{\glsgetgrouptitle{##1}}\item{}\space}%
+  \renewcommand*{\glsgroupskip}{%
+    \ifglsnogroupskip\else%
+    \newline\relax%
+    \fi}%
+}
+
 % Bibliography
 \bibliographystyle{alphalink}
 

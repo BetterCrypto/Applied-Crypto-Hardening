@@ -12,6 +12,8 @@ pdf:
 	./update-metadata-for-gitinfo
 	${LATEX} applied-crypto-hardening
 	bibtex applied-crypto-hardening
+	makeglossaries applied-crypto-hardening
+	pdflatex applied-crypto-hardening
 	while grep -s "Rerun to get cross-references right" \
         applied-crypto-hardening.log ; do \
 	    ${LATEX} applied-crypto-hardening ; \
@@ -50,6 +52,10 @@ clean:
             applied-crypto-hardening.blg applied-crypto-hardening.dvi   \
             applied-crypto-hardening.log applied-crypto-hardening.pdf   \
             applied-crypto-hardening.toc applied-crypto-hardening.markdown \
+            applied-crypto-hardening.glo applied-crypto-hardening.glg \
+            applied-crypto-hardening.gls applied-crypto-hardening.ind \
+            applied-crypto-hardening.ilg applied-crypto-hardening.ist \
+            applied-crypto-hardening.idx applied-crypto-hardening.lol \
 			applied-crypto-hardening.out
 	rm -rf applied-crypto-hardening/
 	rm -rf gitHeadInfo.gin

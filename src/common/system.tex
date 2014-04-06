@@ -85,6 +85,12 @@
 \usepackage{catchfile}
 \usepackage{marginnote}
 \usepackage{hyperref}
+\usepackage[xindy]{glossaries}
+\usepackage{glossary-mcols}
+\AtEndPreamble{%
+  \makeglossaries%
+  \input{common/names}%
+}
 
 % for development
 \usepackage{ifdraft}
