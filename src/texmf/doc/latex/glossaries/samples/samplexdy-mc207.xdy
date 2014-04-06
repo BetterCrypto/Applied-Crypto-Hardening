@@ -1,0 +1,591 @@
+;; xindy style file for samplexdy.tex that has Mc letter group
+
+(define-letter-group "A" :prefixes (""))
+(define-letter-group "B" :after "A" :prefixes (""))
+(define-letter-group "C" :after "B" :prefixes (""))
+(define-letter-group "D" :after "C" :prefixes (""))
+(define-letter-group "E" :after "D" :prefixes (""))
+(define-letter-group "F" :after "E" :prefixes (""))
+(define-letter-group "G" :after "F" :prefixes (""))
+(define-letter-group "H" :after "G" :prefixes ("¤"))
+(define-letter-group "I" :after "H" :prefixes ("¨"))
+(define-letter-group "J" :after "I" :prefixes ("¬"))
+(define-letter-group "K" :after "J" :prefixes ("®"))
+(define-letter-group "L" :after "K" :prefixes ("´"))
+(define-letter-group "Mc" :after "L" :prefixes ("»"))
+(define-letter-group "M" :after "Mc" :prefixes ("»"))
+(define-letter-group "N" :after "M" :prefixes ("¼"))
+(define-letter-group "O" :after "N" :prefixes ("Ã"))
+(define-letter-group "P" :after "O" :prefixes ("È"))
+(define-letter-group "Q" :after "P" :prefixes ("Ê"))
+(define-letter-group "R" :after "Q" :prefixes ("Ë"))
+(define-letter-group "S" :after "R" :prefixes ("Ð"))
+(define-letter-group "T" :after "S" :prefixes ("Ú"))
+(define-letter-group "U" :after "T" :prefixes ("à"))
+(define-letter-group "V" :after "U" :prefixes ("å"))
+(define-letter-group "W" :after "V" :prefixes ("æ"))
+(define-letter-group "X" :after "W" :prefixes ("ë"))
+(define-letter-group "Y" :after "X" :prefixes ("í"))
+(define-letter-group "È" :after "Y" :prefixes ("ï"))
+(define-letter-group "Z" :after "È" :prefixes ("ð"))
+(define-letter-group "Ã" :after "Z" :prefixes ("ö"))
+(define-letter-group "Æ¿" :after "Ã" :prefixes ("÷"))
+
+(define-rule-set "en-alphabetize"
+
+  :rules  (("Ã " "" :string)
+           ("Ã" "" :string)
+           ("Ã" "" :string)
+           ("Ã¦" "" :string)
+           ("Ã" "" :string)
+           ("Ã§" "" :string)
+           ("Ã°" "" :string)
+           ("Ã" "" :string)
+           ("Ã" "" :string)
+           ("Ã" "" :string)
+           ("Ã" "" :string)
+           ("Ã" "" :string)
+           ("Ã¨" "" :string)
+           ("Ã«" "" :string)
+           ("Ãª" "" :string)
+           ("Ã©" "" :string)
+           ("Ã" "¨" :string)
+           ("Ã¯" "¨" :string)
+           ("Ã" "¼" :string)
+           ("Ã±" "¼" :string)
+           ("Ã" "Ã" :string)
+           ("Ã" "Ã" :string)
+           ("Ã´" "Ã" :string)
+           ("Ã¶" "Ã" :string)
+           ("Å" "Ã" :string)
+           ("Å" "Ã" :string)
+           ("È" "ï" :string)
+           ("È" "ï" :string)
+           ("Ã¾" "ö" :string)
+           ("Ã" "ö" :string)
+           ("Ç·" "÷" :string)
+           ("Æ¿" "÷" :string)
+           ("a" "" :string)
+           ("A" "" :string)
+           ("b" "" :string)
+           ("B" "" :string)
+           ("C" "" :string)
+           ("c" "" :string)
+           ("d" "" :string)
+           ("D" "" :string)
+           ("E" "" :string)
+           ("e" "" :string)
+           ("F" "" :string)
+           ("f" "" :string)
+           ("g" "" :string)
+           ("G" "" :string)
+           ("H" "¤" :string)
+           ("h" "¤" :string)
+           ("I" "¨" :string)
+           ("i" "¨" :string)
+           ("J" "¬" :string)
+           ("j" "¬" :string)
+           ("K" "®" :string)
+           ("k" "®" :string)
+           ("L" "´" :string)
+           ("l" "´" :string)
+           ("Mc" "»" :string)
+           ("Mac" "»" :string)
+           ("M" "»" :string)
+           ("m" "»" :string)
+           ("N" "¼" :string)
+           ("n" "¼" :string)
+           ("O" "Ã" :string)
+           ("o" "Ã" :string)
+           ("P" "È" :string)
+           ("p" "È" :string)
+           ("q" "Ê" :string)
+           ("Q" "Ê" :string)
+           ("r" "Ë" :string)
+           ("R" "Ë" :string)
+           ("S" "Ð" :string)
+           ("s" "Ð" :string)
+           ("T" "Ú" :string)
+           ("t" "Ú" :string)
+           ("u" "à" :string)
+           ("U" "à" :string)
+           ("v" "å" :string)
+           ("V" "å" :string)
+           ("w" "æ" :string)
+           ("W" "æ" :string)
+           ("X" "ë" :string)
+           ("x" "ë" :string)
+           ("Y" "í" :string)
+           ("y" "í" :string)
+           ("z" "ð" :string)
+           ("Z" "ð" :string)
+           ))
+
+(define-rule-set "en-resolve-diacritics"
+
+  :rules  (("È" "¢" :string)
+           ("Ã¾" "¢" :string)
+           ("Ç·" "¢" :string)
+           ("Ã" "¢" :string)
+           ("È" "¢" :string)
+           ("Æ¿" "¢" :string)
+           ("Ã" "£" :string)
+           ("Ã" "£" :string)
+           ("Ã°" "£" :string)
+           ("Ã" "£" :string)
+           ("Ã" "£" :string)
+           ("Ã" "£" :string)
+           ("Ã¯" "£" :string)
+           ("Ã¶" "£" :string)
+           ("Ã±" "£" :string)
+           ("Ã§" "£" :string)
+           ("Ã " "£" :string)
+           ("Ã" "£" :string)
+           ("Ã©" "£" :string)
+           ("Ã" "£" :string)
+           ("Ã" "¤" :string)
+           ("Ã´" "¤" :string)
+           ("Ã" "¤" :string)
+           ("Ã¨" "¤" :string)
+           ("Ã" "¥" :string)
+           ("Ã«" "¥" :string)
+           ("Ã" "¦" :string)
+           ("Ãª" "¦" :string)
+           ("Å" "ÿ" :string)
+           ("Ã" "ÿ" :string)
+           ("Å" "ÿ" :string)
+           ("Ã¦" "ÿ" :string)
+           ("S" "¢" :string)
+           ("K" "¢" :string)
+           ("d" "¢" :string)
+           ("Y" "¢" :string)
+           ("E" "¢" :string)
+           ("y" "¢" :string)
+           ("g" "¢" :string)
+           ("e" "¢" :string)
+           ("J" "¢" :string)
+           ("q" "¢" :string)
+           ("D" "¢" :string)
+           ("b" "¢" :string)
+           ("z" "¢" :string)
+           ("w" "¢" :string)
+           ("Q" "¢" :string)
+           ("M" "¢" :string)
+           ("C" "¢" :string)
+           ("L" "¢" :string)
+           ("X" "¢" :string)
+           ("P" "¢" :string)
+           ("T" "¢" :string)
+           ("a" "¢" :string)
+           ("N" "¢" :string)
+           ("j" "¢" :string)
+           ("Z" "¢" :string)
+           ("u" "¢" :string)
+           ("k" "¢" :string)
+           ("t" "¢" :string)
+           ("W" "¢" :string)
+           ("v" "¢" :string)
+           ("s" "¢" :string)
+           ("B" "¢" :string)
+           ("H" "¢" :string)
+           ("c" "¢" :string)
+           ("I" "¢" :string)
+           ("G" "¢" :string)
+           ("U" "¢" :string)
+           ("F" "¢" :string)
+           ("r" "¢" :string)
+           ("x" "¢" :string)
+           ("V" "¢" :string)
+           ("h" "¢" :string)
+           ("f" "¢" :string)
+           ("i" "¢" :string)
+           ("A" "¢" :string)
+           ("O" "¢" :string)
+           ("n" "¢" :string)
+           ("m" "¢" :string)
+           ("l" "¢" :string)
+           ("p" "¢" :string)
+           ("R" "¢" :string)
+           ("o" "¢" :string)
+           ))
+
+(define-rule-set "en-resolve-case"
+
+  :rules  (("Ã" "8" :string)
+           ("Ã" "8" :string)
+           ("Ã" "8" :string)
+           ("Ã" "8" :string)
+           ("Ã" "8" :string)
+           ("Ã" "8" :string)
+           ("Ã" "8" :string)
+           ("Ã" "8" :string)
+           ("Ã" "8" :string)
+           ("Ç·" "8" :string)
+           ("Ã" "8" :string)
+           ("Ã" "8" :string)
+           ("È" "8" :string)
+           ("Ã" "8" :string)
+           ("Ã" "89" :string)
+           ("Å" "89" :string)
+           ("Ã°" "9" :string)
+           ("Ã´" "9" :string)
+           ("È" "9" :string)
+           ("Ã¯" "9" :string)
+           ("Ã¶" "9" :string)
+           ("Ã±" "9" :string)
+           ("Ã§" "9" :string)
+           ("Ã " "9" :string)
+           ("Ã¾" "9" :string)
+           ("Ã¨" "9" :string)
+           ("Ã«" "9" :string)
+           ("Ãª" "9" :string)
+           ("Ã©" "9" :string)
+           ("Æ¿" "9" :string)
+           ("Å" "99" :string)
+           ("Ã¦" "99" :string)
+           ("S" "8" :string)
+           ("K" "8" :string)
+           ("Y" "8" :string)
+           ("E" "8" :string)
+           ("J" "8" :string)
+           ("D" "8" :string)
+           ("Q" "8" :string)
+           ("M" "8" :string)
+           ("C" "8" :string)
+           ("L" "8" :string)
+           ("X" "8" :string)
+           ("P" "8" :string)
+           ("T" "8" :string)
+           ("N" "8" :string)
+           ("Z" "8" :string)
+           ("W" "8" :string)
+           ("B" "8" :string)
+           ("H" "8" :string)
+           ("I" "8" :string)
+           ("G" "8" :string)
+           ("U" "8" :string)
+           ("F" "8" :string)
+           ("V" "8" :string)
+           ("A" "8" :string)
+           ("O" "8" :string)
+           ("R" "8" :string)
+           ("d" "9" :string)
+           ("y" "9" :string)
+           ("g" "9" :string)
+           ("e" "9" :string)
+           ("q" "9" :string)
+           ("b" "9" :string)
+           ("z" "9" :string)
+           ("w" "9" :string)
+           ("a" "9" :string)
+           ("j" "9" :string)
+           ("u" "9" :string)
+           ("k" "9" :string)
+           ("t" "9" :string)
+           ("v" "9" :string)
+           ("s" "9" :string)
+           ("c" "9" :string)
+           ("r" "9" :string)
+           ("x" "9" :string)
+           ("h" "9" :string)
+           ("f" "9" :string)
+           ("i" "9" :string)
+           ("n" "9" :string)
+           ("m" "9" :string)
+           ("l" "9" :string)
+           ("p" "9" :string)
+           ("o" "9" :string)
+           ))
+
+(define-rule-set "en-ignore-special"
+
+  :rules  (("-" "" :string)
+           ("!" "" :string)
+           ("{" "" :string)
+           ("'" "" :string)
+           ("}" "" :string)
+           ("?" "" :string)
+           ("." "" :string)
+           ))
+
+(define-rule-set "en-resolve-special"
+
+  :rules  (("Ã" "¤" :string)
+           ("Ã" "¤" :string)
+           ("Ã°" "¤" :string)
+           ("Ã" "¤" :string)
+           ("Ã" "¤" :string)
+           ("Ã" "¤" :string)
+           ("Ã´" "¤" :string)
+           ("Ã" "¤" :string)
+           ("È" "¤" :string)
+           ("Ã¯" "¤" :string)
+           ("Ã" "¤" :string)
+           ("Ã¶" "¤" :string)
+           ("Ã±" "¤" :string)
+           ("Ã" "¤" :string)
+           ("Ã§" "¤" :string)
+           ("Ã" "¤" :string)
+           ("Ã " "¤" :string)
+           ("Ã¾" "¤" :string)
+           ("Ç·" "¤" :string)
+           ("Ã¨" "¤" :string)
+           ("Ã" "¤" :string)
+           ("Ã«" "¤" :string)
+           ("Ã" "¤" :string)
+           ("Ãª" "¤" :string)
+           ("Ã©" "¤" :string)
+           ("È" "¤" :string)
+           ("Æ¿" "¤" :string)
+           ("Ã" "¤" :string)
+           ("Å" "¤¤" :string)
+           ("Ã" "¤¤" :string)
+           ("Å" "¤¤" :string)
+           ("Ã¦" "¤¤" :string)
+           ("?" "¡" :string)
+           ("!" "¢" :string)
+           ("." "£" :string)
+           ("S" "¤" :string)
+           ("K" "¤" :string)
+           ("d" "¤" :string)
+           ("Y" "¤" :string)
+           ("E" "¤" :string)
+           ("y" "¤" :string)
+           ("g" "¤" :string)
+           ("e" "¤" :string)
+           ("J" "¤" :string)
+           ("q" "¤" :string)
+           ("D" "¤" :string)
+           ("b" "¤" :string)
+           ("z" "¤" :string)
+           ("w" "¤" :string)
+           ("Q" "¤" :string)
+           ("M" "¤" :string)
+           ("C" "¤" :string)
+           ("L" "¤" :string)
+           ("X" "¤" :string)
+           ("P" "¤" :string)
+           ("T" "¤" :string)
+           ("a" "¤" :string)
+           ("N" "¤" :string)
+           ("j" "¤" :string)
+           ("Z" "¤" :string)
+           ("u" "¤" :string)
+           ("k" "¤" :string)
+           ("t" "¤" :string)
+           ("W" "¤" :string)
+           ("v" "¤" :string)
+           ("s" "¤" :string)
+           ("B" "¤" :string)
+           ("H" "¤" :string)
+           ("c" "¤" :string)
+           ("I" "¤" :string)
+           ("G" "¤" :string)
+           ("U" "¤" :string)
+           ("F" "¤" :string)
+           ("r" "¤" :string)
+           ("x" "¤" :string)
+           ("V" "¤" :string)
+           ("h" "¤" :string)
+           ("f" "¤" :string)
+           ("i" "¤" :string)
+           ("A" "¤" :string)
+           ("O" "¤" :string)
+           ("n" "¤" :string)
+           ("m" "¤" :string)
+           ("l" "¤" :string)
+           ("p" "¤" :string)
+           ("R" "¤" :string)
+           ("o" "¤" :string)
+           ("-" "¥" :string)
+           ("'" "¦" :string)
+           ("{" "§" :string)
+           ("}" "¨" :string)
+           ))
+
+; The following section is customised for samplexdy.tex
+; (copied from samplexdy.xdy automatically generated by
+; samplexdy.tex)
+
+; required styles
+
+(require "tex.xdy")
+
+; list of allowed attributes (number formats)
+
+(define-attributes (("default"
+ "glsnumberformat"
+ "textrm"
+ "textsf"
+ "texttt"
+ "textbf"
+ "textmd"
+ "textit"
+ "textup"
+ "textsl"
+ "textsc"
+ "emph"
+ "glshypernumber"
+ "hyperrm"
+ "hypersf"
+ "hypertt"
+ "hyperbf"
+ "hypermd"
+ "hyperit"
+ "hyperup"
+ "hypersl"
+ "hypersc"
+ "hyperemph"
+ "hyperbfit")))
+
+; user defined alphabets
+
+; location class definitions
+
+(define-location-class "roman-page-numbers"
+   ("roman-numbers-lowercase"))
+(define-location-class "Roman-page-numbers"
+   ("roman-numbers-uppercase"))
+(define-location-class "arabic-page-numbers"
+   ("arabic-numbers"))
+(define-location-class "alpha-page-numbers"
+   ("alpha"))
+(define-location-class "Alpha-page-numbers"
+   ("ALPHA"))
+(define-location-class "Appendix-page-numbers"
+   ("ALPHA" :sep "." "arabic-numbers"))
+(define-location-class "arabic-section-numbers"
+   ("arabic-numbers" :sep "." "arabic-numbers"))
+
+; user defined location classes
+
+(define-location-class "Numberstring"
+   (:sep "\protect \Numberstringnum {" "arabic-numbers" :sep "}"))
+
+; define cross-reference class
+
+(define-crossref-class "see" :unverified )
+(markup-crossref-list :class "see"
+   :open "\glsseeformat" :close "{}")
+
+; define the order of the location classes
+(define-location-class-order (
+   "roman-page-numbers"
+   "arabic-page-numbers"
+   "arabic-section-numbers"
+   "alpha-page-numbers"
+   "Roman-page-numbers"
+   "Alpha-page-numbers"
+   "Appendix-page-numbers"
+   "see" ))
+
+; define the glossary markup
+
+(markup-index
+   :open "\glossarysection[\glossarytoctitle]{\glossarytitle}\glossarypreamble~n\begin{theglossary}\glossaryheader~n"
+   :close "~n\end{theglossary}~n\glossarypostamble~n"
+   :tree)
+(markup-letter-group-list :sep "\glsgroupskip~n")
+(markup-indexentry :open "~n" :depth 0)
+(markup-locclass-list :open "{\glossaryentrynumbers{\relax "
+   :sep ", " :close "}}")
+(markup-locref-list :sep "\delimN ")
+(markup-range :sep "\delimR ")
+
+; define format to use for locations
+
+(markup-locref :open "~n\setentrycounter{page}\glsnumberformat{"
+ :close "}"
+ :attr "glsnumberformat")
+(markup-locref :open "~n\setentrycounter{page}\textrm{"
+ :close "}"
+ :attr "textrm")
+(markup-locref :open "~n\setentrycounter{page}\textsf{"
+ :close "}"
+ :attr "textsf")
+(markup-locref :open "~n\setentrycounter{page}\texttt{"
+ :close "}"
+ :attr "texttt")
+(markup-locref :open "~n\setentrycounter{page}\textbf{"
+ :close "}"
+ :attr "textbf")
+(markup-locref :open "~n\setentrycounter{page}\textmd{"
+ :close "}"
+ :attr "textmd")
+(markup-locref :open "~n\setentrycounter{page}\textit{"
+ :close "}"
+ :attr "textit")
+(markup-locref :open "~n\setentrycounter{page}\textup{"
+ :close "}"
+ :attr "textup")
+(markup-locref :open "~n\setentrycounter{page}\textsl{"
+ :close "}"
+ :attr "textsl")
+(markup-locref :open "~n\setentrycounter{page}\textsc{"
+ :close "}"
+ :attr "textsc")
+(markup-locref :open "~n\setentrycounter{page}\emph{"
+ :close "}"
+ :attr "emph")
+(markup-locref :open "~n\setentrycounter{page}\glshypernumber{"
+ :close "}"
+ :attr "glshypernumber")
+(markup-locref :open "~n\setentrycounter{page}\hyperrm{"
+ :close "}"
+ :attr "hyperrm")
+(markup-locref :open "~n\setentrycounter{page}\hypersf{"
+ :close "}"
+ :attr "hypersf")
+(markup-locref :open "~n\setentrycounter{page}\hypertt{"
+ :close "}"
+ :attr "hypertt")
+(markup-locref :open "~n\setentrycounter{page}\hyperbf{"
+ :close "}"
+ :attr "hyperbf")
+(markup-locref :open "~n\setentrycounter{page}\hypermd{"
+ :close "}"
+ :attr "hypermd")
+(markup-locref :open "~n\setentrycounter{page}\hyperit{"
+ :close "}"
+ :attr "hyperit")
+(markup-locref :open "~n\setentrycounter{page}\hyperup{"
+ :close "}"
+ :attr "hyperup")
+(markup-locref :open "~n\setentrycounter{page}\hypersl{"
+ :close "}"
+ :attr "hypersl")
+(markup-locref :open "~n\setentrycounter{page}\hypersc{"
+ :close "}"
+ :attr "hypersc")
+(markup-locref :open "~n\setentrycounter{page}\hyperemph{"
+ :close "}"
+ :attr "hyperemph")
+(markup-locref :open "~n\setentrycounter{page}\hyperbfit{"
+ :close "}"
+ :attr "hyperbfit")
+
+; define letter group list format
+
+(markup-letter-group-list :sep "\glsgroupskip~n")
+
+; letter group headings
+
+(markup-letter-group :open-head "\glsgroupheading{"
+   :close-head "}")
+
+(define-letter-group "glsnumbers"
+   :prefixes ("0" "1" "2" "3" "4" "5" "6" "7" "8" "9")
+   :before "A")
+
+; The following is copied from xindy/lang/english/utf8-lang.xdy
+
+(define-sort-rule-orientations (forward backward forward forward))
+(use-rule-set :run 0
+      :rule-set ("en-alphabetize" "en-ignore-special"))
+(use-rule-set :run 1
+      :rule-set ("en-resolve-diacritics" "en-ignore-special"))
+(use-rule-set :run 2
+      :rule-set ("en-resolve-case" "en-ignore-special"))
+(use-rule-set :run 3
+      :rule-set ("en-resolve-special"))
+

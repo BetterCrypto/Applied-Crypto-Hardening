@@ -1,0 +1,40 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+ % arara: pdflatex: { synctex: on }
+\documentclass{report}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage[savenumberlist,counter=chapter]{glossaries}
+
+\makeglossaries
+
+\newglossaryentry{sample}{name=sample,description=an example}
+
+\begin{document}
+\chapter{Introduction}
+
+This is a \glsentryname{sample} document. \Glsentryplural{sample}
+are discussed in chapters~\glsdisplaynumberlist{sample}.
+
+\chapter{Sample Documents}
+
+\Gls{sample} documents are provided for testing and illustration
+purposes.
+
+\chapter{More About Samples}
+
+Here's more information about \glspl{sample}.
+
+\chapter{Another chapter}
+
+A chapter about something else.
+
+\chapter{Another About Samples}
+
+Here's some more information about \glspl{sample}.
+
+\printglossaries
+\end{document}

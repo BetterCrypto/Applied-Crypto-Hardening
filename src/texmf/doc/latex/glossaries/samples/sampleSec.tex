@@ -1,0 +1,64 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+ % arara: pdflatex: { synctex: on }
+\documentclass{report}
+
+\usepackage[plainpages=false,colorlinks]{hyperref}
+\usepackage[style=altlist,toc,counter=section]{glossaries}
+
+\makeglossaries
+
+\newglossaryentry{ident}{name=identity matrix,
+description=diagonal matrix with 1s along the leading diagonal,
+plural=identity matrices}
+
+\newglossaryentry{diag}{name=diagonal matrix,
+description=matrix whose only non-zero entries are along
+the leading diagonal,
+plural=diagonal matrices}
+
+\newglossaryentry{sing}{name=singular matrix,
+description=matrix with zero determinant,
+plural=singular matrices}
+
+\begin{document}
+
+\pagenumbering{roman}
+\tableofcontents
+
+\printglossaries
+
+\chapter{Introduction}
+\pagenumbering{arabic}
+This is a sample document illustrating the use of the
+\textsf{glossaries} package.
+
+\chapter{Diagonal matrices}
+
+A \gls[format=hyperit]{diag} is a matrix where all elements not on the
+leading diagonal are zero.  This is the
+primary definition, so an italic font is used for the page number.
+
+\newpage
+\section{Identity matrix}
+The \gls[format=hyperit]{ident} is a \gls{diag} whose leading
+diagonal elements are all equal to 1.
+
+Here is another entry for a \gls{diag}. And this is the
+plural: \glspl{ident}.
+
+This adds an entry into the glossary with a bold number, but
+it doesn't create a hyperlink: \gls*[format=hyperbf]{ident}.
+
+\chapter{Singular Matrices}
+
+A \gls{sing} is a matrix with zero determinant.
+\Glspl{sing} are non-invertible. Possessive:
+a \gls{sing}['s] dimensions are not necessarily equal.
+
+Another \gls{ident} entry.
+
+\end{document}

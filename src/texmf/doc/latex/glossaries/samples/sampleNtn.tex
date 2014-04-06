@@ -1,0 +1,87 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+ % arara: pdflatex: { synctex: on }
+\documentclass{report}
+
+\usepackage[plainpages=false,colorlinks]{hyperref}
+\usepackage{html}
+\usepackage[toc,xindy]{glossaries}
+
+ % Define a new glossary type called notation
+\newglossary[nlg]{notation}{not}{ntn}{Notation}
+
+\makeglossaries
+
+ % Notation definitions
+
+\newglossaryentry{not:set}{type=notation, % glossary type
+name={$\mathcal{S}$},
+description={A set},
+sort={S}}
+
+\newglossaryentry{not:U}{type=notation,
+name={$\mathcal{U}$},
+description={The universal set},
+sort=U}
+
+\newglossaryentry{not:card}{type=notation,
+name={$|\mathcal{S}|$},
+description={cardinality of $\mathcal{S}$},
+sort=cardinality}
+
+\newglossaryentry{not:fact}{type=notation,
+name={$!$},
+description={factorial},
+sort=factorial}
+
+ % Main glossary definitions
+
+\newglossaryentry{gls:set}{name=set,
+description={A collection of distinct objects}}
+
+\newglossaryentry{gls:card}{name=cardinality,
+description={The number of elements in the specified set}}
+
+\begin{document}
+\title{Sample Document using the glossaries Package}
+\author{Nicola Talbot}
+\pagenumbering{alph}
+\maketitle
+
+\begin{abstract}
+ %stop hyperref complaining about duplicate page identifiers:
+\pagenumbering{Alph}
+This is a sample document illustrating the use of the
+\textsf{glossaries} package.  In this example, a new glossary type
+called \texttt{notation} is defined, so that the document can have a
+separate glossary of terms and index of notation. The index of notation
+doesn't have associated numbers.
+\end{abstract}
+
+\pagenumbering{roman}
+\tableofcontents
+
+\printglossaries
+
+\chapter{Introduction}
+\pagenumbering{arabic}
+
+\glslink{gls:set}{Sets}
+are denoted by a caligraphic font
+e.g.\ \gls{not:set}.
+
+Let \gls[format=hyperit]{not:U} denote the universal set.
+
+The \gls{gls:card} of a set $\mathcal{S}$ is denoted
+\gls{not:card}.
+
+\chapter{Another Chapter}
+
+Another mention of the universal set \gls{not:U}.
+
+The factorial symbol: \gls{not:fact}.
+
+\end{document}

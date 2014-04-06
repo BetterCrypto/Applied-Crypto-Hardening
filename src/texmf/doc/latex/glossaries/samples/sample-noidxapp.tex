@@ -1,0 +1,143 @@
+ % arara: pdflatex
+ % arara: pdflatex
+\documentclass{report}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage[index,symbols,nohypertypes={index}]{glossaries}
+\usepackage{glossary-mcols}
+
+\makenoidxglossaries
+
+\renewcommand{\theHequation}{\theequation}
+
+ % main entries
+
+\newglossaryentry{elite}{%
+  name={{\'e}lite},
+  description={select group of people}
+}
+
+\newglossaryentry{elephant}{%
+  name={elephant},
+  description={very large mammal with tusks}
+}
+
+\newglossaryentry{elk}{%
+  name={elk},
+  description={large northern deer}
+}
+
+\newglossaryentry{emigre}{%
+  name={{\'e}migr\'e},
+  description={person who has emigrated to another country,
+   especially for political reasons}
+}
+
+ % Symbols
+
+\newglossaryentry{set}{%
+  type=symbols,
+  name={$\mathcal{S}$},
+  text={\mathcal{S}},
+  sort={S},
+  description={A set}}
+
+\newglossaryentry{U}{%
+  type=symbols,
+  name={$\mathcal{U}$},
+  text={\mathcal{U}},
+  sort={U},
+  description={The universal set}}
+
+\newglossaryentry{card}{%
+  type=symbols,
+  name={$|\glsentrytext{set}|$},
+  text={|\glsentrytext{set}|},
+  sort={|},
+  description={cardinality of $\gls{set}$}}
+
+\newglossaryentry{factorial}{%
+  type=symbols,
+  name={$!$},
+  text={!},
+  sort={!},
+  description={factorial}}
+
+ % index entries
+
+\newterm{seal}
+
+\newterm{dinosaur}
+
+\newterm[parent=dinosaur]{ceratopsidae}
+
+\newterm[parent=dinosaur,plural={stegosauruses}]{stegosaurus}
+\newterm[parent=ceratopsidae,plural={triceratopses}]{triceratops}
+\newterm[parent=ceratopsidae,plural={styracosauruses}]{styracosaurus}
+\newterm[parent=dinosaur,plural={apatosauruses}]{apatosaurus}
+
+\newterm{Triassic}
+
+\newterm{Devonian}
+
+\newterm[see={[see also]seal}]{sea lion}
+
+\begin{document}
+
+\chapter{Mathematical Notation}
+
+The cardinality of a set $\gls{set}$ is denoted $\gls{card}$
+The $\gls{factorial}$ symbol indicates factorial.
+$\gls{U}$ is the universal set.
+
+\glsaddall[types=main]
+
+\chapter{Dinosaurs}
+
+\Glspl{dinosaur} are now extinct. They first appeared during the
+\gls{Triassic} period. Examples of \glspl{dinosaur} include the
+\gls{triceratops}, the \gls{styracosaurus}, the \gls{apatosaurus} and the \gls{stegosaurus}.
+
+\Glspl{seal} and \glspl{sea lion} are marine mammals.
+The \gls{Devonian} period was the age of fish.
+
+\glsaddall[types=main]
+
+\chapter{Location Lists}
+
+Dinosaur: \glsdisplaynumberlist{dinosaur}.
+
+Set: \glsdisplaynumberlist{set}.
+
+\Gls{elite}: \glsdisplaynumberlist{elite}.
+
+\begin{equation}
+3\gls[counter=equation]{factorial} = 3 \times 2 \times 1
+\end{equation}
+
+\newcommand{\myhandler}[4]{%
+  Prefix: #1.
+  Counter: #2.
+  Format: #3.
+  Value: #4.
+  Link: \setentrycounter[#1]{#2}%
+  \csuse{#3}{#4}.
+  \par
+}
+\newcommand{\myxrhandler}[2][]{XR (#1): #2. }
+
+Factorial locations:
+\glsnumberlistloop{factorial}{\myhandler}{\myxrhandler}
+
+Sea lion locations:
+\glsnumberlistloop{sea lion}{\myhandler}{\myxrhandler}
+
+\printnoidxglossary[type=main,sort=word]
+
+\printnoidxglossary[type=symbols,sort=use]
+
+\renewcommand*{\glsnamefont}[1]{\textmd{#1}}
+
+\printnoidxglossary[type=index,style=mcolindexgroup,sort=letter]
+
+\end{document}

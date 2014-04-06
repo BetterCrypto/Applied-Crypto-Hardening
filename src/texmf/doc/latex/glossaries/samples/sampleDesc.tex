@@ -1,0 +1,71 @@
+ % This file is public domain
+ %
+ % See also sampleAcrDesc.tex
+ %
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+ % arara: pdflatex: { synctex: on }
+\documentclass[a4paper]{report}
+
+\usepackage[colorlinks,plainpages=false]{hyperref}
+
+\usepackage[style=altlist, % use altlist style
+            toc % add the glossary to the table of contents
+           ]{glossaries}
+
+\makeglossaries
+
+\newglossaryentry{svm}{
+ % how the entry name should appear in the glossary
+name={Support vector machine (SVM)},
+ % how the description should appear in the glossary
+description={Statistical pattern recognition
+technique~\cite{svm}},
+ % how the entry should appear in the document text
+text={svm},
+ % how the entry should appear the first time it is
+ % used in the document text
+first={support vector machine (svm)}}
+
+\newglossaryentry{ksvm}{
+name={Kernel support vector machine (KSVM)},
+description={Statistical pattern recognition technique
+using the ``kernel trick'' (see also SVM)},
+text={ksvm},
+first={kernel support vector machine}}
+
+\begin{document}
+\tableofcontents
+
+\chapter{Support Vector Machines}
+
+The \gls{svm} is used widely in the area of pattern recognition.
+ % plural form with initial letter in uppercase:
+\Glspl{svm} are \ldots
+
+This is the text produced without a link: \glsentrytext{svm}.
+This is the text produced on first use without a link:
+\glsentryfirst{svm}. This is the entry's description without
+a link: \glsentrydesc{svm}.
+
+This is the entry in uppercase: \GLS{svm}.
+
+\chapter{Kernel Support Vector Machines}
+
+The \gls{ksvm} is \ifglsused{svm}{an}{a} \gls{svm} that uses
+the so called ``kernel trick''.
+
+\glsresetall
+Possessive: \gls{ksvm}['s].
+Make the glossary entry number bold for this
+one \gls[format=hyperbf]{svm}.
+
+\begin{thebibliography}{1}
+\bibitem{svm} \ldots
+\end{thebibliography}
+
+\printglossary[title={Acronyms}]
+
+\end{document}

@@ -1,0 +1,61 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+\documentclass{report}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage[toc,index,nohypertypes={index}]{glossaries}
+\usepackage{glossary-mcols}
+
+\makeglossaries
+
+ % define terms for the index
+
+\newterm[plural={stegosauruses}]{stegosaurus}
+\newterm[plural={triceratopses}]{triceratops}
+\newterm[plural={apatosauruses}]{apatosaurus}
+
+ % To avoid labels conflicting with the same name in the main glossary
+ % prefix the index label with "ind-". (This means that the name must
+ % be set independently.)
+\newterm[name={dinosaur}]{ind-dinosaur}
+\newterm[name={Triassic}]{ind-triassic}
+
+ % define terms for the main glossary
+
+\newglossaryentry{dinosaur}%
+{%
+  name={dinosaur\glsadd{ind-dinosaur}},%
+  description={One of a group of dinosauria}%
+}
+
+\newglossaryentry{Triassic}%
+{%
+  name={Triassic\glsadd{ind-triassic}},%
+  description={The first period of the Mesozoic Era}
+}
+
+\begin{document}
+\tableofcontents
+
+\chapter{Dinosaurs}
+
+\Glspl{dinosaur} are now extinct. They first appeared during the
+\gls{Triassic} period. Examples of \glspl{dinosaur} include the
+\gls{triceratops}, the \gls{apatosaurus} and the \gls{stegosaurus}.
+
+Indexed term: \gls{ind-dinosaur}.
+
+\renewcommand*{\glsnamefont}[1]{\textbf{\makefirstuc{#1}}}
+
+\printglossary[style=long,nogroupskip]
+
+\renewcommand*{\glsnamefont}[1]{\textmd{#1}}
+
+\printindex[style=mcolindexgroup]
+
+\end{document}

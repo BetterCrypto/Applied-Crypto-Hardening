@@ -1,0 +1,57 @@
+ % This file is public domain
+ % If you are using arara, you need the following directives:
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+ % arara: pdflatex: { synctex: on }
+\documentclass{report}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage[toc]{glossaries}
+
+\makeglossaries
+
+\newcommand{\sortname}[2]{#2, #1}
+\newcommand{\textname}[2]{#1 #2}
+
+ % Syntax: \name{first name}{surname}
+ \let\name\textname
+
+\renewcommand{\glsprestandardsort}[3]{%
+ \let\name\sortname
+ \edef#1{\expandafter\expandonce\expandafter{#1}}%
+ \let\name\textname
+ \glsdosanitizesort
+}
+
+\newglossaryentry{joebloggs}{name={\name{Joe}{Bloggs}},description={\nopostdesc}}
+
+\newglossaryentry{johnsmith}{name={\name{John}{Smith}},description={\nopostdesc}}
+
+\newglossaryentry{zoeadams}{name={\name{Zo\'e}{Adams}},description={\nopostdesc}}
+
+\newglossaryentry{maryadams}{name={\name{Mary}{Adams}},description={\nopostdesc}}
+
+\begin{document}
+\tableofcontents
+
+\chapter{\glsentrytext{joebloggs}}
+
+\gls{joebloggs} was a fairly ordinary person.
+
+\chapter{\glsentrytext{johnsmith}}
+
+\gls{johnsmith} was great friends with \gls{joebloggs}.
+
+\chapter{\glsentrytext{maryadams}}
+
+\gls{maryadams} worked with \gls{johnsmith} but never met
+\gls{joebloggs}.
+
+\chapter{\glsentrytext{zoeadams}}
+
+\gls{zoeadams} was \gls{maryadams}['s] sister.
+\printglossaries
+
+\end{document}

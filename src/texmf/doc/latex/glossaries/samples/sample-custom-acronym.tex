@@ -1,0 +1,149 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+\documentclass{report}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage[acronym,         % create list of acronyms
+            nomain,          % don't need main glossary for this example
+            ]{glossaries}
+
+\makeglossaries
+
+  % This is a sample file to illustrate how to define a custom
+  % acronym style. This example defines the acronyms so that on first use
+  % they display the short form in the text and with the long form
+  % and description in a footnote. In the main body of the
+  % document the short form will be displayed in small caps, but in
+  % the list of acronyms the short form is displayed in normal
+  % capitals. To ensure this, the short form should be written in
+  % lower case when the acronym is defined, and \MakeTextUppercase is
+  % used when it's displayed in the list of acronyms.
+
+\newacronymstyle{custom-fn}% new style name
+{% Check for long form in case of a mixed glossary
+  \ifglshaslong{\glslabel}{\glsgenacfmt}{\glsgenentryfmt}%
+}%
+{% Style definitions:
+ % User needs to supply the description:
+ \renewcommand*{\GenericAcronymFields}{}%
+ % Need to ensure hyperlinks are switched off on first use:
+ \glshyperfirstfalse
+ % Redefine the commands used by \glsgenacfmt on first use:
+  \renewcommand*{\genacrfullformat}[2]{%
+   \firstacronymfont{\glsentryshort{##1}}##2%
+   \footnote{\glsentrylong{##1}: \glsentrydesc{##1}}%
+  }%
+  \renewcommand*{\Genacrfullformat}[2]{%
+   \firstacronymfont{\Glsentryshort{##1}}##2%
+   \footnote{\glsentrylong{##1}: \glsentrydesc{##1}}%
+  }%
+  \renewcommand*{\genplacrfullformat}[2]{%
+   \firstacronymfont{\glsentryshortpl{##1}}##2%
+   \footnote{\glsentrylongpl{##1}: \glsentrydesc{##1}}%
+  }%
+  \renewcommand*{\Genplacrfullformat}[2]{%
+   \firstacronymfont{\Glsentryshortpl{##1}}##2%
+   \footnote{\glsentrylongpl{##1}: \glsentrydesc{##1}}%
+  }%
+ % Redefine the no-link full forms:
+  \renewcommand*{\glsentryfull}[1]{%
+    \glsentrylong{##1}\space(\acronymfont{\glsentryshort{##1}})%
+  }%
+  \renewcommand*{\Glsentryfull}[1]{%
+    \Glsentrylong{##1}\space(\acronymfont{\glsentryshort{##1}})%
+  }%
+  \renewcommand*{\glsentryfullpl}[1]{%
+    \glsentrylongpl{##1}\space(\acronymfont{\glsentryshortpl{##1}})%
+  }%
+  \renewcommand*{\Glsentryfullpl}[1]{%
+    \Glsentrylongpl{##1}\space(\acronymfont{\glsentryshortpl{##1}})%
+  }%
+ % Redefine the link full forms:
+  \renewcommand*{\acrfullfmt}[3]{%
+    \glslink[##1]{##2}{%
+     \glsentrylong{##2}##3\space(\acronymfont{\glsentryshort{##2}})%
+    }%
+  }%
+  \renewcommand*{\Acrfullfmt}[3]{%
+    \glslink[##1]{##2}{%
+     \Glsentrylong{##2}##3\space(\acronymfont{\glsentryshort{##2}})%
+    }%
+  }%
+  \renewcommand*{\ACRfullfmt}[3]{%
+    \glslink[##1]{##2}{%
+     \MakeTextUppercase{%
+       \glsentrylong{##2}##3\space
+         (\acronymfont{\glsentryshort{##2}})%
+     }%
+    }%
+  }%
+  \renewcommand*{\acrfullplfmt}[3]{%
+    \glslink[##1]{##2}{%
+     \glsentrylongpl{##2}##3\space
+       (\acronymfont{\glsentryshortpl{##2}})%
+    }%
+  }%
+  \renewcommand*{\Acrfullplfmt}[3]{%
+    \glslink[##1]{##2}{%
+     \Glsentrylongpl{##2}##3\space
+       (\acronymfont{\glsentryshortpl{##2}})%
+    }%
+  }%
+  \renewcommand*{\ACRfullplfmt}[3]{%
+    \glslink[##1]{##2}{%
+     \MakeTextUppercase{%
+       \glsentrylongpl{##2}##3\space
+         (\acronymfont{\glsentryshortpl{##2}})%
+     }%
+    }%
+  }%
+ % Use smallcaps for the acronym in the document text:
+  \renewcommand*{\acronymfont}[1]{\textsc{##1}}%
+  \renewcommand*{\acrpluralsuffix}{\glstextup{\glspluralsuffix}}%
+ % Sort acronyms according to the long form:
+  \renewcommand*{\acronymsort}[2]{##2}%
+ % Set the name in the list of acronyms to the long form followed by
+ % the short form (in upper case) in parentheses:
+ \renewcommand*{\acronymentry}[1]{%
+   \Glsentrylong{##1}\space(\MakeTextUppercase{\glsentryshort{##1}})}%
+}
+
+ % Now set the new acronym style (to override the default style)
+\setacronymstyle{custom-fn}
+
+ % Set an appropriate glossary style:
+\setglossarystyle{altlist}
+
+ % Now define the acronyms (must be done after setting the custom
+ % style)
+
+\newacronym[description={set of tags for use in developing hypertext
+documents}]{html}{html}{hyper text markup language}
+
+\newacronym[description={language used to describe the layout of a
+document written in a markup language}]{css}{css}{cascading style
+sheet}
+
+\begin{document}
+
+\gls{css}. \gls{html}.
+
+\gls{css}. \gls{html}.
+
+No-link full forms: \glsentryfull{css}, \Glsentryfull{css}.
+Linking full forms: \acrfull{css}, \Acrfull{css}, \ACRfull{css}.
+Linking with insert: \acrfull{css}['s], \Acrfull{css}['s],
+\ACRfull{css}['s].
+
+Now test plurals.
+
+No-link full forms: \glsentryfullpl{html}, \Glsentryfullpl{html}.
+Linking full forms: \acrfullpl{html}, \Acrfullpl{html}, \ACRfullpl{html}.
+Linking with insert: \acrfullpl{html}['s], \Acrfullpl{html}['s],
+\ACRfullpl{html}['s].
+
+\printglossaries
+\end{document}

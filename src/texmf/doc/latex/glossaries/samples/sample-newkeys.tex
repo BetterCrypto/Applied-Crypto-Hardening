@@ -1,0 +1,56 @@
+ % This file is public domain
+ % If you are using arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+\documentclass{article}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage[nopostdot,nogroupskip]{glossaries}
+
+\glsaddkey*% star version needed as default value needs expanding
+ {ed}% key
+ {\glsentrytext{\glslabel}ed}% default value
+ {\glsentryed}% command analogous to \glsentrytext
+ {\Glsentryed}% command analogous to \Glsentrytext
+ {\glsed}% command analogous to \glstext
+ {\Glsed}% command analogous to \Glstext
+ {\GLSed}% command analogous to \GLStext
+
+\glsaddkey*
+ {ing}% key
+ {\glsentrytext{\glslabel}ing}% default value
+ {\glsentrying}% command analogous to \glsentrytext
+ {\Glsentrying}% command analogous to \Glsentrytext
+ {\glsing}% command analogous to \glstext
+ {\Glsing}% command analogous to \Glstext
+ {\GLSing}% command analogous to \GLStext
+
+\makeglossaries
+
+\newglossaryentry{jump}{name={jump},description={}}
+
+\newglossaryentry{run}{name={run},%
+ ed={ran},%
+ ing={running},
+ description={}}
+
+\newglossaryentry{waddle}{name={waddle},%
+ ed={waddled},%
+ ing={waddling},%
+ description={}}
+
+\begin{document}
+
+This is a sample document illustrating how to add new glossary entry
+keys.
+
+The dog \glsed{jump} over the duck.
+
+The duck was \glsing{waddle} round the dog.
+
+The dog \glsed{run} away from the duck.
+
+\printglossaries
+
+\end{document}

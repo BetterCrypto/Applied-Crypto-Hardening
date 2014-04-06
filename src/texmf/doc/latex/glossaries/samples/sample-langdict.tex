@@ -1,0 +1,39 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+\documentclass[english,french]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage[nomain]{glossaries}
+
+\newglossary[glg]{english}{gls}{glo}{English to French}
+\newglossary[flg]{french}{flx}{flo}{French to English}
+
+\makeglossaries
+
+ % \newword{label}{english}{determiner}{french}
+\newcommand*{\newword}[4]{%
+   \newglossaryentry{en-#1}{type=english,name={#2},description={#3 #4}}%
+   \newglossaryentry{fr-#1}{type=french,name={#3 #4},text={#4},sort={#4},description={#2}}%
+}
+
+\newword{cat}{cat}{le}{chat}
+\newword{mat}{mat}{la}{natte}
+
+\begin{document}
+\selectlanguage{english}
+The \gls{en-cat} sat on the \gls{en-mat}.
+
+\selectlanguage{french}
+Le \gls{fr-cat} s'est repos\'e sur la \gls{fr-mat}.
+
+\selectlanguage{english}
+\printglossary[type=english]
+
+\selectlanguage{french}
+\printglossary[type=french]
+\end{document}
