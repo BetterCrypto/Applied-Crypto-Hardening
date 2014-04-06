@@ -1,0 +1,24 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+\documentclass{article}
+
+\usepackage[colorlinks,plainpages=false]{hyperref}
+\usepackage[nonumberlist]{glossaries}
+
+\newglossary[nlg]{symbols}{not}{ntn}{Symbols}
+
+\makeglossaries
+
+\loadglsentries{database1}
+\loadglsentries[symbols]{database2}
+
+\begin{document}
+
+\glsaddall
+
+\printglossaries
+
+\end{document}

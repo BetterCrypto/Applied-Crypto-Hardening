@@ -1,0 +1,32 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directive:
+ % arara: pdflatex: { synctex: on }
+\documentclass{article}
+
+\usepackage{mfirstuc}
+
+\begin{document}
+
+\makefirstuc{abc}.
+
+\makefirstuc{{\em abc}}.
+
+\makefirstuc{\emph{abc}}.
+
+\makefirstuc{\ae bc}.
+
+\makefirstuc{{\ae}bc}.
+
+\newcommand{\abc}{abc}%
+\xmakefirstuc{\abc}.
+
+\capitalisewords{a book of rhyme.}
+
+\capitalisewords{a book\space of rhyme.}
+
+\newcommand{\mytitle}{a book\space of rhyme.}
+\capitalisewords{\mytitle}
+
+\xcapitalisewords{\mytitle}
+
+\end{document}

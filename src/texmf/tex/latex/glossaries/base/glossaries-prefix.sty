@@ -1,0 +1,252 @@
+%%
+%% This is file `glossaries-prefix.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% glossaries.dtx  (with options: `glossaries-prefix.sty,package')
+%% 
+%%  glossaries.dtx
+%%  Copyright 2014 Nicola Talbot
+%% 
+%%  This work may be distributed and/or modified under the
+%%  conditions of the LaTeX Project Public License, either version 1.3
+%%  of this license of (at your option) any later version.
+%%  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%%  and version 1.3 or later is part of all distributions of LaTeX
+%%  version 2005/12/01 or later.
+%% 
+%%  This work has the LPPL maintenance status `maintained'.
+%% 
+%%  The Current Maintainer of this work is Nicola Talbot.
+%% 
+%%  This work consists of the files glossaries.dtx and glossaries.ins and the derived files glossaries.sty, glossaries-prefix.sty, mfirstuc.sty, glossary-hypernav.sty, glossary-inline.sty, glossary-list.sty, glossary-long.sty, glossary-longragged.sty, glossary-mcols.sty, glossary-super.sty, glossary-superragged.sty, glossary-tree.sty, glossaries-compatible-207.sty, glossaries-compatible-307.sty, glossaries-accsupp.sty, glossaries-babel.sty, glossaries-polyglossia.sty, glossaries-dictionary-Brazilian.dict, glossaries-dictionary-Danish.dict, glossaries-dictionary-Dutch.dict, glossaries-dictionary-English.dict, glossaries-dictionary-French.dict, glossaries-dictionary-German.dict, glossaries-dictionary-Irish.dict, glossaries-dictionary-Italian.dict, glossaries-dictionary-Magyar.dict, glossaries-dictionary-Polish.dict, glossaries-dictionary-Serbian.dict, glossaries-dictionary-Spanish.dict, minimalgls.tex, sample-crossref.tex, sample-custom-acronym.tex, sample-dual.tex, sample-entryfmt.tex, sample-FnDesc.tex, sample-index.tex, sample-inline.tex, sample-langdict.tex, sample-mfirstuc.tex, sample-newkeys.tex, sample-noidxapp-utf8.tex, sample-noidxapp.tex, sample-nomathhyper.tex, sample-numberlist.tex, sample-prefix.tex, sample-si.tex, sample.tex, sample4col.tex, sampleaccsupp.tex, sampleAcr.tex, sampleAcrDesc.tex, sampleacronyms.tex, sampleCustomAcr.tex, sampleDB.tex, sampleDesc.tex, sampleEq.tex, sampleEqPg.tex, sampleFnAcrDesc.tex, sampleNtn.tex, samplePeople.tex, sampleSec.tex, sampleSort.tex, sampletree.tex, sampleutf8.tex, samplexdy.tex, samplexdy2.tex, samplexdy-mc.xdy, samplexdy-mc207.xdy, database1.tex, database2.tex, glossaries.perl, mfirstuc.perl.
+%% 
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{glossaries-prefix}[2013/11/14 v4.0 (NLCT)]
+\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{glossaries}}
+\ProcessOptions
+\RequirePackage{glossaries}
+\define@key{glossentry}{prefixfirst}{\def\@glo@entryprefixfirst{#1}}%
+\define@key{glossentry}{prefixfirstplural}{\def\@glo@entryprefixfirstplural{#1}}%
+\define@key{glossentry}{prefix}{\def\@glo@entryprefix{#1}}%
+\define@key{glossentry}{prefixplural}{\def\@glo@entryprefixplural{#1}}%
+\appto\@gls@keymap{,%
+   {prefixfirst}{prefixfirst},%
+   {prefixfirstplural}{prefixfirstplural},%
+   {prefix}{prefix},%
+   {prefixplural}{prefixplural}%
+ }
+\appto\@newglossaryentryprehook{%
+  \def\@glo@entryprefix{}%
+  \def\@glo@entryprefixplural{}%
+  \let\@glo@entryprefixfirst\@gls@default@value
+  \let\@glo@entryprefixfirstplural\@gls@default@value
+}
+\appto\@newglossaryentryposthook{%
+  \gls@assign@field{}{\@glo@label}{prefix}{\@glo@entryprefix}%
+  \gls@assign@field{}{\@glo@label}{prefixplural}{\@glo@entryprefixplural}%
+  \expandafter\gls@assign@field\expandafter
+    {\csname glo@\@glo@label @prefix\endcsname}{\@glo@label}{prefixfirst}%
+    {\@glo@entryprefixfirst}%
+  \expandafter\gls@assign@field\expandafter
+    {\csname glo@\@glo@label @prefixplural\endcsname}{\@glo@label}%
+    {prefixfirstplural}{\@glo@entryprefixfirstplural}%
+}
+\newcommand*{\glsentryprefixfirst}[1]{\csuse{glo@#1@prefixfirst}}
+\newcommand*{\glsentryprefixfirstplural}[1]{\csuse{glo@#1@prefixfirstplural}}
+\newcommand*{\glsentryprefix}[1]{\csuse{glo@#1@prefix}}
+\newcommand*{\glsentryprefixplural}[1]{\csuse{glo@#1@prefixplural}}
+\newrobustcmd*{\Glsentryprefixfirst}[1]{%
+  \protected@edef\@glo@text{\csname glo@#1@prefixfirst\endcsname}%
+  \xmakefirstuc\@glo@text
+}
+\newrobustcmd*{\Glsentryprefixfirstplural}[1]{%
+  \protected@edef\@glo@text{\csname glo@#1@prefixfirstplural\endcsname}%
+  \xmakefirstuc\@glo@text
+}
+\newrobustcmd*{\Glsentryprefix}[1]{%
+  \protected@edef\@glo@text{\csname glo@#1@prefix\endcsname}%
+  \xmakefirstuc\@glo@text
+}
+\newrobustcmd*{\Glsentryprefixplural}[1]{%
+  \protected@edef\@glo@text{\csname glo@#1@prefixplural\endcsname}%
+  \xmakefirstuc\@glo@text
+}
+\newcommand*{\ifglshasprefix}[3]{%
+  \ifcsempty{glo@#1@prefix}%
+  {#3}%
+  {#2}%
+}
+\newcommand*{\ifglshasprefixplural}[3]{%
+  \ifcsempty{glo@#1@prefixplural}%
+  {#3}%
+  {#2}%
+}
+\newcommand*{\ifglshasprefixfirst}[3]{%
+  \ifcsempty{glo@#1@prefixfirst}%
+  {#3}%
+  {#2}%
+}
+\newcommand*{\ifglshasprefixfirstplural}[3]{%
+  \ifcsempty{glo@#1@prefixfirstplural}%
+  {#3}%
+  {#2}%
+}
+\newrobustcmd{\pgls}{\@ifstar\@spgls\@pgls}
+\newcommand*{\@spgls}[2][]{\@pgls@{hyper=false,#1}{#2}}
+\newcommand*{\@pgls}[2][]{%
+  \new@ifnextchar[%
+  {\@pgls@{#1}{#2}}%
+  {\@pgls@{#1}{#2}[]}%
+}
+\def\@pgls@#1#2[#3]{%
+  \glsdoifexists{#2}%
+  {%
+    \ifglsused{#2}%
+    {%
+      \glsentryprefix{#2}%
+    }%
+    {%
+      \glsentryprefixfirst{#2}%
+    }%
+    \@gls@{#1}{#2}[#3]%
+  }%
+}
+\newrobustcmd{\pglspl}{\@ifstar\@spglspl\@pglspl}
+\newcommand*{\@spglspl}[2][]{\@pglspl@{hyper=false,#1}{#2}}
+\newcommand*{\@pglspl}[2][]{%
+  \new@ifnextchar[%
+  {\@pglspl@{#1}{#2}}%
+  {\@pglspl@{#1}{#2}[]}%
+}
+\def\@pglspl@#1#2[#3]{%
+  \glsdoifexists{#2}%
+  {%
+    \ifglsused{#2}%
+    {%
+      \glsentryprefixplural{#2}%
+    }%
+    {%
+      \glsentryprefixfirstplural{#2}%
+    }%
+    \@glspl@{#1}{#2}[#3]%
+  }%
+}
+\newrobustcmd{\Pgls}{\@ifstar\@sPgls\@Pgls}
+\newcommand*{\@sPgls}[2][]{\@Pgls@{hyper=false,#1}{#2}}
+\newcommand*{\@Pgls}[2][]{%
+  \new@ifnextchar[%
+  {\@Pgls@{#1}{#2}}%
+  {\@Pgls@{#1}{#2}[]}%
+}
+\def\@Pgls@#1#2[#3]{%
+  \glsdoifexists{#2}%
+  {%
+    \ifglsused{#2}%
+    {%
+      \ifglshasprefix{#2}%
+      {%
+        \Glsentryprefix{#2}%
+        \@gls@{#1}{#2}[#3]%
+      }%
+      {\@Gls@{#1}{#2}[#3]}%
+    }%
+    {%
+      \ifglshasprefixfirst{#2}%
+      {%
+        \Glsentryprefixfirst{#2}%
+        \@gls@{#1}{#2}[#3]%
+      }%
+      {\@Gls@{#1}{#2}[#3]}%
+    }%
+  }%
+}
+\newrobustcmd{\Pglspl}{\@ifstar\@sPglspl\@Pglspl}
+\newcommand*{\@sPglspl}[2][]{\@Pglspl@{hyper=false,#1}{#2}}
+\newcommand*{\@Pglspl}[2][]{%
+  \new@ifnextchar[%
+  {\@Pglspl@{#1}{#2}}%
+  {\@Pglspl@{#1}{#2}[]}%
+}
+\def\@Pglspl@#1#2[#3]{%
+  \glsdoifexists{#2}%
+  {%
+    \ifglsused{#2}%
+    {%
+      \ifglshasprefixplural{#2}%
+      {%
+        \Glsentryprefixplural{#2}%
+        \@glspl@{#1}{#2}[#3]%
+      }%
+      {\@Glspl@{#1}{#2}[#3]}%
+    }%
+    {%
+      \ifglshasprefixfirstplural{#2}%
+      {%
+        \Glsentryprefixfirstplural{#2}%
+        \@glspl@{#1}{#2}[#3]%
+      }%
+      {\@Glspl@{#1}{#2}[#3]}%
+    }%
+  }%
+}
+\newrobustcmd{\PGLS}{\@ifstar\@sPGLS\@PGLS}
+\newcommand*{\@sPGLS}[2][]{\@PGLS@{hyper=false,#1}{#2}}
+\newcommand*{\@PGLS}[2][]{%
+  \new@ifnextchar[%
+  {\@PGLS@{#1}{#2}}%
+  {\@PGLS@{#1}{#2}[]}%
+}
+\def\@PGLS@#1#2[#3]{%
+  \glsdoifexists{#2}%
+  {%
+    \ifglsused{#2}%
+    {%
+      \mfirstucMakeUppercase{\glsentryprefix{#2}}%
+    }%
+    {%
+      \mfirstucMakeUppercase{\glsentryprefixfirst{#2}}%
+    }%
+    \@GLS@{#1}{#2}[#3]%
+  }%
+}
+\newrobustcmd{\PGLSpl}{\@ifstar\@sPGLSpl\@PGLSpl}
+\newcommand*{\@sPGLSpl}[2][]{\@PGLSpl@{hyper=false,#1}{#2}}
+\newcommand*{\@PGLSpl}[2][]{%
+  \new@ifnextchar[%
+  {\@PGLSpl@{#1}{#2}}%
+  {\@PGLSpl@{#1}{#2}[]}%
+}
+\def\@PGLSpl@#1#2[#3]{%
+  \glsdoifexists{#2}%
+  {%
+    \ifglsused{#2}%
+    {%
+      \mfirstucMakeUppercase{\glsentryprefixplural{#2}}%
+    }%
+    {%
+      \mfirstucMakeUppercase{\glsentryprefixfirstplural{#2}}%
+    }%
+    \@GLSpl@{#1}{#2}[#3]%
+  }%
+}
+\endinput
+%%
+%% End of file `glossaries-prefix.sty'.

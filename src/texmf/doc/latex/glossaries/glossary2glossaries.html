@@ -1,0 +1,2269 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>Upgrading from the glossary package to the glossaries package</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
+<!-- xhtml,fn-in,css-in,uni-html4,utf8 --> 
+<meta name="src" content="glossary2glossaries.tex" /> 
+<meta name="date" content="2014-04-04 12:03:00" /> 
+ 
+<style type="text/css"> 
+<!--  
+ 
+/* start css.sty */  
+.cmmi-10{font-style: italic;}  
+.cmr-17{font-size:170%;}  
+.cmr-12{font-size:120%;}  
+.cmr-8{font-size:80%;}  
+.cmmi-8{font-size:80%;font-style: italic;}  
+.cmr-9{font-size:90%;}  
+.cmbx-9{font-size:90%; font-weight: bold;}  
+.cmbx-9{ font-weight: bold;}  
+.cmss-9{font-size:90%; font-family: sans-serif;}  
+.cmss-9{ font-family: sans-serif;}  
+.cmss-9{ font-family: sans-serif;}  
+.cmtt-10{font-family: monospace;}  
+.cmtt-10{font-family: monospace;}  
+.cmtt-10{font-family: monospace;}  
+.cmtt-10{font-family: monospace;}  
+.cmti-10{ font-style: italic;}  
+.cmss-10{ font-family: sans-serif;}  
+.cmss-10{ font-family: sans-serif;}  
+.cmss-10{ font-family: sans-serif;}  
+.cmtt-8{font-size:80%;font-family: monospace;}  
+.cmtt-8{font-family: monospace;}  
+.cmtt-8{font-family: monospace;}  
+.cmtt-8{font-family: monospace;}  
+.cmbx-10{ font-weight: bold;}  
+.cmbx-10{ font-weight: bold;}  
+.cmssbx-10{ font-family: sans-serif; font-weight: bold;}  
+.cmssbx-10{ font-family: sans-serif; font-weight: bold;}  
+.cmssbx-10{ font-family: sans-serif; font-weight: bold;}  
+.cmitt-10{font-family: monospace; font-style: italic;}  
+.cmtt-9{font-size:90%;font-family: monospace;}  
+.cmtt-9{font-family: monospace;}  
+.cmtt-9{font-family: monospace;}  
+.cmtt-9{font-family: monospace;}  
+.cmti-8{font-size:80%; font-style: italic;}  
+p.noindent { text-indent: 0em }  
+td p.noindent { text-indent: 0em; margin-top:0em; }  
+p.nopar { text-indent: 0em; }  
+p.indent{ text-indent: 1.5em }  
+@media print {div.crosslinks {visibility:hidden;}}  
+a img { border-top: 0; border-left: 0; border-right: 0; }  
+center { margin-top:1em; margin-bottom:1em; }  
+td center { margin-top:0em; margin-bottom:0em; }  
+.Canvas { position:relative; }  
+img.math{vertical-align:middle;}  
+li p.indent { text-indent: 0em }  
+li p:first-child{ margin-top:0em; }  
+li p:last-child, li div:last-child { margin-bottom:0.5em; }  
+li p~ul:last-child, li p~ol:last-child{ margin-bottom:0.5em; }  
+.enumerate1 {list-style-type:decimal;}  
+.enumerate2 {list-style-type:lower-alpha;}  
+.enumerate3 {list-style-type:lower-roman;}  
+.enumerate4 {list-style-type:upper-alpha;}  
+div.newtheorem { margin-bottom: 2em; margin-top: 2em;}  
+.obeylines-h,.obeylines-v {white-space: nowrap; }  
+div.obeylines-v p { margin-top:0; margin-bottom:0; }  
+.overline{ text-decoration:overline; }  
+.overline img{ border-top: 1px solid black; }  
+td.displaylines {text-align:center; white-space:nowrap;}  
+.centerline {text-align:center;}  
+.rightline {text-align:right;}  
+div.verbatim {font-family: monospace; white-space: nowrap; text-align:left; clear:both; }  
+.fbox {padding-left:3.0pt; padding-right:3.0pt; text-indent:0pt; border:solid black 0.4pt; }  
+div.fbox {display:table}  
+div.center div.fbox {text-align:center; clear:both; padding-left:3.0pt; padding-right:3.0pt; text-indent:0pt; border:solid black 0.4pt; }  
+div.minipage{width:100%;}  
+div.center, div.center div.center {text-align: center; margin-left:1em; margin-right:1em;}  
+div.center div {text-align: left;}  
+div.flushright, div.flushright div.flushright {text-align: right;}  
+div.flushright div {text-align: left;}  
+div.flushleft {text-align: left;}  
+.underline{ text-decoration:underline; }  
+.underline img{ border-bottom: 1px solid black; margin-bottom:1pt; }  
+.framebox-c, .framebox-l, .framebox-r { padding-left:3.0pt; padding-right:3.0pt; text-indent:0pt; border:solid black 0.4pt; }  
+.framebox-c {text-align:center;}  
+.framebox-l {text-align:left;}  
+.framebox-r {text-align:right;}  
+span.thank-mark{ vertical-align: super }  
+span.footnote-mark sup.textsuperscript, span.footnote-mark a sup.textsuperscript{ font-size:80%; }  
+div.footnotes{border-top:solid 1px black; border-bottom:solid 1px black; padding-bottom:1ex; padding-top:0.5ex; margin-right:15%; margin-top:2ex; font-style:italic; font-size:85%;}  
+div.footnotes p{margin-top:0; margin-bottom:0; text-indent:0;}  
+div.tabular, div.center div.tabular {text-align: center; margin-top:0.5em; margin-bottom:0.5em; }  
+table.tabular td p{margin-top:0em;}  
+table.tabular {margin-left: auto; margin-right: auto;}  
+td p:first-child{ margin-top:0em; }  
+td p:last-child{ margin-bottom:0em; }  
+div.td00{ margin-left:0pt; margin-right:0pt; }  
+div.td01{ margin-left:0pt; margin-right:5pt; }  
+div.td10{ margin-left:5pt; margin-right:0pt; }  
+div.td11{ margin-left:5pt; margin-right:5pt; }  
+table[rules] {border-left:solid black 0.4pt; border-right:solid black 0.4pt; }  
+td.td00{ padding-left:0pt; padding-right:0pt; }  
+td.td01{ padding-left:0pt; padding-right:5pt; }  
+td.td10{ padding-left:5pt; padding-right:0pt; }  
+td.td11{ padding-left:5pt; padding-right:5pt; }  
+table[rules] {border-left:solid black 0.4pt; border-right:solid black 0.4pt; }  
+.hline hr, .cline hr{ height : 1px; margin:0px; }  
+.tabbing-right {text-align:right;}  
+span.TEX {letter-spacing: -0.125em; }  
+span.TEX span.E{ position:relative;top:0.5ex;left:-0.0417em;}  
+a span.TEX span.E {text-decoration: none; }  
+span.LATEX span.A{ position:relative; top:-0.5ex; left:-0.4em; font-size:85%;}  
+span.LATEX span.TEX{ position:relative; left: -0.4em; }  
+div.float, div.figure {margin-left: auto; margin-right: auto;}  
+div.float img {text-align:center;}  
+div.figure img {text-align:center;}  
+.marginpar {width:20%; float:right; text-align:left; margin-left:auto; margin-top:0.5em; font-size:85%; text-decoration:underline;}  
+.marginpar p{margin-top:0.4em; margin-bottom:0.4em;}  
+table.equation {width:100%;}  
+.equation td{text-align:center; }  
+td.equation { margin-top:1em; margin-bottom:1em; }  
+td.equation-label { width:5%; text-align:center; }  
+td.eqnarray4 { width:5%; white-space: normal; }  
+td.eqnarray2 { width:5%; }  
+table.eqnarray-star, table.eqnarray {width:100%;}  
+div.eqnarray{text-align:center;}  
+div.array {text-align:center;}  
+div.pmatrix {text-align:center;}  
+table.pmatrix {width:100%;}  
+span.pmatrix img{vertical-align:middle;}  
+div.pmatrix {text-align:center;}  
+table.pmatrix {width:100%;}  
+span.bar-css {text-decoration:overline;}  
+img.cdots{vertical-align:middle;}  
+.partToc a, .partToc, .likepartToc a, .likepartToc {line-height: 200%; font-weight:bold; font-size:110%;}  
+.index-item, .index-subitem, .index-subsubitem {display:block}  
+div.caption {text-indent:-2em; margin-left:3em; margin-right:1em; text-align:left;}  
+div.caption span.id{font-weight: bold; white-space: nowrap; }  
+h1.partHead{text-align: center}  
+p.bibitem { text-indent: -2em; margin-left: 2em; margin-top:0.6em; margin-bottom:0.6em; }  
+p.bibitem-p { text-indent: 0em; margin-left: 2em; margin-top:0.6em; margin-bottom:0.6em; }  
+.paragraphHead, .likeparagraphHead { margin-top:2em; font-weight: bold;}  
+.subparagraphHead, .likesubparagraphHead { font-weight: bold;}  
+.quote {margin-bottom:0.25em; margin-top:0.25em; margin-left:1em; margin-right:1em; text-align:justify;}  
+.verse{white-space:nowrap; margin-left:2em}  
+div.maketitle {text-align:center;}  
+h2.titleHead{text-align:center;}  
+div.maketitle{ margin-bottom: 2em; }  
+div.author, div.date {text-align:center;}  
+div.thanks{text-align:left; margin-left:10%; font-size:85%; font-style:italic; }  
+.quotation {margin-bottom:0.25em; margin-top:0.25em; margin-left:1em; }  
+.abstract p {margin-left:5%; margin-right:5%;}  
+div.abstract {width:100%;}  
+div.important { border : solid red; }  
+div.verbatim { font-family: monospace; white-space: nowrap; text-align:left; clear:both; padding-top: 2ex; padding-bottom: 2ex;}  
+/* end css.sty */  
+ 
+ 
+--> 
+</style> 
+</head><body 
+>
+   <div class="maketitle"><a 
+ id="top"></a>
+                                                                    
+
+                                                                    
+                                                                    
+
+                                                                    
+
+<h2 class="titleHead">Upgrading from the glossary package to the
+glossaries package</h2>
+<div class="author" ><span 
+class="cmr-12">Nicola L.C. Talbot</span></div><br />
+<div class="date" ><span 
+class="cmr-12">2014-04-04</span></div>
+   </div>
+   <div 
+class="abstract" 
+>
+<div class="center" 
+>
+<!--l. 53--><p class="noindent" >
+</p><!--l. 53--><p class="noindent" ><span 
+class="cmbx-9">Abstract</span></p></div>
+     <!--l. 54--><p class="indent" >    <span 
+class="cmr-9">The  purpose  of  this  document  is  to  provide  advice  if  you  want  to</span>
+     <span 
+class="cmr-9">convert a </span><span class="LATEX"><span 
+class="cmr-9">L</span><span class="A"><span 
+class="cmr-9">A</span></span><span class="TEX"><span 
+class="cmr-9">T</span><span 
+class="E"><span 
+class="cmr-9">E</span></span><span 
+class="cmr-9">X</span></span></span><span 
+class="cmr-9">&#x00A0;document from using the obsolete </span><span 
+class="cmss-9">glossary </span><span 
+class="cmr-9">package to the</span>
+     <span 
+class="cmr-9">replacement </span><span 
+class="cmss-9">glossaries </span><span 
+class="cmr-9">package.</span>
+</p>
+</div>
+   <h3 class="likesectionHead"><a 
+ id="x1-1000"></a>Contents</h3>
+   <div class="tableofcontents">
+   <span class="sectionToc" >1 <a 
+href="#whyglossaries" id="QQ2-1-2">Why the Need for a New Package?</a></span>
+<br />   <span class="sectionToc" >2 <a 
+href="#packageoptions" id="QQ2-1-3">Package Options</a></span>
+<br />   <span class="sectionToc" >3 <a 
+href="#definingnewglossarytypes" id="QQ2-1-5">Defining new glossary types</a></span>
+<br />   <span class="sectionToc" >4 <a 
+href="#x1-50004" id="QQ2-1-6"><span 
+class="cmtt-10">\make</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">glossary name</span><span 
+class="cmmi-10">&#x003E;</span></a></span>
+<br />   <span class="sectionToc" >5 <a 
+href="#storingglossaryinformation" id="QQ2-1-7">Storing glossary information</a></span>
+<br />   <span class="sectionToc" >6 <a 
+href="#addinganentrytotheglossary" id="QQ2-1-8">Adding an entry to the glossary</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >6.1 <a 
+href="#x1-80006.1" id="QQ2-1-9"><span 
+class="cmtt-10">\useglosentry</span></a></span>
+<br />   &#x00A0;<span class="subsectionToc" >6.2 <a 
+href="#x1-90006.2" id="QQ2-1-10"><span 
+class="cmtt-10">\useGlosentry</span></a></span>
+<br />   &#x00A0;<span class="subsectionToc" >6.3 <a 
+href="#x1-100006.3" id="QQ2-1-11"><span 
+class="cmtt-10">\gls</span></a></span>
+<br />   &#x00A0;<span class="subsectionToc" >6.4 <a 
+href="#x1-110006.4" id="QQ2-1-12"><span 
+class="cmtt-10">\glossary</span></a></span>
+                                                                    
+
+                                                                    
+<br />   <span class="sectionToc" >7 <a 
+href="#acronyms" id="QQ2-1-13">Acronyms</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >7.1 <a 
+href="#x1-130007.1" id="QQ2-1-14"><span 
+class="cmtt-10">\acrln </span>and <span 
+class="cmtt-10">\acrsh</span></a></span>
+<br />   &#x00A0;<span class="subsectionToc" >7.2 <a 
+href="#x1-140007.2" id="QQ2-1-15"><span 
+class="cmtt-10">\ifacronymfirstuse</span></a></span>
+<br />   &#x00A0;<span class="subsectionToc" >7.3 <a 
+href="#x1-150007.3" id="QQ2-1-16"><span 
+class="cmtt-10">\resetacronym </span>and <span 
+class="cmtt-10">\unsetacronym</span></a></span>
+<br />   <span class="sectionToc" >8 <a 
+href="#displayingtheglossary" id="QQ2-1-17">Displaying the glossary</a></span>
+<br />   <span class="sectionToc" >9 <a 
+href="#processingyourdocument" id="QQ2-1-18">Processing Your Document</a></span>
+<br />   <span class="sectionToc" >10 <a 
+href="#troubleshooting" id="QQ2-1-19">Troubleshooting</a></span>
+<br />   <span class="sectionToc" ><a 
+href="#index">Index</a></span>
+   </div>
+<!--l. 61--><p class="noindent" >
+</p>
+<!--l. 61--><p class="noindent" ><a 
+href="#top">Top</a><h2 class="sectionHead"></p><h3 class="sectionHead"><span class="titlemark">1   </span> <a 
+ id="whyglossaries"></a>Why the Need for a New Package?</h3>
+<!--l. 64--><p class="noindent" >The <span 
+class="cmss-10">glossary </span>package started out as an example in a tutorial, but I decided that I may
+as well package it up and upload it to CTAN. Unfortunately it was fairly rigid and
+unable to adapt well to the wide variation in glossary styles. Users began making
+requests for enhancements, but with each enhancement the code became more
+complicated and bugs crept in. Each fix in one place seemed to cause another problem
+elsewhere. In the end, it was taking up too much of my time to maintain, so I decided
+to replace it with a much better designed package. With the new <span 
+class="cmss-10">glossaries</span>
+package:
+</p>
+     <ul class="itemize1">
+     <li class="itemize">you can define irregular plurals;
+     </li>
+     <li class="itemize">glossary terms can have an associated symbol in addition to the name and
+     description;
+     </li>
+     <li class="itemize">new glossary styles are much easier to design;
+     </li>
+     <li class="itemize">you can add dictionaries to supply translations for the fixed names used in
+     headings and by some of the glossary styles;
+     </li>
+     <li class="itemize">you can choose<span class="footnote-mark"><a 
+href="#fn1x0" id="fn1x0-bk"><sup class="textsuperscript">1</sup></a></span><a 
+ id="x1-2001f1"></a>
+     between using <span 
+class="cmtt-10">makeindex</span><a 
+ id="dx1-2003"></a> or <span 
+class="cmtt-10">xindy</span><a 
+ id="dx1-2004"></a> to sort the glossary. Using <span 
+class="cmtt-10">xindy</span><a 
+ id="dx1-2005"></a> means
+     that:
+                                                                    
+
+                                                                    
+         <ul class="itemize2">
+         <li class="itemize">there is much better support for terms containing accented or non-Latin
+         characters;
+         </li>
+         <li class="itemize">there is support for non-standard location numbers;</li></ul>
+     </li>
+     <li class="itemize">you don&#8217;t need to remember to escape <span 
+class="cmtt-10">makeindex</span><a 
+ id="dx1-2006"></a>&#8217;s special characters as this is
+     done internally;
+     </li>
+     <li class="itemize">hierarchical entries and homographs are
+     supported;<span class="footnote-mark"><a 
+href="#fn2x0" id="fn2x0-bk"><sup class="textsuperscript">2</sup></a></span><a 
+ id="x1-2007f2"></a>
+     </li>
+     <li class="itemize">there is better support for cross-referencing glossary entries;
+     </li>
+     <li class="itemize">acronyms are just another glossary term which helps to maintain consistency;
+     </li>
+     <li class="itemize">different acronym styles are supported.
+     </li></ul>
+<!--l. 112--><p class="noindent" >
+</p>
+<!--l. 112--><p class="noindent" ><a 
+href="#top">Top</a><h2 class="sectionHead"></p><h3 class="sectionHead"><span class="titlemark">2   </span> <a 
+ id="packageoptions"></a>Package Options</h3>
+<!--l. 114--><p class="noindent" >When converting a document that currently uses the obsolete <span 
+class="cmss-10">glossary </span>package to the
+replacement <span 
+class="cmss-10">glossaries </span>package, it should be fairly obvious that the first thing you need
+to do is replace <span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\usepackage{glossary}</span></span></span> with <span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\usepackage{glossaries}</span></span></span>, however
+some of the package options are different, so you may need to change those as
+well. Table&#x00A0;<a 
+href="#tab:pkgopt">1<!--tex4ht:ref: tab:pkgopt --></a> shows the mappings from the <span 
+class="cmss-10">glossary </span>to the <span 
+class="cmss-10">glossaries </span>package
+options.
+</p>
+   <div class="table">
+                                                                    
+
+                                                                    
+<!--l. 123--><p class="indent" >   <a 
+ id="tab:pkgopt"></a></p><hr class="float" /><div class="float" 
+>
+                                                                    
+
+                                                                    
+ <div class="caption" 
+><span class="id">Table&#x00A0;1: </span><span  
+class="content">Mappings from <span 
+class="cmss-10">glossary </span>to <span 
+class="cmss-10">glossaries </span>package options</span></div><!--tex4ht:label?: x1-30011 -->
+<div class="center" 
+>
+<!--l. 127--><p class="noindent" >
+</p>
+<div class="tabular"> <table id="TBL-2" class="tabular" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-2-1g"><col 
+id="TBL-2-1" /><col 
+id="TBL-2-2" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-2-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-1-1"  
+class="td11"><span 
+class="cmssbx-10">glossary </span><span 
+class="cmbx-10">option                                  </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-1-2"  
+class="td11"><span 
+class="cmssbx-10">glossaries </span><span 
+class="cmbx-10">option             </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-2-1"  
+class="td11">style=list                                                 </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-2-2"  
+class="td11">style=list                          </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-3-1"  
+class="td11">style=altlist                                              </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-3-2"  
+class="td11">style=altlist                      </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-4-1"  
+class="td11">style=long,header=none,border=none,cols=2  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-4-2"  
+class="td11">style=long                        </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-5-1"  
+class="td11">style=long,header=plain,border=none,cols=2  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-5-2"  
+class="td11">style=longheader               </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-6-1"  
+class="td11">style=long,header=none,border=plain,cols=2  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-6-2"  
+class="td11">style=longborder               </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-7-1"  
+class="td11">style=long,header=plain,border=plain,cols=2  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-7-2"  
+class="td11">style=longheaderborder       </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-8-1"  
+class="td11">style=long,header=none,border=none,cols=3  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-8-2"  
+class="td11">style=long3col                   </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-9-1"  
+class="td11">style=long,header=plain,border=none,cols=3  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-9-2"  
+class="td11">style=long3colheader          </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-10-1"  
+class="td11">style=long,header=none,border=plain,cols=3  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-10-2"  
+class="td11">style=long3colborder          </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-11-1"  
+class="td11">style=long,header=plain,border=plain,cols=3  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-11-2"  
+class="td11">style=long3colheaderborder  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-12-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-12-1"  
+class="td11">style=super,header=none,border=none,cols=2 </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-12-2"  
+class="td11">style=super                      </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-13-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-13-1"  
+class="td11">style=super,header=plain,border=none,cols=2</td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-13-2"  
+class="td11">style=superheader              </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-14-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-14-1"  
+class="td11">style=super,header=none,border=plain,cols=2</td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-14-2"  
+class="td11">style=superborder              </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-15-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-15-1"  
+class="td11">style=super,header=plain,border=plain,cols=2</td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-15-2"  
+class="td11">style=superheaderborder     </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-16-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-16-1"  
+class="td11">style=super,header=none,border=none,cols=3 </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-16-2"  
+class="td11">style=super3col                 </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-17-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-17-1"  
+class="td11">style=super,header=plain,border=none,cols=3</td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-17-2"  
+class="td11">style=super3colheader         </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-18-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-18-1"  
+class="td11">style=super,header=none,border=plain,cols=3</td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-18-2"  
+class="td11">style=super3colborder         </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-19-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-19-1"  
+class="td11">style=super,header=plain,border=plain,cols=3</td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-19-2"  
+class="td11">style=super3colheaderborder</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-20-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-20-1"  
+class="td11">number=none                                           </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-20-2"  
+class="td11">nonumberlist                     </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-21-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-21-1"  
+class="td11">number=<span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">counter name</span><span 
+class="cmmi-10">&#x003E;                       </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-21-2"  
+class="td11">counter=<span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">counter name</span><span 
+class="cmmi-10">&#x003E;   </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-22-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-22-1"  
+class="td11">toc                                                          </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-22-2"  
+class="td11">toc                                  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-23-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-23-1"  
+class="td11">hypertoc                                                  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-23-2"  
+class="td11">toc                                  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-24-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-24-1"  
+class="td11">hyper                                                      </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-24-2"  
+class="td11"><span 
+class="cmti-10">no corresponding option      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-25-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-25-1"  
+class="td11">section=true                                             </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-25-2"  
+class="td11">section                             </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-26-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-26-1"  
+class="td11">section=false                                            </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-26-2"  
+class="td11"><span 
+class="cmti-10">no corresponding option      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-27-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-27-1"  
+class="td11">acronym                                                  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-27-2"  
+class="td11">acronym                           </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-28-"><td  style="white-space:nowrap; text-align:left;" id="TBL-2-28-1"  
+class="td11">global                                                      </td><td  style="white-space:nowrap; text-align:left;" id="TBL-2-28-2"  
+class="td11"><span 
+class="cmti-10">no corresponding option      </span></td></tr></table>
+</div></div>
+                                                                    
+
+                                                                    
+   </div><hr class="endfloat" />
+   </div>
+<!--l. 161--><p class="noindent" ><a 
+href="#top">Top</a><h2 class="sectionHead"></p><h3 class="sectionHead"><span class="titlemark">3   </span> <a 
+ id="definingnewglossarytypes"></a>Defining new glossary types</h3>
+<!--l. 163--><p class="noindent" >If you have created new glossary types, you will need to replace all instances
+of
+</p><!--l. 165--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossary</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\newglossarytype</span><a 
+ id="dx1-4001"></a><span 
+class="cmtt-10">[</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">log-ext</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">]{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">type</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">out-ext</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">in-ext</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}[</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">old</span>
+<span 
+class="cmitt-10">style list</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">]</span><br 
+class="newline" />
+   <br /><span 
+class="cmtt-10">\newcommand</span><span class="verb"><span 
+class="cmtt-10">{\</span></span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">type</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">name</span><span class="verb"><span 
+class="cmtt-10">}</span></span><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">title</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+with
+</p><!--l. 170--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\newglossary</span><a 
+ id="dx1-4002"></a><span 
+class="cmtt-10">[</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">log-ext</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">]{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">type</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">out-ext</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">in-ext</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">title</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+in the preamble, and, if the new glossary requires a different style to the main (default)
+glossary, you will also need to put
+</p><!--l. 175--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\glossarystyle</span><a 
+ id="dx1-4003"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">new style</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+immediately before the glossary is displayed, or you can specify the style when you
+display the glossary using <span 
+class="cmtt-10">\printglossary</span><a 
+ id="dx1-4004"></a> (see below).
+</p><!--l. 182--><p class="indent" >   The <span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">old style list</span><span 
+class="cmmi-10">&#x003E; </span>optional argument can be converted to <span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">new style</span><span 
+class="cmmi-10">&#x003E; </span>using the
+same mapping given in Table&#x00A0;<a 
+href="#tab:pkgopt">1<!--tex4ht:ref: tab:pkgopt --></a>.
+</p><!--l. 186--><p class="indent" >   For example, if your document contains the following:
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-1">
+\newglossarytype[nlg]{notation}{not}{ntn}[style=long,header]
+&#x00A0;<br />\newcommand{\notationname}{Index&#x00A0;of&#x00A0;Notation}
+</div>
+<!--l. 190--><p class="nopar" > You will need to replace the above two lines with:
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-2">
+\newglossary[nlg]{notation}{not}{ntn}{Index&#x00A0;of&#x00A0;Notation}
+</div>
+<!--l. 194--><p class="nopar" > in the preamble and
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-3">
+\glossarystyle{longheader}
+</div>
+<!--l. 198--><p class="nopar" > immediately prior to displaying this glossary. Alternatively, you can specify the
+style using the <span 
+class="cmss-10">style</span><a 
+ id="dx1-4005"></a> key in the optional argument of <span 
+class="cmtt-10">\printglossary</span><a 
+ id="dx1-4006"></a>. For
+example:
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-4">
+\printglossary[type=notation,style=longheader]
+</div>
+<!--l. 204--><p class="nopar" >
+</p><!--l. 206--><p class="indent" >   Note that the glossary title is no longer specified using <span 
+class="cmtt-10">\</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">glossary-type</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">name</span>
+(except for <span 
+class="cmtt-10">\glossaryname</span><a 
+ id="dx1-4007"></a> and <span 
+class="cmtt-10">\acronymname</span><a 
+ id="dx1-4008"></a>) but is instead specified in the <span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">title</span><span 
+class="cmmi-10">&#x003E;</span>
+argument of <span 
+class="cmtt-10">\newglossary</span><a 
+ id="dx1-4009"></a>. The short title which is specified in the <span 
+class="cmss-10">glossary </span>package by
+the command <span 
+class="cmtt-10">\short</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">glossary-name</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">name </span>is now specified using the <span 
+class="cmss-10">toctitle</span><a 
+ id="dx1-4010"></a> key in the
+optional argument to <span 
+class="cmtt-10">\printglossary</span><a 
+ id="dx1-4011"></a>.
+</p><!--l. 216--><p class="noindent" >
+</p>
+<!--l. 216--><p class="noindent" ><a 
+href="#top">Top</a><h2 class="sectionHead"></p><h3 class="sectionHead"><span class="titlemark">4   </span> <a 
+ id="x1-50004"></a><span 
+class="cmtt-10">\make</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">glossary name</span><span 
+class="cmmi-10">&#x003E;</span></h3>
+<!--l. 218--><p class="noindent" >All instances of <span 
+class="cmtt-10">\make</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">glossary name</span><span 
+class="cmmi-10">&#x003E; </span>(e.g.&#x00A0;<span 
+class="cmtt-10">\makeglossary</span><a 
+ id="dx1-5001"></a> and <span 
+class="cmtt-10">\makeacronym</span><a 
+ id="dx1-5002"></a>)
+should be replaced by the single command <span 
+class="cmtt-10">\makeglossaries</span><a 
+ id="dx1-5003"></a>. For example, if your
+document contained the following:
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-5">
+\makeglossary
+&#x00A0;<br />\makeacronym
+</div>
+<!--l. 225--><p class="nopar" > then you should replace both lines with the single line:
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-6">
+\makeglossaries
+</div>
+<!--l. 229--><p class="nopar" >
+</p><!--l. 231--><p class="noindent" >
+</p>
+<!--l. 231--><p class="noindent" ><a 
+href="#top">Top</a><h2 class="sectionHead"></p><h3 class="sectionHead"><span class="titlemark">5   </span> <a 
+ id="storingglossaryinformation"></a>Storing glossary information</h3>
+<!--l. 233--><p class="noindent" >With the old <span 
+class="cmss-10">glossary </span>package you could optionally store glossary information for later
+use, or you could simply use <span 
+class="cmtt-10">\glossary</span><a 
+ id="dx1-6001"></a> whenever you wanted to add information to
+the glossary. With the new <span 
+class="cmss-10">glossaries </span>package, the latter option is no longer
+available.<span class="footnote-mark"><a 
+href="#fn3x0" id="fn3x0-bk"><sup class="textsuperscript">3</sup></a></span><a 
+ id="x1-6002f3"></a>
+If you have stored all the glossary information using <span 
+class="cmtt-10">\storeglosentry</span><a 
+ id="dx1-6004"></a>, then you will
+need to convert these commands into the equivalent <span 
+class="cmtt-10">\newglossaryentry</span><a 
+ id="dx1-6005"></a>. If you have
+only used <span 
+class="cmtt-10">\glossary</span><a 
+ id="dx1-6006"></a>, then see <a 
+href="#x1-110006.4"><span 
+class="cmsy-10">&sect;</span>6.4 </a><a 
+href="#x1-110006.4"><span 
+class="cmtt-10">\glossary</span><!--tex4ht:ref: sec:csglossary --></a>.
+</p><!--l. 244--><p class="indent" >   Substitute all instances of
+</p><!--l. 245--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossary</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\storeglosentry</span><a 
+ id="dx1-6007"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">gls-entry</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+with
+</p><!--l. 249--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\newglossaryentry</span><a 
+ id="dx1-6008"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">gls-entry</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+This should be fairly easy to do using the search and replace facility in your editor (but
+see notes below).
+</p><!--l. 255--><p class="indent" >   If you have used the optional argument of <span 
+class="cmtt-10">\storeglosentry</span><a 
+ id="dx1-6009"></a> (i.e.&#x00A0;you have multiple
+glossaries) then you will need to substitute
+</p><!--l. 258--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossary</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\storeglosentry</span><a 
+ id="dx1-6010"></a><span 
+class="cmtt-10">[</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">gls-type</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">]{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">gls-entry</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+with
+</p><!--l. 262--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\newglossaryentry</span><a 
+ id="dx1-6011"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span><span class="verb"><span 
+class="cmtt-10">{</span></span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">gls-entry</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">,type=</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">gls-type</span><span 
+class="cmmi-10">&#x003E;</span><span class="verb"><span 
+class="cmtt-10">}</span></span>
+   <br /></div><hr>
+                                                                    
+
+                                                                    
+   <br /></span>
+</p><!--l. 266--><p class="indent" >   The glossary entry information <span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">gls-entry</span><span 
+class="cmmi-10">&#x003E; </span>may also need changing. If
+<span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">gls-entry</span><span 
+class="cmmi-10">&#x003E; </span>contains any of <span 
+class="cmtt-10">makeindex</span><a 
+ id="dx1-6012"></a>&#8217;s special characters (i.e.&#x00A0;<span 
+class="cmtt-10">@ ! </span><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">"</span></span></span> or <span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">|</span></span></span>) then
+they should no longer be escaped with <span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">"</span></span></span> since the <span 
+class="cmss-10">glossaries </span>package deals
+with these characters internally. For example, if your document contains the
+following:
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-7">
+\storeglosentry{card}{name={$"|\mathcal{S}"|$},
+&#x00A0;<br />description={The&#x00A0;cardinality&#x00A0;of&#x00A0;the&#x00A0;set&#x00A0;$\mathcal{S}$}}
+</div>
+<!--l. 275--><p class="nopar" > then you will need to replace it with:
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-8">
+\newglossaryentry{card}{name={$|\mathcal{S}|$},
+&#x00A0;<br />description={The&#x00A0;cardinality&#x00A0;of&#x00A0;the&#x00A0;set&#x00A0;$\mathcal{S}$}}
+</div>
+<!--l. 280--><p class="nopar" >
+</p><!--l. 282--><p class="indent" >   The <span 
+class="cmss-10">format</span><a 
+ id="dx1-6013"></a> and <span 
+class="cmss-10">number</span><a 
+ id="dx1-6014"></a> keys available in <span 
+class="cmtt-10">\storeglosentry</span><a 
+ id="dx1-6015"></a> are not available with
+<span 
+class="cmtt-10">\newglossaryentry</span><a 
+ id="dx1-6016"></a>.
+</p><!--l. 286--><p class="noindent" >
+</p>
+<!--l. 286--><p class="noindent" ><a 
+href="#top">Top</a><h2 class="sectionHead"></p><h3 class="sectionHead"><span class="titlemark">6   </span> <a 
+ id="addinganentrytotheglossary"></a>Adding an entry to the glossary</h3>
+<!--l. 288--><p class="noindent" >The <span 
+class="cmss-10">glossary </span>package provided two basic means to add information to the glossary:
+firstly, the term was defined using <span 
+class="cmtt-10">\storeglosentry</span><a 
+ id="dx1-7001"></a> and the entries for that term were
+added using <span 
+class="cmtt-10">\useglosentry</span><a 
+ id="dx1-7002"></a>, <span 
+class="cmtt-10">\useGlosentry</span><a 
+ id="dx1-7003"></a> and <span 
+class="cmtt-10">\gls</span><a 
+ id="dx1-7004"></a>. Secondly, the term was added
+to the glossary using <span 
+class="cmtt-10">\glossary</span><a 
+ id="dx1-7005"></a>. This second approach is unavailable with the <span 
+class="cmss-10">glossaries</span>
+package.
+</p><!--l. 297--><p class="noindent" >
+</p>
+<!--l. 297--><p class="noindent" ><a 
+href="#top">Top</a><h3 class="subsectionHead"></p><h4 class="subsectionHead"><span class="titlemark">6.1   </span> <a 
+ id="x1-80006.1"></a><span 
+class="cmtt-10">\useglosentry</span></h4>
+<!--l. 300--><p class="noindent" >The <span 
+class="cmss-10">glossary </span>package allows you to add information to the glossary for a predefined
+term without producing any text in the document using
+</p><!--l. 303--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossary</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\useglosentry</span><a 
+ id="dx1-8001"></a><span 
+class="cmtt-10">[</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">old options</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">]{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+Any occurrences of this command will need to be replaced with
+</p><!--l. 307--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\glsadd</span><a 
+ id="dx1-8002"></a><span 
+class="cmtt-10">[</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">new options</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">]{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+The <span 
+class="cmss-10">format</span><a 
+ id="dx1-8003"></a> key in <span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">old options</span><span 
+class="cmmi-10">&#x003E; </span>remains the same in <span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">new options</span><span 
+class="cmmi-10">&#x003E;</span>. However
+the <span 
+class="cmss-10">number</span><a 
+ id="dx1-8004"></a><span 
+class="cmtt-10">=</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">counter name</span><span 
+class="cmmi-10">&#x003E; </span>key in <span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">old options</span><span 
+class="cmmi-10">&#x003E; </span>should be replaced with
+<span 
+class="cmss-10">counter</span><a 
+ id="dx1-8005"></a><span 
+class="cmtt-10">=</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">counter name</span><span 
+class="cmmi-10">&#x003E; </span>in <span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">new options</span><span 
+class="cmmi-10">&#x003E;</span>.
+                                                                    
+
+                                                                    
+</p><!--l. 318--><p class="noindent" >
+</p>
+<!--l. 318--><p class="noindent" ><a 
+href="#top">Top</a><h3 class="subsectionHead"></p><h4 class="subsectionHead"><span class="titlemark">6.2   </span> <a 
+ id="x1-90006.2"></a><span 
+class="cmtt-10">\useGlosentry</span></h4>
+<!--l. 320--><p class="noindent" >The <span 
+class="cmss-10">glossary </span>package allows you to add information to the glossary for a predefined
+term with the given text using
+</p><!--l. 322--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossary</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\useGlosentry</span><a 
+ id="dx1-9001"></a><span 
+class="cmtt-10">[</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">old options</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">]{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">text</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+Any occurrences of this command will need to be replaced with
+</p><!--l. 326--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\glslink</span><a 
+ id="dx1-9002"></a><span 
+class="cmtt-10">[</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">new options</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">]{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">text</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+The mapping from <span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">old options</span><span 
+class="cmmi-10">&#x003E; </span>to <span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">new options</span><span 
+class="cmmi-10">&#x003E; </span>is the same as that given <a 
+href="#x1-80006.1"><span 
+class="cmsy-10">&sect;</span>6.1
+</a><a 
+href="#x1-80006.1"><span 
+class="cmtt-10">\useglosentry</span><!--tex4ht:ref: sec:useglosentry --></a>.
+</p><!--l. 332--><p class="noindent" >
+</p>
+<!--l. 332--><p class="noindent" ><a 
+href="#top">Top</a><h3 class="subsectionHead"></p><h4 class="subsectionHead"><span class="titlemark">6.3   </span> <a 
+ id="x1-100006.3"></a><span 
+class="cmtt-10">\gls</span></h4>
+<!--l. 334--><p class="noindent" >Both the <span 
+class="cmss-10">glossary </span>and the <span 
+class="cmss-10">glossaries </span>packages define the command <span 
+class="cmtt-10">\gls</span><a 
+ id="dx1-10001"></a>. In this
+case, the only thing you need to change is the <span 
+class="cmss-10">number</span><a 
+ id="dx1-10002"></a> key in the optional
+argument to <span 
+class="cmss-10">counter</span><a 
+ id="dx1-10003"></a>. Note that the new form of <span 
+class="cmtt-10">\gls</span><a 
+ id="dx1-10004"></a> also takes a final optional
+argument which can be used to insert text into the automatically generated
+text.
+</p><!--l. 341--><p class="noindent" >
+</p>
+<!--l. 341--><p class="noindent" ><a 
+href="#top">Top</a><h3 class="subsectionHead"></p><h4 class="subsectionHead"><span class="titlemark">6.4   </span> <a 
+ id="x1-110006.4"></a><span 
+class="cmtt-10">\glossary</span></h4>
+<!--l. 344--><p class="noindent" >When using the <span 
+class="cmss-10">glossaries </span>package, you should not use <span 
+class="cmtt-10">\glossary</span><a 
+ id="dx1-11001"></a>
+directly.<span class="footnote-mark"><a 
+href="#fn4x0" id="fn4x0-bk"><sup class="textsuperscript">4</sup></a></span><a 
+ id="x1-11002f4"></a>
+If, with the old package, you have opted to explicitly use <span 
+class="cmtt-10">\glossary</span><a 
+ id="dx1-11008"></a> instead of storing
+the glossary information with <span 
+class="cmtt-10">\storeglosentry</span><a 
+ id="dx1-11009"></a>, then converting from <span 
+class="cmss-10">glossary </span>to
+<span 
+class="cmss-10">glossaries </span>will be more time-consuming, although in the end, I hope you will see the
+benefits.<span class="footnote-mark"><a 
+href="#fn5x0" id="fn5x0-bk"><sup class="textsuperscript">5</sup></a></span><a 
+ id="x1-11010f5"></a>
+If you have used <span 
+class="cmtt-10">\glossary</span><a 
+ id="dx1-11013"></a> with the old glossary package, you will instead need to
+define the relevant glossary terms using <span 
+class="cmtt-10">\newglossaryentry</span><a 
+ id="dx1-11014"></a> and reference the terms
+using <span 
+class="cmtt-10">\glsadd</span><a 
+ id="dx1-11015"></a>, <span 
+class="cmtt-10">\glslink</span><a 
+ id="dx1-11016"></a>, <span 
+class="cmtt-10">\gls</span><a 
+ id="dx1-11017"></a> etc.
+</p><!--l. 367--><p class="indent" >   If you don&#8217;t like the idea of continually scrolling back to the preamble to type all
+your <span 
+class="cmtt-10">\newglossaryentry</span><a 
+ id="dx1-11018"></a> commands, you may prefer to create a new file, in which to
+store all these commands, and then input that file in your document&#8217;s preamble. Most
+                                                                    
+
+                                                                    
+text editors and front-ends allow you to have multiple files open, and you can tab back
+and forth between them.
+</p><!--l. 374--><p class="noindent" >
+</p>
+<!--l. 374--><p class="noindent" ><a 
+href="#top">Top</a><h2 class="sectionHead"></p><h3 class="sectionHead"><span class="titlemark">7   </span> <a 
+ id="acronyms"></a>Acronyms</h3>
+<!--l. 376--><p class="noindent" >In the <span 
+class="cmss-10">glossary </span>package, acronyms were treated differently to glossary entries. This
+resulted in inconsistencies and sprawling unmaintainable code. The new <span 
+class="cmss-10">glossaries</span>
+package treats acronyms in exactly the same way as normal glossary terms. In fact, in
+the <span 
+class="cmss-10">glossaries </span>package, the default definition of:
+</p><!--l. 381--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\newacronym</span><a 
+ id="dx1-12001"></a><span 
+class="cmtt-10">[</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">options</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">]{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">abbrv</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">long</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+is a shortcut for:
+</p><!--l. 385--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\newglossaryentry</span><a 
+ id="dx1-12002"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span><span 
+class="cmsy-10">{</span><span 
+class="cmtt-10">type=\acronymtype,</span>
+   <br /><span 
+class="cmtt-10">name={</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">abbrv</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">},</span>
+   <br /><span 
+class="cmtt-10">description={</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">long</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">},</span>
+   <br /><span 
+class="cmtt-10">text={</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">abbrv</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">},</span>
+   <br /><span 
+class="cmtt-10">first=</span><span 
+class="cmsy-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">long</span><span 
+class="cmmi-10">&#x003E; </span><span 
+class="cmtt-10">(</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">abbrv</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">)</span><span 
+class="cmsy-10">}</span><span 
+class="cmtt-10">,</span>
+   <br /><span 
+class="cmtt-10">plural=</span><span 
+class="cmsy-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">abbrv</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">s</span><span 
+class="cmsy-10">}</span><span 
+class="cmtt-10">,</span>
+   <br /><span 
+class="cmtt-10">firstplural=</span><span 
+class="cmsy-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">long</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">s (</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">abbrv</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">s)</span><span 
+class="cmsy-10">}</span><span 
+class="cmtt-10">,</span>
+   <br /><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">options</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmsy-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+</p><!--l. 396--><p class="indent" >   This is different to the <span 
+class="cmss-10">glossary </span>package which set the <span 
+class="cmss-10">name</span><a 
+ id="dx1-12003"></a> key to <span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">long</span><span 
+class="cmmi-10">&#x003E;</span>
+(<span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">abbrv</span><span 
+class="cmmi-10">&#x003E;</span>) and allowed you to set a description using the <span 
+class="cmss-10">description</span><a 
+ id="dx1-12004"></a> key. If you still
+want to do this, you can use the <span 
+class="cmss-10">description</span><a 
+ id="dx1-12005"></a> package option, and use the <span 
+class="cmss-10">description</span><a 
+ id="dx1-12006"></a> key
+in the optional argument of <span 
+class="cmtt-10">\newacronym</span><a 
+ id="dx1-12007"></a>.
+</p><!--l. 404--><p class="indent" >   For example, if your document originally had the following:
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-9">
+\newacronym{SVM}{Support&#x00A0;Vector&#x00A0;Machine}{description=Statistical
+&#x00A0;<br />pattern&#x00A0;recognition&#x00A0;technique}
+</div>
+<!--l. 408--><p class="nopar" > Then you would need to load the <span 
+class="cmss-10">glossaries </span>package using the <span 
+class="cmss-10">description</span><a 
+ id="dx1-12008"></a> package
+option, for example:
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-10">
+\usepackage[description]{glossaries}
+</div>
+<!--l. 413--><p class="nopar" > and change the acronym definition to:
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-11">
+\newacronym[description=Statistical&#x00A0;pattern&#x00A0;recognition
+&#x00A0;<br />technique]{svm}{SVM}{Support&#x00A0;Vector&#x00A0;Machine}
+</div>
+<!--l. 418--><p class="nopar" > You can then reference the acronym using any of the new referencing commands, such
+as <span 
+class="cmtt-10">\gls</span><a 
+ id="dx1-12009"></a> or <span 
+class="cmtt-10">\glsadd</span><a 
+ id="dx1-12010"></a>.
+</p><!--l. 422--><p class="indent" >   With the old <span 
+class="cmss-10">glossary </span>package, when you defined an acronym, it also defined a
+command <span 
+class="cmtt-10">\</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">acr-name</span><span 
+class="cmmi-10">&#x003E; </span>which could be used to display the acronym in the text.
+So the above SVM example would create the command <span 
+class="cmtt-10">\SVM </span>with the old
+package. In the new <span 
+class="cmss-10">glossaries </span>package, the acronyms are just another type of
+glossary entry, so they are displayed using <span 
+class="cmtt-10">\gls</span><a 
+ id="dx1-12011"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>. Therefore, in the
+above example, you will also need to replace all occurrences of <span 
+class="cmtt-10">\SVM </span>with
+<span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\gls{svm}</span></span></span>.
+</p><!--l. 432--><p class="indent" >   If you have used <span 
+class="cmtt-10">\useacronym</span><a 
+ id="dx1-12012"></a> instead of <span 
+class="cmtt-10">\</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">acr-name</span><span 
+class="cmmi-10">&#x003E;</span>, then you will need to
+replace all occurrences of
+</p><!--l. 434--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossary</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\useacronym</span><a 
+ id="dx1-12013"></a><span 
+class="cmtt-10">[</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">insert</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">]{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">acr-name</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+with
+</p><!--l. 438--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\gls</span><a 
+ id="dx1-12014"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}[</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">insert</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">]</span>
+   <br /></div><hr>
+   <br /></span>
+Note that the starred versions of <span 
+class="cmtt-10">\useacronym</span><a 
+ id="dx1-12015"></a> and <span 
+class="cmtt-10">\</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">acr-name</span><span 
+class="cmmi-10">&#x003E; </span>(which make the first
+letter uppercase) should be replaced with <span 
+class="cmtt-10">\Gls</span><a 
+ id="dx1-12016"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>.
+</p><!--l. 445--><p class="indent" >   Alternatively (as from v1.18 of the <span 
+class="cmss-10">glossaries </span>package), you can use <span 
+class="cmtt-10">\oldacronym</span><a 
+ id="dx1-12017"></a>
+which uses the same syntax as the old <span 
+class="cmss-10">glossary </span>package&#8217;s <span 
+class="cmtt-10">\newacronym</span><a 
+ id="dx1-12018"></a> and
+also defines <span 
+class="cmtt-10">\</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">acr-name</span><span 
+class="cmmi-10">&#x003E;</span>. For example, if your document originally had the
+following:
+</p><!--l. 450--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossary</span></span><span class="obeylines-h">
+                                                                    
+
+                                                                    
+   <div class="verbatim" id="verbatim-12">
+<!--l. 454--><p class="noindent" >\newacronym{SVM}{Support&#x00A0;Vector&#x00A0;Machine}{description=Statistical
+</p><!--l. 454--><p class="noindent" >pattern&#x00A0;recognition&#x00A0;technique}
+
+</p></div>
+<!--l. 454--><p class="nopar" >
+   </div><hr>
+</p><!--l. 455--><p class="noindent" ></p></span>
+then you can change this to:
+</p><!--l. 457--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+                                                                    
+
+                                                                    
+   <div class="verbatim" id="verbatim-13">
+<!--l. 461--><p class="noindent" >\oldacronym{SVM}{Support&#x00A0;Vector&#x00A0;Machine}{description=Statistical
+</p><!--l. 461--><p class="noindent" >pattern&#x00A0;recognition&#x00A0;technique}
+
+</p></div>
+<!--l. 461--><p class="nopar" >
+   </div><hr>
+</p><!--l. 462--><p class="noindent" ></p></span>
+You can then continue to use <span 
+class="cmtt-10">\SVM</span>. However, remember that <span class="LATEX">L<span class="A">A</span><span class="TEX">T<span 
+class="E">E</span>X</span></span>&#x00A0;generally ignores
+spaces after command names that consist of alphabetical characters. You will therefore
+need to force a space after <span 
+class="cmtt-10">\</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">acr-name</span><span 
+class="cmmi-10">&#x003E;</span>, unless you also load the <span 
+class="cmss-10">xspace </span>package.
+(See <a 
+href="glossaries-user.html#sec:acronyms" >Acronyms</a> of the <span 
+class="cmss-10">glossaries </span>documentation for further details.) Note that
+<span 
+class="cmtt-10">\oldacronym</span><a 
+ id="dx1-12019"></a> uses its first argument to define the acronym&#8217;s label (as used by
+commands like <span 
+class="cmtt-10">\gls</span><a 
+ id="dx1-12020"></a>), so in the above example, with the new <span 
+class="cmss-10">glossaries </span>package,
+<span 
+class="cmtt-10">\SVM </span>becomes a shortcut for <span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\gls{SVM}</span></span></span> and <span 
+class="cmtt-10">\SVM* </span>becomes a shortcut for
+<span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\Gls{SVM}</span></span></span>.
+</p><!--l. 477--><p class="noindent" >
+</p>
+<!--l. 477--><p class="noindent" ><a 
+href="#top">Top</a><h3 class="subsectionHead"></p><h4 class="subsectionHead"><span class="titlemark">7.1   </span> <a 
+ id="x1-130007.1"></a><span 
+class="cmtt-10">\acrln </span>and <span 
+class="cmtt-10">\acrsh</span></h4>
+<!--l. 479--><p class="noindent" >In the <span 
+class="cmss-10">glossary </span>package, it is possible to produce the long and short forms of an
+acronym without adding an entry to the glossary using <span 
+class="cmtt-10">\acrln</span><a 
+ id="dx1-13001"></a> and <span 
+class="cmtt-10">\acrsh</span><a 
+ id="dx1-13002"></a>. With
+the <span 
+class="cmss-10">glossaries </span>package (provided you defined the acronym using <span 
+class="cmtt-10">\newacronym</span><a 
+ id="dx1-13003"></a>
+or <span 
+class="cmtt-10">\oldacronym</span><a 
+ id="dx1-13004"></a> and provided you haven&#8217;t redefined <span 
+class="cmtt-10">\newacronym</span><a 
+ id="dx1-13005"></a>) you can
+replace
+</p><!--l. 486--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossary</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\acrsh</span><a 
+ id="dx1-13006"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">acr-name</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+with
+</p><!--l. 490--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\acrshort</span><a 
+ id="dx1-13007"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+and you can replace
+</p><!--l. 494--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossary</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\acrln</span><a 
+ id="dx1-13008"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">acr-name</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+                                                                    
+
+                                                                    
+   <br /></span>
+with
+</p><!--l. 498--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\acrlong</span><a 
+ id="dx1-13009"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+The <span 
+class="cmss-10">glossaries </span>package also provides the related commands <span 
+class="cmtt-10">\acrshortpl</span><a 
+ id="dx1-13010"></a> (plural short
+form) and <span 
+class="cmtt-10">\acrlongpl</span><a 
+ id="dx1-13011"></a> (plural long form) as well as upper case variations. If you use the
+<span 
+class="cmss-10">glossaries </span>&#8220;shortcuts&#8221; package option, you can use <span 
+class="cmtt-10">\acs</span><a 
+ id="dx1-13012"></a> in place of <span 
+class="cmtt-10">\acrshort</span><a 
+ id="dx1-13013"></a> and <span 
+class="cmtt-10">\acl</span><a 
+ id="dx1-13014"></a>
+in place of <span 
+class="cmtt-10">\acrlong</span><a 
+ id="dx1-13015"></a>.
+</p><!--l. 508--><p class="indent" >   See <a 
+href="glossaries-user.html#sec:acronyms" >Acronyms</a> of the <span 
+class="cmss-10">glossaries </span>manual for further details of how to use these
+commands.
+</p><!--l. 514--><p class="noindent" >
+</p>
+<!--l. 514--><p class="noindent" ><a 
+href="#top">Top</a><h3 class="subsectionHead"></p><h4 class="subsectionHead"><span class="titlemark">7.2   </span> <a 
+ id="x1-140007.2"></a><span 
+class="cmtt-10">\ifacronymfirstuse</span></h4>
+<!--l. 516--><p class="noindent" >The <span 
+class="cmss-10">glossary </span>package command
+</p><!--l. 517--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossary</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\ifacronymfirstuse</span><a 
+ id="dx1-14001"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">acr-name</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">text1</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">text2</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+can be replaced by the <span 
+class="cmss-10">glossaries </span>command:
+</p><!--l. 521--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\ifglsused</span><a 
+ id="dx1-14002"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">text2</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">text1</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+Note that <span 
+class="cmtt-10">\ifglsused</span><a 
+ id="dx1-14003"></a> evaluates the opposite condition to that of <span 
+class="cmtt-10">\ifacronymfirstuse</span><a 
+ id="dx1-14004"></a>
+which is why the last two arguments have been reversed.
+</p><!--l. 530--><p class="noindent" >
+</p>
+<!--l. 530--><p class="noindent" ><a 
+href="#top">Top</a><h3 class="subsectionHead"></p><h4 class="subsectionHead"><span class="titlemark">7.3   </span> <a 
+ id="x1-150007.3"></a><span 
+class="cmtt-10">\resetacronym </span>and <span 
+class="cmtt-10">\unsetacronym</span></h4>
+<!--l. 532--><p class="noindent" >The <span 
+class="cmss-10">glossary </span>package allows you to reset and unset the acronym flag which is used to
+determine whether the acronym has been used in the document. The <span 
+class="cmss-10">glossaries </span>package
+also provides a means to do this on either a local or a global level. To reset an acronym,
+you will need to replace:
+</p><!--l. 537--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossary</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\resetacronym</span><a 
+ id="dx1-15001"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">acr-name</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+                                                                    
+
+                                                                    
+   <br /></span>
+with either
+</p><!--l. 541--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\glsreset</span><a 
+ id="dx1-15002"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+or
+</p><!--l. 545--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\glslocalreset</span><a 
+ id="dx1-15003"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+</p><!--l. 549--><p class="indent" >   To unset an acronym, you will need to replace:
+</p><!--l. 550--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossary</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\unsetacronym</span><a 
+ id="dx1-15004"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">acr-name</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+with either
+</p><!--l. 554--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\glsunset</span><a 
+ id="dx1-15005"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+or
+</p><!--l. 558--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\glslocalunset</span><a 
+ id="dx1-15006"></a><span 
+class="cmtt-10">{</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmitt-10">label</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">}</span>
+   <br /></div><hr>
+   <br /></span>
+</p><!--l. 562--><p class="indent" >   To reset all acronyms, you will need to replace:
+</p><!--l. 563--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossary</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\resetallacronyms</span><a 
+ id="dx1-15007"></a>
+   <br /></div><hr>
+   <br /></span>
+with
+</p><!--l. 567--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\glsresetall</span><a 
+ id="dx1-15008"></a><span 
+class="cmtt-10">[\acronymtype</span><a 
+ id="dx1-15009"></a><span 
+class="cmtt-10">]</span>
+   <br /></div><hr>
+   <br /></span>
+                                                                    
+
+                                                                    
+or
+</p><!--l. 571--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\glslocalresetall</span><a 
+ id="dx1-15010"></a><span 
+class="cmtt-10">[\acronymtype</span><a 
+ id="dx1-15011"></a><span 
+class="cmtt-10">]</span>
+   <br /></div><hr>
+   <br /></span>
+To unset all acronyms, you will need to replace:
+</p><!--l. 575--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossary</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\unsetallacronyms</span><a 
+ id="dx1-15012"></a>
+   <br /></div><hr>
+   <br /></span>
+with
+</p><!--l. 579--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\glsunsetall</span><a 
+ id="dx1-15013"></a><span 
+class="cmtt-10">[\acronymtype</span><a 
+ id="dx1-15014"></a><span 
+class="cmtt-10">]</span>
+   <br /></div><hr>
+   <br /></span>
+or
+</p><!--l. 583--><p class="indent" >   <hr><div><span class="marginpar"><span 
+class="cmss-10">glossaries</span></span><span class="obeylines-h">
+   <span 
+class="cmtt-10">\glslocalunsetall</span><a 
+ id="dx1-15015"></a><span 
+class="cmtt-10">[\acronymtype</span><a 
+ id="dx1-15016"></a><span 
+class="cmtt-10">]</span>
+   <br /></div><hr>
+   <br /></span>
+</p><!--l. 587--><p class="noindent" >
+</p>
+<!--l. 587--><p class="noindent" ><a 
+href="#top">Top</a><h2 class="sectionHead"></p><h3 class="sectionHead"><span class="titlemark">8   </span> <a 
+ id="displayingtheglossary"></a>Displaying the glossary</h3>
+<!--l. 589--><p class="noindent" >The <span 
+class="cmss-10">glossary </span>package provides the command <span 
+class="cmtt-10">\printglossary</span><a 
+ id="dx1-16001"></a> (or <span 
+class="cmtt-10">\print</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">type</span><span 
+class="cmmi-10">&#x003E; </span>for
+other glossary types) which can be used to print individual glossaries. The <span 
+class="cmss-10">glossaries</span>
+package provides the command <span 
+class="cmtt-10">\printglossaries</span><a 
+ id="dx1-16002"></a> which will print all the glossaries
+which have been defined, or <span 
+class="cmtt-10">\printglossary</span><a 
+ id="dx1-16003"></a><span 
+class="cmtt-10">[</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">options</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">] </span>to print individual glossaries.
+So if you just have <span 
+class="cmtt-10">\printglossary</span><a 
+ id="dx1-16004"></a>, then you can leave it as it is, but if you have,
+say:
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-14">
+\printglossary
+&#x00A0;<br />\printglossary[acronym]
+</div>
+<!--l. 600--><p class="nopar" > or
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-15">
+\printglossary
+&#x00A0;<br />\printacronym
+</div>
+<!--l. 605--><p class="nopar" > then you will need to replace this with either
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-16">
+\printglossaries
+</div>
+<!--l. 609--><p class="nopar" > or
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-17">
+\printglossary
+&#x00A0;<br />\printglossary[type=\acronymtype]
+</div>
+<!--l. 614--><p class="nopar" >
+</p><!--l. 616--><p class="indent" >   The <span 
+class="cmss-10">glossary </span>package allows you to specify a short title (for the table of contents and
+page header) by defining a command of the form <span 
+class="cmtt-10">\short</span><span 
+class="cmmi-10">&#x003C;</span><span 
+class="cmti-10">glossary-type</span><span 
+class="cmmi-10">&#x003E;</span><span 
+class="cmtt-10">name</span>. The
+<span 
+class="cmss-10">glossaries </span>package doesn&#8217;t do this, but instead provides the <span 
+class="cmss-10">toctitle</span><a 
+ id="dx1-16005"></a> key which can be
+used in the optional argument to <span 
+class="cmtt-10">\printglossary</span><a 
+ id="dx1-16006"></a>. For example, if you have created a
+new glossary type called <span 
+class="cmtt-10">notation</span>, and you had defined
+                                                                    
+
+                                                                    
+</p>
+   <div class="verbatim" id="verbatim-18">
+\newcommand{\shortnotationname}{Notation}
+</div>
+<!--l. 626--><p class="nopar" > then you would need to use the <span 
+class="cmss-10">toctitle</span><a 
+ id="dx1-16007"></a> key:
+                                                                    
+
+                                                                                            
+</p>
+   <div class="verbatim" id="verbatim-19">
+\printglossary[type=notation,toctitle=Notation]
+</div>
+<!--l. 630--><p class="nopar" > The <span 
+class="cmss-10">glossaries </span>package will ignore <span 
+class="cmtt-10">\shortnotationname</span><a 
+ id="dx1-16008"></a>, so unless you have used it
+elsewhere in the document, you may as well remove the definition.
+</p><!--l. 635--><p class="noindent" >
+</p>
+<!--l. 635--><p class="noindent" ><a 
+href="#top">Top</a><h2 class="sectionHead"></p><h3 class="sectionHead"><span class="titlemark">9   </span> <a 
+ id="processingyourdocument"></a>Processing Your Document</h3>
+<!--l. 637--><p class="noindent" >If you convert your document from using the <span 
+class="cmss-10">glossary </span>package to the <span 
+class="cmss-10">glossaries </span>package,
+you will need to delete any of the additional files, such as the <span 
+class="cmtt-10">.glo</span><a 
+ id="dx1-17001"></a> file, that were
+created by the <span 
+class="cmss-10">glossary </span>package, as the <span 
+class="cmss-10">glossaries </span>package uses a different format.
+Remember also, that if you used the <span 
+class="cmtt-10">makeglos</span><a 
+ id="dx1-17002"></a> Perl script, you will need to use the
+<span 
+class="cmtt-10">makeglossaries</span><a 
+ id="dx1-17003"></a> Perl script instead. As from v1.17, the <span 
+class="cmss-10">glossaries </span>package
+can be used with either <span 
+class="cmtt-10">makeindex</span><a 
+ id="dx1-17004"></a> or <span 
+class="cmtt-10">xindy</span><a 
+ id="dx1-17005"></a>. Since <span 
+class="cmtt-10">xindy</span><a 
+ id="dx1-17006"></a> was designed to be
+multilingual, the new <span 
+class="cmss-10">glossaries </span>package is a much better option for non-English
+documents.
+</p><!--l. 650--><p class="indent" >   For further information on using <span 
+class="cmtt-10">makeglossaries</span><a 
+ id="dx1-17007"></a>, <span 
+class="cmtt-10">makeindex</span><a 
+ id="dx1-17008"></a> or <span 
+class="cmtt-10">xindy</span><a 
+ id="dx1-17009"></a> to create
+your glossaries, see <a 
+href="glossaries-user.html#sec:makeglossaries" >Generating the Associated Glossary Files</a> of the <span 
+class="cmss-10">glossaries</span>
+documentation.
+</p><!--l. 656--><p class="noindent" >
+</p>
+<!--l. 656--><p class="noindent" ><a 
+href="#top">Top</a><h2 class="sectionHead"></p><h3 class="sectionHead"><span class="titlemark">10   </span> <a 
+ id="troubleshooting"></a>Troubleshooting</h3>
+<!--l. 658--><p class="noindent" >Please check the <a 
+href="http://www.dickimaw-books.com/faqs/glossariesfaq.html" >FAQ</a> for the <span 
+class="cmss-10">glossaries </span>package if you have any problems.
+                                                                                            
+
+                                                                                            
+</p><!--l. 662--><p class="indent" >   <a 
+ id="likesection.1"></a><a 
+ id="index"></a>
+</p>
+   <h3 class="likesectionHead"><a 
+ id="x1-1900010"></a>Index</h3>
+<!--l. 4--><p class="noindent" >                                                                  <span 
+class="cmbx-10">A</span>
+</p>
+   <div class="theindex"><span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\acl</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-13014" ><span class="underline">1</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\acrln</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-13001" ><span class="underline">2</span></a>, <a 
+href="glossary2glossaries.html#dx1-13008" ><span class="underline">3</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\acrlong</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-13009" ><span class="underline">4</span></a>, <a 
+href="glossary2glossaries.html#dx1-13015" ><span class="underline">5</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\acrlongpl</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-13011" ><span class="underline">6</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\acronymname</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-4008" ><span class="underline">7</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\acronymtype</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-15009" ><span class="underline">8</span></a>, <a 
+href="glossary2glossaries.html#dx1-15011" ><span class="underline">9</span></a>, <a 
+href="glossary2glossaries.html#dx1-15014" ><span class="underline">10</span></a>, <a 
+href="glossary2glossaries.html#dx1-15016" ><span class="underline">11</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\acrsh</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-13002" ><span class="underline">12</span></a>, <a 
+href="glossary2glossaries.html#dx1-13006" ><span class="underline">13</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\acrshort</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-13007" ><span class="underline">14</span></a>, <a 
+href="glossary2glossaries.html#dx1-13013" ><span class="underline">15</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\acrshortpl</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-13010" ><span class="underline">16</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\acs</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-13012" ><span class="underline">17</span></a> <br /></span>
+<p class="theindex">                                                                  <span 
+class="cmbx-10">F</span>
+<span class="index-item">file types<br /></span>
+<span class="index-subitem">&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmtt-10">.glo</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-17001" >18</a> <br /></span>
+</p><p class="theindex">                                                                  <span 
+class="cmbx-10">G</span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\glossary</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-6001" ><span class="underline">19</span></a>, <a 
+href="glossary2glossaries.html#dx1-6006" ><span class="underline">20</span></a>, <a 
+href="glossary2glossaries.html#dx1-7005" ><span class="underline">21</span></a>, <a 
+href="glossary2glossaries.html#dx1-11001" ><span class="underline">22</span></a>, <a 
+href="glossary2glossaries.html#dx1-11008" ><span class="underline">23</span></a>, <a 
+href="glossary2glossaries.html#dx1-11013" ><span class="underline">24</span></a>, <a 
+href="glossary2glossaries.html#dx1-6003" ><span class="underline">25</span></a>, <a 
+href="glossary2glossaries.html#dx1-11003" ><span class="underline">26</span></a>, <a 
+href="glossary2glossaries.html#dx1-11011" ><span class="underline">27</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\glossaryname</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-4007" ><span class="underline">28</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\glossarystyle</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-4003" ><span class="underline">29</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\Gls</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-12016" ><span class="underline">30</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\gls</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-7004" ><span class="underline">31</span></a>, <a 
+href="glossary2glossaries.html#dx1-10001" ><span class="underline">32</span></a>, <a 
+href="glossary2glossaries.html#dx1-10004" ><span class="underline">33</span></a>, <a 
+href="glossary2glossaries.html#dx1-11017" ><span class="underline">34</span></a>, <a 
+href="glossary2glossaries.html#dx1-12009" ><span class="underline">35</span></a>, <a 
+href="glossary2glossaries.html#dx1-12011" ><span class="underline">36</span></a>, <a 
+href="glossary2glossaries.html#dx1-12014" ><span class="underline">37</span></a>, <a 
+href="glossary2glossaries.html#dx1-12020" ><span class="underline">38</span></a> <br /></span>
+<span class="index-item"><span 
+class="cmtt-10">\gls </span>options<br /></span>
+<span class="index-subitem">&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmss-10">counter</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-10003" >39</a> <br /></span>
+<span class="index-subitem">&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmss-10">number</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-10002" >40</a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\glsadd</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-8002" ><span class="underline">41</span></a>, <a 
+href="glossary2glossaries.html#dx1-11015" ><span class="underline">42</span></a>, <a 
+href="glossary2glossaries.html#dx1-12010" ><span class="underline">43</span></a> <br /></span>
+<span class="index-item"><span 
+class="cmtt-10">\glsadd </span>options<br /></span>
+<span class="index-subitem">&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmss-10">counter</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-8005" >44</a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\glslink</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-9002" ><span class="underline">45</span></a>, <a 
+href="glossary2glossaries.html#dx1-11016" ><span class="underline">46</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\glslocalreset</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-15003" ><span class="underline">47</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\glslocalresetall</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-15010" ><span class="underline">48</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\glslocalunset</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-15006" ><span class="underline">49</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\glslocalunsetall</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-15015" ><span class="underline">50</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\glsreset</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-15002" ><span class="underline">51</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\glsresetall</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-15008" ><span class="underline">52</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\glsunset</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-15005" ><span class="underline">53</span></a> <br /></span>
+                                                                                            
+
+                                                                                            
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\glsunsetall</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-15013" ><span class="underline">54</span></a> <br /></span>
+</p><p class="theindex">                                                                   <span 
+class="cmbx-10">I</span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ifacronymfirstuse</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-14001" ><span class="underline">55</span></a>, <a 
+href="glossary2glossaries.html#dx1-14004" ><span class="underline">56</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ifglsused</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-14002" ><span class="underline">57</span></a>, <a 
+href="glossary2glossaries.html#dx1-14003" ><span class="underline">58</span></a> <br /></span>
+</p><p class="theindex">                                                                  <span 
+class="cmbx-10">M</span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\makeacronym</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-5002" ><span class="underline">59</span></a> <br /></span>
+<span class="index-item"><span 
+class="cmtt-10">makeglos</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-17002" >60</a> <br /></span>
+<span class="index-item"><span 
+class="cmtt-10">makeglossaries</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-17003" >61</a>, <a 
+href="glossary2glossaries.html#dx1-17007" >62</a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\makeglossaries</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-5003" ><span class="underline">63</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\makeglossary</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-5001" ><span class="underline">64</span></a> <br /></span>
+<span class="index-item"><span 
+class="cmtt-10">makeindex</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-2003" >65</a>, <a 
+href="glossary2glossaries.html#dx1-2006" >66</a>, <a 
+href="glossary2glossaries.html#dx1-6012" >67</a>, <a 
+href="glossary2glossaries.html#dx1-17004" >68</a>, <a 
+href="glossary2glossaries.html#dx1-17008" >69</a>, <a 
+href="glossary2glossaries.html#dx1-2002" >70</a>, <a 
+href="glossary2glossaries.html#dx1-11004" >71</a>, <a 
+href="glossary2glossaries.html#dx1-11006" >72</a>, <a 
+href="glossary2glossaries.html#dx1-11012" >73</a> <br /></span>
+</p><p class="theindex">                                                                  <span 
+class="cmbx-10">N</span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\newacronym</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-12001" ><span class="underline">74</span></a>, <a 
+href="glossary2glossaries.html#dx1-12007" ><span class="underline">75</span></a>, <a 
+href="glossary2glossaries.html#dx1-12018" ><span class="underline">76</span></a>, <a 
+href="glossary2glossaries.html#dx1-13003" ><span class="underline">77</span></a>, <a 
+href="glossary2glossaries.html#dx1-13005" ><span class="underline">78</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\newglossary</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-4002" ><span class="underline">79</span></a>, <a 
+href="glossary2glossaries.html#dx1-4009" ><span class="underline">80</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\newglossaryentry</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-6005" ><span class="underline">81</span></a>, <a 
+href="glossary2glossaries.html#dx1-6008" ><span class="underline">82</span></a>, <a 
+href="glossary2glossaries.html#dx1-6011" ><span class="underline">83</span></a>, <a 
+href="glossary2glossaries.html#dx1-6016" ><span class="underline">84</span></a>, <a 
+href="glossary2glossaries.html#dx1-11014" ><span class="underline">85</span></a>, <a 
+href="glossary2glossaries.html#dx1-11018" ><span class="underline">86</span></a>, <a 
+href="glossary2glossaries.html#dx1-12002" ><span class="underline">87</span></a> <br /></span>
+<span class="index-item"><span 
+class="cmtt-10">\newglossaryentry </span>options<br /></span>
+<span class="index-subitem">&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmss-10">description</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-12004" >88</a>, <a 
+href="glossary2glossaries.html#dx1-12006" >89</a> <br /></span>
+<span class="index-subitem">&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmss-10">name</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-12003" >90</a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\newglossarytype</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-4001" ><span class="underline">91</span></a> <br /></span>
+</p><p class="theindex">                                                                  <span 
+class="cmbx-10">O</span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\oldacronym</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-12017" ><span class="underline">92</span></a>, <a 
+href="glossary2glossaries.html#dx1-12019" ><span class="underline">93</span></a>, <a 
+href="glossary2glossaries.html#dx1-13004" ><span class="underline">94</span></a> <br /></span>
+</p><p class="theindex">                                                                  <span 
+class="cmbx-10">P</span>
+<span class="index-item">package options:<br /></span>
+<span class="index-subitem">&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmss-10">description</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-12005" ><span class="underline">95</span></a>, <a 
+href="glossary2glossaries.html#dx1-12008" ><span class="underline">96</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\printglossaries</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-16002" ><span class="underline">97</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\printglossary</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-4004" ><span class="underline">98</span></a>, <a 
+href="glossary2glossaries.html#dx1-4006" ><span class="underline">99</span></a>, <a 
+href="glossary2glossaries.html#dx1-4011" ><span class="underline">100</span></a>, <a 
+href="glossary2glossaries.html#dx1-16001" ><span class="underline">101</span></a>, <a 
+href="glossary2glossaries.html#dx1-16003" ><span class="underline">102</span></a>, <a 
+href="glossary2glossaries.html#dx1-16004" ><span class="underline">103</span></a>, <a 
+href="glossary2glossaries.html#dx1-16006" ><span class="underline">104</span></a> <br /></span>
+<span class="index-item"><span 
+class="cmtt-10">\printglossary </span>options<br /></span>
+<span class="index-subitem">&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmss-10">style</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-4005" >105</a> <br /></span>
+<span class="index-subitem">&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmss-10">toctitle</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-4010" >106</a>, <a 
+href="glossary2glossaries.html#dx1-16005" >107</a>, <a 
+href="glossary2glossaries.html#dx1-16007" >108</a> <br /></span>
+</p><p class="theindex">                                                                  <span 
+class="cmbx-10">R</span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\resetacronym</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-15001" ><span class="underline">109</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\resetallacronyms</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-15007" ><span class="underline">110</span></a> <br /></span>
+</p><p class="theindex">                                                                  <span 
+class="cmbx-10">S</span>
+                                                                                            
+
+                                                                                            
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\shortnotationname</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-16008" ><span class="underline">111</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\storeglosentry</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-6004" ><span class="underline">112</span></a>, <a 
+href="glossary2glossaries.html#dx1-6007" ><span class="underline">113</span></a>, <a 
+href="glossary2glossaries.html#dx1-6009" ><span class="underline">114</span></a>, <a 
+href="glossary2glossaries.html#dx1-6010" ><span class="underline">115</span></a>, <a 
+href="glossary2glossaries.html#dx1-6015" ><span class="underline">116</span></a>, <a 
+href="glossary2glossaries.html#dx1-7001" ><span class="underline">117</span></a>, <a 
+href="glossary2glossaries.html#dx1-11009" ><span class="underline">118</span></a> <br /></span>
+<span class="index-item"><span 
+class="cmtt-10">\storeglosentry </span>options<br /></span>
+<span class="index-subitem">&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmss-10">format</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-6013" >119</a> <br /></span>
+<span class="index-subitem">&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmss-10">number</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-6014" >120</a> <br /></span>
+</p><p class="theindex">                                                                  <span 
+class="cmbx-10">U</span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\unsetacronym</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-15004" ><span class="underline">121</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\unsetallacronyms</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-15012" ><span class="underline">122</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\useacronym</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-12012" ><span class="underline">123</span></a>, <a 
+href="glossary2glossaries.html#dx1-12013" ><span class="underline">124</span></a>, <a 
+href="glossary2glossaries.html#dx1-12015" ><span class="underline">125</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\useGlosentry</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-7003" ><span class="underline">126</span></a>, <a 
+href="glossary2glossaries.html#dx1-9001" ><span class="underline">127</span></a> <br /></span>
+<span class="index-item"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\useglosentry</span></span></span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-7002" ><span class="underline">128</span></a>, <a 
+href="glossary2glossaries.html#dx1-8001" ><span class="underline">129</span></a> <br /></span>
+<span class="index-item"><span 
+class="cmtt-10">\useglosentry </span>options<br /></span>
+<span class="index-subitem">&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmss-10">format</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-8003" >130</a> <br /></span>
+<span class="index-subitem">&#x00A0;&#x00A0;&#x00A0;&#x00A0;<span 
+class="cmss-10">number</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-8004" >131</a> <br /></span>
+</p><p class="theindex">                                                                  <span 
+class="cmbx-10">X</span>
+<span class="index-item"><span 
+class="cmtt-10">xindy</span>&#x00A0;&#x00A0;<a 
+href="glossary2glossaries.html#dx1-2004" >132</a>, <a 
+href="glossary2glossaries.html#dx1-2005" >133</a>, <a 
+href="glossary2glossaries.html#dx1-17005" >134</a>, <a 
+href="glossary2glossaries.html#dx1-17006" >135</a>, <a 
+href="glossary2glossaries.html#dx1-17009" >136</a>, <a 
+href="glossary2glossaries.html#dx1-11005" >137</a>, <a 
+href="glossary2glossaries.html#dx1-11007" >138</a> <br /></span>
+</p></div>
+   <div class="footnotes"><!--l. 86--><p class="noindent" ><span class="footnote-mark"><a 
+href="#fn1x0-bk" id="fn1x0"><sup class="textsuperscript">1</sup></a></span><span 
+class="cmr-8">as from v1.17. Previous versions were designed to be used with </span><span 
+class="cmtt-8">makeindex</span><a 
+ id="dx1-2002"></a> <span 
+class="cmr-8">only</span></p>
+<!--l. 101--><p class="noindent" ><span class="footnote-mark"><a 
+href="#fn2x0-bk" id="fn2x0"><sup class="textsuperscript">2</sup></a></span><span 
+class="cmr-8">as from v1.17</span></p><!--l. 238--><p class="indent" > <span class="footnote-mark"><a 
+href="#fn3x0-bk" id="fn3x0"><sup class="textsuperscript">3</sup></a></span><span 
+class="cmr-8">mainly because having a key value list in </span><span 
+class="cmtt-8">\glossary</span><a 
+ id="dx1-6003"></a> <span 
+class="cmr-8">caused problems, but it also helps</span>
+<span 
+class="cmr-8">consistency.</span></p>
+<!--l. 352--><p class="indent" >     <span class="footnote-mark"><a 
+href="#fn4x0-bk" id="fn4x0"><sup class="textsuperscript">4</sup></a></span><span 
+class="cmr-8">This is because </span><span 
+class="cmtt-8">\glossary</span><a 
+ id="dx1-11003"></a> <span 
+class="cmr-8">requires the argument to be in a specific format and doesn&#8217;t use the</span>
+<span 
+class="cmmi-8">&#x003C;</span><span 
+class="cmti-8">key</span><span 
+class="cmmi-8">&#x003E;</span><span 
+class="cmr-8">=</span><span 
+class="cmmi-8">&#x003C;</span><span 
+class="cmti-8">value</span><span 
+class="cmmi-8">&#x003E; </span><span 
+class="cmr-8">format that the old glossary package used. The new package&#8217;s internal commands set</span>
+<span 
+class="cmr-8">this format, as well as escaping any of </span><span 
+class="cmtt-8">makeindex</span><a 
+ id="dx1-11004"></a><span 
+class="cmr-8">&#8217;s or </span><span 
+class="cmtt-8">xindy</span><a 
+ id="dx1-11005"></a><span 
+class="cmr-8">&#8217;s special characters. What&#8217;s more, the</span>
+<span 
+class="cmr-8">format has changed as from v1.17 to allow the new package to be used with either </span><span 
+class="cmtt-8">makeindex</span><a 
+ id="dx1-11006"></a> <span 
+class="cmr-8">or</span>
+<span 
+class="cmtt-8">xindy</span><a 
+ id="dx1-11007"></a><span 
+class="cmr-8">.</span></p>
+<!--l. 361--><p class="indent" >     <span class="footnote-mark"><a 
+href="#fn5x0-bk" id="fn5x0"><sup class="textsuperscript">5</sup></a></span><span 
+class="cmr-8">From the user&#8217;s point of view, using </span><span 
+class="cmtt-8">\glossary</span><a 
+ id="dx1-11011"></a> <span 
+class="cmr-8">throughout the document is time consuming,</span>
+<span 
+class="cmr-8">and if you use it more than once for the same term, there&#8217;s a chance extra spaces may creep in which</span>
+<span 
+class="cmr-8">will cause </span><span 
+class="cmtt-8">makeindex</span><a 
+ id="dx1-11012"></a> <span 
+class="cmr-8">to treat the two entries as different terms, even though they look the same in the</span>
+<span 
+class="cmr-8">document.</span></p>                                                                                                                </div>
+ 
+</body></html> 
+
+                                                                                            
+
+

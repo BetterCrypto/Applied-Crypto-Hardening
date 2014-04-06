@@ -1,0 +1,71 @@
+ % This file is public domain.
+ %
+ % This is a minimal file for testing and debugging
+ % the glossaries package. Change the class file as
+ % desired, and add the relevant package options to
+ % both the class file and the glossaries package.
+ % Change the sample glossary entry and acronym if
+ % required. If the problem occurs with an additional
+ % glossary, add in the relevant \newglossary command
+ % and a sample entry.
+ %
+ % Only add extra packages or commands if they
+ % contribute to whatever problem you are trying to
+ % test.
+ %
+ % Remember that the document will not be complete
+ % until you have successfully completed all of the
+ % following steps:
+ % 1. latex minimalgls
+ % 2. makeglossaries minimalgls (note no extension)
+ % 3. latex minimalgls
+ % A further run through LaTeX will be required to ensure that
+ % the table of contents is up to date if the toc option
+ % is used.
+ % Alternatively, if you use arara, you can add the following
+ % directives in your document:
+ %
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+
+\documentclass{article}
+\listfiles
+
+\usepackage[colorlinks]{hyperref}
+ %\usepackage{glossaries} % acronym will go in main glossary
+ \usepackage[acronym]{glossaries} % make a separate list of acronyms
+
+\makeglossaries
+
+\longnewglossaryentry{par}{name={par}}%
+{%
+  A long description with a paragraph break.
+
+  This is the next paragraph.
+}
+
+\newglossaryentry{sample}{name={sample},
+description={a sample entry}}
+
+\newacronym[\glsshortpluralkey=cas,\glslongpluralkey=contrived
+acronyms]{aca}{aca}{a contrived acronym}
+
+\begin{document}
+
+A \gls{sample} entry and \gls{aca}. Second use: \gls{aca}.
+
+Plurals: \glspl{sample}. Reset acronym\glsreset{aca}.
+First use: \glspl{aca}. Second use: \glspl{aca}.
+
+\glsresetall
+First letter upper case: \Gls{sample}. First use: \Gls{aca}.
+Subsequent use: \Gls{aca}.
+\glsresetall
+Plurals: \Glspl{sample}. First use: \Glspl{aca}. Next: \Glspl{aca}.
+
+If you want paragraph breaks in the description use
+\verb|\longnewglossaryentry|, as with entry \gls{par}.
+
+\printglossaries
+\end{document}

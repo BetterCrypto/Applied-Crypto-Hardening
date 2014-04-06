@@ -1,0 +1,43 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+\documentclass[a4paper]{article}
+
+\usepackage[margin=0.5in]{geometry}
+\usepackage{booktabs}
+\usepackage[acronym]{glossaries-accsupp}
+
+\makeglossaries
+
+\newglossaryentry{dr}{name=Dr,description={Doctor},access={Doctor}}
+
+\newacronym[shortaccess=S V M]{svm}{svm}{support vector machine}
+
+\newacronym{eg}{e.g.}{for example}
+
+\newcommand*{\samplerow}[1]{%
+  \gls{#1} & \gls{#1} & \acrshort{#1} & \acrlong{#1}\\
+ \glsreset{#1}\Gls{#1} & \Gls{#1} & \Acrshort{#1} & \Acrlong{#1}\\
+ \glsreset{#1}\GLS{#1} & \GLS{#1} & \ACRshort{#1} & \ACRlong{#1}\\
+}
+
+\begin{document}
+
+\begin{center}
+\begin{tabular}{lllll}
+\toprule
+\bfseries First & \bfseries Next & \bfseries Short & \bfseries Long
+\\\midrule
+\samplerow{dr}
+\midrule
+\samplerow{eg}
+\midrule
+\samplerow{svm}
+\bottomrule
+\end{tabular}
+\end{center}
+
+\printglossaries
+\end{document}

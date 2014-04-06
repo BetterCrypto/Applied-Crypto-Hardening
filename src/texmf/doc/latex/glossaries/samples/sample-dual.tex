@@ -1,0 +1,33 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+\documentclass{article}
+
+\usepackage[acronym]{glossaries}
+
+ % \newdualentry[main options]{label}{short}{long}{description}
+
+\newcommand*{\newdualentry}[5][]{%
+  \newglossaryentry{main-#2}{name={#4},%
+  text={#3\glsadd{#2}},%
+  description={#5},%
+  #1
+  }%
+  \newacronym{#2}{#3\glsadd{main-#2}}{#4}
+}
+
+\newdualentry{svm}% label
+  {SVM}% abbreviation
+  {support vector machine}% long form
+  {Statistical pattern recognition technique}% description
+
+\makeglossaries
+
+\begin{document}
+
+\gls{svm}.
+
+\printglossaries
+\end{document}

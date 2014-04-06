@@ -1,0 +1,28 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+\documentclass{article}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage[style=tree]{glossaries}
+
+\makeglossaries
+
+\renewcommand*{\glsentryfmt}{%
+  \glsgenentryfmt
+  \ifglsused{\glslabel}{}{\space (\glsentrysymbol{\glslabel})}%
+}
+
+\newglossaryentry{distance}{name=distance,
+description={The length between two points},
+symbol={km}}
+
+\begin{document}
+
+First use: \gls{distance}. Next use: \gls{distance}.
+
+\printglossaries
+
+\end{document}

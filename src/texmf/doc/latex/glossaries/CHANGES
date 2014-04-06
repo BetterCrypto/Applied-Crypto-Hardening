@@ -1,0 +1,957 @@
+glossaries change log:
+
+v4.07:
+
+  * glossaries.sty:
+
+   - Added \glsletentryfield
+
+   - Bug fixes:
+     - added optional argument to unstarred sectioning
+       commands (used with package options numberedsection=nolabel
+       and numberedsection=autolabel)
+
+     - added \global prefix to definition of \@gls@loclist
+       in \@gls@noidx@do in case a tabular-like style is used.
+
+     - Fixed no case change bug in \Acrfullplfmt
+
+v4.06:
+
+  * glossaries.sty:
+
+   - Added \glsifhyper
+
+   - Fixed bookmark issue occurring with
+     "numbers" and "symbols" package options
+     in combination with hyperref.sty and translator.sty
+
+v4.05:
+
+  - Added missing glossaries-prefix.sty to tds
+
+v4.04:
+
+  * glossaries.sty:
+
+   - new commands: \makenoidxglossaries, \printnoidxglossary
+     and \printnoidxglossaries that use TeX to sort entries 
+     instead of makeindex/xindy
+
+   - new command: \glsnumberlistloop (for use with
+     \makenoidxglossaries)
+
+   - new package option: noredefwarn
+
+   - moved definition of \glswrite to \makeglossaries so that write
+     register is only allocated if required.
+
+   - fixed bug in \defglsdisplayfirst
+
+  * glossary-tree.sty:
+
+   - fixed bug in alttree style
+
+
+  * glossaries-accsupp.sty:
+
+   - \compatibleglossentry and \compatiblesubglossentry:
+     changed \newcommand to \def as they may or may not be
+     defined depending on whether user has loaded glossaries
+     separately from glossaries-accsupp
+
+  * makeglossaries:
+
+   - added -Q and -k switches
+
+   - added extra diagnostics
+
+v4.03:
+
+  glossaries.sty:
+
+   * Added \glsifhasfield
+
+   * Changed default definition of \glswritefiles to \@empty
+     instead of \relax
+
+   * Fixed bug in \ifglsdescsuppressed
+
+   * Added \glsdetoklabel
+
+   * Added \glsdoifexistsorwarn
+
+   * Changed \glossentryname etc to use \glsdoifexistsorwarn
+     instead of \glsdoifexists
+
+   * Added \renewacronymstyle
+
+   * Fixed bug in dua acronym style
+
+  glossaries-accsupp.sty:
+
+   * Redefined acronym styles to use accessibility support
+
+  makeglossaries v2.12:
+
+   * Added check for backslashes in -x, -m and -d arguments
+
+
+v4.02:
+
+  glossaries.sty:
+
+   * Added nameref value to 'numberedsection' package option
+
+   * New package option: "index"
+
+   * New package option: xindynoglsnumbers (equivalent to 
+     xindy={glsnumbers=false})
+
+   * Added \newacronymstyle, \setacronymstyle and associated
+     commands. (Package options "smallcaps", "smaller",
+     "description", "dua" and "footnote" now deprecated.)
+
+   * New commands \acrfullfmt etc to govern the format of 
+     \acrfull etc.
+
+   * Made \makeglossaries preamble only
+
+   * Bug Fixes:
+
+     - \acrlong, \Acrlong, \ACRlong, \acrlongpl,
+       \Acrlongpl and \ACRlongpl: removed \acronymfont and
+       spurious parenthetical text.
+
+     - \glsentryfull, \Glsentryfull, \glsentryfullpl,
+       and \Glsentryfullpl: added missing \acronymfont
+
+     - Fixed bug in "sanitize" package option (deprecated option,
+       but still kept for backward compatibility).
+
+v4.01:
+
+  * Fixed bug in \CustomAcronymFields caused by missing comma.
+
+  * Fixed valueless package options so that they can be passed via
+    the document class.
+
+v4.0:
+
+  First stable release since v3.07.
+
+v3.14a:
+
+  * glossaries.sty
+
+    - New package options: acronyms, xindygloss, notranslate
+
+    - Modified savewrites option so that it can be set via
+      \setupglossaries
+
+    - Enabled compatible-3.07 option in \setupglossaries
+
+    - Added \provideglossaryentry and \longprovideglossaryentry
+
+    - Bug fix: fixed the default firstplural value to the value of
+      the plural key.
+
+  * glossaries-prefix.sty
+
+    - New
+
+  * makeglossaries v2.09:
+
+    - added check for -q switch when issuing warnings
+
+v3.13a:
+
+  * glossaries.sty
+
+    - Added \glsprestandardsort
+
+    - Renamed \glossarymark to \glsglossarymark to prevent clash
+      with memoir.
+
+    - Made "translate" package option a choice key rather than boolean
+
+    - Bug fix for \glsaddallunused: 
+        set default value of optional argument to \@glo@types
+
+    - Bug fix for \SetFootnoteAcronymDisplayStyle:
+        added missing final argument of \ifglshaslong
+
+    - Bug fix for \glossarystyle:
+        replaced \ifdef with \ifcsdef
+
+  * mfirstuc.sty (v1.08):
+
+    - Made \makefirstuc and \capitalisewords robust
+
+v3.12a:
+
+  * glossaries.sty
+
+    - Added \glsaddkey (allows the user to add their own custom 
+      keys to glossary entries).
+
+v3.11a:
+
+  * glossaries.sty
+
+    - Added \setupglossaries
+      (http://www.dickimaw-books.com/cgi-bin/featuretracker.cgi?action=view&key=7)
+
+    - Added \glsentryfmt and \defglsentryfmt
+      and deprecated \glsdisplayfirst, \glsdisplay,
+      \defglsdisplayfirst and \defglsdisplay
+      (http://www.dickimaw-books.com/cgi-bin/featuretracker.cgi?action=view&key=13)
+
+    - Added \longnewglossaryentry
+
+    - Added \ifglshasshort and \ifglshaslong
+
+    - Added check in \glsgetgrouptitle for non-Latin characters
+
+    - Added compatible-3.07 package option
+
+    - Added "symbols" and "numbers" package options
+      (http://www.dickimaw-books.com/cgi-bin/featuretracker.cgi?action=view&key=16)
+
+    - Added \printacronyms[opts] as a synonym for
+      \printglossary[type=\acronymtype,opts]
+      if "acronym" package option is used and
+      "compatible-3.07" package has not been used
+      and \printacronym doesn't already exist at the start
+      of the document.
+
+    - Added \showgloshort and \showglolong
+
+    - Fixed bug in \@gls@noexpand@fields
+
+    - Fixed bug in \gls@defglossaryentry that didn't set the default
+      counter correctly
+
+    - Now uses \mfirstucMakeUppercase instead of \MakeUppercase
+      to be consistent with mfirstuc.
+
+    - Now requires textcase (better handling of case changes)
+
+  * mfirstuc (v1.07)
+
+    - Added \mfirstucMakeUppercase to allow the user to switch from
+      \MakeUppercase to another case changing command.
+
+  * makeglossaries (v2.08)
+
+    - Added -x and -m switches
+
+v3.10a:
+
+  * glossaries.sty
+
+    - Added \providecommand to aux file in case user removes 
+      the glossaries package from their document. (This ensures
+      the next run doesn't throw a load of undefined control
+      sequence errors when the aux file is parsed.)
+
+    - Fixed new code (from v3.08a) so that document can still
+      compile if entries are defined within the document after
+      \printglossary or \printglossaries
+
+v3.09a:
+
+  * glossaries.sty
+
+    - Added fix for \RecordChanges if doc.sty has been loaded
+
+    - Fixed noexpand for symbolplural field
+      (http://www.dickimaw-books.com/cgi-bin/bugtracker.cgi?action=view&key=41)
+
+    - Made \Glsentryname, \Glsentrytext etc robust
+
+    - Fixed bug in footnote option
+      (http://www.dickimaw-books.com/cgi-bin/bugtracker.cgi?action=view&key=37)
+
+    - Fixed bug where acronym starts with repeated letter
+      (www.dickimaw-books.com/cgi-bin/bugtracker.cgi?action=view&key=34)
+
+    - Added \glstextup which checks for \textulc
+      (http://www.dickimaw-books.com/cgi-bin/bugtracker.cgi?action=view&key=40)
+
+v3.08a:
+
+  * glossaries.sty
+
+    - Changed the way information is written to external glossary
+      files. Information is now written as just \glossentry{label}
+      or \subglossentry{level}{label} instead of
+      \glossaryentryfield{label}{name}{description}{symbol} or 
+      \glossarysubentryfield{level}{label}{name}{description}{symbol} 
+      This means that descriptions can span multiple paragraphs
+      without exceeding makeindex's buffer.
+
+    - Added \setglossarystyle (replaces \glossarystyle which is now
+      just for backward compatibility)
+
+    - New user commands: 
+
+        \glossentryname, \Glossentryname,
+        \glossentrydesc, \Glossentrydesc,
+        \glossentrysymbol, \Glossentrysymbol,
+        \glsexpandfields, \glsnoexpandfields,
+        \glsaddallunused,
+        \ifglshassymbol, ifglshasdesc
+
+    - Added nogroupskip option to \printglossary
+
+    - Added \gls@ifnotmeasuring
+
+    - Made \glsseeformat, \glsseelist, \glsseeitem and \glssee robust
+
+  * glossary-tree.sty
+
+    - Added \par to end of theglossary environment for index style.
+      (http://www.dickimaw-books.com/cgi-bin/bugtracker.cgi?action=view&key=38)
+
+v3.07:
+
+  * glossaries.sty
+
+    - Fixed bug relating to nohypertypes list option
+
+    - Added \setglossarypreamble (code provided by Michael Pock)
+
+    - Modified \glspostdescription to adjust spacefactor before full
+      stop. (Patch provided by Michael Pock.)
+
+    - Added check for openright in \gls@doclearpage
+
+    - Added \glsdoparenifnotempty
+
+    - Made \findrootlanguage obsolete
+
+makeglossaries:
+
+    - Added languagemap to determine root language
+
+v3.06:
+
+  * glossaries.sty
+
+    - Fixed incompatibility between glossaries and new version of babel.
+
+  * makeglossaries
+
+    - added babel dialect -> xindy language map
+
+v3.05:
+
+  * glossaries.sty
+
+    - fixed bugs related to location numbering (Roman and Alph).
+
+    - made \nopostdesc robust
+
+    - clarified in the documentation that \makeglossaries must be
+      used before cross-referenced entries
+
+    - added missing 'nohypertypes' code
+
+  * makeglossaries:
+
+    - added "din5007" as the default to makeglossaries if the
+      language is german
+
+  * glossary-mcols.sty:
+
+    - Fixed bug -> \begin{multicols}{2} replaced with \begin{multicols}{\glsmcols}
+
+v3.04:
+
+  * added 'nohypertypes' package option
+
+  * added new commands: \GlsDeclareNoHyperList and \glsIfNoHyperType
+
+  * added 'local' key to \glsdisp, \gls, \Gls and \GLS
+
+  * added check for doc package
+
+  * fixed bug in altlist that can cause an unintentional page break
+    between entry and description.
+
+  * fixed bug that causes extra space after glossary when using
+    xindy
+
+  * fixed bug that was introduced by the bug fix in 3.02 regarding wrong
+    page number
+
+  makeglossaries v2.05:
+  * added -d option
+
+v3.03:
+
+  * fixed bug in \printglossary options: title now also sets
+    toctitle if toctitle missing (as per documentation).
+
+  * added sanitize={sort=false} option
+
+  * added nopostdot package option
+
+  * added nogroupskip package option
+
+   glossary-inline.sty added:
+
+   - \glsinlinenameformat
+   - \glsinlinedescformat
+   - \glsinlineemptydescformat
+   - \glsinlinesubnameformat
+   - \glsinlinesubdescformat
+   - \glsinlinepostchild
+
+v3.02:
+
+  * new package options:
+
+    - 'ucmark'
+    - 'indexonlyfirst'
+    - 'savenumberlist'
+
+  * new glossary styles:
+
+    - glossary-mcol.sty
+    - glossary-inline.sty
+
+  * new commands:
+
+    - \glolinkprefix
+    - \glsmoveentry
+    - \renewglossarystyle
+    - \ifglshaschildren
+    - \ifglshasparent
+    - \glsresetentrycounter
+    - \glsentrynumberlist
+    - \glsdisplaynumberlist
+
+  * added check to \glswritefiles to see if glossary tokens have
+    been defined in case savewrites option used and \makeglossaries
+    omitted.
+
+  * fixed bug in \showglossaryentries
+
+  * fixed bug in \SmallNewAcronymDef
+
+  * fixed unwanted space in
+    \SetDescriptionFootnoteAcronymDisplayStyle
+
+  * fixed [xindy] wrong page number bug for entries occurring in
+    paragraph spanning page break
+
+  * fixed bug in \Glsentryfull and \glsentryfullpl
+
+  * swapped order of checks for babel and polyglossia
+
+  mfirstuc v1.06:
+
+  * added \capitalisewords, \xcapitalisewords
+
+  makeglossaries v2.04:
+
+  * fixed bug in &scan_aux
+
+v3.01:
+
+   * made commands like \glslink, \gls and \acrshort robust
+
+   * Fixed bugs in commands like \acrfullpl which was missing the
+     plural in some cases.
+
+   * Removed \acronymfont from \acrfullformat as it's already used
+     in the second argument passed to that command. (Causes a 
+     problem with the "smaller" option.)
+
+v3.0 (Major changes):
+
+   * Documentation has been restructured:
+
+     - glossaries-user: main user manual
+     - glossariesbegin: cut-down introduction for beginners
+     - mfirstuc-manual: user manual for mfirstuc package
+     - glossaries.pdf: documented code for advanced users
+     - glossary2glossaries: upgrading from glossary.sty to glossaries.sty
+
+   * Added new package options:
+
+     - entrycounter : number main (level 0) entries in the glossary.
+
+     - counterwithin : set parent counter for the entry counter.
+
+     - subentrycounter : number level 1 entries in the glossary.
+
+     - sort : set the sort order to 
+              - standard alphabetical (sort=standard),
+              - order of definition (sort=def) 
+              - order of use (sort=use)
+
+     - seeautonumberlist : automatically activates the number list
+                           for entries that use the "see" key.
+
+     - savewrites : minimise number of \newwrite
+
+     - compatible-2.07 :
+
+         bug fixes in v3.0 have cause compatibility problems. This 
+         package option will restore the old behaviour but bugs will 
+         remain.  (Should mostly only effect documents that used
+         \noist with a custom Xindy style file.)
+
+   * \printglossary sets \currentglossary to the current glossary's
+     label. (Allows custom glossary styles access to the glossary
+     type.)
+
+   * Modified internal workings of acronyms and:
+
+     - Added starred versions of \acrshort etc.
+
+     - Added "long", "short", "longplural" and "shortplural" keys
+       (Reserved for use with \newacronym.)
+
+     - Added analogous "longaccess", "shortaccess", "longpluralaccess"
+       and "shortpluralaccess" keys for \newacronym in 
+       glossaries-accsupp.sty
+
+   * Added \glsseeitemformat to customise the text given in the link
+     created by \glsseeitem.
+
+   * \newglossaryentry key "nonumberlist" now boolean.
+
+   * added debugging commands \showgloname etc.
+
+   * now loads etoolbox:
+
+     - replaced \DeclareRobustCommand with \newrobustcmd
+
+     - replaced \@ifundefined with \ifcsundef
+
+     - replaced \let...\undefined with \undef...
+
+   * Bug Fixes:
+
+     - now works with equation counter in amsmath's align
+       environment.
+
+     - Mixed counters now work with xindy option.
+
+     - Fixed hyperlinks in location numbers where \theH<counter>
+       has a prefix not present in \the<counter>.
+
+     - If title specified in \printglossary but toctitle hasn't
+       been specified, make toctitle same as supplied title.
+
+     - \newglossaryentry "see" key and \glssee now sanitize and escape 
+       special characters before writing to output file. (Allows
+       user to redefine \seename any point before \printglossary or
+       \printglossaries.)
+
+     - \glshyperlink: Changed the default value of the optional argument
+                      to \glsentrytext instead of \glsentryname.
+
+   * mfirstuc.sty (v1.05):
+
+     - added \glsmakefirstuc (replaces \@gls@makefirstuc) to make
+       it easier to customise.
+
+   makeglossaries (v2.02):
+
+   * now displays version number on startup unless -q
+
+   * added more diagnostics to give more helpful messages than
+     those supplied by xindy or makeindex.
+
+v2.07:
+
+   * Fixed bug that ignored format key in \glsadd
+
+   makeglossaries:
+
+   * Fixed bug causing failure to process aux files containing \@input
+
+v2.06:
+   * Added \altnewglossary
+
+   * added facility to customise acronyms if the predefined styles
+     don't fit the user's requirements.
+
+   * Serbian dictionary added (provided by Zoran Filipovic)
+
+   makeglossaries:
+
+   * Scans aux file for \@input in case \printglossary is in an
+     imported file.
+
+v2.05:
+   * Fixed error in .ist file and in \glsdisp caused by a 
+     misplace brace. (Patch provided by Sergiu Dotenco).
+
+v2.04:
+   * Improved support for multiple lists of acronyms.
+
+   * Fixed bug that caused \glsadd to ignore counter option
+
+   * Fixed bug that causes babel to override translator's definition
+     of \glossaryname.
+
+   * Added user1, ... , user6 keys.
+
+   * Added polyglossia support
+
+   * makeglossaries now creates stub output file if input file is
+     empty
+
+  glossaries-accsupp v0.2:
+   * Added access keys.
+
+   * Added support for acronyms.
+
+  mfirstuc v1.04: 
+   * fixed bug occurring when initial control sequence
+     in the argument of \makefirstuc has more than one 
+     argument.
+
+v2.03:
+   * Added check to see if \glossarymark has been defined
+
+   * makeglossaries - failed file test messages printed to
+     stdout instead of stderr (so that it doesn't interrupt
+     latexmk).
+
+   * Fixed bug when entries used at the start of a paragraph.
+
+   * Added package option hyperfirst (boolean option to suppress
+     hyperlink on first use).
+
+   * Added pod to makeglossaries.
+
+v2.02:
+   * Renamed glossaries-dictionary-Brazil.dict to 
+     glossaries-dictionary-Brazilian.dict
+
+   * Replaced \@mkboth with \glossarymark in \glossarysection
+     to make it easier for the user to override it
+
+   * Fixed bug that generated no \printglossary warning when
+     the glossary is placed in a group
+
+   * translate=false option will now prevent automatic loading
+     of translator package.
+
+v2.01:
+   * Documentation changes:
+      - removed quick guide section from glossaries.pdf and replaced 
+        it with a separate beginners guide (glossariesbegin.pdf)
+      - added a section for front-end or script developers who
+        want to access information from the aux file
+
+   * Added new ragged right versions of long/super styles
+
+   * Added 'nomain' package option to suppress the creation of the
+     main glossary
+
+   * Added 'nowarn' package option to suppress warnings
+
+   * Removed unwanted full stops in transcript messages
+
+   * Changed \linewidth to \hsize when setting lengths
+
+   * Removed item_02 key from makeindex style file (no such key)
+
+   * Moved \@do@wrglossary before term is displayed to prevent
+     unwanted whatsit
+
+v2.0 (1.20):
+   * Fixed ngerman caption bug in glossaries-babel.sty
+
+v1.19:
+
+   * changed \acronymfont to use \textsmaller instead of \smaller
+     (for "smaller" package option)
+
+   * Added \glsdisp (similar to \glslink except that it uses
+     \glsdisplay/glsdisplayfirst and unsets the first use flag)
+
+   * Added experimental package glossaries-accsupp which 
+     requires accsupp package.
+
+v1.18:
+   * fixed missing closing } in glossaries-babel.sty
+
+   * added \glstarget so that glossary styles can be modified
+     in the document without using internal commands.
+
+   * glossary-super.sty isn't loaded if supertabular.sty isn't
+     installed.
+
+   * added nolong, nosuper, nolist, notree and nostyles package 
+     options to prevent loading unnecessary packages.
+
+   * added \oldacronym (emulates the old glossary package's 
+     \newacronym command).
+
+   * added sublistdotted style.
+
+   * fixed bug caused by misspelt \glspagewidthlist (should be
+     \glspagelistwidth).
+
+   * fixed border in super4colheaderborder and 
+     altsuper4colheaderborder styles.
+
+   * fixed sort sanitization when package option sanitize={name=false}
+     is used.
+
+v1.17:
+   * changed definition of \@glossary to prevent conflict with
+     memoir
+
+   * added check to determine if \printglossary is defined. (If
+     it is, issue warning and redefine.)
+
+   * provided means to suppress number list for specific entries
+
+   * provided means to suppress description terminator for
+     specific entries
+
+   * added cross-referencing support
+
+   * added hierarchical support
+
+   * added xindy support
+
+   * modified \glshypernumber to support \nohyperpage
+     (code provided by Heiko Oberdiek)
+
+   * added 2 and 3-page suffix support
+
+   * added "order" package option to set word/letter ordering
+     (only has an effect in combination with makeglossaries script)
+
+   * added Brazilian dictionary (supplied by Thiago de Melo)
+
+v1.16 :
+   * fixed bug that causes footnote option to remove hyperlink
+     for first use entries in glossaries other than the list
+     of acronyms. (footnote option should only affect entries
+     in \acronymtype glossary.)
+
+   * Raised hypertarget so that links to glossary entries don't
+     scroll off the top of the page.
+
+   * Fixed expansion-related bug (thanks to fix provided by
+     Ulrich Diez)
+
+v1.15 :
+   * added \glslabel
+
+   * added altlong4col* and altsuper4col* styles
+
+   * fixed PDF encoding problem caused when both translator
+     and hyperref packages are being used
+
+   * fixed bug when using smallcaps and smaller options that causes
+     the long form in the list of acronyms to be the same for each 
+     entry
+
+   * Added warnings when rerun required when using glossary
+     group hyper navigation
+
+glossaries.perl v1.04:
+   * add do_cmd_glslabel
+
+   * changed links to the start of the relevant glossary entry
+     rather than the entry's backlink
+
+   * added implementation of starred forms of \gls etc
+
+   * added frame related code if frames.pl has been loaded
+
+v1.14 :
+   * Fixed bug in \glsnavhyperlink that causes an error when used
+     with hyperref and translator packages.
+
+   * Added \glsautoprefix (specifies a prefix to the automatically
+     generated label)
+
+   * Added nonumberlist and numberedsection keys to \printglossary
+
+   * Changed \glsnavigation so that it only lists the groups that
+     are present. (This prevents unknown target warnings.)
+
+   * Amended documentation.
+
+mfirstuc v1.02 (18 June 2008):
+
+   * Fixed bug that transfered grouping, (e.g 
+     \makefirstuc{\emph{abc}xyz} moved the xyz into the \emph)
+
+   * If group following initial command is empty, \MakeUppercase
+     is applied to the command, e.g. \makefirstuc{\ae{}bc} now
+     produces \MakeUppercase\ae{}bc.
+
+v1.13 :
+   * Fixed bug in long4colheaderborder that puts an extra row
+     at the end of the glossary.
+
+   * Fixed bug in \glstext etc that ignored 3rd argument (thanks
+     to Franz Fischer for pointing this out).
+
+   * Removed only preamble restriction on \newglossaryentry and
+     \newacronym.
+
+   * Added \glspluralsuffix.
+
+   * Changed firstplural default so that it takes its value from
+     the plural key if the first key is omitted.
+
+   * Added \acrshortpl, \Acrshortpl, \ACRshortpl, \acrlongpl,
+     \Acrlongpl, \ACRlongpl, \acrfullpl, \Acrfullpl, \ACRfullpl.
+
+   * Fixed bugs in \Acrshort etc.
+
+   * Add package options "smaller" and "shortcuts".
+
+   * Acronym default plural forms now implemented for the additional
+     acronym styles.
+
+   * Fixed makeglossaries to allow filenames with spaces.
+
+   * Fixed error in documentation describing \glsaddall
+     - optional argument should be a key=value list.
+
+   * Added Polish support (thanks to Piotr Formella for supplying
+     the translations).
+
+   * If babel is loaded and translator package is found on TeX's
+     path, then the translator package will now be automatically 
+     loaded.
+
+mfirstuc v1.01 (13 May 2008):
+
+   * Added \xmakefirstuc (expands argument before applying \makefirstuc)
+
+v1.12 (8 March 2008):
+   * Fixed bug that causes \glspl to print the plural short form
+     on first use instead of the plural long form.
+
+   * Added descriptionplural and symbolplural keys.
+
+   * Added \glsshortkey, \glsshortpluralkey, \glslongkey and
+     \glslongpluralkey.
+
+   * Fixed bugs in \glsname, \glstext, \glsdesc etc.
+
+   * Added a check for \hypertarget in addition to checking
+     for \hyperlink (in the event that \hyperlink is defined
+     but not \hypertarget).
+
+   * Changed #! line in makeglossaries to use /usr/bin/env
+
+   * Added package mfirstuc.sty which provides the command 
+     \makefirstuc{<stuff>} which makes the first object of
+     <stuff> uppercase unless <stuff> starts with a control
+     sequence followed by a group, in which case the first
+     object in the group is converted to uppercase. Examples:
+
+     \makefirstuc{abc}        -> Abc
+     \makefirstuc{\emph{abc}} -> \emph{Abc}
+     \makefirstuc{{\'a}bc}    -> {\'A}bc
+     \makefirstuc{\ae bc}     -> \AE bc
+     \makefirstuc{{\ae}bc}    -> {\AE}bc
+
+     (but don't do \makefirstuc{\ae{}bc} which produces \ae Bc.)
+
+v1.11 (2 March 2008):
+   * Fixed error in manual (glossary style is set using \glossarystyle
+     not \setglossarystyle).
+
+   * Changed the way the package is archived to make it compatible
+     with TeX Live.
+
+   * Improved error handling of makeglossaries and added --version
+     and --help options.
+
+v1.1 (22 Feb 2008):
+
+   * New package options:
+
+     - numberline: 
+       inserts \numberline{} in \addcontentsline when used with
+       the toc option.
+
+     - numberedsection: 
+       puts glossaries in numbered chapters/sections
+
+     - translate:
+       translate=false option prevents glossaries package from
+       using pre-supplied translations.
+
+     - description:
+       changes definition of \newacronym to allow a description
+
+     - footnote:
+       changes definition of \newacronym to use a footnote on
+       first use
+
+     - smallcaps:
+       changes definition of \newacronym to set acronyms in 
+       small capitals
+
+     - dua:
+       changes definition of \newacronym to always expand
+       acronyms
+
+   * Added \setglossarysection
+     - changes the section type used by the glossaries
+
+   * Added listdotted glossary style.
+
+   * No longer uses xspace package; uses amsgen instead.
+
+   * Added \glsname, \glsdesc, \glssymbol, \glsfirst, \glstext, 
+     \glsplural and \glsfirstplural.
+
+   * Added support for translator package.
+
+v1.08 (13 Oct 2007):
+   * Added multilingual support
+   * Fixed bug in listgroup and altlistgroup styles so that 
+     \glsgroupheading uses \glsgetgrouptitle to get the group title 
+     instead of displaying the label
+   * Fixed typo in error message text when the description key
+     is missing to \newglossaryentry.
+
+v1.07 (13 Sep 2007):
+   * Fixed bug causing incorrect page number for entries in the
+     first paragraph of a page.
+
+v1.06 (21 Aug 2007):
+   * Changed the license text
+
+v1.05 (10 Aug 2007):
+   * Changed the default value of the sort key to just use the
+     name key
+   * Added \@mkboth to \glossarysection
+
+v1.04 (3 Aug 2007):
+   * Added \glstextformat
+
+v1.03 (4 July 2007):
+   * Added \glspostdescription
+
+v1.02 (25 May 2007):
+   * Added overview section in the documentation
+
+v1.01 (17 May 2007):
+   * Added number range facility (equivalent to makeindex's |( and |)
+     formatting commands.)
+   * Added a space after \delimN and \delimR in the ist file.
+
+v1.0 (16 May 2007): Initial release

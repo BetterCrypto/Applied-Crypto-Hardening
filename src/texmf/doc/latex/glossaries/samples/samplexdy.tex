@@ -1,0 +1,261 @@
+ % This file is public domain.
+ %
+ % This is a sample document illustrating how to use the
+ % glossaries package with xindy. To create the document:
+ %
+ %   latex samplexdy
+ %   makeglossaries samplexdy
+ %   latex samplexdy
+ %
+ % If you don't have Perl installed, then use one of the
+ % following instead of makeglossaries:
+ %
+ % If you want to have a separate "Mc" letter group do:
+ %
+ %    xindy -I xindy -M samplexdy-mc -t samplexdy.glg -o samplexdy.gls samplexdy.glo
+ %
+ % Otherwise do:
+ %
+ %  xindy -L english -C utf8 -I xindy -M samplexdy -t samplexdy.glg -o samplexdy.gls samplexdy.glo
+ %
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fmtcount}
+
+\usepackage[colorlinks,plainpages]{hyperref}
+\usepackage[xindy,style=altlistgroup]{glossaries}
+
+ % Define a new command to do bold italic:
+
+\newcommand*{\hyperbfit}[1]{\textit{\hyperbf{#1}}}
+
+ % Need to add this to the list of attributes in order
+ % to use it with xindy:
+ % (This command will have no effect if \noist is used)
+
+\GlsAddXdyAttribute{hyperbfit}
+
+ % Redefine the page numbers so that they appear as a word:
+
+ \renewcommand*{\thepage}{\texorpdfstring{\Numberstring{page}}{\arabic{page}}}
+
+ % Need to add this to the list of location styles.
+ % \Numberstring{page} gets expanded to
+ % \protect \Numberstringnum {<n>} (where <n> is the page number)
+ % so need to define the location in that format:
+ % (This command will have no effect if \noist is used)
+
+\GlsAddXdyLocation{Numberstring}{:sep "\string\protect\space
+  \string\Numberstringnum\space\glsopenbrace"
+  "arabic-numbers" :sep "\glsclosebrace"}
+
+ % (Need to redefine \glsXpageXhyperbfit and
+ % \glsXpageXglsnumberformat after \makeglossaries to get the
+ % hyperlinks working correctly.)
+
+ % To have Mc as a separate group uncomment the following three
+ % lines:
+
+ %\setStyleFile{samplexdy-mc} % note no extension
+ %\noist
+ %\GlsSetXdyLanguage{}
+
+ % The above three lines specify to use samplexdy-mc.xdy (supplied
+ % with this file) and don't overwrite it. The language is
+ % unset using \GlsSetXdyLanguage{} as all the language
+ % dependent information is contained in samplexdy-mc.xdy
+ % Note that using \noist means that commands like
+ % \GlsAddXdyAttribute and \GlsAddXdyLocation will no longer have
+ % an effect.
+
+ % Write the style file (if \noist isn't used)
+ % and activate glossary entries
+
+\makeglossaries
+
+ % Each page location will be specified in the form:
+ %
+ % "\glsXpageXglsnumberformat{}{\protect \Numberstringnum "\marg{n}"}"
+ % or
+ % "\glsXpageXhyperbfit{}{\protect \Numberstringnum "\marg{n}"}"
+ %
+ % Redefine to allow hyperlinks:
+
+\renewcommand{\glsXpageXglsnumberformat}[2]{%
+ \linkpagenumber#2%
+}
+
+\renewcommand{\glsXpageXhyperbfit}[2]{%
+ \textbf{\em\linkpagenumber#2}%
+}
+
+\newcommand{\linkpagenumber}[3]{\hyperlink{page.#3}{#1#2{#3}}}
+
+ % Define glossary entries
+ % \glshyperlink is used instead of \gls to prevent the glossary
+ % page numbers also appear in the locations, however I need
+ % to ensure that the referenced entries are added to the
+ % glossary via commands that use \glslink, \glsadd or \glssee
+
+\newglossaryentry{mcadam}{name={McAdam, John Loudon},
+first={John Loudon McAdam},text={McAdam},
+description={Scottish engineer}}
+
+\newglossaryentry{maclaurin}{name={Maclaurin, Colin},
+first={Colin Maclaurin},text={Maclaurin},
+description={Scottish mathematician best known for the
+\gls{maclaurinseries}}}
+
+\newglossaryentry{maclaurinseries}{name={Maclaurin series},
+description={Series expansion},see={taylorstheorem}}
+
+\newglossaryentry{taylorstheorem}{name={Taylor's theorem},
+description={Theorem expressing a function $f(x)$ as the sum of
+a polynomial and a remainder:
+\[f(x) = f(a)+f'(a)(x-a)+f''(a)(x-a^2)/2!+\cdots+R_n\]
+If $n\to\infty$ the expansion is a \glshyperlink{taylorseries}
+and if $a=0$, the series is called a
+\gls{maclaurinseries}}}
+
+\newglossaryentry{taylorseries}{name={Taylor series},
+description={Series expansion},see={taylorstheorem}}
+
+\newglossaryentry{taylor}{name={Taylor, Brook},
+first={Brook Taylor},text={Taylor},
+description={English mathematician}}
+
+\newglossaryentry{mcnemar}{name={McNemar, Quinn},
+first={Quinn McNemar},text={McNemar},
+description={Mathematician who introduced
+\gls{mcnemarstest}. This entry has the number list
+suppressed},nonumberlist}
+
+\newglossaryentry{mcnemarstest}{name={McNemar's test},
+description={A nonparametric test introduced by
+\gls{mcnemar} in 1947}}
+
+\newglossaryentry{mach}{name={Mach, Ernst},
+first={Ernst Mach},text={Mach},
+ % if using samplexdy-mc.xdy, the following line is needed
+ % to prevent this entry being put in the "Mc" group
+sort={mach, Ernst},
+description={Czech/Austrian physicist and philosopher}}
+
+\newglossaryentry{machnumber}{name={Mach number},
+ % if using samplexdy-mc.xdy, the following line is needed
+ % to prevent this entry being put in the "Mc" group
+sort={mach number},
+description={Ratio of the speed of a body in a fluid to the
+speed of sound in that fluid named after \gls{mach}}}
+
+\newglossaryentry{malthus}{name={Malthus, Thomas Robert},
+first={Thomas Robert Malthus},text={Malthus},
+description={English mathematician, sociologist and classicist}}
+
+\newglossaryentry{ampereandre}{name={Ampère, André-Marie},
+first={André-Marie Ampère},text={Ampère},
+description={French mathematician and physicist}}
+
+\newglossaryentry{ampere}{name={ampere},
+description={SI unit of electric current named after
+\gls{ampereandre}}}
+
+\newglossaryentry{archimedes}{name={Archimedes of Syracuse},
+first={Archimedes of Syracuse},text={Archimedes},
+description={Greek mathematician}}
+
+\newglossaryentry{archimedesprinciple}{name={Archimedes' principle},
+description={Principle that if a body is submerged in a fluid
+it experiences upthrust equal to the weight of the displaced
+fluid. Named after \gls{archimedes}}}
+
+\newglossaryentry{galton}{name={Galton, Sir Francis},
+first={Sir Francis Galton},text={Galton},
+description={English anthropologist}}
+
+\newglossaryentry{gauss}{name={Gauss, Karl Friedrich},
+first={Karl Friedrich Gauss},text={Gauss},
+description={German mathematician}}
+
+\newglossaryentry{gaussianint}{name={Gaussian integer},
+description={Complex number where both real and imaginary
+parts are integers}}
+
+\newglossaryentry{gaussianfn}{name={Gaussian function},
+ description={A function of the form:
+ \[f(x) = a \exp\left(-\frac{(x-b)^2}{2c^2}\right)\]
+ for some constants $a$, $b$ and $c$}}
+
+\newglossaryentry{peano}{name={Peano, Giuseppe},
+first={Giuseppe Peano},text={Peano},
+description={Italian mathematician}}
+
+\newglossaryentry{peanoscurve}{name={Peano's curve},
+description={A space-filling curve discovered by
+\gls{peano}}}
+
+\newglossaryentry{pearson}{name={Pearson, Karl},
+first={Karl Pearson},text={Pearson},
+description={English mathematician}}
+
+\newglossaryentry{pearspmcc}{name={Pearson's product moment
+correlation coefficient},description={Product moment correlation
+coefficient named after \gls{pearson}}}
+
+\begin{document}
+\title{Sample Document Using the Glossaries Package With Xindy}
+\author{Nicola Talbot}
+\maketitle
+
+\section{\glsentryfirst{gauss}}
+
+This is a section on \gls[format=(]{gauss}. This section spans
+several pages.
+
+\rule{1pt}{0.6\textheight}
+
+This paragraph has been shoved to the bottom of the page using a rule.
+This paragraph spans a page break for testing purposes to ensure the
+glossary entry in this paragraph has the correct location. Here's
+the glossary entry: \gls{gaussianfn}.
+
+This page talks about \glspl[format=hyperbfit]{gaussianint}. Since
+it's the principle definition, the user-defined hyperbfit format is
+used.
+
+\newpage
+
+The section on \gls[format=)]{gauss} ends here.
+
+\section{Series Expansions}
+
+This section is about series expansions. It mentions
+\gls{maclaurin} and \gls{taylor}. It also discusses
+\gls{taylorstheorem} which is related to the \gls{taylorseries}.
+The \gls{maclaurinseries} is a special case of the
+\gls{taylorseries}.
+
+\section{\glsentryname{archimedesprinciple}}
+
+This section discusses \gls{archimedesprinciple} which was
+introduced by \gls{archimedes}.
+
+\section{Another section}
+
+This section covers \gls{mach} who introduced the \gls{machnumber}.
+It also mentions \gls{ampereandre} after whom the
+SI unit \gls{ampere} is named. It then discusses \gls{galton}
+and \gls{malthus}. Finally it mentions \gls{mcadam}.
+
+\newpage
+This page discusses \gls{mcnemar} who introduced
+\gls{mcnemarstest} and \gls{peano} who discovered \gls{peanoscurve}.
+
+\printglossaries
+\end{document}
