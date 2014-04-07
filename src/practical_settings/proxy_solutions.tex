@@ -151,11 +151,20 @@ ListenHTTPS
     End
 End
 \end{lstlisting}
+
 %% ---------------------------------------------------------------------- 
 \subsection{Apache Traffic Server}
+
+\subsubsection{Tested with Version} 
+\begin{itemize*}
+  \item 4.2.0 with OpenSSL 1.0.1e on RHEL 6.5
+\end{itemize*}
+
 As of v4.2 there is support for forward secrecy trough elliptic curve ciphers. Previous versions
 had no support for forward secrecy. Also v4.2 adds support for setting HSTS and configuring TLS
-minor versions on or off.
+minor versions on or off. The below configuration is valid for any ATS version newer than at least
+3.2.5, with the v4.2 options commented out.
+\end{itemize*}
 
 \paragraph*{records.config}
 \begin{lstlisting}
@@ -174,3 +183,12 @@ CONFIG proxy.config.ssl.server.cipher_suite STRING %*\cipherStringB*)
 #CONFIG proxy.config.ssl.hsts_max_age INT -1
 #CONFIG proxy.config.ssl.hsts_include_subdomains INT 0
 \end{lstlisting}
+
+\subsubsection{References} 
+\begin{itemize*}
+  \item \url{http://docs.trafficserver.apache.org/en/latest/reference/configuration/records.config.en.html#ssl-termination}
+  \item \url{https://cwiki.apache.org/confluence/display/TS/What\%27s+new+in+v4.2.x}
+\end{itemize*}
+
+\subsubsection{How to test}
+See appendix \ref{cha:tools}
