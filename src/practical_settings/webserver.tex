@@ -132,10 +132,51 @@ See appendix \ref{cha:tools}
 %%---------------------------------------------------------------------- 
 \subsection{MS IIS}
 \label{sec:ms-iis}
-\todo{Daniel: add screenshots and registry keys}
+
+To configure SSL/TLS on Windows Server IIS Crypto can be used.~\footnote{\url{https://www.nartac.com/Products/IISCrypto/}}
+Simply start the Programm, no installation required. The tool changes the registry keys described below.
+A restart ist required for the changes to take effect.
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.411\textwidth]{img/IISCryptoConfig.png}
+  \caption{IIS Crypto Tool}
+  \label{fig:IISCryptoConfig}
+\end{figure}
+
+Instead of using the IIS Crypto Tool the configuration can be set
+using the Windows Registry. The following Registry keys apply to the
+newer Versions of Windows (Windows 7, Windows Server 2008, Windows
+Server 2008 R2, Windows Server 2012 and Windows Server 2012 R2). For detailed
+information about the older versions see the Microsoft knowlagebase
+article. \footnote{\url{http://support.microsoft.com/kb/245030/en-us}}
+\begin{lstlisting}[breaklines]
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Ciphers] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\CipherSuites] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Hashes] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\KeyExchangeAlgorithms] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Protocols] 
+\end{lstlisting}
+
+\subsubsection{Tested with Version} 
+\begin{itemize*}
+  \item Windows Server 2008
+  \item Windows Server 2008 R2
+  \item Windows Server 2012
+  \item Windows Server 2012 R2
+\end{itemize*}
+
+\begin{itemize*}
+  \item Windows Vista and Internet Explorer 7 and upwards
+  \item Windows 7 and Internet Explorer 8 and upwards
+  \item Windows 8 and Internet Explorer 10 and upwards
+  \item Windows 8.1 and Internet Explorer 11
+\end{itemize*}
 
 
-\subsubsection{Tested with Version} \todo{Daniel: add tested version}
+
+
 
 
 \subsubsection{Settings}
@@ -151,8 +192,9 @@ The configuration of cipher suites MS IIS will use, can be configured in one
 of the following ways:
 \begin{enumerate}
   \item Group Policy \footnote{\url{http://msdn.microsoft.com/en-us/library/windows/desktop/bb870930(v=vs.85).aspx}}
-  \item Registry
+  \item Registry  \footnote{\url{http://support.microsoft.com/kb/245030 }}
   \item IIS Crypto~\footnote{\url{https://www.nartac.com/Products/IISCrypto/}}
+  \item Powershell 
 \end{enumerate}
 
 
@@ -199,14 +241,28 @@ Clients not supported:
 
 \subsubsection{Additional settings}
 %Here you can add additional settings
+It's recommended to use Strict-Transport-Security: max-age=15768000 
+for detailed information visit the
+\footnote{\url{http://www.iis.net/configreference/system.webserver/httpprotocol/customheaders#005}}
+Microsoft knowledgebase.
 
+You might want to redirect everything to http\textbf{s}:// if possible. In IIS you can do this with the following setting by Powershell:
+
+\begin{lstlisting}[breaklines]
+Set-WebConfiguration -Location "$WebSiteName/$WebApplicationName" `
+    -Filter 'system.webserver/security/access' `
+    -Value "SslRequireCert"
+\end{lstlisting}
 
 \subsubsection{Justification for special settings (if needed)}
 % in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
 
 
 \subsubsection{References}
-\todo{add references}
+\begin{itemize*}
+\item \url{http://support.microsoft.com/kb/245030/en-us}
+\item \url{http://support.microsoft.com/kb/187498/en-us}
+\end{itemize*}
 
 % add any further references or best practice documents here
 
