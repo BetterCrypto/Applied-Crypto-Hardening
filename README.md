@@ -29,6 +29,13 @@ Receive latest updates for a previously cloned repository (from within repo-dire
 ## GitHub
 Fork and issue pull requests. Those will be reviewed and if accepted pushed to the main repository hosted on git.bettercrypto.org.
 
+## MacTeX
+MacTeX misses `mweights.sty` and may cause a compile error.
+
+```bash
+sudo tlsmgr install mweights
+```
+
 # IMPORTANT
 
 If you reviewed the document and/or made some changes, please add your name to `src/acknowledgements.tex` (the list of names is sorted alphabetically by last name).
