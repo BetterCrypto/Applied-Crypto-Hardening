@@ -1,0 +1,21 @@
+ % This file is public domain.
+\documentclass{letter}
+
+\usepackage{datatool}
+
+\DTLloaddb{data}{sample-student-records.csv}
+
+\begin{document}
+\begin{DTLenvforeach*}{data}{\Title=Title,\FirstName=First Name,\Surname=Surname,\AssignmentI=Assignment 1,\AssignmentII=Assignment 2,\AssignmentIII=Assignment 3,\Address=Address}
+\begin{letter}{\Title\space\FirstName\space\Surname\\\Address}
+\opening{Dear \Title~\Surname}
+
+\DTLmeanforall{\Score}{\AssignmentI,\AssignmentII,\AssignmentIII}
+\DTLround{\Score}{\Score}{0}\DTLclip{\Score}{\Score}%
+You were awarded a mark of \Score\%.
+
+\closing{Yours Sincerely}
+\end{letter}
+
+\end{DTLenvforeach*}
+\end{document}

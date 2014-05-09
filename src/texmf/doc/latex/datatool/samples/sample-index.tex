@@ -1,0 +1,735 @@
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+ % Two LaTeX runs are required to ensure this document is up-to-date
+
+ % It can take a long time to sort the index, so use the optimize
+ % option. This has values: off (no optimize, sorting is done every
+ % run), low (sort every second run) or high (write sorted database
+ % to file and read in next time round). Don't modify the
+ % index/glossary databases while the optimize option is set to
+ % high. Do the modifications while the optimize option is set to
+ % low or off. Alternatively, delete the .aux and .gidx files before rerunning
+ % LaTeX.
+
+%\usepackage[optimize=high]{datagidx}
+\usepackage[optimize=off]{datagidx}
+
+\usepackage[colorlinks]{hyperref}
+
+ % Define some convenient commands
+
+\newcommand*{\principleloc}[1]{\textbf{#1}}
+\newcommand*{\appname}[1]{\texttt{#1}}
+
+ % Later we'll switch to a fancy small caps Roman page numbering
+
+\newcommand*{\myscroman}[1]{%
+  \myscromannum{\value{#1}}%
+}
+
+\newcommand*{\myscromannum}[1]{%
+  \textsc{\romannumeral#1}%
+}
+
+ % Now we need to add this as a possible location type
+
+\DTLgidxAddLocationType{myscromannum}
+
+ % Don't let \appname interfere with the sorting and labelling of
+ % terms:
+
+\appto\newtermlabelhook{\let\appname\DTLgidxNoFormat}
+
+ % (datagidx also does this for \MakeUppercase, \MakeTextUppercase,
+ % \MakeLowercase, \MakeTextLowercase, \textsc and \acronymfont.)
+
+ % Make an index database labelled 'index' with given title.
+
+\newgidx{index}{Index}
+
+ % Define some terms for the index (entries must be defined in the
+ % preamble).
+
+ % Either use "database" key in optional argument
+ % or set the default database. It's less typing to set the default
+ % database, so let's do that:
+
+\DTLgidxSetDefaultDB{index}
+
+ % All the following definitions will add terms to the "index" database:
+
+ % accent commands get stripped from the default label and sort
+ % so the following gets both the label and sort set to 'macedoine'
+\newterm{mac\'edoine}
+
+ % The following gets both the label and sort set to 'macrame'
+ % (This is only tested with utf8. It most likely won't work with
+ % other encodings.)
+\newterm{macramé}
+
+ % Take care if the first letter starts with an accent.
+ % The initial accented letter must be grouped to ensure it works
+ % with \makefirstuc, but this will make the default label '{e}lite'
+ % rather than 'elite', so let's override the default:
+
+\newterm[label=elite]{{é}lite}
+
+ % Sometimes the default sort may not suit your requirements. In
+ % which case you can override it:
+
+\newterm
+[
+  sort={Ten Downing Street}
+]
+{10 Downing Street}
+
+\newterm{singular}
+\newterm{plural}
+\newterm{group}
+\newterm[see=group]{scope}
+\newterm[label={glossary}]{glossary}
+\newterm
+ [%
+   label={index},
+   seealso={glossary},
+ ]
+ {index}
+\newterm
+ [
+   seealso={glossary}
+ ]
+ {acronym}
+
+\newterm[parent=acronym]{reset}
+\newterm[parent=acronym]{unset}
+
+\newterm
+ [%
+   parent=acronym,
+   label={firstuse},
+ ]
+ {first use}
+\newterm
+ [%
+   parent=acronym,
+   label={acronymlist},
+   text={list of acronyms},
+   plural={lists of acronyms}
+ ]
+ {list}
+
+\newterm{reptile}
+
+\newterm
+ [%
+   seealso={reptile}
+ ]
+ {crocodylian}
+
+\newterm
+ [%
+   parent=crocodylian
+ ]
+ {crocodile}
+
+\newterm
+ [%
+   parent=crocodylian
+ ]
+ {caiman}
+
+\newterm
+ [%
+   parent=crocodylian
+ ]
+ {alligator}
+
+\newterm{seal}
+\newterm{sea lion}
+\newterm{sea}
+\newterm{sea anchor}
+\newterm{sea urchin}
+\newterm{seam bowler}
+\newterm{seam}
+
+ % Be careful if a value contains a comma or an equal sign. The
+ % entire value must be grouped.
+\newterm
+ [%
+   label={comma},
+   sort={,},
+   text={comma (,)},
+   plural={commas (,)}
+ ]%
+ {, (comma)}
+
+\newterm
+ [%
+   label={equals},
+   sort={=},
+   text={equal sign (=)},
+   plural={equal signs (=)},
+ ]%
+ {= (equal sign)}
+
+ % Don't need to worry about makeindex's special characters (since
+ % we're not using makeindex!)
+\newterm
+ [%
+   label={"},
+   sort={"},
+   text={double quote (")},
+   plural={double quotes (")},
+ ]%
+ {" (double quote)}
+
+\newterm
+ [%
+   label={!},
+   sort={!},
+   text={exclamation mark (!)},
+   plural={exclamation marks (!)},
+ ]%
+ {! (exclamation mark)}
+
+\newterm
+ [%
+   label={|},
+   sort={|},
+   text={vertical bar (\textbar)},
+   plural={vertical bars (\textbar)},
+ ]%
+ {\textbar\ (vertical bar)}
+
+
+ % Be careful of special characters
+
+\newterm
+ [%
+   label={amp},
+   sort={\DTLgidxStripBackslash{\&}},
+   text={ampersand (\&)},
+   plural={ampersands (\&)},
+ ]
+ {\& (ampersand)}
+
+\newterm
+ [%
+   label={underscore},
+   sort={\DTLgidxStripBackslash{\_}},
+   text={underscore (\_)},
+   plural={underscores (\_)},
+ ]
+ {\_ (underscore)}
+
+\newterm
+ [%
+   label={dollar},
+   sort={\DTLgidxStripBackslash{\$}},
+   text={dollar (\$)},
+   plural={dollars (\$)},
+ ]
+ {\$ (dollar)}
+
+\newterm
+ [%
+   label={circum},
+   sort={\DTLgidxStripBackslash{\^}},
+   text={circumflex (\textasciicircum)},
+   plural={circumflexes (\textasciicircum)},
+ ]
+ {\textasciicircum\ (circumflex)}
+
+\newterm
+ [%
+   label={tilde},
+   sort={\string~},
+   text={tilde (\textasciitilde)},
+   plural={tildes (\textasciitilde)},
+ ]
+ {\textasciitilde\ (tilde)}
+
+\newterm{0\DTLgidxParen{zero}}
+
+\newterm{1\DTLgidxParen{one}}
+
+\newterm{2\DTLgidxParen{two}}
+
+\newterm{3\DTLgidxParen{three}}
+
+\newterm{10\DTLgidxParen{ten}}
+
+\newterm{100\DTLgidxParen{one hundred}}
+
+\newterm{20\DTLgidxParen{twenty}}
+
+\newterm{alpine}
+
+ % Let's index a person
+ % The label is formed from the surname.
+ % If you are indexing more than one person with the same surname,
+ % you'll have to provide your own labels via the label key.
+
+\newterm{\DTLgidxName{Donald E.}{Knuth}}
+
+ % Let's have some examples from the Oxford Style Manual:
+
+\newterm{highwater}
+\newterm{highlights}
+\newterm{highbrow}
+\newterm{Highclere Castle}
+\newterm{highball}
+\newterm{high chair}
+\newterm{high heels}
+\newterm{high-fliers}
+
+ % parenthetical material
+\newterm{high\DTLgidxParen{light-headed}}
+
+\newterm
+[% label needed to distinguish from previous entry
+  label=highheight,
+]
+{high\DTLgidxParen{height}}
+
+\newterm{\emph{High Water}\DTLgidxParen{play}}
+
+\newterm{high water}
+
+\newterm{\emph{New York, New York}}
+
+ % Using \DTLgidxName allows the sort key to work with \dtlwordindexcompare
+
+\newterm{\DTLgidxName{J.}{High}}
+
+\newterm{\DTLgidxName{P.}{High-Smith}}
+
+\newterm{\DTLgidxName{A.}{Highsmith}}
+
+\newterm{\DTLgidxName{Earl of}{New York}}
+
+ % Some more examples from the Oxford Style Manual
+
+\newterm
+ [
+   label={DrMeynell}
+ ]
+ {\DTLgidxName{\DTLgidxRank{Dr}{A.}}{Meynell}}
+
+\newterm
+ [%
+   label={AliceMeynell}
+ ]
+ {\DTLgidxName{Alice}{Meynell}}
+
+\newterm
+ [%
+   label={AMeynell}
+ ]
+ {\DTLgidxName{A}{Meynell}}
+
+\newterm
+ [%
+   label={FMeynell}
+ ]
+ {\DTLgidxName{F.}{Meynell}}
+
+\newterm
+ [%
+   label={WGMeynell}
+ ]
+ {\DTLgidxName{W.~G.}{Meynell}}
+
+\newterm
+ [%
+   label={WMeynell}
+ ]
+ {\DTLgidxName{W.}{Meynell}}
+
+\newterm
+ [%
+   label={SirMeynell}
+ ]
+ {\DTLgidxName{\DTLgidxRank{Sir}{F.}}{Meynell}}
+
+
+ % Using \DTLgidxMac allows the sort key to sort on ``Mac'' rather
+ % than the argument to \DTLgidxMac
+
+\newterm{\DTLgidxName{Joe}{\DTLgidxMac{Mc}Cullers}}
+
+\newterm{\DTLgidxName{Bob}{\DTLgidxMac{M'}Fingal}}
+
+ % The labels need to be set here as we have identical surnames
+
+\newterm
+ [%
+   label={TomMacFarlane}
+ ]%
+ {\DTLgidxName{Tom}{\DTLgidxMac{Mac}Farlane}}
+
+\newterm
+ [%
+   label={DickMacFarlane}
+ ]%
+ {\DTLgidxName{Dick}{\DTLgidxMac{Mac}Farlane}}
+
+\newterm{\DTLgidxName{Harry}{\DTLgidxMac{Mc}Namee}}
+
+\newterm{\DTLgidxMac{Mc}Carthyism}
+\newterm{\DTLgidxMac{Mc}Guffin}
+\newterm{\DTLgidxMac{Mc}Coy}
+
+\newterm{macadam}
+\newterm{ma'am}
+\newterm{ma}
+\newterm{macabre}
+\newterm{machete}
+
+
+\newterm{deem}
+\newterm{demote}
+\newterm{deerstalker}
+\newterm{deface}
+\newterm{de facto}
+
+ % Don't let the hyphen be considered a word boundary:
+\newterm{de\DTLgidxIgnore{-}escalate}
+
+ % Ignore particles such as "de", "von", "of"
+ % The label defaults to deWinter but the name is displayed as
+ % de~Winter
+
+\newterm{\DTLgidxName{Fred}{\DTLgidxParticle{de}{Winter}}}
+
+\newterm{\DTLgidxName{Wilma}{Winter}}
+
+\newterm{\DTLgidxName{Betty}{Winters}}
+
+ % these all need labels added to ensure uniqueness:
+
+\newterm
+[
+  label={HenrySonJohn}
+]
+{\DTLgidxOffice{son \DTLgidxParticle{of}{John}}{Henry}}
+
+\newterm
+[
+  label={HenryBeaumont}
+]
+{\DTLgidxOffice{bishop \DTLgidxParticle{of}{Bayeux}}{Henry
+\DTLgidxParticle{de}{Beaumont}}}
+
+\newterm
+[
+  label={HenryScribe}
+]
+{\DTLgidxOffice{scribe \DTLgidxParticle{of}{Bury}
+   \DTLgidxSaint{St}~Edmunds}{Henry}}
+
+\newterm
+[
+  label={HenryKing}
+]
+{\DTLgidxOffice{king \DTLgidxParticle{of}{England}}{Henry}}
+
+\newterm
+[
+  label={HenryBlois}
+]
+{\DTLgidxOffice{bishop \DTLgidxParticle{of}{Winchester}}{Henry
+\DTLgidxParticle{of}{Blois}}}
+
+\newterm
+[
+  label={HenryBlund}
+]
+{Henry Blund}
+
+\newterm
+[
+  label={HenryEssex}
+]
+{Henry \DTLgidxParticle{of}{Essex}}
+
+\newterm
+[
+  label={HenryLittle}
+]
+{Henry \DTLgidxParticle{the}{Little}}
+
+\newterm
+[
+  label={HenryMowbray}
+]
+{Henry \DTLgidxParticle{de}{Mowbray}}
+
+\newterm
+[
+  label={HenryFitzRobert}
+]
+{Henry \DTLgidxParticle{Fitz}{Robert}}
+
+\newterm
+[
+   label={JBSaint}
+]
+{\DTLgidxName{J.~B.}{Saint}}
+
+\newterm
+[
+  label={StAndrews}
+]
+{\DTLgidxPlace{\DTLgidxSaint{St}~Andrews}{Fife}}
+
+\newterm
+[
+  label={StBenetsHall}
+]
+{\DTLgidxSaint{St}~Benet's Hall}
+
+\newterm
+[
+  label={StJamesInfirmary}
+]
+{\DTLgidxSaint{St}~James Infirmary}
+
+\newterm
+[
+  label={QStJohnSmythe}
+]
+{\DTLgidxName{Q.}{\DTLgidxSaint{St}~John-Smythe}}
+
+\newterm
+[
+  label={SaintJulian}
+]
+{\DTLgidxSaint{Saint}-Julian}
+
+\newterm
+[
+  label={StJustinRoseland}
+]
+{\DTLgidxSaint{St}~Just-in-Roseland}
+
+ % Names with an associated number
+
+ % The following gets the label 'James I' and sort 'James 01'
+
+\newterm{James~\DTLgidxNameNum{1}}
+
+ % The following gets the label 'James II' and sort 'James 02'
+
+\newterm{James~\DTLgidxNameNum{2}}
+
+ % etc
+\newterm{James~\DTLgidxNameNum{3}}
+\newterm{James~\DTLgidxNameNum{4}}
+\newterm{James~\DTLgidxNameNum{5}}
+
+ % In the following, the label and name default to 'New York, population' 
+ % The text defaults to 'population'.
+ % Using \DTLgidxSubject allows the sort key to work with \dtlwordindexcompare
+ % Here both the label and the text have been changed from their
+ % defaults.
+\newterm
+[
+  label={popNY},% give it a short, easy to type label
+  text={population of New York}
+]
+{\DTLgidxSubject{population}{New York}}
+
+ % In the following, the label and name become 'New York, USA'
+ % The text becomes 'New York'.
+ % The sort key is adjusted to work with \dtlwordindexcompare
+\newterm{\DTLgidxPlace{USA}{New York}}
+
+\newterm{\ensuremath{\alpha}-iron}% gets label and sort keys 'alpha-iron'
+
+\newterm{\ensuremath{\alpha} chain}% label & sort -> 'alpha chain'
+
+\newterm{\ensuremath{\alpha} Centauri}% label & sort -> 'alpha Centauri'
+
+\newterm{alphabet}
+
+\newterm{\ensuremath{\Lambda} calculus}% label & sort -> 'Lambda calculus'
+
+ % and have a few more entries in the same letter group to test case
+ % ordering:
+\newterm{kite}
+\newterm{koala}
+
+ % Earlier I modified \newtermlabelhook so
+ % that \appname won't interfere with the sorting
+ % and labelling mechanism, so I don't need to specify separate sort
+ % and label keys here:
+
+\newterm{\appname{makeindex}}% label and sort both set to just 'makeindex'
+\newterm{\appname{xindy}}% label and sort both set to just 'xindy'
+
+\title{Sample Document Using the datagidx Package}
+\author{Nicola L. C. Talbot}
+
+\begin{document}
+\pagenumbering{roman}
+
+The datagidx package was developed to follow the word order indexing
+style described by the Oxford Style Manual. Many of the examples
+here are taken from that manual. Two \LaTeX\ runs are required. If
+you get a pdfTeX warning that a destination has been referenced but
+does not exist, this may mean the index is out-of-date and you need
+to do another \LaTeX\ run.
+
+With word ordering a word break (space or hyphen) comes before all
+other letters of the alphabet (\gls{sea lion} comes before \gls{seal}). 
+With letter ordering word breaks are ignored (so \gls{seal} comes
+before \gls{sea lion}).
+
+Use a few terms here: \gls{index}, \gls{group}, \gls{singular}, \gls{plural}.
+
+\newpage
+
+\Gls{singular}, \glspl{plural}. \gls{glossary}.
+\Gls{acronym}: \gls{reset}, \gls{firstuse}.
+
+\newpage
+\pagenumbering{arabic}
+
+Switched page numbering style. \Gls{singular}, \gls{kite},
+\gls{koala}, \gls{crocodile}, \gls{seal}.
+
+\Gls{sea},
+\gls{sea anchor},
+\gls{sea urchin}.
+
+Some characters: \gls{comma}, \gls{equals}, \gls{"}, \gls{!}, \gls{|}
+\gls{amp}, \gls{underscore}, \gls{dollar}, \gls{circum},
+\gls{tilde}.
+
+Some numbers: \gls{0}, \gls{1}, \gls{2}, \gls{3}, \gls{20}, \gls{10}.
+
+\newpage
+
+Some numbers again: \gls{0}, \gls{1}, \gls{2}, \gls{3}, \gls{100},
+\gls{10}, \gls{20}.
+
+Case mixture: \gls{kite}, 
+\gls{Knuth} and 
+\gls{[principleloc]koala}.
+
+\Gls{de-escalate}, \gls{deem}, \gls{demote}.
+
+We don't need to use \gls{makeindex} or \gls{xindy}!
+However, \TeX\ takes longer to sort and collate than either
+\gls{makeindex} or \gls{xindy}, so document compilation time will
+take longer.
+
+\newpage
+
+\Gls{kite}, \gls{highwater}, \gls{koala}, \gls{caiman}, \gls{sea
+lion}, \gls{high},
+\gls{highbrow}, \gls{high chair}, \gls{highball}, \gls{reptile},
+\gls{highlights}, \gls{high heels}, \gls{high-fliers}.
+\Gls{seam} and \gls{seam bowler}.
+
+\gls{New York, New York}. \gls{New York}. 
+\Gls{popNY}. \gls{New York, USA}.
+\gls{Highclere Castle}.
+
+\gls{High}. \gls{High-Smith}, \gls{Highsmith}, \gls{High Water}
+as opposed to \gls{high water}. \Gls{alphabet}. \Gls{alpine}.
+
+Some terms with Greek letters: \gls{alpha-iron}, 
+\gls{Lambda calculus}, \gls{alpha chain}, \gls{alpha Centauri}.
+
+\newpage
+
+\renewcommand{\thepage}{\myscroman{page}}%
+Switching to small caps Roman page numbering.
+
+\Gls{kite}. \Glspl{alligator}. \Gls{highheight}.
+
+\gls{deWinter}.
+\gls{Winter}.
+\gls{Winters}.
+
+\gls{McCullers}.
+
+\gls{M'Fingal}.
+
+\gls{TomMacFarlane}.
+
+\gls{DickMacFarlane}.
+
+\gls{McNamee}.
+
+\gls{McCarthyism},
+\gls{McGuffin},
+\gls{McCoy}.
+
+\Gls{macadam},
+\gls{ma'am},
+\gls{ma},
+\gls{macabre},
+\gls{macrame},
+\gls{macedoine}.
+
+\Gls{elite},
+\gls{deem},
+\gls{demote},
+\gls{deerstalker},
+\gls{deface},
+\gls{de facto}.
+
+
+\gls{AliceMeynell}.
+\gls{AMeynell}.
+\gls{DrMeynell}.
+\gls{SirMeynell}.
+\gls{FMeynell}.
+\gls{WGMeynell}.
+\gls{WMeynell}.
+
+\gls{HenrySonJohn}. \gls{HenryBlois}.
+\gls{HenryBeaumont}. \gls{HenryBlund}.
+\gls{HenryLittle}. \gls{HenryEssex}. \gls{HenryMowbray}.
+\gls{HenryFitzRobert}.
+\gls{HenryKing}. \gls{HenryScribe}.
+
+\gls{James V}.
+\gls{James I}.
+\gls{James IV}.
+\gls{James III}.
+\gls{James II}.
+
+\gls{JBSaint}.
+\gls{StAndrews}.
+\gls{StBenetsHall}.
+\gls{StJamesInfirmary}.
+\gls{QStJohnSmythe}.
+\gls{SaintJulian}.
+\gls{StJustinRoseland}.
+
+\gls{10 Downing Street}.
+
+\newpage
+
+% This will take a while as the sorting algorithm is complex. 
+
+\printterms
+ [
+   heading={\section[Word Sorted Index]},% make a numbered section
+   database=index,% 'index' database
+   prelocation=dotfill,% put a dotted line before the location list
+   columns=3,% page layout 
+   style=index,% use 'index' style
+   %balance=false,% don't balance columns
+   postheading={Locations in bold indicate primary reference.
+   (Word sort.)}
+ ]
+
+\end{document}

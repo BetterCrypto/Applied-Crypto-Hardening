@@ -1,0 +1,57 @@
+ % This file is public domain.
+\documentclass[captions=tableheading]{scrartcl}
+
+\usepackage{tikz}
+\usetikzlibrary{snakes}
+
+\usepackage{databar}
+
+\DTLloaddb{marks}{sample-student-records.csv}
+
+\begin{document}
+
+% Compute average mark for each student:
+\DTLforeach{marks}{%
+\assignI=Assignment 1,%
+\assignII=Assignment 2,%
+\assignIII=Assignment 3}{%
+\DTLmeanforall{\theMean}{\assignI,\assignII,\assignIII}%
+\DTLround{\theMean}{\theMean}{0}\DTLclip{\theMean}{\theMean}%
+\DTLappendtorow{Average}{\theMean}}
+
+\begin{table}
+\caption{Student Marks}
+ \centering
+\DTLdisplaydb[Address,RegNum,Title]{marks}
+\end{table}
+
+\begin{figure}[htbp]
+ \centering
+ % compute the overall mean
+ \DTLmeanforkeys{marks}{Average}{\overallmean}
+ % round it to 2 decimal places
+ \DTLround{\overallmean}{\overallmean}{2}
+ % draw a grey dotted line indicating the overall mean
+ % covering the entire width of the bar chart
+ \renewcommand*{\DTLbaratendtikz}{%
+   \draw[lightgray,loosely dotted] (0,\overallmean) --
+     (\DTLbarchartwidth,\overallmean)
+     node[right,black]{Average (\overallmean)};}
+ % Set the lower bar labels to draw a brace across the current
+ % group, along with the student's name and average score
+ \renewcommand*{\DTLdisplaylowerbarlabel}[1]{%
+ \tikz[baseline=(current bounding box.center)]{
+ \draw[snake=brace,rotate=-90](0,0) -- (\DTLbargroupwidth,0);}
+ \DTLround{\theMean}{\theMean}{2}%
+ \shortstack{#1\\(Average: \theMean)}}
+ % draw the bar chart
+ \DTLmultibarchart{variables={\assignI,\assignII,\assignIII},
+ barwidth=10pt,uppermultibarlabels={\assignI,\assignII,\assignIII},
+ barlabel={\firstname\ \surname}}{marks}
+ {\surname=Surname,\firstname=First Name,\assignI=Assignment 1,%
+ \assignII=Assignment 2,\assignIII=Assignment 3,\theMean=Average}
+ \caption{Student marks}
+\end{figure}
+
+
+\end{document}

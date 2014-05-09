@@ -1,0 +1,248 @@
+\documentclass{article}
+
+\usepackage{datagidx}
+
+\usepackage[colorlinks]{hyperref}
+
+ % Make a glossary database labelled 'glossary' with given title.
+
+\newgidx[heading=\section]{glossary}{Glossary}
+
+ % Make an acronym database labelled 'acronyms' with given title.
+ % A different heading for the table of contents is supplied.
+
+\newgidx[heading={\section[Acronyms]}]{acronyms}{List of Acronyms}
+
+ % Make a notation database labelled 'notation' with given title
+ % Make it an unnumbered section
+
+\newgidx[heading=\section*]{notation}{Notation}
+
+ % Define some terms for the glossary
+
+\DTLgidxSetDefaultDB{glossary}
+
+\newterm[description={sea mammal with flippers that eats
+fish}]{seal}
+\newterm[description={large seal}]{sea lion}
+
+\newterm{bravo}
+\newterm
+  [%
+    label=bravocry,
+    description={cry of approval (pl.\ bravos)},
+    parent=bravo
+  ]
+  {bravo}
+\newterm
+  [% options
+    label=bravokiller,
+    description={hired ruffian or killer (pl.\ bravoes)},
+    plural=bravoes,
+    parent=bravo
+  ]
+ {bravo}
+
+\newterm
+ [% options
+   plural={glossaries},
+ ]%
+ {glossary}
+
+\newterm
+ [% options
+   label=glossarycol,
+   plural={glossaries},
+   description={collection of glosses},
+   parent=glossary
+ ]
+ {glossary}
+
+\newterm
+ [% options
+   label=glossarylist,
+   plural={glossaries},
+   description={list of technical words},
+   parent=glossary
+ ]
+ {glossary}
+
+\newterm
+  [% options
+   % description contains commas so it must be grouped
+   description={a list of individual pages or page ranges
+    (e.g.\ 1,2,4,7--9)}
+  ]
+  {page list}
+
+\newterm
+ [%
+   plural={indices},
+   description={an alphabetical list of names or subjects with
+   references to their location in the document (pl.\ indices or
+   indexes)}
+ ]
+ {index}
+
+ % define some acronyms
+
+\DTLgidxSetDefaultDB{acronyms}
+
+\newacro{html}{hyper-text markup language}
+\newacro{css}{cascading style sheet}
+
+% override default description on this one:
+\newacro[description={eXtensible Markup Language}]{xml}{extensible markup language}
+
+% define some notation
+
+\DTLgidxSetDefaultDB{notation}
+
+\newterm
+ [%
+   symbol={\ensuremath{\mathcal{S}}},
+   description={a collection of distinct objects},
+ ]%
+ {set}
+
+\newterm
+ [%
+   symbol={\ensuremath{\mathcal{U}}},
+   description={the set containing everything}
+ ]%
+ {universal set}
+
+\newterm
+ [%
+   symbol={\ensuremath{\emptyset}},
+   description={the set with no elements}
+ ]%
+ {empty set}
+
+\newterm
+ [%
+   symbol={\ensuremath{|\mathcal{S}|}},
+   description={the number of elements in the set
+\ensuremath{\mathcal{S}}}
+ ]%
+ {cardinality}
+
+\title{Sample Document Using the datagidx Package}
+\author{Nicola L. C. Talbot}
+
+\begin{document}
+
+\maketitle
+
+Here's an acronym referenced using \verb|\acr|: \acr{html}.
+And here
+it is again: \acr{html}. If you're used to the \texttt{glossaries}
+package, note the difference in using \verb|\gls|: \gls{html}.
+And again (no difference): \gls{html}.
+
+Here are some more entries:
+
+\acr{xml} and \acr{css}.
+Next use:
+\acr{xml} and \acr{css}.
+Full form:
+\gls{xml} and \gls{css}.
+
+Reset again. \glsresetall{acronyms}%
+Start with a capital. \Acr{html}.
+Next: \Acr{html}. Full: \Gls{html}.
+
+Prefer capitals?
+\renewcommand{\acronymfont}[1]{\MakeTextUppercase{#1}}%
+\Acr{xml}. Next: \acr{xml}. Full: \gls{xml}.
+
+Prefer small-caps?
+\renewcommand{\acronymfont}[1]{\textsc{#1}}%
+\Acr{css}. Next: \acr{css}. Full: \gls{css}.
+
+A \gls{set} (denoted \glssym{set}) is a collection of objects.
+The \gls{universal set} is the set of everything.
+The \gls{empty set} contains no elements.
+The \gls{cardinality} of a set (denoted \glssym{cardinality}) is the
+number of elements in the set.
+
+A \gls{glossarylist} is a useful
+addition to any technical document,
+although a \gls{glossarycol} can also simply be a collection of
+glosses, which is another thing entirely. Some documents have
+multiple \glspl{glossarylist}. Entries in a \gls{glossarylist} or 
+\gls{index} have an associated \gls{page list}. 
+
+A \gls{bravocry} is a cry of approval (plural \glspl{bravocry}) but
+a
+\gls{bravokiller} can also be a hired ruffian or killer (plural
+\glspl{bravokiller}).
+
+\newpage
+
+Resetting all acronyms.\glsresetall{acronyms}
+
+Here are the acronyms again:
+
+\Acr{html}, \acr{xml} and \acr{css}.
+
+Next use:
+\Acr{html}, \acr{xml} and \acr{css}.
+
+Full form:
+\Gls{html}, \gls{xml} and \gls{css}.
+
+\newpage
+
+Provide your own link text: \glslink{[textbf]css}{style sheet}.
+
+\newpage
+
+\printterms
+ [
+   database=glossary,% 'glossary' database
+   columns=1,% one column page layout
+   postdesc=dot,% put a full stop after the description
+   style=gloss,% use 'gloss' style (sub-entries numbered)
+   namefont={\textbf},% put the name in bold
+   namecase=firstuc,% make the first letter of the name upper case
+   child=noname,% don't print sub item names
+   location=hide% hide the location list
+ ]
+
+\printterms
+ [
+   database=acronyms,% 'acronyms' database
+   postdesc=dot,% put a full stop after the description
+   columns=1,% one column page layout
+   namefont={\textbf},% put the name (i.e. the abbreviation) in bold
+   namecase=uc,% make the name upper case
+   style=align,% use the 'align' style
+ ]
+
+% Change the way the description is formatted (the argument to
+% \DTLgidxFormatDesc will always be a control sequence so
+% \xmakefirstuc is needed instead of \makefirstuc)
+\renewcommand{\DTLgidxFormatDesc}[1]{\xmakefirstuc{#1}}
+
+\printterms
+ [
+   database=notation,% 'notation' database
+   postdesc=dot,% put a full stop after the description
+   columns=1,% one page column layout
+   namefont={\textbf},% make the name bold
+   style=indexalign,
+   namecase=firstuc,% make first letter of name a capital
+   symboldesc={symbol desc},% put symbol to the left of description
+   %symboldesc={desc (symbol)},% put symbol to the right of the description
+   sort={},% don't sort
+% If the following widths are 0 (default) they take up their natural
+% amount of space. If the widths are greater than 0, those fields
+% are put in a box of the given width.
+   symbolwidth={2cm},% width taken up by symbol
+   locationwidth={1cm},% width taken up by location list
+ ]
+
+
+
+\end{document}

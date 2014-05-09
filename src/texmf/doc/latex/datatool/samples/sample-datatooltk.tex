@@ -1,0 +1,23 @@
+% Sample file used with datatooltk
+\documentclass{article}
+
+\usepackage{datatool}
+
+% load database that was either previously saved using
+% \DTLsaverawdb{mydata}{data-raw.dbtex}
+% or created and saved using datatooltk
+
+\input{data-raw.dbtex}
+
+\begin{document}
+
+\DTLdisplaydb{mydata}
+
+% Save to a new file to test \DTLsaverawdb:
+
+\DTLsaverawdb{mydata}{data-raw-saved.dbtex}
+
+% Now try the protected version:
+
+\DTLprotectedsaverawdb{mydata}{data-raw-psaved.dbtex}
+\end{document}

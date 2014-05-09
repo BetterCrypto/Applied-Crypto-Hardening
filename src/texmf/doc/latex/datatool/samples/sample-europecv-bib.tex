@@ -1,0 +1,19 @@
+\documentclass[narrow,helvetica,a4paper]{europecv}
+
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{databib}
+
+\begin{document}
+\DTLloadbbl{myrefs}{xampl.bib}
+\nocite{*}
+
+\begin{europecv}
+ \ecvsection{Publications}
+ 
+ \gDTLforeachbibentry*{myrefs}{%
+  \ecvitem{}{\gDTLformatbibentry}%
+}
+\end{europecv}
+
+\end{document}

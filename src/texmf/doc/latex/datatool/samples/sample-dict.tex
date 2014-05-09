@@ -1,0 +1,439 @@
+\documentclass[oneside]{scrbook}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathpazo}
+
+% The low optimize setting won't work for this example
+\usepackage[optimize=high]{datagidx}
+
+\usepackage[colorlinks]{hyperref}
+
+% This is an example document that uses datagidx to create a
+% sorted dictionary, using datatool to do the sorting.
+
+% Make a database labelled 'index' with the given title
+
+\newgidx[heading={\title}]{index}{Sample Dictionary Created Using datagidx}
+
+% Define some terms for the dictionary
+
+% First set the default database, so we don't have to keep using the
+% "database" key:
+\DTLgidxSetDefaultDB{index}
+
+% Add some custom fields
+
+\newtermaddfield{Derivatives}{derivatives}{}
+
+\newtermaddfield{Origin}{origin}{}
+
+\newtermaddfield{Phrases}{phrases}{}
+
+\newtermaddfield{Subject}{subject}{}
+
+\newtermaddfield{Variation}{variation}{}
+
+\newtermaddfield{Phonetic}{phonetic}{}
+
+\newtermaddfield{AltPlural}{altplural}{}
+
+\newtermaddfield{Parenthetical}{parenthetical}{}
+
+% Provide a convenient interface to define words:
+
+% Syntax: \newentry[main option list][cat opt list]{word}{category}{definition}
+
+\newcommand*{\newentry}[1][]{%
+  \def\newentryopts{#1}%
+  \nnewentry
+}
+
+\newcommand*{\nnewentry}[4][]{%
+  \expandafter\newterm\expandafter[\newentryopts]{#2}%
+  \newterm
+  [%
+    label={\datagidxlastlabel-#3},%
+    parent={\datagidxlastlabel},%
+    description={#4},%
+    text={#3},%
+    #1%
+  ]%
+  {#3}%
+  \setcounter{newentrysubcat}{0}%
+}
+
+% Syntax: \newentrycat{parent label}{category}{definition}
+
+\newcommand*{\newentrycat}[3]{%
+  \newterm
+  [%
+    label={#1-#2},%
+    parent={#1},%
+    description={#3}%
+  ]%
+  {#2}%
+  \setcounter{newentrysubcat}{0}%
+}
+
+% Syntax: \newentrysubcat[option list]{parent label}{description}
+
+\newcounter{newentrysubcat}
+
+\newcommand*{\newentrysubcat}[3][]{%
+  \stepcounter{newentrysubcat}%
+  \newterm
+  [%
+    label={#2-\arabic{newentrysubcat}},%
+    sort={#2-\arabic{newentrysubcat}},%
+    parent={#2},%
+    description={#3},%
+   #1%
+  ]
+  {}%
+}
+
+\newcommand*{\categoryand}{ \& }
+
+% hook into the mechanism that constructs the label and sort fields from
+% the name:
+
+\appto\newtermlabelhook{\def\categoryand{+}}
+
+\newcommand*{\namefont}[1]{\textbf{\sffamily #1}}
+\newcommand*{\subjectfont}[1]{\textsf{#1}}
+\newcommand*{\categoryfont}[1]{\namefont{#1}}
+\newcommand*{\originfont}[1]{\emph{#1}}
+\newcommand*{\derivativeformat}[2]{\textbf{#1}\space\textsf{#2}}
+\newcommand*{\phoneticformat}[1]{/#1/}
+
+\newcommand*{\stress}[1]{\textbf{#1}}
+
+\newcommand*{\crossref}[1]{\textbf{\useentry{#1}{Name}}}
+\newcommand*{\Crossref}[1]{\textbf{\textsc{\useentry{#1}{Name}}}}
+
+% Words and their definitions taken from the Compact Oxford English
+% Dictionary
+
+% label and sort must both be specified here as \newterm can't cope
+% with {\ae} when automatically generating the label and sort from
+% the name
+\newentry
+ [%
+   phonetic={ee-\stress{oh}-li-uhn},
+   origin={from \originfont{\AE olus}, the Greek god of the winds},
+   label=aeolian,
+   sort=aeolian
+ ]
+ {{\ae}olian harp}{noun}{a stringed instrument that produces musical
+sounds when a current of air passes through it}
+
+% Similarly label and sort are needed here
+\newentry
+ [%
+   phonetic={i-\stress{sof}-fuh-guhss},
+   plural={{œ}sophagi},
+   origin={Greek \originfont{oisophagos}},
+   label={oesophagus},
+   sort={oesophagus}
+ ]
+ {{œ}sophagus}{noun}{the muscular tube which connects throat to
+stomach}
+
+\newentry
+ [% additional info
+   origin={Old English}
+ ]%
+ [%
+   subject={literary}
+ ]
+ {asunder}{adverb}{apart}
+
+\newentry
+ [% additional info
+   origin={Old English},
+   parenthetical={\subjectfont{US} \namefont{adz}}
+ ]
+ {adze}{noun}{a tool similar to an axe, with an arched blade at right angles to
+ the handle}
+
+\newentry
+ [% additional info
+   origin={Latin \originfont{astutus}},
+   derivatives={\derivativeformat{astutely}{adverb}
+    \derivativeformat{astuteness}{noun}}
+ ]
+ {astute}{adjective}{good at making accurate judgements; shrewd}
+
+\newentry{astern}{adverb}{behind or towards the rear of a ship}
+
+\newentry{thunderbolt}{noun}{flash of lightning with a crash of
+thunder at the same time}
+
+\newentry{thunderclap}{noun}{a crash of thunder}
+
+\newentry
+ [%
+  origin={Italian \originfont{ticchio}}
+ ]
+ {tic}{noun}{a recurring spasm of the muscles, most often in
+the face}
+
+\newentry
+ [%
+   phonetic={thwort},
+   origin={from Old Norse, `transverse'}
+ ]
+ {thwart}{verb}{}
+
+\newentrysubcat{thwart-verb}{prevent someone from accomplishing
+something}
+
+\newentrysubcat{thwart-verb}{prevent something from succeeding}
+
+\newentrycat{thwart}{noun}{a crosspiece forming a seat for a rower
+in a boat}
+
+\newentry
+ [% additional info
+   origin={from an old sense of \Crossref{thwart}, meaning
+`across'},
+   phonetic={uh-\stress{thwart}}
+ ]
+ {athwart}{preposition\categoryand adverb}{from side to side of something;
+  across}
+
+\newentry
+ [%
+   phonetic={aw-\stress{bree}-shuh},
+   parenthetical={also \namefont{aubrietia}},
+   origin={named after the French botanist Claude \originfont{Aubriet}}
+ ]
+ {aubretia}{noun}{a trailing plant with purple, pink, or white
+flowers}
+
+\newentry
+ [%
+   phonetic={aw-\stress{day}-shuhss},
+   derivatives={\derivativeformat{audaciously}{adverb}
+    \derivativeformat{audaciousness}{noun}
+    \derivativeformat{audacity}{noun}},
+   origin={Latin \originfont{audax} `bold'}
+ ]
+ {audacious}{adjective}{}
+
+\newentrysubcat{audacious-adjective}{willing to take daring risks}
+\newentrysubcat{audacious-adjective}{showing lack of respect; rude
+or impudent}
+
+\newentry
+ [%
+   parenthetical={pl.\ \namefont{attorneys}},
+   phonetic={uh-\stress{ter}-ni},
+   origin={Old French \originfont{atorner} `assign'}
+ ]
+ {attorney}{noun}{}
+
+\newentrysubcat{attorney-noun}{a person appointed to act for another
+in legal matters}
+
+\newentrysubcat
+ [%
+   subject={chiefly US}%
+ ]
+ {attorney-noun}{a lawyer}
+
+\newentry
+ [
+   phonetic={\stress{ay}-tri-uhm},
+   altplural={atria},
+   parenthetical={pl.\ \namefont{atria}
+    \phoneticformat{\stress{ay}-tri-uh}
+    or \namefont{atriums}},
+   derivatives={\derivativeformat{atrial}{adjective}},
+   origin={Latin}
+ ]
+ {atrium}{noun}{}
+
+\newentrysubcat{atrium-noun}{a central hall rising through several
+storeys and having a glazed roof}
+
+\newentrysubcat{atrium-noun}{an open area in the centre of an
+ancient Roman house}
+
+\newentrysubcat{atrium-noun}{each of the two cavities of the heart}
+
+\newentry
+ [%
+   plural={austerities},
+   phonetic={oss-\stress{te}-ri-ti}
+ ]
+ {austerity}{noun}{}
+
+\newentrysubcat{austerity-noun}{strictness or severity of appearance
+or manner}
+\newentrysubcat{austerity-noun}{difficult economic conditions
+resulting from a cut in public spending}
+
+\newentry
+[
+  plural={cacti},
+  altplural={cactuses},
+  origin={Greek \originfont{kaktos} `cardoon'}
+]
+{cactus}{noun}{a succulent plant with thick fleshy stems bearing
+spikes but no leaves}
+
+\newentry
+ [%
+   phonetic={chahf},
+   phrases={\namefont{separate} (or \namefont{sort}) \namefont{the
+   wheat from the chaff} distinguish valuable people or things from
+   worthless ones},
+   origin={Old English}
+ ]
+ {chaff\textsuperscript{1}}{noun}{}
+
+\newentrysubcat{chaff1-noun}{the husks of grain from the seed by
+winnowing or threshing}
+
+\newentrysubcat{chaff1-noun}{chopped hay and straw used in cattle
+fodder}
+
+\newentry
+ [
+   phonetic={chaff},
+ ]
+ {chaff\textsuperscript{2}}{noun}{light-hearted joking}
+
+\newentrycat{chaff2}{verb}{tease someone}
+
+\newterm
+[
+  plural={elves},%
+  derivatives={\derivativeformat{elfish}{adjective}
+   \derivativeformat{elven}{adjective (literary)}
+   \derivativeformat{elvish}{adjective}},%
+  origin={Old English},%
+  description={a supernatural creature of folk tales, represented as
+   a small human figure with pointed ears}
+]
+{elf}
+
+% Be careful of words starting with an accent.
+
+\newterm
+ [
+   label={elite},%
+   phonetic={i-\stress{leet}},%
+   origin={French, `selection, choice'}%
+ ]
+ {{é}lite}
+
+\newentrycat{elite}{noun}{a group of people regarded as the best in a
+particular society or organisation}
+
+\newterm
+ [
+   description={plural of \Crossref{elf}}%
+ ]
+ {elves}
+
+% Add all entries
+
+\glsaddall{index}
+
+% Customise index format
+
+\renewcommand{\DTLgidxNameFont}[1]{\namefont{\large#1}}
+
+\newcommand{\postnamespace}{\space}
+
+\renewcommand{\DTLgidxPostName}{%
+  \ifdefempty\Subject
+  {%
+  }%
+  {%
+    \space\subjectfont{\Subject}%
+  }%
+  \ifdefempty\Phonetic
+  {%
+  }%
+  {%
+    \space\phoneticformat{\Phonetic}%
+  }%
+  \ifdefempty\Parenthetical
+  {%
+    \ifdefempty\AltPlural
+    {%
+      \ifthenelse{\equal{\Plural}{\Text s}}%
+      {%
+      }%
+      {%
+        \space (pl.\ \namefont{\Plural})%
+      }%
+    }%
+    {%
+      \space (pl. \namefont{\Plural} or \namefont{\AltPlural})%
+    }%
+  }%
+  {%
+    \space (\Parenthetical)%
+  }%
+  \postnamespace
+}
+
+\renewcommand{\DTLgidxCategoryNameFont}[1]{\categoryfont{#1}}
+\renewcommand{\DTLgidxCategorySep}{\space\textbullet\space}
+\renewcommand*{\DTLgidxChildCountLabel}{%
+ \def\postnamespace{~\def\postnamespace{\space}}%
+ \textbf{\sffamily\theDTLgidxChildCount}%
+}
+
+\renewcommand{\DTLgidxDictPostItem}{%
+  \ifdefempty\Derivatives
+  {}
+  {%
+    \par
+    \datagidxdictparshape
+    -- \textsc{derivatives} \Derivatives.
+  }%
+  \ifdefempty\Phrases
+  {}
+  {%
+    \par
+    \datagidxdictparshape
+    -- \textsc{phrases} \Phrases.
+  }%
+  \ifdefempty\Origin
+  {}
+  {%
+    \par
+    \datagidxdictparshape
+    -- \textsc{origin} \Origin.
+  }%
+  \par
+}
+
+% Title information
+\author{}
+\date{}
+
+\begin{document}
+% don't number the chapters
+\setcounter{secnumdepth}{-1}
+
+\printterms
+[
+   database=index,
+   postheading={\maketitle This is an example document illustrating
+   the use of the datagidx package. The examples here are taken from
+   the Compact Oxford English Dictionary.
+   },
+   columns=2,
+   postdesc=dot,%
+   childsort=false,% don't sort the child lists
+   style={dict} % use the 'dict' style
+]
+
+\end{document}
