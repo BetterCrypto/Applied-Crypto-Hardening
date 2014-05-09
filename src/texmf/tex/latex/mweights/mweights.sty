@@ -1,0 +1,87 @@
+\ProvidesPackage{mweights}
+  [2013/07/21 (Bob Tennent)  Support package for multiple-weight font packages. ]
+
+\AtBeginDocument{%
+  % Define any undefined \mdseries@rm etc. 
+  % Defined \mdseries@rm etc. assumed to be fully expanded!
+  \ifdefined\mdseries@rm\else\edef\mdseries@rm{\mddefault}\fi
+  \ifdefined\bfseries@rm\else\edef\bfseries@rm{\bfdefault}\fi
+  \ifdefined\mdseries@sf\else\edef\mdseries@sf{\mddefault}\fi
+  \ifdefined\bfseries@sf\else\edef\bfseries@sf{\bfdefault}\fi
+  \ifdefined\mdseries@tt\else\edef\mdseries@tt{\mddefault}\fi
+  \ifdefined\bfseries@tt\else\edef\bfseries@tt{\bfdefault}\fi
+
+  % In case any unexpanded macros present in \rmdefault, etc
+  \edef\rmdef@ult{\rmdefault}
+  \edef\sfdef@ult{\sfdefault}
+  \edef\ttdef@ult{\ttdefault}
+  \edef\bfdef@ult{\bfdefault}
+  \edef\mddef@ult{\mddefault}
+}
+
+\DeclareRobustCommand\bfseries{%
+\not@math@alphabet\bfseries\mathbf
+\ifx\f@family\rmdef@ult\fontseries\bfseries@rm
+\else\ifx\f@family\sfdef@ult\fontseries\bfseries@sf
+\else\ifx\f@family\ttdef@ult\fontseries\bfseries@tt
+\else\fontseries\bfdefault\fi\fi\fi\selectfont}%
+
+\DeclareRobustCommand\mdseries{%
+\not@math@alphabet\mdseries\relax
+\ifx\f@family\rmdef@ult\fontseries\mdseries@rm
+\else\ifx\f@family\sfdef@ult\fontseries\mdseries@sf
+\else\ifx\f@family\ttdef@ult\fontseries\mdseries@tt
+\else\fontseries\mddefault\fi\fi\fi\selectfont}
+
+\DeclareRobustCommand\rmfamily{%
+\not@math@alphabet\rmfamily\mathrm
+% change the current series before changing the family
+\ifx\f@family\sfdef@ult
+    \ifx\f@series\mdseries@sf\fontseries\mdseries@rm
+    \else\ifx\f@series\bfseries@sf\fontseries\bfseries@rm
+    \else\ifx\f@series\mddef@ult\fontseries\mdseries@rm
+    \else\ifx\f@series\bfdef@ult\fontseries\bfseries@rm
+    \fi\fi\fi\fi
+\else\ifx\f@family\ttdef@ult
+    \ifx\f@series\mdseries@tt\fontseries\mdseries@rm
+    \else\ifx\f@series\bfseries@tt\fontseries\bfseries@rm
+    \else\ifx\f@series\mddef@ult\fontseries\mdseries@rm
+    \else\ifx\f@series\bfdef@ult\fontseries\bfseries@rm
+    \fi\fi\fi\fi
+\fi\fi\fontfamily\rmdefault\selectfont}
+
+\DeclareRobustCommand\sffamily{%
+\not@math@alphabet\sffamily\mathsf
+% change the current series before changing the family
+\ifx\f@family\rmdef@ult
+    \ifx\f@series\mdseries@rm\fontseries\mdseries@sf
+    \else\ifx\f@series\bfseries@rm\fontseries\bfseries@sf
+    \else\ifx\f@series\mddef@ult\fontseries\mdseries@sf
+    \else\ifx\f@series\bfdef@ult\fontseries\bfseries@sf
+    \fi\fi\fi\fi
+\else\ifx\f@family\ttdef@ult
+    \ifx\f@series\mdseries@tt\fontseries\mdseries@sf
+    \else\ifx\f@series\bfseries@tt\fontseries\bfseries@sf
+    \else\ifx\f@series\mddef@ult\fontseries\mdseries@sf
+    \else\ifx\f@series\bfdef@ult\fontseries\bfseries@sf
+    \fi\fi\fi\fi
+\fi\fi\fontfamily\sfdefault\selectfont}
+
+\DeclareRobustCommand\ttfamily{%
+\not@math@alphabet\ttfamily\mathtt
+% change the current series before changing the family
+\ifx\f@family\rmdef@ult
+    \ifx\f@series\mdseries@rm\fontseries\mdseries@tt
+    \else\ifx\f@series\bfseries@rm\fontseries\bfseries@tt
+    \else\ifx\f@series\mddef@ult\fontseries\mdseries@tt
+    \else\ifx\f@series\bfdef@ult\fontseries\bfseries@tt
+    \fi\fi\fi\fi
+\else\ifx\f@family\sfdef@ult
+    \ifx\f@series\mdseries@sf\fontseries\mdseries@tt
+    \else\ifx\f@series\bfseries@sf\fontseries\bfseries@tt
+    \else\ifx\f@series\mddef@ult\fontseries\mdseries@tt
+    \else\ifx\f@series\bfdef@ult\fontseries\bfseries@tt
+    \fi\fi\fi\fi
+\fi\fi\fontfamily\ttdefault\selectfont}
+
+\endinput
