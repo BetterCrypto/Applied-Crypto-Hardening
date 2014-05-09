@@ -8,7 +8,7 @@
 %%mechanism.
 %% ^^ commented out due to duplication (see previous section on architecture) - azet
 
-Many of the parts in a ciphersuite are interchangeable. Like the key exchange
+Many of the parts in a cipher suite are interchangeable. Like the key exchange
 algorithm in this example: \texttt{ECDHE-RSA-AES256-GCM-SHA384} and
 \texttt{DHE-RSA-AES256-GCM-SHA384}.  To provide a decent level of security, all
 algorithms need to be safe (subject to the disclaimer in section
@@ -24,35 +24,30 @@ support of these low-security algorithms is disabled by setting
 
 \subsubsection{Key Exchange}
 
-Many algorithms allow secure key exchange.  Those are RSA, DH, EDH, ECDSA,
-ECDH, EECDH amongst others. During the key exchange, keys used for authentication
-and symmetric encryption are exchanged. For RSA, DSA and ECDSA those keys are derived
+Many algorithms allow secure key exchange.  Those are \ac{RSA}, \ac{DH}, \ac{EDH}, \ac{ECDSA},
+\ac{ECDH}, \ac{EECDH} amongst others. During the key exchange, keys used for authentication
+and symmetric encryption are exchanged. For \ac{RSA}, \ac{DSA} and \ac{ECDSA} those keys are derived
 from the server's public key.
 
 \todo{explain this section}
 
-\begin{center}
-\begin{tabular}{llll}
-    \toprule
-          & \textbf{Key}  & \textbf{EC}  & \textbf{ephemeral} \\ \cmidrule(lr){1-4}
-   RSA    & RSA           & no           & no                 \\
-   DH     & RSA           & no           & no                 \\
-   EDH    & RSA           & no           & yes                \\
-   ECDH   & both          & yes          & no                 \\
-   EECDH  & both          & yes          & yes                \\
-   DSA    & DSA           & no           & no                 \\
-   ECDSA  & DSA           & yes          & no                 \\
-\bottomrule
-\end{tabular}
-%\\
-%\\
+\ctable[caption={Key exchange algorithms}]{llll}{}{%
+\FL          & \textbf{Key}  & \textbf{EC}  & \textbf{ephemeral}
+\ML   RSA    & RSA           & \no           & \no
+\NN   DH     & RSA           & \no           & \no
+\NN   EDH    & RSA           & \no           & \yes
+\NN   ECDH   & both          & \yes          & \no
+\NN   EECDH  & both          & \yes          & \yes
+\NN   DSA    & DSA           & \no           & \no
+\NN   ECDSA  & DSA           & \yes          & \no
+\LL}
 %disabled: \texttt{!PSK:!SRP}
-\end{center}
 
 \textbf{Ephemeral Key Exchange} uses different keys for authentication (the server's RSA
 key) and encryption (a randomly created key). This advantage is called ``Forward
 Secrecy'' and means that even recorded traffic cannot be decrypted later when someone
-obtains the server key. \\
+obtains the server key.
+
 All ephemeral key exchange schemes are based on the Diffie-Hellman algorithm and require
 pre-generated Diffie-Hellman parameter (which allow fast ephemeral key generation). It
 is important to note that the Diffie-Hellman parameter settings need to reflect at least 
@@ -119,7 +114,7 @@ Other hash functions like MD2, MD4 or MD5 are unsafe and broken: \texttt{!MD2:!M
 %%% NOTE: we do not need to list this all here, can move to an appendix
 %At the time of this writing, SSL is defined in RFCs: 	
 %
-%\begin{itemize}
+%\begin{itemize*}
 %\item RFC2246 - TLS1.0		
 %\item RFC3268 - AES		
 %\item RFC4132 - Camelia		
@@ -140,7 +135,7 @@ Other hash functions like MD2, MD4 or MD5 are unsafe and broken: \texttt{!MD2:!M
 %\item RFC6367 - Camelia		
 %\item RFC6655 - AES\_CCM		
 %\item RFC7027 - Brainpool Curves		
-%\end{itemize}
+%\end{itemize*}
 
 %\subsubsection{Overview of SSL Server settings}
 %
@@ -195,13 +190,13 @@ Other hash functions like MD2, MD4 or MD5 are unsafe and broken: \texttt{!MD2:!M
 %Next we tested the cipher suites above on the following clients:
 %
 %%% NOTE: we need to test with more systems!!
-%\begin{itemize}
+%\begin{itemize*}
 %\item Chrome 30.0.1599.101 Mac OS X 10.9
 %\item Safari 7.0 Mac OS X 10.9
 %\item Firefox 25.0 Mac OS X 10.9
 %\item Internet Explorer 10 Windows 7
 %\item Apple iOS 7.0.3
-%\end{itemize}
+%\end{itemize*}
 %
 %
 %The result of testing the cipher suites with these clients gives us a preference order as shown in table \ref{table:prefOrderCipherSuites}. 

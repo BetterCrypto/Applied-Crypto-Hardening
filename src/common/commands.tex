@@ -17,7 +17,52 @@
   \rule{\linewidth}{1pt}%
 }
 
-\CatchFileDef{\CIPHERSTRINGB}{cipherStringB.txt}{\endlinechar=-1 }%
+%%% CIPHERSTRING
+\usepackage{seqsplit} % Use Sequence split. Basically it inserts between every character pair a box with zero width to allow linebreaks everywhere. Better solution wanted, but is there any better?
+\CatchFileDef{\cipherStringB}{common/cipherStringB.tex}{\endlinechar=-1 }%
+
+\newcommand\warningbox[1]{
+\par\leavevmode\noindent%
+\fcolorbox{black}{pink!20}{\parbox{.99\linewidth}{%
+\begingroup
+\vspace*{.2\baselineskip}%
+\addtolength{\textwidth}{-.4\baselineskip}
+  #1%
+\vspace*{.2\baselineskip}%
+\endgroup
+}}\par}
+
+\newcommand\ttbox[1]{
+\par\leavevmode\noindent%
+\fcolorbox{black}{black!10}{\parbox{.99\linewidth}{%
+    \texttt{#1}%
+}}}
+
+\newcommand*\doindex[2][]{%
+  \newterm[name={#2},#1]{index-#2}%
+}
+\catcode`|=\active
+\makeatletter
+\def\idxopt[#1]#2|{\idx[#1]{#2}\xspace}
+\def\idxnorm#1|{%
+  \def\tempa{#1}%
+  \ifx\tempa\@empty%
+    \textbar\relax%
+  \else%
+    \idx{#1}\xspace% 
+  \fi%
+}
+\def|{\@ifnextchar[{\idxopt}{\idxnorm}%]
+}
+\makeatother
+\newcommand*\idx[2][]{\gls[#1]{index-#2}}
+\newcommand*\Idx[2][]{\Gls[#1]{index-#2}}
+\newcommand*\IDX[2][]{\GLS[#1]{index-#2}}
+\newcommand*\idxpl[2][]{\glspl[#1]{index-#2}}
+\newcommand*\Idxpl[2][]{\Glspl[#1]{index-#2}}
+\newcommand*\IDXpl[2][]{\GLSpl[#1]{index-#2}}
+\newcommand*\alsoidx[1]{\glsadd{index-#1}}
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "../applied-crypto-hardening"

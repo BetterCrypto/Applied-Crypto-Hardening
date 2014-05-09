@@ -1,0 +1,209 @@
+% Source Code Pro for LaTeX
+%
+% Silke Hofstra, tex@slxh.nl
+%
+% This file selects either the OTF or the TYPE1 fonts based on
+% the LaTeX engine used.
+%
+% Licenced under the LPPL v1.3 or higher.
+%
+\NeedsTeXFormat{LaTeX2e}[1994/12/01]
+\ProvidesPackage{sourcecodepro}[2013/09/23 v2.2 Adobe's Source Code Pro typeface]
+
+\RequirePackage{ifxetex,ifluatex,xkeyval}
+
+% Switches
+\newif\ifsourcecodepro@otf
+\newif\ifsourcecodepro@default
+\newif\ifsourcecodepro@ttdefault
+\newif\ifsourcecodepro@oldstyle
+\newif\ifsourcecodepro@black
+\newif\ifsourcecodepro@semibold
+\newif\ifsourcecodepro@light
+\newif\ifsourcecodepro@extralight
+
+% Scaling command
+\newcommand*{\SourceCodePro@scale}{1}
+
+% Use OpenType fonts for XeTeX and LuaTeX.
+\ifxetex
+	\sourcecodepro@otftrue
+\else
+	\ifluatex
+		\sourcecodepro@otftrue
+	\fi
+\fi
+
+\DeclareOptionX{lining}      {\sourcecodepro@oldstylefalse}
+\DeclareOptionX{nf}          {\sourcecodepro@oldstylefalse}
+\DeclareOptionX{lf}          {\sourcecodepro@oldstylefalse}
+\DeclareOptionX{oldstyle}    {\sourcecodepro@oldstyletrue}
+\DeclareOptionX{osf}         {\sourcecodepro@oldstyletrue}
+\DeclareOptionX{black}       {\sourcecodepro@blacktrue \sourcecodepro@semiboldfalse}
+\DeclareOptionX{semibold}    {\sourcecodepro@blackfalse\sourcecodepro@semiboldtrue}
+\DeclareOptionX{bold}        {\sourcecodepro@blackfalse\sourcecodepro@semiboldfalse}
+\DeclareOptionX{light}       {\sourcecodepro@lighttrue \sourcecodepro@extralightfalse}
+\DeclareOptionX{extralight}  {\sourcecodepro@lightfalse\sourcecodepro@extralighttrue}
+\DeclareOptionX{regular}     {\sourcecodepro@lightfalse\sourcecodepro@extralightfalse}
+\DeclareOptionX{scale}       {\renewcommand*{\SourceCodePro@scale}{#1}}
+\DeclareOptionX{scaled}      {\renewcommand*{\SourceCodePro@scale}{#1}}
+\DeclareOptionX{default}     {\sourcecodepro@defaulttrue}
+\DeclareOptionX{ttdefault}   {\sourcecodepro@ttdefaulttrue}
+\DeclareOptionX{nottdefault} {\sourcecodepro@ttdefaultfalse}
+\DeclareOptionX{type1}       {\sourcecodepro@otffalse}
+\DeclareOptionX{t1}          {\sourcecodepro@otffalse}
+\DeclareOptionX{opentype}    {\sourcecodepro@otftrue}
+\DeclareOptionX{otf}         {\sourcecodepro@otftrue}
+
+% Default options
+\ExecuteOptionsX{ttdefault,lining,bold,regular}
+\ProcessOptionsX\relax
+
+% Load OpenType files
+\ifsourcecodepro@otf
+	\RequirePackage{fontspec}
+	
+	% Oldstyle/Lining
+	\ifsourcecodepro@oldstyle
+		\def\sourcecodepro@figurestyle{OldStyle}
+	\else
+		\def\sourcecodepro@figurestyle{}
+	\fi
+	
+	% Black/Semibold/Bold
+	\ifsourcecodepro@black
+		\def\sourcecodepro@boldstyle{Black}
+	\else
+		\ifsourcecodepro@semibold
+			\def\sourcecodepro@boldstyle{Semibold}
+		\else
+			\def\sourcecodepro@boldstyle{Bold}
+		\fi
+	\fi
+	
+	% Light/ExtraLight/Regular
+	\ifsourcecodepro@light
+		\def\sourcecodepro@regstyle{Light}
+	\else
+		\ifsourcecodepro@extralight
+			\def\sourcecodepro@regstyle{ExtraLight}
+		\else
+			\def\sourcecodepro@regstyle{Regular}
+		\fi
+	\fi
+	
+	% Shared features
+	\defaultfontfeatures{
+		Ligatures = TeX ,
+		Numbers   = \sourcecodepro@figurestyle ,
+		Scale     = \SourceCodePro@scale ,
+		Extension = .otf }
+	
+	% Monospace font
+	\ifsourcecodepro@ttdefault
+		\setmonofont
+			[ UprightFont    = *-\sourcecodepro@regstyle ,
+			  ItalicFont     = *-\sourcecodepro@regstyle ,
+			  BoldFont       = *-\sourcecodepro@boldstyle , 
+			  BoldItalicFont = *-\sourcecodepro@boldstyle ]
+			{SourceCodePro}
+	\fi
+	
+	% Font families
+	% Regular/Bold
+	\newfontfamily\sourcecodepro
+		[ UprightFont    = *-Regular ,
+		  ItalicFont     = *-Regular ,
+		  BoldFont       = *-Bold , 
+		  BoldItalicFont = *-Bold ]
+		{SourceCodePro}
+	
+	% Light/Semibold
+	\newfontfamily\sourcecodeprolight
+		[ UprightFont    = *-Light ,
+		  ItalicFont     = *-Light ,
+		  BoldFont       = *-Semibold ,
+		  BoldItalicFont = *-Semibold ]
+		{SourceCodePro}
+	
+	% ExtraLight/Black
+	\newfontfamily\sourcecodeproextreme
+		[ UprightFont    = *-ExtraLight ,
+		  ItalicFont     = *-ExtraLight ,
+		  BoldFont       = *-Black ,
+		  BoldItalicFont = *-Black ]
+		{SourceCodePro}
+		
+	% Lining figures
+	\newfontfamily\sourcecodeprolf
+		[ Numbers        = ,
+		  UprightFont    = *-\sourcecodepro@regstyle ,
+		  ItalicFont     = *-\sourcecodepro@regstyle ,
+		  BoldFont       = *-\sourcecodepro@boldstyle , 
+		  BoldItalicFont = *-\sourcecodepro@boldstyle ]
+		{SourceCodePro}
+	
+	% Dont keep all default font features
+	\defaultfontfeatures{}
+
+% Load type1 font.
+\else
+	\RequirePackage[OT1,LY1,T1]{fontenc}
+	\RequirePackage{mweights}
+
+	% Oldstyle/Lining
+	\ifsourcecodepro@oldstyle
+		\def\sourcecodepro@figurestyle{OsF}
+	\else
+		\def\sourcecodepro@figurestyle{LF}
+	\fi
+	
+	% Black/Semibold/Bold
+	\ifsourcecodepro@black
+		\def\bfseries@sf{k}
+	\else
+		\ifsourcecodepro@semibold
+			\def\bfseries@sf{sb}
+		\else
+			\def\bfseries@sf{b}
+		\fi
+	\fi
+	
+	% Light/ExtraLight/Regular
+	\ifsourcecodepro@light
+		\def\bfseries@sf{l}
+	\else
+		\ifsourcecodepro@extralight
+			\def\bfseries@sf{el}
+		\else
+			\def\bfseries@sf{m}
+		\fi
+	\fi
+
+	% Monospace font
+	\ifsourcecodepro@ttdefault
+		\renewcommand*
+			{\ttdefault}
+			{SourceCodePro-T\sourcecodepro@figurestyle}
+	\fi
+	
+	% If source code pro is the default font \oldstylenums needs a new definition.
+	\ifsourcecodepro@default
+		\renewcommand*\oldstylenums[1]{%
+			\begingroup
+				\ifmmode
+					\mathgroup\symletters #1%
+				\else
+					\fontfamily{SourceCodePro-TOsF}\selectfont #1%
+				\fi
+			\endgroup
+		}
+	\fi
+\fi
+
+% Set default font family
+\ifsourcecodepro@default
+	\let\familydefault\ttdefault
+\fi
+
+\endinput

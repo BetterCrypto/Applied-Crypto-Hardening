@@ -1,0 +1,146 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+ % arara: pdflatex: { synctex: on }
+\documentclass[a4paper]{report}
+
+\usepackage[plainpages=false,colorlinks]{hyperref}
+\usepackage[toc,order=word,subentrycounter]{glossaries}
+
+\usepackage{glossary-inline}
+
+\renewcommand*{\glossarysection}[2][]{\textbf{#1}: }
+\renewcommand{\glsnamefont}[1]{\textsc{#1}}
+\setglossarystyle{inline}
+
+\makeglossaries
+
+\newglossaryentry{Perl}{name=\texttt{Perl},
+sort=Perl, % need a sort key because name contains a command
+description=A scripting language}
+
+\newglossaryentry{glossary}{name=glossary,
+description={\nopostdesc},
+plural={glossaries}}
+
+\newglossaryentry{glossarycol}{
+description={collection of glosses},
+sort={2},
+parent={glossary}}
+
+\newglossaryentry{glossarylist}{
+description={list of technical words},
+sort={1},
+parent={glossary}}
+
+\newglossaryentry{pagelist}{name=page list,
+ % description value has to be enclosed in braces
+ % because it contains commas
+description={a list of individual pages or page ranges
+(e.g.\ 1,2,4,7-9)}}
+
+\newglossaryentry{mtrx}{name=matrix,
+description={rectangular array of quantities},
+ % plural is not simply obtained by appending an s, so specify
+plural=matrices}
+
+ % entry with a paragraph break in the description
+
+\newglossaryentry{par}{name=paragraph,
+description={distinct section of piece of
+writing. Beginning on new, usually indented, line}}
+
+ % entry with two types of plural. Set the plural form to the
+ % form most likely to be used. If you want to use a different
+ % plural, you will need to explicity specify it in \glslink
+\newglossaryentry{cow}{name=cow,
+ % this isn't necessary, as this form (appending an s) is
+ % the default
+plural=cows,
+ % description:
+description={(\emph{pl.}\ cows, \emph{archaic} kine) an adult
+female of any bovine animal}}
+
+\newglossaryentry{bravo}{name={bravo},
+description={\nopostdesc}}
+
+\newglossaryentry{bravo1}{description={cry of approval (pl.\ bravos)},
+sort={1},
+plural={bravos},
+parent=bravo}
+
+\newglossaryentry{bravo2}{description={hired ruffian or killer (pl.\ bravoes)},
+sort={2},
+plural={bravoes},
+parent=bravo}
+
+\newglossaryentry{seal}{name=seal,description={sea mammal with
+flippers that eats fish}}
+
+\newglossaryentry{sealion}{name={sea lion},
+description={large seal}}
+
+\begin{document}
+
+\title{Sample Document Using glossary Package}
+\author{Nicola Talbot}
+\pagenumbering{alph}% prevent duplicate page link names if using PDF
+\maketitle
+
+\pagenumbering{roman}
+\tableofcontents
+
+\chapter{Introduction}
+\pagenumbering{arabic}
+
+This document has a glossary in a footnote\footnote{\printglossaries}.
+
+A \gls{glossarylist} (definition~\glsrefentry{glossarylist}) is a
+very useful addition to any technical document, although a
+\gls{glossarycol} (definition~\glsrefentry{glossarycol}) can also
+simply be a collection of glosses, which is another thing entirely.
+Some documents have multiple \glspl{glossarylist}.
+
+Once you have run your document through \LaTeX, you
+will then need to run the \texttt{.glo} file through
+\texttt{makeindex}.  You will need to set the output
+file so that it creates a \texttt{.gls} file instead
+of an \texttt{.ind} file, and change the name of
+the log file so that it doesn't overwrite the index
+log file (if you have an index for your document).
+Rather than having to remember all the command line
+switches, you can call the \gls{Perl} script
+\texttt{makeglossaries} which provides a convenient
+wrapper.
+
+If a comma appears within the name or description, grouping
+must be used, e.g.\ in the description of \gls{pagelist}.
+
+\chapter{Plurals and Paragraphs}
+
+Plurals are assumed to have the letter s appended, but if this is
+not the case, as in \glspl{mtrx}, then you need to specify the
+plural when you define the entry. If a term may have multiple
+plurals (for example \glspl{cow}/\glslink{cow}{kine}) then
+define the entry with the plural form most likely to be used and
+explicitly specify the alternative form using \verb|\glslink|.
+\Glspl{seal} and \glspl{sealion} have regular plural forms.
+
+\Gls{bravo} is a homograph, but the plural forms are spelt
+differently. The plural of \gls{bravo1}, a cry of approval
+(definition~\glsrefentry{bravo1}), is \glspl{bravo1}, whereas the
+plural of \gls{bravo2}, a hired ruffian or killer
+(definition~\glsrefentry{bravo2}), is \glspl{bravo2}.
+
+\Glspl{par} can cause a problem in commands, so care is needed
+when having a paragraph break in a \gls{glossarylist} entry.
+
+\chapter{Ordering}
+
+There are two types of ordering: word ordering (which places
+``\gls{sealion}'' before ``\gls{seal}'') and letter ordering
+(which places ``\gls{seal}'' before ``\gls{sealion}'').
+
+\end{document}

@@ -1,0 +1,127 @@
+%
+%
+% https://tex.stackexchange.com/questions/151208/how-to-remove-the-leading-unnecessary-white-spaces-when-using-linerange-option/164610#164610
+
+\makeatletter
+
+% -------- ugly details --------
+
+% custom key
+\lst@Key{autounindent}f[t]{\lstKV@SetIf{#1}\lst@ifautounindent}
+
+% --- accumulation of tokens ---
+\toks@={
+    \lst@DefSaveDef{`\ }\lsts@myspace{\processmyspace}
+    %\lst@DefSaveDef{`\^^I}\lsts@mytab{\processmytab}
+}
+
+
+% --- egreg's helper function for accumulating tokens ---
+\def\add@savedef#1#2{%
+  \begingroup\lccode`?=#1\relax
+  \lowercase{\endgroup
+  \edef\@temp{%
+    \noexpand\lst@DefSaveDef{\number#1}%
+    \expandafter\noexpand\csname lsts@?\endcsname{\noexpand#2% % I had to swap things around to fix a bug here;
+      \expandafter\noexpand\csname lsts@?\endcsname}%          % otherwise, comment highlighting would be broken.
+  }}%
+  \toks@=\expandafter{\the\expandafter\toks@\@temp}%
+}
+
+\count@=33
+\loop
+    \add@savedef\count@\processchar
+  \ifnum\count@<127
+  \advance\count@\@ne
+\repeat
+
+% --- to keep track of the state ---
+\newcount\spacesToGobble
+\newcount\spacesGobbledSoFar
+\newif\ifafterindent
+\newif\ifonBasisLine
+\newif\ifPostponeCountToNextLine
+
+
+\lst@AddToHook{Init}
+{%
+  \lst@ifautounindent%
+    % patch hook macros
+    \let\@ddedToInitVarsBOLhook\@@ddedToInitVarsBOLhook%
+    \let\@ddedToEOLhook\@@ddedToEOLhook%
+    % initialise things
+    \global\onBasisLinetrue%
+    \global\afterindentfalse%
+    \global\spacesToGobble=0%
+    \lst@ifincluderangemarker%
+      \ifnum9999999=\lst@firstline% (i.e. if firstline option not used)
+        \global\PostponeCountToNextLinetrue%
+      \fi
+    \fi
+  \fi
+}
+
+
+\lst@AddToHook{SelectCharTable}
+{%
+    \lst@ifautounindent%
+        \lst@lAddTo\lst@DeveloperSCT{\the\toks@}%
+    \fi
+}
+
+
+\lst@AddToHook{InitVarsBOL}{\@ddedToInitVarsBOLhook}
+\newcommand\@ddedToInitVarsBOLhook{}
+\newcommand\@@ddedToInitVarsBOLhook
+{%
+  \global\afterindentfalse%
+}
+
+\lst@AddToHook{EOL}{\@ddedToEOLhook}
+\newcommand\@ddedToEOLhook{}
+\newcommand\@@ddedToEOLhook
+{%
+  \ifonBasisLine%
+    \ifPostponeCountToNextLine%
+    \else
+      \global\onBasisLinefalse%
+    \fi
+  \fi
+  \global\spacesGobbledSoFar=0%
+  \global\PostponeCountToNextLinefalse%
+}
+
+\lst@AddToHook{DeInit}
+{%
+  \lst@ifautounindent%
+    % undo patches
+    \def\@ddedToInitVarsBOLhook{}%
+    \def\@ddedToEOLhook{}%
+  \fi
+}
+
+
+% --- helper macros ---
+\newcommand\processchar
+{%
+  \global\afterindenttrue%
+}
+
+\newcommand\processmyspace
+{%
+  \ifafterindent%
+    \lsts@myspace%
+  \else
+    \ifonBasisLine%
+      \global\advance\spacesToGobble\@ne\relax%
+    \else
+      \ifnum\spacesGobbledSoFar<\spacesToGobble\relax%
+        \global\advance\spacesGobbledSoFar\@ne\relax%
+      \else
+        \lsts@myspace%
+      \fi
+    \fi
+  \fi
+}
+
+\makeatother

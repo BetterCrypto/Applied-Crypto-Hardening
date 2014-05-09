@@ -63,7 +63,7 @@ tools.  On Unix-like systems, it is likely that the OpenSSL suite is available
 to you.  In this case, you can generate a private key and a corresponding
 certificate request as follows:
 
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 % openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize>
 Country Name (2 letter code) [AU]:DE
 State or Province Name (full name) [Some-State]:Bavaria
@@ -117,10 +117,15 @@ CA at all, but is signed by the entity that it is issued to.  Thus, the
 organizational overhead of running a CA is eliminated at the expense of
 having to establish all trust relationships between entities manually.
 
-With OpenSSL, a self-signed certificate may be created with this command:
+With OpenSSL, you can self-sign a previously created certificate with this command:
 
 \begin{lstlisting}
 % openssl req -new -x509 -key privkey.pem -out cacert.pem -days 1095
+\end{lstlisting}
+
+You can also create a self-signed certificate in just one command:
+\begin{lstlisting}
+openssl req -new -x509 -keyout privkey.pem -out cacert.pem -days 1095 -nodes -newkey rsa:<keysize>
 \end{lstlisting}
 
 The resulting certificate will by default not be trusted by anyone at all,
@@ -167,7 +172,7 @@ Transparency~\cite{certtransparency}.
 % A good background on PKIs can be found in
 % \footnote{\url{https://developer.mozilla.org/en/docs/Introduction_to_Public-Key_Cryptography}}
 % \footnote{\url{http://cacr.uwaterloo.ca/hac/about/chap8.pdf}}
-% \footnote{\url{http://www.verisign.com.au/repository/tutorial/cryptography/intro1.shtml}}
+% \footnote{\url{https://www.verisign.com.au/repository/tutorial/cryptography/intro1.shtml}}
 % .
 
 % \todo{ts: Background and Configuration (EMET) of Certificate Pinning,

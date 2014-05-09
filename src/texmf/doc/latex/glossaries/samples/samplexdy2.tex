@@ -1,0 +1,71 @@
+ % This file is public domain
+ %
+ % This is a sample document illustrating how to use the
+ % glossaries package with xindy. To create the document:
+ %
+ % pdflatex samplexdy2
+ % makeglossaries samplexdy2
+ % pdflatex samplexdy2
+ %
+ % This sample file won't work with makeindex
+ %
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+\documentclass{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[colorlinks]{hyperref}
+\usepackage[xindy,counter=section]{glossaries}
+
+ % Set up somewhat eccentric section numbering system:
+
+\renewcommand*{\thesection}{[\thechapter]\arabic{section}}
+
+\renewcommand*{\theHsection}{\thepart.\thesection}
+\renewcommand*{\thepart}{\Roman{part}}
+
+\GlsAddXdyLocation["roman-numbers-uppercase"]{section}{:sep "["
+  "arabic-numbers" :sep "]" "arabic-numbers"
+}
+
+ % If part is 0, then \thepart will be empty, so add an extra
+ % case to catch this:
+
+\GlsAddXdyLocation{zero.section}{:sep "["
+  "arabic-numbers" :sep "]" "arabic-numbers"
+}
+
+ % (Note that the above will stop xindy giving a warning, but the
+ % location hyper links will be invalid if no \part is used.)
+
+\makeglossaries
+
+\newglossaryentry{sample}{name=sample,description={an example}}
+\newglossaryentry{sample2}{name=sample2,description={another example}}
+
+\begin{document}
+This is a sample document illustrating Xindy specific commands in
+the glossaries package.
+
+\part{First Part}
+
+\chapter{Sample Chapter}
+This example document has an eccentric section numbering system.
+
+\section{First Section}
+
+\gls{sample}. \gls{sample2}.
+
+\section{Second Section}
+
+\gls{sample2}.
+
+\section{Third Section}
+
+\gls{sample}. \gls{sample2}.
+
+\printglossaries
+\end{document}

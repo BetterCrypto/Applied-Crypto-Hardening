@@ -1,78 +1,75 @@
+%hack.
+\gdef\currentsectionname{DBs}
 %%\subsection{Database Systems}
-% This list is based on : http://en.wikipedia.org/wiki/Relational_database_management_system#Market_share
+% This list is based on : https://en.wikipedia.org/wiki/Relational_database_management_system#Market_share
 
 %% ---------------------------------------------------------------------- 
-\subsubsection{Oracle}
-\begin{description}
-\item[Tested with Version:] not tested
+\subsection{Oracle}
+\subsubsection{Tested with Versions}
+\begin{itemize*}
+\item We do not test this here, since we only reference other papers for Oracle so far.
+\end{itemize*}
 
-\item[References:] (German)
-{\small \url{http://www.telekom.com/static/-/155996/7/technische-sicherheitsanforderungen-si}}
 
-Please read the following pages about SSL and ciphersuites:\\
-p. 129 -Req 396 and Req 397 \\
+\subsubsection{References}
+\begin{itemize*}
+  \item Technical safety requirements by \emph{Deutsche Telekom AG} (German). Please read section 17.12 or pages 129 and following (Req 396 and Req 397) about SSL and ciphersuites \url{http://www.telekom.com/static/-/155996/7/technische-sicherheitsanforderungen-si}
+\end{itemize*}
 
-\end{description}
+
 
 %% ---------------------------------------------------------------------- 
-%%\subsubsection{SQL Server}
+%%\subsection{SQL Server}
 %%\todo{write this}
 
 
 
-
 %% ---------------------------------------------------------------------- 
-\subsubsection{MySQL}
-
-\begin{description}
-\item[Tested with Version:] Debian 7.0 and MySQL 5.5
-
-\item[Settings:] \mbox{}
-
-\paragraph*{my.cnf}\mbox{}\\
-
-\begin{lstlisting}[breaklines]
-[mysqld]
-ssl
-ssl-ca=/etc/mysql/ssl/ca-cert.pem
-ssl-cert=/etc/mysql/ssl/server-cert.pem
-ssl-key=/etc/mysql/ssl/server-key.pem
-ssl-cipher=EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA
-\end{lstlisting}
-
-\item[Additional settings:]
+\subsection{MySQL}
 
 
-\item[Justification for special settings (if needed):]
+\subsubsection{Tested with Versions}
+\begin{itemize*}
+  \item Debian Wheezy and MySQL 5.5
+\end{itemize*}
 
+
+\subsubsection{Settings}
+\configfile{my.cnf}{31-31,104-109}{SSL configuration fo MySQL}
+
+
+%\subsubsection{Additional settings}
+
+
+%\subsubsection{Justification for special settings (if needed)}
 % in case you have the need for further justifications why you chose this and that setting or if the settings do not fit into the standard Variant A or Variant B schema, please document this here
 
-\item[References:]
-{\small \url{https://dev.mysql.com/doc/refman/5.5/en/ssl-connections.html}}
 
-\item[How to test:]
+\subsubsection{References}
+\begin{itemize*}
+  \item MySQL Documentation on SSL Connections: \url{https://dev.mysql.com/doc/refman/5.5/en/ssl-connections.html}
+\end{itemize*}
 
+
+\subsubsection{How to test}
 After restarting the server run the following query to see if the ssl settings are correct:
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 show variables like '%ssl%';
 \end{lstlisting}
 
 
-\end{description}
-
-
 %% ---------------------------------------------------------------------- 
-\subsubsection{DB2}
-\begin{description}
-\item[Tested with Version:] not tested
+\subsection{DB2}
+\subsubsection{Tested with Version}
+\begin{itemize*}
+\item  We do not test this here, since we only reference other papers for DB2 so far.
+\end{itemize*}
 
-\item[References:]
-{\small \url{http://pic.dhe.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=%2Fcom.ibm.db2.luw.admin.sec.doc%2Fdoc%2Fc0053544.html}}
 
-
-\paragraph*{ssl\_cipherspecs}\mbox{}\\
+\subsubsection{Settings}
+\paragraph{ssl\_cipherspecs:}
 In the link above the whole SSL-configuration is described in-depth. The following command shows only how to set the recommended ciphersuites.
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 # recommended and supported ciphersuites 
 
 db2 update dbm cfg using SSL_CIPHERSPECS 
@@ -94,54 +91,45 @@ TLS_RSA_WITH_AES_256_CBC_SHA,
 TLS_RSA_WITH_AES_128_CBC_SHA,
 TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
 TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
-
 \end{lstlisting}
 
-\end{description}
+
+\subsubsection{References}
+\begin{itemize*}
+  \item IBM Db2 Documentation on \emph{Supported cipher suites} \url{http://pic.dhe.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=\%2Fcom.ibm.db2.luw.admin.sec.doc\%2Fdoc\%2Fc0053544.html}
+\end{itemize*}
 
 %% ---------------------------------------------------------------------- 
 
-\subsubsection{PostgreSQL}
-
-\begin{description}
-\item[Tested with Version:] Debian 7.0 and PostgreSQL 9.1
-
-\item[References:]
-
-It's recommended to read 
-
-{\small \url{http://www.postgresql.org/docs/current/static/runtime-config-connection.html#RUNTIME-CONFIG-CONNECTION-SECURITY}}
-{\small \url{http://www.postgresql.org/docs/current/static/ssl-tcp.html}}
-{\small \url{http://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html}}
-
-\item[Settings:] \mbox{}
+\subsection{PostgreSQL}
+\subsubsection{Tested with Versions}
+\begin{itemize*}
+  \item Debian Wheezy and PostgreSQL 9.1
+  \item Linux Mint 14 nadia / Ubuntu 12.10 quantal with PostgreSQL 9.1+136 and OpenSSL 1.0.1c
+\end{itemize*}
 
 
-To start in SSL mode the server.crt and server.key must exist in the server's data directory \$PGDATA. 
+\subsubsection{Settings}
+\configfile{9.1/postgresql.conf}{80-81}{Enabling SSL in PostgreSQL}
 
-Starting with version 9.2, you have the possibility to set the path.
+To start in SSL mode the server.crt and server.key must exist in the server's data directory \$PGDATA.
 
-\begin{lstlisting}[breaklines]
-ssl_key_file = '/your/path/server.key'
-ssl_cert_file = '/your/path/server.crt'
-ssl_ca_file = '/your/path/root.crt'
-\end{lstlisting}
-
-\paragraph*{postgresql.conf}\mbox{}\\
-
-\begin{lstlisting}[breaklines]
-#>=8.3
-ssl = on 
-ssl_ciphers = 'EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EDH+CAMELLIA256:EECDH:EDH+aRSA:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!AES128:!CAMELLIA128:!ECDSA:AES256-SHA'
-\end{lstlisting}
+Starting with version 9.2, you have the possibility to set the path manually.
+\configfile{9.3/postgresql.conf}{85-87}{Certificate locations in PostgreSQL \(\geq\) 9.2}
 
 
 
-\item[How to test:]
+\subsubsection{References}
+\begin{itemize*}
+  \item It's recommended to read \url{http://www.postgresql.org/docs/9.1/interactive/runtime-config-connection.html\#RUNTIME-CONFIG-CONNECTION-SECURITY} (please edit the version with your preferred one).
+  \item PostgreSQL Documentation on \emph{Secure TCP/IP Connections with SSL}: \url{http://www.postgresql.org/docs/9.1/static/ssl-tcp.html}
+  \item PostgreSQL Documentation on \emph{host-based authentication}: \url{http://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html}
+\end{itemize*}
+
+
+\subsubsection{How to test}
 To test your ssl settings, run psql with the sslmode parameter:
-\begin{lstlisting}[breaklines]
+\begin{lstlisting}
 psql "sslmode=require host=postgres-server dbname=database" your-username
 \end{lstlisting}
-
-\end{description}
 

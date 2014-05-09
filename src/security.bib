@@ -7,7 +7,7 @@
      \hyperref{http://stackexchange.com/}{}{}{Mathematics}}
 }
 @string {I_PolarSSL =
-    {\hyperref{http://polarssl.org/}{}{}{PolarSSL}}
+    {\hyperref{https://polarssl.org/}{}{}{PolarSSL}}
 }
 @string {I_Stackexchange =
     {\hyperref{http://stackexchange.com/}{}{}{Stackexchange}
@@ -15,7 +15,7 @@
      \hyperref{http://stackexchange.com/}{}{}{Site}}
 }
 @string {I_Wikipedia =
-    {\hyperref{http://wikipedia.org/}{}{}{Wikipedia}}
+    {\hyperref{https://wikipedia.org/}{}{}{Wikipedia}}
 }
 @string {I_Wolfram =
     {\hyperref{http://mathworld.wolfram.com/}{}{}{Wolfram} 
@@ -23,13 +23,34 @@
      \hyperref{http://mathworld.wolfram.com/}{}{}{Mathworld}}
 }
 @string {J_TOMACS =
-    {\hyperref{http://tomacs.acm.org/}{}{}{ACM}
-     \hyperref{http://tomacs.acm.org/}{}{}{Transactions}
-     \hyperref{http://tomacs.acm.org/}{}{}{on}
-     \hyperref{http://tomacs.acm.org/}{}{}{Modeling}
-     \hyperref{http://tomacs.acm.org/}{}{}{and}
-     \hyperref{http://tomacs.acm.org/}{}{}{Computer}
-     \hyperref{http://tomacs.acm.org/}{}{}{Simulation}}
+    {\hyperref{https://tomacs.acm.org/}{}{}{ACM}
+     \hyperref{https://tomacs.acm.org/}{}{}{Transactions}
+     \hyperref{https://tomacs.acm.org/}{}{}{on}
+     \hyperref{https://tomacs.acm.org/}{}{}{Modeling}
+     \hyperref{https://tomacs.acm.org/}{}{}{and}
+     \hyperref{https://tomacs.acm.org/}{}{}{Computer}
+     \hyperref{https://tomacs.acm.org/}{}{}{Simulation}}
+}
+
+@string {I_MIT = 
+	{\hyperref{http://web.mit.edu/}{}{}{MIT}}
+}
+
+@string {I_IETF = 
+	{\hyperref{https://www.ietf.org/}{}{}{IETF}}
+}
+
+@string {I_ORACLE = 
+	{\hyperref{http://www.oracle.com/}{}{}{Oracle}}
+}
+
+@string {I_GNU = 
+	{\hyperref{https://www.gnu.org/}{}{}{GNU}}
+}
+
+@string {I_BLACKHAT =
+    {\hyperref{https://blackhat.com}{}{}{Blackhat}
+     \hyperref{https://blackhat.com}{}{}{USA}}
 }
 
 @inproceedings{HDWH12,
@@ -50,7 +71,7 @@
    year      = {2013},
    month     = Dec,
    type      = {Wikipedia},
-   url       = {http://en.wikipedia.org/wiki/dev/random},
+   url       = {https://en.wikipedia.org/wiki/dev/random},
    note      = {Accessed 2013-12-06},
 }
 
@@ -136,7 +157,7 @@
    year      = {2013},
    month     = Dec,
    type      = {Wikipedia},
-   url       = {http://en.wikipedia.org/wiki/Export_of_cryptography_in_the_United_States},
+   url       = {https://en.wikipedia.org/wiki/Export_of_cryptography_in_the_United_States},
    note      = {Accessed 2013-12-09},
 }
 
@@ -249,7 +270,7 @@
 
 @techreport{TR02102,
   title      = {BSI TR-02102 Kryptographische Verfahren},
-  author     = {Bundesamt f\"ur Sicherheit in der Informationstechnik (BSI)},
+  author     = {Bundesamt für Sicherheit in der Informationstechnik (BSI)},
   year       = {2013},
   month      = {Jan},
   url        = {https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR02102/BSI-TR-02102_pdf}
@@ -274,7 +295,7 @@
 @misc{tschofenig-webpki,
   author = {{H. Tschofenig and E. Lear}},
   title = {{Evolving the Web Public Key Infrastructure}},
-  howpublished = {\url{http://tools.ietf.org/html/draft-tschofenig-iab-webpki-evolution-01.txt}},
+  howpublished = {\url{https://tools.ietf.org/html/draft-tschofenig-iab-webpki-evolution-01.txt}},
   year = 2013,
   month = Nov,
 }
@@ -298,7 +319,7 @@
 @misc{draft-ietf-websec-key-pinning,
   author = {{C. Evans and C. Palmer}},
   title = {{Public Key Pinning Extension for HTTP}},
-  howpublished = {\url{http://tools.ietf.org/html/draft-ietf-websec-key-pinning-09}},
+  howpublished = {\url{https://tools.ietf.org/html/draft-ietf-websec-key-pinning-09}},
   year = 2013,
   month = Nov,
 }
@@ -315,7 +336,7 @@
   author = {{Adam Langley, Ben Laurie, Emilia Kasper}},
   title = {{Certificate Transparency}},
   howpublished = "\url{http://www.certificate-transparency.org}
-		\url{http://datatracker.ietf.org/doc/rfc6962/}",
+		\url{https://datatracker.ietf.org/doc/rfc6962/}",
   year = 2013,
   month = 07,
 }
@@ -346,7 +367,62 @@
    year      = {2013},
    month     = Dec,
    type      = {Wikipedia},
-   url       = {http://en.wikipedia.org/wiki/TinyCA},
+   url       = {https://en.wikipedia.org/wiki/TinyCA},
    note      = {Accessed 2013-12-24},
 }
 
+@techreport{MITKrbDoc:realm_config,
+	key = {MITKrbDoc:realm_config},
+	title = {Realm configuration decisions},
+	institution = I_MIT,
+	year = {2013},
+	type = {Documentation},
+	url = {http://web.mit.edu/kerberos/krb5-latest/doc/admin/realm_config.html},
+}
+
+@techreport{IETF:cat-krb-dns-locate-02,
+	key = {IETF:cat-krb-dns-locate-02},
+	title = {Distributing Kerberos KDC and Realm Information with DNS},
+	institution = I_IETF,
+	year = {2000},
+	month = Mar,
+	author = {Ken Hornstein and Jeffrey Altman},
+	type = {Internet Draft},
+	url = {https://www.ietf.org/proceedings/48/I-D/cat-krb-dns-locate-02.txt},
+}
+
+@techreport{krb519,
+	key = {krb519},
+	title = {Kerberos 5 Release 1.9},
+	institution = I_MIT,
+	year = {2010},
+	month = Dec,
+	type = {Release Notes},
+	url = {http://web.mit.edu/kerberos/krb5-1.9/},
+}
+
+@techreport{JavaJGSS,
+	key = {JavaJGSS},
+	title = {Java Generic Security Services: (Java GSS) and Kerberos},
+	institution = I_ORACLE,
+	type = {Documentation},
+	url = {http://docs.oracle.com/javase/7/docs/technotes/guides/security/jgss/jgss-features.html},
+}
+
+@techreport{ShishiEnctypes,
+	key = {ShishiEnctypes},
+	title = {GNU Shishi 1.0.2},
+	institution = I_GNU,
+	type = {Documentation},
+	url = {https://www.gnu.org/software/shishi/manual/shishi.html\#Cryptographic-Overview},
+}
+
+@techreport{AttKerbDepl,
+	key = {AttKerbDepl},
+	author = {Rachel Engel and Brad Hill and Scott Stender},
+	title = {Attacking Kerberos Deployments},
+	journal = J_BLACKHAT,
+	year = {2010},
+	type = {Slides},
+	url = {https://media.blackhat.com/bh-us-10/presentations/Stender_Engel_Hill/BlackHat-USA-2010-Stender-Engel-Hill-Attacking-Kerberos-Deployments-slides.pdf},
+}

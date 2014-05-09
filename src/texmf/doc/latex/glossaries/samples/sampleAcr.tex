@@ -1,0 +1,88 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+ % arara: pdflatex: { synctex: on }
+\documentclass[a4paper]{report}
+
+\usepackage[colorlinks,plainpages=false]{hyperref}
+\usepackage[style=long,% use 'long' style for the glossary
+            toc,% add glossary to table of contents
+           ]{glossaries}
+
+\makeglossaries
+
+ % Set the acronym style
+\setacronymstyle{long-sc-short}
+
+\newacronym{svm}% label
+{svm}% abbreviation
+{support vector machine}% long form
+
+\newacronym{ksvm}{ksvm}{kernel support vector machine}
+
+\newacronym{rna}{rna}{ribonukleins\"aure}
+
+\begin{document}
+\tableofcontents
+
+\chapter{Support Vector Machines}
+
+\Glspl{svm} are used widely in the area of pattern recognition.
+Subsequent use: \gls{svm}.
+
+Short version: \acrshort{svm}. Long version: \acrlong{svm}. Full
+version: \acrfull{svm}. Description: \glsentrydesc{svm}.
+
+This is the entry in uppercase: \GLS{svm}.
+
+\chapter{Kernel Support Vector Machines}
+
+The \gls{ksvm} is \ifglsused{svm}{an}{a} \gls{svm} that uses
+the so called ``kernel trick''. Plural: \glspl{ksvm}. Resetting
+acronyms.
+
+\glsresetall
+Possessive: \gls{ksvm}['s].
+Make the glossary entry number bold for this
+one \gls[format=hyperbf]{ksvm}.
+
+\chapter{Short, Long and Full Forms}
+
+These commands don't affect the first use flag:
+
+\begin{center}
+\begin{tabular}{lll}
+ & Unstarred & Starred\\
+acrshort & \acrshort{svm} & \acrshort*{svm}\\
+Acrshort & \Acrshort{svm} & \Acrshort*{svm}\\
+ACRshort & \ACRshort{svm} & \ACRshort*{svm}\\
+acrlong & \acrlong{svm} & \acrlong*{svm}\\
+Acrlong & \Acrlong{svm} & \Acrlong*{svm}\\
+ACRlong & \ACRlong{svm} & \ACRlong*{svm}\\
+acrfull & \acrfull{svm} & \acrfull*{svm}\\
+Acrfull & \Acrfull{svm} & \Acrfull*{svm}\\
+ACRfull & \ACRfull{svm} & \ACRfull*{svm}\\
+\\
+& Insert Unstarred & Insert Starred\\
+acrshort & \acrshort{svm}['s] & \acrshort*{svm}['s]\\
+Acrshort & \Acrshort{svm}['s] & \Acrshort*{svm}['s]\\
+ACRshort & \ACRshort{svm}['s] & \ACRshort*{svm}['s]\\
+acrlong & \acrlong{svm}['s] & \acrlong*{svm}['s]\\
+Acrlong & \Acrlong{svm}['s] & \Acrlong*{svm}['s]\\
+ACRlong & \ACRlong{svm}['s] & \ACRlong*{svm}['s]\\
+acrfull & \acrfull{svm}['s] & \acrfull*{svm}['s]\\
+Acrfull & \Acrfull{svm}['s] & \Acrfull*{svm}['s]\\
+ACRfull & \ACRfull{svm}['s] & \ACRfull*{svm}['s]
+\end{tabular}
+\end{center}
+
+\chapter{Another chapter}
+
+You don't need to worry about makeindex's special characters:
+\gls{rna}.
+
+\printglossary[title={List of Acronyms}]
+
+\end{document}

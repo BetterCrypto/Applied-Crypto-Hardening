@@ -1,0 +1,69 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+\documentclass{report}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage[style=alttreehypergroup,nolong,nosuper]{glossaries}
+
+ % The alttree type of glossary styles need to know the
+ % widest entry name for each level
+\glssetwidest{Roman letters} % level 0 widest name
+\glssetwidest[1]{Sigma}      % level 1 widest name
+
+\makeglossaries
+
+\newglossaryentry{greekletter}{name={Greek letters},
+text={Greek letter},
+description={\nopostdesc}}
+
+\newglossaryentry{sigma}{name={Sigma},
+text={\ensuremath{\Sigma}},
+first={\ensuremath{\Sigma} (uppercase sigma)},
+symbol={\ensuremath{\Sigma}},
+description={Used to indicate summation},
+parent=greekletter}
+
+\newglossaryentry{pi}{name={pi},
+text={\ensuremath{\pi}},
+first={\ensuremath{\pi} (lowercase pi)},
+symbol={\ensuremath{\pi}},
+description={Transcendental number},
+parent=greekletter}
+
+\newglossaryentry{romanletter}{name={Roman letters},
+text={Roman letter},
+description={\nopostdesc}}
+
+\newglossaryentry{e}{name={e},
+description={Unique real number such that the derivative of
+the function $e^x$ is the function itself},
+parent=romanletter}
+
+\newglossaryentry{C}{name={C},
+description={Euler's constant},
+parent=romanletter}
+
+\begin{document}
+This is a sample document illustrating hierarchical glossary
+entries.
+
+\chapter{Greek Letters Used in Mathematics}
+
+Some information about \glspl{greekletter}.
+The letter \gls{pi} is used to represent the ratio of a circle's
+circumference to its diameter.
+The letter \gls{sigma} is used to represent summation.
+
+\chapter{Roman Letters Used in Mathematics}
+
+Some information about \glspl{romanletter}.
+The letter \gls{e} is the unique real number such that
+the derivative of the function $e^x$ is the function itself.
+The letter \gls{C} represents Euler's constant.
+
+\printglossaries
+
+\end{document}

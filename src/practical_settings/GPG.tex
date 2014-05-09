@@ -1,28 +1,29 @@
+% hack.
+\gdef\currentsectionname{GPG}
+\gdef\currentsubsectionname{GnuPG}
+
 The OpenPGP protocol
-\footnote{\url{http://tools.ietf.org/search/rfc4880}}
+\footnote{\url{https://tools.ietf.org/search/rfc4880}}
  uses asymmetric encryption to protect a session key which is used to encrypt a message. Additionally, it signs messages via asymmetric encryption and hash functions. %% what? - azet
 Research on SHA-1 conducted back in 2005\footnote{\url{https://www.schneier.com/blog/archives/2005/02/sha1\_broken.html}} has made clear that collision attacks are a real threat to the security of the SHA-1 hash function. PGP settings should be adapted to avoid using SHA-1.
 
 
 When using PGP, there are a couple of things to take care of:
-\begin{itemize}
-\item keylengths (see section \ref{section:keylengths})
-\item randomness (see section \ref{section:RNGs})
-\item preference of symmetric encryption algorithm (see section \ref{section:CipherSuites})
-\item preference of hash function (see section \ref{section:CipherSuites})
-\end{itemize}
+\begin{itemize*}
+  \item keylengths (see section \ref{section:keylengths})
+  \item randomness (see section \ref{section:RNGs})
+  \item preference of symmetric encryption algorithm (see section \ref{section:CipherSuites})
+  \item preference of hash function (see section \ref{section:CipherSuites})
+\end{itemize*}
 
 Properly dealing with key material, passphrases and the web-of-trust is outside of the scope of this document. The GnuPG website\footnote{\url{http://www.gnupg.org/}} has a good tutorial on PGP.
+
+This \href{https://www.debian-administration.org/users/dkg/weblog/48}{Debian How-to} is a great resource on upgrading your old PGP key as well as on safe default settings. This section is built based on the Debian How-to.
 
 \subsubsection{Hashing}
 Avoid SHA-1 in GnuPG. Edit \$HOME/.gnupg/gpg.conf:
 
-\begin{lstlisting}[breaklines]
-# according to:  https://www.debian-administration.org/users/dkg/weblog/48
-personal-digest-preferences SHA256
-cert-digest-algo SHA256
-default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed
-\end{lstlisting}
+\configfile{gpg.conf}{208-210}{Digest selection in GnuPG}
 
 Before you generate a new PGP key, make sure there is enough entropy available (see subsection \ref{subsec:RNG-linux}).
 

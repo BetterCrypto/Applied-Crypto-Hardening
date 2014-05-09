@@ -1,0 +1,52 @@
+These are sample files illustrating the use of the glossaries
+package. If you are new to this package, start with minimalgls.tex
+to check you have glossaries correctly installed and to check that
+you understand how to use it.
+
+1. Run minimalgls.tex through LaTeX ("compile the document") either
+by typing
+
+	latex minimalgls
+
+in a terminal or by using the relevant button or menu item in your
+text editor or front-end. This will create the required associated
+files but you will not see the glossary. If you use PDFLaTeX you
+will also get warnings about non-existent references that look
+something like:
+
+pdfTeX warning (dest): name{glo:aca} has been referenced but does
+not exist, 
+replaced by a fixed one
+
+These warnings may be ignored on the first run.
+
+If you get a "Missing \begin{document}" error, then it's most likely
+that your version of xkeyval.sty is out of date. Check the log file
+for a warning of that nature. If this is the case, please update
+your TeX distribution.
+
+2. Run makeglossaries on the document. This can be done on a
+terminal either by typing
+
+	makeglossaries minimalgls
+
+or by typing
+
+	perl makeglossaries minimalgls
+
+If you don't have Perl installed you will need to run makeindex
+directly:
+
+	makeindex -s minimalgls.ist -t minimalgls.glg -o minimalgls.gls minimalgls.glo
+
+Another alternative is to use the Java application makeglossariesgui
+(http://ctan.org/pkg/makeglossariesgui) which has diagnostic tools
+to help determine what has gone wrong if there's a problem.
+
+3. Repeat step 1. Your document minimalgls.pdf should now have a
+glossary.
+
+If the above seems complicated, you can automate the process using
+tools such as latexmk or arara. See
+http://www.dickimaw-books.com/latex/thesis/html/build.html for
+further details.

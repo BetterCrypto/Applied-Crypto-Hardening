@@ -1,0 +1,29 @@
+ % This file is public domain
+ % If you are using arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+\documentclass{report}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage[hyperfirst=false]{glossaries}
+
+\makeglossaries
+
+\renewcommand*{\glsentryfmt}{%
+  \glsgenentryfmt
+  \ifglsused{\glslabel}{}{\footnote{\glsentrydesc{\glslabel}}}%
+}
+
+\newglossaryentry{sample}{name={sample},description={an example
+description}}
+
+\begin{document}
+\chapter{Sample Chapter}
+
+First use: \gls{sample}.
+
+Next use: \gls{sample}.
+
+\printglossaries
+\end{document}

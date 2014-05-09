@@ -1,0 +1,121 @@
+INSTALLATION
+
+If you have downloaded the glossaries package using the TeX
+Directory Structure (TDS), that is you have downloaded the archive
+glossaries.tds.zip containing doc, tex, scripts and source
+directories, you need to follow the "Installing from TDS"
+instructions below.
+
+If you have downloaded the following files:
+
+glossaries.dtx
+glossaries.ins
+makeglossaries
+makeglossaries.bat
+
+You need to follow the "Installing from DTX and INS" instructions
+below.
+
+For further information on installing LaTeX packages see:
+
+http://www.tex.ac.uk/cgi-bin/texfaq2html?label=installthings
+
+INSTALLING FROM TDS
+===================
+
+Files in tex and doc directories should go in the corresponding
+TEXMF directories (for example, /usr/share/texmf-local/ or
+C:\localtexmf\). The scripts/glossaries/ directory contains the Perl
+script makeglossaries and the batch file makeglossaries.bat which
+should go somewhere on your operating system's PATH. (Both files are
+required for Windows, but only the Perl script is required for other
+operating systems.)
+
+*Remember to refresh TeX's database*
+
+Example (on UNIX like systems):
+
+unzip glossaries.tds.zip -d ~/texmf/
+texhash ~/texmf/
+
+A minimal example file called minimalgls.tex is provided for testing
+and debugging purposes and can be found in the package documentation
+samples directory (doc/latex/glossaries/samples/). To test your
+installation do:
+
+latex minimalgls
+makeglossaries minimalgls
+latex minimalgls
+
+The LaTeX2HTML style file, glossaries.perl, is located in 
+source/latex/glossaries and should go in the LaTeX2HTML styles 
+directory, if required.
+
+INSTALLING FROM DTX AND INS
+===========================
+
+Run LaTeX on glossaries.ins to generate the package style files,
+sample files and LaTeX2HTML style file:
+
+latex glossaries.ins
+
+To create the package documentation (glossaries-code.pdf):
+
+pdflatex -jobname glossaries-code glossaries.dtx
+makeindex -s gind.ist glossaries.idx
+makeindex -s gglo.ist -o glossaries.gls glossaries.glo
+makeglossaries glossaries
+pdflatex -jobname glossaries-code glossaries.dtx
+pdflatex -jobname glossaries-code glossaries.dtx
+
+If TEXMF denotes the base directory of your local TeX installation (e.g.
+/usr/share/texmf-local/ or C:\localtexmf\) then create the following
+directories (if they don't already exist):
+
+TEXMF/doc/latex/glossaries
+TEXMF/doc/latex/glossaries/samples
+TEXMF/tex/latex/glossaries
+TEXMF/tex/latex/glossaries/base
+TEXMF/tex/latex/glossaries/expl
+TEXMF/tex/latex/glossaries/styles
+TEXMF/tex/latex/glossaries/dict
+
+Move the sample files (*.tex) to TEXMF/doc/latex/glossaries/sample/
+
+Move the documentation (*.pdf) to TEXMF/doc/latex/glossaries/
+
+Move glossaries.sty, glossaries-babel.sty,
+glossaries-polyglossia.sty, glossaries-compatible-207.sty and 
+mfirstuc.sty to
+TEXMF/tex/latex/glossaries/base/
+
+Move glossaries-accsupp.sty to
+TEXMF/tex/latex/glossaries/expl/
+
+Move the other style files (glossary-*.sty) to
+TEXMF/tex/latex/glossaries/styles/
+
+Move the dictionary files (*.dict) to
+TEXMF/tex/latex/glossaries/dict/
+
+Move makeglossaries to somewhere on your path, e.g. /usr/bin/.
+
+If you are a Windows user, you will also need to move
+makeglossaries.bat to the same location as makeglossaries, but you
+will need to have Perl installed to be able to use makeglossaries.
+(It is possible to use makeindex or xindy directly if you don't have
+Perl installed. See the manual, glossaries.pdf, for details.)
+
+*Remember to refresh TeX's database*
+
+A minimal example file called minimalgls.tex is provided for testing
+and debugging purposes. This file is created along with all the other
+sample files when you run glossaries.ins through LaTeX. To test your
+installation do:
+
+latex minimalgls
+makeglossaries minimalgls
+latex minimalgls
+
+If you want to use the glossaries package with LaTeX2HTML:
+move glossaries.perl to the LaTeX2HTML styles directory.

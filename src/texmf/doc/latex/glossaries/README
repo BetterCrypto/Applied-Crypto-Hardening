@@ -1,0 +1,83 @@
+LaTeX Package : glossaries v4.07
+
+Last Modified : 2014-04-04
+
+Author        : Nicola Talbot
+
+Package FAQ   : http://www.dickimaw-books.com/faqs/glossariesfaq.html
+
+This package is provided to assist generating glossaries.
+The package supports acronyms and multiple glossaries.
+New entries are defined to have a name and description (and
+optionally an associated symbol). Plural forms can also be
+specified.  New glossary styles can be defined, and preambles
+and postambles can be specified. There is provision for loading
+a database of terms, only terms used in the text will be added
+to the relevant glossary.
+
+*This package replaces the glossary package which is now obsolete.*
+
+The glossaries bundle also includes mfirstuc.sty which provides
+\makefirstuc{<stuff>} which makes the first object of
+<stuff> uppercase unless <stuff> starts with a control
+sequence followed by a non-empty group, in which case the first
+object in the group is converted to uppercase. Examples:
+
+     \makefirstuc{abc}        -> Abc
+     \makefirstuc{\emph{abc}} -> \emph{Abc}
+     \makefirstuc{{\'a}bc}    -> \'Abc
+     \makefirstuc{\ae bc}     -> \AE bc
+     \makefirstuc{{\ae}bc}    -> \AE bc
+     \makefirstuc{\ae{}bc}    -> \AE{}bc
+
+glossaries-accsupp.sty is an experimental package that uses the
+accsupp package to provide accessibility support for the
+glossaries package.
+
+INSTALLATION
+
+See INSTALL file for installation instructions.
+
+REQUIREMENTS
+
+ifthen
+xkeyval *at least version 2.5f (2006/11/18)*
+xfor
+amsgen
+etoolbox
+longtable (unless you use the nolong or nostyles package options)
+datatool-base
+textcase
+
+If the supertabular package is installed, it will also be loaded
+unless the nosuper or nostyles package options are used. If the
+supertabular package isn't installed, you can still use the
+glossaries package, but you won't be able to use any of the styles
+defined in glossaries-super.sty. If you want to use
+glossary-longragged.sty or glossary-superragged.sty you will also
+need the array package. If you want to use glossary-mcols you will
+also need the multicol package.
+
+Note that the current version of the glossaries package doesn't
+load xspace.
+
+If you want to use the experimental glossaries-accsupp.sty
+you will also need the accsupp package.
+
+LaTeX2HTML
+
+This package comes with a LaTeX2HTML style files glossaries.perl and
+mfirstuc.perl which should be placed in the relevant LaTeX2HTML
+styles directory, but note that these styles only supplies a sub-set
+of the commands provided by glossaries.sty and mfirstuc.sty, so some
+commands may not be implemented or may be implemented in a different
+way.
+
+LICENCE
+
+This material is subject to the LaTeX Project Public License. 
+See http://www.ctan.org/license/lppl1.3 
+for the details of that license.
+
+Author's home page: http://www.dickimaw-books.com/
+

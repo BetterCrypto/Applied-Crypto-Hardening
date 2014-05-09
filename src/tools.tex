@@ -5,51 +5,53 @@ This section lists tools for checking the security settings.
 \section{SSL \& TLS}
 
 Server checks via the web
-\begin{itemize}
-\item \href{http://ssllabs.com}{ssllabs.com} offers a great way to check your webserver for misconfigurations. See \url{https://www.ssllabs.com/ssltest/}. Furthermore, ssllabs.com has a good best practices tutorial, which focuses on avoiding the most common mistakes in SSL.
-\item SSL Server certificate installation issues \url{http://www.sslshopper.com/ssl-checker.html}
-\item Check SPDY protocol support and basic TLS setup \url{http://spdycheck.org/}
-\item XMPP/Jabber Server check (Client-to-Server and Server-to-Server) \url{https://xmpp.net/}
-\item Luxsci SMTP TLS Checker \url{https://luxsci.com/extranet/tlschecker.html}
-\item \url{http://checktls.com} is a tool for testing arbitrary TLS services.
-\item TLS and SSH key check \url{https://factorable.net/keycheck.html}
-\item \url{http://tls.secg.org} is a tool for testing interoperability of HTTPS implementations for ECC cipher suites.
-\end{itemize}
+\begin{itemize*}
+  \item \href{https://ssllabs.com}{ssllabs.com} offers a great way to check your webserver for misconfigurations. See \url{https://www.ssllabs.com/ssltest/}. Furthermore, ssllabs.com has a good best practices tutorial, which focuses on avoiding the most common mistakes in SSL.
+  \item SSL Server certificate installation issues \url{https://www.sslshopper.com/ssl-checker.html}
+  \item Check SPDY protocol support and basic TLS setup \url{http://spdycheck.org/}
+  \item XMPP/Jabber Server check (Client-to-Server and Server-to-Server) \url{https://xmpp.net/}
+  \item Luxsci SMTP TLS Checker \url{https://luxsci.com/extranet/tlschecker.html}
+  \item Does your mail server support StartTLS? \url{https://starttls.info/}
+  \item \url{http://checktls.com} is a tool for testing arbitrary TLS services.
+  \item TLS and SSH key check \url{https://factorable.net/keycheck.html}
+  \item \url{http://tls.secg.org} is a tool for testing interoperability of HTTPS implementations for ECC cipher suites.
+  \item \url{http://www.whynopadlock.com/} Testing for mixed SSL parts loaded via http that can totally lever your HTTPS.
+\end{itemize*}
 
 Browser checks
-\begin{itemize}
-\item Check your browser's SSL capabilities: \url{https://cc.dcsec.uni-hannover.de/} and \url{https://www.ssllabs.com/ssltest/viewMyClient.html}.
-\end{itemize}
+\begin{itemize*}
+  \item Check your browser's SSL capabilities: \url{https://cc.dcsec.uni-hannover.de/} and \url{https://www.ssllabs.com/ssltest/viewMyClient.html}.
+  \item Check Browsers SSL/TLS support and vulnerability to attacks: \url{https://www.howsmyssl.com}
+\end{itemize*}
 
 
 Command line tools
-\begin{itemize}
-\item \url{http://sourceforge.net/projects/sslscan} connects to a given SSL service and shows the cipher suites that are offered.
-\item \url{http://checktls.com} is a tool for testing arbitrary TLS services. 
-\item \url{http://www.bolet.org/TestSSLServer/} tests for BEAST and CRIME vulnerabilities.
-\item \url{https://github.com/iSECPartners/sslyze} Fast and full-featured SSL scanner
-\item \url{http://nmap.org/} nmap security scanner
-\item \url{http://www.openssl.net} OpenSSL s\_client
-\end{itemize}
+\begin{itemize*}
+  \item \url{https://sourceforge.net/projects/sslscan} connects to a given SSL service and shows the cipher suites that are offered.
+  \item \url{http://www.bolet.org/TestSSLServer/} tests for BEAST and CRIME vulnerabilities.
+  \item \url{https://github.com/iSECPartners/sslyze} Fast and full-featured SSL scanner
+  \item \url{http://nmap.org/} nmap security scanner
+  \item \url{http://www.openssl.net} OpenSSL s\_client
+\end{itemize*}
 
 
-\section{Keylength}
-\begin{itemize}
-\item \url{http://www.keylength.com} comprehensive online resource for comparison of keylengths according to common recommendations and standards in cryptography.
-\end{itemize}
+\section{Key length}
+\begin{itemize*}
+  \item \url{http://www.keylength.com} comprehensive online resource for comparison of key lengths according to common recommendations and standards in cryptography.
+\end{itemize*}
 
 
 \section{RNGs}
 
 %% NOTE: should we merge that with chapter 6.6??
-\begin{itemize}
-\item \href{http://www.fourmilab.ch/random/}{ENT} is a pseudo random number generator sequence tester.
-\item \href{http://www.issihosts.com/haveged/}{HaveGE} is a tool which increases the Entropy of the Linux random number generator devices. It is based on the HAVEGE algorithm. \url{http://dl.acm.org/citation.cfm?id=945516}
-\item \href{http://www.phy.duke.edu/~rgb/General/dieharder.php}{Dieharder} a random number generator testing tool.
-\item \href{http://www.cacert.at/random/}{CAcert Random} another random number generator testing service.
-\end{itemize}
+\begin{itemize*}
+  \item \href{http://www.fourmilab.ch/random/}{ENT} is a pseudo random number generator sequence tester.
+  \item \href{http://www.issihosts.com/haveged/}{HaveGE} is a tool which increases the Entropy of the Linux random number generator devices. It is based on the HAVEGE algorithm. \url{http://dl.acm.org/citation.cfm?id=945516}
+  \item \href{http://www.phy.duke.edu/~rgb/General/dieharder.php}{Dieharder} a random number generator testing tool.
+  \item \href{http://www.cacert.at/random/}{CAcert Random} another random number generator testing service.
+\end{itemize*}
 
 \section{Guides}
-\begin{itemize}
-\item See: \url{https://www.ssllabs.com/downloads/SSL_TLS_Deployment_Best_Practices_1.3.pdf}.
-\end{itemize}
+\begin{itemize*}
+  \item See: \url{https://www.ssllabs.com/downloads/SSL_TLS_Deployment_Best_Practices_1.3.pdf}.
+\end{itemize*}

@@ -1,0 +1,36 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+\documentclass{article}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage{glossaries}
+
+\makeglossaries
+
+\renewcommand{\glsseeitemformat}[1]{\textsc{\glsentryname{#1}}}
+
+\newglossaryentry{pear}{name=pear,
+description={an oddly shaped fruit}}
+
+\newglossaryentry{apple}{name=apple,
+description={firm, round fruit},
+see=[see also]{pear}}
+
+\newglossaryentry{banana}{name=banana,
+description={a yellow fruit with an even odder shape than
+a \gls{pear}}}
+
+\newglossaryentry{fruit}{name=fruit,
+description={sweet, fleshy product of plant containing seed}}
+
+\glssee{fruit}{pear,apple,banana}
+
+\begin{document}
+\gls{pear}, \gls{apple} and \gls{banana}.
+
+\printglossaries
+
+\end{document}

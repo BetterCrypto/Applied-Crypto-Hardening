@@ -1,0 +1,47 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+\documentclass{report}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage{glossaries}
+
+\makeglossaries
+
+ % switch off hyperlinks:
+\glsdisablehyper
+
+ % redefine \glsentryfmt so that it adds a hyperlink
+ % if not in math mode
+\renewcommand*{\glsentryfmt}{%
+  \ifmmode
+    \glsgenentryfmt
+  \else
+    % Temporarily enable hyperlinks:
+    \glsenablehyper
+    \glshyperlink[\glsgenentryfmt]{\glslabel}%
+    % Disable hyperlinks again
+    \glsdisablehyper
+  \fi
+}
+
+\renewcommand{\glossarypreamble}{\glsenablehyper}
+\renewcommand{\glossarypostamble}{\glsdisablehyper}
+
+ % define a sample entry:
+\newglossaryentry{x}{name={x},description={sample entry}}
+
+\begin{document}
+\chapter{Sample}
+In text mode: \gls{x}. Inline maths: $\gls{x}$. Displayed
+maths:
+\[
+  \gls{x}
+\]
+
+Back to text mode again: \gls{x}.
+
+\printglossaries
+\end{document}

@@ -1,0 +1,101 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+ % arara: pdflatex: { synctex: on }
+\documentclass{report}
+
+\usepackage[plainpages=false,colorlinks]{hyperref}
+\usepackage[toc,acronym]{glossaries}
+
+ % Define a new glossary type called notation
+\newglossary[nlg]{notation}{not}{ntn}{Notation}
+
+\makeglossaries
+
+\newcounter{sortcount}
+
+\renewcommand{\glsprestandardsort}[3]{%
+  \ifdefstring{#2}{notation}%
+  {%
+     \stepcounter{sortcount}%
+     \edef#1{\glssortnumberfmt{\arabic{sortcount}}}%
+  }%
+  {%
+     \glsdosanitizesort
+  }%
+}
+
+ % Notation definitions
+
+\newglossaryentry{not:set}{type=notation, % glossary type
+name={$\mathcal{S}$},
+text={\mathcal{S}},
+description={A set}}
+
+\newglossaryentry{not:emptyset}{type=notation,
+name={$\emptyset$},
+text={\emptyset},
+description={The empty set}}
+
+\newglossaryentry{not:card}{type=notation,
+name={$|\mathcal{S}|$},
+text={|\mathcal{S}|},
+description={cardinality of $\mathcal{S}$}}
+
+ % Main glossary definitions
+
+\newglossaryentry{gls:set}{name=set,
+description={A collection of distinct objects}}
+
+\newglossaryentry{gls:card}{name=cardinality,
+description={The number of elements in the specified set}}
+
+ % Acronym definitions
+
+\newacronym{zfc}{ZFC}{Zermelo-Fraenkel set theory}
+
+\newacronym{ad}{AD}{axiom of determinacy}
+
+\newacronym{nf}{NF}{new foundations}
+
+\begin{document}
+\title{Sample Document using the glossaries Package}
+\author{Nicola Talbot}
+\pagenumbering{alph}
+\maketitle
+
+\begin{abstract}
+ %stop hyperref complaining about duplicate page identifiers:
+\pagenumbering{Alph}
+This is a sample document illustrating the use of the
+\textsf{glossaries} package.  In this example, a new glossary type
+called \texttt{notation} is defined, so that the document can have a
+separate glossary of terms, list of acronyms and index of notation.
+\end{abstract}
+
+\pagenumbering{roman}
+\tableofcontents
+
+\printglossaries
+
+\chapter{Introduction}
+\pagenumbering{arabic}
+
+\Glspl{gls:set} are denoted by a calligraphic font
+e.g.\ $\gls{not:set}$.
+
+The \gls{gls:card} of a set $\mathcal{S}$ is denoted
+$\gls{not:card}$. The empty set is denoted
+$\gls{not:emptyset}$.
+
+Here are some acronyms: \gls{nf}, \gls{zfc} and \gls{ad}.
+
+\chapter{Another Chapter}
+
+Another mention of the empty set $\gls{not:emptyset}$.
+
+Here are the acronyms again: \gls{nf}, \gls{zfc} and \gls{ad}.
+
+\end{document}

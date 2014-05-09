@@ -12,7 +12,7 @@ first of all is static and second of all, does not consider itself to be
 authoritative on keylengths, we would rather refer to existing publications and
 websites.  Recommending a safe key length is a hit-and-miss issue.
 
-Furthermore, when choosing an encryption algorithm and keylength, the
+Furthermore, when choosing an encryption algorithm and key length, the
 designer/sysadmin always needs to consider the value of the information and how
 long it must be protected.  In other words: consider the number of years the
 data needs to stay confidential.
@@ -46,28 +46,19 @@ this web site.
 
 
 \paragraph{Summary}
-\begin{itemize}
-
-\item For traditional asymmetric public-key cryptography we consider any key
-length below 2048 bits to be deprecated at the time of this writing (for long
-term protection).  
-
-\item For elliptic curve cryptography we consider key lengths below 256 bits to
+\begin{itemize*}
+  \item For asymmetric public-key cryptography we consider any key length below
+3248 bits to be deprecated at the time of this writing (for long term
+protection).
+  \item For elliptic curve cryptography we consider key lengths below 256 bits to
 be inadequate for long term protection.  
-
-\item For symmetric algorithms we consider anything below 128 bits to be
+  \item For symmetric algorithms we consider anything below 128 bits to be
 inadequate for long term protection.
+\end{itemize*}
 
-\end{itemize}
-
-\paragraph{Special remark on 3DES} \mbox{} \\
+\paragraph{Special remark on 3DES:}
 We want to note that 3DES theoretically has 168 bits of security, however based
 on the NIST Special Publication 800-57
 \footnote{\url{http://csrc.nist.gov/publications/PubsSPs.html\#800-57-part1},
 pages 63 and 64}, it is clear that 3DES can only be considered to provide for
 80 bits / 112 bits security.
-
-
-
-
-

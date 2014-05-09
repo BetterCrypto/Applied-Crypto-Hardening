@@ -1,0 +1,73 @@
+ % This file is public domain
+ % If you want to use arara, you need the following directives:
+ % arara: pdflatex: { synctex: on }
+ % arara: makeglossaries
+ % arara: pdflatex: { synctex: on }
+ % arara: pdflatex: { synctex: on }
+
+\documentclass{article}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage[toc,acronym]{glossaries-prefix}
+
+\makeglossaries
+
+\newglossaryentry{sample}{name={sample},
+  description={an example},
+  prefix={a~},
+  prefixplural={the\space}%
+}
+
+\newglossaryentry{oeil}{name={oeil},
+  plural={yeux},
+  description={eye},
+  prefix={l'},
+  prefixplural={les\space}}
+
+\newacronym
+ [%
+   prefix={an\space},prefixfirst={a~}%
+ ]{svm}{SVM}{support vector machine}
+
+\newglossarystyle{plist}{%
+  \setglossarystyle{list}%
+  \renewcommand*{\glossentry}[2]{%
+    \item[\glsentryitem{##1}%
+          \Glsentryprefix{##1}%
+          \glstarget{##1}{\glossentryname{##1}}]
+       \glossentrydesc{##1}\glspostdescription\space ##2}%
+}
+
+\begin{document}
+
+\tableofcontents
+
+\section{Sample}
+
+First use: \pgls{sample}, \pgls{svm}, \pgls{oeil}. Next use: \pgls{sample}, \pgls{svm}, \pgls{oeil}.
+
+Reset. \glsresetall
+
+First use: \pglspl{sample}, \pglspl{svm}, \pglspl{oeil}. Next use:
+\pglspl{sample}, \pglspl{svm}, \pglspl{oeil}.
+
+Reset. \glsresetall
+
+First use: \Pgls{sample}, \Pgls{svm}. Next use: \Pgls{sample}, \Pgls{svm}.
+
+Reset. \glsresetall
+
+First use: \Pglspl{sample}, \Pglspl{svm}. Next use: \Pglspl{sample}, \Pglspl{svm}.
+
+Reset. \glsresetall
+
+First use: \PGLS{sample}, \PGLS{svm}. Next use: \PGLS{sample}, \PGLS{svm}.
+
+Reset. \glsresetall
+
+First use: \PGLSpl{sample}, \PGLSpl{svm}. Next use: \PGLSpl{sample}, \PGLSpl{svm}.
+
+\printglossary[style=plist]
+
+\printacronyms
+\end{document}

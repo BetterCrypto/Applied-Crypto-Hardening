@@ -1,113 +1,73 @@
-%%\subsection{Instant Messaging Systems}
-\subsubsection{XMPP / Jabber}
-
-
-\subsubsection{General server configuration recommendations}
+% hack.
+\gdef\currentsectionname{IM}
+%%---------------------------------------------------------------------- 
+\subsection{General server configuration recommendations}
 
 For servers, we mostly recommend to apply what's proposed by the \emph{Peter's manifesto}\footnote{\url{https://github.com/stpeter/manifesto}}.
 
 In short:
-\begin{itemize}
+\begin{itemize*}
     \item require the use of TLS for both client-to-server and server-to-server connections
     \item prefer or require TLS cipher suites that enable forward secrecy
     \item deploy certificates issued by well-known and widely-deployed certification authorities (CAs)
-\end{itemize}
+\end{itemize*}
 
 The last point being out-of-scope for this section, we will only cover the first two points.
 
-\paragraph{ejabberd}
+\subsection{ejabberd}
 
-\begin{description}
-\item[Tested with Version:] Debian 7.0, version 2.1.10-4+deb7u1
+\subsubsection{Tested with Versions}
+\begin{itemize*}
+  \item Debian Wheezy 2.1.10-4+deb7u1
+\end{itemize*}
 
-\item[Settings:] \mbox{}
+\subsubsection{Settings}
+ejabberd is one of the popular Jabber server. In order to be compliant
+with the manifesto, you should adapt your configuration\footnote{\url{http://www.process-one.net/docs/ejabberd/guide_en.html}}:
 
-
-ejabberd is one of the popular Jabber servers.  In order to be compliant
-with the manifesto, you should adapt your
-configuration\footnote{\url{http://www.process-one.net/docs/ejabberd/guide_en.html}}:
-\begin{lstlisting}[breaklines]
-{listen,
- [
-  {5222, ejabberd_c2s, [
-                        {access, c2s},
-                        {shaper, c2s_shaper},
-                        {max_stanza_size, 65536},
-                        starttls,
-                        starttls_required, 
-                        {certfile, "/etc/ejabberd/ejabberd.pem"}
-                       ]},
-  {5269, ejabberd_s2s_in, [
-                           {shaper, s2s_shaper},
-                           {max_stanza_size, 131072}
-                          ]},
-
-  %%% Other input ports
-]}.
-{s2s_use_starttls, required_trusted}.
-{s2s_certfile, "/etc/ejabberd/ejabberd.pem"}.
-\end{lstlisting}
-
-\item[Additional settings:]
-
+\configfile{ejabberd.cfg}{108-109,111-111,120-126,172-172,179-179,184-184}{%
+  TLS setup for ejabberd}
+% 
+\subsubsection{Additional settings}
 Older Versions of ejabberd ($ < $ 2.0.0) need to be patched\footnote{\url{http://hyperstruct.net/2007/06/20/installing-the-startcom-ssl-certificate-in-ejabberd/}} to be able to parse all of the certificates in the CA chain.
 
 Newer versions of ejabberd now support specifying the cipher string in the config file. See the commit message: \url{https://github.com/processone/ejabberd/commit/1dd94ac0d06822daa8c394ea2da20d91c8209124}. However, this change did not yet make it into the stable release at the time of this writing. 
 
 
-\item[References:] 
-
-\item[How to test:] \url{https://xmpp.net} is a practical website to test Jabber server configurations.
-
-\end{description}
+\subsubsection{References}
 
 
-\subsubsection{Chat privacy - Off-the-Record Messaging (OTR)}
+\subsubsection{How to test}
+\begin{itemize*}
+  \item \url{https://xmpp.net} is a practical website to test Jabber server configurations.
+\end{itemize*}
+
+
+%%---------------------------------------------------------------------- 
+\subsection{Chat privacy - Off-the-Record Messaging (OTR)}
 
 The OTR protocol works on top of the Jabber protocol\footnote{\url{https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html}}.  
 It adds to popular chat clients (Adium, Pidgin...) the following properties for encrypted chats:
-\begin{itemize}
-    \item Authentication
-    \item Integrity
-    \item Confidentiality
-    \item Forward secrecy
-\end{itemize}
+\begin{itemize*}
+  \item Authentication
+  \item Integrity
+  \item Confidentiality
+  \item Forward secrecy
+\end{itemize*}
 
 It basically uses Diffie-Hellman, AES and SHA1. Communicating over an insecure instant messaging network, OTR can be used for end to end encryption.
 
 There are no specific configurations required but the protocol itself is worth to be mentioned.
 
-\subsubsection{IRC}
 
-There are numerous implementations of IRC servers.  In this section, we choose \emph{Charybdis} which serves as basis for \emph{ircd-seven}\footnote{\url{https://dev.freenode.net/redmine/projects/ircd-seven}}, developed and used by freenode. Freenode is actually the biggest IRC network\footnote{\url{http://irc.netsplit.de/networks/top10.php}}.  \emph{Charybdis} is part of the \emph{Debian} \& \emph{Ubuntu} distributions.
-
-\begin{lstlisting}[breaklines]
-/* Extensions */
-# Some modules 
-#loadmodule "extensions/chm_sslonly_compat.so";
-loadmodule "extensions/extb_ssl.so";
-# Some other modules
-
-serverinfo {
-  /* Standard piece of information */
-  
-  ssl_private_key = "etc/test.key";
-  ssl_cert = "etc/test.cert";
-  ssl_dh_params = "etc/dh.pem";
-  # set ssld_count as number of cores - 1
-  ssld_count = 1; 
-};
-
-listen {
-  /* Standard ports */
-  sslport = 6697;
-
-  /* IPv6 configuration */
-};
-\end{lstlisting}
+%%---------------------------------------------------------------------- 
+\subsection{Charybdis}
+There are numerous implementations of IRC servers.  In this section, we choose \emph{Charybdis} which serves as basis for \emph{ircd-seven}\footnote{\url{https://dev.freenode.net/redmine/projects/ircd-seven}}, developed and used by freenode. Freenode is actually the biggest IRC network\footnote{\url{http://irc.netsplit.de/networks/top10.php}}. \emph{Charybdis} is part of the \emph{Debian} \& \emph{Ubuntu} distributions.
+\configfile{ircd.conf}{12-12,15-15,24-24,44-44,60-60,63-63,66-66,74-75,83-83,132-132,138-138,144-144}{SSL relevant configuration for Charybdis/ircd-seven}
 
 
-\subsubsection{SILC}
+%%---------------------------------------------------------------------- 
+\subsection{SILC}
 
 SILC\footnote{\url{http://www.silcnet.org/} and
 \url{https://en.wikipedia.org/wiki/SILC_(protocol)}} is instant messaging
@@ -116,7 +76,4 @@ thanks to a generalized usage of symmetric encryption. Keys are generated by
 the server meaning that if compromised, communication could be compromised.
 
 The protocol is not really popular anymore.
-
-
-
 

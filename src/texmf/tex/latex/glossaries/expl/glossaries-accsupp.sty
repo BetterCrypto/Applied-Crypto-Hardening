@@ -1,0 +1,1424 @@
+%%
+%% This is file `glossaries-accsupp.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% glossaries.dtx  (with options: `glossaries-accsupp.sty,package')
+%% 
+%%  glossaries.dtx
+%%  Copyright 2014 Nicola Talbot
+%% 
+%%  This work may be distributed and/or modified under the
+%%  conditions of the LaTeX Project Public License, either version 1.3
+%%  of this license of (at your option) any later version.
+%%  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%%  and version 1.3 or later is part of all distributions of LaTeX
+%%  version 2005/12/01 or later.
+%% 
+%%  This work has the LPPL maintenance status `maintained'.
+%% 
+%%  The Current Maintainer of this work is Nicola Talbot.
+%% 
+%%  This work consists of the files glossaries.dtx and glossaries.ins and the derived files glossaries.sty, glossaries-prefix.sty, mfirstuc.sty, glossary-hypernav.sty, glossary-inline.sty, glossary-list.sty, glossary-long.sty, glossary-longragged.sty, glossary-mcols.sty, glossary-super.sty, glossary-superragged.sty, glossary-tree.sty, glossaries-compatible-207.sty, glossaries-compatible-307.sty, glossaries-accsupp.sty, glossaries-babel.sty, glossaries-polyglossia.sty, glossaries-dictionary-Brazilian.dict, glossaries-dictionary-Danish.dict, glossaries-dictionary-Dutch.dict, glossaries-dictionary-English.dict, glossaries-dictionary-French.dict, glossaries-dictionary-German.dict, glossaries-dictionary-Irish.dict, glossaries-dictionary-Italian.dict, glossaries-dictionary-Magyar.dict, glossaries-dictionary-Polish.dict, glossaries-dictionary-Serbian.dict, glossaries-dictionary-Spanish.dict, minimalgls.tex, sample-crossref.tex, sample-custom-acronym.tex, sample-dual.tex, sample-entryfmt.tex, sample-FnDesc.tex, sample-index.tex, sample-inline.tex, sample-langdict.tex, sample-mfirstuc.tex, sample-newkeys.tex, sample-noidxapp-utf8.tex, sample-noidxapp.tex, sample-nomathhyper.tex, sample-numberlist.tex, sample-prefix.tex, sample-si.tex, sample.tex, sample4col.tex, sampleaccsupp.tex, sampleAcr.tex, sampleAcrDesc.tex, sampleacronyms.tex, sampleCustomAcr.tex, sampleDB.tex, sampleDesc.tex, sampleEq.tex, sampleEqPg.tex, sampleFnAcrDesc.tex, sampleNtn.tex, samplePeople.tex, sampleSec.tex, sampleSort.tex, sampletree.tex, sampleutf8.tex, samplexdy.tex, samplexdy2.tex, samplexdy-mc.xdy, samplexdy-mc207.xdy, database1.tex, database2.tex, glossaries.perl, mfirstuc.perl.
+%% 
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{glossaries-accsupp}[2014/03/06 v4.04 (NLCT)
+  Experimental glossaries accessibility]
+\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{glossaries}}
+\ProcessOptions
+\def\compatibleglossentry#1#2{%
+  \toks@{#2}%
+  \protected@edef\@do@glossentry{%
+    \noexpand\accsuppglossaryentryfield{#1}%
+    {\noexpand\glsnamefont
+       {\expandafter\expandonce\csname glo@\glsdetoklabel{#1}@name\endcsname}}%
+    {\expandafter\expandonce\csname glo@\glsdetoklabel{#1}@desc\endcsname}%
+    {\expandafter\expandonce\csname glo@\glsdetoklabel{#1}@symbol\endcsname}%
+    {\the\toks@}%
+  }%
+  \@do@glossentry
+}
+\def\compatiblesubglossentry#1#2#3{%
+  \toks@{#3}%
+  \protected@edef\@do@subglossentry{%
+    \noexpand\accsuppglossarysubentryfield{\number#1}%
+    {#2}%
+    {\noexpand\glsnamefont
+      {\expandafter\expandonce\csname glo@\glsdetoklabel{#2}@name\endcsname}}%
+    {\expandafter\expandonce\csname glo@\glsdetoklabel{#2}@desc\endcsname}%
+    {\expandafter\expandonce\csname glo@\glsdetoklabel{#2}@symbol\endcsname}%
+    {\the\toks@}%
+  }%
+  \@do@subglossentry
+}
+\RequirePackage{glossaries}
+\RequirePackage{accsupp}
+\define@key{glossentry}{access}{%
+  \def\@glo@access{#1}%
+}
+\define@key{glossentry}{textaccess}{%
+  \def\@glo@textaccess{#1}%
+}
+\define@key{glossentry}{firstaccess}{%
+  \def\@glo@firstaccess{#1}%
+}
+\define@key{glossentry}{pluralaccess}{%
+  \def\@glo@pluralaccess{#1}%
+}
+\define@key{glossentry}{firstpluralaccess}{%
+  \def\@glo@firstpluralaccess{#1}%
+}
+\define@key{glossentry}{symbolaccess}{%
+  \def\@glo@symbolaccess{#1}%
+}
+\define@key{glossentry}{symbolpluralaccess}{%
+  \def\@glo@symbolpluralaccess{#1}%
+}
+\define@key{glossentry}{descriptionaccess}{%
+  \def\@glo@descaccess{#1}%
+}
+\define@key{glossentry}{descriptionpluralaccess}{%
+  \def\@glo@descpluralaccess{#1}%
+}
+\define@key{glossentry}{shortaccess}{%
+  \def\@glo@shortaccess{#1}%
+}
+\define@key{glossentry}{shortpluralaccess}{%
+  \def\@glo@shortpluralaccess{#1}%
+}
+\define@key{glossentry}{longaccess}{%
+  \def\@glo@longaccess{#1}%
+}
+\define@key{glossentry}{longpluralaccess}{%
+  \def\@glo@longpluralaccess{#1}%
+}
+\appto\@gls@keymap{,%
+  {access}{access},%
+  {textaccess}{textaccess},%
+  {firstaccess}{firstaccess},%
+  {pluralaccess}{pluralaccess},%
+  {firstpluralaccess}{firstpluralaccess},%
+  {symbolaccess}{symbolaccess},%
+  {symbolpluralaccess}{symbolpluralaccess},%
+  {descaccess}{descaccess},%
+  {descpluralaccess}{descpluralaccess},%
+  {shortaccess}{shortaccess},%
+  {shortpluralaccess}{shortpluralaccess},%
+  {longaccess}{longaccess},%
+  {longpluralaccess}{longpluralaccess}%
+}
+\def\@gls@noaccess{\relax}
+\let\@gls@oldnewglossaryentryprehook\@newglossaryentryprehook
+\renewcommand*{\@newglossaryentryprehook}{%
+  \@gls@oldnewglossaryentryprehook
+  \def\@glo@access{\@glo@symbol}%
+  \def\@glo@textaccess{\@glo@access}%
+  \def\@glo@firstaccess{\@glo@access}%
+  \def\@glo@pluralaccess{\@glo@textaccess}%
+  \def\@glo@firstpluralaccess{\@glo@pluralaccess}%
+  \def\@glo@symbolaccess{\relax}%
+  \def\@glo@symbolpluralaccess{\@glo@symbolaccess}%
+  \def\@glo@descaccess{\relax}%
+  \def\@glo@descpluralaccess{\@glo@descaccess}%
+  \def\@glo@shortaccess{\relax}%
+  \def\@glo@shortpluralaccess{\@glo@shortaccess}%
+  \def\@glo@longaccess{\relax}%
+  \def\@glo@longpluralaccess{\@glo@longaccess}%
+}
+\let\@gls@oldnewglossaryentryposthook\@newglossaryentryposthook
+\renewcommand*{\@newglossaryentryposthook}{%
+  \@gls@oldnewglossaryentryposthook
+  \expandafter
+    \protected@xdef\csname glo@\@glo@label @access\endcsname{%
+      \@glo@access}%
+  \expandafter
+    \protected@xdef\csname glo@\@glo@label @textaccess\endcsname{%
+      \@glo@textaccess}%
+  \expandafter
+    \protected@xdef\csname glo@\@glo@label @firstaccess\endcsname{%
+      \@glo@firstaccess}%
+  \expandafter
+    \protected@xdef\csname glo@\@glo@label @pluralaccess\endcsname{%
+      \@glo@pluralaccess}%
+  \expandafter
+    \protected@xdef\csname glo@\@glo@label @firstpluralaccess\endcsname{%
+      \@glo@firstpluralaccess}%
+  \expandafter
+    \protected@xdef\csname glo@\@glo@label @symbolaccess\endcsname{%
+      \@glo@symbolaccess}%
+  \expandafter
+    \protected@xdef\csname glo@\@glo@label @symbolpluralaccess\endcsname{%
+      \@glo@symbolpluralaccess}%
+  \expandafter
+    \protected@xdef\csname glo@\@glo@label @descaccess\endcsname{%
+      \@glo@descaccess}%
+  \expandafter
+    \protected@xdef\csname glo@\@glo@label @descpluralaccess\endcsname{%
+      \@glo@descpluralaccess}%
+  \expandafter
+    \protected@xdef\csname glo@\@glo@label @shortaccess\endcsname{%
+      \@glo@shortaccess}%
+  \expandafter
+    \protected@xdef\csname glo@\@glo@label @shortpluralaccess\endcsname{%
+      \@glo@shortpluralaccess}%
+  \expandafter
+    \protected@xdef\csname glo@\@glo@label @longaccess\endcsname{%
+      \@glo@longaccess}%
+  \expandafter
+    \protected@xdef\csname glo@\@glo@label @longpluralaccess\endcsname{%
+      \@glo@longpluralaccess}%
+}
+\newcommand*{\glsentryaccess}[1]{%
+  \@gls@entry@field{#1}{access}%
+}
+\newcommand*{\glsentrytextaccess}[1]{%
+  \@gls@entry@field{#1}{textaccess}%
+}
+\newcommand*{\glsentryfirstaccess}[1]{%
+  \@gls@entry@field{#1}{firstaccess}%
+}
+\newcommand*{\glsentrypluralaccess}[1]{%
+  \@gls@entry@field{#1}{pluralaccess}%
+}
+\newcommand*{\glsentryfirstpluralaccess}[1]{%
+  \csname glo@#1@firstpluralaccess\endcsname
+}
+\newcommand*{\glsentrysymbolaccess}[1]{%
+  \@gls@entry@field{#1}{symbolaccess}%
+}
+\newcommand*{\glsentrysymbolpluralaccess}[1]{%
+  \@gls@entry@field{#1}{symbolpluralaccess}%
+}
+\newcommand*{\glsentrydescaccess}[1]{%
+  \@gls@entry@field{#1}{descaccess}%
+}
+\newcommand*{\glsentrydescpluralaccess}[1]{%
+  \@gls@entry@field{#1}{descaccess}%
+}
+\newcommand*{\glsentryshortaccess}[1]{%
+  \@gls@entry@field{#1}{shortaccess}%
+}
+\newcommand*{\glsentryshortpluralaccess}[1]{%
+  \@gls@entry@field{#1}{shortpluralaccess}%
+}
+\newcommand*{\glsentrylongaccess}[1]{%
+  \@gls@entry@field{#1}{longaccess}%
+}
+\newcommand*{\glsentrylongpluralaccess}[1]{%
+  \@gls@entry@field{#1}{longpluralaccess}%
+}
+\newcommand*{\glsaccsupp}[2]{%
+  \BeginAccSupp{ActualText=#1}#2\EndAccSupp{}%
+}
+\newcommand*{\xglsaccsupp}[2]{%
+   \protected@edef\@gls@replacementtext{#1}%
+   \expandafter\glsaccsupp\expandafter{\@gls@replacementtext}{#2}%
+}
+\newcommand*{\@gls@access@display}[2]{%
+  \protected@edef\@glo@access{#2}%
+  \ifx\@glo@access\@gls@noaccess
+    #1%
+  \else
+    \xglsaccsupp{\@glo@access}{#1}%
+  \fi
+}
+\DeclareRobustCommand*{\glsnameaccessdisplay}[2]{%
+  \@gls@access@display{#1}{\glsentryaccess{#2}}%
+}
+\DeclareRobustCommand*{\glstextaccessdisplay}[2]{%
+  \@gls@access@display{#1}{\glsentrytextaccess{#2}}%
+}
+\DeclareRobustCommand*{\glspluralaccessdisplay}[2]{%
+  \@gls@access@display{#1}{\glsentrypluralaccess{#2}}%
+}
+\DeclareRobustCommand*{\glsfirstaccessdisplay}[2]{%
+  \@gls@access@display{#1}{\glsentryfirstaccess{#2}}%
+}
+\DeclareRobustCommand*{\glsfirstpluralaccessdisplay}[2]{%
+  \@gls@access@display{#1}{\glsentryfirstpluralaccess{#2}}%
+}
+\DeclareRobustCommand*{\glssymbolaccessdisplay}[2]{%
+  \@gls@access@display{#1}{\glsentrysymbolaccess{#2}}%
+}
+\DeclareRobustCommand*{\glssymbolpluralaccessdisplay}[2]{%
+  \@gls@access@display{#1}{\glsentrysymbolpluralaccess{#2}}%
+}
+\DeclareRobustCommand*{\glsdescriptionaccessdisplay}[2]{%
+  \@gls@access@display{#1}{\glsentrydescaccess{#2}}%
+}
+\DeclareRobustCommand*{\glsdescriptionpluralaccessdisplay}[2]{%
+  \@gls@access@display{#1}{\glsentrydescpluralaccess{#2}}%
+}
+\DeclareRobustCommand*{\glsshortaccessdisplay}[2]{%
+  \@gls@access@display{#1}{\glsentryshortaccess{#2}}%
+}
+\DeclareRobustCommand*{\glsshortpluralaccessdisplay}[2]{%
+  \@gls@access@display{#1}{\glsentryshortpluralaccess{#2}}%
+}
+\DeclareRobustCommand*{\glslongaccessdisplay}[2]{%
+  \@gls@access@display{#1}{\glsentrylongaccess{#2}}%
+}
+\DeclareRobustCommand*{\glslongpluralaccessdisplay}[2]{%
+  \@gls@access@display{#1}{\glsentrylongpluralaccess{#2}}%
+}
+\DeclareRobustCommand*{\glsaccessdisplay}[3]{%
+  \@ifundefined{gls#1accessdisplay}%
+  {%
+    \PackageError{glossaries-accsupp}{No accessibility support
+     for key `#1'}{}%
+  }%
+  {%
+    \csname gls#1accessdisplay\endcsname{#2}{#3}%
+  }%
+}
+\renewcommand*{\@@gls@default@entryfmt}[2]{%
+  \ifdefempty\glscustomtext
+  {%
+    \glsifplural
+    {%
+      \glscapscase
+      {%
+        \ifglsused\glslabel
+        {%
+          #2{\glspluralaccessdisplay
+               {\glsentryplural{\glslabel}}{\glslabel}}%
+            {\glsdescriptionpluralaccessdisplay
+               {\glsentrydescplural{\glslabel}}{\glslabel}}%
+            {\glssymbolpluralaccessdisplay
+               {\glsentrysymbolplural{\glslabel}}{\glslabel}}
+            {\glsinsert}%
+        }%
+        {%
+          #1{\glsfirstpluralaccessdisplay
+               {\glsentryfirstplural{\glslabel}}{\glslabel}}%
+            {\glsdescriptionpluralaccessdisplay
+               {\glsentrydescplural{\glslabel}}{\glslabel}}%
+            {\glssymbolpluralaccessdisplay
+               {\glsentrysymbolplural{\glslabel}}{\glslabel}}%
+            {\glsinsert}%
+        }%
+      }%
+      {%
+        \ifglsused\glslabel
+        {%
+          #2{\glspluralaccessdisplay
+              {\Glsentryplural{\glslabel}}{\glslabel}}%
+            {\glsdescriptionpluralaccessdisplay
+              {\glsentrydescplural{\glslabel}}{\glslabel}}%
+            {\glssymbolpluralaccessdisplay
+              {\glsentrysymbolplural{\glslabel}}{\glslabel}}%
+            {\glsinsert}%
+        }%
+        {%
+          #1{\glsfirstpluralaccessdisplay
+               {\Glsentryfirstplural{\glslabel}}{\glslabel}}%
+            {\glsdescriptionpluralaccessdisplay
+               {\glsentrydescplural{\glslabel}}{\glslabel}}%
+            {\glssymbolpluralaccessdisplay
+               {\glsentrysymbolplural{\glslabel}}{\glslabel}}%
+            {\glsinsert}%
+        }%
+      }%
+      {%
+        \ifglsused\glslabel
+        {%
+          \MakeUppercase{%
+            #2{\glspluralaccessdisplay
+                {\glsentryplural{\glslabel}}{\glslabel}}%
+              {\glsdescriptionpluralaccessdisplay
+                {\glsentrydescplural{\glslabel}}{\glslabel}}%
+              {\glssymbolpluralaccessdisplay
+                {\glsentrysymbolplural{\glslabel}}{\glslabel}}%
+              {\glsinsert}}%
+        }%
+        {%
+          \MakeUppercase{%
+            #1{\glsfirstpluralaccessdisplay
+                {\glsentryfirstplural{\glslabel}}{\glslabel}}%
+              {\glsdescriptionpluralaccessdisplay
+                {\glsentrydescplural{\glslabel}}{\glslabel}}%
+              {\glssymbolpluralaccessdisplay
+                {\glsentrysymbolplural{\glslabel}}{\glslabel}}%
+              {\glsinsert}}%
+        }%
+      }%
+    }%
+    {%
+      \glscapscase
+      {%
+        \ifglsused\glslabel
+        {%
+          #2{\glstextaccessdisplay
+               {\glsentrytext{\glslabel}}{\glslabel}}%
+            {\glsdescriptionaccessdisplay
+               {\glsentrydesc{\glslabel}}{\glslabel}}%
+            {\glssymbolaccessdisplay
+               {\glsentrysymbol{\glslabel}}{\glslabel}}%
+            {\glsinsert}%
+        }%
+        {%
+          #1{\glsfirstaccessdisplay
+              {\glsentryfirst{\glslabel}}{\glslabel}}%
+            {\glsdescriptionaccessdisplay
+              {\glsentrydesc{\glslabel}}{\glslabel}}%
+            {\glssymbolaccessdisplay
+              {\glsentrysymbol{\glslabel}}{\glslabel}}%
+            {\glsinsert}%
+        }%
+      }%
+      {%
+        \ifglsused\glslabel
+        {%
+          #2{\glstextaccessdisplay
+               {\Glsentrytext{\glslabel}}{\glslabel}}%
+            {\glsdescriptionaccessdisplay
+               {\glsentrydesc{\glslabel}}{\glslabel}}%
+            {\glssymbolaccessdisplay
+               {\glsentrysymbol{\glslabel}}{\glslabel}}%
+            {\glsinsert}%
+        }%
+        {%
+          #1{\glsfirstaccessdisplay
+              {\Glsentryfirst{\glslabel}}{\glslabel}}%
+            {\glsdescriptionaccessdisplay
+              {\glsentrydesc{\glslabel}}{\glslabel}}%
+            {\glssymbolaccessdisplay
+              {\glsentrysymbol{\glslabel}}{\glslabel}}%
+            {\glsinsert}%
+        }%
+      }%
+      {%
+        \ifglsused\glslabel
+        {%
+          \MakeUppercase{%
+            #2{\glstextaccessdisplay
+                {\glsentrytext{\glslabel}}{\glslabel}}%
+              {\glsdescriptionaccessdisplay
+                {\glsentrydesc{\glslabel}}{\glslabel}}%
+              {\glssymbolaccessdisplay
+                {\glsentrysymbol{\glslabel}}{\glslabel}}%
+              {\glsinsert}}%
+        }%
+        {%
+          \MakeUppercase{%
+            #1{\glsfirstaccessdisplay
+                {\glsentryfirst{\glslabel}}{\glslabel}}%
+              {\glsdescriptionaccessdisplay
+                {\glsentrydesc{\glslabel}}{\glslabel}}%
+              {\glssymbolaccessdisplay
+                {\glsentrysymbol{\glslabel}}{\glslabel}}%
+              {\glsinsert}}%
+        }%
+      }%
+    }%
+  }%
+  {%
+    \ifglsused{\glslabel}%
+    {%
+      #2{\glscustomtext}%
+        {\glsdescriptionaccessdisplay
+          {\glsentrydesc{\glslabel}}{\glslabel}}%
+        {\glssymbolaccessdisplay
+          {\glsentrysymbol{\glslabel}}{\glslabel}}%
+        {\glsinsert}%
+    }%
+    {%
+      #1{\glscustomtext}%
+        {\glsdescriptionaccessdisplay
+          {\glsentrydesc{\glslabel}}{\glslabel}}%
+        {\glssymbolaccessdisplay
+          {\glsentrysymbol{\glslabel}}{\glslabel}}%
+        {\glsinsert}%
+    }%
+  }%
+}
+\renewcommand*{\glsgenentryfmt}{%
+  \ifdefempty\glscustomtext
+  {%
+    \glsifplural
+    {%
+      \glscapscase
+      {%
+        \ifglsused\glslabel
+        {%
+          \glspluralaccessdisplay
+               {\glsentryplural{\glslabel}}{\glslabel}%
+          \glsinsert
+        }%
+        {%
+          \glsfirstpluralaccessdisplay
+              {\glsentryfirstplural{\glslabel}}{\glslabel}%
+          \glsinsert
+        }%
+      }%
+      {%
+        \ifglsused\glslabel
+        {%
+          \glspluralaccessdisplay
+              {\Glsentryplural{\glslabel}}{\glslabel}%
+          \glsinsert
+        }%
+        {%
+          \glsfirstpluralaccessdisplay
+              {\Glsentryfirstplural{\glslabel}}{\glslabel}%
+          \glsinsert
+        }%
+      }%
+      {%
+        \ifglsused\glslabel
+        {%
+           \glspluralaccessdisplay
+              {\mfirstucMakeUppercase{\glsentryplural{\glslabel}}}%
+              {\glslabel}%
+           \mfirstucMakeUppercase{\glsinsert}%
+        }%
+        {%
+          \glsfirstpluralacessdisplay
+             {\mfirstucMakeUppercase{\glsentryfirstplural{\glslabel}}}%
+             {\glslabel}%
+          \mfirstucMakeUppercase{\glsinsert}%
+        }%
+      }%
+    }%
+    {%
+      \glscapscase
+      {%
+        \ifglsused\glslabel
+        {%
+          \glstextaccessdisplay{\glsentrytext{\glslabel}}{\glslabel}%
+          \glsinsert
+        }%
+        {%
+          \glsfirstaccessdisplay{\glsentryfirst{\glslabel}}{\glslabel}%
+          \glsinsert
+        }%
+      }%
+      {%
+        \ifglsused\glslabel
+        {%
+           \glstextaccessdisplay{\Glsentrytext{\glslabel}}{\glslabel}%
+           \glsinsert
+        }%
+        {%
+          \glsfirstaccessdisplay{\Glsentryfirst{\glslabel}}{\glslabel}%
+          \glsinsert
+        }%
+      }%
+      {%
+        \ifglsused\glslabel
+        {%
+          \glstextaccessdisplay
+            {\mfirstucMakeUppercase{\glsentrytext{\glslabel}}}{\glslabel}%
+          \mfirstucMakeUppercase{\glsinsert}%
+        }%
+        {%
+          \glsfirstaccessdisplay
+            {\mfirstucMakeUppercase{\glsentryfirst{\glslabel}}}{\glslabel}%
+          \mfirstucMakeUppercase{\glsinsert}%
+        }%
+      }%
+    }%
+  }%
+  {%
+    \glscustomtext\glsinsert
+  }%
+}
+\renewcommand*{\glsgenacfmt}{%
+  \ifdefempty\glscustomtext
+  {%
+    \ifglsused\glslabel
+    {%
+      \glsifplural
+      {%
+        \glscapscase
+        {%
+          \acronymfont
+           {\glsshortpluralaccessdisplay
+              {\glsentryshortpl{\glslabel}}{\glslabel}}%
+          \glsinsert
+        }%
+        {%
+          \acronymfont
+           {\glsshortpluralaccessdisplay
+              {\Glsentryshortpl{\glslabel}}{\glslabel}}%
+          \glsinsert
+        }%
+        {%
+          \mfirstucMakeUppercase
+          {\acronymfont
+           {\glsshortpluralaccessdisplay
+              {\glsentryshortpl{\glslabel}}{\glslabel}}%
+          \glsinsert}%
+        }%
+      }%
+      {%
+        \glscapscase
+        {%
+          \acronymfont
+           {\glsshortaccessdisplay{\glsentryshort{\glslabel}}{\glslabel}}%
+          \glsinsert
+        }%
+        {%
+          \acronymfont
+           {\glsshortaccessdisplay{\Glsentryshort{\glslabel}}{\glslabel}}%
+          \glsinsert
+        }%
+        {%
+          \mfirstucMakeUppercase
+            {\acronymfont{%
+              \glsshortaccessdisplay{\glsentryshort{\glslabel}}{\glslabel}}%
+             \glsinsert}%
+        }%
+      }%
+    }%
+    {%
+      \glsifplural
+      {%
+        \glscapscase
+        {%
+          \genplacrfullformat{\glslabel}{\glsinsert}%
+        }%
+        {%
+          \Genplacrfullformat{\glslabel}{\glsinsert}%
+        }%
+        {%
+          \mfirstucMakeUppercase
+            {\genplacrfullformat{\glslabel}{\glsinsert}}%
+        }%
+      }%
+      {%
+        \glscapscase
+        {%
+          \genacrfullformat{\glslabel}{\glsinsert}%
+        }%
+        {%
+          \Genacrfullformat{\glslabel}{\glsinsert}%
+        }%
+        {%
+          \mfirstucMakeUppercase
+           {\genacrfullformat{\glslabel}{\glsinsert}}%
+        }%
+      }%
+    }%
+  }%
+  {%
+    \glscustomtext
+  }%
+}
+\renewcommand*{\genacrfullformat}[2]{%
+   \glslongaccessdisplay{\glsentrylong{#1}}{#1}#2\space
+   (\glsshortaccessdisplay{\protect\firstacronymfont{\glsentryshort{#1}}}{#1})%
+}
+\renewcommand*{\Genacrfullformat}[2]{%
+   \glslongaccessdisplay{\Glsentrylong{#1}}{#1}#2\space
+   (\glsshortaccessdisplay{\protect\firstacronymfont{\Glsentryshort{#1}}}{#1})%
+}
+\renewcommand*{\genplacrfullformat}[2]{%
+   \glslongpluralaccessdisplay{\glsentrylongpl{#1}}{#1}#2\space
+   (\glsshortpluralaccessdisplay
+      {\protect\firstacronymfont{\glsentryshortpl{#1}}}{#1})%
+}
+\renewcommand*{\Genplacrfullformat}[2]{%
+   \glslongpluralaccessdisplay{\Glsentrylongpl{#1}}{#1}#2\space
+   (\glsshortpluralaccessdisplay
+      {\protect\firstacronymfont{\glsentryshortpl{#1}}}{#1})%
+}
+\def\@acrshort#1#2[#3]{%
+  \glsdoifexists{#2}%
+  {%
+    \edef\@glo@type{\glsentrytype{#2}}%
+    \let\glsifplural\@secondoftwo
+    \let\glscapscase\@firstofthree
+    \let\glsinsert\@empty
+    \def\glscustomtext{%
+      \acronymfont{\glsshortaccessdisplay{\glsentryshort{#2}}{#2}}#3%
+    }%
+    \@gls@link[#1]{#2}{\csname gls@\@glo@type @entryfmt\endcsname}%
+  }%
+}
+\def\@Acrshort#1#2[#3]{%
+  \glsdoifexists{#2}%
+  {%
+    \edef\@glo@type{\glsentrytype{#2}}%
+    \let\glsifplural\@secondoftwo
+    \let\glscapscase\@secondofthree
+    \let\glsinsert\@empty
+    \def\glscustomtext{%
+      \acronymfont{\glsshortaccessdisplay{\Glsentryshort{#2}}{#2}}#3%
+    }%
+    \@gls@link[#1]{#2}{\csname gls@\@glo@type @entryfmt\endcsname}%
+  }%
+}
+\def\@ACRshort#1#2[#3]{%
+  \glsdoifexists{#2}%
+  {%
+    \edef\@glo@type{\glsentrytype{#2}}%
+    \let\glsifplural\@secondoftwo
+    \let\glscapscase\@thirdofthree
+    \let\glsinsert\@empty
+    \def\glscustomtext{%
+      \acronymfont{\glsshortaccessdisplay
+          {\MakeUppercase{\glsentryshort{#2}}}{#2}}#3%
+    }%
+    \@gls@link[#1]{#2}{\csname gls@\@glo@type @entryfmt\endcsname}%
+  }%
+}
+\def\@acrlong#1#2[#3]{%
+  \glsdoifexists{#2}%
+  {%
+    \edef\@glo@type{\glsentrytype{#2}}%
+    \let\glsifplural\@secondoftwo
+    \let\glscapscase\@firstofthree
+    \let\glsinsert\@empty
+    \def\glscustomtext{%
+      \acronymfont{\glslongaccessdisplay{\glsentrylong{#2}}{#2}}#3%
+    }%
+    \@gls@link[#1]{#2}{\csname gls@\@glo@type @entryfmt\endcsname}%
+  }%
+}
+\def\@Acrlong#1#2[#3]{%
+  \glsdoifexists{#2}%
+  {%
+    \edef\@glo@type{\glsentrytype{#2}}%
+    \let\glsifplural\@secondoftwo
+    \let\glscapscase\@firstofthree
+    \let\glsinsert\@empty
+    \def\glscustomtext{%
+      \acronymfont{\glslongaccessdisplay{\Glsentrylong{#2}}{#2}}#3%
+    }%
+    \@gls@link[#1]{#2}{\csname gls@\@glo@type @entryfmt\endcsname}%
+  }%
+}
+\def\@ACRlong#1#2[#3]{%
+  \glsdoifexists{#2}%
+  {%
+    \edef\@glo@type{\glsentrytype{#2}}%
+    \let\glsifplural\@secondoftwo
+    \let\glscapscase\@firstofthree
+    \let\glsinsert\@empty
+    \def\glscustomtext{%
+      \acronymfont{\glslongaccessdisplay{%
+        \MakeUppercase{\glsentrylong{#2}}}{#2}#3}%
+    }%
+    \@gls@link[#1]{#2}{\csname gls@\@glo@type @entryfmt\endcsname}%
+  }%
+}
+\renewcommand*{\glossentryname}[1]{%
+  \glsdoifexists{#1}%
+  {%
+    \glsnamefont{\glsnameaccessdisplay{\glsentryname{#1}}{#1}}%
+  }%
+}
+\renewcommand*{\glossentryname}[1]{%
+  \glsdoifexists{#1}%
+  {%
+    \glsnamefont{\glsnameaccessdisplay{\Glsentryname{#1}}{#1}}%
+  }%
+}
+\renewcommand*{\glossentrydesc}[1]{%
+  \glsdoifexists{#1}%
+  {%
+     \glsdescriptionaccessdisplay{\glsentrydesc{#1}}{#1}%
+  }%
+}
+\renewcommand*{\Glossentrydesc}[1]{%
+  \glsdoifexists{#1}%
+  {%
+     \glsdescriptionaccessdisplay{\Glsentrydesc{#1}}{#1}%
+  }%
+}
+\renewcommand*{\glossentrysymbol}[1]{%
+  \glsdoifexists{#1}%
+  {%
+     \glssymbolaccessdisplay{\glsentrysymbol{#1}}{#1}%
+  }%
+}
+\renewcommand*{\Glossentrysymbol}[1]{%
+  \glsdoifexists{#1}%
+  {%
+     \glssymbolaccessdisplay{\Glsentrysymbol{#1}}{#1}%
+  }%
+}
+\newcommand*{\accsuppglossaryentryfield}[5]{%
+  \glossaryentryfield{#1}%
+  {\glsnameaccessdisplay{#2}{#1}}%
+  {\glsdescriptionaccessdisplay{#3}{#1}}%
+  {\glssymbolaccessdisplay{#4}{#1}}{#5}%
+}
+\newcommand*{\accsuppglossarysubentryfield}[6]{%
+  \glossarysubentryfield{#1}{#2}%
+  {\glsnameaccessdisplay{#3}{#2}}%
+  {\glsdescriptionaccessdisplay{#4}{#2}}%
+  {\glssymbolaccessdisplay{#5}{#2}}{#6}%
+}
+\renewacronymstyle{long-short}%
+{%
+  \ifglshaslong{\glslabel}{\glsgenacfmt}{\glsgenentryfmt}%
+}%
+{%
+  \renewcommand*{\GenericAcronymFields}{description={\the\glslongtok}}%
+  \renewcommand*{\genacrfullformat}[2]{%
+   \glslongaccessdisplay{\glsentrylong{##1}}{##1}##2\space
+   (\glsshortaccessdisplay
+      {\protect\firstacronymfont{\glsentryshort{##1}}}{##1})%
+  }%
+  \renewcommand*{\Genacrfullformat}[2]{%
+   \glslongaccessdisplay{\Glsentrylong{##1}}{##1}##2\space
+   (\glsshortaccessdisplay
+      {\protect\firstacronymfont{\glsentryshort{##1}}}{##1})%
+  }%
+  \renewcommand*{\genplacrfullformat}[2]{%
+   \glslongpluralaccessdisplay{\glsentrylongpl{##1}}{##1}##2\space
+   (\glsshortpluralaccessdisplay
+      {\protect\firstacronymfont{\glsentryshortpl{##1}}}{##1})%
+  }%
+  \renewcommand*{\Genplacrfullformat}[2]{%
+   \glslongpluralaccessdisplay{\Glsentrylongpl{##1}}{##1}##2\space
+   (\glsshortpluralaccessdisplay
+      {\protect\firstacronymfont{\glsentryshortpl{##1}}}{##1})%
+  }%
+  \renewcommand*{\acronymentry}[1]{%
+    \glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1}}
+  \renewcommand*{\acronymsort}[2]{##1}%
+  \renewcommand*{\acronymfont}[1]{##1}%
+  \renewcommand*{\firstacronymfont}[1]{\acronymfont{##1}}%
+  \renewcommand*{\acrpluralsuffix}{\glspluralsuffix}%
+}
+\renewacronymstyle{short-long}%
+{%
+  \ifglshaslong{\glslabel}{\glsgenacfmt}{\glsgenentryfmt}%
+}%
+{%
+  \renewcommand*{\GenericAcronymFields}{description={\the\glslongtok}}%
+  \renewcommand*{\genacrfullformat}[2]{%
+   \glsshortaccessdisplay
+     {\protect\firstacronymfont{\glsentryshort{##1}}}{##1}##2\space
+   (\glslongaccessdisplay{\glsentrylong{##1}}{##1})%
+  }%
+  \renewcommand*{\Genacrfullformat}[2]{%
+   \glsshortaccessdisplay
+      {\protect\firstacronymfont{\Glsentryshort{##1}}}{##1}##2\space
+   (\glslongaccessdisplay{\glsentrylong{##1}}{##1})%
+  }%
+  \renewcommand*{\genplacrfullformat}[2]{%
+   \glsshortpluralaccessdisplay
+     {\protect\firstacronymfont{\glsentryshortpl{##1}}}{##1}##2\space
+   (\glslongpluralaccessdisplay
+     {\glsentrylongpl{##1}}{##1})%
+  }%
+  \renewcommand*{\Genplacrfullformat}[2]{%
+   \glsshortpluralaccessdisplay
+    {\protect\firstacronymfont{\Glsentryshortpl{##1}}}{##1}##2\space
+   (\glslongpluralaccessdisplay{\glsentrylongpl{##1}}{##1})%
+  }%
+  \renewcommand*{\acronymentry}[1]{%
+    \glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1}}%
+  \renewcommand*{\acronymsort}[2]{##1}%
+  \renewcommand*{\acronymfont}[1]{##1}%
+  \renewcommand*{\firstacronymfont}[1]{\acronymfont{##1}}%
+  \renewcommand*{\acrpluralsuffix}{\glspluralsuffix}%
+}
+\renewacronymstyle{long-short-desc}%
+{%
+  \GlsUseAcrEntryDispStyle{long-short}%
+}%
+{%
+  \GlsUseAcrStyleDefs{long-short}%
+  \renewcommand*{\GenericAcronymFields}{}%
+  \renewcommand*{\acronymsort}[2]{##2}%
+  \renewcommand*{\acronymentry}[1]{%
+    \glslongaccessdisplay{\glsentrylong{##1}}{##1}\space
+    (\glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1})}%
+}
+\renewacronymstyle{long-sc-short-desc}%
+{%
+  \GlsUseAcrEntryDispStyle{long-sc-short}%
+}%
+{%
+  \GlsUseAcrStyleDefs{long-sc-short}%
+  \renewcommand*{\GenericAcronymFields}{}%
+  \renewcommand*{\acronymsort}[2]{##2}%
+  \renewcommand*{\acronymentry}[1]{%
+    \glslongaccessdisplay{\glsentrylong{##1}}{##1}\space
+    (\glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1})}%
+}
+\renewacronymstyle{long-sm-short-desc}%
+{%
+  \GlsUseAcrEntryDispStyle{long-sm-short}%
+}%
+{%
+  \GlsUseAcrStyleDefs{long-sm-short}%
+  \renewcommand*{\GenericAcronymFields}{}%
+  \renewcommand*{\acronymsort}[2]{##2}%
+  \renewcommand*{\acronymentry}[1]{%
+    \glslongaccessdisplay{\glsentrylong{##1}}{##1}\space
+    (\glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1})}%
+}
+\renewacronymstyle{short-long-desc}%
+{%
+  \GlsUseAcrEntryDispStyle{short-long}%
+}%
+{%
+  \GlsUseAcrStyleDefs{short-long}%
+  \renewcommand*{\GenericAcronymFields}{}%
+  \renewcommand*{\acronymsort}[2]{##2}%
+  \renewcommand*{\acronymentry}[1]{%
+    \glslongaccessdisplay{\glsentrylong{##1}}{##1}\space
+    (\glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1})}%
+}
+\renewacronymstyle{sc-short-long-desc}%
+{%
+  \GlsUseAcrEntryDispStyle{sc-short-long}%
+}%
+{%
+  \GlsUseAcrStyleDefs{sc-short-long}%
+  \renewcommand*{\GenericAcronymFields}{}%
+  \renewcommand*{\acronymsort}[2]{##2}%
+  \renewcommand*{\acronymentry}[1]{%
+    \glslongaccessdisplay{\glsentrylong{##1}}{##1}\space
+    (\glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1})}%
+}
+\renewacronymstyle{sm-short-long-desc}%
+{%
+  \GlsUseAcrEntryDispStyle{sm-short-long}%
+}%
+{%
+  \GlsUseAcrStyleDefs{sm-short-long}%
+  \renewcommand*{\GenericAcronymFields}{}%
+  \renewcommand*{\acronymsort}[2]{##2}%
+  \renewcommand*{\acronymentry}[1]{%
+    \glslongaccessdisplay{\glsentrylong{##1}}{##1}\space
+    (\glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1})}%
+}
+\renewacronymstyle{dua}%
+{%
+  \ifdefempty\glscustomtext
+  {%
+    \ifglshaslong{\glslabel}%
+    {%
+      \glsifplural
+      {%
+        \glscapscase
+        {%
+          \glslongpluralaccessdisplay{\glsentrylongpl{\glslabel}}{\glslabel}%
+          \glsinsert
+        }%
+        {%
+          \glslongpluralaccessdisplay{\Glsentrylongpl{\glslabel}}{\glslabel}%
+          \glsinsert
+        }%
+        {%
+          \glslongpluralaccessdisplay
+            {\mfirstucMakeUppercase{\glsentrylongpl{\glslabel}}}{\glslabel}%
+          \mfirstucMakeUppercase{\glsinsert}%
+        }%
+      }%
+      {%
+        \glscapscase
+        {%
+          \glslongaccessdisplay{\glsentrylong{\glslabel}}{\glslabel}\glsinsert
+        }%
+        {%
+          \glslongaccessdisplay{\Glsentrylong{\glslabel}}{\glslabel}\glsinsert
+        }%
+        {%
+          \glslongaccessdisplay
+           {\mfirstucMakeUppercase
+              {\glsentrylong{\glslabel}\glsinsert}}{\glslabel}%
+          \mfirstucMakeUppercase{\glsinsert}%
+        }%
+      }%
+    }%
+    {%
+      \glsgenentryfmt
+    }%
+  }%
+  {\glscustomtext\glsinsert}%
+}%
+{%
+  \renewcommand*{\GenericAcronymFields}{description={\the\glslongtok}}%
+  \renewcommand*{\acrfullfmt}[3]{%
+    \glslink[##1]{##2}{%
+      \glslongaccessdisplay{\glsentrylong{##2}}{##2}##3\space
+      (\glsshortaccessdisplay{\acronymfont{\glsentryshort{##2}}}{##2})}}%
+  \renewcommand*{\Acrfullfmt}[3]{%
+    \glslink[##1]{##2}{%
+      \glslongaccessdisplay{\Glsentrylong{##2}}{##2}##3\space
+      (\glsshortaccessdisplay{\acronymfont{\glsentryshort{##2}}}{##2})}}%
+  \renewcommand*{\ACRfullfmt}[3]{%
+    \glslink[##1]{##2}{%
+      \glslongaccessdisplay
+        {\mfirstucMakeUppercase{\glsentrylong{##2}}{##2}##3\space
+      (\glsshortaccessdisplay{\acronymfont{\glsentryshort{##2}}}{##2})}}}%
+  \renewcommand*{\acrfullplfmt}[3]{%
+    \glslink[##1]{##2}{%
+      \glslongpluralaccessdisplay
+        {\glsentrylongpl{##2}}{##2}##3\space
+      (\glsshortpluralaccessdisplay
+        {\acronymfont{\glsentryshortpl{##2}}}{##2})}}%
+  \renewcommand*{\Acrfullplfmt}[3]{%
+    \glslink[##1]{##2}{%
+      \glslongpluralaccessdisplay
+        {\Glsentrylongpl{##2}}{##2}##3\space
+      (\glsshortpluralaccessdisplay
+        {\acronymfont{\glsentryshortpl{##2}}}{##2})}}%
+  \renewcommand*{\ACRfullplfmt}[3]{%
+    \glslink[##1]{##2}{%
+      \glslongpluralaccessdisplay
+         {\mfirstucMakeUppercase{\glsentrylongpl{##2}}{##2}##3\space
+      (\glsshortpluralaccessdisplay
+         {\acronymfont{\glsentryshortpl{##2}}}{##2})}}}%
+  \renewcommand*{\glsentryfull}[1]{%
+    \glslongaccessdisplay{\glsentrylong{##1}}\space
+    (\glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1})%
+  }%
+  \renewcommand*{\Glsentryfull}[1]{%
+    \glslongaccessdisplay{\Glsentrylong{##1}}{##1}\space
+    (\glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1})%
+  }%
+  \renewcommand*{\glsentryfullpl}[1]{%
+    \glslongpluralaccessdisplay{\glsentrylongpl{##1}}{##1}\space
+    (\glsshortpluralaccessdisplay{\acronymfont{\glsentryshortpl{##1}}}{##1})%
+  }%
+  \renewcommand*{\Glsentryfullpl}[1]{%
+    \glslongpluralaccessdisplay{\Glsentrylongpl{##1}}{##1}\space
+    (\glsshortpluralaccessdisplay{\acronymfont{\glsentryshortpl{##1}}}{##1})%
+  }%
+  \renewcommand*{\acronymentry}[1]{%
+     \glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1}}%
+  \renewcommand*{\acronymsort}[2]{##1}%
+  \renewcommand*{\acronymfont}[1]{##1}%
+  \renewcommand*{\acrpluralsuffix}{\glspluralsuffix}%
+}
+\renewacronymstyle{dua-desc}%
+{%
+  \GlsUseAcrEntryDispStyle{dua}%
+}%
+{%
+  \GlsUseAcrStyleDefs{dua}%
+  \renewcommand*{\GenericAcronymFields}{}%
+  \renewcommand*{\acronymentry}[1]{%
+    \glslongaccessdisplay{\acronymfont{\glsentrylong{##1}}}{##1}}%
+  \renewcommand*{\acronymsort}[2]{##2}%
+}%
+\renewacronymstyle{footnote}%
+{%
+  \ifglshaslong{\glslabel}{\glsgenacfmt}{\glsgenentryfmt}%
+}%
+{%
+  \renewcommand*{\GenericAcronymFields}{description={\the\glslongtok}}%
+  \glshyperfirstfalse
+  \renewcommand*{\genacrfullformat}[2]{%
+   \glsshortaccessdisplay
+     {\protect\firstacronymfont{\glsentryshort{##1}}}{##1}##2%
+   \protect\footnote{\glslongaccessdisplay{\glsentrylong{##1}}{##1}}%
+  }%
+  \renewcommand*{\Genacrfullformat}[2]{%
+   \glsshortaccessdisplay
+     {\firstacronymfont{\Glsentryshort{##1}}}{##1}##2%
+   \protect\footnote{\glslongaccessdisplay{\glsentrylong{##1}}{##1}}%
+  }%
+  \renewcommand*{\genplacrfullformat}[2]{%
+   \glsshortpluralaccessdisplay
+     {\protect\firstacronymfont{\glsentryshortpl{##1}}}{##1}##2%
+   \protect\footnote{\glslongpluralaccessdisplay{\glsentrylongpl{##1}}{##1}}%
+  }%
+  \renewcommand*{\Genplacrfullformat}[2]{%
+   \glsshortpluralaccessdisplay
+     {\protect\firstacronymfont{\Glsentryshortpl{##1}}}{##1}##2%
+   \protect\footnote{\glslongpluralaccessdisplay{\glsentrylongpl{##1}}{##1}}%
+  }%
+  \renewcommand*{\acronymentry}[1]{%
+    \glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1}}%
+  \renewcommand*{\acronymsort}[2]{##1}%
+  \renewcommand*{\acronymfont}[1]{##1}%
+  \renewcommand*{\acrpluralsuffix}{\glspluralsuffix}%
+  \renewcommand*{\acrfullfmt}[3]{%
+    \glslink[##1]{##2}{%
+      \glsshortaccessdisplay{\acronymfont{\glsentryshort{##2}}}{##2}##3\space
+      (\glslongaccessdisplay{\glsentrylong{##2}}{##2})}}%
+  \renewcommand*{\Acrfullfmt}[3]{%
+    \glslink[##1]{##2}{%
+      \glsshortaccessdisplay{\acronymfont{\Glsentryshort{##2}}}{##2}##3\space
+      (\glslongaccessdisplay{\glsentrylong{##2}}{##2})}}%
+  \renewcommand*{\ACRfullfmt}[3]{%
+    \glslink[##1]{##2}{%
+      \glsshortaccessdisplay
+         {\mfirstucMakeUppercase
+           {\acronymfont{\glsentryshort{##2}}}{##2}##3\space
+      (\glslongaccessdisplay{\glsentrylong{##2}}{##2})}}}%
+  \renewcommand*{\acrfullplfmt}[3]{%
+    \glslink[##1]{##2}{%
+      \glsshortpluralaccessdisplay
+         {\acronymfont{\glsentryshortpl{##2}}}{##2}##3\space
+      (\glslongpluralaccessdisplay{\glsentrylongpl{##2}}{##2})}}%
+  \renewcommand*{\Acrfullplfmt}[3]{%
+    \glslink[##1]{##2}{%
+      \glsshortpluralaccessdisplay
+        {\acronymfont{\Glsentryshortpl{##2}}}{##2}##3\space
+      (\glslongpluralaccessdisplay{\glsentrylongpl{##2}})}}%
+  \renewcommand*{\ACRfullplfmt}[3]{%
+    \glslink[##1]{##2}{%
+      \glsshortpluralaccessdisplay
+        {\mfirstucMakeUppercase
+           {\acronymfont{\glsentryshortpl{##2}}}{##2}##3\space
+      (\glslongpluralaccessdisplay{\glsentrylongpl{##2}}{##2})}}}%
+  \renewcommand*{\glsentryfull}[1]{%
+     \glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1}\space
+      (\glslongaccessdisplay{\glsentrylong{##1}}{##1})}%
+  \renewcommand*{\Glsentryfull}[1]{%
+     \glsshortaccessdisplay{\acronymfont{\Glsentryshort{##1}}}{##1}\space
+     (\glslongaccessdisplay{\glsentrylong{##1}}{##1})}%
+  \renewcommand*{\glsentryfullpl}[1]{%
+     \glsshortpluralaccessdisplay
+       {\acronymfont{\glsentryshortpl{##1}}}{##1}\space
+       (\glslongpluralaccessdisplay{\glsentrylongpl{##1}}{##1})}%
+  \renewcommand*{\Glsentryfullpl}[1]{%
+     \glsshortpluralaccessdisplay
+        {\acronymfont{\Glsentryshortpl{##1}}}{##1}\space
+     (\glslongpluralaccessdisplay{\glsentrylongpl{##1}}{##1})}%
+}
+\renewacronymstyle{footnote-sc}%
+{%
+  \GlsUseAcrEntryDispStyle{footnote}%
+}%
+{%
+  \GlsUseAcrStyleDefs{footnote}%
+  \renewcommand{\acronymentry}[1]{%
+     \glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1}}
+  \renewcommand{\acronymfont}[1]{\textsc{##1}}%
+  \renewcommand*{\acrpluralsuffix}{\glstextup{\glspluralsuffix}}%
+}%
+\renewacronymstyle{footnote-sm}%
+{%
+  \GlsUseAcrEntryDispStyle{footnote}%
+}%
+{%
+  \GlsUseAcrStyleDefs{footnote}%
+  \renewcommand{\acronymentry}[1]{%
+    \glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1}}
+  \renewcommand{\acronymfont}[1]{\textsmaller{##1}}%
+  \renewcommand*{\acrpluralsuffix}{\glspluralsuffix}%
+}%
+\renewacronymstyle{footnote-desc}%
+{%
+  \GlsUseAcrEntryDispStyle{footnote}%
+}%
+{%
+  \GlsUseAcrStyleDefs{footnote}%
+  \renewcommand*{\GenericAcronymFields}{}%
+  \renewcommand*{\acronymsort}[2]{##2}%
+  \renewcommand*{\acronymentry}[1]{%
+    \glslongaccessdisplay{\glsentrylong{##1}}{##1}\space
+    (\glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1})}%
+}
+\renewacronymstyle{footnote-sc-desc}%
+{%
+  \GlsUseAcrEntryDispStyle{footnote-sc}%
+}%
+{%
+  \GlsUseAcrStyleDefs{footnote-sc}%
+  \renewcommand*{\GenericAcronymFields}{}%
+  \renewcommand*{\acronymsort}[2]{##2}%
+  \renewcommand*{\acronymentry}[1]{%
+    \glslongaccessdisplay{\glsentrylong{##1}}{##1}\space
+    (\glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1})}%
+}
+\renewacronymstyle{footnote-sm-desc}%
+{%
+  \GlsUseAcrEntryDispStyle{footnote-sm}%
+}%
+{%
+  \GlsUseAcrStyleDefs{footnote-sm}%
+  \renewcommand*{\GenericAcronymFields}{}%
+  \renewcommand*{\acronymsort}[2]{##2}%
+  \renewcommand*{\acronymentry}[1]{%
+    \glslongaccessdisplay{\glsentrylong{##1}}{##1}\space
+    (\glsshortaccessdisplay{\acronymfont{\glsentryshort{##1}}}{##1})}%
+}
+\renewcommand*{\newacronymhook}{%
+  \edef\@gls@keylist{shortaccess=\the\glslongtok,%
+     \the\glskeylisttok}%
+  \expandafter\glskeylisttok\expandafter{\@gls@keylist}%
+}
+\renewcommand*{\DefaultNewAcronymDef}{%
+  \edef\@do@newglossaryentry{%
+    \noexpand\newglossaryentry{\the\glslabeltok}%
+    {%
+      type=\acronymtype,%
+      name={\the\glsshorttok},%
+      description={\the\glslongtok},%
+      descriptionaccess=\relax,
+      text={\the\glsshorttok},%
+      access={\noexpand\@glo@textaccess},%
+      sort={\the\glsshorttok},%
+      short={\the\glsshorttok},%
+      shortplural={\the\glsshorttok\noexpand\acrpluralsuffix},%
+      shortaccess={\the\glslongtok},%
+      long={\the\glslongtok},%
+      longplural={\the\glslongtok\noexpand\acrpluralsuffix},%
+      descriptionplural={\the\glslongtok\noexpand\acrpluralsuffix},%
+      first={\noexpand\glslongaccessdisplay
+        {\the\glslongtok}{\the\glslabeltok}\space
+        (\noexpand\glsshortaccessdisplay
+          {\the\glsshorttok}{\the\glslabeltok})},%
+      plural={\the\glsshorttok\acrpluralsuffix},%
+      firstplural={\noexpand\glslongpluralaccessdisplay
+        {\noexpand\@glo@longpl}{\the\glslabeltok}\space
+        (\noexpand\glsshortpluralaccessdisplay
+          {\noexpand\@glo@shortpl}{\the\glslabeltok})},%
+      firstaccess=\relax,
+      firstpluralaccess=\relax,
+      textaccess={\noexpand\@glo@shortaccess},%
+      \the\glskeylisttok
+    }%
+  }%
+  \let\@org@gls@assign@firstpl\gls@assign@firstpl
+  \let\@org@gls@assign@plural\gls@assign@plural
+  \let\@org@gls@assign@descplural\gls@assign@descplural
+  \def\gls@assign@firstpl##1##2{%
+    \@@gls@expand@field{##1}{firstpl}{##2}%
+  }%
+  \def\gls@assign@plural##1##2{%
+    \@@gls@expand@field{##1}{plural}{##2}%
+  }%
+  \def\gls@assign@descplural##1##2{%
+    \@@gls@expand@field{##1}{descplural}{##2}%
+  }%
+  \@do@newglossaryentry
+  \let\gls@assign@firstpl\@org@gls@assign@firstpl
+  \let\gls@assign@plural\@org@gls@assign@plural
+  \let\gls@assign@symbolplural\@org@gls@assign@symbolplural
+}
+\renewcommand*{\DescriptionFootnoteNewAcronymDef}{%
+  \edef\@do@newglossaryentry{%
+    \noexpand\newglossaryentry{\the\glslabeltok}%
+    {%
+      type=\acronymtype,%
+      name={\noexpand\acronymfont{\the\glsshorttok}},%
+      sort={\the\glsshorttok},%
+      text={\the\glsshorttok},%
+      short={\the\glsshorttok},%
+      shortplural={\the\glsshorttok\noexpand\acrpluralsuffix},%
+      shortaccess={\the\glslongtok},%
+      long={\the\glslongtok},%
+      longplural={\the\glslongtok\noexpand\acrpluralsuffix},%
+      access={\noexpand\@glo@textaccess},%
+      plural={\the\glsshorttok\noexpand\acrpluralsuffix},%
+      symbol={\the\glslongtok},%
+      symbolplural={\the\glslongtok\noexpand\acrpluralsuffix},%
+      firstpluralaccess=\relax,
+      textaccess={\noexpand\@glo@shortaccess},%
+      \the\glskeylisttok
+    }%
+  }%
+  \let\@org@gls@assign@firstpl\gls@assign@firstpl
+  \let\@org@gls@assign@plural\gls@assign@plural
+  \let\@org@gls@assign@symbolplural\gls@assign@symbolplural
+  \def\gls@assign@firstpl##1##2{%
+    \@@gls@expand@field{##1}{firstpl}{##2}%
+  }%
+  \def\gls@assign@plural##1##2{%
+    \@@gls@expand@field{##1}{plural}{##2}%
+  }%
+  \def\gls@assign@symbolplural##1##2{%
+    \@@gls@expand@field{##1}{symbolplural}{##2}%
+  }%
+  \@do@newglossaryentry
+  \let\gls@assign@plural\@org@gls@assign@plural
+  \let\gls@assign@firstpl\@org@gls@assign@firstpl
+  \let\gls@assign@symbolplural\@org@gls@assign@symbolplural
+}
+\renewcommand*{\DescriptionNewAcronymDef}{%
+  \edef\@do@newglossaryentry{%
+    \noexpand\newglossaryentry{\the\glslabeltok}%
+    {%
+      type=\acronymtype,%
+      name={\noexpand
+        \acrnameformat{\the\glsshorttok}{\the\glslongtok}},%
+      access={\noexpand\@glo@textaccess},%
+      sort={\the\glsshorttok},%
+      short={\the\glsshorttok},%
+      shortplural={\the\glsshorttok\noexpand\acrpluralsuffix},%
+      shortaccess={\the\glslongtok},%
+      long={\the\glslongtok},%
+      longplural={\the\glslongtok\noexpand\acrpluralsuffix},%
+      first={\the\glslongtok},%
+      firstaccess=\relax,
+      firstplural={\the\glslongtok\noexpand\acrpluralsuffix},%
+      text={\the\glsshorttok},%
+      textaccess={\the\glslongtok},%
+      plural={\the\glsshorttok\noexpand\acrpluralsuffix},%
+      symbol={\noexpand\@glo@text},%
+      symbolaccess={\noexpand\@glo@textaccess},%
+      symbolplural={\noexpand\@glo@plural},%
+      firstpluralaccess=\relax,
+      textaccess={\noexpand\@glo@shortaccess},%
+      \the\glskeylisttok}%
+  }%
+  \let\@org@gls@assign@firstpl\gls@assign@firstpl
+  \let\@org@gls@assign@plural\gls@assign@plural
+  \let\@org@gls@assign@symbolplural\gls@assign@symbolplural
+  \def\gls@assign@firstpl##1##2{%
+    \@@gls@expand@field{##1}{firstpl}{##2}%
+  }%
+  \def\gls@assign@plural##1##2{%
+    \@@gls@expand@field{##1}{plural}{##2}%
+  }%
+  \def\gls@assign@symbolplural##1##2{%
+    \@@gls@expand@field{##1}{symbolplural}{##2}%
+  }%
+  \@do@newglossaryentry
+  \let\gls@assign@firstpl\@org@gls@assign@firstpl
+  \let\gls@assign@plural\@org@gls@assign@plural
+  \let\gls@assign@symbolplural\@org@gls@assign@symbolplural
+}
+\renewcommand*{\FootnoteNewAcronymDef}{%
+  \edef\@do@newglossaryentry{%
+    \noexpand\newglossaryentry{\the\glslabeltok}%
+    {%
+      type=\acronymtype,%
+      name={\noexpand\acronymfont{\the\glsshorttok}},%
+      sort={\the\glsshorttok},%
+      text={\the\glsshorttok},%
+      textaccess={\the\glslongtok},%
+      access={\noexpand\@glo@textaccess},%
+      plural={\the\glsshorttok\noexpand\acrpluralsuffix},%
+      short={\the\glsshorttok},%
+      shortplural={\the\glsshorttok\noexpand\acrpluralsuffix},%
+      long={\the\glslongtok},%
+      longplural={\the\glslongtok\noexpand\acrpluralsuffix},%
+      description={\the\glslongtok},%
+      descriptionplural={\the\glslongtok\noexpand\acrpluralsuffix},%
+      \the\glskeylisttok
+    }%
+  }%
+  \let\@org@gls@assign@plural\gls@assign@plural
+  \let\@org@gls@assign@firstpl\gls@assign@firstpl
+  \let\@org@gls@assign@descplural\gls@assign@descplural
+  \def\gls@assign@firstpl##1##2{%
+    \@@gls@expand@field{##1}{firstpl}{##2}%
+  }%
+  \def\gls@assign@plural##1##2{%
+    \@@gls@expand@field{##1}{plural}{##2}%
+  }%
+  \def\gls@assign@descplural##1##2{%
+    \@@gls@expand@field{##1}{descplural}{##2}%
+  }%
+  \@do@newglossaryentry
+  \let\gls@assign@plural\@org@gls@assign@plural
+  \let\gls@assign@firstpl\@org@gls@assign@firstpl
+  \let\gls@assign@descplural\@org@gls@assign@descplural
+}
+\renewcommand*{\SmallNewAcronymDef}{%
+  \edef\@do@newglossaryentry{%
+    \noexpand\newglossaryentry{\the\glslabeltok}%
+    {%
+      type=\acronymtype,%
+      name={\noexpand\acronymfont{\the\glsshorttok}},%
+      access={\noexpand\@glo@symbolaccess},%
+      sort={\the\glsshorttok},%
+      short={\the\glsshorttok},%
+      shortplural={\the\glsshorttok\noexpand\acrpluralsuffix},%
+      shortaccess={\the\glslongtok},%
+      long={\the\glslongtok},%
+      longplural={\the\glslongtok\noexpand\acrpluralsuffix},%
+      text={\noexpand\@glo@short},%
+      textaccess={\noexpand\@glo@shortaccess},%
+      plural={\noexpand\@glo@shortpl},%
+      first={\the\glslongtok},%
+      firstaccess=\relax,
+      firstplural={\the\glslongtok\noexpand\acrpluralsuffix},%
+      description={\noexpand\@glo@first},%
+      descriptionplural={\noexpand\@glo@firstplural},%
+      symbol={\the\glsshorttok},%
+      symbolaccess={\the\glslongtok},%
+      symbolplural={\the\glsshorttok\noexpand\acrpluralsuffix},%
+      \the\glskeylisttok
+    }%
+  }%
+  \let\@org@gls@assign@firstpl\gls@assign@firstpl
+  \let\@org@gls@assign@plural\gls@assign@plural
+  \let\@org@gls@assign@descplural\gls@assign@descplural
+  \let\@org@gls@assign@symbolplural\gls@assign@symbolplural
+  \def\gls@assign@firstpl##1##2{%
+    \@@gls@expand@field{##1}{firstpl}{##2}%
+  }%
+  \def\gls@assign@plural##1##2{%
+    \@@gls@expand@field{##1}{plural}{##2}%
+  }%
+  \def\gls@assign@descplural##1##2{%
+    \@@gls@expand@field{##1}{descplural}{##2}%
+  }%
+  \def\gls@assign@symbolplural##1##2{%
+    \@@gls@expand@field{##1}{symbolplural}{##2}%
+  }%
+  \@do@newglossaryentry
+  \let\gls@assign@firstpl\@org@gls@assign@firstpl
+  \let\gls@assign@plural\@org@gls@assign@plural
+  \let\gls@assign@descplural\@org@gls@assign@descplural
+  \let\gls@assign@symbolplural\@org@gls@assign@symbolplural
+}
+  \newcommand*{\glsshortaccesskey}{\glsshortkey access}%
+  \newcommand*{\glsshortpluralaccesskey}{\glsshortpluralkey access}%
+  \newcommand*{\glslongaccesskey}{\glslongkey access}%
+  \newcommand*{\glslongpluralaccesskey}{\glslongpluralkey access}%
+\newcommand*{\showglonameaccess}[1]{%
+  \expandafter\show\csname glo@\glsdetoklabel{#1}@textaccess\endcsname
+}
+\newcommand*{\showglotextaccess}[1]{%
+  \expandafter\show\csname glo@\glsdetoklabel{#1}@textaccess\endcsname
+}
+\newcommand*{\showglopluralaccess}[1]{%
+  \expandafter\show\csname glo@\glsdetoklabel{#1}@pluralaccess\endcsname
+}
+\newcommand*{\showglofirstaccess}[1]{%
+  \expandafter\show\csname glo@\glsdetoklabel{#1}@firstaccess\endcsname
+}
+\newcommand*{\showglofirstpluralaccess}[1]{%
+  \expandafter\show\csname glo@\glsdetoklabel{#1}@firstpluralaccess\endcsname
+}
+\newcommand*{\showglosymbolaccess}[1]{%
+  \expandafter\show\csname glo@\glsdetoklabel{#1}@symbolaccess\endcsname
+}
+\newcommand*{\showglosymbolpluralaccess}[1]{%
+  \expandafter\show\csname glo@\glsdetoklabel{#1}@symbolpluralaccess\endcsname
+}
+\newcommand*{\showglodescaccess}[1]{%
+  \expandafter\show\csname glo@\glsdetoklabel{#1}@descaccess\endcsname
+}
+\newcommand*{\showglodescpluralaccess}[1]{%
+  \expandafter\show\csname glo@\glsdetoklabel{#1}@descpluralaccess\endcsname
+}
+\newcommand*{\showgloshortaccess}[1]{%
+  \expandafter\show\csname glo@\glsdetoklabel{#1}@shortaccess\endcsname
+}
+\newcommand*{\showgloshortpluralaccess}[1]{%
+  \expandafter\show\csname glo@\glsdetoklabel{#1}@shortpluralaccess\endcsname
+}
+\newcommand*{\showglolongaccess}[1]{%
+  \expandafter\show\csname glo@\glsdetoklabel{#1}@longaccess\endcsname
+}
+\newcommand*{\showglolongpluralaccess}[1]{%
+  \expandafter\show\csname glo@\glsdetoklabel{#1}@longpluralaccess\endcsname
+}
+\endinput
+%%
+%% End of file `glossaries-accsupp.sty'.

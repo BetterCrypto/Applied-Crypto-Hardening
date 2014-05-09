@@ -6,7 +6,7 @@ keeping high cipher suite security while supporting as many users as possible.
 The website \url{https://www.ssllabs.com/} gives administrators and security engineers
 a tool to test their setup and compare compatibility with clients. The authors made 
 use of ssllabs.com to arrive at a set of cipher suites which we will recommend 
-throughout this document.\\
+throughout this document.
 
 %\textbf{Caution: these settings can only represent a subjective
 %choice of the authors at the time of writing. It might be a wise choice to
@@ -25,18 +25,15 @@ deployments where software that is to be used can be defined without restriction
 
 We arrived at this set of cipher suites by selecting:
 
-\begin{itemize}
-\item TLS 1.2
-\item Perfect forward secrecy / ephemeral Diffie Hellman
-\item strong MACs (SHA-2) or
-\item GCM as Authenticated Encryption scheme
-\end{itemize}
+\begin{itemize*}
+  \item TLS 1.2
+  \item Perfect forward secrecy / ephemeral Diffie Hellman
+  \item strong MACs (SHA-2) or
+  \item GCM as Authenticated Encryption scheme
+\end{itemize*}
 
 This results in the OpenSSL string:
-
-\begin{lstlisting}[breaklines]
-'EDH+aRSA+AES256:EECDH+aRSA+AES256:!SSLv3'
-\end{lstlisting}
+\ttbox{EDH+aRSA+AES256:EECDH+aRSA+AES256:!SSLv3'}
 
 %$\implies$ resolves to 
 %
@@ -47,27 +44,23 @@ This results in the OpenSSL string:
 
 
 %\todo{make a column for cipher chaining mode} --> not really important, is it?
-\begin{center}
-
-\begin{tabular}{lllllll}
-\toprule
-\textbf{ID}   & \textbf{OpenSSL Name}       & \textbf{Version} & \textbf{KeyEx} & \textbf{Auth} & \textbf{Cipher} & \textbf{MAC}\\\cmidrule(lr){1-7}
-\verb|0x009F| & DHE-RSA-AES256-GCM-SHA384   & TLSv1.2          & DH             &  RSA          & AESGCM(256)     & AEAD         \\
-\verb|0x006B| & DHE-RSA-AES256-SHA256       & TLSv1.2          & DH             &  RSA          & AES(256) (CBC)  & SHA256       \\
-\verb|0xC030| & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2          & ECDH           &  RSA          & AESGCM(256)     & AEAD         \\
-\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           &  RSA          & AES(256) (CBC)  & SHA384       \\
-\bottomrule
-\end{tabular}
-\end{center}
-
+\ctable[caption={Configuration A ciphers},label=tab:conf-a]{lllllll}{}{%
+\FL \textbf{ID}   & \textbf{OpenSSL Name}       & \textbf{Version} & \textbf{KeyEx} & \textbf{Auth} & \textbf{Cipher} & \textbf{MAC}
+\ML \texttt{0x009F} & DHE-RSA-AES256-GCM-SHA384   & TLSv1.2          & DH             &  RSA          & AESGCM(256)     & AEAD
+\NN \texttt{0x006B} & DHE-RSA-AES256-SHA256       & TLSv1.2          & DH             &  RSA          & AES(256) (CBC)  & SHA256
+\NN \texttt{0xC030} & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2          & ECDH           &  RSA          & AESGCM(256)     & AEAD
+\NN \texttt{0xC028} & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           &  RSA          & AES(256) (CBC)  & SHA384
+\LL}
 
 \paragraph*{Compatibility:}
 
-Only clients which support TLS 1.2 are covered by these cipher suites (Chrome 30,
-Win 7 and Win 8.1 crypto stack, Opera 17, OpenSSL $\ge$ 1.0.1e, Safari 6 / iOS
-6.0.1, Safari 7 / OS X 10.9).
+At the time of this writing only Win 7 and Win 8.1 crypto stack,
+OpenSSL $\ge$ 1.0.1e, Safari 6 / iOS 6.0.1 and Safar 7 / OS X 10.9
+are covered by that cipher string.
 
-
+In case you need to support other/different clients, see information
+about choosing your own cipher string in section
+\ref{section:ChoosingYourOwnCipherSuites}.
 
 \subsubsection{Configuration B: Weaker ciphers but better compatibility}
 
@@ -76,52 +69,44 @@ example, there are known weaknesses for the SHA-1 hash function that is
 included in this set.  The advantage of this set of cipher suites is not only
 better compatibility with a broad range of clients, but also less computational
 workload on the provisioning hardware.
-\\
+
 
 \textbf{All further examples in this publication use Configuration B}.\\
 
 We arrived at this set of cipher suites by selecting:
 
-\begin{itemize}
-\item TLS 1.2, TLS 1.1, TLS 1.0
-\item allowing SHA-1 (see the comments on SHA-1 in section \ref{section:SHA})
-
-\end{itemize}
+\begin{itemize*}
+  \item TLS 1.2, TLS 1.1, TLS 1.0
+  \item allowing SHA-1 (see the comments on SHA-1 in section \ref{section:SHA})
+\end{itemize*}
 
 This results in the OpenSSL string:
-
+%
 %'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA'
-\begin{lstlisting}[breaklines]
-@@@CIPHERSTRINGB@@@
-\end{lstlisting}
+\ttbox{\cipherStringB}
 
 \todo{make a column for cipher chaining mode}
-\begin{center}
-\begin{tabular}{lllllll}
-\toprule
-\textbf{ID}   & \textbf{OpenSSL Name}       & \textbf{Version} & \textbf{KeyEx} & \textbf{Auth} & \textbf{Cipher} & \textbf{MAC}\\\cmidrule(lr){1-7}
-\verb|0x009F| & DHE-RSA-AES256-GCM-SHA384   & TLSv1.2          & DH             & RSA           & AESGCM(256)     & AEAD         \\
-\verb|0x006B| & DHE-RSA-AES256-SHA256       & TLSv1.2          & DH             & RSA           & AES(256)        & SHA256       \\
-\verb|0xC030| & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2          & ECDH           & RSA           & AESGCM(256)     & AEAD         \\
-\verb|0xC028| & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           & RSA           & AES(256)        & SHA384       \\
-\verb|0x009E| & DHE-RSA-AES128-GCM-SHA256   & TLSv1.2          & DH             & RSA           & AESGCM(128)     & AEAD         \\
-\verb|0x0067| & DHE-RSA-AES128-SHA256       & TLSv1.2          & DH             & RSA           & AES(128)        & SHA256       \\
-\verb|0xC02F| & ECDHE-RSA-AES128-GCM-SHA256 & TLSv1.2          & ECDH           & RSA           & AESGCM(128)     & AEAD         \\
-\verb|0xC027| & ECDHE-RSA-AES128-SHA256     & TLSv1.2          & ECDH           & RSA           & AES(128)        & SHA256       \\
-\verb|0x0088| & DHE-RSA-CAMELLIA256-SHA     & SSLv3            & DH             & RSA           & Camellia(256)   & SHA1         \\
-\verb|0x0039| & DHE-RSA-AES256-SHA          & SSLv3            & DH             & RSA           & AES(256)        & SHA1         \\
-\verb|0xC014| & ECDHE-RSA-AES256-SHA        & SSLv3            & ECDH           & RSA           & AES(256)        & SHA1         \\
-\verb|0x0045| & DHE-RSA-CAMELLIA128-SHA     & SSLv3            & DH             & RSA           & Camellia(128)   & SHA1         \\
-\verb|0x0033| & DHE-RSA-AES128-SHA          & SSLv3            & DH             & RSA           & AES(128)        & SHA1         \\
-\verb|0xC013| & ECDHE-RSA-AES128-SHA        & SSLv3            & ECDH           & RSA           & AES(128)        & SHA1         \\
-\verb|0x0084| & CAMELLIA256-SHA             & SSLv3            & RSA            & RSA           & Camellia(256)   & SHA1         \\
-\verb|0x0035| & AES256-SHA                  & SSLv3            & RSA            & RSA           & AES(256)        & SHA1         \\
-\verb|0x0041| & CAMELLIA128-SHA             & SSLv3            & RSA            & RSA           & Camellia(128)   & SHA1         \\
-\verb|0x002F| & AES128-SHA                  & SSLv3            & RSA            & RSA           & AES(128)        & SHA1         \\
-\bottomrule
-\end{tabular}
-\end{center}
-
+\ctable[caption={Configuration B ciphers},label=tab:conf-b]{lllllll}{}{%
+\FL \textbf{ID}   & \textbf{OpenSSL Name}       & \textbf{Version} & \textbf{KeyEx} & \textbf{Auth} & \textbf{Cipher} & \textbf{MAC}
+\ML \texttt{0x009F} & DHE-RSA-AES256-GCM-SHA384   & TLSv1.2          & DH             & RSA           & AESGCM(256)     & AEAD
+\NN \texttt{0x006B} & DHE-RSA-AES256-SHA256       & TLSv1.2          & DH             & RSA           & AES(256)        & SHA256
+\NN \texttt{0xC030} & ECDHE-RSA-AES256-GCM-SHA384 & TLSv1.2          & ECDH           & RSA           & AESGCM(256)     & AEAD
+\NN \texttt{0xC028} & ECDHE-RSA-AES256-SHA384     & TLSv1.2          & ECDH           & RSA           & AES(256)        & SHA384
+\NN \texttt{0x009E} & DHE-RSA-AES128-GCM-SHA256   & TLSv1.2          & DH             & RSA           & AESGCM(128)     & AEAD
+\NN \texttt{0x0067} & DHE-RSA-AES128-SHA256       & TLSv1.2          & DH             & RSA           & AES(128)        & SHA256
+\NN \texttt{0xC02F} & ECDHE-RSA-AES128-GCM-SHA256 & TLSv1.2          & ECDH           & RSA           & AESGCM(128)     & AEAD
+\NN \texttt{0xC027} & ECDHE-RSA-AES128-SHA256     & TLSv1.2          & ECDH           & RSA           & AES(128)        & SHA256
+\NN \texttt{0x0088} & DHE-RSA-CAMELLIA256-SHA     & SSLv3            & DH             & RSA           & Camellia(256)   & SHA1
+\NN \texttt{0x0039} & DHE-RSA-AES256-SHA          & SSLv3            & DH             & RSA           & AES(256)        & SHA1
+\NN \texttt{0xC014} & ECDHE-RSA-AES256-SHA        & SSLv3            & ECDH           & RSA           & AES(256)        & SHA1
+\NN \texttt{0x0045} & DHE-RSA-CAMELLIA128-SHA     & SSLv3            & DH             & RSA           & Camellia(128)   & SHA1
+\NN \texttt{0x0033} & DHE-RSA-AES128-SHA          & SSLv3            & DH             & RSA           & AES(128)        & SHA1
+\NN \texttt{0xC013} & ECDHE-RSA-AES128-SHA        & SSLv3            & ECDH           & RSA           & AES(128)        & SHA1
+\NN \texttt{0x0084} & CAMELLIA256-SHA             & SSLv3            & RSA            & RSA           & Camellia(256)   & SHA1
+\NN \texttt{0x0035} & AES256-SHA                  & SSLv3            & RSA            & RSA           & AES(256)        & SHA1
+\NN \texttt{0x0041} & CAMELLIA128-SHA             & SSLv3            & RSA            & RSA           & Camellia(128)   & SHA1
+\NN \texttt{0x002F} & AES128-SHA                  & SSLv3            & RSA            & RSA           & AES(128)        & SHA1
+\LL}
 \paragraph*{Compatibility: }
 
 Note that these cipher suites will not work with Windows XP's crypto stack (e.g. IE, Outlook), 
@@ -149,17 +134,17 @@ used on legacy installations (e.g. OpenSSL 0.9.8).
 Our recommended cipher strings are meant to be used via copy and paste and need to work
 "out of the box".
 
-\begin{itemize}
-\item TLSv1.2 is preferred over TLSv1.0 (while still providing a useable cipher
+\begin{itemize*}
+  \item TLSv1.2 is preferred over TLSv1.0 (while still providing a useable cipher
       string for TLSv1.0 servers).
-\item AES256 and CAMELLIA256 count as very strong ciphers at the moment.
-\item AES128 and CAMELLIA128 count as strong ciphers at the moment
-\item DHE or ECDHE for forward secrecy
-\item RSA as this will fit most of today's setups
-\item AES256-SHA as a last resort: with this cipher at the end, even server
+  \item AES256 and CAMELLIA256 count as very strong ciphers at the moment.
+  \item AES128 and CAMELLIA128 count as strong ciphers at the moment
+  \item DHE or ECDHE for forward secrecy
+  \item RSA as this will fit most of today's setups
+  \item AES256-SHA as a last resort: with this cipher at the end, even server
       systems with very old OpenSSL versions will work out of the box (version 0.9.8 for example does not
-      provide support for ECC and TLSv1.1 or above). \\
+      provide support for ECC and TLSv1.1 or above). \newline
       Note however that this cipher suite will not provide forward secrecy. It
       is meant to provide the same client coverage (eg. support Microsoft crypto
       libraries) on legacy setups.
-\end{itemize}
+\end{itemize*}
