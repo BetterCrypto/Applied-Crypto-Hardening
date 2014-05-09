@@ -1,0 +1,52 @@
+This is the README for the mweights package, version 2013-07-21.
+
+Many font families available for use with LaTeX have multiple
+weights, especially when originally aimed at use on the web. For
+example, Linux Libertine has both bold and semibold; Cabin, a
+sans-serif family, has four weights (regular, medium, semibold,
+bold); SourceCodePro, a monospaced family, has seven weights.
+
+Traditionally the type1-oriented support packages for such fonts
+re-define the standard \mddefault or \bfdefault macros. But this can
+create difficulties if the weight desired for one font family isn't
+available for another font family, or if it differs from the weight
+desired for another font family. For example, there is no medium
+weight font for Linux Libertine so that setting \mddefault to mb for
+use with Cabin will be problematic for Libertine. And \bfdefault
+cannot be both sb for use with Cabin and b for use with Libertine,
+or vice versa.
+
+This package provides a solution to these difficulties. The basic
+idea (due to Michael Sharpe) is that font packages should *not*
+re-define \mddefault or \bfdefault; instead they should define as
+many of the following macros as is appropriate:
+
+\mdseries@rm
+\mdseries@sf
+\mdseries@tt
+
+\bfseries@rm
+\bfseries@sf
+\bfseries@tt
+
+For example, 
+
+\def\mdseries@sf{mb}
+\def\bfseries@sf{b}
+
+would be appropriate definitions for using a sans font such as Cabin 
+with medium and bold, and
+
+\def\bfseries@rm{sb}
+
+would be appropriate for using a Roman font such as Libertine
+with semibold. These macros should always be fully expanded; if
+necessary, \edef should be used.
+
+The package re-defines standard selection commands for series
+(\mdseries and \bfseries) and family (\rmfamily, \sffamily,
+\ttfamily) to use the macros. It should be a RequiredPackage (for
+type1 font use only) in any such font package.
+
+The package is licensed under the terms of the LaTeX Project Public
+License. The maintainer is Bob Tennent (rdt at cs.queensu.ca).  
