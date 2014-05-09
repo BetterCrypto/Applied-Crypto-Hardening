@@ -1,0 +1,3341 @@
+%%
+%% This is file `datatool.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% datatool.dtx  (with options: `datatool.sty,package')
+%% 
+%%  datatool.dtx
+%%  Copyright 2014 Nicola Talbot
+%% 
+%%  This work may be distributed and/or modified under the
+%%  conditions of the LaTeX Project Public License, either version 1.3
+%%  of this license of (at your option) any later version.
+%%  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%%  and version 1.3 or later is part of all distributions of LaTeX
+%%  version 2005/12/01 or later.
+%% 
+%%  This work has the LPPL maintenance status `maintained'.
+%% 
+%%  The Current Maintainer of this work is Nicola Talbot.
+%% 
+%%  This work consists of the files datatool.dtx and datatool.ins and the derived files datatool-base.sty, datatool-fp.sty, datatool-pgfmath.sty, datatool.sty, datagidx.sty, databib.sty, databar.sty, datapie.sty, dataplot.sty, person.sty, databib.bst.
+%% 
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{datatool}[2014/03/08 v2.21 (NLCT)]
+\RequirePackage{xkeyval}
+\RequirePackage{ifthen}
+\RequirePackage{xfor}
+\RequirePackage{substr}
+\RequirePackage{etoolbox}
+\RequirePackage{etex}
+\newcommand*{\@dtl@separator}{,}
+\newcommand*{\DTLsetseparator}[1]{%
+  \renewcommand*{\@dtl@separator}{#1}%
+  \@dtl@construct@lopoffs
+}
+\begingroup
+\catcode`\^^I12
+\gdef\DTLsettabseparator{%
+  \catcode`\^^I12
+  \DTLsetseparator{^^I}%
+}
+\endgroup
+\begingroup
+\catcode`\"12\relax
+\gdef\@dtl@delimiter{"}
+\endgroup
+\newcommand*\DTLsetdelimiter[1]{%
+  \renewcommand*{\@dtl@delimiter}{#1}%
+  \@dtl@construct@lopoffs
+}
+\edef\@dtl@construct@lopoff#1#2{%
+  \noexpand\long
+    \noexpand\def\noexpand\@dtl@lopoff#1##1##2\noexpand\to##3##4{%
+      \noexpand\ifx#2##1\noexpand\relax
+        \noexpand\@dtl@qlopoff#1##1##2\noexpand\to##3##4\relax
+      \noexpand\else
+        \noexpand\@dtl@lop@ff#1##1##2\noexpand\to##3##4\relax
+      \noexpand\fi
+  }%
+}
+\edef\@dtl@construct@qlopoff#1#2{%
+  \noexpand\long
+    \noexpand\def\noexpand\@dtl@qlopoff#1#2##1#2#1##2\noexpand\to##3##4{%
+      \noexpand\def##4{##1}%
+      \noexpand\DTLsubstituteall{##4}{#2#2}{#2}%
+      \noexpand\edef\noexpand\@dtl@dosubs{%
+        \noexpand\noexpand\noexpand\DTLsubstituteall{\noexpand\noexpand##4}%
+        {\noexpand\expandafter\noexpand\noexpand\noexpand\csname#2\noexpand\endcsname#2}%
+        {\noexpand\expandafter\noexpand\noexpand\noexpand\csname#2\noexpand\endcsname}%
+      }%
+      \noexpand\@dtl@dosubs
+      \noexpand\def##3{#1##2}%
+  }%
+}
+\edef\@dtl@construct@lop@ff#1{%
+  \noexpand\long
+    \noexpand\def\noexpand\@dtl@lop@ff#1##1#1##2\noexpand\to##3##4{%
+      \noexpand\def##4{##1}%
+      \noexpand\def##3{#1##2}%
+  }%
+}
+\newcommand{\@dtl@construct@lopoffs}{%
+  \edef\@dtl@chars{{\@dtl@separator}{\@dtl@delimiter}}%
+  \expandafter\@dtl@construct@lopoff\@dtl@chars
+  \expandafter\@dtl@construct@qlopoff\@dtl@chars
+  \expandafter\@dtl@construct@lop@ff\expandafter{\@dtl@separator}%
+}
+\define@key{datatool.sty}{separator}{%
+  \DTLsetseparator{#1}%
+}
+\define@key{datatool.sty}{delimiter}{%
+  \DTLsetdelimiter{#1}%
+}
+\define@boolkey{datatool.sty}[dtl]{verbose}[true]{}
+\define@choicekey{datatool.sty}{math}[\val\nr]{fp,pgfmath}{%
+  \renewcommand*\@dtl@mathprocessor{#1}%
+}
+\providecommand*{\@dtl@mathprocessor}{fp}
+\ProcessOptionsX
+\@dtl@construct@lopoffs
+\RequirePackage{datatool-base}
+\DeclareRobustCommand{\DTLpar}{\par}
+\newcommand*{\DTLnewdb}[1]{%
+  \DTLifdbexists{#1}%
+  {%
+     \PackageError{datatool}{Database `#1' already exists}{}%
+  }%
+  {%
+    \dtl@message{Creating database `#1'}%
+    \expandafter\newtoks\csname dtldb@#1\endcsname
+    \expandafter\newtoks\csname dtlkeys@#1\endcsname{}%
+    \expandafter\newcount\csname dtlrows@#1\endcsname
+    \expandafter\newcount\csname dtlcols@#1\endcsname
+  }%
+}
+\newcommand*{\DTLcleardb}[1]{%
+  \DTLifdbexists{#1}%
+  {%
+    \dtlforeachkey(\@dtl@key,\@dtl@col,\@dtl@type,\@dtl@head)\in{#1}\do
+    {%
+      \expandafter\let\csname dtl@ci@#1@\@dtl@key\endcsname\undefined
+    }%
+    \csname dtldb@#1\endcsname{}%
+    \csname dtlkeys@#1\endcsname{}%
+    \csname dtlrows@#1\endcsname=0\relax
+    \csname dtlcols@#1\endcsname=0\relax
+  }%
+  {%
+    \PackageError{Can't clear database `#1':
+       database doesn't exist}{}{}%
+  }%
+}
+\newcommand*{\DTLdeletedb}[1]{%
+  \DTLifdbexists{#1}%
+  {%
+    \dtlforeachkey(\@dtl@key,\@dtl@col,\@dtl@type,\@dtl@head)\in{#1}\do
+    {%
+      \expandafter\let\csname dtl@ci@#1@\@dtl@key\endcsname\undefined
+    }%
+    \expandafter\let\csname dtldb@#1\endcsname\undefined
+    \expandafter\let\csname dtlkeys@#1\endcsname\undefined
+    \expandafter\let\csname dtlrows@#1\endcsname\undefined
+    \expandafter\let\csname dtlcols@#1\endcsname\undefined
+  }%
+  {%
+    \PackageError{Can't delete database `#1':
+       database doesn't exist}{}{}%
+  }%
+}
+\newcommand*{\DTLgnewdb}[1]{%
+  \DTLifdbexists{#1}%
+  {%
+     \PackageError{datatool}{Database `#1' already exists}{}%
+  }%
+  {%
+    \dtl@message{Creating database `#1'}%
+    \expandafter\global\expandafter\newtoks\csname dtldb@#1\endcsname
+    \expandafter\global\expandafter\newtoks\csname dtlkeys@#1\endcsname{}%
+    \expandafter\global\expandafter\newcount\csname dtlrows@#1\endcsname
+    \expandafter\global\expandafter\newcount\csname dtlcols@#1\endcsname
+  }%
+}
+\newcommand*{\DTLgdeletedb}[1]{%
+  \DTLifdbexists{#1}%
+  {%
+    \dtlforeachkey(\@dtl@key,\@dtl@col,\@dtl@type,\@dtl@head)\in{#1}\do
+    {%
+      \expandafter\global\expandafter\let\csname dtl@ci@#1@\@dtl@key\endcsname\undefined
+    }%
+    \expandafter\global\expandafter\let\csname dtldb@#1\endcsname\undefined
+    \expandafter\global\expandafter\let\csname dtlkeys@#1\endcsname\undefined
+    \expandafter\global\expandafter\let\csname dtlrows@#1\endcsname\undefined
+    \expandafter\global\expandafter\let\csname dtlcols@#1\endcsname\undefined
+  }%
+  {%
+    \PackageError{Can't delete database `#1':
+       database doesn't exist}{}{}%
+  }%
+}
+\newcommand*{\DTLgcleardb}[1]{%
+  \DTLifdbexists{#1}%
+  {%
+    \dtlforeachkey(\@dtl@key,\@dtl@col,\@dtl@type,\@dtl@head)\in{#1}\do
+    {%
+      \expandafter\global\expandafter\let\csname dtl@ci@#1@\@dtl@key\endcsname\undefined
+    }%
+    \expandafter\global\csname dtldb@#1\endcsname{}%
+    \expandafter\global\csname dtlkeys@#1\endcsname{}%
+    \expandafter\global\csname dtlrows@#1\endcsname=0\relax
+    \expandafter\global\csname dtlcols@#1\endcsname=0\relax
+  }%
+  {%
+    \PackageError{Can't clear database `#1':
+       database doesn't exist}{}{}%
+  }%
+}
+\newcommand*{\DTLrowcount}[1]{%
+  \expandafter\number\csname dtlrows@#1\endcsname
+}
+\newcommand*{\DTLcolumncount}[1]{%
+  \expandafter\number\csname dtlcols@#1\endcsname
+}
+\newcommand{\DTLifdbempty}[3]{%
+  \DTLifdbexists{#1}%
+    {\@DTLifdbempty{#1}{#2}{#3}}%
+    {\PackageError{Can't check if database `#1' is empty:
+       database doesn't exist}{}{}}%
+}
+\newcommand{\@DTLifdbempty}[3]{%
+  \expandafter\ifnum\csname dtlrows@#1\endcsname=0\relax
+    #2%
+  \else
+    #3%
+  \fi
+}
+\newcommand*{\DTLnewrow}{%
+  \@ifstar\@sDTLnewrow\@DTLnewrow
+}
+\newcommand*{\@DTLnewrow}[1]{%
+\DTLifdbexists{#1}%
+  {\@sDTLnewrow{#1}}%
+  {\PackageError{datatool}{Can't add new row to database `#1':
+     database doesn't exist}{}}%
+}
+\newcommand*{\@sDTLnewrow}[1]{%
+  \global\advance\csname dtlrows@#1\endcsname by 1\relax
+  \toks@gput@right@cx{dtldb@#1}{%
+     \noexpand\db@row@elt@w%
+       \noexpand\db@row@id@w \number\csname dtlrows@#1\endcsname
+       \noexpand\db@row@id@end@%
+       \noexpand\db@row@id@w \number\csname dtlrows@#1\endcsname
+       \noexpand\db@row@id@end@%
+     \noexpand\db@row@elt@end@%
+  }%
+  \dtl@message{New row added to database `#1'}%
+}
+\newcount\dtlcolumnnum
+\newcount\dtlrownum
+\newcommand*{\DTLifhaskey}{\@ifstar\@sDTLifhaskey\@DTLifhaskey}
+\newcommand{\@DTLifhaskey}[4]{%
+   \DTLifdbexists{#1}%
+   {%
+     \@sDTLifhaskey{#1}{#2}{#3}{#4}%
+   }%
+   {%
+     \PackageError{datatool}{Database `#1' doesn't exist}{}%
+   }%
+}
+\newcommand{\@sDTLifhaskey}[4]{%
+  \@ifundefined{dtl@ci@#1@#2}%
+  {%
+    #4%
+  }%
+  {%
+    #3%
+  }%
+}
+\newcommand*{\DTLgetcolumnindex}{%
+  \@ifstar\@sdtl@getcolumnindex\@dtl@getcolumnindex
+}
+\newcommand*{\@dtl@getcolumnindex}[3]{%
+  \DTLifdbexists{#2}%
+  {%
+    \@sDTLifhaskey{#2}{#3}%
+    {%
+      \@sdtl@getcolumnindex{#1}{#2}{#3}%
+    }%
+    {%
+      \PackageError{datatool}{Database `#2' doesn't contain
+       key `#3'}{}%
+    }%
+  }%
+  {%
+    \PackageError{datatool}{Database `#2' doesn't exist}{}%
+  }%
+}
+\newcommand*{\@sdtl@getcolumnindex}[3]{%
+  \expandafter\let\expandafter#1\csname dtl@ci@#2@#3\endcsname
+}
+\newcommand*{\dtlcolumnindex}[2]{%
+  \csname dtl@ci@#1@#2\endcsname
+}
+\newcommand*{\DTLgetkeyforcolumn}{%
+  \@ifstar\@sdtlgetkeyforcolumn\@dtlgetkeyforcolumn}
+\newcommand*{\@dtlgetkeyforcolumn}[3]{%
+  \DTLifdbexists{#2}%
+  {%
+    \ifnum#3<1\relax
+      \PackageError{datatool}{Invalid column index \number#3}{%
+      Column indices start at 1}%
+    \else
+      \expandafter\ifnum\csname dtlcols@#2\endcsname<#3\relax
+        \PackageError{datatool}{Index \number#3\space out of
+        range for database `#2'}{Database `#2' only has
+        \expandafter\number\csname dtlcols@#2\endcsname\space
+        columns}%
+      \else
+        \@sdtlgetkeyforcolumn{#1}{#2}{#3}%
+      \fi
+    \fi
+  }%
+  {%
+    \PackageError{datatool}{Database `#2' doesn't exists}{}%
+  }%
+}
+\newcommand*{\@sdtlgetkeyforcolumn}[3]{%
+  \edef\@dtl@dogetkeyforcolumn{\noexpand\@dtl@getkeyforcolumn
+    {\noexpand#1}{#2}{\number#3}}%
+  \@dtl@dogetkeyforcolumn
+}
+\newcommand*{\@dtl@getkeyforcolumn}[3]{%
+  \def\@dtl@get@keyforcolumn##1% before stuff
+    \db@plist@elt@w% start of block
+    \db@col@id@w #3\db@col@id@end@% index
+    \db@key@id@w ##2\db@key@id@end@% key
+    \db@type@id@w ##3\db@type@id@end@% data type
+    \db@header@id@w ##4\db@header@id@end@% header
+    \db@col@id@w #3\db@col@id@end@% index
+    \db@plist@elt@end@% end of block
+    ##5\q@nil{\def#1{##2}}%
+  \edef\@dtl@tmp{\expandafter\the\csname dtlkeys@#2\endcsname}%
+  \expandafter\@dtl@get@keyforcolumn\@dtl@tmp
+    \db@plist@elt@w% start of block
+    \db@col@id@w #3\db@col@id@end@ %index
+    \db@key@id@w \@nil\db@key@id@end@% key
+    \db@type@id@w \db@type@id@end@% data type
+    \db@header@id@w \db@header@id@end@% header
+    \db@col@id@w #3\db@col@id@end@% index
+    \db@plist@elt@end@% end of block
+    \q@nil
+}
+\def\DTLunsettype{}
+\def\DTLstringtype{0}
+\def\DTLinttype{1}
+\def\DTLrealtype{2}
+\def\DTLcurrencytype{3}
+\newcommand*{\DTLgetdatatype}{%
+  \@ifstar\@sdtlgetdatatype\@dtlgetdatatype
+}
+\newcommand*{\@dtlgetdatatype}[3]{%
+  \DTLifdbexists{#2}%
+  {%
+    \@sDTLifhaskey{#2}{#3}%
+    {%
+      \@sdtlgetdatatype{#1}{#2}{#3}%
+    }%
+    {%
+      \PackageError{datatool}{Key `#3' undefined in database `#2'}{}%
+    }%
+  }%
+  {%
+    \PackageError{datatool}{Database `#2' doesn't exist}{}%
+  }%
+}
+\newcommand*{\@sdtlgetdatatype}[3]{%
+  \edef\@dtl@dogetdata{\noexpand\@dtl@getdatatype{\noexpand#1}%
+   {\expandafter\the\csname dtlkeys@#2\endcsname}%
+   {\dtlcolumnindex{#2}{#3}}}%
+  \@dtl@dogetdata
+}
+\newcommand*{\@dtl@getdatatype}[3]{%
+  \def\@dtl@get@keydata##1% stuff before
+    \db@plist@elt@w% start of key block
+     \db@col@id@w #3\db@col@id@end@% column index
+      \db@key@id@w ##2\db@key@id@end@% key id
+      \db@type@id@w ##3\db@type@id@end@% data type
+      \db@header@id@w ##4\db@header@id@end@% header
+     \db@col@id@w #3\db@col@id@end@% column index
+    \db@plist@elt@end@% end of key block
+    ##5% stuff afterwards
+    \q@nil{\def#1{##3}}%
+  \@dtl@get@keydata#2\q@nil
+}
+\newcommand*{\@dtl@getprops}[7]{%
+  \def\@dtl@get@keydata##1% stuff before
+    \db@plist@elt@w% start of key block
+     \db@col@id@w #7\db@col@id@end@% column index
+      \db@key@id@w ##2\db@key@id@end@% key id
+      \db@type@id@w ##3\db@type@id@end@% data type
+      \db@header@id@w ##4\db@header@id@end@% header
+     \db@col@id@w #7\db@col@id@end@% column index
+    \db@plist@elt@end@% end of key block
+    ##5% stuff afterwards
+    \q@nil{%
+      \def#1{##2}% key
+      \def#2{##3}% data type
+      #3={##4}% header
+      #4={##1}% before stuff
+      #5={##5}% after stuff
+    }%
+  \@dtl@get@keydata#6\q@nil
+}
+\newtoks\@dtl@before
+\newtoks\@dtl@after
+\newtoks\@dtl@colhead
+\newcommand*{\DTLaddcolumn}{%
+   \@ifstar\@sDTLaddcolumn\@DTLaddcolumn
+}
+\newcommand{\@DTLaddcolumn}[2]{%
+  \DTLifdbexists{#1}%
+    {\@dtl@updatekeys{#1}{#2}{}}%
+    {\PackageError{datatool}{Can't add new column to database `#1':
+      database doesn't exist}{}}%
+}
+\newcommand{\s@DTLaddcolumn}[2]{%
+  \@dtl@updatekeys{#1}{#2}{}%
+}
+\newcommand*{\@dtl@updatekeys}[3]{%
+  \@sDTLifhaskey{#1}{#2}%
+  {%
+    \expandafter\dtlcolumnnum\expandafter
+      =\dtlcolumnindex{#1}{#2}\relax
+    \edef\@dtl@dogetprops{\noexpand\@dtl@getprops
+      {\noexpand\@dtl@key}{\noexpand\@dtl@type}%
+      {\noexpand\@dtl@colhead}{\noexpand\@dtl@before}%
+      {\noexpand\@dtl@after}{\the\csname dtlkeys@#1\endcsname}%
+      {\number\dtlcolumnnum}}%
+    \@dtl@dogetprops
+    \ifstrempty{#3}%
+    {%
+    }%
+    {%
+      \let\@dtl@oldtype\@dtl@type
+      \@dtl@checknumerical{#3}%
+      \ifdefempty{\@dtl@type}%
+      {%
+        \edef\@dtl@type{\number\@dtl@datatype}%
+      }%
+      {%
+        \ifcase\@dtl@datatype % string
+          \def\@dtl@type{0}%
+        \or % int
+        \or % real
+          \ifnum\@dtl@type=1\relax
+            \def\@dtl@type{2}%
+          \fi
+        \or % currency
+          \ifnum\@dtl@type>0\relax
+            \def\@dtl@type{3}%
+          \fi
+        \fi
+      }%
+      \ifx\@dtl@oldtype\@dtl@type
+      \else
+        \toks@gconcat@middle@cx{dtlkeys@#1}%
+        {\@dtl@before}%
+        {%
+          \noexpand\db@plist@elt@w% start of key block
+            \noexpand\db@col@id@w \the\dtlcolumnnum
+              \noexpand\db@col@id@end@% column index
+            \noexpand\db@key@id@w #2\noexpand\db@key@id@end@% key id
+            \noexpand\db@type@id@w \@dtl@type
+              \noexpand\db@type@id@end@% data type
+            \noexpand\db@header@id@w \the\@dtl@colhead
+              \noexpand\db@header@id@end@% header
+            \noexpand\db@col@id@w \the\dtlcolumnnum
+              \noexpand\db@col@id@end@% column index
+            \noexpand\db@plist@elt@end@% end of key block
+        }%
+        {\@dtl@after}%
+      \fi
+    }%
+  }%
+  {%
+    \expandafter\global\expandafter\advance
+      \csname dtlcols@#1\endcsname by 1\relax
+    \dtlcolumnnum=\csname dtlcols@#1\endcsname\relax
+    \expandafter\xdef\csname dtl@ci@#1@#2\endcsname{%
+      \number\dtlcolumnnum}%
+    \ifstrempty{#2}%
+    {%
+      \edef\@dtl@type{}% don't know data type yet
+    }%
+    {%
+      \@dtl@checknumerical{#3}%
+      \edef\@dtl@type{\number\@dtl@datatype}%
+    }%
+    \toks@gput@right@cx{dtlkeys@#1}%
+    {%
+      \noexpand\db@plist@elt@w
+      \noexpand\db@col@id@w \the\dtlcolumnnum
+        \noexpand\db@col@id@end@
+      \noexpand\db@key@id@w #2\noexpand\db@key@id@end@
+      \noexpand\db@type@id@w \@dtl@type
+        \noexpand\db@type@id@end@
+      \noexpand\db@header@id@w #2\noexpand\db@header@id@end@
+      \noexpand\db@col@id@w \the\dtlcolumnnum
+        \noexpand\db@col@id@end@
+      \noexpand\db@plist@elt@end@
+    }%
+  }%
+}
+\newcommand*{\DTLsetheader}{\@ifstar\@sDTLsetheader\@DTLsetheader}
+\newcommand*{\@DTLsetheader}[3]{%
+  \DTLifdbexists{#1}%
+  {%
+    \@sDTLifhaskey{#1}{#2}%
+    {%
+      \@sDTLsetheader{#1}{#2}{#3}%
+    }%
+    {%
+      \PackageError{datatool}{Database `#1' doesn't contain key
+      `#2'}{}%
+    }%
+  }%
+  {%
+    \PackageError{datatool}{Database `#1' doesn't exist}{}%
+  }%
+}
+\newcommand*{\@sDTLsetheader}[3]{%
+  \expandafter\dtlcolumnnum\expandafter
+    =\dtlcolumnindex{#1}{#2}\relax
+  \@dtl@setheaderforindex{#1}{\dtlcolumnnum}{#3}%
+}
+\newcommand*{\@dtl@setheaderforindex}[3]{%
+  \edef\@dtl@dogetprops{\noexpand\@dtl@getprops
+    {\noexpand\@dtl@key}{\noexpand\@dtl@type}%
+    {\noexpand\@dtl@colhead}{\noexpand\@dtl@before}%
+    {\noexpand\@dtl@after}{\the\csname dtlkeys@#1\endcsname}%
+    {\number#2}}%
+  \@dtl@dogetprops
+  \@dtl@colhead={#3}%
+  \edef\@dtl@colnum{\number#2}\relax
+  \toks@gconcat@middle@cx{dtlkeys@#1}%
+  {\@dtl@before}%
+  {%
+    \noexpand\db@plist@elt@w% start of block
+      \noexpand\db@col@id@w \@dtl@colnum
+        \noexpand\db@col@id@end@% index
+      \noexpand\db@key@id@w \@dtl@key\noexpand\db@key@id@end@% key
+      \noexpand\db@type@id@w \@dtl@type
+        \noexpand\db@type@id@end@% data type
+      \noexpand\db@header@id@w \the\@dtl@colhead
+        \noexpand\db@header@id@end@% header
+      \noexpand\db@col@id@w \@dtl@colnum
+        \noexpand\db@col@id@end@% index
+    \noexpand\db@plist@elt@end@% end of block
+  }%
+  {\@dtl@after}%
+}
+\newcommand*{\dtlexpandnewvalue}{%
+  \def\@dtl@setnewvalue##1{\protected@edef\@dtl@tmp{##1}%
+  \expandafter\@dtl@toks\expandafter{\@dtl@tmp}}%
+}
+\newcommand*{\dtlnoexpandnewvalue}{%
+  \def\@dtl@setnewvalue##1{\@dtl@toks{##1}}%
+}
+\dtlnoexpandnewvalue
+\newcommand{\DTLnewdbentry}{%
+   \@ifstar\@sDTLnewdbentry\@DTLnewdbentry
+}
+\newcommand{\@DTLnewdbentry}[3]{%
+  \DTLifdbexists{#1}%
+    {\@sDTLnewdbentry{#1}{#2}{#3}}%
+    {\PackageError{datatool}{Can't add new entry to database `#1':
+      database doesn't exist}{}}%
+}
+\newcommand*{\@sDTLnewdbentry}[3]{%
+  \@dtl@updatekeys{#1}{#2}{#3}%
+  \expandafter\dtlcolumnnum\expandafter
+    =\dtlcolumnindex{#1}{#2}\relax
+  \edef\dtl@dogetrow{\noexpand\dtlgetrow{#1}%
+    {\number\csname dtlrows@#1\endcsname}}%
+  \dtl@dogetrow
+  \edef\dtl@dogetentry{\noexpand\dtlgetentryfromcurrentrow
+     {\noexpand\dtl@entry}{\number\dtlcolumnnum}%
+  }%
+  \dtl@dogetentry
+  \ifx\dtl@entry\dtlnovalue
+    \@dtl@setnewvalue{#3}%
+    \toks@gconcat@middle@cx{dtldb@#1}%
+    {\dtlbeforerow}%
+    {%
+      \noexpand\db@row@elt@w%
+      \noexpand\db@row@id@w \number\csname dtlrows@#1\endcsname
+        \noexpand\db@row@id@end@%
+      \the\dtlcurrentrow
+      \noexpand\db@col@id@w \number\dtlcolumnnum
+        \noexpand\db@col@id@end@%
+          \noexpand\db@col@elt@w \the\@dtl@toks
+            \noexpand\db@col@elt@end@%
+      \noexpand\db@col@id@w \number\dtlcolumnnum
+        \noexpand\db@col@id@end@%
+      \noexpand\db@row@id@w \number\csname dtlrows@#1\endcsname
+        \noexpand\db@row@id@end@%
+      \noexpand\db@row@elt@end@%
+    }%
+    {\dtlafterrow}%
+    \dtl@message{Added #2\space -> #3\space to database `#1'}%
+  \else
+    \PackageError{datatool}{Can't add entry with ID `#2' to
+      current row of database `#1'}{There is already an entry with
+      this ID in the current row}%
+  \fi
+}
+\newcommand{\DTLifdbexists}[3]{%
+  \@ifundefined{dtldb@#1}{#3}{#2}}
+\newcommand*{\DTLassign}[3]{%
+  \DTLifdbexists{#1}
+  {%
+    {%
+      \dtlgetrow{#1}{#2}%
+    \@dtl@assign{#3}{#1}%
+    }%
+  }%
+  {%
+    \PackageError{datatool}{Database `#1' doesn't exist}{}%
+  }%
+}
+\newcommand*{\DTLassignfirstmatch}[4]{%
+  \dtl@assignfirstmatch{#3}{#1}{#2}{#4}%
+}
+\newcommand*{\xDTLassignfirstmatch}[4]{%
+  \protected@edef\@dtl@asg@value{\expandonce{#3}}%
+  \expandafter\dtl@assignfirstmatch\expandafter
+   {\@dtl@asg@value}{#1}{#2}{#4}%
+}
+\newcommand*{\dtl@assignfirstmatch}[4]{%
+  \DTLifdbexists{#2}%
+  {%
+    {%
+      \dtlgetrowindex{\dtl@asg@rowidx}{#2}{\dtlcolumnindex{#2}{#3}}{#1}%
+      \ifx\dtl@asg@rowidx\dtlnovalue
+        \PackageError{datatool}{No match found for
+          \string\DTLassignfirstmatch{#2}{#3}{#1}{#4}}{}%
+      \else
+        \dtlgetrow{#2}{\dtl@asg@rowidx}%
+        \@dtl@assign{#4}{#2}%
+      \fi
+    }%
+  }%
+  {%
+    \PackageError{datatool}{Data base `#2' doesn't exist}{}%
+  }%
+}
+\newcommand*{\@dtl@assign}[2]{%
+  \ifstrempty{#1}{}%
+  {%
+    \@dtl@assigncmd#1,\@nil\@@{#2}%
+  }%
+}
+\def\@dtl@assigncmd#1#2=#3,#4\@@#5{%
+  \edef\@dtl@dbname{#5}%
+  \@sDTLifhaskey{#5}{#3}%
+  {%
+    \edef\@dtl@dogetentry{%
+      \noexpand\dtlgetentryfromcurrentrow
+        {\noexpand#1}{\dtlcolumnindex{#5}{#3}}}%
+    \@dtl@dogetentry
+    \ifdefequal{#1}{\dtlnovalue}%
+    {%
+      \@@dtl@setnull{#1}{#3}%
+    }%
+    {}%
+    \global\let#1=#1\relax
+  }%
+  {%
+    \PackageError{datatool}{Can't assign \string#1\space: there
+     is no key `#3' in data base `#5'}{}%
+    \global\let#1\DTLstringnull
+  }%
+  \def\dtl@tmp{#4}%
+  \ifx\@nnil\dtl@tmp
+    \let\@dtl@next\@dtl@assigncmdnoop
+  \else
+    \let\@dtl@next\@dtl@assigncmd
+  \fi
+  \@dtl@next#4\@@{#5}%
+}
+\def\@dtl@assigncmdnoop#1\@@#2{}
+\newcommand*{\@dtl@setnull}[2]{%
+  \@sDTLifhaskey{\@dtl@dbname}{#2}%
+  {%
+    \@@dtl@setnull{#1}{#2}%
+  }%
+  {%
+    \global\let#1=\DTLstringnull
+  }%
+}
+\newcommand*{\@@dtl@setnull}[2]{%
+  \@sdtlgetdatatype{\@dtl@type}{\@dtl@dbname}{#2}%
+  \ifnum0\@dtl@type=0\relax
+    \global\let#1=\DTLstringnull
+  \else
+    \global\let#1=\DTLnumbernull
+  \fi
+}
+\newcommand*{\DTLstringnull}{\@dtlstringnull}
+\newcommand*{\@dtlstringnull}{NULL}
+\newcommand*{\DTLnumbernull}{\@dtlnumbernull}
+\newcommand*{\@dtlnumbernull}{0}
+\newcommand*{\DTLifnull}[3]{%
+  \ifx#1\dtlnovalue
+    #2%
+  \else
+    \ifx#1\DTLstringnull
+      #2%
+    \else
+      \ifx#1\DTLnumbernull
+        #2%
+      \else
+        #3%
+      \fi
+    \fi
+  \fi
+}
+\newcommand*{\DTLifnullorempty}[3]{%
+  \ifdefempty{#1}{#2}{\DTLifnull{#1}{#2}{#3}}%
+}
+\def\@dtlnovalue{Undefined Value}
+\def\dtlnovalue{\@dtlnovalue}
+\newcommand*{\DTLgetkeydata}{%
+  \@ifstar\@sdtlgetkeydata\@dtlgetkeydata
+}
+\newcommand*{\@dtlgetkeydata}[5]{%
+  \DTLifdbexists{#2}%
+  {%
+    \@sDTLifhaskey{#2}{#1}%
+    {%
+      \@sdtlgetkeydata{#1}{#2}{#3}{#4}{#5}%
+    }%
+    {%
+      \PackageError{datatool}{Key `#1' not defined in database
+        `#2'}{}%
+    }%
+  }%
+  {%
+    \PackageError{datatool}{Database `#2' doesn't exist}{}%
+  }%
+}
+\newcommand*{\@sdtlgetkeydata}[5]{%
+  \@sdtl@getcolumnindex{#3}{#2}{#1}%
+  \edef\@dtl@dogetkeydata{\noexpand\@dtl@getprops
+    {\noexpand\@dtl@key}{\noexpand#4}{\noexpand\@dtl@colhead}%
+    {\noexpand\@dtl@before}{\noexpand\@dtl@after}%
+    {\expandafter\the\csname dtlkeys@#2\endcsname}%
+    {#3}}%
+  \@dtl@dogetkeydata
+  \edef#5{\the\@dtl@toks}%
+}
+\newcommand{\dtl@gathervalues}[3][key]{%
+  \dtlforeachkey(\@dtl@key,\@dtl@col,\@dtl@type,\@dtl@head)\in{#2}\do
+  {%
+    \dtlgetentryfromrow{\@dtl@tmp}{\@dtl@col}{#3}%
+    \ifx\@dtl@tmp\dtlnovalue
+      \@dtl@setnull{\@dtl@tmp}{\@dtl@key}%
+    \fi
+    \expandafter\let\csname @dtl@#1@\@dtl@key\endcsname\@dtl@tmp
+  }%
+}
+\newcommand{\dtl@g@gathervalues}[3][key]{%
+  \dtlforeachkey(\@dtl@key,\@dtl@col,\@dtl@type,\@dtl@head)\in{#2}\do
+  {%
+    \dtlgetentryfromrow{\@dtl@tmp}{\@dtl@col}{#3}%
+    \ifx\@dtl@tmp\dtlnovalue
+      \@dtl@setnull{\@dtl@tmp}{\@dtl@key}%
+    \fi
+    \expandafter\global
+      \expandafter\let\csname @dtl@#1@\@dtl@key\endcsname\@dtl@tmp
+  }%
+}
+\newtoks\dtlcurrentrow
+\newtoks\dtlbeforerow
+\newtoks\dtlafterrow
+
+\newcommand*{\dtlgetrow}[2]{%
+  \dtlrownum=#2\relax
+  \edef\dtldbname{#1}%
+  \expandafter\toks@\expandafter=\csname dtldb@#1\endcsname
+  \edef\@dtl@dogetrow{\noexpand\@dtlgetrow{\the\toks@}{\number#2}}%
+  \@dtl@dogetrow
+}
+\newcommand{\edtlgetrowforvalue}[3]{%
+  \protected@edef\@dtl@dogetrowforvalue{%
+    \noexpand\dtlgetrowforvalue{#1}{#2}{#3}}%
+  \@dtl@dogetrowforvalue
+}
+\newcommand{\DTLfetch}[4]{%
+  \edtlgetrowforvalue{#1}{\dtlcolumnindex{#1}{#2}}{#3}%
+  \dtlgetentryfromcurrentrow{\dtlcurrentvalue}{\dtlcolumnindex{#1}{#4}}%
+  \dtlcurrentvalue
+}
+\newcommand*{\dtlgetrowforvalue}[3]{%
+  \dtlgetrowindex{\dtl@rowidx}{#1}{#2}{#3}%
+  \ifx\dtl@rowidx\dtlnovalue
+    \PackageError{datatool}{No row found in database `#1' for
+     column `\number#2' matching `#3'}{}%
+  \else
+    \dtlrownum=\dtl@rowidx\relax
+    \edef\dtldbname{#1}%
+    \expandafter\toks@\expandafter=\csname dtldb@#1\endcsname
+    \edef\@dtl@dogetrow{\noexpand\@dtlgetrow{\the\toks@}{\dtl@rowidx}}%
+    \@dtl@dogetrow
+  \fi
+}
+\newcommand*{\@dtlgetrow}[2]{%
+  \def\@dtl@getrow##1% before stuff
+    \db@row@elt@w% start of the row
+      \db@row@id@w #2\db@row@id@end@% row id
+        ##2%
+      \db@row@id@w #2\db@row@id@end@% row id
+    \db@row@elt@end@% end of the row
+        ##3% after stuff
+    \q@nil{\dtlbeforerow={##1}\dtlcurrentrow={##2}\dtlafterrow={##3}}%
+  \@dtl@getrow#1\q@nil
+}
+\newcommand*{\dtlrecombine}{%
+   \toks@gconcat@middle@cx{dtldb@\dtldbname}%
+   {\dtlbeforerow}%
+   {%
+      \noexpand\db@row@elt@w
+        \noexpand\db@row@id@w
+          \number\dtlrownum
+        \noexpand\db@row@id@end@
+         \the\dtlcurrentrow
+        \noexpand\db@row@id@w
+          \number\dtlrownum
+        \noexpand\db@row@id@end@
+      \noexpand\db@row@elt@end@
+   }%
+   {\dtlafterrow}%
+}
+\newcommand{\dtlrecombineomitcurrent}{%
+  \dtl@decrementrows{\dtlafterrow}{\dtlrownum}
+  \csname dtldb@\dtldbname\endcsname=\dtlbeforerow
+  \toks@gput@right@cx{dtldb@\dtldbname}{\the\dtlafterrow}%
+  \dtl@message{Removed row \number\dtlrownum\space in database
+    `\dtldbname'}%
+}
+\newcommand*{\dtlsplitrow}[4]{%
+  \def\@dtlsplitrow##1%before stuff
+    \db@col@id@w #2\db@col@id@end@% column id
+      ##2% unwanted stuff
+    \db@col@id@w #2\db@col@id@end@% column id
+    ##3% after stuff
+    \q@nil{\def#3{##1}\def#4{##3}}%
+   \@dtlsplitrow#1\q@nil
+}
+\newcommand*{\dtlreplaceentryincurrentrow}[2]{%
+  \edef\@dtl@do@splitrow{\noexpand\dtlsplitrow
+   {\the\dtlcurrentrow}%
+   {\number#2}%
+   {\noexpand\@dtl@before@cs}%
+   {\noexpand\@dtl@after@cs}}%
+  \@dtl@do@splitrow
+  \toks@{#1}%
+  \edef\@dtl@stuff{%
+    \expandonce\@dtl@before@cs
+      \noexpand\db@col@id@w \number#2\noexpand
+        \noexpand\db@col@id@end@% column id
+      \noexpand\db@col@elt@w
+        \the\toks@
+      \noexpand\db@col@elt@end@
+      \noexpand\db@col@id@w \number#2\noexpand
+        \noexpand\db@col@id@end@% column id
+    \expandonce\@dtl@after@cs
+  }%
+  \expandafter\dtlcurrentrow\expandafter{\@dtl@stuff}%
+  \@sdtlgetkeyforcolumn{\@dtl@key}{\dtldbname}{#2}%
+  \@dtl@updatekeys{\dtldbname}{\@dtl@key}{#1}%
+  \dtl@message{Updated \@dtl@key\space -> #1\space in database
+    `\dtldbname'}%
+}
+\newcommand*{\dtlremoveentryincurrentrow}[1]{%
+  \edef\@dtl@do@splitrow{\noexpand\dtlsplitrow
+   {\the\dtlcurrentrow}%
+   {\number#1}%
+   {\noexpand\@dtl@before@cs}%
+   {\noexpand\@dtl@after@cs}}%
+  \@dtl@do@splitrow
+  \edef\@dtl@stuff{%
+    \expandonce\@dtl@before@cs
+    \expandonce\@dtl@after@cs
+  }%
+  \expandafter\dtlcurrentrow\expandafter{\@dtl@stuff}%
+  \dtl@message{Removed entry from column \number#1\space\space in database
+    `\dtldbname'}%
+}
+\newcommand*{\dtlswapentriesincurrentrow}[2]{%
+  \dtlgetentryfromcurrentrow{\@dtl@entryI}{#1}%
+  \dtlgetentryfromcurrentrow{\@dtl@entryII}{#2}%
+  \expandafter\dtlreplaceentryincurrentrow\expandafter
+   {\@dtl@entryII}{#1}%
+  \expandafter\dtlreplaceentryincurrentrow\expandafter
+   {\@dtl@entryI}{#2}%
+}
+\newcommand*{\dtlgetentryfromcurrentrow}[2]{%
+  \dtlgetentryfromrow{#1}{#2}{\dtlcurrentrow}%
+}
+\newcommand*{\dtlgetentryfromrow}[3]{%
+  \edef\@dtl@do@getentry{\noexpand\dtl@getentryfromrow
+    {\noexpand#1}{\number#2}{\the#3}}%
+  \@dtl@do@getentry
+}
+\newcommand*{\dtl@getentryfromrow}[3]{%
+  \def\dtl@dogetentry##1% before stuff
+    \db@col@id@w #2\db@col@id@end@% Column id
+      \db@col@elt@w ##2\db@col@elt@end@% Value
+    \db@col@id@w #2\db@col@id@end@% Column id
+    ##3% Remaining stuff
+    \q@nil{\def#1{##2}}%
+  \dtl@dogetentry#3%
+    \db@col@id@w #2\db@col@id@end@%
+      \db@col@elt@w \@dtlnovalue\db@col@elt@end@%
+    \db@col@id@w #2\db@col@id@end@%
+    \q@nil
+}
+\newcommand*{\dtlappendentrytocurrentrow}[2]{%
+      \@dtl@updatekeys{\dtldbname}{#1}{#2}%
+      \expandafter\dtlcolumnnum\expandafter
+        =\dtlcolumnindex{\dtldbname}{#1}\relax
+      \edef\dtl@dogetentry{\noexpand\dtlgetentryfromcurrentrow
+        {\noexpand\dtl@entry}{\number\dtlcolumnnum}%
+      }%
+      \dtl@dogetentry
+      \ifx\dtl@entry\dtlnovalue
+        \protected@edef\@dtl@tmp{#2}%
+        \expandafter\@dtl@toks\expandafter{\@dtl@tmp}%
+        \toks@gput@right@cx{dtlcurrentrow}%
+        {%
+          \noexpand\db@col@id@w
+            \number\dtlcolumnnum
+          \noexpand\db@col@id@end@
+          \noexpand\db@col@elt@w
+            \the\@dtl@toks
+          \noexpand\db@col@elt@end@
+          \noexpand\db@col@id@w
+             \number\dtlcolumnnum
+          \noexpand\db@col@id@end@
+        }%
+         \dtl@message{Appended #1\space -> #2\space to database
+           `\dtldbname'}%
+      \else
+        \PackageError{datatool}{Can't append entry to row:
+          there is already an entry for key `#1' in this row}{}%
+      \fi
+}
+\newcommand*{\dtlupdateentryincurrentrow}[2]{%
+      \@dtl@updatekeys{\dtldbname}{#1}{#2}%
+      \expandafter\dtlcolumnnum\expandafter
+        =\dtlcolumnindex{\dtldbname}{#1}\relax
+      \edef\dtl@dogetentry{\noexpand\dtlgetentryfromcurrentrow
+        {\noexpand\dtl@entry}{\number\dtlcolumnnum}%
+      }%
+      \dtl@dogetentry
+      \ifx\dtl@entry\dtlnovalue
+        \protected@edef\@dtl@tmp{#2}%
+        \expandafter\@dtl@toks\expandafter{\@dtl@tmp}%
+        \toks@gput@right@cx{dtlcurrentrow}%
+        {%
+          \noexpand\db@col@id@w
+            \number\dtlcolumnnum
+          \noexpand\db@col@id@end@
+          \noexpand\db@col@elt@w
+            \the\@dtl@toks
+          \noexpand\db@col@elt@end@
+          \noexpand\db@col@id@w
+             \number\dtlcolumnnum
+          \noexpand\db@col@id@end@
+        }%
+         \dtl@message{Appended #1\space -> #2\space to database
+           `\dtldbname'}%
+      \else
+        \toks@{#2}%
+        \edef\do@dtlreplaceincurrentrow{%
+           \noexpand\dtlreplaceentryincurrentrow{\the\toks@}{\number\dtlcolumnnum}%
+        }%
+        \do@dtlreplaceincurrentrow
+      \fi
+}
+\newcommand*{\DTLgetvalue}[4]{%
+  \edef\dtl@dogetvalue{\noexpand\dtl@getvalue{\noexpand#1}{#2}%
+    {\number#3}{\number#4}}%
+  \dtl@dogetvalue
+}
+\newcommand*{\dtl@getvalue}[4]{%
+  \def\@dtl@getvalue ##1% stuff before row <r>
+     \db@row@id@w #3\db@row@id@end@% row <r> id
+        ##2% stuff in row <r> before column <c>
+     \db@col@id@w #4\db@col@id@end@% column <c> id
+       \db@col@elt@w ##3\db@col@elt@end@% value
+     ##4% stuff after value
+     \q@nil{\def#1{##3}}%
+  \toks@=\csname dtldb@#2\endcsname
+  \expandafter\@dtl@getvalue\the\toks@% contents of data base
+     \db@row@id@w #3\db@row@id@end@%
+       \db@col@id@w #4\db@col@id@end@%
+         \db@col@elt@w \@dtlnovalue\db@col@elt@end@% undefined value
+     \q@nil
+  \ifx#1\dtlnovalue
+    \PackageError{datatool}{There is no element at (row=#3,\space
+      column=#4) in database `#2'}{}%
+  \fi
+}
+\newcommand*{\DTLgetlocation}[4]{%
+  \def\@dtl@getlocation##1% stuff before value
+    \db@col@elt@w #4\db@col@elt@end@% value
+    \db@col@id@w ##2\db@col@id@end@% column id
+    ##3% stuff after this column
+    \db@row@id@w ##4\db@row@id@end@% row id
+    ##5% stuff after row
+    \q@nil{\def#1{##4}\def#2{##2}}%
+  \toks@=\csname dtldb@#3\endcsname
+  \expandafter\@dtl@getlocation\the\toks@% contents of data base
+    \db@col@elt@w #4\db@col@elt@end@% value
+    \db@col@id@w \@dtlnovalue\db@col@id@end@% undefined column id
+    \db@row@id@w \@dtlnovalue\db@row@id@end@% undefined row id
+    \q@nil
+  \ifx#1\dtlnovalue
+    \PackageError{datatool}{There is no element `#4' in database `#3'}{}%
+  \fi
+}
+\newcommand*{\DTLgetrowindex}[4]{%
+  \toks@{#4}%
+  \edef\dtl@dogetrowindex{\noexpand\@dtlgetrowindex{\noexpand#1}{#2}{\number#3}{\the\toks@}}%
+  \dtl@dogetrowindex
+  \ifx#1\dtlnovalue
+    \PackageError{datatool}{There is no element `#4' for column
+      \number#3\space in database `#2'}{}%
+  \fi
+}
+\newcommand*{\dtlgetrowindex}[4]{%
+  \toks@{#4}%
+  \edef\dtl@dogetrowindex{\noexpand\@dtlgetrowindex{\noexpand#1}{#2}{\number#3}{\the\toks@}}%
+  \dtl@dogetrowindex
+}
+\newcommand*{\@dtlgetrowindex}[4]{%
+  \def\@dtl@getrowindex##1% stuff before value
+    \db@col@elt@w #4\db@col@elt@end@% value
+    \db@col@id@w #3\db@col@id@end@% column id
+    ##2% stuff after this column
+    \db@row@id@w ##3\db@row@id@end@% row id
+    ##4% stuff after row
+    \q@nil{\def#1{##3}}%
+  \toks@=\csname dtldb@#2\endcsname
+  \expandafter\@dtl@getrowindex\the\toks@% contents of data base
+    \db@col@elt@w #4\db@col@elt@end@% value
+    \db@col@id@w #3\db@col@id@end@% column id
+    \db@row@id@w \@dtlnovalue\db@row@id@end@% undefined row id
+    \q@nil
+}
+
+\long\def\@dtlforeachrow(#1,#2)\in#3\do#4{%
+  \edef\dtl@tmp{\expandafter\the\csname dtldb@#3\endcsname}%
+  \expandafter\@dtl@foreachrow\dtl@tmp
+    \db@row@elt@w%
+    \db@row@id@w \@nil\db@row@id@end@%
+    \db@row@id@w \@nil\db@row@id@end@%
+    \db@row@elt@end@%
+    \@@{#1}{#2}{#4}\q@nil
+}
+\long\def\@dtl@foreachrow\db@row@elt@w%
+\db@row@id@w #1\db@row@id@end@%
+#2\db@row@id@w #3\db@row@id@end@%
+\db@row@elt@end@#4\@@#5#6#7\q@nil{%
+  \gdef#5{#1}%
+  \gdef\@dtl@loopbody{#7}%
+  \global\advance\@dtl@foreach@level by 1\relax
+  \ifx#5\@nnil
+    \expandafter\global\expandafter
+      \let\csname @dtl@foreachnext\the\@dtl@foreach@level\endcsname
+        =\@dtl@foreachnoop
+  \else
+    \gdef#6{#2}%
+    \expandafter\let
+      \csname @dtl@break@\the\@dtl@foreach@level\endcsname
+      \dtlbreak
+    \gdef\dtlbreak{\expandafter\global\expandafter
+      \let\csname @dtl@foreachnext\the\@dtl@foreach@level\endcsname
+        =\@dtl@foreachnoop}%
+    \expandafter\global\expandafter
+      \let\csname @dtl@foreachnext\the\@dtl@foreach@level\endcsname
+        =\@dtl@foreachrow
+    \@dtl@loopbody
+    \expandafter\let\expandafter\dtlbreak
+      \csname @dtl@break@\the\@dtl@foreach@level\endcsname
+  \fi
+  \expandafter\let\expandafter\@dtl@foreachnext
+    \csname @dtl@foreachnext\the\@dtl@foreach@level\endcsname
+  \global\advance\@dtl@foreach@level by -1\relax
+  \@dtl@foreachnext#4\@@{#5}{#6}{#7}\q@nil
+}
+\long\def\@dtl@foreachnoop#1\@@#2\q@nil{}
+\long\def\dtlforeachkey(#1,#2,#3,#4)\in#5\do#6{%
+  \gdef\@dtl@loopbody{#6}%
+  \edef\@dtl@keys{\expandafter\the\csname dtlkeys@#5\endcsname}%
+  \expandafter\@dtl@foreachkey\@dtl@keys
+    \db@plist@elt@w%
+    \db@col@id@w -1\db@col@id@end@%
+    \db@key@id@w \db@key@id@end@%
+    \db@type@id@w \db@type@id@end@%
+    \db@header@id@w \db@header@id@end@%
+    \db@col@id@w -1\db@col@id@end@%
+    \db@plist@elt@end@%
+    \@@{\@dtl@updatefkcs{#1}{#2}{#3}{#4}}\q@nil
+}
+\newcommand*{\@dtl@updatefkcs}[8]{%
+  \gdef#1{#5}%
+  \gdef#2{#6}%
+  \gdef#3{#7}%
+  \gdef#4{#8}%
+}
+\long\def\@dtl@foreachkey\db@plist@elt@w%
+\db@col@id@w #1\db@col@id@end@%
+\db@key@id@w #2\db@key@id@end@%
+\db@type@id@w #3\db@type@id@end@%
+\db@header@id@w #4\db@header@id@end@%
+\db@col@id@w #5\db@col@id@end@%
+\db@plist@elt@end@#6\@@#7\q@nil{%
+  \ifnum#1=-1\relax
+    \let\@dtl@foreachnext\@dtl@foreachnoop
+  \else
+    #7{#2}{#1}{#3}{#4}%
+    \global\advance\@dtl@foreach@level by 1\relax
+    \expandafter\let
+      \csname @dtl@break@\the\@dtl@foreach@level\endcsname
+      \dtlbreak
+    \gdef\dtlbreak{\expandafter\global\expandafter
+      \let\csname @dtl@foreachnext\the\@dtl@foreach@level\endcsname
+        =\@dtl@foreachnoop}%
+    \expandafter\global\expandafter
+      \let\csname @dtl@foreachnext\the\@dtl@foreach@level\endcsname
+        =\@dtl@foreachkey
+    \@dtl@loopbody
+    \expandafter\let\expandafter\@dtl@foreachnext
+      \csname @dtl@foreachnext\the\@dtl@foreach@level\endcsname
+    \expandafter\let\expandafter\dtlbreak
+      \csname @dtl@break@\the\@dtl@foreach@level\endcsname
+    \global\advance\@dtl@foreach@level by -1\relax
+  \fi
+  \@dtl@foreachnext#6\@@{#7}\q@nil
+}
+\newcommand*{\dtlforcolumn}{\@ifstar\@sdtlforcolumn\@dtlforcolumn}
+\newcommand{\@dtlforcolumn}[4]{%
+  \DTLifdbexists{#2}%
+  {%
+    \@DTLifhaskey{#2}{#3}%
+    {%
+      \@sdtlforcolumn{#1}{#2}{#3}{#4}%
+    }%
+    {%
+      \PackageError{datatool}{Database `#2' doesn't contain
+        key `#3'}{}%
+    }%
+  }%
+  {%
+    \PackageError{datatool}{Database `#2' doesn't exist}{}%
+  }%
+}
+\newcommand{\@sdtlforcolumn}[4]{%
+    \toks@{#4}%
+    \edef\@dtl@doforcol{\noexpand\dtl@forcolumn{\noexpand#1}%
+      {\expandafter\the\csname dtldb@#2\endcsname}%
+      {\dtlcolumnindex{#2}{#3}}{\the\toks@}%
+    }%
+    \@dtl@doforcol%
+}
+\newcommand*{\dtlforcolumnidx}{%
+  \@ifstar\@sdtlforcolumnidx\@dtlforcolumnidx
+}
+\newcommand{\@dtlforcolumnidx}[4]{%
+  \DTLifdbexists{#2}%
+  {%
+    \expandafter\ifnum\csname dtlcols@#2\endcsname<#3\relax
+      \PackageError{datatool}{Column index \number#3\space out of
+        bounds for database `#2'}{Database `#2' only has
+        \expandafter\number\csname dtlcols@#2\endcsname\space
+        columns}%
+    \else
+      \ifnum#3<1\relax
+       \PackageError{datatool}{Column index \number#3\space out of
+        bounds for database `#2'}{Indices start from 1}%
+      \else
+        \@sdtlforcolumnidx{#1}{#2}{#3}{#4}%
+      \fi
+    \fi
+  }%
+  {%
+    \PackageError{datatool}{Database `#2' doesn't exist}{}%
+  }%
+}
+\newcommand{\@sdtlforcolumnidx}[4]{%
+    \toks@{#4}%
+    \edef\@dtl@doforcol{\noexpand\dtl@forcolumn{\noexpand#1}%
+      {\expandafter\the\csname dtldb@#2\endcsname}%
+      {\number#3}{\the\toks@}%
+    }%
+    \@dtl@doforcol
+}
+\newcommand{\dtl@forcolumn}[4]{%
+  \let\@dtl@oldbreak\dtlbreak
+  \def\dtlbreak{\let\@dtl@forcolnext=\@dtl@forcolnoop}%
+  \def\@dtl@forcolumn##1% before stuff
+    \db@col@id@w #3\db@col@id@end@% column index
+      \db@col@elt@w ##2\db@col@elt@end@% entry
+    \db@col@id@w #3\db@col@id@end@% column index
+    ##3% after stuff
+    \q@nil{%
+      \def#1{##2}% assign value to <cs>
+      \ifx#1\@nnil
+        \let\@dtl@forcolnext=\@dtl@forcolnoop
+      \else
+        #4%
+        \let\@dtl@forcolnext=\@dtl@forcolumn
+      \fi
+      \@dtl@forcolnext##3\q@nil
+    }%
+  \@dtl@forcolumn#2%
+   \db@col@id@w #3\db@col@id@end@%
+     \db@col@elt@w \@nil\db@col@elt@end@%
+   \db@col@id@w #3\db@col@id@end@\q@nil
+  \let\dtlbreak\@dtl@oldbreak
+}
+\def\@dtl@forcolnoop#1\q@nil{}
+
+\newcount\dtlforeachlevel
+\newcounter{DTLrowi}
+\newcounter{DTLrowii}
+\newcounter{DTLrowiii}
+\newcounter{DTLrow}
+\def\theHDTLrow{\arabic{DTLrow}}
+\def\theHDTLrowi{\theHDTLrow.\arabic{DTLrowi}}
+\def\theHDTLrowii{\theHDTLrowi.\arabic{DTLrowii}}
+\def\theHDTLrowiii{\theHDTLrowii.\arabic{DTLrowiii}}
+\newcount\dtl@rowi
+\newcount\dtl@rowii
+\newcount\dtl@rowiii
+\newtoks\@dtl@curi
+\newtoks\@dtl@previ
+\newtoks\@dtl@nexti
+\newtoks\@dtl@curii
+\newtoks\@dtl@previi
+\newtoks\@dtl@nextii
+\newtoks\@dtl@curiii
+\newtoks\@dtl@previii
+\newtoks\@dtl@nextiii
+\newcommand*{\DTLsavelastrowcount}[1]{%
+\ifnum\dtlforeachlevel>2\relax
+  \def#1{0}%
+\else
+  \ifnum\dtlforeachlevel<0\relax
+    \def#1{0}%
+  \else
+    \@dtl@tmpcount=\dtlforeachlevel
+    \advance\@dtl@tmpcount by 1\relax
+    \edef#1{\expandafter\number
+      \csname c@DTLrow\romannumeral\@dtl@tmpcount\endcsname}%
+  \fi
+\fi}
+\newenvironment{DTLenvforeach}[3][\boolean{true}]%
+{%
+  \def\@dtlenvforeach@args{[#1]{#2}{#3}}%
+  \long@collect@body\@do@dtlenvforeach
+}%
+{}
+\newcommand{\@do@dtlenvforeach}[1]{%
+  \expandafter\@DTLforeach\@dtlenvforeach@args{#1}%
+}
+\newenvironment{DTLenvforeach*}[3][\boolean{true}]%
+{%
+  \def\s@dtlenvforeach@args{[#1]{#2}{#3}}%
+  \long@collect@body\@do@sdtlenvforeach
+}%
+{}
+\newcommand{\@do@sdtlenvforeach}[1]{%
+  \expandafter\@sDTLforeach\s@dtlenvforeach@args{#1}%
+}
+\newcommand*{\DTLforeach}{\@ifstar\@sDTLforeach\@DTLforeach}
+\newcommand{\@DTLforeach}[4][\boolean{true}]{%
+  \DTLifdbexists{#2}%
+  {%
+    \refstepcounter{DTLrow}%
+    \global\c@DTLrow=\c@DTLrow\relax
+    \xdef\@dtl@dbname{#2}%
+    \global\advance\dtlforeachlevel by 1\relax
+    \ifnum\dtlforeachlevel>3\relax
+      \PackageError{datatool}{\string\DTLforeach\space nested too
+        deeply}{Only 3 levels are allowed}%
+    \else
+       \@DTLifdbempty{#2}%
+       {}%
+       {%
+        \expandafter\global
+          \csname c@DTLrow\romannumeral\dtlforeachlevel\endcsname
+            = 0\relax
+        \expandafter\global\expandafter\let%
+          \csname @dtl@iffirstrow\the\dtlforeachlevel\endcsname
+          \DTLiffirstrow
+        \gdef\DTLiffirstrow##1##2{%
+          \expandafter\ifnum
+           \csname c@DTLrow\romannumeral\dtlforeachlevel\endcsname
+           =1\relax
+            ##1%
+          \else
+            ##2%
+          \fi}%
+        \expandafter\global\expandafter\let%
+          \csname @dtl@iflastrow\the\dtlforeachlevel\endcsname
+          \DTLiflastrow
+        \gdef\DTLiflastrow##1##2{%
+          \expandafter\ifnum
+           \csname c@DTLrow\romannumeral\dtlforeachlevel\endcsname
+           =\csname dtlrows@#2\endcsname\relax
+            ##1%
+          \else
+            ##2%
+          \fi}%
+        \expandafter\global\expandafter\let%
+          \csname @dtl@ifoddrow\the\dtlforeachlevel\endcsname
+          \DTLifoddrow
+        \gdef\DTLifoddrow##1##2{%
+          \expandafter\ifodd
+           \csname c@DTLrow\romannumeral\dtlforeachlevel\endcsname
+            ##1%
+          \else
+            ##2%
+          \fi}%
+        \expandafter\global\expandafter\let
+          \csname @dtl@dbname@\romannumeral\dtlforeachlevel\endcsname
+            =\@dtl@dbname
+        \expandafter\global\expandafter\let
+          \csname @dtl@ro@\romannumeral\dtlforeachlevel\endcsname
+            = 0\relax
+        \dtlgforint
+          \csname dtl@row\romannumeral\dtlforeachlevel\endcsname
+          =1\to\csname dtlrows@#2\endcsname\step1\do
+        {%
+          \@dtl@tmpcount=
+            \csname dtl@row\romannumeral\dtlforeachlevel\endcsname
+          \edef\dtl@dogetrow{\noexpand\dtlgetrow{#2}%
+            {\number\@dtl@tmpcount}}%
+          \dtl@dogetrow
+          \expandafter\global
+            \csname @dtl@cur\romannumeral\dtlforeachlevel\endcsname
+              = \dtlcurrentrow
+          \expandafter\global
+            \csname @dtl@prev\romannumeral\dtlforeachlevel\endcsname
+              = \dtlbeforerow
+          \expandafter\global
+            \csname @dtl@next\romannumeral\dtlforeachlevel\endcsname
+              = \dtlafterrow
+          \ifx\relax#3\relax
+          \else
+            \@dtl@assign{#3}{#2}%
+          \fi
+          \ifthenelse{#1}%
+          {%
+            \refstepcounter{DTLrow\romannumeral\dtlforeachlevel}%
+            \expandafter\edef\expandafter\DTLcurrentindex%
+              \expandafter{%
+                 \arabic{DTLrow\romannumeral\dtlforeachlevel}}%
+            #4%
+            \edef\@dtl@tmp{\expandafter\the
+              \csname @dtl@cur\romannumeral
+                \dtlforeachlevel\endcsname}%
+            \ifx\@dtl@tmp\@nnil
+              \expandafter\dtl@decrementrows\expandafter
+                 {\csname @dtl@prev\romannumeral
+                    \dtlforeachlevel\endcsname
+                 }{\csname dtl@row\romannumeral
+                   \dtlforeachlevel\endcsname}%
+              \expandafter\dtl@decrementrows\expandafter
+                 {\csname @dtl@next\romannumeral
+                    \dtlforeachlevel\endcsname
+                 }{\csname dtl@row\romannumeral
+                   \dtlforeachlevel\endcsname}%
+              \edef\@dtl@tmp{%
+                \expandafter\the
+                  \csname @dtl@prev\romannumeral
+                    \dtlforeachlevel\endcsname
+                \expandafter\the
+                  \csname @dtl@next\romannumeral
+                     \dtlforeachlevel\endcsname
+                }%
+              \expandafter\global\expandafter
+                 \csname dtldb@#2\endcsname\expandafter{\@dtl@tmp}%
+              \expandafter\global\expandafter
+                \advance\csname dtlrows@#2\endcsname by -1\relax
+              \expandafter\global\expandafter
+                \advance\csname dtl@row\romannumeral
+                   \dtlforeachlevel\endcsname by -1\relax
+            \else
+              \@dtl@before=\csname @dtl@prev\romannumeral
+                \dtlforeachlevel\endcsname
+              \@dtl@after=\csname @dtl@next\romannumeral
+                \dtlforeachlevel\endcsname
+              \toks@gconcat@middle@cx{dtldb@#2}%
+              {\@dtl@before}%
+              {%
+                \noexpand\db@row@elt@w%
+                \noexpand\db@row@id@w \expandafter\number
+                  \csname dtl@row\romannumeral
+                    \dtlforeachlevel\endcsname
+                \noexpand\db@row@id@end@%
+                \expandafter\the
+                  \csname @dtl@cur\romannumeral
+                    \dtlforeachlevel\endcsname
+                \noexpand\db@row@id@w \expandafter\number
+                  \csname dtl@row\romannumeral
+                    \dtlforeachlevel\endcsname
+                \noexpand\db@row@id@end@%
+                \noexpand\db@row@elt@end@%
+                }%
+              {\@dtl@after}%
+            \fi
+          }%
+          {}%
+         }%
+        \expandafter\global\expandafter\let\expandafter\DTLiffirstrow
+          \csname @dtl@iffirstrow\the\dtlforeachlevel\endcsname
+        \expandafter\global\expandafter\let\expandafter\DTLiflastrow
+          \csname @dtl@iflastrow\the\dtlforeachlevel\endcsname
+        \expandafter\global\expandafter\let\expandafter\DTLifoddrow
+          \csname @dtl@ifoddrow\the\dtlforeachlevel\endcsname
+      }%
+    \fi
+    \global\advance\dtlforeachlevel by -1\relax
+  }%
+  {%
+    \PackageError{datatool}{Database `#2' doesn't exist}{}%
+  }%
+}
+\newcommand{\@sDTLforeach}[4][\boolean{true}]{%
+  \DTLifdbexists{#2}%
+  {%
+    \refstepcounter{DTLrow}%
+    \global\c@DTLrow=\c@DTLrow
+    \xdef\@dtl@dbname{#2}%
+    \global\advance\dtlforeachlevel by 1\relax
+    \ifnum\dtlforeachlevel>3\relax
+      \PackageError{datatool}{\string\DTLforeach\space nested too
+        deeply}{Only 3 levels are allowed}%
+    \else
+       \@DTLifdbempty{#2}%
+       {}%
+       {%
+        \expandafter\global
+          \csname c@DTLrow\romannumeral\dtlforeachlevel\endcsname
+            = 0\relax
+        \expandafter\global\expandafter\let%
+          \csname @dtl@iffirstrow\the\dtlforeachlevel\endcsname
+          \DTLiffirstrow
+        \gdef\DTLiffirstrow##1##2{%
+          \expandafter\ifnum
+           \csname c@DTLrow\romannumeral\dtlforeachlevel\endcsname
+           =1\relax
+            ##1%
+          \else
+            ##2%
+          \fi}%
+        \expandafter\global\expandafter\let%
+          \csname @dtl@iflastrow\the\dtlforeachlevel\endcsname
+          \DTLiflastrow
+        \gdef\DTLiflastrow##1##2{%
+          \expandafter\ifnum
+           \csname c@DTLrow\romannumeral\dtlforeachlevel\endcsname
+           =\csname dtlrows@#2\endcsname\relax
+            ##1%
+          \else
+            ##2%
+          \fi}%
+        \expandafter\global\expandafter\let%
+          \csname @dtl@ifoddrow\the\dtlforeachlevel\endcsname
+          \DTLifoddrow
+        \gdef\DTLifoddrow##1##2{%
+          \expandafter\ifodd
+           \csname c@DTLrow\romannumeral\dtlforeachlevel\endcsname
+            ##1%
+          \else
+            ##2%
+          \fi}%
+        \expandafter\gdef\csname @dtl@dbname@\romannumeral
+          \dtlforeachlevel\endcsname{#2}%
+        \expandafter\global\expandafter\let
+          \csname @dtl@ro@\romannumeral\dtlforeachlevel\endcsname
+            = 1\relax
+        \@dtlforeachrow(\dtl@thisidx,\dtl@thisrow)\in{#2}\do%
+        {%
+          \csname dtl@row\romannumeral\dtlforeachlevel\endcsname
+            = \dtl@thisidx\relax
+          \expandafter\global
+            \csname @dtl@cur\romannumeral\dtlforeachlevel\endcsname
+              = \expandafter{\dtl@thisrow}%
+          \ifx\relax#3\relax
+          \else
+            \dtlcurrentrow=\expandafter{\dtl@thisrow}%
+            \@dtl@assign{#3}{#2}%
+          \fi
+          \ifthenelse{#1}%
+          {%
+            \refstepcounter{DTLrow\romannumeral\dtlforeachlevel}%
+            \expandafter\edef\expandafter\DTLcurrentindex%
+              \expandafter{%
+                 \arabic{DTLrow\romannumeral\dtlforeachlevel}}%
+            #4%
+          }%
+          {}%
+         }%
+        \expandafter\global\expandafter\let\expandafter\DTLiffirstrow
+          \csname @dtl@iffirstrow\the\dtlforeachlevel\endcsname
+        \expandafter\global\expandafter\let\expandafter\DTLiflastrow
+          \csname @dtl@iflastrow\the\dtlforeachlevel\endcsname
+        \expandafter\global\expandafter\let\expandafter\DTLifoddrow
+          \csname @dtl@ifoddrow\the\dtlforeachlevel\endcsname
+      }%
+    \fi
+    \global\advance\dtlforeachlevel by -1\relax
+  }%
+  {%
+    \PackageError{datatool}{Database `#2' doesn't exist}{}%
+  }%
+}
+\newcommand*{\@dtlifreadonly}[2]{%
+  \expandafter\ifx
+    \csname @dtl@ro@\romannumeral\dtlforeachlevel\endcsname1\relax
+    #1%
+  \else
+    #2%
+  \fi
+}
+\newcommand*{\DTLappendtorow}[2]{%
+  \ifnum\dtlforeachlevel=0\relax
+    \PackageError{datatool}{\string\DTLappendrow\space can only be
+      used inside \string\DTLforeach}{}%
+  \else
+    \expandafter\let\expandafter\@dtl@thisdb
+      \csname @dtl@dbname@\romannumeral\dtlforeachlevel\endcsname
+    \@dtlifreadonly
+    {%
+      \PackageError{datatool}{\string\DTLappendtorow\space can't
+       be used inside \DTLforeach*}{The starred version of
+       \string\DTLforeach\space is read only}%
+    }%
+    {%
+      \dtlrownum=
+        \csname dtl@row\romannumeral\dtlforeachlevel\endcsname\relax
+      \@dtl@updatekeys{\@dtl@thisdb}{#1}{#2}%
+      \expandafter\dtlcolumnnum\expandafter
+        =\dtlcolumnindex{\@dtl@thisdb}{#1}\relax
+      \dtlcurrentrow =
+        \csname @dtl@cur\romannumeral\dtlforeachlevel\endcsname
+      \edef\dtl@dogetentry{\noexpand\dtlgetentryfromcurrentrow
+        {\noexpand\dtl@entry}{\number\dtlcolumnnum}%
+      }%
+      \dtl@dogetentry
+      \ifx\dtl@entry\dtlnovalue
+        \protected@edef\@dtl@tmp{#2}%
+        \expandafter\@dtl@toks\expandafter{\@dtl@tmp}%
+        \toks@gput@right@cx{@dtl@cur\romannumeral\dtlforeachlevel}%
+        {%
+          \noexpand\db@col@id@w \number\dtlcolumnnum
+            \noexpand\db@col@id@end@
+          \noexpand\db@col@elt@w \the\@dtl@toks
+            \noexpand\db@col@elt@end@
+          \noexpand\db@col@id@w \number\dtlcolumnnum
+            \noexpand\db@col@id@end@
+        }%
+         \dtl@message{Appended #1\space -> #2\space to database
+           `\@dtl@thisdb'}%
+      \else
+        \PackageError{datatool}{Can't append entry to row:
+          there is already an entry for key `#1' in this row}{}%
+      \fi
+    }%
+  \fi
+}
+\newcommand*{\DTLremoveentryfromrow}[1]{%
+  \ifnum\dtlforeachlevel=0\relax
+    \PackageError{datatool}{\string\DTLremoventryfromrow\space
+      can only be used inside \string\DTLforeach}{}%
+  \else
+    \expandafter\let\expandafter\@dtl@thisdb
+      \csname @dtl@dbname@\romannumeral\dtlforeachlevel\endcsname
+    \@dtlifreadonly
+    {%
+      \PackageError{datatool}{\string\DTLremoveentryfromrow\space
+        can't be used inside \string\DTLforeach*}{The starred
+        version of \string\DTLforeach\space is read only}%
+    }%
+    {%
+      \dtlrownum=
+        \csname dtl@row\romannumeral\dtlforeachlevel\endcsname\relax
+      \@DTLifhaskey{\@dtl@thisdb}{#1}%
+      {%
+        \@dtl@getcolumnindex{\thiscol}{\@dtl@thisdb}{#1}\relax
+        \dtlcolumnnum=\thiscol\relax
+        \dtlcurrentrow =
+          \csname @dtl@cur\romannumeral\dtlforeachlevel\endcsname
+        \edef\dtl@dogetentry{\noexpand\dtlgetentryfromcurrentrow
+          {\noexpand\dtl@entry}{\number\dtlcolumnnum}%
+        }%
+        \dtl@dogetentry
+        \ifx\dtl@entry\dtlnovalue
+          \PackageError{datatool}{Can't remove entry given by `#1'
+             from current row in database `\@dtl@thisdb': no such
+             entry}{The current row doesn't contain an entry for
+             key `#1'}%
+        \else
+          \edef\@dtl@dosplitrow{%
+            \noexpand\dtlsplitrow{\the\dtlcurrentrow}%
+              {\number\dtlcolumnnum}{\noexpand\dtl@pre}%
+              {\noexpand\dtl@post}%
+          }%
+          \@dtl@dosplitrow
+          \expandafter\@dtl@toks\expandafter{\dtl@pre}%
+          \expandafter\toks@\expandafter{\dtl@post}%
+          \edef\@dtl@tmp{\the\@dtl@toks \the\toks@}%
+          \dtlcurrentrow=\expandafter{\@dtl@tmp}%
+          \expandafter\global
+            \csname @dtl@cur\romannumeral\dtlforeachlevel\endcsname
+              = \dtlcurrentrow
+         \dtl@message{Removed entry given by #1\space from current
+           row of database `\@dtl@thisdb'}%
+        \fi
+      }%
+      {%
+        \PackageError{datatool}{Can't remove entry given by
+          `#1' - no such key exists}{}%
+      }%
+    }%
+  \fi
+}
+\newcommand*{\DTLreplaceentryforrow}[2]{%
+  \ifnum\dtlforeachlevel=0\relax
+    \PackageError{datatool}{\string\DTLreplaceentryforrow\space
+      can only be used inside \string\DTLforeach}{}%
+  \else
+    \expandafter\let\expandafter\@dtl@thisdb
+      \csname @dtl@dbname@\romannumeral\dtlforeachlevel\endcsname
+    \@dtlifreadonly
+    {%
+      \PackageError{datatool}{\string\DTLreplaceentryforrow\space
+        can't be used inside \string\DTLforeach*}{The starred version
+        of \string\DTLforeach\space is read only}%
+    }%
+    {%
+      \dtlrownum=
+        \csname dtl@row\romannumeral\dtlforeachlevel\endcsname\relax
+      \@DTLifhaskey{\@dtl@thisdb}{#1}%
+      {%
+        \@dtl@getcolumnindex{\thiscol}{\@dtl@thisdb}{#1}\relax
+        \dtlcolumnnum=\thiscol\relax
+        \dtlcurrentrow =
+          \csname @dtl@cur\romannumeral\dtlforeachlevel\endcsname
+        \edef\dtl@dogetentry{\noexpand\dtlgetentryfromcurrentrow
+          {\noexpand\dtl@entry}{\number\dtlcolumnnum}%
+        }%
+        \dtl@dogetentry
+        \ifx\dtl@entry\dtlnovalue
+          \PackageError{datatool}{Can't replace entry given by `#1'
+             from current row in database `\@dtl@thisdb': no such
+             entry}{The current row doesn't contain an entry for
+             key `#1'}%
+        \else
+          \edef\@dtl@dosplitrow{%
+            \noexpand\dtlsplitrow{\the\dtlcurrentrow}%
+              {\number\dtlcolumnnum}{\noexpand\dtl@pre}%
+              {\noexpand\dtl@post}%
+          }%
+          \@dtl@dosplitrow
+          \protected@edef\@dtl@tmp{#2}%
+          \expandafter\@dtl@toks\expandafter{\@dtl@tmp}% new value
+          \expandafter\@dtl@before\expandafter{\dtl@pre}%
+          \expandafter\@dtl@after\expandafter{\dtl@post}%
+          \toks@gconcat@middle@cx
+            {@dtl@cur\romannumeral\dtlforeachlevel}%
+            {\@dtl@before}%
+            {%
+              \noexpand\db@col@id@w \number\dtlcolumnnum
+                \noexpand\db@col@id@end@%
+              \noexpand\db@col@elt@w \the\@dtl@toks
+                \noexpand\db@col@elt@end@%
+              \noexpand\db@col@id@w \number\dtlcolumnnum
+                \noexpand\db@col@id@end@%
+            }%
+            {\@dtl@after}%
+         \dtl@message{Updated #1\space -> #2\space in database
+           `\@dtl@thisdb'}%
+        \fi
+      }%
+      {%
+         \PackageError{datatool}{Can't replace key `#1' - no such
+           key in database `\@dtl@thisdb'}{}%
+      }%
+    }%
+  \fi
+}
+\newcommand*{\DTLremovecurrentrow}{%
+  \ifnum\dtlforeachlevel=0\relax
+    \PackageError{datatool}{\string\DTLremovecurrentrow\space can
+      only be used inside \string\DTLforeach}{}%
+  \else
+    \expandafter\let\expandafter\@dtl@thisdb
+      \csname @dtl@dbname@\romannumeral\dtlforeachlevel\endcsname
+    \@dtlifreadonly
+    {%
+      \PackageError{datatool}{\string\DTLreplaceentryforrow\space
+        can't be used inside \string\DTLforeach*}{The starred version
+        of \string\DTLforeach\space is read only}%
+    }%
+    {%
+      \expandafter\global
+        \csname @dtl@cur\romannumeral\dtlforeachlevel\endcsname
+          ={\@nil}%
+    }%
+  \fi
+}
+\newcommand{\DTLaddentryforrow}[5]{%
+  \DTLifdbexists{#1}%
+  {%
+    \def\@dtl@notdone{\PackageError{datatool}{Unable to add entry
+      given by key `#4': condition not met for any row in database
+      `#1'}{}}%
+    \DTLforeach[#3]{#1}{#2}%
+    {%
+      \DTLappendtorow{#4}{#5}%
+      \let\@dtl@notdone\relax
+      \dtlbreak
+    }%
+    \@dtl@notdone
+  }%
+  {%
+    \PackageError{datatool}{Unable to add entry given by key `#4':
+      database `#1' doesn't exist}{}%
+  }%
+}
+\newcommand*{\DTLforeachkeyinrow}[2]{%
+  \ifnum\dtlforeachlevel=0\relax
+    \PackageError{datatool}{\string\DTLforeachkeyinrow\space can only
+     be used inside \string\DTLforeach}{}%
+  \else
+    \expandafter\let\expandafter\@dtl@thisdb
+      \csname @dtl@dbname@\romannumeral\dtlforeachlevel\endcsname
+    \dtlforeachkey(\dtlkey,\dtlcol,\dtltype,\dtlheader)\in
+      \@dtl@thisdb\do{%
+      \dtlcurrentrow =
+        \csname @dtl@cur\romannumeral\dtlforeachlevel\endcsname
+      \edef\dtl@dogetentry{\noexpand\dtlgetentryfromcurrentrow
+        {\noexpand#1}{\dtlcol}}%
+      \dtl@dogetentry
+      \ifx#1\dtlnovalue
+        \ifnum0\dtltype=0\relax
+          \let#1=\@dtlstringnull
+        \else
+          \let#1=\@dtlnumbernull
+        \fi
+      \fi
+      \global\let#1#1%
+      \def\@dtl@loop@body{#2}%
+      \@dtl@loop@body
+    }%
+  \fi
+}
+\newcommand{\DTLiffirstrow}[2]{%
+  \PackageError{datatool}{\string\DTLiffirstrow\space can only
+  be used inside \string\DTLforeach}{}%
+}
+\newcommand{\DTLiflastrow}[2]{%
+  \PackageError{datatool}{\string\DTLiflastrow\space can only
+  be used inside \string\DTLforeach}{}%
+}
+\newcommand{\DTLifoddrow}[2]{%
+  \PackageError{datatool}{\string\DTLifoddrow\space can only
+  be used inside \string\DTLforeach}{}%
+}
+\newcommand*{\dtlbetweencols}{}
+\newcommand*{\dtlbeforecols}{}
+\newcommand*{\dtlaftercols}{}
+\newcommand*{\dtlstringalign}{l}
+\newcommand*{\dtlintalign}{r}
+\newcommand*{\dtlrealalign}{r}
+\newcommand*{\dtlcurrencyalign}{r}
+\newcommand*{\dtladdalign}[4]{%
+  \ifnum#3=1\relax
+    \protected@edef#1{\dtlbeforecols}%
+  \else
+    \protected@edef#1{#1\dtlbetweencols}%
+  \fi
+  \ifstrempty{#2}%
+  {%
+    \protected@edef#1{#1c}%
+  }%
+  {%
+    \ifcase#2\relax
+      \protected@edef#1{#1\dtlstringalign}%
+    \or
+      \protected@edef#1{#1\dtlintalign}%
+    \or
+      \protected@edef#1{#1\dtlrealalign}%
+    \or
+      \protected@edef#1{#1\dtlcurrencyalign}%
+    \else
+      \protected@edef#1{#1c}%
+      \PackageError{datatool}{Unknown data type `#2'}{}%
+    \fi
+  }%
+  \ifnum#3=#4\relax
+    \protected@edef#1{#1\dtlaftercols}%
+  \fi
+}
+\newcommand*{\dtlheaderformat}[1]{\null\hfil\textbf{#1}\hfil\null}
+\newcommand*{\dtlstringformat}[1]{#1}
+\newcommand*{\dtlintformat}[1]{#1}
+\newcommand*{\dtlrealformat}[1]{#1}
+\newcommand*{\dtlcurrencyformat}[1]{#1}
+\newcommand*{\dtldisplaystarttab}{}
+\newcommand*{\dtldisplayendtab}{}
+\newcommand*{\dtldisplayafterhead}{}
+\newcommand*{\dtldisplayvalign}{c}
+\newcommand*{\dtldisplaystartrow}{}
+\newcommand{\dtldisplaycr}{\tabularnewline}
+
+\newcommand*{\DTLdisplaydb}[2][]{%
+  \def\@dtl@doamp{\gdef\@dtl@doamp{&}}%
+  \def\@dtl@resetdoamp{\gdef\@dtl@doamp{\gdef\@dtl@doamp{&}}}%
+  \edef\@dtl@maxcols{\expandafter\number
+    \csname dtlcols@#2\endcsname}%
+  \DTLnumitemsinlist{#1}{\@dtl@tmp}%
+  \dtlsub{\@dtl@maxcols}{\@dtl@maxcols}{\@dtl@tmp}%
+  \dtlclip{\@dtl@maxcols}{\@dtl@maxcols}%
+  \def\@dtl@tabargs{}%
+  \dtlforeachkey(\@dtl@key,\@dtl@idx,\@dtl@type,\@dtl@head)%
+    \in{#2}\do
+  {%
+    \expandafter\DTLifinlist\expandafter{\@dtl@key}{#1}%
+    {}%
+    {%
+       \dtladdalign\@dtl@tabargs\@dtl@type\@dtl@idx\@dtl@maxcols
+    }%
+  }%
+  \edef\@dtl@dobegintab{\noexpand\begin{tabular}[\dtldisplayvalign]{\@dtl@tabargs}}%
+  \@dtl@dobegintab
+  \dtldisplaystarttab
+  \@dtl@resetdoamp
+  \dtlforeachkey(\@dtl@key,\@dtl@idx,\@dtl@type,\@dtl@head)%
+    \in{#2}\do
+  {%
+    \expandafter\DTLifinlist\expandafter{\@dtl@key}{#1}%
+    {}%
+    {%
+      \@dtl@doamp
+      \dtlheaderformat{\@dtl@head}%
+    }%
+  }%
+  \\%
+  \dtldisplayafterhead
+  \@dtl@resetdoamp
+  \@sDTLforeach{#2}{}{%
+    \DTLiffirstrow{}{\dtldisplaycr\dtldisplaystartrow}%
+    \@dtl@resetdoamp
+    \DTLforeachkeyinrow{\@dtl@val}%
+    {%
+      \expandafter\DTLifinlist\expandafter{\dtlkey}{#1}%
+      {}%
+      {%
+        \global\let\@dtl@val\@dtl@val
+        \@dtl@doamp
+        \@dtl@datatype=0\dtltype\relax
+        \ifcase\@dtl@datatype
+          \dtlstringformat\@dtl@val
+        \or
+          \dtlintformat\@dtl@val
+        \or
+          \dtlrealformat\@dtl@val
+        \or
+          \dtlcurrencyformat\@dtl@val
+        \else
+          \@dtl@val
+        \fi
+      }%
+    }%
+  }%
+  \dtldisplayendtab
+  \end{tabular}%
+}
+\define@key{displaylong}{caption}{\def\@dtl@cap{#1}}
+\define@key{displaylong}{contcaption}{\def\@dtl@contcap{#1}}
+\define@key{displaylong}{shortcaption}{\def\@dtl@shortcap{#1}}
+\define@key{displaylong}{label}{\def\@dtl@label{#1}}
+\define@key{displaylong}{foot}{\def\@dtl@foot{#1}}
+\define@key{displaylong}{lastfoot}{\def\@dtl@lastfoot{#1}}
+\define@key{displaylong}{omit}{\def\@dtl@omitlist{#1}}
+\newcommand*{\@dtl@resetdostartrow}{%
+  \gdef\@dtl@dostartrow{%
+    \gdef\@dtl@dostartrow{\dtldisplaycr\dtldisplaystartrow}}%
+}
+\newcommand*{\DTLdisplaylongdb}[2][]{%
+  \def\@dtl@cap{\@nil}%
+  \def\@dtl@contcap{\@nil}%
+  \def\@dtl@label{\@nil}%
+  \def\@dtl@shortcap{\@dtl@cap}%
+  \def\@dtl@foot{\@nil}%
+  \def\@dtl@lastfoot{\@nil}%
+  \def\@dtl@omitlist{}%
+  \setkeys{displaylong}{#1}%
+  \def\@dtl@doamp{\gdef\@dtl@doamp{&}}%
+  \def\@dtl@resetdoamp{\gdef\@dtl@doamp{\gdef\@dtl@doamp{&}}}%
+  \@dtl@resetdostartrow
+  \edef\@dtl@maxcols{\expandafter\number
+    \csname dtlcols@#2\endcsname}%
+  \DTLnumitemsinlist{\@dtl@omitlist}{\@dtl@tmp}%
+  \dtlsub{\@dtl@maxcols}{\@dtl@maxcols}{\@dtl@tmp}%
+  \dtlclip{\@dtl@maxcols}{\@dtl@maxcols}%
+  \def\@dtl@tabargs{}%
+  \dtlforeachkey(\@dtl@key,\@dtl@idx,\@dtl@type,\@dtl@head)%
+    \in{#2}\do
+  {%
+    \expandafter\DTLifinlist\expandafter{\@dtl@key}{\@dtl@omitlist}%
+    {}%
+    {%
+      \dtladdalign\@dtl@tabargs\@dtl@type\@dtl@idx\@dtl@maxcols
+    }%
+  }%
+  \edef\@dtl@dobegintab{\noexpand\begin{longtable}{\@dtl@tabargs}}%
+  \@dtl@dobegintab
+  \ifx\@dtl@foot\@nnil
+  \else
+    \@dtl@foot\endfoot
+  \fi
+  \ifx\@dtl@lastfoot\@nnil
+  \else
+    \@dtl@lastfoot\endlastfoot
+  \fi
+  \ifx\@dtl@cap\@nnil
+    \@dtl@resetdoamp
+    \dtldisplaystarttab
+    \dtlforeachkey(\@dtl@key,\@dtl@idx,\@dtl@type,\@dtl@head)%
+      \in{#2}\do
+    {%
+      \expandafter\DTLifinlist\expandafter{\@dtl@key}{\@dtl@omitlist}%
+      {}%
+      {%
+        \@dtl@doamp{\dtlheaderformat{\@dtl@head}}%
+      }%
+    }%
+    \@dtl@resetdoamp
+    \@dtl@resetdostartrow
+    \endhead\dtldisplayafterhead
+  \else
+    \caption[\@dtl@shortcap]{\@dtl@cap}%
+    \ifx\@dtl@label\@nnil
+    \else
+      \label{\@dtl@label}%
+    \fi
+    \dtldisplaycr
+  \dtldisplaystarttab
+    \@dtl@resetdoamp
+    \dtlforeachkey(\@dtl@key,\@dtl@idx,\@dtl@type,\@dtl@head)%
+      \in{#2}\do
+    {%
+      \expandafter\DTLifinlist\expandafter{\@dtl@key}{\@dtl@omitlist}%
+      {}%
+      {%
+        \@dtl@doamp{\dtlheaderformat{\@dtl@head}}%
+      }%
+    }%
+    \@dtl@resetdoamp
+    \dtldisplaycr\dtldisplayafterhead
+    \endfirsthead
+    \ifx\@dtl@contcap\@nnil
+      \caption{\@dtl@cap}%
+    \else
+      \caption{\@dtl@contcap}%
+    \fi
+    \dtldisplaycr\dtldisplaystarttab
+      \@dtl@resetdoamp
+      \dtlforeachkey(\@dtl@key,\@dtl@idx,\@dtl@type,\@dtl@head)%
+      \in{#2}\do
+      {%
+        \expandafter\DTLifinlist\expandafter{\@dtl@key}{\@dtl@omitlist}%
+        {}%
+        {%
+          \@dtl@doamp{\dtlheaderformat{\@dtl@head}}%
+        }%
+      }%
+      \@dtl@resetdoamp
+      \@dtl@resetdostartrow
+    \dtldisplaycr\dtldisplayafterhead
+    \endhead
+  \fi
+  \@sDTLforeach{#2}{}{%
+    \@dtl@dostartrow
+    \@dtl@resetdoamp
+    \DTLforeachkeyinrow{\@dtl@val}%
+    {%
+      \global\let\@dtl@val\@dtl@val
+      \expandafter\DTLifinlist\expandafter{\dtlkey}{\@dtl@omitlist}%
+      {}%
+      {%
+        \@dtl@doamp
+        \@dtl@datatype=0\dtltype\relax
+        \ifcase\@dtl@datatype
+          \dtlstringformat\@dtl@val
+        \or
+          \dtlintformat\@dtl@val
+        \or
+          \dtlrealformat\@dtl@val
+        \or
+          \dtlcurrencyformat\@dtl@val
+        \fi
+      }%
+    }%
+  }%
+  \dtldisplayendtab
+  \end{longtable}%
+}
+\newcommand*{\dtlswaprows}[3]{%
+  \ifnum#2=#3\relax
+  \else
+    \ifnum#2<#3\relax
+      \edef\@dtl@rowAidx{\number#2}%
+      \edef\@dtl@rowBidx{\number#3}%
+    \else
+      \edef\@dtl@rowAidx{\number#3}%
+      \edef\@dtl@rowBidx{\number#2}%
+    \fi
+    \edef\@dtl@dosplit{\noexpand\dtlgetrow{#1}{\@dtl@rowAidx}}%
+    \@dtl@dosplit
+    \expandafter\def\expandafter\@dtl@firstpart\expandafter
+      {\the\dtlbeforerow}%
+    \@dtl@toksA=\dtlcurrentrow
+    \edef\@dtl@dosplit{\noexpand\@dtlgetrow
+      {\the\dtlafterrow}{\@dtl@rowBidx}}%
+    \@dtl@dosplit
+    \expandafter\def\expandafter\@dtl@secondpart\expandafter
+      {\the\dtlbeforerow}%
+    \@dtl@toksB=\dtlcurrentrow
+    \expandafter\def\expandafter\@dtl@thirdpart\expandafter
+      {\the\dtlafterrow}%
+    \toks@=\expandafter{\@dtl@firstpart}%
+    \@dtl@toks=\expandafter{\@dtl@secondpart}%
+    \edef\@dtl@tmp{\the\toks@
+     \noexpand\db@row@elt@w%
+     \noexpand\db@row@id@w \@dtl@rowAidx\noexpand\db@row@id@end@%
+     \the\@dtl@toksB
+     \noexpand\db@row@id@w \@dtl@rowAidx\noexpand\db@row@id@end@%
+     \noexpand\db@row@elt@end@%
+     \the\@dtl@toks}%
+    \toks@=\expandafter{\@dtl@tmp}%
+    \@dtl@toks=\expandafter{\@dtl@thirdpart}%
+    \edef\@dtl@tmp{\the\toks@
+     \noexpand\db@row@elt@w%
+     \noexpand\db@row@id@w \@dtl@rowBidx\noexpand\db@row@id@end@%
+     \the\@dtl@toksA
+     \noexpand\db@row@id@w \@dtl@rowBidx\noexpand\db@row@id@end@%
+     \noexpand\db@row@elt@end@%
+    \the\@dtl@toks}%
+    \expandafter\global\csname dtldb@#1\endcsname=\expandafter
+      {\@dtl@tmp}%
+  \fi
+}
+\newcommand*{\dtl@decrementrows}[2]{%
+  \def\@dtl@newlist{}%
+  \edef\@dtl@min{\number#2}%
+  \expandafter\@dtl@decrementrows\the#1%
+    \db@row@elt@w%
+      \db@row@id@w \@nil\db@row@id@end@%
+      \db@row@id@w \@nil\db@row@id@end@%
+    \db@row@elt@end@%
+    \@nil
+  #1=\expandafter{\@dtl@newlist}%
+}
+\def\@dtl@decrementrows\db@row@elt@w\db@row@id@w #1\db@row@id@end@%
+#2\db@row@id@w #3\db@row@id@end@\db@row@elt@end@#4\@nil{%
+  \def\@dtl@thisrow{#1}%
+  \ifx\@dtl@thisrow\@nnil
+    \let\@dtl@donextdec=\@dtl@gobbletonil
+  \else
+    \ifnum\@dtl@thisrow>\@dtl@min
+      \@dtl@tmpcount=\@dtl@thisrow\relax
+      \advance\@dtl@tmpcount by -1\relax
+      \toks@{#2}%
+      \@dtl@toks=\expandafter{\@dtl@newlist}%
+      \edef\@dtl@newlist{\the\@dtl@toks
+        \noexpand\db@row@elt@w% row header
+        \noexpand\db@row@id@w \number\@dtl@tmpcount
+          \noexpand\db@row@id@end@% row id
+         \the\toks@ % row contents
+        \noexpand\db@row@id@w \number\@dtl@tmpcount
+          \noexpand\db@row@id@end@% row id
+        \noexpand\db@row@elt@end@% row end
+      }%
+    \else
+      \toks@{#2}%
+      \@dtl@toks=\expandafter{\@dtl@newlist}%
+      \edef\@dtl@newlist{\the\@dtl@toks
+        \noexpand\db@row@elt@w% row header
+        \noexpand\db@row@id@w #1%
+          \noexpand\db@row@id@end@% row id
+         \the\toks@ % row contents
+        \noexpand\db@row@id@w #3%
+          \noexpand\db@row@id@end@% row id
+        \noexpand\db@row@elt@end@% row end
+      }%
+    \fi
+    \let\@dtl@donextdec=\@dtl@decrementrows
+  \fi
+  \@dtl@donextdec#4\@nil
+}
+\newcommand*{\DTLremoverow}[2]{%
+  \DTLifdbexists{#1}%
+  {%
+    \ifnum#2>0\relax
+      \expandafter\ifnum\csname dtlrows@#1\endcsname<#2\relax
+        \expandafter\ifnum\csname dtlrows@#1\endcsname=1\relax
+          \PackageError{datatool}{Can't remove row `\number#2' from
+            database `#1': no such row}{Database `#1' only has
+            1 row}%
+        \else
+          \PackageError{datatool}{Can't remove row `\number#2' from
+            database `#1': no such row}{Database `#1' only has
+            \expandafter\number\csname dtlrows@#1\endcsname\space
+            rows}%
+        \fi
+      \else
+        \@DTLremoverow{#1}{#2}%
+      \fi
+    \else
+      \PackageError{datatool}{Can't remove row \number#2: index
+        out of bounds}{Row indices start at 1}%
+    \fi
+  }%
+  {%
+    \PackageError{datatool}{Can't remove row: database `#1' doesn't
+      exist}{}%
+  }%
+}
+\newcommand*{\@DTLremoverow}[2]{%
+      \edef\dtl@dogetrow{\noexpand\dtlgetrow{#1}{\number#2}}%
+      \dtl@dogetrow
+      \expandafter\dtl@decrementrows\expandafter
+        {\dtlbeforerow}{#2}%
+      \expandafter\dtl@decrementrows\expandafter
+        {\dtlafterrow}{#2}%
+      \edef\dtl@tmp{\the\dtlbeforerow \the\dtlafterrow}%
+      \expandafter\global\csname dtldb@#1\endcsname
+        =\expandafter{\dtl@tmp}%
+      \expandafter\global\expandafter\advance
+        \csname dtlrows@#1\endcsname by -1\relax
+}
+\newcommand*{\DTLsumforkeys}[1][\boolean{true}\and
+ \DTLisnumerical{\DTLthisval}]{%
+  \def\@dtl@cond{#1}%
+  \@dtlsumforkeys
+}
+\newcommand*{\@dtlsumforkeys}[4][]{%
+  \def#4{0}%
+  \@for\@dtl@db@name:=#2\do{%
+    \@sDTLforeach{\@dtl@db@name}%
+    {#1}% assignment list
+    {%
+      \@for\@dtl@key:=#3\do{%
+        \@sdtl@getcolumnindex{\@dtl@col}{\@dtl@db@name}{\@dtl@key}%
+        \dtlcurrentrow=\expandafter{\dtl@thisrow}%
+        \dtlgetentryfromrow{\DTLthisval}{\@dtl@col}{\dtlcurrentrow}%
+        \expandafter\ifthenelse\expandafter{\@dtl@cond}%
+          {\DTLadd{#4}{#4}{\DTLthisval}}{}%
+      }%
+    }%
+  }%
+}
+\newcommand*{\DTLsumcolumn}[3]{%
+  \def#3{0}%
+  \DTLifdbexists{#1}%
+  {%
+     \@sDTLifhaskey{#1}{#2}%
+     {%
+       \@sdtlforcolumn{\DTLthisval}{#1}{#2}%
+       {%
+         \DTLadd{#3}{#3}{\DTLthisval}%
+       }%
+     }%
+     {%
+       \PackageError{datatool}{Key `#2' doesn't
+         exist in database `#1'}{}%
+     }%
+  }%
+  {%
+    \PackageError{datatool}{Data base `#1' doesn't
+      exist}{}%
+  }%
+}
+\newcommand*{\DTLmeanforkeys}[1][\boolean{true}\and
+ \DTLisnumerical{\DTLthisval}]{%
+  \def\@dtl@cond{#1}%
+  \@dtlmeanforkeys
+}
+\newcount\@dtl@elements
+\newcommand*{\@dtlmeanforkeys}[4][]{%
+  \def#4{0}%
+  \@dtl@elements=0\relax
+  \@for\@dtl@db@name:=#2\do{%
+    \@sDTLforeach{\@dtl@db@name}%
+    {#1}% assignment list
+    {%
+      \@for\@dtl@key:=#3\do{%
+        \@sdtl@getcolumnindex{\@dtl@col}{\@dtl@db@name}{\@dtl@key}%
+        \dtlcurrentrow=\expandafter{\dtl@thisrow}%
+        \dtlgetentryfromrow{\DTLthisval}{\@dtl@col}{\dtlcurrentrow}%
+        \expandafter\ifthenelse\expandafter{\@dtl@cond}%
+        {%
+          \DTLadd{#4}{#4}{\DTLthisval}%
+          \advance\@dtl@elements by 1\relax
+        }{}%
+      }%
+    }%
+  }%
+  \ifnum\@dtl@elements=0\relax
+    \PackageError{datatool}{Unable to evaluate mean: no data}{}%
+  \else
+    \edef\@dtl@n{\number\@dtl@elements}%
+    \DTLdiv{#4}{#4}{\@dtl@n}%
+  \fi
+}
+\newcommand*{\DTLmeanforcolumn}[3]{%
+  \def#3{0}%
+  \@dtl@elements=0\relax
+  \DTLifdbexists{#1}%
+  {%
+     \@sDTLifhaskey{#1}{#2}%
+     {%
+       \@sdtlforcolumn{\DTLthisval}{#1}{#2}%
+       {%
+         \DTLadd{#3}{#3}{\DTLthisval}%
+         \advance\@dtl@elements by 1\relax
+       }%
+       \ifnum\@dtl@elements=0\relax
+         \PackageError{datatool}{Can't compute mean for
+          column `#2' in database `#1': no data}{}%
+       \else
+         \edef\@dtl@n{\number\@dtl@elements}%
+         \DTLdiv{#3}{#3}{\@dtl@n}%
+       \fi
+     }%
+     {%
+       \PackageError{datatool}{Key `#2' doesn't
+         exist in database `#1'}{}%
+     }%
+  }%
+  {%
+    \PackageError{datatool}{Data base `#1' doesn't
+      exist}{}%
+  }%
+}
+\newcommand*{\DTLvarianceforkeys}[1][\boolean{true}\and
+ \DTLisnumerical{\DTLthisval}]{%
+  \def\@dtl@cond{#1}%
+  \@dtlvarianceforkeys
+}
+\newcommand*{\@dtlvarianceforkeys}[4][]{%
+  \@dtlmeanforkeys[#1]{#2}{#3}{\dtl@mean}%
+  \def#4{0}%
+  \@dtl@elements=0\relax
+  \@for\@dtl@db@name:=#2\do{%
+    \@sDTLforeach{\@dtl@db@name}%
+    {#1}% assignment list
+    {%
+      \@for\@dtl@key:=#3\do{%
+        \@sdtl@getcolumnindex{\@dtl@col}{\@dtl@db@name}{\@dtl@key}%
+        \dtlcurrentrow=\expandafter{\dtl@thisrow}%
+        \dtlgetentryfromrow{\DTLthisval}{\@dtl@col}{\dtlcurrentrow}%
+        \expandafter\ifthenelse\expandafter{\@dtl@cond}%
+        {%
+           \DTLsub{\dtl@diff}{\DTLthisval}{\dtl@mean}%
+           \DTLmul{\dtl@diff}{\dtl@diff}{\dtl@diff}%
+           \DTLadd{#4}{#4}{\dtl@diff}%
+           \advance\@dtl@elements by 1\relax
+        }{}%
+      }%
+    }%
+  }%
+  \ifnum\@dtl@elements=0\relax
+    \PackageError{datatool}{Unable to evaluate variance: no data}{}%
+  \else
+    \edef\@dtl@n{\number\@dtl@elements}%
+    \DTLdiv{#4}{#4}{\@dtl@n}%
+  \fi
+}
+\newcommand*{\DTLvarianceforcolumn}[3]{%
+  \DTLmeanforcolumn{#1}{#2}{\dtl@mean}%
+  \def#3{0}%
+  \@dtl@elements=0\relax
+  \DTLifdbexists{#1}%
+  {%
+     \@sDTLifhaskey{#1}{#2}%
+     {%
+       \@sdtlforcolumn{\DTLthisval}{#1}{#2}%
+       {%
+         \DTLsub{\dtl@diff}{\DTLthisval}{\dtl@mean}%
+         \DTLmul{\dtl@diff}{\dtl@diff}{\dtl@diff}%
+         \DTLadd{#3}{#3}{\dtl@diff}%
+         \advance\@dtl@elements by 1\relax
+       }%
+       \ifnum\@dtl@elements=0\relax
+         \PackageError{datatool}{Can't compute variance for
+          column `#2' in database `#1': no data}{}%
+       \else
+         \edef\@dtl@n{\number\@dtl@elements}%
+         \DTLdiv{#3}{#3}{\@dtl@n}%
+       \fi
+     }%
+     {%
+       \PackageError{datatool}{Key `#2' doesn't
+         exist in database `#1'}{}%
+     }%
+  }%
+  {%
+    \PackageError{datatool}{Data base `#1' doesn't
+      exist}{}%
+  }%
+}
+\newcommand*{\DTLsdforkeys}[1][\boolean{true}\and
+\DTLisnumerical{\DTLthisval}]{%
+  \def\@dtl@cond{#1}%
+  \@dtlsdforkeys
+}
+\newcommand*{\@dtlsdforkeys}[4][]{%
+  \@dtlvarianceforkeys[#1]{#2}{#3}{#4}%
+  \DTLsqrt{#4}{#4}%
+}
+\newcommand*{\DTLsdforcolumn}[3]{%
+  \DTLvarianceforcolumn{#1}{#2}{#3}%
+  \DTLsqrt{#3}{#3}%
+}
+\newcommand*{\DTLminforkeys}[1][\boolean{true}\and
+ \DTLisnumerical{\DTLthisval}]{%
+  \def\@dtl@cond{#1}%
+  \@dtlminforkeys
+}
+\newcommand*{\@dtlminforkeys}[4][]{%
+  \def#4{}%
+  \@for\@dtl@db@name:=#2\do{%
+    \@sDTLforeach{\@dtl@db@name}%
+    {#1}% assignment list
+    {%
+      \@for\@dtl@key:=#3\do{%
+        \@sdtl@getcolumnindex{\@dtl@col}{\@dtl@db@name}{\@dtl@key}%
+        \dtlcurrentrow=\expandafter{\dtl@thisrow}%
+        \dtlgetentryfromrow{\DTLthisval}{\@dtl@col}{\dtlcurrentrow}%
+        \expandafter\ifthenelse\expandafter{\@dtl@cond}%
+        {%
+          \ifdefempty{#4}%
+          {%
+            \let#4\DTLthisval
+          }%
+          {%
+            \DTLmin{#4}{#4}{\DTLthisval}%
+          }%
+        }{}%
+      }%
+    }%
+  }%
+}
+\newcommand*{\DTLminforcolumn}[3]{%
+  \def#3{}%
+  \DTLifdbexists{#1}%
+  {%
+     \@sDTLifhaskey{#1}{#2}%
+     {%
+       \@sdtlforcolumn{\DTLthisval}{#1}{#2}%
+       {%
+         \ifdefempty{#3}%
+         {%
+           \let#3\DTLthisval
+         }%
+         {%
+           \DTLmin{#3}{#3}{\DTLthisval}%
+         }%
+       }%
+     }%
+     {%
+       \PackageError{datatool}{Key `#2' doesn't
+         exist in database `#1'}{}%
+     }%
+  }%
+  {%
+    \PackageError{datatool}{Data base `#1' doesn't
+      exist}{}%
+  }%
+}
+\newcommand*{\DTLmaxforkeys}[1][\boolean{true}\and
+ \DTLisnumerical{\DTLthisval}]{%
+  \def\@dtl@cond{#1}%
+  \@dtlmaxforkeys
+}
+\newcommand*{\@dtlmaxforkeys}[4][]{%
+  \def#4{}%
+  \@for\@dtl@db@name:=#2\do{%
+    \@sDTLforeach{\@dtl@db@name}%
+    {#1}% assignment list
+    {%
+      \@for\@dtl@key:=#3\do{%
+        \@sdtl@getcolumnindex{\@dtl@col}{\@dtl@db@name}{\@dtl@key}%
+        \dtlcurrentrow=\expandafter{\dtl@thisrow}%
+        \dtlgetentryfromrow{\DTLthisval}{\@dtl@col}{\dtlcurrentrow}%
+        \expandafter\ifthenelse\expandafter{\@dtl@cond}%
+        {%
+          \ifdefempty{#4}%
+          {%
+            \let#4\DTLthisval
+          }%
+          {%
+            \DTLmax{#4}{#4}{\DTLthisval}%
+          }%
+        }{}%
+      }%
+    }%
+  }%
+}
+\newcommand*{\DTLmaxforcolumn}[3]{%
+  \def#3{}%
+  \DTLifdbexists{#1}%
+  {%
+     \@sDTLifhaskey{#1}{#2}%
+     {%
+       \@sdtlforcolumn{\DTLthisval}{#1}{#2}%
+       {%
+         \ifdefempty{#3}%
+         {%
+           \let#3\DTLthisval
+         }%
+         {%
+           \DTLmax{#3}{#3}{\DTLthisval}%
+         }%
+       }%
+     }%
+     {%
+       \PackageError{datatool}{Key `#2' doesn't
+         exist in database `#1'}{}%
+     }%
+  }%
+  {%
+    \PackageError{datatool}{Data base `#1' doesn't
+      exist}{}%
+  }%
+}
+\newcommand*{\DTLcomputebounds}[8][\boolean{true}]{%
+\let#5=\relax
+\let#6=\relax
+\let#7=\relax
+\let#8=\relax
+\@for\dtl@thisdb:=#2\do{%
+  \@sDTLforeach[#1]{\dtl@thisdb}{\DTLthisX=#3,\DTLthisY=#4}{%
+    \expandafter\DTLconverttodecimal\expandafter{\DTLthisX}{\dtl@decx}%
+    \expandafter\DTLconverttodecimal\expandafter{\DTLthisY}{\dtl@decy}%
+    \ifx#5\relax
+      \let#5=\dtl@decx
+      \let#6=\dtl@decy
+      \let#7=\dtl@decx
+      \let#8=\dtl@decy
+    \else
+      \dtlmin{#5}{#5}{\dtl@decx}%
+      \dtlmin{#6}{#6}{\dtl@decy}%
+      \dtlmax{#7}{#7}{\dtl@decx}%
+      \dtlmax{#8}{#8}{\dtl@decy}%
+    \fi
+  }%
+}%
+}
+\newcommand*{\DTLgetvalueforkey}[5]{%
+  \DTLgetrowforkey{\@dtl@row}{#3}{#4}{#5}%
+  \@sdtl@getcolumnindex{\@dtl@col}{#3}{#2}%
+  {%
+    \dtlcurrentrow=\expandafter{\@dtl@row}%
+    \edef\@dtl@dogetval{\noexpand\dtlgetentryfromcurrentrow
+      {\noexpand\@dtl@val}{\@dtl@col}}%
+    \@dtl@dogetval
+    \global\let#1=\@dtl@val
+  }%
+}
+\newcommand*{\DTLgetrowforkey}[4]{%
+  \global\let#1=\@empty
+  \@sDTLforeach{#2}{\dtl@refvalue=#3}{%
+    \DTLifnull{\dtl@refvalue}%
+    {}%
+    {%
+      \ifthenelse{\equal{\dtl@refvalue}{#4}}%
+      {%
+        \xdef#1{\the\dtlcurrentrow}%
+        \dtlbreak
+      }%
+      {}%
+    }%
+  }%
+}
+\newtoks\@dtl@list
+\newcommand*{\DTLsort}{\@ifstar\@sDTLsort\@DTLsort}
+\newcommand{\@DTLsort}[3][]{%
+  \dtlsort[#1]{#2}{#3}{\dtlicompare}%
+}
+\newcommand*{\@sDTLsort}[3][]{%
+  \dtlsort[#1]{#2}{#3}{\dtlicompare}%
+}
+\newcommand{\dtlsort}[4][]{%
+  \DTLifdbexists{#3}%
+  {%
+     \ifnum\DTLrowcount{#3}>100\relax
+       \typeout{Sorting `#3' - this may take a while.}%
+     \fi
+    \edef\@dtl@replacementkeys{#1}%
+    \def\@dtl@sortorder{}%
+    \@for\@dtl@level:=#2\do
+    {%
+      \expandafter\@dtl@getsortdirection\@dtl@level=\relax
+      \DTLifhaskey{#3}{\@dtl@key}%
+      {%
+         \ifdefempty\@dtl@sortorder
+         {\let\@dtl@sortorder=\@dtl@level}%
+         {\eappto\@dtl@sortorder{,\@dtl@level}}%
+      }%
+      {%
+         \PackageError{datatool}%
+         {%
+            Can't sort on `\@dtl@level'.
+            No such key `\@dtl@key' in database `#3'%
+         }{}%
+      }%
+    }%
+    \ifdefempty\@dtl@sortorder
+    {%
+       \PackageWarning{datatool}{No keys provided to sort database `#3'}%
+    }%
+    {%
+      \let\@dtl@comparecs=#4%
+      \dtl@sortdata{#3}%
+    }%
+  }%
+  {%
+    \PackageError{datatool}{Database `#3' doesn't exist}{}%
+  }%
+}
+\newtoks\@dtl@rowa
+\newtoks\@dtl@rowb
+\newcommand*{\dtl@sortdata}[1]{%
+  \def\@dtl@sortedlist{}%
+  \edef\@dtl@dbname{#1}%
+  \@dtlforeachrow(\@dtl@rowAnum,\@dtl@rowAcontents)\in\@dtl@dbname\do{%
+    \@dtl@rowa=\expandafter{\@dtl@rowAcontents}%
+    \def\@dtl@newlist{}%
+  \@dtl@insertdonefalse
+  \dtlrownum=0\relax
+  \expandafter\@dtl@foreachrow\@dtl@sortedlist
+    \db@row@elt@w%
+    \db@row@id@w \@nil\db@row@id@end@%
+    \db@row@id@w \@nil\db@row@id@end@%
+    \db@row@elt@end@%
+    \@@{\@dtl@rowBnum}{\@dtl@rowBcontents}%
+    {%
+      \@dtl@rowb=\expandafter{\@dtl@rowBcontents}%
+      \dtlrownum=\@dtl@rowBnum
+      \if@dtl@insertdone
+        \advance\dtlrownum by 1\relax
+      \else
+        \@dtl@sortcriteria{\@dtl@rowa}{\@dtl@rowb}%
+        \ifnum\dtl@sortresult<0\relax
+          \toks@=\expandafter{\@dtl@newlist}%
+          \edef\@dtl@newlist{%
+            \the\toks@
+            \noexpand\db@row@elt@w%
+             \noexpand\db@row@id@w \number\dtlrownum
+             \noexpand\db@row@id@end@%
+             \the\@dtl@rowa
+             \noexpand\db@row@id@w \number\dtlrownum
+             \noexpand\db@row@id@end@%
+            \noexpand\db@row@elt@end@%
+          }%
+          \advance\dtlrownum by 1\relax
+          \@dtl@insertdonetrue
+        \fi
+      \fi
+      \toks@=\expandafter{\@dtl@newlist}%
+      \edef\@dtl@newlist{\the\toks@
+        \noexpand\db@row@elt@w%
+         \noexpand\db@row@id@w \number\dtlrownum
+         \noexpand\db@row@id@end@%
+         \the\@dtl@rowb
+         \noexpand\db@row@id@w \number\dtlrownum
+         \noexpand\db@row@id@end@%
+        \noexpand\db@row@elt@end@%
+      }%
+    }\q@nil
+    \if@dtl@insertdone
+    \else
+      \advance\dtlrownum by 1\relax
+      \toks@=\expandafter{\@dtl@newlist}%
+      \edef\@dtl@newlist{\the\toks@
+        \noexpand\db@row@elt@w%
+         \noexpand\db@row@id@w \number\dtlrownum
+         \noexpand\db@row@id@end@%
+         \the\@dtl@rowa
+         \noexpand\db@row@id@w \number\dtlrownum
+         \noexpand\db@row@id@end@%
+        \noexpand\db@row@elt@end@%
+      }%
+    \fi
+    \let\@dtl@sortedlist=\@dtl@newlist
+  }%
+  \expandafter\global\csname dtldb@#1\endcsname=\expandafter
+    {\@dtl@sortedlist}%
+}
+\newcommand{\@dtl@sortcriteria}[2]{%
+  \@for\@dtl@level:=\@dtl@sortorder\do
+  {%
+    \expandafter\@dtl@getsortdirection\@dtl@level=\relax
+    \let\@dtl@keya=\@dtl@key
+    \let\@dtl@keyb=\@dtl@key
+    \@sdtl@getcolumnindex{\@dtl@col}{\@dtl@dbname}{\@dtl@key}%
+    \dtlgetentryfromrow{\@dtl@a}{\@dtl@col}{#1}%
+    \dtlgetentryfromrow{\@dtl@b}{\@dtl@col}{#2}%
+    \ifx\@dtl@a\dtlnovalue
+      \@dtl@setnull{\@dtl@a}{\@dtl@key}%
+    \fi
+    \ifx\@dtl@b\dtlnovalue
+      \@dtl@setnull{\@dtl@b}{\@dtl@key}%
+    \fi
+    \DTLifnull{\@dtl@a}%
+    {%
+      \@for\@dtl@keya:=\@dtl@replacementkeys\do{%
+        \@sdtl@getcolumnindex{\@dtl@col}{\@dtl@dbname}{\@dtl@keya}%
+        \dtlgetentryfromrow{\@dtl@a}{\@dtl@col}{#1}%
+        \ifx\@dtl@a\dtlnovalue
+          \@dtl@setnull{\@dtl@a}{\@dtl@key}%
+        \fi
+        \DTLifnull{\@dtl@a}{}{\@endfortrue}%
+      }%
+      \ifx\@dtl@keya\@nnil
+        \let\@dtl@keya\@dtl@key
+        \@dtl@setnull{\@dtl@a}{\@dtl@key}%
+      \fi
+    }%
+    {}%
+    \DTLifnull{\@dtl@b}%
+    {%
+      \@for\@dtl@keyb:=\@dtl@replacementkeys\do{%
+        \@sdtl@getcolumnindex{\@dtl@col}{\@dtl@dbname}{\@dtl@keyb}%
+        \dtlgetentryfromrow{\@dtl@b}{\@dtl@col}{#2}%
+        \ifx\@dtl@b\dtlnovalue
+          \@dtl@setnull{\@dtl@b}{\@dtl@key}%
+        \fi
+        \DTLifnull{\@dtl@b}{}{\@endfortrue}%
+      }%
+      \ifx\@dtl@keyb\@nnil
+        \let\@dtl@keyb\@dtl@key
+        \@dtl@setnull{\@dtl@b}{\@dtl@key}%
+      \fi
+    }%
+    {}%
+    \@dtl@toksA=\expandafter{\@dtl@a}%
+    \@dtl@toksB=\expandafter{\@dtl@b}%
+    \edef\@dtl@docompare{\noexpand\dtl@compare@
+      {\@dtl@keya}{\@dtl@keyb}%
+      {\noexpand\@dtl@toksA}{\noexpand\@dtl@toksB}}%
+    \@dtl@docompare
+    \ifnum\dtl@sortresult=0\relax
+      \@endforfalse
+    \else
+      \@endfortrue
+    \fi
+  }%
+  \multiply\dtl@sortresult by -\@dtl@sortdirection\relax
+}
+\def\@dtl@getsortdirection#1=#2\relax{%
+  \def\@dtl@key{#1}%
+  \def\@dtl@sortdirection{#2}%
+  \ifdefempty{\@dtl@sortdirection}%
+  {%
+    \def\@dtl@sortdirection{-1}%
+  }%
+  {%
+    \@dtl@get@sortdirection#2%
+    \def\@dtl@dir{ascending}%
+    \ifx\@dtl@sortdirection\@dtl@dir
+      \def\@dtl@sortdirection{-1}%
+    \else
+      \def\@dtl@dir{descending}%
+      \ifx\@dtl@sortdirection\@dtl@dir
+        \def\@dtl@sortdirection{1}%
+      \else
+        \PackageError{datatool}{Invalid sort direction
+        `\@dtl@sortdirection'}{The sort direction can only be
+         one of `ascending' or `descending'}%
+        \def\@dtl@sortdirection{-1}%
+      \fi
+    \fi
+  }%
+}
+\def\@dtl@get@sortdirection#1={\def\@dtl@sortdirection{#1}}
+\newtoks\@dtl@toksA
+\newtoks\@dtl@toksB
+\newcommand{\dtl@compare}[3]{%
+  \dtl@compare@{#1}{#1}{#2}{#3}%
+}
+\newcommand{\dtl@compare@}[4]{%
+  \DTLgetdatatype{\@dtl@typeA}{\@dtl@dbname}{#1}%
+  \ifx\@dtl@typeA\DTLunsettype
+    \let\@dtl@typeA\DTLstringtype
+  \fi
+  \DTLgetdatatype{\@dtl@typeB}{\@dtl@dbname}{#2}%
+  \ifx\@dtl@typeB\DTLunsettype
+    \let\@dtl@typeB\DTLstringtype
+  \fi
+  \@dtl@tmpcount=\@dtl@typeA\relax
+  \multiply\@dtl@tmpcount by \@dtl@typeB\relax
+  \ifnum\@dtl@tmpcount=0\relax
+    \edef\@dtl@tmpcmp{%
+      \noexpand\@dtl@comparecs{\noexpand\dtl@sortresult}%
+        {\the#3}{\the#4}%
+      }%
+    \@dtl@tmpcmp
+    \ifdtlverbose
+      \edef\@dtl@a{\the#3}%
+      \edef\@dtl@b{\the#4}%
+    \fi
+  \else
+    \edef\@dtl@a{\the#3}%
+    \edef\@dtl@b{\the#4}%
+    \DTLifnumlt{\@dtl@a}{\@dtl@b}%
+    {%
+      \dtl@sortresult=-1\relax
+    }%
+    {%
+      \DTLifnumgt{\@dtl@a}{\@dtl@b}%
+      {%
+        \dtl@sortresult=1\relax
+      }%
+      {%
+        \dtl@sortresult=0\relax
+      }%
+    }%
+  \fi
+  \ifdtlverbose
+    \@onelevel@sanitize\@dtl@a
+    \@onelevel@sanitize\@dtl@b
+    \dtl@message{`\@dtl@a' <=> `\@dtl@b' = \number\dtl@sortresult}%
+  \fi
+}
+\newwrite\@dtl@write
+\newcommand*{\DTLsavedb}[2]{%
+  \DTLifdbexists{#1}%
+  {%
+    \openout\@dtl@write=#2\relax
+    \def\@dtl@header{}%
+    \dtlforeachkey(\@dtl@key,\@dtl@col,\@dtl@type,\@dtl@head)%
+      \in{#1}\do
+    {%
+      \IfSubStringInString{\@dtl@separator}{\@dtl@key}%
+      {%
+        \ifdefempty{\@dtl@header}%
+        {%
+          \protected@edef\@dtl@header{%
+            \@dtl@delimiter\@dtl@key\@dtl@delimiter}%
+        }%
+        {%
+          \toks@=\expandafter{\@dtl@header}%
+          \protected@edef\@dtl@header{%
+            \the\toks@\@dtl@separator
+            \@dtl@delimiter\@dtl@key\@dtl@delimiter}%
+        }%
+      }%
+      {%
+        \ifdefempty{\@dtl@header}%
+        {%
+          \protected@edef\@dtl@header{\@dtl@key}%
+        }%
+        {%
+          \toks@=\expandafter{\@dtl@header}%
+          \protected@edef\@dtl@header{\the\toks@
+            \@dtl@separator\@dtl@key}%
+        }%
+      }%
+    }%
+    \protected@write\@dtl@write{}{\@dtl@header}%
+    \@sDTLforeach{#1}{}%
+    {%
+      \def\@dtl@row{}%
+      \DTLforeachkeyinrow{\@dtl@val}%
+      {%
+        \IfSubStringInString{\@dtl@separator}{\@dtl@val}%
+        {%
+          \ifdefempty{\@dtl@row}%
+          {%
+            \protected@edef\@dtl@row{%
+              \@dtl@delimiter\@dtl@val\@dtl@delimiter}%
+          }%
+          {%
+            \toks@=\expandafter{\@dtl@row}%
+            \protected@edef\@dtl@row{\the\toks@\@dtl@separator
+              \@dtl@delimiter\@dtl@val\@dtl@delimiter}%
+          }%
+        }%
+        {%
+          \ifdefempty{\@dtl@row}%
+          {%
+            \protected@edef\@dtl@row{\@dtl@val}%
+          }%
+          {%
+            \toks@=\expandafter{\@dtl@row}%
+            \protected@edef\@dtl@row{\the\toks@\@dtl@separator
+              \@dtl@val}%
+          }%
+        }%
+      }%
+        \protected@write\@dtl@write{}{\@dtl@row}%
+    }%
+    \closeout\@dtl@write
+  }%
+  {%
+    \PackageError{datatool}{Can't save database `#1': no such
+      database}{}%
+  }%
+}
+\newcommand*{\DTLsavetexdb}[2]{%
+  \DTLifdbexists{#1}%
+  {%
+    \openout\@dtl@write=#2\relax
+    \protected@write\@dtl@write{}{\string\DTLnewdb{#1}}%
+    \@sDTLforeach{#1}{}%
+    {%
+      \protected@write\@dtl@write{}{\string\DTLnewrow*{#1}}%
+      \DTLforeachkeyinrow{\@dtl@val}%
+      {%
+        \DTLifnull{\@dtl@val}%
+        {\def\@dtl@val{}}%
+        {}%
+        \protected@write\@dtl@write{}{%
+          \string\DTLnewdbentry*{#1}{\dtlkey}{\@dtl@val}}%
+      }%
+    }%
+    \dtlforeachkey(\@dtl@k,\@dtl@c,\@dtl@t,\@dtl@h)\in{#1}\do
+    {%
+      \@onelevel@sanitize\@dtl@h
+      \protected@write\@dtl@write{}{%
+        \string\DTLsetheader*{#1}{\@dtl@k}{\@dtl@h}}%
+    }%
+    \protected@write{\@dtl@write}{}{\string\def\string\dtllastloadeddb{#1}}%
+    \closeout\@dtl@write
+  }%
+  {%
+    \PackageError{datatool}{Can't save database `#1': no such
+      database}{}%
+  }%
+}
+\newcommand*{\dtl@saverawdbhook}{}
+\newcommand*{\DTLsaverawdb}[2]{%
+  \DTLifdbexists{#1}%
+  {%
+    \openout\@dtl@write=#2\relax
+    \protected@write{\@dtl@write}{}{%
+      \string\DTLifdbexists{#1}\expandafter\@gobble\string\%^^J%
+      {%
+         \string\PackageError{datatool}{Database `#1' ^^Jalready exists}{}%
+         \expandafter\@gobble\string\%^^J%
+         \string\aftergroup\string\endinput
+      }%
+      {%
+      }\expandafter\@gobble\string\%
+    }%
+    {%
+      \def\db@row@elt@w{\expandafter\@gobble\string\%^^J\string\db@row@elt@w\space}%
+      \def\db@row@elt@end@{\expandafter\@gobble\string\%^^J\string\db@row@elt@end@\space}%
+      \def\db@row@id@w{\expandafter\@gobble\string\%^^J\string\db@row@id@w\space}%
+      \def\db@row@id@end@{\expandafter\@gobble\string\%^^J\string\db@row@id@end@\space}%
+      \def\db@col@elt@w{\expandafter\@gobble\string\%^^J\string\db@col@elt@w\space}%
+      \def\db@col@elt@end@{\expandafter\@gobble\string\%^^J\string\db@col@elt@end@\space}%
+      \def\db@col@id@w{\expandafter\@gobble\string\%^^J\string\db@col@id@w\space}%
+      \def\db@col@id@end@{\expandafter\@gobble\string\%^^J\string\db@col@id@end@\space}%
+      \def\db@plist@elt@w{\expandafter\@gobble\string\%^^J\string\db@plist@elt@w\space}%
+      \def\db@plist@elt@end@{\expandafter\@gobble\string\%^^J\string\db@plist@elt@end@\space}%
+      \def\db@key@id@w{\expandafter\@gobble\string\%^^J\string\db@key@id@w\space}%
+      \def\db@key@id@end@{\expandafter\@gobble\string\%^^J\string\db@key@id@end@\space}%
+      \def\db@type@id@w{\expandafter\@gobble\string\%^^J\string\db@type@id@w\space}%
+      \def\db@type@id@end@{\expandafter\@gobble\string\%^^J\string\db@type@id@end@\space}%
+      \def\db@header@id@w{\expandafter\@gobble\string\%^^J\string\db@header@id@w\space}%
+      \def\db@header@id@end@{\expandafter\@gobble\string\%^^J\string\db@header@id@end@\space}%
+      \protected@write{\@dtl@write}{}{\string\bgroup\string\makeatletter}%
+      \protected@write{\@dtl@write}{}{%
+        \string\dtl@message{Reconstructing database^^J`#1'}%
+        \expandafter\@gobble\string\%}%
+      \protected@write{\@dtl@write}{}{%
+       \string\expandafter
+       \string\global\string\expandafter^^J\string\newtoks
+       \string\csname\space dtlkeys@#1\string\endcsname}%
+      \protected@write{\@dtl@write}{}{%
+        \string\expandafter
+        \string\global^^J
+        \string\csname\space dtlkeys@#1\string\endcsname
+       =\expandafter\@gobble\string\{\expandafter\@gobble\string\%}%
+      \expandafter\protected@xdef\csname dtl@rawwritedbkeys@#1\endcsname{%
+        \the\csname dtlkeys@#1\endcsname}%
+      \protected@write{\@dtl@write}{}{\csname dtl@rawwritedbkeys@#1\endcsname}%
+      \protected@write{\@dtl@write}{}%
+         {\expandafter\@gobble\string\}\expandafter\@gobble\string\%}%
+      \dtl@saverawdbhook
+      \protected@write{\@dtl@write}{}{%
+       \string\expandafter\string\global
+       \string\expandafter^^J\string\newtoks
+         \string\csname\space dtldb@#1\string\endcsname}%
+      \protected@write{\@dtl@write}{}{%
+        \string\expandafter
+        \string\global^^J\string\csname\space dtldb@#1\string\endcsname
+       =\expandafter\@gobble\string\{\expandafter\@gobble\string\%}%
+      \expandafter\protected@xdef\csname dtl@rawwritedb@#1\endcsname{\the\csname dtldb@#1\endcsname}%
+      \protected@write{\@dtl@write}{}{\csname dtl@rawwritedb@#1\endcsname}%
+      \protected@write{\@dtl@write}{}{\expandafter\@gobble\string\}\expandafter\@gobble\string\%}%
+      \protected@write{\@dtl@write}{}{\string\expandafter\string\global^^J
+       \string\expandafter\string\newcount
+       \string\csname\space dtlrows@#1\string\endcsname}%
+      \protected@write{\@dtl@write}{}{\string\expandafter\string\global^^J
+       \string\csname\space dtlrows@#1\string\endcsname
+        =\expandafter\number\csname dtlrows@#1\endcsname\string\relax}%
+      \protected@write{\@dtl@write}{}{\string\expandafter\string\global^^J
+       \string\expandafter\string\newcount
+       \string\csname\space dtlcols@#1\string\endcsname}%
+      \protected@write{\@dtl@write}{}{\string\expandafter\string\global^^J
+       \string\csname\space dtlcols@#1\string\endcsname
+        =\expandafter\number\csname dtlcols@#1\endcsname\string\relax}%
+    \dtlforeachkey(\@dtl@key,\@dtl@col,\@dtl@type,\@dtl@head)\in{#1}\do
+    {%
+      \edef\dtl@tmp{%
+        \string\expandafter^^J
+        \string\gdef
+        \string\csname\space dtl@ci@#1@\@dtl@key\string\endcsname
+        {\csname dtl@ci@#1@\@dtl@key\endcsname}\expandafter\@gobble\string\%
+      }%
+      \expandafter\write\expandafter\@dtl@write\expandafter{\dtl@tmp}%
+    }%
+      \protected@write{\@dtl@write}{}{\string\egroup}%
+    }%
+    \protected@write{\@dtl@write}{}{\string\def\string\dtllastloadeddb{#1}}%
+    \closeout\@dtl@write
+  }%
+  {%
+    \PackageError{datatool}{Can't save database `#1': no such
+      database}{}%
+  }%
+}
+\newcommand*{\DTLprotectedsaverawdb}[2]{%
+  \DTLifdbexists{#1}%
+  {%
+    \openout\@dtl@write=#2\relax
+    \protected@write{\@dtl@write}{}{%
+      \string\DTLifdbexists{#1}\expandafter\@gobble\string\%^^J%
+      {%
+         \string\PackageError{datatool}{Database `#1' ^^Jalready exists}{}%
+         \expandafter\@gobble\string\%^^J%
+         \string\aftergroup\string\endinput
+      }%
+      {%
+      }\expandafter\@gobble\string\%
+    }%
+    {%
+      \protected@write{\@dtl@write}{}{\string\bgroup\string\makeatletter}%
+      \protected@write{\@dtl@write}{}{\string\dtl@message{Reconstructing database
+        ^^J`#1'}\expandafter\@gobble\string\%}%
+      \protected@write{\@dtl@write}{}{%
+       \string\expandafter
+       \string\global\string\expandafter^^J\string\newtoks
+       \string\csname\space dtlkeys@#1\string\endcsname}%
+      \protected@write{\@dtl@write}{}{%
+        \string\expandafter
+        \string\global^^J
+        \string\csname\space dtlkeys@#1\string\endcsname
+       =\expandafter\@gobble\string\{\expandafter\@gobble\string\%}%
+      \edef\dtl@rawwrite@keys{\the\csname dtlkeys@#1\endcsname}%
+      \@onelevel@sanitize\dtl@rawwrite@keys
+      \expandafter\write\expandafter\@dtl@write\expandafter
+         {\dtl@rawwrite@keys\expandafter\@gobble\string\}}%
+      \protected@write{\@dtl@write}{}{%
+       \string\expandafter\string\global
+       \string\expandafter^^J\string\newtoks
+         \string\csname\space dtldb@#1\string\endcsname}%
+      \protected@write{\@dtl@write}{}{%
+        \string\expandafter
+        \string\global^^J\string\csname\space dtldb@#1\string\endcsname
+       =\expandafter\@gobble\string\{\expandafter\@gobble\string\%}%
+      \edef\dtl@rawwrite@db{\the\csname dtldb@#1\endcsname}%
+      \@onelevel@sanitize\dtl@rawwrite@db
+      \expandafter\write\expandafter\@dtl@write\expandafter
+         {\dtl@rawwrite@db\expandafter\@gobble\string\}}%
+      \protected@write{\@dtl@write}{}{\string\expandafter\string\global^^J
+       \string\expandafter\string\newcount
+       \string\csname\space dtlrows@#1\string\endcsname}%
+      \protected@write{\@dtl@write}{}{\string\expandafter\string\global^^J
+       \string\csname\space dtlrows@#1\string\endcsname
+        =\expandafter\number\csname dtlrows@#1\endcsname\string\relax}%
+      \protected@write{\@dtl@write}{}{\string\expandafter\string\global^^J
+       \string\expandafter\string\newcount
+       \string\csname\space dtlcols@#1\string\endcsname}%
+      \protected@write{\@dtl@write}{}{\string\expandafter\string\global^^J
+       \string\csname\space dtlcols@#1\string\endcsname
+        =\expandafter\number\csname dtlcols@#1\endcsname\string\relax}%
+    \dtlforeachkey(\@dtl@key,\@dtl@col,\@dtl@type,\@dtl@head)\in{#1}\do
+    {%
+      \edef\dtl@tmp{%
+        \string\expandafter^^J
+        \string\gdef
+        \string\csname\space dtl@ci@#1@\@dtl@key\string\endcsname
+        {\csname dtl@ci@#1@\@dtl@key\endcsname}\expandafter\@gobble\string\%
+      }%
+      \expandafter\write\expandafter\@dtl@write\expandafter{\dtl@tmp}%
+    }%
+      \protected@write{\@dtl@write}{}{\string\egroup}%
+    }%
+    \protected@write{\@dtl@write}{}{\string\def\string\dtllastloadeddb{#1}}%
+    \closeout\@dtl@write
+  }%
+  {%
+    \PackageError{datatool}{Can't save database `#1': no such
+      database}{}%
+  }%
+}
+\newcommand*{\DTLloaddbtex}[2]{%
+  \IfFileExists{#2}%
+  {%
+    \input{#2}%
+    \ifdef#1%
+    {%
+      \PackageError{datatool}{Command \string#1\space is already defined}%
+      {}%
+    }%
+    {%
+      \let#1\dtllastloadeddb
+    }%
+  }%
+  {%
+    \PackageError{datatool}{File `#2' doesn't exist.}{}%
+  }%
+}
+\newread\@dtl@read
+\newcount\dtl@entrycr
+\define@boolkey{loaddb}[dtl]{noheader}[true]{}
+\define@key{loaddb}{keys}{%
+  \dtl@entrycr=0\relax
+  \@for\@dtl@key:=#1\do
+  {%
+    \advance\dtl@entrycr by 1\relax
+    \expandafter
+      \edef\csname @dtl@inky@\romannumeral\dtl@entrycr\endcsname{%
+        \@dtl@key}%
+  }%
+}
+\define@key{loaddb}{headers}{%
+  \dtl@entrycr=0\relax
+  \@for\@dtl@head:=#1\do
+  {%
+    \advance\dtl@entrycr by 1\relax
+    \toks@=\expandafter{\@dtl@head}%
+    \expandafter
+      \edef\csname @dtl@inhd@\romannumeral\dtl@entrycr\endcsname{%
+        \the\toks@}%
+  }%
+}
+\newcount{\dtl@omitlines}
+\define@key{loaddb}{omitlines}{\dtl@omitlines=#1\relax}
+\newcommand*{\dtldefaultkey}{Column}
+\newcommand*{\@dtl@readline}[2]{%
+  \read#1 to #2%
+  \ifdefempty{#2}%
+  {%
+  }%
+  {%
+    \dtl@trim#2%
+  }%
+}
+\newcommand*{\@dtl@readrawline}[2]{%
+  \@dtl@rawread#1 to #2%
+  \dtl@trim#2%
+  \dtl@domappings\@dtl@line
+}
+\newif\ifDTLnewdbonload
+\DTLnewdbonloadtrue
+\newcommand*{\DTLloaddb}{%
+  \let\@dtl@doreadline\@dtl@readline
+  \@dtlloaddb
+}
+\newcommand*{\@dtlloaddb}[3][]{%
+  \IfFileExists{#3}{%
+  \begingroup
+    \catcode`\"12\relax
+     \dtlnoheaderfalse
+     \setkeys{loaddb}{#1}%
+    \openin\@dtl@read=#3%
+    \dtl@message{Reading `#3'}%
+    \loop
+    \ifnum \dtl@omitlines > \z@
+      \advance\dtl@omitlines by \m@ne
+      \read\@dtl@read to \@dtl@line
+    \repeat
+    \ifDTLnewdbonload
+     \DTLnewdb{#2}%
+    \fi
+    \ifeof\@dtl@read
+      \PackageWarning{datatool}{File `#3' has no data}%
+    \else
+      \ifdtlnoheader
+      \else
+        \loop
+          \@dtl@conditionfalse
+          \ifeof\@dtl@read
+          \else
+            \@dtl@doreadline\@dtl@read\@dtl@line
+            \ifdefempty{\@dtl@line}%
+            {%
+              \@dtl@conditiontrue
+            }%
+            {%
+            }%
+          \fi
+        \if@dtl@condition
+        \repeat
+        \protected@edef\@dtl@lin@{%
+           \@dtl@separator\@dtl@line\@dtl@separator}%
+        \dtl@entrycr=0\relax
+       \loop
+        \expandafter\@dtl@lopoff\@dtl@lin@\to\@dtl@lin@\@dtl@key
+        \advance\dtl@entrycr by 1\relax
+        \ifdefempty{\@dtl@key}%
+        {%
+          \edef\@dtl@key{\dtldefaultkey\number\dtl@entrycr}%
+        }%
+        {}%
+        \expandafter\@dtl@toks\expandafter{\@dtl@key}%
+        \@ifundefined{@dtl@inky@\romannumeral\dtl@entrycr}%
+        {%
+          \expandafter
+            \edef\csname @dtl@inky@\romannumeral
+              \dtl@entrycr\endcsname{\the\@dtl@toks}%
+        }%
+        {%
+          \@ifundefined{@dtl@inhd@\romannumeral\dtl@entrycr}%
+          {%
+            \expandafter
+              \edef\csname @dtl@inhd@\romannumeral
+                \dtl@entrycr\endcsname{\the\@dtl@toks}%
+          }%
+          {}%
+        }%
+        \ifx\@dtl@lin@\@dtl@separator
+          \@dtl@conditionfalse
+        \else
+          \@dtl@conditiontrue
+        \fi
+       \if@dtl@condition
+       \repeat
+      \fi
+       \ifeof\@dtl@read
+          \ifdtlnoheader
+            \PackageWarning{datatool}{No data in `#3'}%
+          \else
+            \PackageWarning{datatool}{Only header row found in `#3'}%
+          \fi
+       \else
+         \@dtl@conditiontrue
+         \loop
+          \@dtl@doreadline\@dtl@read\@dtl@line
+           \ifdefempty{\@dtl@line}%
+           {%
+           }%
+           {%
+             \@sDTLnewrow{#2}%
+             \expandafter\@dtl@toks\expandafter{\@dtl@line}%
+             \edef\@dtl@lin@{\@dtl@separator\the\@dtl@toks
+               \@dtl@separator}%
+             \dtl@entrycr=0\relax
+             {%
+               \@dtl@conditiontrue
+               \loop
+                 \expandafter\@dtl@lopoff\@dtl@lin@\to
+                   \@dtl@lin@\@dtl@thisentry
+                 \advance\dtl@entrycr by 1\relax
+                 \@ifundefined{@dtl@inky@\romannumeral\dtl@entrycr}%
+                 {%
+                   \edef\@dtl@thiskey{\dtldefaultkey
+                     \number\dtl@entrycr}%
+                   \expandafter\let
+                     \csname @dtl@inky@\romannumeral
+                       \dtl@entrycr\endcsname\@dtl@thiskey
+                 }%
+                 {%
+                   \edef\@dtl@thiskey{%
+                     \csname @dtl@inky@\romannumeral
+                       \dtl@entrycr\endcsname}%
+                 }%
+                 \expandafter\@dtl@toks\expandafter{\@dtl@thisentry}%
+                 \edef\@do@dtlnewentry{\noexpand\@sDTLnewdbentry
+                   {#2}{\@dtl@thiskey}{\the\@dtl@toks}}%
+                 \@do@dtlnewentry
+                 \ifx\@dtl@lin@\@dtl@separator
+                   \@dtl@conditionfalse
+                 \fi
+               \if@dtl@condition
+               \repeat
+             }%
+         }%
+         \ifeof\@dtl@read \@dtl@conditionfalse\fi
+         \if@dtl@condition
+         \repeat
+       \fi
+    \fi
+    \closein\@dtl@read
+     \edef\@dtl@maxcols{\expandafter
+       \number\csname dtlcols@#2\endcsname}%
+     \dtlgforint\dtl@entrycr=1\to\@dtl@maxcols\step1\do
+     {%
+       \@ifundefined{@dtl@inhd@\romannumeral\dtl@entrycr}%
+       {}%
+       {%
+          \expandafter\let\expandafter\@dtl@head
+            \csname @dtl@inhd@\romannumeral\dtl@entrycr\endcsname
+          \@dtl@toks=\expandafter{\@dtl@head}%
+          \edef\@dtl@dosetheader{\noexpand\@dtl@setheaderforindex
+            {#2}{\number\dtl@entrycr}{\the\@dtl@toks}}%
+          \@dtl@dosetheader
+       }%
+     }%
+  \endgroup
+  }{%
+    \PackageError{datatool}{Can't load database `#2' (file `#3'
+    doesn't exist)}{}%
+  }%
+}
+\newcommand{\dtl@trim}[1]{%
+  \def\@dtl@trmstr{}%
+  \expandafter\@dtl@starttrim#1\@nil
+  \let#1=\@dtl@trmstr
+}
+\long\def\@dtl@starttrim#1#2{%
+  \def\@dtl@tmpB{#2}%
+  \ifx\par#1%
+   \def\@dtl@dotrim{\@dtl@trim{} #2}%
+  \else
+    \ifx\@dtl@tmpB\@nnil
+      \def\@dtl@dotrim{}%
+      \def\@dtl@trmstr{#1}%
+    \else
+      \def\@dtl@dotrim{\@dtl@trim#1#2}%
+    \fi
+  \fi
+  \@dtl@dotrim
+}
+\long\def\@dtl@trim#1 \@nil{\long\def\@dtl@trmstr{#1}}
+\newcommand*\DTLloadrawdb{%
+  \let\@dtl@doreadline\@dtl@readrawline
+  \@dtlloaddb
+}
+\begingroup
+\catcode`\%=\active
+\catcode`$=\active
+\catcode`&=\active
+\catcode`~=\active
+\catcode`_=\active
+\catcode`^=\active
+\catcode`#=\active
+\catcode`?=6\relax
+\catcode`<=1\relax
+\catcode`>=2\relax
+\catcode`\{=\active
+\catcode`\}=\active
+\gdef\@dtl@rawread?1to?2<\relax
+<<\catcode`\%=\active
+\catcode`$=\active
+\catcode`&=\active
+\catcode`~=\active
+\catcode`_=\active
+\catcode`^=\active
+\catcode`#=\active
+\catcode`\{=\active
+\catcode`\}=\active
+\def%<\noexpand\%>\relax
+\def$<\noexpand\$>\relax
+\def&<\&>\relax
+\def#<\#>\relax
+\def~<\noexpand\textasciitilde>\relax
+\def_<\noexpand\_>\relax
+\def^<\noexpand\textasciicircum>\relax
+\@dtl@activatebraces
+\@dtl@doreadraw?1?2>>>
+\gdef\@dtl@doreadraw?1?2<\relax
+\read?1 to \tmp
+\xdef?2<\tmp>\relax
+>
+\endgroup
+\begingroup
+\catcode`\{=\active
+\catcode`\}=\active
+\catcode`<=1\relax
+\catcode`>=2\relax
+\gdef\@dtl@activatebraces<%
+ \catcode`\{=\active
+ \catcode`\}=\active
+ \def{<\noexpand\{>%
+ \def}<\noexpand\}>%
+>%
+\endgroup
+\newcommand*{\DTLrawmap}[2]{%
+  \expandafter\@dtl@toks\expandafter{\@dtl@rawmappings}%
+  \ifdefempty{\@dtl@rawmappings}%
+  {%
+    \def\@dtl@rawmappings{{#1}{#2}}%
+  }%
+  {%
+    \def\@dtl@tmp{{#1}{#2}}%
+    \protected@edef\@dtl@rawmappings{\the\@dtl@toks,\@dtl@tmp}%
+  }%
+}
+\newcommand*{\@dtl@rawmappings}{}
+\newcommand*{\dtl@domappings}[1]{%
+  \@for\@dtl@map:=\@dtl@rawmappings\do{%
+    \expandafter\DTLsubstituteall\expandafter#1\@dtl@map
+  }%
+}
+\newcommand*{\dtlshowdb}[1]{%
+  \expandafter\showthe\csname dtldb@#1\endcsname
+}
+\newcommand*{\dtlshowdbkeys}[1]{%
+  \expandafter\showthe\csname dtlkeys@#1\endcsname
+}
+\newcommand*{\dtlshowtype}[2]{%
+  \DTLgetdatatype{\@dtl@type}{#1}{#2}\show\@dtl@type
+}
+\endinput
+%%
+%% End of file `datatool.sty'.

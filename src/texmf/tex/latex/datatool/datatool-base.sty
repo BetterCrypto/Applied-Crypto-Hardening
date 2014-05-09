@@ -1,0 +1,2758 @@
+%%
+%% This is file `datatool-base.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% datatool.dtx  (with options: `datatool-base.sty,package')
+%% 
+%%  datatool.dtx
+%%  Copyright 2014 Nicola Talbot
+%% 
+%%  This work may be distributed and/or modified under the
+%%  conditions of the LaTeX Project Public License, either version 1.3
+%%  of this license of (at your option) any later version.
+%%  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%%  and version 1.3 or later is part of all distributions of LaTeX
+%%  version 2005/12/01 or later.
+%% 
+%%  This work has the LPPL maintenance status `maintained'.
+%% 
+%%  The Current Maintainer of this work is Nicola Talbot.
+%% 
+%%  This work consists of the files datatool.dtx and datatool.ins and the derived files datatool-base.sty, datatool-fp.sty, datatool-pgfmath.sty, datatool.sty, datagidx.sty, databib.sty, databar.sty, datapie.sty, dataplot.sty, person.sty, databib.bst.
+%% 
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{datatool-base}[2013/09/06 v2.18 (NLCT)]
+\RequirePackage{etoolbox}
+\RequirePackage{amsmath}
+\RequirePackage{xkeyval}
+\RequirePackage{xfor}
+\RequirePackage{ifthen}
+\RequirePackage{substr}[2009/10/20]
+\ifundef{\ifdtlverbose}
+{
+  \define@boolkey{datatool-base.sty}[dtl]{verbose}[true]{}
+}%
+{}
+\define@choicekey{datatool-base.sty}{math}[\val\nr]{fp,pgfmath}{%
+  \renewcommand*\@dtl@mathprocessor{#1}%
+}
+\providecommand*{\@dtl@mathprocessor}{fp}
+\ProcessOptionsX
+\RequirePackage{datatool-\@dtl@mathprocessor}
+\newcommand*{\dtl@message}[1]{%
+  \ifdtlverbose\typeout{#1}\fi
+}
+\newtoks\@dtl@toks
+\newcount\@dtl@tmpcount
+\newlength\dtl@tmplength
+\newcommand{\dtl@ifsingle}[3]{%
+  \def\@dtl@arg{#1}%
+  \ifdefempty{\@dtl@arg}%
+  {%
+    #3%
+  }%
+  {%
+    \@dtl@ifsingle#1\@nil{#2}{#3}%
+  }%
+}
+\def\@dtl@ifsingle#1#2\@nil#3#4{%
+  \def\dtl@sg@arg{#2}%
+  \ifdefempty{\dtl@sg@arg}%
+  {%
+   #3%
+  }%
+  {%
+   #4%
+  }%
+}
+\newcommand{\dtlifintopenbetween}[5]{%
+  \ifnum#1>#2\relax
+    \ifnum#1<#3\relax
+      #4%
+    \else
+      #5%
+    \fi
+  \else
+    #5%
+  \fi
+}
+\newcommand{\dtlifintclosedbetween}[5]{%
+  \dtlifintopenbetween{#1}{#2}{#3}{#4}%
+  {%
+    \ifnum#1=#2\relax
+      #4%
+    \else
+      \ifnum#1=#3\relax
+        #4%
+      \else
+        #5%
+      \fi
+    \fi
+  }%
+}
+\long\def\long@collect@body#1{%
+  \@envbody{\@xp#1\@xp{\the\@envbody}}%
+  \edef\process@envbody{\the\@envbody\@nx\end{\@currenvir}}%
+  \@envbody\@emptytoks \def\begin@stack{b}%
+  \begingroup
+  \@xp\let\csname\@currenvir\endcsname\long@collect@@body
+  \edef\process@envbody{\@xp\@nx\csname\@currenvir\endcsname}%
+  \process@envbody
+}
+\long\def\long@addto@envbody#1{%
+  \toks@{#1}%
+  \edef\@dtl@tmp{\the\@envbody\the\toks@}%
+  \global\@envbody\@xp{\@dtl@tmp}%
+}
+\long\def\long@collect@@body#1\end#2{%
+  \protected@edef\begin@stack{%
+    \long@push@begins#1\begin\end \@xp\@gobble\begin@stack
+  }%
+  \ifx\@empty\begin@stack
+    \endgroup
+    \@checkend{#2}%
+    \long@addto@envbody{#1}%
+  \else
+    \long@addto@envbody{#1\end{#2}}%
+  \fi
+  \process@envbody
+}
+\long\def\long@push@begins#1\begin#2{%
+  \ifx\end#2\else b\@xp\long@push@begins\fi
+}
+\newcommand*{\DTLifinlist}[4]{%
+  \def\@dtl@doifinlist##1,#1,##2\end@dtl@doifinlist{%
+     \def\@before{##1}%
+     \def\@after{##2}%
+  }%
+  \expandafter\@dtl@doifinlist\expandafter,#2,#1,\@nil
+    \end@dtl@doifinlist
+  \ifx\@after\@nnil
+    #4%
+  \else
+    #3%
+  \fi
+}
+\newcommand*{\DTLnumitemsinlist}[2]{%
+  \@dtl@tmpcount=0\relax
+  \@for\@dtl@element:=#1\do{%
+     \ifdefempty{\@dtl@element}%
+     {}%
+     {\advance\@dtl@tmpcount by 1\relax}%
+  }%
+  \edef#2{\number\@dtl@tmpcount}%
+}
+\newcommand*{\dtl@choplast}[3]{%
+  \let#2\@empty
+  \let#3\@empty
+  \@for\@dtl@element:=#1\do{%
+    \ifdefempty{#3}%
+    {%
+    }%
+    {%
+      \ifdefempty{#2}%
+      {%
+        \expandafter\toks@\expandafter{#3}%
+        \edef#2{{\the\toks@}}%
+      }%
+      {%
+        \expandafter\toks@\expandafter{#3}%
+        \expandafter\@dtl@toks\expandafter{#2}%
+        \edef#2{\the\@dtl@toks,{\the\toks@}}%
+      }%
+    }%
+    \let#3=\@dtl@element%
+  }%
+}
+\newcommand*{\dtl@chopfirst}[3]{%
+  \let#2=\@empty
+  \let#3=\@empty
+  \@for\@dtl@element:=#1\do{%
+    \let#2=\@dtl@element
+    \@endfortrue
+  }%
+  \if@endfor
+   \let#3=\@forremainder
+  \fi
+  \@endforfalse
+}
+\newcommand{\dtl@sortlist}[2]{%
+\def\@dtl@sortedlist{}%
+\@for\@dtl@currentrow:=#1\do{%
+\expandafter\dtl@insertinto\expandafter
+  {\@dtl@currentrow}{\@dtl@sortedlist}{#2}%
+\@endforfalse}%
+\let#1=\@dtl@sortedlist
+}
+\newcommand{\dtl@insertinto}[3]{%
+  \def\@dtl@newsortedlist{}%
+  \@dtl@insertdonefalse
+  \@for\dtl@srtelement:=#2\do{%
+    \if@dtl@insertdone
+      \expandafter\toks@\expandafter{\dtl@srtelement}%
+      \edef\@dtl@newstuff{{\the\toks@}}%
+    \else
+      \expandafter#3\expandafter{\dtl@srtelement}{#1}%
+      \ifnum\dtl@sortresult<0\relax
+        \expandafter\toks@\expandafter{\dtl@srtelement}%
+        \@dtl@toks{#1}%
+        \edef\@dtl@newstuff{{\the\@dtl@toks},{\the\toks@}}%
+        \@dtl@insertdonetrue
+      \else
+        \expandafter\toks@\expandafter{\dtl@srtelement}%
+        \edef\@dtl@newstuff{{\the\toks@}}%
+      \fi
+    \fi
+    \ifdefempty{\@dtl@newsortedlist}%
+    {%
+      \expandafter\toks@\expandafter{\@dtl@newstuff}%
+      \edef\@dtl@newsortedlist{\the\toks@}%
+    }%
+    {%
+      \expandafter\toks@\expandafter{\@dtl@newsortedlist}%
+      \expandafter\@dtl@toks\expandafter{\@dtl@newstuff}%
+      \edef\@dtl@newsortedlist{\the\toks@,\the\@dtl@toks}%
+    }%
+    \@endforfalse
+  }%
+  \ifdefempty{\@dtl@newsortedlist}%
+  {%
+    \@dtl@toks{#1}%
+    \edef\@dtl@newsortedlist{{\the\@dtl@toks}}%
+  }%
+  {%
+    \if@dtl@insertdone
+    \else
+      \expandafter\toks@\expandafter{\@dtl@newsortedlist}%
+      \@dtl@toks{#1}%
+      \edef\@dtl@newsortedlist{\the\toks@,{\the\@dtl@toks}}%
+    \fi
+  }%
+  \global\let#2=\@dtl@newsortedlist
+}
+\newif\if@dtl@insertdone
+\newcount\dtl@sortresult
+\newcommand{\toks@gput@right@cx}[2]{%
+  \def\@toks@name{#1}%
+  \edef\@dtl@stuff{#2}%
+  \global\csname\@toks@name\endcsname\expandafter
+    \expandafter\expandafter{\expandafter\the
+    \csname\expandafter\@toks@name\expandafter\endcsname\@dtl@stuff}%
+}
+\newcommand{\toks@gconcat@middle@cx}[4]{%
+  \def\@toks@name{#1}%
+  \edef\@dtl@stuff{#3}%
+  \global\csname\@toks@name\endcsname\expandafter\expandafter
+    \expandafter\expandafter\expandafter
+    \expandafter\expandafter{\expandafter\expandafter\expandafter
+    \the\expandafter\expandafter\expandafter#2%
+    \expandafter\@dtl@stuff\the#4}%
+}
+\newcount\@dtl@numgrpsepcount
+\newcommand*{\@dtl@decimal}{.}
+\newcommand*{\@dtl@numbergroupchar}{,}
+\newcommand*{\DTLsetnumberchars}[2]{%
+  \renewcommand*{\@dtl@numbergroupchar}{#1}%
+  \renewcommand*{\@dtl@decimal}{#2}%
+  \@dtl@construct@getnums
+  \@dtl@construct@stripnumgrpchar{#1}%
+}
+\edef\@dtl@construct@getintfrac#1{%
+  \noexpand\def\noexpand\@dtl@getintfrac##1#1##2\noexpand\relax{%
+    \noexpand\@dtl@get@intpart{##1}%
+    \noexpand\def\noexpand\@dtl@fracpart{##2}%
+    \noexpand\ifdefempty{\noexpand\@dtl@fracpart}
+    {%
+      \noexpand\def\noexpand\@dtl@fracpart{0}%
+    }%
+    {%
+        \noexpand\@dtl@getfracpart##2\noexpand\relax
+        \noexpand\@dtl@choptrailingzeroes{\noexpand\@dtl@fracpart}%
+    }%
+  }%
+  \noexpand\def\noexpand\@dtl@getfracpart##1#1\noexpand\relax{%
+    \noexpand\def\noexpand\@dtl@fracpart{##1}%
+  }%
+  \noexpand\def\noexpand\DTLconverttodecimal##1##2{%
+    \noexpand\dtl@ifsingle{##1}%
+    {%
+      \noexpand\expandafter\noexpand\toks@\noexpand\expandafter{##1}%
+      \noexpand\edef\noexpand\@dtl@tmp{\noexpand\the\noexpand\toks@}%
+    }%
+    {%
+      \noexpand\def\noexpand\@dtl@tmp{##1}%
+    }%
+    \noexpand\@dtl@standardize@currency\noexpand\@dtl@tmp
+    \noexpand\ifdefempty{\noexpand\@dtl@org@currency}%
+    {%
+    }%
+    {%
+      \noexpand\let\noexpand\@dtl@currency\noexpand\@dtl@org@currency
+    }%
+    \noexpand\expandafter
+      \noexpand\@dtl@getintfrac\noexpand\@dtl@tmp#1\noexpand\relax
+    \noexpand\edef##2{\noexpand\@dtl@intpart.\noexpand\@dtl@fracpart}%
+  }%
+}
+\newcommand*{\@dtl@construct@getnums}{%
+  \expandafter\@dtl@construct@getintfrac\expandafter{\@dtl@decimal}%
+}
+\newcommand*{\@dtl@get@intpart}[1]{%
+  \@dtl@tmpcount=1\relax
+  \def\@dtl@intpart{#1}%
+  \ifx\@dtl@intpart\@empty
+    \def\@dtl@intpart{0}%
+  \else
+    \def\@dtl@intpart{}%
+    \@dtl@get@int@part#1.\relax%
+  \fi
+  \ifnum\@dtl@tmpcount<0\relax
+    \edef\@dtl@intpart{-\@dtl@intpart}%
+  \fi
+  \@dtl@strip@numgrpchar{\@dtl@intpart}%
+}
+\def\@dtl@get@int@part#1#2\relax{%
+  \def\@dtl@argi{#1}%
+  \def\@dtl@argii{#2}%
+  \ifx\protect#1\relax%
+    \let\@dtl@get@nextintpart=\@dtl@get@int@part
+  \else
+    \expandafter\ifx\@dtl@argi\$%
+      \let\@dtl@get@nextintpart=\@dtl@get@int@part
+    \else
+      \ifx-#1%
+        \multiply\@dtl@tmpcount by -1\relax
+        \let\@dtl@get@nextintpart=\@dtl@get@int@part
+      \else
+        \if\@dtl@argi+%
+          \let\@dtl@get@nextintpart=\@dtl@get@int@part
+        \else
+          \def\@dtl@intpart{#1}%
+          \ifx.\@dtl@argii
+            \let\@dtl@get@nextintpart=\@gobble
+          \else
+            \let\@dtl@get@nextintpart=\@dtl@get@next@intpart
+          \fi
+        \fi
+      \fi
+    \fi
+  \fi
+  \@dtl@get@nextintpart#2\relax
+}
+\def\@dtl@get@next@intpart#1.\relax{%
+  \edef\@dtl@intpart{\@dtl@intpart#1}%
+}
+\newcommand*{\@dtl@choptrailingzeroes}[1]{%
+  \def\@dtl@tmpcpz{}%
+  \expandafter\@dtl@chop@trailingzeroes#1\@nil%
+  \let#1=\@dtl@tmpcpz
+}
+\def\@dtl@chop@trailingzeroes#1#2\@nil{%
+  \dtlifnumeq{#2}{0}%
+  {%
+    \edef\@dtl@tmpcpz{\@dtl@tmpcpz#1}%
+    \let\@dtl@chopzeroesnext=\@dtl@gobbletonil
+  }%
+  {%
+    \edef\@dtl@tmpcpz{\@dtl@tmpcpz#1}%
+    \let\@dtl@chopzeroesnext=\@dtl@chop@trailingzeroes
+  }%
+  \@dtl@chopzeroesnext#2\@nil
+}
+\def\@dtl@gobbletonil#1\@nil{}
+\newcommand*{\dtl@truncatedecimal}[1]{%
+  \expandafter\@dtl@truncatedecimal#1.\@nil#1%
+}
+\def\@dtl@truncatedecimal#1.#2\@nil#3{%
+  \def#3{#1}%
+}
+\newcommand*{\@dtl@strip@numgrpchar}[1]{%
+  \def\@dtl@stripped{}%
+  \edef\@dtl@do@stripnumgrpchar{%
+    \noexpand\@@dtl@strip@numgrpchar#1\@dtl@numbergroupchar
+    \noexpand\relax
+  }%
+  \@dtl@do@stripnumgrpchar
+  \let#1=\@dtl@stripped
+}
+\edef\@dtl@construct@stripnumgrpchar#1{%
+  \noexpand\def\noexpand\@@dtl@strip@numgrpchar##1#1##2\noexpand\relax{%
+    \noexpand\expandafter\noexpand\toks@\noexpand\expandafter
+      {\noexpand\@dtl@stripped}%
+    \noexpand\edef\noexpand\@dtl@stripped{%
+      \noexpand\the\noexpand\toks@
+      ##1%
+    }%
+    \noexpand\def\noexpand\@dtl@tmp{##2}%
+    \noexpand\ifx\noexpand\@dtl@tmp\noexpand\@empty
+      \noexpand\let\noexpand\@dtl@next=\noexpand\relax
+    \noexpand\else
+      \noexpand\let\noexpand\@dtl@next=\noexpand\@@dtl@strip@numgrpchar
+    \noexpand\fi
+    \noexpand\@dtl@next##2\noexpand\relax
+  }%
+}
+\newcommand*{\DTLdecimaltolocale}[2]{%
+  \edef\@dtl@tmpdtl{#1}%
+  \expandafter\@dtl@decimaltolocale\@dtl@tmpdtl.\relax
+  \dtlifnumeq{\@dtl@fracpart}{0}%
+  {%
+    \edef#2{\@dtl@intpart}%
+  }%
+  {%
+    \edef#2{\@dtl@intpart\@dtl@decimal\@dtl@fracpart}%
+  }%
+}
+\def\@dtl@decimaltolocale#1.#2\relax{%
+  \@dtl@decimaltolocaleint{#1}%
+  \def\@dtl@fracpart{#2}%
+  \ifx\@dtl@fracpart\@empty
+    \def\@dtl@fracpart{0}%
+  \else
+    \@dtl@decimaltolocalefrac#2\relax
+  \fi
+}
+\def\@dtl@decimaltolocaleint#1{%
+  \@dtl@tmpcount=0\relax
+  \@dtl@countdigits#1.\relax
+  \@dtl@numgrpsepcount=\@dtl@tmpcount\relax
+  \divide\@dtl@numgrpsepcount by 3\relax
+  \multiply\@dtl@numgrpsepcount by 3\relax
+  \advance\@dtl@numgrpsepcount by -\@dtl@tmpcount\relax
+  \ifnum\@dtl@numgrpsepcount<0\relax
+    \advance\@dtl@numgrpsepcount by 3\relax
+  \fi
+  \def\@dtl@intpart{}%
+  \@dtl@decimal@to@localeint#1.\relax
+}
+\def\@dtl@countdigits#1#2\relax{%
+  \advance\@dtl@tmpcount by 1\relax
+  \ifx.#2\relax
+    \let\@dtl@countnext=\@gobble
+  \else
+    \let\@dtl@countnext=\@dtl@countdigits
+  \fi
+  \@dtl@countnext#2\relax
+}
+\def\@dtl@decimal@to@localeint#1#2\relax{%
+  \advance\@dtl@numgrpsepcount by 1\relax
+  \ifx.#2\relax
+    \edef\@dtl@intpart{\@dtl@intpart#1}%
+    \let\@dtl@localeintnext=\@gobble
+  \else
+    \ifnum\@dtl@numgrpsepcount=3\relax
+      \edef\@dtl@intpart{\@dtl@intpart#1\@dtl@numbergroupchar}%
+      \@dtl@numgrpsepcount=0\relax
+    \else
+      \ifnum\@dtl@numgrpsepcount>3\relax
+        \@dtl@numgrpsepcount=0\relax
+      \fi
+      \edef\@dtl@intpart{\@dtl@intpart#1}%
+    \fi
+    \let\@dtl@localeintnext=\@dtl@decimal@to@localeint
+  \fi
+  \@dtl@localeintnext#2\relax
+}
+\def\@dtl@decimaltolocalefrac#1.\relax{%
+  \def\@dtl@fracpart{#1}%
+  \@dtl@choptrailingzeroes{\@dtl@fracpart}%
+}
+\newcommand*{\DTLdecimaltocurrency}[2]{%
+  \edef\@dtl@tmpdtl{#1}%
+  \expandafter\@dtl@decimaltolocale\@dtl@tmpdtl.\relax
+  \dtl@truncatedecimal\@dtl@tmpdtl
+  \@dtl@tmpcount=\@dtl@tmpdtl\relax
+  \expandafter\@dtl@toks\expandafter{\@dtl@currency}%
+  \dtlifnumeq{\@dtl@fracpart}{0}%
+  {%
+    \ifnum\@dtl@tmpcount<0\relax
+      \@dtl@tmpcount = -\@dtl@tmpcount\relax
+      \edef#2{-\the\@dtl@toks\the\@dtl@tmpcount\@dtl@decimal00}%
+    \else
+      \edef#2{\the\@dtl@toks\@dtl@intpart\@dtl@decimal00}%
+    \fi
+  }%
+  {%
+    \ifnum\@dtl@tmpcount<0\relax
+      \@dtl@tmpcount = -\@dtl@tmpcount\relax
+      \ifnum\@dtl@fracpart<10\relax
+        \edef#2{%
+          -\the\@dtl@toks\number\@dtl@tmpcount
+          \@dtl@decimal\@dtl@fracpart0%
+        }%
+      \else
+        \edef#2{%
+          -\the\@dtl@toks\number\@dtl@tmpcount
+          \@dtl@decimal\@dtl@fracpart
+        }%
+      \fi
+    \else
+      \ifnum\@dtl@fracpart<10\relax
+        \edef#2{\the\@dtl@toks\@dtl@intpart\@dtl@decimal\@dtl@fracpart0}%
+      \else
+        \edef#2{\the\@dtl@toks\@dtl@intpart\@dtl@decimal\@dtl@fracpart}%
+      \fi
+    \fi
+  }%
+}
+\@dtl@construct@getnums
+\expandafter\@dtl@construct@stripnumgrpchar\expandafter
+  {\@dtl@numbergroupchar}
+\newcommand*{\@dtl@currencies}{\$,\pounds}
+\newcommand*{\DTLnewcurrencysymbol}[1]{%
+  \expandafter\toks@\expandafter{\@dtl@currencies}%
+  \@dtl@toks{#1}%
+  \edef\@dtl@currencies{\the\@dtl@toks,\the\toks@}%
+}
+\AtBeginDocument{%
+  \@ifundefined{texteuro}{}{\DTLnewcurrencysymbol{\texteuro}}%
+  \@ifundefined{textdollar}{}{\DTLnewcurrencysymbol{\textdollar}}%
+  \@ifundefined{textstirling}{}{\DTLnewcurrencysymbol{\textstirling}}%
+  \@ifundefined{textyen}{}{\DTLnewcurrencysymbol{\textyen}}%
+  \@ifundefined{textwon}{}{\DTLnewcurrencysymbol{\textwon}}%
+  \@ifundefined{textcurrency}{}{\DTLnewcurrencysymbol{\textcurrency}}%
+  \@ifundefined{euro}{}{\DTLnewcurrencysymbol{\euro}}%
+  \@ifundefined{yen}{}{\DTLnewcurrencysymbol{\yen}}%
+}
+\newcommand{\@dtl@standardize@currency}[1]{%
+  \def\@dtl@org@currency{}%
+  \@for\@dtl@thiscurrency:=\@dtl@currencies\do{%
+    \expandafter\toks@\expandafter{\@dtl@thiscurrency}%
+    \edef\@dtl@dosubs{\noexpand\DTLsubstitute{\noexpand#1}%
+     {\the\toks@}{\noexpand\$}}%
+    \@dtl@dosubs
+    \ifdefempty{\@dtl@replaced}%
+    {%
+    }%
+    {%
+      \let\@dtl@org@currency=\@dtl@replaced
+      \@endfortrue
+    }%
+  }%
+  \@endforfalse
+}
+\newcommand*{\@dtl@currency}{\$}
+\newcommand*{\DTLsetdefaultcurrency}[1]{%
+  \renewcommand*{\@dtl@currency}{#1}%
+}
+\newcommand*{\DTLadd}[3]{%
+  \DTLconverttodecimal{#2}{\@dtl@numi}%
+  \DTLconverttodecimal{#3}{\@dtl@numii}%
+  \dtladd{\@dtl@tmp}{\@dtl@numi}{\@dtl@numii}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@tmp}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@tmp}{#1}%
+  }%
+}
+\newcommand*{\DTLgadd}[3]{%
+  \DTLadd{\@dtl@tmpii}{#2}{#3}%
+  \global\let#1=\@dtl@tmpii
+}
+\newcommand*{\DTLaddall}[2]{%
+  \def\@dtl@sum{0}%
+  \@for\dtl@thisval:=#2\do{%
+    \expandafter\DTLconverttodecimal\expandafter{\dtl@thisval}{\@dtl@num}%
+    \dtladd{\@dtl@sum}{\@dtl@sum}{\@dtl@num}%
+  }%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@sum}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@sum}{#1}%
+  }%
+}
+\newcommand*{\DTLgaddall}[2]{%
+  \DTLaddall{\@dtl@tmpi}{#2}%
+  \global\let#1=\@dtl@tmpi
+}
+\newcommand*{\DTLsub}[3]{%
+  \DTLconverttodecimal{#2}{\@dtl@numi}%
+  \DTLconverttodecimal{#3}{\@dtl@numii}%
+  \dtlsub{\@dtl@tmp}{\@dtl@numi}{\@dtl@numii}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@tmp}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@tmp}{#1}%
+  }%
+}
+\newcommand*{\DTLgsub}[3]{%
+  \DTLsub{\@dtl@tmpii}{#2}{#3}%
+  \global\let#1=\@dtl@tmpii
+}
+\newcommand*{\DTLmul}[3]{%
+  \let\@dtl@thisreplaced=\@empty
+  \DTLconverttodecimal{#2}{\@dtl@numi}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+  }%
+  {%
+    \let\@dtl@thisreplaced=\@dtl@replaced
+  }%
+  \DTLconverttodecimal{#3}{\@dtl@numii}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+  }%
+  {%
+    \let\@dtl@thisreplaced=\@dtl@replaced
+  }%
+  \dtlmul{\@dtl@tmp}{\@dtl@numi}{\@dtl@numii}%
+  \ifdefempty{\@dtl@thisreplaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@tmp}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@tmp}{#1}%
+  }%
+}
+\newcommand*{\DTLgmul}[3]{%
+ \DTLmul{\@dtl@tmpii}{#2}{#3}%
+ \global\let#1=\@dtl@tmpii
+}
+\newcommand*{\DTLdiv}[3]{%
+  \let\@dtl@thisreplaced=\@empty
+  \DTLconverttodecimal{#2}{\@dtl@numi}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+  }%
+  {%
+    \let\@dtl@thisreplaced=\@dtl@replaced
+  }%
+  \DTLconverttodecimal{#3}{\@dtl@numii}%
+  \dtldiv{\@dtl@tmp}{\@dtl@numi}{\@dtl@numii}%
+  \ifdefempty{\@dtl@thisreplaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@tmp}{#1}%
+  }%
+  {%
+    \ifdefequal{\@dtl@thisreplaced}{\@dtl@replaced}%
+    {%
+      \DTLdecimaltolocale{\@dtl@tmp}{#1}%
+    }%
+    {%
+      \DTLdecimaltocurrency{\@dtl@tmp}{#1}%
+    }%
+  }%
+}
+\newcommand*{\DTLgdiv}[3]{%
+  \DTLdiv{\@dtl@tmpii}{#2}{#3}%
+  \global\let#1=\@dtl@tmpii
+}
+\newcommand*{\DTLabs}[2]{%
+  \DTLconverttodecimal{#2}{\@dtl@numi}%
+  \dtlabs{\@dtl@tmp}{\@dtl@numi}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@tmp}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@tmp}{#1}%
+  }%
+}
+\newcommand*{\DTLgabs}[2]{%
+  \DTLabs{\@dtl@tmpii}{#2}%
+  \global\let#1=\@dtl@tmpii
+}
+\newcommand*{\DTLneg}[2]{%
+  \DTLconverttodecimal{#2}{\@dtl@numi}%
+  \dtlneg{\@dtl@tmp}{\@dtl@numi}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@tmp}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@tmp}{#1}%
+  }%
+}
+\newcommand*{\DTLgneg}[2]{%
+  \DTLneg{\@dtl@tmpii}{#2}%
+  \global\let#1=\@dtl@tmpii
+}
+\newcommand*{\DTLsqrt}[2]{%
+  \DTLconverttodecimal{#2}{\@dtl@numi}%
+  \dtlroot{\@dtl@tmpi}{\@dtl@numi}{2}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@tmpi}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@tmpi}{#1}%
+  }%
+}
+\newcommand*{\DTLgsqrt}[2]{%
+\DTLsqrt{\@dtl@tmpii}{#2}%
+\global\let#1=\@dtl@tmpii
+}
+\newcommand*{\DTLmin}[3]{%
+ \DTLconverttodecimal{#2}{\@dtl@numi}%
+ \DTLconverttodecimal{#3}{\@dtl@numii}%
+ \dtlifnumlt{\@dtl@numi}{\@dtl@numii}%
+ {%
+   \dtl@ifsingle{#2}%
+   {\let#1=#2}%
+   {\def#1{#2}}%
+ }%
+ {%
+  \dtl@ifsingle{#3}%
+  {\let#1=#3}%
+  {\def#1{#3}}%
+ }%
+}
+\newcommand*{\DTLgmin}[3]{%
+  \DTLmin{\@dtl@tmpii}{#2}{#3}%
+  \global\let#1=\@dtl@tmpii
+}
+\newcommand*{\DTLminall}[2]{%
+  \let\@dtl@min=\@empty
+  \@for\dtl@thisval:=#2\do{%
+    \expandafter\DTLconverttodecimal\expandafter{\dtl@thisval}{\@dtl@num}%
+    \ifdefempty{\@dtl@min}%
+    {%
+      \let\@dtl@min=\@dtl@num
+    }%
+    {%
+      \dtlmin{\@dtl@min}{\@dtl@min}{\@dtl@num}%
+    }%
+  }%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@min}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@min}{#1}%
+  }%
+}
+\newcommand*{\DTLgminall}[2]{%
+  \DTLminall{\@dtl@tmpi}{#2}%
+  \global\let#1=\@dtl@tmpi
+}
+\newcommand*{\DTLmax}[3]{%
+  \DTLconverttodecimal{#2}{\@dtl@numi}%
+  \DTLconverttodecimal{#3}{\@dtl@numii}%
+  \dtlmax{\@dtl@tmp}{\@dtl@numi}{\@dtl@numii}%
+  \dtlifnumgt{\@dtl@numi}{\@dtl@numii}%
+  {%
+   \dtl@ifsingle{#2}%
+   {\let#1=#2}%
+   {\def#1{#2}}%
+  }%
+  {%
+   \dtl@ifsingle{#3}%
+   {\let#1=#3}%
+   {\def#1{#3}}%
+  }%
+}
+\newcommand*{\DTLgmax}[3]{%
+  \DTLmax{\@dtl@tmpii}{#2}{#3}%
+  \global\let#1=\@dtl@tmpii
+}
+\newcommand*{\DTLmaxall}[2]{%
+  \let\@dtl@max=\@empty
+  \@for\dtl@thisval:=#2\do{%
+    \expandafter\DTLconverttodecimal\expandafter{\dtl@thisval}{\@dtl@num}%
+    \ifdefempty{\@dtl@max}%
+    {%
+      \let\@dtl@max\@dtl@num
+    }%
+    {%
+      \dtlmax{\@dtl@max}{\@dtl@max}{\@dtl@num}%
+    }%
+  }%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@max}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@max}{#1}%
+  }%
+}
+\newcommand*{\DTLgmaxall}[2]{%
+\DTLmaxall{\@dtl@tmpi}{#2}%
+\global\let#1=\@dtl@tmpi
+}
+\newcommand*{\DTLmeanforall}[2]{%
+  \def\@dtl@mean{0}%
+  \def\@dtl@n{0}%
+  \@for\dtl@thisval:=#2\do{%
+    \expandafter\DTLconverttodecimal\expandafter{\dtl@thisval}{\@dtl@num}%
+    \dtladd{\@dtl@mean}{\@dtl@mean}{\@dtl@num}%
+    \dtladd{\@dtl@n}{\@dtl@n}{1}%
+  }%
+  \dtldiv{\@dtl@mean}{\@dtl@mean}{\@dtl@n}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@mean}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@mean}{#1}%
+  }%
+}
+\newcommand*{\DTLgmeanforall}[2]{%
+  \DTLmeanforall{\@dtl@tmpi}{#2}%
+  \global\let#1=\@dtl@tmpi
+}
+\newcommand*{\DTLvarianceforall}[2]{%
+  \def\@dtl@mean{0}%
+  \def\@dtl@n{0}%
+  \let\@dtl@decvals=\@empty
+  \@for\dtl@thisval:=#2\do{%
+    \expandafter\DTLconverttodecimal\expandafter{\dtl@thisval}{\@dtl@num}%
+    \ifdefempty{\@dtl@decvals}%
+    {%
+     \let\@dtl@decvals=\@dtl@num
+    }%
+    {%
+      \expandafter\toks@\expandafter{\@dtl@decvals}%
+      \edef\@dtl@decvals{\the\toks@,\@dtl@num}%
+    }%
+    \dtladd{\@dtl@mean}{\@dtl@mean}{\@dtl@num}%
+    \dtladd{\@dtl@n}{\@dtl@n}{1}%
+  }%
+  \dtldiv{\@dtl@mean}{\@dtl@mean}{\@dtl@n}%
+  \def\@dtl@var{0}%
+  \@for\@dtl@num:=\@dtl@decvals\do{%
+    \dtlsub{\@dtl@diff}{\@dtl@num}{\@dtl@mean}%
+    \dtlmul{\@dtl@diff}{\@dtl@diff}{\@dtl@diff}%
+    \dtladd{\@dtl@var}{\@dtl@var}{\@dtl@diff}%
+  }%
+  \dtldiv{\@dtl@var}{\@dtl@var}{\@dtl@n}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@var}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@var}{#1}%
+  }%
+}
+\newcommand*{\DTLgvarianceforall}[2]{%
+  \DTLvarianceforall{\@dtl@tmpi}{#2}%
+  \global\let#1=\@dtl@tmpi
+}
+\newcommand*{\DTLsdforall}[2]{%
+  \def\@dtl@mean{0}%
+  \def\@dtl@n{0}%
+  \let\@dtl@decvals=\@empty
+  \@for\dtl@thisval:=#2\do{%
+    \expandafter\DTLconverttodecimal\expandafter{\dtl@thisval}{\@dtl@num}%
+    \ifdefempty{\@dtl@decvals}%
+    {%
+     \let\@dtl@decvals=\@dtl@num
+    }%
+    {%
+     \expandafter\toks@\expandafter{\@dtl@decvals}%
+     \edef\@dtl@decvals{\the\toks@,\@dtl@num}%
+    }%
+    \dtladd{\@dtl@mean}{\@dtl@mean}{\@dtl@num}%
+    \dtladd{\@dtl@n}{\@dtl@n}{1}%
+  }%
+  \dtldiv{\@dtl@mean}{\@dtl@mean}{\@dtl@n}%
+  \def\@dtl@sd{0}%
+  \@for\@dtl@num:=\@dtl@decvals\do{%
+    \dtlsub{\@dtl@diff}{\@dtl@num}{\@dtl@mean}%
+    \dtlmul{\@dtl@diff}{\@dtl@diff}{\@dtl@diff}%
+    \dtladd{\@dtl@sd}{\@dtl@sd}{\@dtl@diff}%
+  }%
+  \dtldiv{\@dtl@sd}{\@dtl@sd}{\@dtl@n}%
+  \dtlroot{\@dtl@sd}{\@dtl@sd}{2}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@sd}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@sd}{#1}%
+  }%
+}
+\newcommand*{\DTLgsdforall}[2]{%
+  \DTLsdforall{\@dtl@tmpi}{#2}%
+  \global\let#1=\@dtl@tmpi
+}
+\newcommand*{\DTLround}[3]{%
+  \DTLconverttodecimal{#2}{\@dtl@numi}%
+  \dtlround{\@dtl@tmp}{\@dtl@numi}{#3}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@tmp}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@tmp}{#1}%
+  }%
+}
+\newcommand*{\DTLground}[3]{%
+  \DTLround{\@dtl@tmpii}{#2}{#3}%
+  \global\let#1=\@dtl@tmpii
+}
+\newcommand*{\DTLtrunc}[3]{%
+  \DTLconverttodecimal{#2}{\@dtl@numi}%
+  \dtltrunc{\@dtl@tmp}{\@dtl@numi}{#3}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@tmp}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@tmp}{#1}%
+  }%
+}
+\newcommand*{\DTLgtrunc}[3]{%
+  \DTLtrunc{\@dtl@tmpii}{#2}{#3}%
+  \global\let#1=\@dtl@tmpii
+}
+\newcommand*{\DTLclip}[2]{%
+  \DTLconverttodecimal{#2}{\@dtl@numi}%
+  \dtlclip{\@dtl@tmp}{\@dtl@numi}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \DTLdecimaltolocale{\@dtl@tmp}{#1}%
+  }%
+  {%
+    \DTLdecimaltocurrency{\@dtl@tmp}{#1}%
+  }%
+}
+\newcommand*{\DTLgclip}[3]{%
+  \DTLclip{\@dtl@tmpii}{#2}%
+  \global\let#1=\@dtl@tmpii
+}
+\newcommand*\DTLinitials[1]{%
+  \def\dtl@initialscmd{}%
+  \dtl@subnobrsp{#1}{\dtl@string}%
+  \DTLsubstituteall{\dtl@string}{~}{ }%
+  \DTLsubstituteall{\dtl@string}{\ }{ }%
+  \DTLsubstituteall{\dtl@string}{\space}{ }%
+  \expandafter\dtl@initials\dtl@string{} \@nil%
+  \dtl@initialscmd
+}%
+\edef\dtl@construct@subnobrsp{%
+  \noexpand\def\noexpand\@dtl@subnobrsp##1\noexpand\protect
+  \expandafter\noexpand\csname nobreakspace \endcsname ##2{%
+  \noexpand\toks@{##1}%
+  \noexpand\expandafter\noexpand\@dtl@toks\noexpand\expandafter{%
+  \noexpand\@dtl@string}%
+  \noexpand\edef\noexpand\@dtl@string{\noexpand\the\noexpand\@dtl@toks
+  \noexpand\the\noexpand\toks@}%
+  \noexpand\def\noexpand\@dtl@tmp{##2}%
+  \noexpand\ifx\noexpand\@dtl@tmp\noexpand\@nnil
+    \noexpand\let\noexpand\@dtl@subnobrspnext=\noexpand\relax
+  \noexpand\else
+    \noexpand\toks@{ }%
+    \noexpand\expandafter\noexpand\@dtl@toks\noexpand\expandafter{%
+    \noexpand\@dtl@string}%
+    \noexpand\edef\noexpand\@dtl@string{\noexpand\the\noexpand\@dtl@toks
+    \noexpand\the\noexpand\toks@}%
+    \noexpand\let\noexpand\@dtl@subnobrspnext=\noexpand\@dtl@subnobrsp
+  \noexpand\fi
+  \noexpand\@dtl@subnobrspnext
+  }%
+  \noexpand\def\noexpand\dtl@subnobrsp##1##2{%
+  \noexpand\def\noexpand\@dtl@string{}%
+  \noexpand\@dtl@subnobrsp ##1\noexpand\protect\expandafter\noexpand
+  \csname nobreakspace \endcsname \noexpand\@nil
+  \noexpand\let##2=\noexpand\@dtl@string
+  }%
+}
+\dtl@construct@subnobrsp
+\newcommand*{\DTLstoreinitials}[2]{%
+  \def\dtl@initialscmd{}%
+  \dtl@subnobrsp{#1}{\dtl@string}%
+  \DTLsubstituteall{\dtl@string}{~}{ }%
+  \DTLsubstituteall{\dtl@string}{\ }{ }%
+  \DTLsubstituteall{\dtl@string}{\space}{ }%
+  \expandafter\dtl@initials\dtl@string{} \@nil
+  \let#2=\dtl@initialscmd
+}
+\def\dtl@initials#1#2 #3{%
+  \dtl@ifsingle{#1}%
+  {%
+    \ifcat\noexpand#1\relax\relax
+       \def\@dtl@donextinitials{\@dtl@initials#2 {#3}}%
+    \else
+       \def\@dtl@donextinitials{\@dtl@initials#1#2 {#3}}%
+    \fi
+  }%
+  {%
+    \def\@dtl@donextinitials{\@dtl@initials{#1}#2 {#3}}%
+  }%
+  \@dtl@donextinitials
+}
+\def\@dtl@initials#1#2 #3{%
+  \dtl@initialshyphen#2-{}\dtl@endhyp
+  \expandafter\@dtl@toks\expandafter{\dtl@initialscmd}%
+  \toks@{#1}%
+  \ifdefempty{\dtl@inithyphen}%
+  {%
+  }%
+  {%
+    \edef\dtl@initialscmd{\the\@dtl@toks\the\toks@}%
+    \expandafter\@dtl@toks\expandafter{\dtl@initialscmd}%
+    \expandafter\toks@\expandafter{\dtl@inithyphen}%
+  }%
+  \def\dtl@tmp{#3}%
+  \ifx\@nnil\dtl@tmp
+   \edef\dtl@initialscmd{\the\@dtl@toks\the\toks@\DTLafterinitials}%
+   \let\dtl@initialsnext=\@gobble
+  \else
+   \edef\dtl@initialscmd{\the\@dtl@toks\the\toks@\DTLbetweeninitials}%
+   \let\dtl@initialsnext=\dtl@initials
+  \fi
+  \dtl@initialsnext{#3}%
+}
+\def\dtl@initialshyphen#1-#2#3\dtl@endhyp{%
+  \def\dtl@inithyphen{#2}%
+  \ifdefempty{\dtl@inithyphen}%
+  {%
+  }%
+  {%
+   \edef\dtl@inithyphen{%
+     \DTLafterinitialbeforehyphen\DTLinitialhyphen#2}%
+  }%
+}
+\newcommand*{\DTLafterinitials}{.}
+\newcommand*{\DTLbetweeninitials}{.}
+\newcommand*{\DTLafterinitialbeforehyphen}{.}
+\newcommand*{\DTLinitialhyphen}{-}
+\newcommand*{\DTLifAllUpperCase}[3]{%
+  \protected@edef\dtl@tuc{#1}%
+  \expandafter\dtl@testifuppercase\dtl@tuc\@nil\relax
+  \if@dtl@condition#2\else#3\fi
+}
+\def\dtl@testifuppercase#1#2{%
+  \def\dtl@argi{#1}%
+  \def\dtl@argii{#2}%
+  \def\dtl@tc@rest{}%
+  \ifx\dtl@argi\@nnil
+    \let\dtl@testifuppernext=\@nnil
+  \else
+    \ifx#1\protect
+      \let\dtl@testifuppernext=\dtl@testifuppercase
+    \else
+      \ifx\uppercase#1\relax
+        \@dtl@conditiontrue
+        \def\dtl@tc@rest{}%
+        \let\dtl@testifuppernext=\relax
+      \else
+        \edef\dtl@tc@arg{\string#1}%
+        \expandafter\dtl@test@ifuppercase\dtl@tc@arg\end
+        \ifx\dtl@argii\@nnil
+          \let\dtl@testifuppernext=\@dtl@gobbletonil
+        \fi
+      \fi
+    \fi
+  \fi
+  \ifx\dtl@testifuppernext\relax
+   \edef\dtl@dotestifuppernext{%
+     \noexpand\dtl@testifuppercase}%
+  \else
+   \ifx\dtl@testifuppernext\@nnil
+     \edef\dtl@dotestifuppernext{#2}%
+   \else
+     \expandafter\toks@\expandafter{\dtl@tc@rest}%
+     \@dtl@toks{#2}%
+     \edef\dtl@dotestifuppernext{%
+       \noexpand\dtl@testifuppernext\the\toks@\the\@dtl@toks}%
+   \fi
+  \fi
+  \dtl@dotestifuppernext
+}
+\def\dtl@test@ifuppercase#1#2\end{%
+  \def\dtl@tc@rest{#2}%
+  \IfSubStringInString{\string\MakeUppercase}{#1#2}%
+  {%
+     \@dtl@conditiontrue
+     \def\dtl@tc@rest{}%
+     \let\dtl@testifuppernext=\relax
+  }%
+  {%
+    \IfSubStringInString{\string\MakeTextUppercase}{#1#2}%
+    {%
+       \@dtl@conditiontrue
+       \def\dtl@tc@rest{}%
+       \let\dtl@testifuppernext=\relax
+    }%
+    {%
+      \edef\dtl@uccode{\the\uccode`#1}%
+      \edef\dtl@code{\number`#1}%
+      \ifnum\dtl@code=\dtl@uccode\relax
+        \@dtl@conditiontrue
+        \let\dtl@testifuppernext=\dtl@testifuppercase
+      \else
+        \ifnum\dtl@uccode=0\relax
+          \@dtl@conditiontrue
+          \let\dtl@testifuppernext=\dtl@testifuppercase
+        \else
+          \@dtl@conditionfalse
+          \let\dtl@testifuppernext=\@dtl@gobbletonil
+        \fi
+      \fi
+    }%
+  }%
+}
+\newcommand*{\DTLifAllLowerCase}[3]{%
+  \protected@edef\dtl@tlc{#1}%
+  \expandafter\dtl@testiflowercase\dtl@tlc\@nil\relax
+  \if@dtl@condition#2\else#3\fi
+}
+\def\dtl@testiflowercase#1#2{%
+  \def\dtl@argi{#1}%
+  \def\dtl@argii{#2}%
+  \ifx\dtl@argi\@nnil
+    \let\dtl@testiflowernext=\@nnil
+  \else
+    \ifx#1\protect
+      \let\dtl@testiflowernext=\dtl@testiflowercase
+    \else
+      \ifx\lowercase#1\relax
+        \@dtl@conditiontrue
+        \def\dtl@tc@rest{}%
+        \let\dtl@testiflowernext=\relax
+      \else
+        \edef\dtl@tc@arg{\string#1}%
+        \expandafter\dtl@test@iflowercase\dtl@tc@arg\end
+        \ifx\dtl@argii\@nnil
+          \let\dtl@testiflowernext=\@dtl@gobbletonil
+        \fi
+      \fi
+    \fi
+  \fi
+  \ifx\dtl@testiflowernext\relax
+   \edef\dtl@dotestiflowernext{%
+     \noexpand\dtl@testiflowercase}%
+  \else
+   \ifx\dtl@testiflowernext\@nnil
+     \edef\dtl@dotestiflowernext{#2}%
+   \else
+     \expandafter\toks@\expandafter{\dtl@tc@rest}%
+     \@dtl@toks{#2}%
+     \edef\dtl@dotestiflowernext{%
+       \noexpand\dtl@testiflowernext\the\toks@\the\@dtl@toks}%
+   \fi
+  \fi
+  \dtl@dotestiflowernext
+}
+\def\dtl@test@iflowercase#1#2\end{%
+  \def\dtl@tc@rest{#2}%
+  \IfSubStringInString{\string\MakeLowercase}{#1#2}%
+  {%
+    \@dtl@conditiontrue
+    \def\dtl@tc@rest{}%
+    \let\dtl@testiflowernext=\relax
+  }%
+  {%
+    \IfSubStringInString{\string\MakeTextLowercase}{#1#2}%
+    {%
+      \@dtl@conditiontrue
+      \def\dtl@tc@rest{}%
+      \let\dtl@testiflowernext=\relax
+    }%
+    {%
+      \edef\dtl@lccode{\the\lccode`#1}%
+      \edef\dtl@code{\number`#1}%
+      \ifnum\dtl@code=\dtl@lccode\relax
+        \@dtl@conditiontrue
+        \let\dtl@testiflowernext=\dtl@testiflowercase
+      \else
+        \ifnum\dtl@lccode=0\relax
+          \@dtl@conditiontrue
+          \let\dtl@testiflowernext=\dtl@testiflowercase
+        \else
+          \@dtl@conditionfalse
+          \let\dtl@testiflowernext=\@dtl@gobbletonil
+        \fi
+      \fi
+    }%
+  }%
+}
+\newcommand{\DTLsubstitute}[3]{%
+  \expandafter\DTLsplitstring\expandafter
+    {#1}{#2}{\@dtl@beforepart}{\@dtl@afterpart}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+  }%
+  {%
+    \def#1{}%
+    \expandafter\@dtl@toks\expandafter{\@dtl@beforepart}%
+    \expandafter\toks@\expandafter{#1}%
+    \protected@edef#1{\the\toks@\the\@dtl@toks#3}%
+    \expandafter\@dtl@toks\expandafter{\@dtl@afterpart}%
+    \expandafter\toks@\expandafter{#1}%
+    \edef#1{\the\toks@\the\@dtl@toks}%
+  }%
+}
+\newcommand*{\DTLsplitstring}[4]{%
+  \def\dtl@splitstr##1#2##2\@nil{%
+    \def#3{##1}%
+    \def#4{##2}%
+    \ifdefempty{#4}%
+    {%
+      \let\@dtl@replaced=\@empty
+    }%
+    {%
+      \def\@dtl@replaced{#2}%
+      \dtl@split@str##2\@nil
+    }%
+  }%
+  \def\dtl@split@str##1#2\@nil{%
+  \def#4{##1}}%
+  \dtl@splitstr#1#2\@nil
+}
+\newcommand{\DTLsubstituteall}[3]{%
+  \def\@dtl@splitsubstr{}%
+  \let\@dtl@afterpart=#1\relax
+  \@dtl@dosubstitute{#2}{#3}%
+  \expandafter\toks@\expandafter{\@dtl@splitsubstr}%
+  \expandafter\@dtl@toks\expandafter{\@dtl@afterpart}%
+  \long\edef#1{\the\toks@\the\@dtl@toks}%
+}
+\def\@dtl@dosubstitute#1#2{%
+  \expandafter\DTLsplitstring\expandafter
+   {\@dtl@afterpart}{#1}{\@dtl@beforepart}{\@dtl@afterpart}%
+  \expandafter\toks@\expandafter{\@dtl@splitsubstr}%
+  \expandafter\@dtl@toks\expandafter{\@dtl@beforepart}%
+  \edef\@dtl@splitsubstr{\the\toks@\the\@dtl@toks}%
+  \ifdefempty{\@dtl@replaced}%
+  {%
+    \let\@dtl@dosubstnext=\@dtl@dosubstitutenoop
+  }%
+  {%
+    \expandafter\toks@\expandafter{\@dtl@splitsubstr}%
+    \@dtl@toks{#2}%
+    \edef\@dtl@splitsubstr{\the\toks@\the\@dtl@toks}%
+    \let\@dtl@dosubstnext=\@dtl@dosubstitute
+  }%
+  \@dtl@dosubstnext{#1}{#2}%
+}
+\def\@dtl@dosubstitutenoop#1#2{}
+\newif\if@dtl@condition
+\newcount\@dtl@datatype
+\newcommand{\@dtl@checknumerical}[1]{%
+  \@dtl@numgrpsepfalse
+  \dtl@ifsingle{#1}%
+  {%
+    \expandafter\toks@\expandafter{#1}%
+    \edef\@dtl@tmp{\the\toks@}%
+  }%
+  {%
+    \def\@dtl@tmp{#1}%
+  }%
+  \ifdefempty\@dtl@tmp
+  {%
+    \@dtl@datatype=0\relax
+  }%
+  {%
+    \@dtl@tmpcount=0\relax
+    \@dtl@datatype=0\relax
+    \@dtl@numgrpsepcount=2\relax
+    \@dtl@standardize@currency\@dtl@tmp
+    \ifdefempty{\@dtl@org@currency}%
+    {%
+    }%
+    {%
+      \let\@dtl@currency\@dtl@org@currency
+    }%
+    \expandafter\@dtl@checknumericalstart\@dtl@tmp\@nil\@nil
+  }%
+  \ifnum\@dtl@numgrpsepcount>-1\relax
+    \if@dtl@numgrpsep
+      \ifnum\@dtl@numgrpsepcount=3\relax
+      \else
+        \@dtl@datatype=0\relax
+      \fi
+    \fi
+  \fi
+}
+\def\@dtl@checknumericalstart#1#2\@nil\@nil{%
+\ifx#1\protect\relax
+  \@dtl@checknumericalstart#2\@nil\@nil\relax
+\else
+  \ifx-#1\relax
+    \def\@dtl@tmp{#2}%
+    \ifdefempty{\@dtl@tmp}%
+    {%
+      \@dtl@datatype=0\relax
+    }%
+    {%
+      \ifnum\@dtl@datatype=0\relax
+        \@dtl@datatype=1\relax
+      \fi
+      \@dtl@checknumericalstart#2\@nil\@nil\relax
+    }%
+  \else
+    \ifx+#1\relax
+      \def\@dtl@tmp{#2}%
+      \ifdefempty{\@dtl@tmp}%
+      {%
+        \@dtl@datatype=0\relax
+      }%
+      {%
+        \ifnum\@dtl@datatype=0\relax
+          \@dtl@datatype=1\relax
+        \fi
+        \@dtl@checknumericalstart#2\@nil\@nil\relax
+      }%
+    \else
+    \def\@dtl@tmp{#1}%
+      \ifx#1\$\relax
+        \@dtl@datatype=3\relax
+        \@dtl@checknumericalstart#2\@nil\@nil\relax
+      \else
+        \ifdefempty{\@dtl@tmp}%
+        {%
+          \@dtl@datatype=0\relax
+        }%
+        {%
+          \ifnum\@dtl@datatype=0\relax
+            \@dtl@datatype=1\relax
+          \fi
+          \@dtl@checknumericalloop#1#2\@nil\@nil\relax
+        }%
+      \fi
+    \fi
+  \fi
+\fi
+}
+\newif\if@dtl@numgrpsep
+\newcommand*{\@dtl@ifDigitOrDecimalSep}[3]{%
+  \ifnum 9<1\noexpand#1\relax
+    #2%
+  \else
+    \expandafter\ifx\@dtl@decimal#1\relax
+      #2%
+    \else
+      #3%
+    \fi
+  \fi
+}
+\def\@dtl@checknumericalloop#1#2\@nil{%
+\def\@dtl@tmp{#1}%
+\ifx\@nnil\@dtl@tmp\relax
+ \let\@dtl@chcknumnext=\@dtl@checknumericalnoop%
+\else
+  \@dtl@ifDigitOrDecimalSep{#1}{%
+  \let\@dtl@chcknumnext=\@dtl@checknumericalloop%
+  \expandafter\ifx\@dtl@decimal#1\relax
+     \if@dtl@numgrpsep
+       \ifnum\@dtl@numgrpsepcount=3\relax
+        \@dtl@numgrpsepcount=-1\relax
+       \else
+        \@dtl@datatype=0\relax
+        \let\@dtl@chcknumnext=\@dtl@checknumericalnoop
+       \fi
+     \else
+       \@dtl@numgrpsepcount=-1\relax
+     \fi
+   \else
+     \ifnum\@dtl@numgrpsepcount=-1\relax
+     \else
+       \advance\@dtl@numgrpsepcount by 1\relax
+     \fi
+   \fi
+}{%
+\ifx\@dtl@numbergroupchar\@dtl@tmp\relax
+  \@dtl@numgrpseptrue
+  \ifnum\@dtl@numgrpsepcount<3\relax
+    \@dtl@datatype=0\relax
+    \let\@dtl@chcknumnext=\@dtl@checknumericalnoop
+  \else
+     \@dtl@numgrpsepcount=0\relax
+  \fi
+\else
+  \@dtl@datatype=0\relax
+  \let\@dtl@chcknumnext=\@dtl@checknumericalnoop
+\fi
+}%
+  \ifx\@dtl@decimal\@dtl@tmp\relax
+   \ifnum\@dtl@datatype<3\relax
+     \@dtl@datatype=2\relax
+   \fi
+   \advance\@dtl@tmpcount by 1\relax
+   \ifnum\@dtl@tmpcount>1\relax
+     \@dtl@datatype=0\relax
+     \let\@dtl@chcknumnext=\@dtl@checknumericalnoop%
+   \fi
+  \fi
+\fi
+\@dtl@chcknumnext#2\@nil
+}
+\def\@dtl@checknumericalnoop#1\@nil#2{}
+\newcommand{\DTLifnumerical}[3]{%
+\@dtl@checknumerical{#1}%
+\ifnum\@dtl@datatype=0\relax#3\else#2\fi
+}
+\newcommand{\DTLifreal}[3]{%
+  \@dtl@checknumerical{#1}%
+  \ifnum\@dtl@datatype=2\relax #2\else #3\fi
+}
+\newcommand{\DTLifint}[3]{%
+  \@dtl@checknumerical{#1}%
+  \ifnum\@dtl@datatype=1\relax #2\else #3\fi
+}
+\newcommand{\DTLifstring}[3]{%
+  \@dtl@checknumerical{#1}%
+  \ifnum\@dtl@datatype=0\relax #2\else #3\fi
+}
+\newcommand{\DTLifcurrency}[3]{%
+  \@dtl@checknumerical{#1}%
+  \ifnum\@dtl@datatype=3\relax #2\else #3\fi
+}
+\newcommand*{\DTLifcurrencyunit}[4]{%
+  \@dtl@checknumerical{#1}%
+  \ifnum\@dtl@datatype=3\relax
+    \ifthenelse{\equal{\@dtl@org@currency}{#2}}{#3}{#4}%
+  \else
+    #4%
+  \fi
+}
+\newcommand{\DTLifcasedatatype}[5]{%
+  \@dtl@checknumerical{#1}%
+  \ifcase\@dtl@datatype
+   #2% string
+  \or
+   #3% integer
+  \or
+   #4% number
+  \or
+   #5% currency
+  \fi
+}
+\newcommand*{\dtl@testbothnumerical}[2]{%
+  \dtl@ifsingle{#1}{%
+   \edef\@dtl@tmp{#1}}{%
+   \def\@dtl@tmp{#1}}%
+  \expandafter\@dtl@checknumerical\expandafter{\@dtl@tmp}%
+  \edef\@dtl@firsttype{\number\@dtl@datatype}%
+  \dtl@ifsingle{#2}{%
+   \edef\@dtl@tmp{#2}}{%
+   \def\@dtl@tmp{#2}}%
+  \expandafter\@dtl@checknumerical\expandafter{\@dtl@tmp}%
+  \multiply\@dtl@datatype by \@dtl@firsttype\relax
+  \ifnum\@dtl@datatype>0\relax
+   \@dtl@conditiontrue
+  \else
+   \@dtl@conditionfalse
+  \fi
+}
+\newcommand*{\DTLifnumlt}[4]{%
+  \DTLconverttodecimal{#1}{\@dtl@numi}%
+  \DTLconverttodecimal{#2}{\@dtl@numii}%
+  \dtlifnumlt{\@dtl@numi}{\@dtl@numii}%
+  {%
+    #3%
+  }%
+  {%
+    #4%
+  }%
+}
+\newcommand*{\dtlcompare}[3]{%
+  \dtl@subnobrsp{#2}{\@dtl@argA}%
+  \dtl@subnobrsp{#3}{\@dtl@argB}%
+  \ifdefempty{\@dtl@argA}%
+  {%
+    \ifdefempty{\@dtl@argB}%
+    {%
+      #1=0\relax
+    }%
+    {%
+      #1=-1\relax
+    }%
+  }%
+  {%
+    \ifdefempty{\@dtl@argB}%
+    {%
+      #1=1\relax
+    }%
+    {%
+      \DTLsubstituteall{\@dtl@argA}{ }{\space }%
+      \DTLsubstituteall{\@dtl@argB}{ }{\space }%
+      \expandafter\dtl@getfirst\@dtl@argA\end
+      \let\dtl@firstA=\dtl@first
+      \let\dtl@restA=\dtl@rest
+      \expandafter\dtl@getfirst\@dtl@argB\end
+      \let\dtl@firstB=\dtl@first
+      \let\dtl@restB=\dtl@rest
+      \expandafter\dtl@ifsingle\expandafter{\dtl@firstA}{%
+      \expandafter\dtl@ifsingle\expandafter{\dtl@firstB}{%
+      \expandafter\dtl@setcharcode\expandafter{\dtl@firstA}{\dtl@codeA}%
+      \expandafter\dtl@setcharcode\expandafter{\dtl@firstB}{\dtl@codeB}%
+      \ifnum\dtl@codeA=-1\relax
+        \ifnum\dtl@codeB=-1\relax
+           \protected@edef\dtl@donext{%
+             \noexpand\dtlcompare{\noexpand#1}{\dtl@restA}{\dtl@restB}}%
+           \dtl@donext
+        \else
+           \protected@edef\dtl@donext{%
+             \noexpand\dtlcompare
+               {\noexpand#1}{\dtl@restA}{\dtl@firstB\dtl@restB}}%
+           \dtl@donext
+        \fi
+      \else
+        \ifnum\dtl@codeB=-1\relax
+           \protected@edef\dtl@donext{%
+             \noexpand\dtlcompare
+               {\noexpand#1}{\dtl@firstA\dtl@restA}{\dtl@restB}}%
+           \dtl@donext
+        \else
+          \ifnum\dtl@codeA<\dtl@codeB
+            #1=-1\relax
+          \else
+            \ifnum\dtl@codeA>\dtl@codeB
+              #1=1\relax
+            \else
+               \ifdefempty{\dtl@restA}%
+               {%
+                 \ifdefempty{\dtl@restB}%
+                 {%
+                   #1=0\relax
+                 }%
+                 {%
+                   #1=-1\relax
+                 }%
+               }%
+               {%
+                 \ifdefempty{\restB}%
+                 {%
+                   #1=1\relax
+                 }%
+                 {%
+                   \protected@edef\dtl@donext{%
+                     \noexpand\dtlcompare
+                       {\noexpand#1}{\dtl@restA}{\dtl@restB}}%
+                   \dtl@donext
+                 }%
+               }%
+            \fi
+          \fi
+        \fi
+      \fi
+      }{%
+      \protected@edef\dtl@donext{%
+        \noexpand\dtlcompare
+          {\noexpand#1}{\dtl@firstA\dtl@restA}{\dtl@firstB\dtl@restB}}%
+      \dtl@donext
+      }}{%
+      \protected@edef\dtl@donext{%
+        \noexpand\dtlcompare
+          {\noexpand#1}{\dtl@firstA\dtl@restA}{\dtl@firstB\dtl@restB}}%
+      \dtl@donext
+      }%
+    }%
+  }%
+}
+\def\dtl@getfirst#1#2\end{%
+  \def\dtl@first{#1}%
+  \ifdefempty{\dtl@first}%
+  {%
+    \def\dtl@rest{#2}%
+  }%
+  {%
+    \dtl@ifsingle{#1}{\def\dtl@rest{#2}}{\dtl@getfirst#1#2\end}%
+  }%
+}
+\newcount\dtl@codeA
+\newcount\dtl@codeB
+\newcommand*{\dtl@setcharcode}[2]{%
+  \ifstrempty{#1}%
+  {%
+    #2=-1\relax
+  }%
+  {%
+    \ifx#1\@dtl@wordbreak\relax
+     #2=`\ \relax
+   \else
+     \ifcat\noexpand#1\relax
+       #2=0\relax
+     \else
+       #2=`#1\relax
+     \fi
+   \fi
+  }%
+}
+\newcommand*{\dtl@setlccharcode}[2]{%
+  \ifstrempty{#1}%
+  {%
+   #2=-1\relax
+  }%
+  {%
+   \ifx#1\@dtl@wordbreak\relax
+     #2=`\ \relax
+   \else
+     \ifcat\noexpand#1\relax%
+       #2=0\relax
+     \else
+       #2=\lccode`#1\relax
+       \ifnum#2=0\relax
+         #2=`#1\relax
+       \fi
+     \fi
+   \fi
+  }%
+}
+\newcommand*{\dtlicompare}[3]{%
+  \dtl@subnobrsp{#2}{\@dtl@argA}%
+  \dtl@subnobrsp{#3}{\@dtl@argB}%
+  \ifdefempty{\@dtl@argA}%
+  {%
+    \ifdefempty{\@dtl@argB}%
+    {%
+      #1=0\relax
+    }%
+    {%
+      #1=-1\relax
+    }%
+  }%
+  {%
+    \ifdefempty{\@dtl@argB}%
+    {%
+      #1=1\relax
+    }%
+    {%
+      \dtl@setwordbreaksnohyphens{\@dtl@argA}{\@dtl@wordbreak}%
+      \let\@dtl@argA\dtl@string
+      \dtl@setwordbreaksnohyphens{\@dtl@argB}{\@dtl@wordbreak}%
+      \let\@dtl@argB\dtl@string
+      \expandafter\dtl@getfirst\@dtl@argA\end
+      \let\dtl@firstA=\dtl@first
+      \let\dtl@restA=\dtl@rest
+      \expandafter\dtl@getfirst\@dtl@argB\end
+      \let\dtl@firstB=\dtl@first
+      \let\dtl@restB=\dtl@rest
+      \expandafter\dtl@ifsingle\expandafter{\dtl@firstA}%
+      {%
+        \expandafter\dtl@ifsingle\expandafter{\dtl@firstB}%
+        {%
+          \expandafter\dtl@setlccharcode\expandafter{\dtl@firstA}{\dtl@codeA}%
+          \expandafter\dtl@setlccharcode\expandafter{\dtl@firstB}{\dtl@codeB}%
+          \ifnum\dtl@codeA=-1\relax
+            \ifnum\dtl@codeB=-1\relax
+               \protected@edef\dtl@donext{%
+                 \noexpand\dtlicompare{\noexpand#1}{\dtl@restA}{\dtl@restB}}%
+               \dtl@donext
+            \else
+               \protected@edef\dtl@donext{%
+                 \noexpand\dtlicompare
+                   {\noexpand#1}{\dtl@restA}{\dtl@firstB\dtl@restB}}%
+               \dtl@donext
+            \fi
+          \else
+            \ifnum\dtl@codeB=-1\relax
+               \protected@edef\dtl@donext{%
+                 \noexpand\dtlicompare
+                   {\noexpand#1}{\dtl@firstA\dtl@restA}{\dtl@restB}}%
+               \dtl@donext
+            \else
+              \ifnum\dtl@codeA<\dtl@codeB
+                #1=-1\relax
+              \else
+                \ifnum\dtl@codeA>\dtl@codeB
+                  #1=1\relax
+                \else
+                   \ifdefempty{\dtl@restA}%
+                   {%
+                     \ifdefempty{\dtl@restB}%
+                     {%
+                       #1=0\relax
+                     }%
+                     {%
+                       #1=-1\relax
+                     }%
+                   }%
+                   {%
+                     \ifdefempty{\restB}%
+                     {%
+                       #1=1\relax
+                     }%
+                     {%
+                       \protected@edef\dtl@donext{%
+                         \noexpand\dtlicompare
+                           {\noexpand#1}{\dtl@restA}{\dtl@restB}}%
+                       \dtl@donext
+                     }%
+                   }%
+                \fi
+              \fi
+            \fi
+          \fi
+        }%
+        {%
+          \protected@edef\dtl@donext{%
+            \noexpand\dtlicompare
+              {\noexpand#1}{\dtl@firstA\dtl@restA}{\dtl@firstB\dtl@restB}}%
+          \dtl@donext
+        }%
+      }%
+      {%
+        \protected@edef\dtl@donext{%
+          \noexpand\dtlicompare
+            {\noexpand#1}{\dtl@firstA\dtl@restA}{\dtl@firstB\dtl@restB}}%
+        \dtl@donext
+      }%
+    }%
+  }%
+}
+\newcommand*{\dtlwordindexcompare}[3]{%
+  \@dtldictcompare{#1}{#2}{#3}{\@dtl@wordbreak}%
+}
+\newcommand*{\dtlletterindexcompare}[3]{%
+  \@dtldictcompare{#1}{#2}{#3}{}%
+}
+\newcommand*{\@dtldictcompare}[4]{%
+  \dtl@subnobrsp{#2}{\@dtl@argA}%
+  \dtl@subnobrsp{#3}{\@dtl@argB}%
+  \ifdefempty{\@dtl@argA}%
+  {%
+    \ifdefempty{\@dtl@argB}%
+    {%
+      #1=0\relax
+    }%
+    {%
+      #1=-1\relax
+    }%
+  }%
+  {%
+    \ifdefempty{\@dtl@argB}%
+    {%
+      #1=1\relax
+    }%
+    {%
+      \expandafter\DTLsplitstring\expandafter
+        {\@dtl@argA}{\datatoolpersoncomma}{\@dtl@beforepart}{\@dtl@afterpart}%
+      \ifdefempty{\@dtl@replaced}%
+      {%
+        \expandafter\DTLsplitstring\expandafter
+          {\@dtl@argA}{\datatoolplacecomma}{\@dtl@beforepart}{\@dtl@afterpart}%
+        \ifdefempty{\@dtl@replaced}%
+        {%
+          \expandafter\DTLsplitstring\expandafter
+            {\@dtl@argA}{\datatoolsubjectcomma}{\@dtl@beforepart}{\@dtl@afterpart}%
+          \ifdefempty{\@dtl@replaced}%
+          {%
+            \expandafter\DTLsplitstring\expandafter
+              {\@dtl@argA}{\datatoolparenstart}{\@dtl@beforepart}{\@dtl@afterpart}%
+            \ifdefempty{\@dtl@replaced}%
+            {%
+              \def\@dtl@A@comma{0}%
+              \let\@dtl@A@before\@dtl@argA
+              \def\@dtl@A@after{}%
+            }%
+            {%
+              \let\@dtl@A@comma\@dtl@replaced
+              \let\@dtl@A@before\@dtl@beforepart
+              \let\@dtl@A@after\@dtl@afterpart
+            }%
+          }%
+          {%
+            \let\@dtl@A@comma\@dtl@replaced
+            \let\@dtl@A@before\@dtl@beforepart
+            \let\@dtl@A@after\@dtl@afterpart
+          }%
+        }%
+        {%
+          \let\@dtl@A@comma\@dtl@replaced
+          \let\@dtl@A@before\@dtl@beforepart
+          \let\@dtl@A@after\@dtl@afterpart
+        }%
+      }%
+      {%
+        \let\@dtl@A@comma\@dtl@replaced
+        \let\@dtl@A@before\@dtl@beforepart
+        \let\@dtl@A@after\@dtl@afterpart
+      }%
+      \expandafter\DTLsplitstring\expandafter
+        {\@dtl@argB}{\datatoolpersoncomma}{\@dtl@beforepart}{\@dtl@afterpart}%
+      \ifdefempty{\@dtl@replaced}%
+      {%
+        \expandafter\DTLsplitstring\expandafter
+          {\@dtl@argB}{\datatoolplacecomma}{\@dtl@beforepart}{\@dtl@afterpart}%
+        \ifdefempty{\@dtl@replaced}%
+        {%
+          \expandafter\DTLsplitstring\expandafter
+            {\@dtl@argB}{\datatoolsubjectcomma}{\@dtl@beforepart}{\@dtl@afterpart}%
+          \ifdefempty{\@dtl@replaced}%
+          {%
+            \expandafter\DTLsplitstring\expandafter
+              {\@dtl@argB}{\datatoolparenstart}{\@dtl@beforepart}{\@dtl@afterpart}%
+            \ifdefempty{\@dtl@replaced}%
+            {%
+              \def\@dtl@B@comma{0}%
+              \let\@dtl@B@before\@dtl@argB
+              \def\@dtl@B@after{}%
+            }%
+            {%
+              \let\@dtl@B@comma\@dtl@replaced
+              \let\@dtl@B@before\@dtl@beforepart
+              \let\@dtl@B@after\@dtl@afterpart
+            }%
+          }%
+          {%
+            \let\@dtl@B@comma\@dtl@replaced
+            \let\@dtl@B@before\@dtl@beforepart
+            \let\@dtl@B@after\@dtl@afterpart
+          }%
+        }%
+        {%
+          \let\@dtl@B@comma\@dtl@replaced
+          \let\@dtl@B@before\@dtl@beforepart
+          \let\@dtl@B@after\@dtl@afterpart
+        }%
+      }%
+      {%
+        \let\@dtl@B@comma\@dtl@replaced
+        \let\@dtl@B@before\@dtl@beforepart
+        \let\@dtl@B@after\@dtl@afterpart
+      }%
+      \expandafter\dtl@ifcasechargroup\@dtl@A@before\dtl@end@ifcasechargroup
+       {\def\@dtl@A@chargroup{2}}%
+       {\def\@dtl@A@chargroup{1}}%
+       {\def\@dtl@A@chargroup{0}}%
+      \expandafter\dtl@ifcasechargroup\@dtl@B@before\dtl@end@ifcasechargroup
+       {\def\@dtl@B@chargroup{2}}%
+       {\def\@dtl@B@chargroup{1}}%
+       {\def\@dtl@B@chargroup{0}}%
+      \ifnum\@dtl@A@chargroup<\@dtl@B@chargroup
+        #1=-1\relax
+      \else
+        \ifnum\@dtl@A@chargroup>\@dtl@B@chargroup
+          #1=1\relax
+        \else
+          \ifcase\@dtl@A@chargroup
+            \protected@edef\dtl@donext{%
+              \noexpand\dtlcompare
+                {\noexpand#1}{\@dtl@A@before}{\@dtl@B@before}}%
+            \dtl@donext
+          \or
+            \ifnum\@dtl@A@before<\@dtl@B@before\relax
+              #1=-1\relax
+            \else
+              \ifnum\@dtl@A@before>\@dtl@B@before\relax
+                #1=1\relax
+              \else
+                #1=0\relax
+              \fi
+            \fi
+          \or
+            \@dtlwordindexcompare{#1}{\@dtl@A@before}{\@dtl@B@before}
+              {\dtlicomparewords}{#4}%
+            \ifnum#1=0\relax
+              \let\@org@dtl@person@comma\datatoolpersoncomma
+              \let\@org@dtl@place@comma\datatoolplacecomma
+              \let\@org@dtl@subject@comma\datatoolsubjectcomma
+              \let\@org@dtl@paren@start\datatoolparenstart
+              \def\datatoolpersoncomma{3}%
+              \def\datatoolplacecomma{2}%
+              \def\datatoolsubjectcomma{1}%
+              \def\datatoolparenstart{-1}%
+              \ifnum\@dtl@A@comma>\@dtl@B@comma\relax
+                #1=-1\relax
+              \else
+                \ifnum\@dtl@A@comma<\@dtl@B@comma\relax
+                  #1=1\relax
+                \else
+                 \@dtlwordindexcompare{#1}{\@dtl@B@before}{\@dtl@A@before}
+                   {\dtlcomparewords}{#4}%
+                  \ifnum#1=0\relax
+                    \@dtlwordindexcompare{#1}{\@dtl@A@after}{\@dtl@B@after}
+                      {\dtlicomparewords}{#4}%
+                  \fi
+                \fi
+              \fi
+              \let\datatoolpersoncomma\@org@dtl@person@comma
+              \let\datatoolplacecomma\@org@dtl@place@comma
+              \let\datatoolsubjectcomma\@org@dtl@subject@comma
+              \let\datatoolparenstart\@org@dtl@paren@start
+            \fi
+          \fi
+        \fi
+      \fi
+    }%
+  }%
+}%
+\newcommand*{\datatoolpersoncomma}{,\space}
+\newcommand*{\datatoolplacecomma}{,\space}
+\newcommand*{\datatoolsubjectcomma}{,\space}
+\newcommand*{\datatoolparenstart}{\space}
+\newcommand*{\@dtlwordindexcompare}[5]{%
+  \dtl@setwordbreaks{#2}{#5}%
+  \let#2\dtl@string
+  \dtl@setwordbreaks{#3}{}%
+  \let#3\dtl@string
+  \edef\@dtl@do@compare{%
+    \noexpand#4{\noexpand#1}%
+      {\expandonce#2}{\expandonce#3}%
+  }%
+  \@dtl@do@compare
+}
+\newcommand*{\@dtl@dict@compare}[4]{%
+  \ifdefempty{#2}%
+  {%
+    \ifdefempty{#3}%
+    {%
+      #1=0\relax
+    }%
+    {%
+      #1=-1\relax
+    }%
+  }%
+  {%
+    \ifdefempty{#3}%
+    {%
+      #1=1\relax
+    }%
+    {%
+      \expandafter\dtl@grabword#2\@dtl@endgrabword\dtl@A@first\dtl@A@remain
+      \expandafter\dtl@grabword#3\@dtl@endgrabword\dtl@B@first\dtl@B@remain
+      \edef\@dtl@do@compare{%
+        \noexpand#4{\noexpand#1}%
+          {\expandonce\dtl@A@first}{\expandonce\dtl@B@first}%
+      }%
+      \@dtl@do@compare
+      \ifnum#1=0\relax
+        \@dtl@dict@compare{#1}{\dtl@A@remain}{\dtl@B@remain}{#4}%
+      \fi
+    }%
+  }%
+}
+\def\dtl@grabword#1\@dtl@wordbreak#2\@dtl@endgrabword#3#4{%
+  \def#3{#1}%
+  \def#4{#2}%
+}
+\newcommand{\dtlicomparewords}[3]{%
+  \dtlicompare{#1}{#2}{#3}%
+}
+\newcommand{\dtlcomparewords}[3]{%
+  \dtlcompare{#1}{#2}{#3}%
+}
+\newcommand*{\dtl@setwordbreaks}[2]{%
+  \expandafter\dtl@subnobrsp\expandafter{#1}{\dtl@string}%
+  \DTLsubstituteall{\dtl@string}{~}{#2}%
+  \DTLsubstituteall{\dtl@string}{\ }{#2}%
+  \DTLsubstituteall{\dtl@string}{\space}{#2}%
+  \DTLsubstituteall{\dtl@string}{-}{#2}%
+ \toks@{#2}%
+ \edef\dtl@do@setwordbreaks{%
+   \noexpand\@dtl@setwordbreaks{\the\toks@}\expandonce\dtl@string\space\noexpand\@nil}%
+ \def\dtl@string{}%
+ \dtl@do@setwordbreaks
+}
+\def\@dtl@setwordbreaks#1#2 #3{%
+  \def\dtl@tmp{#3}%
+  \ifx\@nnil\dtl@tmp
+    \let\@dtl@setwordbreaks@next\@gobbletwo
+    \appto\dtl@string{#2}%
+  \else
+    \let\@dtl@setwordbreaks@next\@dtl@setwordbreaks
+    \appto\dtl@string{#2#1}%
+  \fi
+  \@dtl@setwordbreaks@next{#1}#3%
+}
+\newcommand*{\dtl@setwordbreaksnohyphens}[2]{%
+  \expandafter\dtl@subnobrsp\expandafter{#1}{\dtl@string}%
+  \DTLsubstituteall{\dtl@string}{~}{#2}%
+  \DTLsubstituteall{\dtl@string}{\ }{#2}%
+  \DTLsubstituteall{\dtl@string}{\space}{#2}%
+ \toks@{#2}%
+ \edef\dtl@do@setwordbreaks{%
+   \noexpand\@dtl@setwordbreaks{\the\toks@}\expandonce\dtl@string\space\noexpand\@nil}%
+ \def\dtl@string{}%
+ \dtl@do@setwordbreaks
+}
+\newcommand*{\@dtl@wordbreak}{ }
+\def\dtl@ifcasechargroup#1#2\dtl@end@ifcasechargroup#3#4#5{%
+  \dtlifcasechargroup{#1}%
+   {#3}%
+   {%
+     \DTLifint{#1#2}
+     {%
+       #4%
+     }%
+     {%
+       #3%
+     }%
+   }%
+   {#5}%
+}
+\newcommand*{\dtlifcasechargroup}[4]{%
+  \count@=`#1\relax
+  \dtlifintclosedbetween{\number\count@}{48}{57}%
+  {%
+    #3%
+  }%
+  {%
+    \dtlifintclosedbetween{\number\count@}{97}{122}%
+    {%
+      #2%
+    }%
+    {%
+      \dtlifintclosedbetween{\number\count@}{65}{90}%
+      {%
+        #2%
+      }%
+      {%
+        #4%
+      }%
+    }%
+  }%
+}
+\newcommand*{\dtlparsewords}[2]{%
+  \dtl@subnobrsp{#1}{\dtl@string}%
+  \DTLsubstituteall{\dtl@string}{~}{ }%
+  \DTLsubstituteall{\dtl@string}{\ }{ }%
+  \DTLsubstituteall{\dtl@string}{\space}{ }%
+  \DTLsubstituteall{\dtl@string}{-}{ }%
+  \let\dtl@parsewordshandler#2\relax
+  \edef\dtl@donext{%
+     \noexpand\@dtl@parse@words\expandonce\dtl@string\space\noexpand\@nil}%
+  \dtl@donext
+}
+\def\@dtl@parse@words#1 #2{%
+  \def\dtl@tmp{#2}%
+  \ifx\@nnil\dtl@tmp
+   \let\parse@wordsnext=\@gobble
+  \else
+   \let\parse@wordsnext=\@dtl@parse@words
+  \fi
+  \dlt@parsewordshandler{#1}%
+  \parse@wordsnext#2%
+}
+\newcommand*{\DTLifstringlt}{\@ifstar\@sDTLifstringlt\@DTLifstringlt}
+\newcommand*{\@DTLifstringlt}[4]{%
+  \protected@edef\@dtl@tmpcmp{%
+    \noexpand\dtlcompare{\noexpand\@dtl@tmpcount}{#1}{#2}}%
+  \@dtl@tmpcmp
+  \ifnum\@dtl@tmpcount<0\relax
+    #3%
+  \else
+    #4%
+  \fi
+}
+\newcommand*{\@sDTLifstringlt}[4]{%
+  \protected@edef\@dtl@tmpcmp{%
+    \noexpand\dtlicompare{\noexpand\@dtl@tmpcount}{#1}{#2}}%
+  \@dtl@tmpcmp
+  \ifnum\@dtl@tmpcount<0\relax
+    #3%
+  \else
+    #4%
+  \fi
+}
+\newcommand*{\DTLiflt}{\@ifstar\@sDTLiflt\@DTLiflt}
+\newcommand*{\@DTLiflt}[4]{%
+  \dtl@testbothnumerical{#1}{#2}%
+  \if@dtl@condition
+   \DTLifnumlt{#1}{#2}{#3}{#4}%
+  \else
+   \@DTLifstringlt{#1}{#2}{#3}{#4}%
+  \fi
+}
+\newcommand*{\@sDTLiflt}[4]{%
+  \dtl@testbothnumerical{#1}{#2}%
+  \if@dtl@condition
+   \DTLifnumlt{#1}{#2}{#3}{#4}%
+  \else
+   \@sDTLifstringlt{#1}{#2}{#3}{#4}%
+  \fi
+}
+\newcommand*{\DTLifnumgt}[4]{%
+  \DTLconverttodecimal{#1}{\@dtl@numi}%
+  \DTLconverttodecimal{#2}{\@dtl@numii}%
+  \dtlifnumgt{\@dtl@numi}{\@dtl@numii}%
+  {%
+    #3%
+  }%
+  {%
+    #4%
+  }%
+}
+\newcommand*{\DTLifstringgt}{\@ifstar\@sDTLifstringgt\@DTLifstringgt}
+\newcommand*{\@DTLifstringgt}[4]{%
+  \protected@edef\@dtl@tmpcmp{%
+    \noexpand\dtlcompare{\noexpand\@dtl@tmpcount}{#1}{#2}}%
+  \@dtl@tmpcmp
+  \ifnum\@dtl@tmpcount>0\relax
+    #3%
+  \else
+    #4%
+  \fi
+}
+\newcommand*{\@sDTLifstringgt}[4]{%
+  \protected@edef\@dtl@tmpcmp{%
+    \noexpand\dtlicompare{\noexpand\@dtl@tmpcount}{#1}{#2}}%
+  \@dtl@tmpcmp
+  \ifnum\@dtl@tmpcount>0\relax
+    #3%
+  \else
+    #4%
+  \fi
+}
+\newcommand*{\DTLifgt}{\@ifstar\@sDTLifgt\@DTLifgt}
+\newcommand*{\@DTLifgt}[4]{%
+  \dtl@testbothnumerical{#1}{#2}%
+  \if@dtl@condition
+   \DTLifnumgt{#1}{#2}{#3}{#4}%
+  \else
+   \@DTLifstringgt{#1}{#2}{#3}{#4}%
+  \fi
+}
+\newcommand*{\@sDTLifgt}[4]{%
+  \dtl@testbothnumerical{#1}{#2}%
+  \if@dtl@condition
+   \DTLifnumgt{#1}{#2}{#3}{#4}%
+  \else
+   \@sDTLifstringgt{#1}{#2}{#3}{#4}%
+  \fi
+}
+\newcommand*{\DTLifnumeq}[4]{%
+  \DTLconverttodecimal{#1}{\@dtl@numi}%
+  \DTLconverttodecimal{#2}{\@dtl@numii}%
+  \dtlifnumeq{\@dtl@numi}{\@dtl@numii}%
+  {%
+    #3%
+  }%
+  {%
+    #4%
+  }%
+}
+\newcommand*{\DTLifstringeq}{\@ifstar\@sDTLifstringeq\@DTLifstringeq}
+\newcommand*{\@DTLifstringeq}[4]{%
+  \protected@edef\@dtl@tmpcmp{%
+    \noexpand\dtlcompare{\noexpand\@dtl@tmpcount}{#1}{#2}}%
+  \@dtl@tmpcmp
+  \ifnum\@dtl@tmpcount=0\relax
+    #3%
+  \else
+    #4%
+  \fi
+}
+\newcommand*{\@sDTLifstringeq}[4]{%
+  \protected@edef\@dtl@tmpcmp{%
+    \noexpand\dtlicompare{\noexpand\@dtl@tmpcount}{#1}{#2}}%
+  \@dtl@tmpcmp
+  \ifnum\@dtl@tmpcount=0\relax
+    #3%
+  \else
+    #4%
+  \fi
+}
+\newcommand*{\DTLifeq}{\@ifstar\@sDTLifeq\@DTLifeq}
+\newcommand*{\@DTLifeq}[4]{%
+  \dtl@testbothnumerical{#1}{#2}%
+  \if@dtl@condition
+   \DTLifnumeq{#1}{#2}{#3}{#4}%
+  \else
+   \@DTLifstringeq{#1}{#2}{#3}{#4}%
+  \fi
+}
+\newcommand*{\@sDTLifeq}[4]{%
+  \dtl@testbothnumerical{#1}{#2}%
+  \if@dtl@condition
+   \DTLifnumeq{#1}{#2}{#3}{#4}%
+  \else
+   \@sDTLifstringeq{#1}{#2}{#3}{#4}%
+  \fi
+}
+\newcommand*{\DTLifSubString}[4]{%
+  \protected@edef\@dtl@dotestifsubstring{\noexpand\dtl@testifsubstring
+  {#1}{#2}}%
+  \@dtl@dotestifsubstring
+  \if@dtl@condition
+   #3%
+  \else
+   #4%
+  \fi
+}
+\newcommand*{\dtl@testifsubstring}[2]{%
+  \dtl@subnobrsp{#1}{\@dtl@argA}%
+  \dtl@subnobrsp{#2}{\@dtl@argB}%
+  \dtl@setwordbreaksnohyphens{\@dtl@argA}{\@dtl@wordbreak}%
+  \let\@dtl@argA\dtl@string
+  \dtl@setwordbreaksnohyphens{\@dtl@argB}{\@dtl@wordbreak}%
+  \let\@dtl@argB\dtl@string
+  \edef\dtl@donext{%
+    \noexpand\@dtl@testifsubstring{\expandonce\@dtl@argA}{\expandonce\@dtl@argB}}%
+  \dtl@donext
+}
+\newcommand*{\@dtl@testifsubstring}[2]{%
+  \def\@dtl@argA{#1}%
+  \def\@dtl@argB{#2}%
+  \ifdefempty{\@dtl@argB}%
+  {%
+    \@dtl@conditiontrue
+  }%
+  {%
+    \ifdefempty{\@dtl@argA}%
+    {%
+      \@dtl@conditionfalse
+    }%
+    {%
+      \@dtl@teststartswith{#1}{#2}%
+      \if@dtl@condition
+      \else
+        \expandafter\dtl@getfirst\@dtl@argA\end
+        \expandafter\dtl@ifsingle\expandafter{\dtl@first}{%
+          \expandafter\@dtl@testifsubstring\expandafter{\dtl@rest}{#2}%
+        }{%
+          \protected@edef\@dtl@donext{\noexpand\@dtl@testifsubstring
+             {\expandonce\dtl@first\expandonce\dtl@rest}{\expandonce\@dtl@argB}}%
+          \@dtl@donext
+        }%
+      \fi
+    }%
+  }%
+}
+\newcommand*{\DTLifStartsWith}[4]{%
+  \@dtl@conditionfalse
+  \protected@edef\@dtl@tmp{\noexpand\dtl@teststartswith{#1}{#2}}%
+  \@dtl@tmp
+  \if@dtl@condition
+   #3%
+  \else
+   #4%
+  \fi
+}
+\newcommand*{\dtl@teststartswith}[2]{%
+  \dtl@subnobrsp{#1}{\@dtl@argA}%
+  \dtl@subnobrsp{#2}{\@dtl@argB}%
+  \dtl@setwordbreaksnohyphens{\@dtl@argA}{\@dtl@wordbreak}%
+  \let\@dtl@argA\dtl@string
+  \dtl@setwordbreaksnohyphens{\@dtl@argB}{\@dtl@wordbreak}%
+  \let\@dtl@argB\dtl@string
+  \edef\dtl@donext{%
+    \noexpand\@dtl@teststartswith{\expandonce\@dtl@argA}{\expandonce\@dtl@argB}}%
+  \dtl@donext
+}
+
+\newcommand*{\@dtl@teststartswith}[2]{%
+  \def\@dtl@argA{#1}%
+  \def\@dtl@argB{#2}%
+  \ifdefempty{\@dtl@argA}%
+  {%
+    \ifdefempty{\@dtl@argB}%
+    {%
+      \@dtl@conditiontrue
+    }%
+    {%
+      \@dtl@conditionfalse
+    }%
+  }%
+  {%
+    \ifdefempty{\@dtl@argB}%
+    {%
+      \@dtl@conditiontrue
+    }%
+    {%
+      \expandafter\dtl@getfirst\@dtl@argA\end
+      \let\dtl@firstA=\dtl@first
+      \let\dtl@restA=\dtl@rest
+      \expandafter\dtl@getfirst\@dtl@argB\end
+      \let\dtl@firstB=\dtl@first
+      \let\dtl@restB=\dtl@rest
+      \expandafter\dtl@ifsingle\expandafter{\dtl@firstA}%
+      {%
+        \expandafter\dtl@ifsingle\expandafter{\dtl@firstB}%
+        {%
+          \expandafter\dtl@setcharcode\expandafter{\dtl@firstA}{\dtl@codeA}%
+          \expandafter\dtl@setcharcode\expandafter{\dtl@firstB}{\dtl@codeB}%
+          \ifnum\dtl@codeA=-1\relax
+            \ifnum\dtl@codeB=-1\relax
+               \protected@edef\dtl@donext{%
+                 \noexpand\@dtl@teststartswith{\expandonce\dtl@restA}{\expandonce\dtl@restB}}%
+               \dtl@donext
+            \else
+               \protected@edef\dtl@donext{%
+                 \noexpand\@dtl@teststartswith
+                   {\expandonce\dtl@restA}{\expandonce\dtl@firstB\expandonce\dtl@restB}}%
+               \dtl@donext
+            \fi
+          \else
+            \ifnum\dtl@codeB=-1\relax
+               \protected@edef\dtl@donext{%
+                 \noexpand\@dtl@teststartswith
+                   {\expandonce\dtl@firstA\expandonce\dtl@restA}{\expandonce\dtl@restB}}%
+               \dtl@donext
+            \else
+              \ifnum\dtl@codeA=\dtl@codeB
+                \protected@edef\dtl@donext{%
+                  \noexpand\@dtl@teststartswith{\expandonce\dtl@restA}{\expandonce\dtl@restB}}%
+                \dtl@donext
+              \else
+                \@dtl@conditionfalse
+              \fi
+            \fi
+          \fi
+        }%
+        {%
+          \protected@edef\dtl@donext{%
+            \noexpand\@dtl@teststartswith
+              {\expandonce\dtl@firstA\expandonce\dtl@restA}%
+              {\expandonce\dtl@firstB\expandonce\dtl@restB}}%
+          \dtl@donext
+        }%
+      }%
+      {%
+        \protected@edef\dtl@donext{%
+          \noexpand\@dtl@teststartswith
+            {\expandonce\dtl@firstA\expandonce\dtl@restA}%
+            {\expandonce\dtl@firstB\expandonce\dtl@restB}}%
+      }%
+    }%
+  }%
+}
+\newcommand*{\DTLifnumclosedbetween}[5]{%
+ \DTLconverttodecimal{#1}{\@dtl@numi}%
+ \DTLconverttodecimal{#2}{\@dtl@numii}%
+ \DTLconverttodecimal{#3}{\@dtl@numiii}%
+ \DTLifFPclosedbetween{\@dtl@numi}{\@dtl@numii}{\@dtl@numiii}{#4}{#5}%
+}
+\newcommand*{\DTLifstringclosedbetween}{%
+  \@ifstar\@sDTLifstringclosedbetween\@DTLifstringclosedbetween
+}
+\newcommand*{\@DTLifstringclosedbetween}[5]{%
+  \protected@edef\@dtl@tmpcmp{%
+    \noexpand\dtlcompare{\noexpand\@dtl@tmpcount}{#1}{#2}}%
+  \@dtl@tmpcmp
+  \let\@dtl@dovalue\relax
+  \ifnum\@dtl@tmpcount<0\relax
+    \def\@dtl@dovalue{#5}%
+  \fi
+  \ifx\@dtl@dovalue\relax
+    \protected@edef\@dtl@tmpcmp{%
+      \noexpand\dtlcompare{\noexpand\@dtl@tmpcount}{#1}{#3}}%
+    \@dtl@tmpcmp
+    \ifnum\@dtl@tmpcount>0\relax
+      \def\@dtl@dovalue{#5}%
+    \else
+      \def\@dtl@dovalue{#4}%
+    \fi
+  \fi
+  \@dtl@dovalue
+}
+\newcommand*{\@sDTLifstringclosedbetween}[5]{%
+  \protected@edef\@dtl@tmpcmp{%
+    \noexpand\dtlicompare{\noexpand\@dtl@tmpcount}{#1}{#2}}%
+  \@dtl@tmpcmp
+  \let\@dtl@dovalue\relax
+  \ifnum\@dtl@tmpcount<0\relax
+    \def\@dtl@dovalue{#5}%
+  \fi
+  \ifx\@dtl@dovalue\relax
+    \protected@edef\@dtl@tmpcmp{%
+      \noexpand\dtlicompare{\noexpand\@dtl@tmpcount}{#1}{#3}}%
+    \@dtl@tmpcmp
+    \ifnum\@dtl@tmpcount>0\relax
+      \def\@dtl@dovalue{#5}%
+    \else
+      \def\@dtl@dovalue{#4}%
+    \fi
+  \fi
+  \@dtl@dovalue
+}
+\newcommand*{\DTLifclosedbetween}{%
+  \@ifstar\@sDTLifclosedbetween\@DTLifclosedbetween
+}
+\newcommand*{\@DTLifclosedbetween}[5]{%
+  \dtl@testbothnumerical{#2}{#3}%
+  \if@dtl@condition
+    \dtl@ifsingle{#1}{%
+      \edef\@dtl@tmp{#1}}{%
+      \def\@dtl@tmp{#1}}%
+    \expandafter\@dtl@checknumerical\expandafter{\@dtl@tmp}%
+    \ifnum\@dtl@datatype>0\relax
+      \DTLifnumclosedbetween{#1}{#2}{#3}{#4}{#5}%
+    \else
+      \@DTLifstringclosedbetween{#1}{#2}{#3}{#4}{#5}%
+    \fi
+  \else
+    \@DTLifstringclosedbetween{#1}{#2}{#3}{#4}{#5}%
+  \fi
+}
+\newcommand*{\@sDTLifclosedbetween}[5]{%
+  \dtl@testbothnumerical{#2}{#3}%
+  \if@dtl@condition
+    \dtl@ifsingle{#1}{%
+      \edef\@dtl@tmp{#1}}{%
+      \def\@dtl@tmp{#1}}%
+    \expandafter\@dtl@checknumerical\expandafter{\@dtl@tmp}%
+    \ifnum\@dtl@datatype>0\relax
+      \DTLifnumclosedbetween{#1}{#2}{#3}{#4}{#5}%
+    \else
+      \@sDTLifstringclosedbetween{#1}{#2}{#3}{#4}{#5}%
+    \fi
+  \else
+    \@sDTLifstringclosedbetween{#1}{#2}{#3}{#4}{#5}%
+  \fi
+}
+\newcommand*{\DTLifnumopenbetween}[5]{%
+ \DTLconverttodecimal{#1}{\@dtl@numi}%
+ \DTLconverttodecimal{#2}{\@dtl@numii}%
+ \DTLconverttodecimal{#3}{\@dtl@numiii}%
+ \DTLifFPopenbetween{\@dtl@numi}{\@dtl@numii}{\@dtl@numiii}{#4}{#5}%
+}
+\newcommand*{\DTLifstringopenbetween}{%
+  \@ifstar\@sDTLifstringopenbetween\@DTLifstringopenbetween
+}
+\newcommand*{\@DTLifstringopenbetween}[5]{%
+  \protected@edef\@dtl@tmpcmp{%
+    \noexpand\dtlcompare{\noexpand\@dtl@tmpcount}{#1}{#2}}%
+  \@dtl@tmpcmp
+  \let\@dtl@dovalue\relax
+  \ifnum\@dtl@tmpcount>0\relax
+  \else
+    \def\@dtl@dovalue{#5}%
+  \fi
+  \ifx\@dtl@dovalue\relax
+    \protected@edef\@dtl@tmpcmp{%
+      \noexpand\dtlcompare{\noexpand\@dtl@tmpcount}{#1}{#3}}%
+    \@dtl@tmpcmp
+    \ifnum\@dtl@tmpcount<0\relax
+      \def\@dtl@dovalue{#4}%
+    \else
+      \def\@dtl@dovalue{#5}%
+    \fi
+  \fi
+  \@dtl@dovalue
+}
+\newcommand*{\@sDTLifstringopenbetween}[5]{%
+  \protected@edef\@dtl@tmpcmp{%
+    \noexpand\dtlicompare{\noexpand\@dtl@tmpcount}{#1}{#2}}%
+  \@dtl@tmpcmp
+  \let\@dtl@dovalue\relax
+  \ifnum\@dtl@tmpcount>0\relax
+  \else
+    \def\@dtl@dovalue{#5}%
+  \fi
+  \ifx\@dtl@dovalue\relax
+    \protected@edef\@dtl@tmpcmp{%
+      \noexpand\dtlicompare{\noexpand\@dtl@tmpcount}{#1}{#3}}%
+    \@dtl@tmpcmp
+    \ifnum\@dtl@tmpcount<0\relax
+      \def\@dtl@dovalue{#4}%
+    \else
+      \def\@dtl@dovalue{#5}%
+    \fi
+  \fi
+  \@dtl@dovalue
+}
+\newcommand*{\DTLifopenbetween}{%
+  \@ifstar\@sDTLifopenbetween\@DTLifopenbetween
+}
+\newcommand*{\@DTLifopenbetween}[5]{%
+  \dtl@testbothnumerical{#2}{#3}%
+  \if@dtl@condition
+    \dtl@ifsingle{#1}{%
+      \edef\@dtl@tmp{#1}}{%
+      \def\@dtl@tmp{#1}}%
+    \expandafter\@dtl@checknumerical\expandafter{\@dtl@tmp}%
+    \ifnum\@dtl@datatype>0\relax
+      \DTLifnumopenbetween{#1}{#2}{#3}{#4}{#5}%
+    \else
+      \@DTLifstringopenbetween{#1}{#2}{#3}{#4}{#5}%
+    \fi
+  \else
+    \@DTLifstringopenbetween{#1}{#2}{#3}{#4}{#5}%
+  \fi
+}
+\newcommand*{\@sDTLifopenbetween}[5]{%
+  \dtl@testbothnumerical{#2}{#3}%
+  \if@dtl@condition
+    \dtl@ifsingle{#1}{%
+      \edef\@dtl@tmp{#1}}{%
+      \def\@dtl@tmp{#1}}%
+    \expandafter\@dtl@checknumerical\expandafter{\@dtl@tmp}%
+    \ifnum\@dtl@datatype>0\relax
+      \DTLifnumopenbetween{#1}{#2}{#3}{#4}{#5}%
+    \else
+      \@sDTLifstringopenbetween{#1}{#2}{#3}{#4}{#5}%
+    \fi
+  \else
+    \@sDTLifstringopenbetween{#1}{#2}{#3}{#4}{#5}%
+  \fi
+}
+\let\DTLifFPopenbetween\dtlifnumopenbetween
+\let\DTLifFPclosedbetween\dtlifnumclosedbetween
+\newcommand*{\dtl@testlt}[2]{%
+  \DTLiflt{#1}{#2}{\@dtl@conditiontrue}{\@dtl@conditionfalse}%
+}
+\newcommand*{\DTLislt}[2]{%
+  \TE@throw\noexpand\dtl@testlt{#1}{#2}\noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testiclt}[2]{%
+  \@sDTLiflt{#1}{#2}{\@dtl@conditiontrue}{\@dtl@conditionfalse}%
+}
+\newcommand*{\DTLisilt}[2]{%
+  \TE@throw\noexpand\dtl@testiclt{#1}{#2}\noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testgt}[2]{%
+  \DTLifgt{#1}{#2}{\@dtl@conditiontrue}{\@dtl@conditionfalse}%
+}
+\newcommand*{\DTLisgt}[2]{%
+  \TE@throw\noexpand\dtl@testgt{#1}{#2}\noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testicgt}[2]{%
+  \@sDTLifgt{#1}{#2}{\@dtl@conditiontrue}{\@dtl@conditionfalse}%
+}
+\newcommand*{\DTLisigt}[2]{%
+  \TE@throw\noexpand\dtl@testicgt{#1}{#2}\noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testeq}[2]{%
+  \DTLifeq{#1}{#2}{\@dtl@conditiontrue}{\@dtl@conditionfalse}%
+}
+\newcommand*{\DTLiseq}[2]{%
+  \TE@throw\noexpand\dtl@testeq{#1}{#2}\noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testiceq}[2]{%
+  \@sDTLifeq{#1}{#2}{\@dtl@conditiontrue}{\@dtl@conditionfalse}%
+}
+\newcommand*{\DTLisieq}[2]{%
+  \TE@throw\noexpand\dtl@testiceq{#1}{#2}\noexpand\if@dtl@condition
+}
+\newcommand*{\DTLisSubString}[2]{%
+  \TE@throw\noexpand\dtl@testifsubstring{#1}{#2}%
+  \noexpand\if@dtl@condition
+}
+\newcommand*{\DTLisPrefix}[2]{%
+  \TE@throw\noexpand\dtl@teststartswith{#1}{#2}%
+  \noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testnumclosedbetween}[3]{%
+  \DTLifnumclosedbetween{#1}{#2}{#3}%
+    {\@dtl@conditiontrue}{\@dtl@conditionfalse}%
+}
+\newcommand*{\DTLisnumclosedbetween}[3]{%
+  \TE@throw\noexpand\dtl@testnumclosedbetween{#1}{#2}{#3}%
+  \noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testnumopenbetween}[3]{%
+  \DTLifnumopenbetween{#1}{#2}{#3}%
+    {\@dtl@conditiontrue}{\@dtl@conditionfalse}%
+}
+\newcommand*{\DTLisnumopenbetween}[3]{%
+  \TE@throw\noexpand\dtl@testnumopenbetween{#1}{#2}{#3}%
+  \noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testclosedbetween}[3]{%
+  \DTLifclosedbetween{#1}{#2}{#3}%
+    {\@dtl@conditiontrue}{\@dtl@conditionfalse}%
+}
+\newcommand*{\DTLisclosedbetween}[3]{%
+  \TE@throw\noexpand\dtl@testclosedbetween{#1}{#2}{#3}%
+  \noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testiclosedbetween}[3]{%
+  \@sDTLifclosedbetween{#1}{#2}{#3}%
+    {\@dtl@conditiontrue}{\@dtl@conditionfalse}%
+}
+\newcommand*{\DTLisiclosedbetween}[3]{%
+  \TE@throw\noexpand\dtl@testiclosedbetween{#1}{#2}{#3}%
+  \noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testopenbetween}[3]{%
+  \DTLifopenbetween{#1}{#2}{#3}%
+    {\@dtl@conditiontrue}{\@dtl@conditionfalse}%
+}
+\newcommand*{\DTLisopenbetween}[3]{%
+  \TE@throw\noexpand\dtl@testopenbetween{#1}{#2}{#3}%
+  \noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testiopenbetween}[3]{%
+  \@sDTLifopenbetween{#1}{#2}{#3}%
+    {\@dtl@conditiontrue}{\@dtl@conditionfalse}%
+}
+\newcommand*{\DTLisiopenbetween}[3]{%
+  \TE@throw\noexpand\dtl@testiopenbetween{#1}{#2}{#3}%
+  \noexpand\if@dtl@condition
+}
+\let\DTLisFPclosedbetween\DTLisnumclosedbetween
+\newcommand*{\dtl@testFPopenbetween}[3]{%
+  \DTLifFPopenbetween{#1}{#2}{#3}%
+    {\@dtl@conditiontrue}{\@dtl@conditionfalse}%
+}
+\newcommand*{\DTLisFPopenbetween}[3]{%
+  \TE@throw\noexpand\dtl@testFPopenbetween{#1}{#2}{#3}%
+  \noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testFPislt}[2]{%
+  \dtlifnumlt{#1}{#2}%
+  {%
+    \@dtl@conditiontrue
+  }%
+  {%
+    \@dtl@conditionfalse
+  }%
+}
+\newcommand*{\DTLisFPlt}[2]{%
+  \TE@throw\noexpand\dtl@testFPislt{#1}{#2}%
+  \noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testFPisgt}[2]{%
+  \dtlifnumgt{#1}{#2}%
+  {%
+    \@dtl@conditiontrue
+  }%
+  {%
+   \@dtl@conditionfalse
+  }%
+}
+\newcommand*{\DTLisFPgt}[2]{%
+  \TE@throw\noexpand\dtl@testFPisgt{#1}{#2}%
+  \noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testFPiseq}[2]{%
+ \dtlifnumeq{#1}{#2}%
+ {%
+   \@dtl@conditiontrue
+ }%
+ {%
+  \@dtl@conditionfalse
+ }%
+}
+\newcommand*{\DTLisFPeq}[2]{%
+  \TE@throw\noexpand\dtl@testFPiseq{#1}{#2}%
+  \noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testFPislteq}[2]{%
+ \dtlifnumlt{#1}{#2}%
+ {%
+   \@dtl@conditiontrue
+ }%
+ {%
+   \@dtl@conditionfalse
+ }%
+ \if@dtl@condition
+ \else
+  \dtl@testFPiseq{#1}{#2}%
+ \fi
+}
+\newcommand*{\DTLisFPlteq}[2]{%
+ \TE@throw\noexpand\dtl@testFPislteq{#1}{#2}%
+ \noexpand\if@dtl@condition
+}
+\newcommand*{\dtl@testFPisgteq}[2]{%
+ \dtlifnumgt{#1}{#2}%
+ {%
+   \@dtl@conditiontrue
+ }%
+ {%
+   \@dtl@conditionfalse
+ }%
+ \if@dtl@condition
+ \else
+  \dtl@testFPiseq{#1}{#2}%
+ \fi
+}
+\newcommand*{\DTLisFPgteq}[2]{%
+  \TE@throw\noexpand\dtl@testFPisgteq{#1}{#2}%
+  \noexpand\if@dtl@condition}
+\newcommand*{\dtl@teststring}[1]{%
+  \DTLifstring{#1}{\@dtl@conditiontrue}{\@dtl@conditionfalse}}
+\newcommand*{\DTLisstring}[1]{%
+  \TE@throw\noexpand\dtl@teststring{#1}\noexpand\if@dtl@condition}
+\newcommand*{\dtl@testnumerical}[1]{%
+  \DTLifnumerical{#1}{\@dtl@conditiontrue}{\@dtl@conditionfalse}%
+}
+\newcommand*{\DTLisnumerical}[1]{%
+  \TE@throw\noexpand\dtl@testnumerical{#1}\noexpand\if@dtl@condition}
+\newcommand*{\dtl@testint}[1]{%
+  \DTLifint{#1}{\@dtl@conditiontrue}{\@dtl@conditionfalse}}
+\newcommand*{\DTLisint}[1]{%
+  \TE@throw\noexpand\dtl@testint{#1}\noexpand\if@dtl@condition}
+\newcommand*{\dtl@testreal}[1]{%
+  \DTLifreal{#1}{\@dtl@conditiontrue}{\@dtl@conditionfalse}}
+\newcommand*{\DTLisreal}[1]{%
+  \TE@throw\noexpand\dtl@testreal{#1}\noexpand\if@dtl@condition}
+\newcommand*{\dtl@testcurrency}[1]{%
+  \DTLifcurrency{#1}{\@dtl@conditiontrue}{\@dtl@conditionfalse}}
+\newcommand*{\DTLiscurrency}[1]{%
+  \TE@throw\noexpand\dtl@testcurrency{#1}\noexpand\if@dtl@condition}
+\newcommand*{\dtl@testcurrencyunit}[2]{%
+  \DTLifcurrencyunit{#1}{#2}{\@dtl@conditiontrue}{\@dtl@conditionfalse}}
+\newcommand*{\DTLiscurrencyunit}[2]{%
+  \TE@throw\noexpand\dtl@testcurrencyunit{#1}{#2}%
+  \noexpand\if@dtl@condition
+}
+\newcommand*{\dtlbreak}{%
+  \PackageError{datatool}{Can't break out of anything}{}%
+}
+\long\def\dtlforint#1=#2\to#3\step#4\do#5{%
+  \let\@dtl@orgbreak\dtlbreak
+  \def\@dtl@endloophook{}%
+  \def\dtlbreak{\def\@dtl@endloophook{#1=#3}}%
+  #1=#2\relax
+  \ifnum#4<0\relax
+    \whiledo{\(#1>#3\)\TE@or\(#1=#3\)}%
+    {%
+      #5%
+      \@dtl@endloophook
+      \advance#1 by #4\relax
+    }%
+  \else
+    \whiledo{\(#1<#3\)\TE@or\(#1=#3\)}%
+    {%
+      #5%
+      \@dtl@endloophook
+      \advance#1 by #4\relax
+    }%
+  \fi
+  \let\dtlbreak\@dtl@orgbreak
+}
+\newcount\@dtl@foreach@level
+\long\def\dtlgforint#1=#2\to#3\step#4\do#5{%
+  \global#1=#2\relax
+  \global\advance\@dtl@foreach@level by 1\relax
+  \expandafter\global\expandafter
+    \let\csname @dtl@endhook@\the\@dtl@foreach@level\endcsname
+    \relax
+  \expandafter\global\expandafter
+    \let\csname @dtl@break@\the\@dtl@foreach@level\endcsname
+    \dtlbreak
+  \gdef\dtlbreak{\expandafter
+     \gdef\csname @dtl@endhook@\the\@dtl@foreach@level\endcsname{%
+       #1=#3}}%
+  \ifnum#4<0\relax
+    \whiledo{\(#1>#3\)\TE@or\(#1=#3\)}%
+    {%
+      #5%
+      \csname @dtl@endhook@\the\@dtl@foreach@level\endcsname
+      \global\advance#1 by #4\relax
+    }%
+  \else
+    \whiledo{\(#1<#3\)\TE@or\(#1=#3\)}%
+    {%
+      #5%
+      \csname @dtl@endhook@\the\@dtl@foreach@level\endcsname
+      \global\advance#1 by #4\relax
+    }%
+  \fi
+  \expandafter\global\expandafter\let\expandafter\dtlbreak
+    \csname @dtl@break@\the\@dtl@foreach@level\endcsname
+  \global\advance\@dtl@foreach@level by -1\relax
+}
+\newenvironment{dtlenvgforint}[1]%
+{%
+  \def\@dtlenvgforint@arg{#1}%
+  \long@collect@body\@do@dtlenvgforint
+}%
+{}
+\newcommand{\@do@dtlenvgforint}[1]{%
+  \expandafter\dtlgforint\@dtlenvgforint@arg\do{#1}%
+}
+\endinput
+%%
+%% End of file `datatool-base.sty'.

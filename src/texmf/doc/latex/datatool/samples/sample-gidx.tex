@@ -1,0 +1,645 @@
+\documentclass{book}
+
+\usepackage{datagidx}
+
+\usepackage[colorlinks]{hyperref}
+
+\usepackage{fmtcount}
+
+\DTLgidxAddLocationType{numberstringnum}
+
+ % Define some convenient commands
+
+\newcommand*{\principleloc}[1]{\textbf{#1}}
+\newcommand*{\glossaryloc}[1]{\textit{#1}}
+\newcommand*{\appname}[1]{\texttt{#1}}
+
+ % Don't let \appname interfere with the sorting and labelling of
+ % terms:
+
+\appto\newtermlabelhook{\let\appname\DTLgidxNoFormat}
+
+ % (datagidx also does this for \MakeUppercase, \MakeTextUppercase,
+ % \MakeLowercase, \MakeTextLowercase, \textsc and \acronymfont.)
+
+ % Make an index database labelled 'index' with given title.
+ % (Omit optional argument to affect all indexing databases
+ % or use a comma-separated list of labels for each database
+ % to affect.)
+
+\newgidx[heading=\chapter]{index}{Index}
+
+ % Add custom fields to the 'index' database
+
+\newtermaddfield[index]{Ed}{ed}{\field{text}ed}
+
+\newtermaddfield[index]{Ing}{ing}{\field{text}ing}
+
+\newtermaddfield[index]{AltPlural}{altplural}{}% no default value
+
+ % Define some convenience commands to access these fields
+
+\newcommand*{\glsed}[1]{\useentry{#1}{Ed}}
+\newcommand*{\glsing}[1]{\useentry{#1}{Ing}}
+\newcommand*{\glsaltpl}[1]{\useentry{#1}{AltPlural}}
+
+ % Make a glossary database labelled 'glossary' with given title.
+
+\newgidx[heading=\section]{glossary}{Glossary}
+
+ % Make an acronym database labelled 'acronyms' with given title.
+ % A different heading for the table of contents is supplied.
+
+\newgidx[heading={\section[Acronyms]}]{acronyms}{List of Acronyms}
+
+ % Make a notation database labelled 'notation' with given title
+
+\newgidx[heading=\section]{notation}{Notation}
+
+ % Define some terms for the index
+
+ % Either use "database" key in optional argument
+ % or set the default database. It's less typing to set the default
+ % database, so let's do that:
+
+\DTLgidxSetDefaultDB{index}
+
+ % These definitions will add terms to the "index" database:
+
+\newterm{singular}
+\newterm{plural}
+\newterm
+ [% options
+   label=pluralalt,
+   parent=plural,
+   see={altplural}
+ ]
+ {alternative}
+\newterm[label=altplural]{alternative plural}
+\newterm{group}
+\newterm[see=group]{scope}
+\newterm[label={ind-glossary}]{glossary}
+\newterm
+ [%
+   label={ind-index},
+   seealso={ind-glossary},
+ ]
+ {index}
+\newterm
+ [
+   seealso={ind-glossary}
+ ]
+ {acronym}
+\newterm[parent=acronym]{reset}
+\newterm
+ [%
+   parent=acronym,
+   label={firstuse},
+ ]
+ {first use}
+\newterm
+ [%
+   parent=acronym,
+   label={acronymlist},
+   text={list of acronyms},
+   plural={lists of acronyms}
+ ]
+ {list}
+
+ % Be careful if a value contains a comma or an equal sign. The
+ % entire value must be grouped.
+\newterm
+ [%
+   label={comma},
+   sort={,},
+   text={comma (,)},
+   plural={commas (,)}
+ ]%
+ {, (comma)}
+
+\newterm
+ [%
+   label={equals},
+   sort={=},
+   text={equal sign (=)},
+   plural={equal signs (=)},
+ ]%
+ {= (equal sign)}
+
+ % Don't need to worry about makeindex's special characters (since
+ % we're not using makeindex!)
+\newterm
+ [%
+   label={"},
+   sort={"},
+   text={double quote (")},
+   plural={double quotes (")},
+ ]%
+ {" (double quote)}
+
+\newterm
+ [%
+   label={!},
+   sort={!},
+   text={exclamation mark (!)},
+   plural={exclamation marks (!)},
+ ]%
+ {! (exclamation mark)}
+
+\newterm
+ [%
+   label={|},
+   sort={|},
+   text={vertical bar (\textbar)},
+   plural={vertical bars (\textbar)},
+ ]%
+ {\textbar\ (vertical bar)}
+
+
+ % Be careful of special characters
+
+\newterm
+ [%
+   label={amp},
+   sort={\DTLgidxStripBackslash{\&}},
+   text={ampersand (\&)},
+   plural={ampersands (\&)},
+ ]
+ {\& (ampersand)}
+
+\newterm
+ [%
+   label={underscore},
+   sort={\DTLgidxStripBackslash{\_}},
+   text={underscore (\_)},
+   plural={underscores (\_)},
+ ]
+ {\_ (underscore)}
+
+\newterm
+ [%
+   label={dollar},
+   sort={\DTLgidxStripBackslash{\$}},
+   text={dollar (\$)},
+   plural={dollars (\$)},
+ ]
+ {\$ (dollar)}
+
+\newterm
+ [%
+   label={circum},
+   sort={\DTLgidxStripBackslash{\^}},
+   text={circumflex (\textasciicircum)},
+   plural={circumflexes (\textasciicircum)},
+ ]
+ {\textasciicircum\ (circumflex)}
+
+\newterm
+ [%
+   label={tilde},
+   sort={\string~},
+   text={tilde (\textasciitilde)},
+   plural={tildes (\textasciitilde)},
+ ]
+ {\textasciitilde\ (tilde)}
+
+\newterm
+ [
+   label={0},
+   sort={0},
+ ]
+ {0 (zero)}
+
+\newterm
+ [
+   label={1},
+   sort={1},
+ ]
+ {1 (one)}
+
+\newterm
+ [
+   label={2},
+   sort={2},
+ ]
+ {2 (two)}
+
+\newterm
+ [
+   label={3},
+   sort={3},
+ ]
+ {3 (three)}
+
+ % Let's index a person
+\newterm
+ [%
+   label={knuth},
+   text={Knuth},
+ ]
+ {Knuth, Donald E.}
+
+ % and have a few more entries in the same letter group to test case
+ % ordering:
+\newterm{kite}
+\newterm{koala}
+
+ % Earlier I modified \newtermlabelhook so
+ % that \appname won't interfere with the sorting
+ % and labelling mechanism, so I don't need to specify separate sort
+ % and label keys here:
+
+\newterm{\appname{makeindex}}% label and sort both set to just 'makeindex'
+\newterm{\appname{xindy}}% label and sort both set to just 'xindy'
+
+ % Define some terms for the glossary
+
+\DTLgidxSetDefaultDB{glossary}
+
+\newterm[description={sea mammal with flippers that eats fish}]{seal}
+\newterm[description={large seal},seealso={seal}]{sea lion}
+
+\newterm{bravo}
+\newterm
+  [%
+    label=bravocry,
+    description={cry of approval (pl.\ bravos)},
+    parent=bravo
+  ]
+  {bravo}
+\newterm
+  [% options
+    label=bravokiller,
+    description={hired ruffian or killer (pl.\ bravoes)},
+    plural=bravoes,
+    parent=bravo
+  ]
+ {bravo}
+
+\newterm
+ [%
+   plural={indices\glsadd{ind-index}},
+   altplural={indexes},
+   text={index\glsadd{ind-index}},
+   description={an alphabetical list of names or subjects with
+   references to their location in the document (pl.\ indices or
+   indexes)}
+ ]
+ {index\glsadd{[glossaryloc]ind-index}}
+
+\newterm
+ [% options
+   text={glossary\glsadd{ind-glossary}},
+   plural={glossaries\glsadd{ind-glossary}},
+   seealso={index}%
+ ]%
+ {glossary\glsadd{ind-glossary}}
+
+\newterm
+ [% options
+   label=glossarycol,
+   text={glossary\glsadd{ind-glossary}},
+   plural={glossaries\glsadd{ind-glossary}},
+   description={collection of glosses},
+   parent=glossary
+ ]
+ {glossary\glsadd{[glossaryloc]ind-glossary}}
+
+\newterm
+ [% options
+   label=glossarylist,
+   text={glossary\glsadd{ind-glossary}},
+   plural={glossaries\glsadd{ind-glossary}},
+   description={list of technical words},
+   parent=glossary
+ ]
+ {glossary\glsadd{[glossaryloc]ind-glossary}}
+
+\newterm
+  [% options
+   label=pglist,
+   % description contains commas so it must be grouped
+   description={a list of individual pages or page ranges
+    (e.g.\ 1,2,4,7--9)}
+  ]
+  {page list}
+
+ % define some acronyms
+
+\DTLgidxSetDefaultDB{acronyms}
+
+ % Let's redefine \newacro so that the short form is also indexed:
+
+\renewcommand{\newacro}[3][]{%
+  \newterm[database=index,label={ind-#2-long},see={ind-#2}]{#3}%
+  \newterm[database=index,label={ind-#2}]{\acronymfont{#2}}%
+  \newterm
+    [%
+      description={\capitalisewords{#3}},% long form capitalised
+      text={\DTLgidxAcrStyle{#3}{\acronymfont{#2}}},% produced via \gls
+      plural={\DTLgidxAcrStyle{#3}{\acronymfont{#2}}},% produced via \glspl
+      short={\acronymfont{#2}\glsadd{ind-#2}},% short form
+      long={#3},% long form
+      sort={#2},% sort on short form
+      #1%
+    ]%
+    {#2\glsadd{[glossaryloc]ind-#2}}
+}
+
+\newacro{html}{hyper-text markup language}
+\newacro{css}{cascading style sheet}
+\newacro{xml}{extensible markup language}
+
+% define some notation
+
+\DTLgidxSetDefaultDB{notation}
+
+\newterm
+ [%
+   symbol={\ensuremath{\mathcal{S}}},
+   description={a collection of distinct objects},
+ ]%
+ {set}
+
+\newterm
+ [%
+   parent=set,
+   symbol={\ensuremath{\mathcal{U}}},
+   text={universal set},
+   description={the set containing everything}
+ ]%
+ {universal}
+
+\newterm
+ [%
+   parent=set,
+   symbol={\ensuremath{\emptyset}},
+   text={empty set},
+   description={the set with no elements}
+ ]%
+ {empty}
+
+\newterm
+ [%
+   symbol={\ensuremath{|\mathcal{S}|}},
+   description={the number of elements in the set \ensuremath{\mathcal{S}}}
+ ]%
+ {cardinality}
+
+\title{Sample Document Using the datagidx Package}
+\author{Nicola L. C. Talbot}
+
+\begin{document}
+\pagenumbering{alph}% Stop hyperref complaining about duplicate page identifiers
+\maketitle
+\thispagestyle{empty}%
+
+\frontmatter
+
+\tableofcontents
+
+\chapter{Summary}
+
+This is a sample document illustrating the use of the
+\texttt{datagidx} package to create document \glspl{index},
+\glspl{glossarylist} and \glspl{acronymlist} without the use of
+external \glsing{index} % custom command defined earlier
+applications, such as \gls{makeindex} or
+\gls{xindy}. Please read the user guide (datatool-user.pdf) for
+further guidance.
+
+\mainmatter
+
+\chapter{Introduction}
+%\renewcommand{\thepage}{\numberstring{page}}
+
+Words can be \glsed{index}. % custom command defined earlier.
+
+A \gls{glossarylist}\glsadd{[principleloc]ind-glossary} is a useful addition to any technical document,
+although a \gls{glossarycol} can also simply be a collection of
+glosses, which is another thing entirely. Some documents have
+multiple \glspl{glossarylist}.
+
+A \gls{bravocry} is a cry of approval (plural \glspl{bravocry}) but a 
+\gls{bravokiller} can also be a hired ruffian or killer (plural
+\glspl{bravokiller}).
+
+\section{Characters}
+
+When defining entries be careful of \glspl{comma} and \glspl{equals}
+so they don't interfere with the key=value mechanism. The sort and
+label keys get expanded so be careful of special characters, such as
+\gls{amp}, \gls{underscore}, \gls{circum}, \gls{dollar} and \gls{tilde}.
+
+Since we're not using \gls{makeindex}, we don't need to worry about
+\gls{makeindex}'s special characters, such as \gls{"}, \gls{!} and
+\gls{|}. (Unless they've been made active by packages such as
+\texttt{ngerman} or \texttt{babel}.)
+
+Non-alphabetical characters are usually grouped at the start of an
+index, and are usually followed by the number group. That is, the
+group of entries that are numerical, such as \gls{0}, \gls{1},
+\gls{2} and \gls{3}.
+
+\section{Custom Fields}
+
+You can add custom fields. For example, this document has added
+three custom fields to the `index' database.
+
+\section{Plurals}
+
+The \gls{plural} of \gls{glossarylist} is
+\glspl{glossarylist}. The \gls{plural} of \gls{index} is
+\glspl{index}. Some words have an \gls{altplural}. For example,
+an alternative to \glspl{index} is 
+\glsaltpl{index}.% custom command defined earlier
+
+\section{Sorting}
+
+The only type of sorting available is letter sorting. If you want
+word sorting you'll need to use \gls{makeindex} or \gls{xindy}.
+So ``\gls{sea lion}'' comes after ``\gls{seal}''.
+
+The default sort is case-insensitive so \gls{kite} before
+\gls{knuth} and \gls{knuth} before \gls{koala}.
+
+\section{Using without indexing}
+
+Here's a defined entry that won't get into the glossary.
+Name: \glsdispentry{pglist}{Name}.
+Description: \glsdispentry{pglist}{Description}.
+(Unless I~later reference it using a command like \verb|\gls|.)
+
+\section{Links to Entries}
+
+You can reference and index entries using \verb|\gls|, \verb|\Gls|,
+\verb|\glspl|, \verb|\Glspl|, \verb|\glssym| and \verb|\Glssym|.
+(Note, if you're used to using the \texttt{glossaries} package
+the syntax is different.)
+
+Or you can reference a particular field using \verb|\useentry| or
+\verb|\Useentry|. So here's the description for \gls{seal}:
+\useentry{seal}{Description}.
+
+If the \texttt{hyperref} package has been loaded, commands like
+\verb|\gls| will link to the relevant entry in the glossary or
+index. Referencing using \verb|\glsdispentry| and
+\verb|\Glsdispentry| won't have hyperlinks.
+
+\subsection{Enabling and Disabling Hyperlinks}
+
+If the \texttt{hyperref} package has been loaded, hyperlinks can be
+enabled and disabled. Either globally
+\DTLgidxDisableHyper
+(here's a reference to \gls{seal} without a hyperlink 
+\DTLgidxEnableHyper
+ and here's a reference to \gls{seal} with a hyperlink)
+or locally
+({%
+  \DTLgidxDisableHyper
+  here's a reference to \gls{seal} without a hyperlink
+}%
+and here's a reference to \gls{seal} with a hyperlink).
+
+\section{Acronyms}
+
+\glsadd{firstuse}Here's an \gls{acronym} referenced using \verb|\acr|: \acr{html}. And here
+it is again: \acr{html}. If you're used to the \texttt{glossaries}
+package, note the difference in using \verb|\gls|: \gls{html}.
+And again (no difference): \gls{html}.
+
+Now let's switch to displaying acronyms with a footnote.
+ % syntax: \DTLgidxAcrStyle{long}{short}
+\renewcommand*{\DTLgidxAcrStyle}[2]{%
+  #2\footnote{#1.}%
+}%
+First use: \acr{xml}. Next use: \acr{xml}.
+
+However it would look better if the footnote text started with a
+capital letter, so let's tweak things a bit.
+ % syntax: \DTLgidxFormatAcr{label}{long field}{short field}
+\renewcommand*{\DTLgidxFormatAcr}[3]{%
+  \DTLgidxAcrStyle{\Glsdispentry{#1}{#2}}{\useentry{#1}{#3}}%
+}%
+ % syntax: \DTLgidxFormatAcr{label}{long field}{short field}
+\renewcommand*{\DTLgidxFormatAcrUC}[3]{%
+  \DTLgidxAcrStyle{\Glsdispentry{#1}{#2}}{\Useentry{#1}{#3}}%
+}%
+Try with another acronym: \acr{css}. Next use: \acr{css}.
+
+\glsadd{reset}Reset: \glsresetall{acronyms}%
+\renewcommand*{\DTLgidxAcrStyle}[2]{#1 (#2)}%
+\renewcommand*{\DTLgidxFormatAcr}[3]{%
+  \DTLgidxAcrStyle{\glsdispentry{#1}{#2}}{\useentry{#1}{#3}}%
+}%
+\renewcommand*{\DTLgidxFormatAcrUC}[3]{%
+  \DTLgidxAcrStyle{\Glsdispentry{#1}{#2}}{\useentry{#1}{#3}}%
+}%
+Here are the acronyms again:
+\acr{html}, \acr{xml} and \acr{css}.
+Next use:
+\acr{html}, \acr{xml} and \acr{css}.
+Full form:
+\gls{html}, \gls{xml} and \gls{css}.
+
+Reset again. \glsresetall{acronyms}%
+Start with a capital. \Acr{html}.
+Next: \Acr{html}. Full: \Gls{html}.
+
+Prefer small-caps?
+\renewcommand{\acronymfont}[1]{\textsc{#1}}%
+\Acr{css}. Next: \acr{css}. Full: \gls{css}.
+
+Prefer capitals?
+\renewcommand{\acronymfont}[1]{\MakeTextUppercase{#1}}%
+\Acr{xml}. Next: \acr{xml}. Full: \gls{xml}.
+
+\section{Conditionals}
+
+You can test if a term has been defined using \verb|\iftermexists|.
+For example: \iftermexists{seal}{seal exists}{seal doesn't exist}.
+Another example: \iftermexists{jabberwocky}{jabberwocky
+exists}{jabberwocky doesn't exist}.
+
+You can test if a term has been used via \verb|ifentryused|.
+For example: \ifentryused{seal}{seal has been used}{seal hasn't been
+used.}
+Another example: \ifentryused{pglist}{pglist has been used}{pglist
+hasn't been used}.
+
+
+\section{Symbols}
+
+Terms may have an associated symbol. The symbol can be accessed
+using \verb|\glssym| or if you don't want to add information to the
+location list you can use \verb|\glsdispentry|. Here's the symbol
+associated with the \gls{cardinality} entry:
+\glsdispentry{cardinality}{Symbol}.
+
+A \gls{set} (denoted \glssym{set}) is a collection of objects.
+The \gls{universal} is the set of everything.
+The \gls{empty} contains no elements.
+The \gls{cardinality} of a set (denoted \glssym{cardinality}) is the
+number of elements in the set.
+
+\section{Location Ranges}
+
+A range is formed if a location sequence contains more than 2
+locations. Here's \gls{seal} again.
+
+\backmatter
+ % suppress section numbering
+\setcounter{secnumdepth}{-1}
+
+\chapter{Glossaries}
+
+\printterms
+ [
+   database=glossary,% 'glossary' database
+   columns=1,% one column page layout
+   postdesc=dot,% put a full stop after the description
+   style=gloss,% use 'gloss' style (sub-entries numbered)
+   namefont={\textbf},% put the name in bold
+   namecase=firstuc,% make the first letter of the name upper case
+   child=noname,% don't print sub item names
+   childsort=false,% don't sort the child lists
+%   location=hide% hide the location list
+ ]
+
+\printterms
+ [
+   database=acronyms,% 'acronyms' database
+   postdesc=dot,% put a full stop after the description
+   columns=1,% one column page layout
+   namefont={\textbf},% put the name (i.e. the abbreviation) in bold
+   namecase=uc,% make the name upper case
+   style=align,% use the 'align' style
+%   location=hide% hide the location list
+ ]
+
+\printterms
+ [
+   database=notation,% 'notation' database
+   postdesc=dot,% put a full stop after the description
+   columns=1,% one page column layout
+   namefont={\textbf},% make the name bold
+   style=indexalign,
+   namecase=firstuc,% make first letter of name a capital
+   symboldesc={desc (symbol)},% put symbol to the right of the description
+   sort={}% don't sort
+ ]
+
+\printterms
+ [
+   database=index,% 'index' database
+   prelocation=dotfill,% put a dotted line before the location list
+   columns=2,% page layout 
+   style=index,% use 'index' style
+   %balance=false,% don't balance columns
+   postheading={Locations in bold indicate primary reference.
+    Locations in italic indicate definitions in the
+    glossaries.}
+ ]
+
+
+\end{document}

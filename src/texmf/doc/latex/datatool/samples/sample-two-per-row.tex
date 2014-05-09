@@ -1,0 +1,55 @@
+ % This file is public domain.
+\documentclass[captions=tableheading]{scrartcl}
+
+\usepackage{datatool}
+
+\DTLloaddb{scores}{sample-student-records.csv}
+% Sort by surname then first name
+\DTLsort{Surname,First Name}{scores}
+
+\begin{document}
+
+\begin{table}[htbp]
+ \caption{Two database rows per tabular row}
+ \centering
+ \begin{tabular}{llcllc}
+ \bfseries First Name &
+ \bfseries Surname &
+ \bfseries Assignment 1 (\%) &
+ \bfseries First Name &
+ \bfseries Surname &
+ \bfseries Assignment 1 (\%)%
+ \DTLforeach*{scores}{\firstname=First Name,\surname=Surname,\score=Assignment 1}{%
+ \DTLifoddrow{\\}{&}%
+ \firstname & \surname & \score}%
+ \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+ \caption{Two database rows per tabular row (column-wise)}
+ \centering
+ % store half number of rows
+ \edef\maxrows{\DTLrowcount{scores}}%
+ \DTLdiv{\halfrowidx}{\maxrows}{2}
+ \begin{tabular}{llcllc}
+ \bfseries First Name &
+ \bfseries Surname &
+ \bfseries Assignment 1 (\%) &
+ \bfseries First Name &
+ \bfseries Surname &
+ \bfseries Assignment 1 (\%)%
+ \DTLforeach*[\value{DTLrowi}<\halfrowidx]{scores}%
+ {\firstname=First Name,\surname=Surname,\score=Assignment 1}%
+ {%
+   \\%
+   \firstname & \surname & \score
+   &
+   \edef\currentrowidx{\arabic{DTLrowi}}%
+   \DTLadd{\rowidxII}{\halfrowidx}{\currentrowidx}%
+   \DTLassign{scores}{\rowidxII}{\firstnameII=First Name,\surnameII=Surname,\scoreII=Assignment 1}%
+   \firstnameII & \surnameII & \scoreII
+ }%
+ \end{tabular}
+\end{table}
+
+\end{document}

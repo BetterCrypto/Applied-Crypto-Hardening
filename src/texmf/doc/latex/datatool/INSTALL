@@ -1,0 +1,65 @@
+INSTALLATION
+
+If you have downloaded the datatool package using the TeX
+Directory Structure (TDS), that is you have downloaded the archive
+datatool.tds.zip containing doc, tex, scripts and source
+directories, you need to follow the "Installing from TDS"
+instructions below.
+
+If you have downloaded the following files:
+
+datatool.dtx
+datatool.ins
+
+You need to follow the "Installing from DTX and INS" instructions
+below.
+
+For further information on installing LaTeX packages see:
+
+http://www.tex.ac.uk/cgi-bin/texfaq2html?label=installthings
+
+INSTALLING FROM TDS
+===================
+
+Files in tex and doc directories should go in the corresponding
+TEXMF directories (for example, /usr/share/texmf-local/ or
+C:\localtexmf\). 
+
+*Remember to refresh TeX's database*
+
+Example (on UNIX like systems):
+
+unzip datatool.tds.zip -d ~/texmf/
+texhash ~/texmf/
+
+INSTALLING FROM DTX AND INS
+===========================
+
+Run LaTeX on datatool.ins to generate the package style files:
+
+latex datatool.ins
+
+To create the package documentation (datatool-code.pdf):
+
+pdflatex -jobname datatool-code datatool.dtx
+makeindex -s gind.ist datatool-code.idx
+makeindex -s gglo.ist -o datatool-code.gls datatool-code.glo
+pdflatex -jobname datatool-code datatool.dtx
+pdflatex -jobname datatool-code datatool.dtx
+
+If TEXMF denotes the base directory of your local TeX installation (e.g.
+/usr/share/texmf-local/ or C:\localtexmf\) then create the following
+directories (if they don't already exist):
+
+TEXMF/doc/latex/datatool
+TEXMF/doc/latex/datatool/samples
+TEXMF/tex/latex/datatool
+
+Move the sample files (*.tex) to TEXMF/doc/latex/datatool/sample/
+
+Move the documentation (*.pdf) to TEXMF/doc/latex/datatool/
+
+Move style files (*.sty) to TEXMF/tex/latex/datatool/
+
+*Remember to refresh TeX's database*
+
