@@ -36,6 +36,10 @@ MacTeX misses `mweights.sty` and may cause a compile error.
 sudo tlmgr install mweights
 ```
 
+## IRC
+channel: #bettercrypto
+network: freenode
+
 # IMPORTANT
 
 If you reviewed the document and/or made some changes, please add your name to `src/acknowledgements.tex` (the list of names is sorted alphabetically by last name).
