@@ -1,0 +1,34 @@
+ % This file is public domain.
+\documentclass[captions=tableheading]{scrartcl}
+
+\usepackage{datatool}
+\usepackage{longtable}
+
+\DTLloaddb{scores}{sample-student-records.csv}
+
+\begin{document}
+Sort by surname, then first name:
+\DTLsort{Surname,First Name}{scores}
+
+% omit Address column
+\DTLdisplaydb[Address]{scores}
+
+Sort by assignment 1 score in descending order:
+\DTLsort{Assignment 1=descending}{scores}
+
+% omit Address column
+\DTLdisplaydb[Address]{scores}
+
+Average score: 
+\DTLmeanforcolumn{scores}{Assignment 1}{\averagescore}%
+\averagescore\%.
+Rounded to two decimal places: \DTLround{\averagescore}{\averagescore}{2}%
+\averagescore\%.
+
+A long list will require the longtable environment (supplied by
+longtable.sty). Example in Table~\ref{tab:records}.
+
+% Omit RegNum and Address columns
+\DTLdisplaylongdb[caption={Student Scores},label={tab:records},omit={RegNum,Address}]{scores}
+
+\end{document}

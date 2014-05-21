@@ -1,0 +1,10 @@
+FirstName,Surname,StudentNo,Assignment1,Assignment2
+John,"Smith, Jr",102689,68,60
+Jane,Brown,102647,75,80
+Andy,Brown,103569,42,50
+Z\"oe,Adams,105987,52,61
+Roger,Brady,106872,58,56
+%Clare,Verdon,104356,45,50
+Henk,\switchargs{Mere}{van der },106789,71,80
+Jos,\switchargs{Mere}{de la },104256,58,60
+

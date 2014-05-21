@@ -1,0 +1,118 @@
+% This file is public domain
+
+\documentclass{article}
+
+\usepackage{datatool}
+
+% Sample database
+
+\DTLnewdb{data}
+
+% Add a word to the database. (The Definition column is provided to
+% distinguish the entries when the database is displayed. The
+% Definition column is not used by the sort code.)
+
+% Syntax: \newword{string}
+
+\makeatletter
+\newcommand*{\newword}[1]{%
+  \DTLnewrow{data}%
+  \DTLnewdbentry{data}{Word}{#1}%
+% Convert word to its definition and add
+  {%
+    \def\thisword{#1}\@onelevel@sanitize\thisword
+    \dtlexpandnewvalue % ensure \theword gets expanded
+    \DTLnewdbentry{data}{Definition}{\thisword}%
+  }%
+}
+\makeatother
+
+\newword{High Water}
+\newword{!}
+\newword{[}
+\newword{~}
+\newword{\#define}
+\newword{High water}
+\newword{highwater}
+\newword{1st Street}
+\newword{high water}
+\newword{1st~Street}
+\newword{10~Downing Street}
+\newword{10~Downing Avenue}
+\newword{10 Downing Road}
+\newword{\#include}
+\newword{1 (one)}
+\newword{1\datatoolparenstart(one)}
+\newword{10\datatoolparenstart(ten)}
+\newword{10 (ten)}
+\newword{42\datatoolparenstart(forty-two)}
+\newword{42 (forty-two)}
+\newword{100\datatoolparenstart(one hundred)}
+\newword{100 (one hundred)}
+\newword{4\datatoolparenstart(four)}
+\newword{4 (four)}
+\newword{The Ten Samurai}
+\newword{London, Jack}
+\newword{London}
+\newword{10 Samurai, The}
+\newword{10 Samurai}
+\newword{Ten Samurai, The}
+\newword{Ten Samurai}
+\newword{10 Samurai\datatoolsubjectcomma The}
+\newword{Ten Samurai\datatoolsubjectcomma The}
+\newword{London\datatoolpersoncomma Jack}
+\newword{London\datatoolplacecomma UK}
+\newword{London\datatoolsubjectcomma History of}
+\newword{Zebra}
+\newword{zebra}
+\newword{alpha}
+\newword{Alpha}
+\newword{seal}
+\newword{sea lion}
+
+\begin{document}
+
+\section{Unsorted data}
+
+\begin{tabular}{ll}
+\bfseries Word & \bfseries Definition
+\DTLforeach*{data}{\Word=Word,\Definition=Definition}{%
+\\\Word & \ttfamily \Definition
+}
+\end{tabular}
+
+\section{Case-Insensitive Sort}
+
+\DTLsort*{Word}{data}
+
+\begin{tabular}{ll}
+\bfseries Word & \bfseries Definition
+\DTLforeach*{data}{\Word=Word,\Definition=Definition}{%
+\\\Word & \ttfamily \Definition
+}
+\end{tabular}
+
+
+\section{Case-Sensitive Sort}
+
+\DTLsort{Word}{data}
+
+\begin{tabular}{ll}
+\bfseries Word & \bfseries Definition
+\DTLforeach*{data}{\Word=Word,\Definition=Definition}{%
+\\\Word & \ttfamily \Definition
+}
+\end{tabular}
+
+\section{Word-Order Sort}
+
+\dtlsort{Word}{data}{\dtlwordindexcompare}
+
+\begin{tabular}{ll}
+\bfseries Word & \bfseries Definition
+\DTLforeach*{data}{\Word=Word,\Definition=Definition}{%
+\\\Word & \ttfamily \Definition
+}
+\end{tabular}
+
+\end{document}

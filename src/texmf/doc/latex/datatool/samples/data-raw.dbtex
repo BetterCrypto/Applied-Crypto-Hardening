@@ -1,0 +1,166 @@
+\DTLifdbexists{mydata}%
+{\PackageError{datatool}{Database `mydata' 
+already exists}{}%
+\aftergroup\endinput}{}% 
+\bgroup\makeatletter
+\dtl@message{Reconstructing database 
+`mydata'}%
+\expandafter\global\expandafter
+\newtoks\csname dtlkeys@mydata\endcsname
+\expandafter\global
+ \csname dtlkeys@mydata\endcsname={%
+%
+\db@plist@elt@w %
+\db@col@id@w 1%
+\db@col@id@end@ %
+\db@key@id@w Incubation Temperature%
+\db@key@id@end@ %
+\db@type@id@w 1%
+\db@type@id@end@ %
+\db@header@id@w Incubation Temperature%
+\db@header@id@end@ %
+\db@col@id@w 1%
+\db@col@id@end@ %
+\db@plist@elt@end@ %
+\db@plist@elt@w %
+\db@col@id@w 2%
+\db@col@id@end@ %
+\db@key@id@w Incubation Time%
+\db@key@id@end@ %
+\db@type@id@w 1%
+\db@type@id@end@ %
+\db@header@id@w Incubation Time%
+\db@header@id@end@ %
+\db@col@id@w 2%
+\db@col@id@end@ %
+\db@plist@elt@end@ %
+\db@plist@elt@w %
+\db@col@id@w 3%
+\db@col@id@end@ %
+\db@key@id@w Time to Growth%
+\db@key@id@end@ %
+\db@type@id@w 1%
+\db@type@id@end@ %
+\db@header@id@w Time to Growth%
+\db@header@id@end@ %
+\db@col@id@w 3%
+\db@col@id@end@ %
+\db@plist@elt@end@ 
+}%
+\expandafter\global\expandafter
+\newtoks\csname dtldb@mydata\endcsname
+\expandafter\global
+\csname dtldb@mydata\endcsname={%
+%
+\db@row@elt@w %
+\db@row@id@w 1%
+\db@row@id@end@ %
+\db@col@id@w 1%
+\db@col@id@end@ %
+\db@col@elt@w 40%
+\db@col@elt@end@ %
+\db@col@id@w 1%
+\db@col@id@end@ %
+\db@col@id@w 2%
+\db@col@id@end@ %
+\db@col@elt@w 120%
+\db@col@elt@end@ %
+\db@col@id@w 2%
+\db@col@id@end@ %
+\db@col@id@w 3%
+\db@col@id@end@ %
+\db@col@elt@w 40%
+\db@col@elt@end@ %
+\db@col@id@w 3%
+\db@col@id@end@ %
+\db@row@id@w 1%
+\db@row@id@end@ %
+\db@row@elt@end@ %
+\db@row@elt@w %
+\db@row@id@w 2%
+\db@row@id@end@ %
+\db@col@id@w 1%
+\db@col@id@end@ %
+\db@col@elt@w 40%
+\db@col@elt@end@ %
+\db@col@id@w 1%
+\db@col@id@end@ %
+\db@col@id@w 2%
+\db@col@id@end@ %
+\db@col@elt@w 90%
+\db@col@elt@end@ %
+\db@col@id@w 2%
+\db@col@id@end@ %
+\db@col@id@w 3%
+\db@col@id@end@ %
+\db@col@elt@w 60%
+\db@col@elt@end@ %
+\db@col@id@w 3%
+\db@col@id@end@ %
+\db@row@id@w 2%
+\db@row@id@end@ %
+\db@row@elt@end@ %
+\db@row@elt@w %
+\db@row@id@w 3%
+\db@row@id@end@ %
+\db@col@id@w 1%
+\db@col@id@end@ %
+\db@col@elt@w 35%
+\db@col@elt@end@ %
+\db@col@id@w 1%
+\db@col@id@end@ %
+\db@col@id@w 2%
+\db@col@id@end@ %
+\db@col@elt@w 180%
+\db@col@elt@end@ %
+\db@col@id@w 2%
+\db@col@id@end@ %
+\db@col@id@w 3%
+\db@col@id@end@ %
+\db@col@elt@w 20%
+\db@col@elt@end@ %
+\db@col@id@w 3%
+\db@col@id@end@ %
+\db@row@id@w 3%
+\db@row@id@end@ %
+\db@row@elt@end@ %
+\db@row@elt@w %
+\db@row@id@w 4%
+\db@row@id@end@ %
+\db@col@id@w 1%
+\db@col@id@end@ %
+\db@col@elt@w 55%
+\db@col@elt@end@ %
+\db@col@id@w 1%
+\db@col@id@end@ %
+\db@col@id@w 2%
+\db@col@id@end@ %
+\db@col@elt@w 190%
+\db@col@elt@end@ %
+\db@col@id@w 2%
+\db@col@id@end@ %
+\db@col@id@w 3%
+\db@col@id@end@ %
+\db@col@elt@w 40%
+\db@col@elt@end@ %
+\db@col@id@w 3%
+\db@col@id@end@ %
+\db@row@id@w 4%
+\db@row@id@end@ %
+\db@row@elt@end@ 
+}%
+\expandafter\global
+ \expandafter\newcount\csname dtlrows@mydata\endcsname
+\expandafter\global
+ \csname dtlrows@mydata\endcsname=4\relax
+\expandafter\global
+ \expandafter\newcount\csname dtlcols@mydata\endcsname
+\expandafter\global
+ \csname dtlcols@mydata\endcsname=3\relax
+\expandafter
+ \gdef\csname dtl@ci@mydata@Incubation Temperature\endcsname{1}% 
+\expandafter
+ \gdef\csname dtl@ci@mydata@Incubation Time\endcsname{2}% 
+\expandafter
+ \gdef\csname dtl@ci@mydata@Time to Growth\endcsname{3}% 
+\egroup

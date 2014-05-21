@@ -33,8 +33,12 @@ Fork and issue pull requests. Those will be reviewed and if accepted pushed to t
 MacTeX misses `mweights.sty` and may cause a compile error.
 
 ```bash
-sudo tlsmgr install mweights
+sudo tlmgr install mweights
 ```
+
+## IRC
+channel: #bettercrypto
+network: freenode
 
 # IMPORTANT
 

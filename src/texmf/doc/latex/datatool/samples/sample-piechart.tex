@@ -1,0 +1,36 @@
+ % This file is public domain.
+\documentclass[captions=tableheading]{scrartcl}
+
+\usepackage{datapie}
+
+\DTLloaddb{marks}{sample-student-records.csv}
+
+\begin{document}
+
+% Compute average mark for each student:
+\DTLforeach{marks}{%
+\assignI=Assignment 1,%
+\assignII=Assignment 2,%
+\assignIII=Assignment 3}{%
+\DTLmeanforall{\theMean}{\assignI,\assignII,\assignIII}%
+\DTLround{\theMean}{\theMean}{0}\DTLclip{\theMean}{\theMean}%
+\DTLappendtorow{Average}{\theMean}}
+
+% Sort according to average mark
+\DTLsort{Average=descending}{marks}
+
+\begin{table}
+\caption{Student Marks}
+\centering
+\DTLdisplaydb[Address,RegNum,Title]{marks}
+\end{table}
+
+\begin{figure}
+\caption{Pie Chart}
+\centering
+\DTLpiechart{variable=\Average,outerlabel={\Surname, \FirstName},rotateouter}{marks}%
+  {\Average=Average,\Surname=Surname,\FirstName=First
+Name}
+\end{figure}
+
+\end{document}

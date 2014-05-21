@@ -1,0 +1,3215 @@
+%%
+%% This is file `datagidx.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% datatool.dtx  (with options: `datagidx.sty,package')
+%% 
+%%  datatool.dtx
+%%  Copyright 2014 Nicola Talbot
+%% 
+%%  This work may be distributed and/or modified under the
+%%  conditions of the LaTeX Project Public License, either version 1.3
+%%  of this license of (at your option) any later version.
+%%  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%%  and version 1.3 or later is part of all distributions of LaTeX
+%%  version 2005/12/01 or later.
+%% 
+%%  This work has the LPPL maintenance status `maintained'.
+%% 
+%%  The Current Maintainer of this work is Nicola Talbot.
+%% 
+%%  This work consists of the files datatool.dtx and datatool.ins and the derived files datatool-base.sty, datatool-fp.sty, datatool-pgfmath.sty, datatool.sty, datagidx.sty, databib.sty, databar.sty, datapie.sty, dataplot.sty, person.sty, databib.bst.
+%% 
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{datagidx}[2014/01/17 v2.19 (NLCT)]
+\RequirePackage{datatool}
+\RequirePackage{etoolbox}
+\RequirePackage{xkeyval}
+\RequirePackage{mfirstuc}
+\RequirePackage{xfor}
+\RequirePackage{multicol}
+\RequirePackage{textcase}
+\RequirePackage{afterpage}
+\newcommand*{\datagidx@columns}{2}
+\newcommand*{\DTLgidxSetColumns}[1]{%
+  \DTLifint{#1}%
+  {%
+    \def\datagidx@columns{#1}%
+  }%
+  {%
+    \PackageError{datagidx}%
+    {Number of columns must be an integer}%
+    {%
+      You have requested `#1' columns, which can't be parsed as a
+      number%
+    }%
+  }%
+}
+\newcounter{DTLgidxChildCount}
+\def\theHDTLgidxChildCount{\Label.\arabic{DTLgidxChildCount}}
+\newcommand*{\DTLgidxChildCountLabel}{\theDTLgidxChildCount) }
+\newcommand*{\DTLgidxChildStyle}[1]{#1}
+\newcommand*{\datagidx@setchildstyle}[1]{%
+  \ifcase#1\relax
+    \renewcommand*{\DTLgidxChildStyle}[1]{##1}%
+  \or
+    \renewcommand*{\DTLgidxChildStyle}[1]{%
+      \DTLgidxChildCountLabel
+    }%
+  \fi
+}
+\newcommand{\datagidx@foreachchild}{%
+  \datagidx@sort@foreachchild
+}
+\newcommand*{\datagidx@setchildsort}[1]{%
+  \ifcase#1\relax
+    \renewcommand*{\datagidx@foreachchild}{%
+       \datagidx@sort@foreachchild
+    }%
+  \or
+    \renewcommand*{\datagidx@foreachchild}{%
+       \datagidx@unsort@foreachchild
+    }%
+  \fi
+}
+\newcommand*{\DTLgidxPostName}{ }
+\newcommand*{\DTLgidxPostChildName}{\DTLgidxPostName}
+\newcommand*{\DTLgidxNameCase}[1]{#1}
+\newcommand*{\datagidx@setnamecase}[1]{%
+  \ifcase#1\relax
+    \renewcommand*{\DTLgidxNameCase}[1]{##1}%
+  \or
+    \let\DTLgidxNameCase\MakeTextUppercase
+  \or
+    \let\DTLgidxNameCase\MakeTextLowercase
+  \or
+    \let\DTLgidxNameCase\xmakefirstuc
+  \or
+    \let\DTLgidxNameCase\xcapitalisewords
+  \fi
+}
+\newcommand*{\DTLgidxNameFont}[1]{\textnormal{#1}}
+\newcommand*{\DTLgidxPostDescription}{}
+\newcommand*{\datagidx@setpostdesc}[1]{%
+   \ifcase#1\relax
+     \renewcommand*{\DTLgidxPostDescription}{}%
+   \or
+     \renewcommand*{\DTLgidxPostDescription}{.}%
+   \fi
+ }
+\newcommand*{\DTLgidxPreLocation}{\enspace}
+\newcommand*{\datagidx@setprelocation}[1]{%
+   \ifcase#1\relax
+     \renewcommand*{\DTLgidxPreLocation}{}%
+   \or
+     \renewcommand*{\DTLgidxPreLocation}{\enspace}%
+   \or
+     \renewcommand*{\DTLgidxPreLocation}{ }%
+   \or
+     \renewcommand*{\DTLgidxPreLocation}{\dotfill}%
+   \or
+     \renewcommand*{\DTLgidxPreLocation}{\hfill}%
+   \fi
+ }
+\newcommand*{\DTLgidxLocation}{\dtldolocationlist}
+\newcommand*{\datagidx@setlocation}[1]{%
+  \ifcase#1\relax
+    \renewcommand*{\DTLgidxLocation}{}%
+  \or
+    \renewcommand*{\DTLgidxLocation}{\dtldolocationlist}%
+  \or
+    \renewcommand*{\DTLgidxLocation}{\dtldofirstlocation}%
+  \fi
+}
+\newcommand*{\DTLgidxSee}{%
+  \DTLifnull{\See}%
+  {}%
+  {%
+    \DTLgidxPreLocation
+    \DTLgidxFormatSee{\seename}{\See}%
+  }%
+}
+\newcommand*{\DTLgidxSeeAlso}{%
+  \DTLifnull{\SeeAlso}%
+  {}%
+  {%
+     \DTLgidxFormatSeeAlso{\seealsoname}{\SeeAlso}%
+  }%
+}
+\newcommand*{\DTLgidxChildrenSeeAlso}{%
+  \DTLgidxChildren
+  \DTLgidxSeeAlso
+}
+\newcommand*{\datagidx@setsee}[1]{%
+  \ifcase#1\relax
+    \renewcommand*{\DTLgidxSee}{%
+      \DTLifnull{\See}{}%
+      {%
+        , \DTLgidxFormatSee{\seename}{\See}%
+      }%
+    }%
+  \or
+    \renewcommand*{\DTLgidxSee}{%
+      \DTLifnull{\See}{}
+      {%
+        \space(\DTLgidxFormatSee{\seename}{\See})%
+      }%
+    }%
+  \or
+    \renewcommand*{\DTLgidxSee}{%
+      \DTLifnull{\See}{}%
+      {%
+        . \DTLgidxFormatSee{\xmakefirstuc{\seename}}{\See}%
+      }%
+    }%
+  \or
+    \renewcommand*{\DTLgidxSee}{%
+      \DTLifnull{\See}{}
+      {%
+        \space\DTLgidxFormatSee{\seename}{\See}%
+      }%
+    }%
+  \or
+    \renewcommand*{\DTLgidxSee}{%
+      \DTLifnull{\See}{}
+      {%
+        \DTLgidxFormatSee{\seename}{\See}%
+      }%
+    }%
+  \or
+    \renewcommand*{\DTLgidxSee}{%
+      \DTLifnull{\See}{}
+      {%
+        ; \DTLgidxFormatSee{\seename}{\See}%
+      }%
+    }%
+  \or
+    \renewcommand*{\DTLgidxSee}{%
+      \DTLifnull{\See}{}
+      {%
+        \DTLgidxPreLocation\DTLgidxFormatSee{\seename}{\See}%
+      }%
+    }%
+  \fi
+}
+\newcommand*{\DTLgidxSymDescSep}{\space}
+\newlength\datagidxsymbolwidth
+\newlength\datagidxlocationwidth
+\newcommand{\DTLgidxFormatDesc}[1]{#1}
+\newcommand*{\DTLgidxSymbolDescription}{%
+  \DTLgidxSymbolDescLeft
+  \DTLgidxSymbolDescRight
+}
+\newcommand*{\DTLgidxSymbolDescLeft}{%
+  \ifdefempty{\Symbol}{}{(\Symbol)\DTLgidxSymDescSep}%
+}
+\newcommand*{\DTLgidxSymbolDescRight}{%
+  \ifdefempty{\Description}{}%
+  {%
+    \DTLgidxFormatDesc{\Description}\DTLgidxPostDescription
+  }%
+}
+\newif\if@datagidxsymbolleft
+\@datagidxsymbollefttrue
+\newcommand*{\datagidx@formatsymdesc}[1]{%
+   \ifcase#1\relax
+      \renewcommand*{\DTLgidxSymbolDescLeft}{%
+        \ifdefempty{\Symbol}{}{\Symbol}%
+      }%
+      \renewcommand*{\DTLgidxSymbolDescRight}{}%
+      \@datagidxsymbollefttrue
+   \or
+      \renewcommand*{\DTLgidxSymbolDescLeft}{%
+        \ifdefempty{\Description}{}%
+        {%
+           \DTLgidxFormatDesc{\Description}\DTLgidxPostDescription
+        }%
+      }%
+      \renewcommand*{\DTLgidxSymbolDescRight}{}%
+      \@datagidxsymbolleftfalse
+   \or
+      \renewcommand*{\DTLgidxSymbolDescLeft}{%
+        \ifdefempty{\Symbol}{}{(\Symbol)\DTLgidxSymDescSep}%
+      }%
+      \renewcommand*{\DTLgidxSymbolDescRight}{%
+        \ifdefempty{\Description}{}%
+        {%
+          \DTLgidxFormatDesc{\Description}\DTLgidxPostDescription
+        }%
+      }%
+      \@datagidxsymbollefttrue
+   \or
+      \renewcommand*{\DTLgidxSymbolDescLeft}{%
+        \ifdefempty{\Description}{}%
+        {%
+          \DTLgidxFormatDesc{\Description}%
+          \DTLgidxPostDescription\DTLgidxSymDescSep
+        }%
+      }%
+      \renewcommand*{\DTLgidxSymbolDescRight}{%
+        \ifdefempty{\Symbol}{}{(\Symbol)}%
+      }%
+      \@datagidxsymbolleftfalse
+   \or
+      \renewcommand*{\DTLgidxSymbolDescLeft}{%
+        \ifdefempty{\Symbol}{}{\Symbol\DTLgidxSymDescSep}%
+      }%
+      \renewcommand*{\DTLgidxSymbolDescRight}{%
+        \ifdefempty{\Description}{}%
+        {%
+          \DTLgidxFormatDesc{\Description}%
+          \DTLgidxPostDescription
+        }%
+      }%
+      \@datagidxsymbollefttrue
+   \or
+      \renewcommand*{\DTLgidxSymbolDescLeft}{%
+        \ifdefempty{\Description}{}%
+        {%
+          \DTLgidxFormatDesc{\Description}%
+          \DTLgidxPostDescription\DTLgidxSymDescSep
+        }%
+      }%
+      \renewcommand*{\DTLgidxSymbolDescRight}{%
+        \ifdefempty{\Symbol}{}{\Symbol}%
+      }%
+      \@datagidxsymbolleftfalse
+   \fi
+ }
+\newcommand*{\DTLgidxSetCompositor}[1]{%
+ \undef\datagidx@docomplist
+ \DeclareListParser{\datagidx@docomplist}{#1}%
+ \def\datagidx@compositor{#1}%
+}
+\DTLgidxSetCompositor{.}
+\newcommand*{\datagidx@do@sort}{\datagidx@sort}
+\newcommand*{\datagidx@optimize@sort}{%
+  \ifdef\datagidx@do@optimize@sort
+  {%
+    \datagidx@sort
+  }%
+  {%
+    \protected@write\@auxout{}{%
+      \string\gdef\string\datagidx@do@optimize@sort{}%
+    }%
+    \global\let\@datagidx@dorerun@warn@sort\@data@rerun@warn@sort
+  }%
+}
+\newif\if@datagidx@warn
+\@datagidx@warntrue
+\newcommand*\@datagidx@dorerun@warn{}
+\AtEndDocument{\if@datagidx@warn\@datagidx@dorerun@warn\fi}
+\newcommand*\@datagidx@dorerun@warn@sort{}
+\AtEndDocument{\if@datagidx@warn\@datagidx@dorerun@warn@sort\fi}
+\newcommand*\@data@rerun@warn@sort{%
+  \PackageWarningNoLine{datagidx}{Rerun required to sort the
+   index/glossary databases}%
+}
+\newcommand*\@data@rerun@warn{%
+  \PackageWarningNoLine{datagidx}{Rerun required to ensure the
+   index/glossary location lists are up-to-date}%
+}
+\newcommand*{\datagidx@do@highopt@optimize}{%
+  \renewcommand*{\datagidx@do@sort}{%
+    \ifcsdef{datagidx@do@highopt@sort@\DTLgidxCurrentdb}%
+    {%
+      \csuse{datagidx@do@highopt@sort@\DTLgidxCurrentdb}%
+    }%
+    {%
+    }%
+    \bgroup
+    \def\dtl@saverawdbhook{%
+      \let\db@col@id@w\@datagidx@db@col@id@w
+      \def\DTLgidxName{\string\DTLgidxName\space}%
+      \def\DTLgidxMac{\string\DTLgidxMac\space}%
+      \def\DTLgidxRank{\string\DTLgidxRank\space}%
+      \def\DTLgidxParen{\string\DTLgidxParen\space}%
+      \def\DTLgidxParticle{\string\DTLgidxParticle\space}%
+      \def\DTLgidxOffice{\string\DTLgidxOffice\space}%
+      \def\DTLgidxSaint{\string\DTLgidxSaint\space}%
+      \def\DTLgidxPlace{\string\DTLgidxPlace\space}%
+      \def\DTLgidxIgnore{\string\DTLgidxIgnore\space}%
+      \def\DTLgidxNameNum{\string\DTLgidxNameNum\space}%
+      \def\DTLgidxSubject{\string\DTLgidxSubject\space}%
+    }%
+    \DTLsaverawdb{\DTLgidxCurrentdb}{\datagidxhighoptfilename\DTLgidxCurrentdb}%
+    \egroup
+  }%
+  \def\newgidx{\datagidx@highopt@newgidx}%
+  \def\newterm{\datagidx@highopt@newterm}%
+}
+\def\@datagidx@db@col@id@w#1\db@col@id@end@\db@col@elt@w#2\db@col@elt@end@\db@col@id@w#3\db@col@id@end@{%
+  \expandafter\@gobble\string\%^^J
+  \string\db@col@id@w\space #1%
+  \expandafter\@gobble\string\%^^J
+  \string\db@col@id@end@\space
+  \expandafter\@gobble\string\%^^J
+  \string\db@col@elt@w\space
+   \expandafter\ifnum\csname dtl@ci@\DTLgidxCurrentdb @Used\endcsname=#1\space
+     0%
+   \else
+     \expandafter\ifnum\csname dtl@ci@\DTLgidxCurrentdb @Location\endcsname=#1\space
+     \else
+       \expandafter\ifnum\csname dtl@ci@\DTLgidxCurrentdb @CurrentLocation\endcsname=#1\space
+       \else
+         \expandafter\ifnum\csname dtl@ci@\DTLgidxCurrentdb @Sort\endcsname=#1\space
+           \protect#2%
+         \else
+         #2%
+         \fi
+       \fi
+     \fi
+   \fi
+  \expandafter\@gobble\string\%^^J
+  \string\db@col@elt@end@\space
+  \expandafter\@gobble\string\%^^J
+  \string\db@col@id@w\space #3%
+  \expandafter\@gobble\string\%^^J
+  \string\db@col@id@end@\space
+}
+\newcommand*{\datagidx@do@highopt@update}[1]{}
+\newcommand*{\datagidxhighoptfilename}[1]{\jobname-#1.gidx}
+\define@choicekey{datagidx.sty}{optimize}[\val\nr]%
+ {off,low,high}[high]%
+ {%
+   \ifcase\nr\relax
+    \renewcommand*{\datagidx@do@sort}{\datagidx@sort}
+   \or
+    \renewcommand*{\datagidx@do@sort}{\datagidx@optimize@sort}
+   \or
+    \datagidx@do@highopt@optimize
+   \fi
+ }
+\define@choicekey{datagidx.sty}{nowarn}[\val\nr]{true,false}[true]%
+{%
+  \ifcase\nr\relax
+    \@datagidx@warnfalse
+  \or
+    \@datagidx@warntrue
+  \fi
+}
+\define@key{datagidx.sty}{columns}%
+{%
+  \DTLgidxSetColumns{#1}%
+}
+\define@choicekey{datagidx.sty}{child}[\val\nr]%
+ {named,noname}%
+ {%
+   \datagidx@setchildstyle\nr
+ }
+\define@choicekey{datagidx.sty}{namecase}[\val\nr]%
+ {nochange,uc,lc,firstuc,capitalise}%
+ {%
+   \datagidx@setnamecase\nr
+ }
+\define@key{datagidx.sty}{namefont}%
+{%
+  \renewcommand*{\DTLgidxNameFont}[1]{{#1{##1}}}%
+}
+\define@key{datagidx.sty}{postname}
+{%
+  \renewcommand*{\DTLgidxPostName}{#1}%
+}
+\define@choicekey{datagidx.sty}{postdesc}[\val\nr]%
+ {none,dot}%
+ {%
+   \datagidx@setpostdesc\nr
+ }
+\define@choicekey{datagidx.sty}{prelocation}[\val\nr]%
+ {none,enspace,space,dotfill,hfill}%
+ {%
+   \datagidx@setprelocation\nr
+ }
+\define@choicekey{datagidx.sty}{location}[\val\nr]%
+ {hide,list,first}%
+ {\datagidx@setlocation\nr}
+\define@choicekey{datagidx.sty}{see}[\val\nr]%
+  {comma,brackets,dot,space,nosep,semicolon,location}%
+  {\datagidx@setsee\nr}
+\define@choicekey{datagidx.sty}{symboldesc}[\val\nr]%
+ {symbol,desc,(symbol) desc,desc (symbol),symbol desc,desc symbol}%
+ {\datagidx@formatsymdesc\nr}
+\define@key{datagidx.sty}{compositor}%
+{%
+  \DTLgidxSetCompositor{#1}%
+}%
+\DeclareOptionX{final}{%
+  \let\datagidxshowifdraft\@gobble
+}
+\let\datagidxshowifdraft\@gobble
+\DeclareOptionX{draft}{%
+  \let\datagidxshowifdraft\@firstofone
+}
+\define@choicekey{datagidx.sty}{verbose}[\val\nr]%
+ {true,false}[true]%
+ {%
+   \csuse{dtlverbose\val}%
+ }
+\ProcessOptionsX
+\DTLnewdb{datagidx}
+\providecommand*{\seename}{see}
+\providecommand*{\seealsoname}{see also}
+\newcommand*{\DTLgidxSeeTagFont}[1]{\emph{#1}}
+\newcommand*{\DTLgidxFormatSee}[2]{%
+  \DTLgidxSeeTagFont{#1} \DTLgidxSeeList{#2}%
+}
+\newcommand*{\DTLgidxFormatSeeAlso}[2]{%
+  \datagidxdoseealso
+  {%
+    \DTLgidxSeeTagFont{#1} \DTLgidxSeeList{#2}%
+  }%
+}
+\newcommand*{\datagidxdoseealso}[1]{%
+  \datagidxseealsostart
+   #1%
+  \datagidxseealsoend
+}
+\newcommand*{\DTLgidxSeeList}[1]{%
+  \def\datagidx@sep{}%
+  \@for\dtl@thislabel:=#1\do
+  {%
+    \ifx\@xfor@nextelement\@nnil
+      \ifdefempty{\datagidx@sep}%
+      {%
+      }%
+      {%
+         \DTLidxSeeLastSep
+      }%
+    \else
+      \datagidx@sep
+      \let\datagidx@sep\DTLidxSeeSep
+    \fi
+    \DTLidxFormatSeeItem{\dtl@thislabel}%
+  }%
+}
+\newcommand*{\DTLidxFormatSeeItem}[1]{%
+  \DTLgidxFetchEntry{\datagidx@value}{#1}{Name}%
+  \datagidxlink{#1}%
+  {%
+    \datagidx@value
+  }%
+}
+\newcommand*{\DTLidxSeeSep}{, }
+\newcommand*{\DTLidxSeeLastSep}{ \& }
+\newcommand*{\DTLgidxDoSeeOrLocation}{%
+  \DTLifnull\See
+  {%
+     \ifdefempty\Location
+     {%
+     }%
+     {%
+       \DTLgidxPreLocation
+       \DTLgidxLocation
+     }%
+  }%
+  {%
+     \DTLgidxSee
+  }%
+}
+\newcommand*{\datagidx@sortchildren}{%
+  \def\datagidx@sortedlist{}%
+  \@for\Label:=\Children\do
+  {%
+    \edef\do@getrow{%
+      \noexpand\dtlgetrowforvalue
+      {\DTLgidxCurrentdb}%
+      {\dtlcolumnindex{\DTLgidxCurrentdb}{Label}}%
+      {\Label}%
+    }%
+    \do@getrow
+    \ifdefempty\datagidx@sortedlist
+    {%
+      \edef\datagidx@newsortedlist{{\number\dtlrownum}{\Label}}%
+    }%
+    {%
+      \def\datagidx@newsortedlist{}%
+      \@for\@datagidx@thisval:=\datagidx@sortedlist\do
+      {%
+        \edef\datagidx@thisidx{\expandafter\@firstoftwo\@datagidx@thisval}%
+        \ifnum\datagidx@thisidx>\dtlrownum\relax
+          \ifdefempty\datagidx@newsortedlist
+          {%
+            \eappto\datagidx@newsortedlist
+            {%
+              {\number\dtlrownum}{\Label},\@datagidx@thisval
+            }%
+          }%
+          {%
+            \eappto\datagidx@newsortedlist
+            {%
+              ,{\number\dtlrownum}{\Label},\@datagidx@thisval
+            }%
+          }%
+          \@endfortrue
+        \else
+          \ifdefempty\datagidx@newsortedlist
+          {%
+            \edef\datagidx@newsortedlist{%
+              \@datagidx@thisval
+            }%
+          }%
+          {%
+            \eappto\datagidx@newsortedlist
+            {%
+              ,\@datagidx@thisval
+            }%
+          }%
+        \fi
+      }%
+      \if@endfor
+        \ifdefempty\@forremainder
+        {%
+        }%
+        {%
+          \eappto\datagidx@newsortedlist{,\@forremainder}%
+        }%
+      \else
+        \ifdefempty\datagidx@newsortedlist
+        {%
+          \edef\datagidx@newsortedlist{{\number\dtlrownum}{\Label}}%
+        }%
+        {%
+          \eappto\datagidx@newsortedlist{,{\number\dtlrownum}{\Label}}%
+        }%
+      \fi
+    }%
+    \let\datagidx@sortedlist\datagidx@newsortedlist
+    \@endforfalse
+  }%
+}
+\newcommand{\datagidx@sort@foreachchild}[1]{%
+  \datagidx@sortchildren
+  \@for\@datagidx@thisval:=\datagidx@sortedlist\do
+  {%
+    \edef\Label{\expandafter\@secondoftwo\@datagidx@thisval}%
+    #1%
+  }%
+}
+\newcommand{\datagidx@unsort@foreachchild}[1]{%
+  \@for\Label:=\Children\do
+  {%
+    #1%
+  }%
+}
+\newcommand*{\DTLgidxChildren}{%
+  \bgroup
+    \DTLifnull\Children
+    {}%
+    {%
+      \advance\datagidx@level by 1\relax
+      \datagidxchildstart
+      \let\Parent\Label
+      \datagidx@foreachchild
+      {%
+        \edef\do@getrow{%
+          \noexpand\dtlgetrowforvalue
+          {\DTLgidxCurrentdb}%
+          {\dtlcolumnindex{\DTLgidxCurrentdb}{Label}}%
+          {\Label}%
+        }%
+        \do@getrow
+        \dtlgetentryfromcurrentrow
+          {\Location}%
+          {\dtlcolumnindex{\DTLgidxCurrentdb}{Location}}%
+        \dtlgetentryfromcurrentrow
+          {\See}%
+          {\dtlcolumnindex{\DTLgidxCurrentdb}{See}}%
+        \dtlgetentryfromcurrentrow
+          {\SeeAlso}%
+          {\dtlcolumnindex{\DTLgidxCurrentdb}{SeeAlso}}%
+        \DTLifnull\Location
+        {%
+          \DTLifnull\See
+          {%
+            \DTLifnull\SeeAlso
+            {}%
+            {%
+              \datagidx@displaychild
+            }%
+          }%
+          {%
+            \datagidx@displaychild
+          }%
+        }%
+        {%
+           \datagidx@displaychild
+        }%
+      }%
+      \datagidxchildend
+    }%
+  \egroup
+}
+\newcommand*{\datagidxgetchildfields}{%
+  \dtlgetentryfromcurrentrow
+    {\Name}%
+    {\dtlcolumnindex{\DTLgidxCurrentdb}{Name}}%
+  \dtlgetentryfromcurrentrow
+    {\Description}%
+    {\dtlcolumnindex{\DTLgidxCurrentdb}{Description}}%
+  \dtlgetentryfromcurrentrow
+    {\Symbol}%
+    {\dtlcolumnindex{\DTLgidxCurrentdb}{Symbol}}%
+  \dtlgetentryfromcurrentrow
+    {\Long}%
+    {\dtlcolumnindex{\DTLgidxCurrentdb}{Long}}%
+  \dtlgetentryfromcurrentrow
+    {\Short}%
+    {\dtlcolumnindex{\DTLgidxCurrentdb}{Short}}%
+  \dtlgetentryfromcurrentrow
+    {\Text}%
+    {\dtlcolumnindex{\DTLgidxCurrentdb}{Text}}%
+  \dtlgetentryfromcurrentrow
+    {\Plural}%
+    {\dtlcolumnindex{\DTLgidxCurrentdb}{Plural}}%
+  \dtlgetentryfromcurrentrow
+    {\Short}%
+    {\dtlcolumnindex{\DTLgidxCurrentdb}{Used}}%
+  \dtlgetentryfromcurrentrow
+    {\Children}%
+    {\dtlcolumnindex{\DTLgidxCurrentdb}{Child}}%
+}
+\newcommand*{\datagidx@displaychild}{%
+  \datagidxgetchildfields
+  \datagidxchilditem
+}
+\ifdef{\chapter}
+{%
+  \newcommand*{\datagidx@heading}{\chapter*}
+}%
+{%
+  \newcommand*{\datagidx@heading}{\section*}
+}
+\let\DTLgidxNoHeading\@gobble
+\newcommand*{\datagidx@postheading}{}
+\newcommand*{\datagidx@multicols}{multicols}
+\newcommand*{\datagidx@sort}{%
+  \dtlsort{Sort,FirstId}{\DTLgidxCurrentdb}{\dtlwordindexcompare}%
+}
+\providecommand{\@idxitem}{\par\hangindent 40\p@}
+\newcommand*{\datagidxstart}%
+{%
+  \bgroup
+  \setlength{\parindent}{0pt}%
+  \setlength{\parskip}{0pt plus 0.3pt}%
+  \let\item\@idxitem
+}
+\newcommand*{\datagidxend}{\egroup}
+\newcommand*{\@datagidxtarget}[2]{%
+  \ifdef\hypertarget
+  {%
+    \bgroup
+      \let\glsadd\@gobble
+      \settoheight\dimen@{#2}%
+      \raisebox{\dimen@}{\hypertarget{#1}{}}%
+    \egroup
+  }%
+  {%
+  }%
+  #2%
+}
+\newcommand*{\datagidxtarget}{\@datagidxtarget}
+\newcommand*{\@datagidxlink}[2]{%
+  \ifdef\hyperlink
+  {%
+    \hyperlink{#1}{#2}%
+  }%
+  {%
+    #2%
+  }%
+}
+\newcommand*{\datagidxlink}{\@datagidxlink}
+\newcommand*{\DTLgidxEnableHyper}{%
+  \let\datagidxtarget\@datagidxtarget
+  \let\datagidxlink\@datagidxlink
+}
+\newcommand*{\DTLgidxDisableHyper}{%
+  \let\datagidxtarget\@secondoftwo
+  \let\datagidxlink\@secondoftwo
+}
+\newcommand*{\datagidxgroupsep}{}
+\newcommand*{\datagidxgroupheader}{}
+\newcommand*{\datagidxitem}{}%
+\newcommand*{\datagidxchildstart}{}
+\newcommand*{\datagidxchildend}{}
+\newcommand*{\datagidxchilditem}{}%
+\newcommand*{\datagidxseealsostart}{}
+\newcommand*{\datagidxseealsoend}{}
+\newcommand*{\datagidx@doifsymlocwidth}[3]{%
+  \setlength{\dtl@tmplength}{\linewidth}%
+  \addtolength{\dtl@tmplength}{-#1}%
+  \settowidth{\dimen@}{#2}%
+  \addtolength{\dtl@tmplength}{-\dimen@}%
+  \addtolength{\dtl@tmplength}{-\datagidxsymbolwidth}%
+  \addtolength{\dtl@tmplength}{-\datagidxlocationwidth}%
+  \settowidth{\dimen@}{\DTLgidxPreLocation}%
+  \addtolength{\dtl@tmplength}{-\dimen@}%
+  \settowidth{\dimen@}{\DTLgidxSymDescSep}%
+  \addtolength{\dtl@tmplength}{-\dimen@}%
+  \if@datagidxsymbolleft
+    \begin{minipage}[t]{\datagidxsymbolwidth}%
+      \datagidxsymalign
+      \let\DTLgidxSymDescSep\@empty
+      \DTLgidxSymbolDescLeft
+    \end{minipage}%
+    \DTLgidxSymDescSep
+    \begin{minipage}[t]{\dtl@tmplength}%
+      \let\DTLgidxSymDescSep\@empty
+      \DTLgidxSymbolDescRight
+    \end{minipage}%
+  \else
+    \begin{minipage}[t]{\dtl@tmplength}%
+      \let\DTLgidxSymDescSep\@empty
+      \DTLgidxSymbolDescRight
+    \end{minipage}%
+    \DTLgidxSymDescSep
+    \begin{minipage}[t]{\datagidxsymbolwidth}%
+      \datagidxsymalign
+      \let\DTLgidxSymDescSep\@empty
+      \DTLgidxSymbolDescLeft
+    \end{minipage}%
+  \fi
+  \DTLgidxPreLocation
+  \begin{minipage}[t]{\datagidxlocationwidth}%
+    \datagidxlocalign
+    \let\DTLgidxPreLocation\@empty
+    #3%
+  \end{minipage}%
+}
+\newcommand*{\datagidx@doiflocwidth}[3]{%
+  \setlength{\dtl@tmplength}{\linewidth}%
+  \addtolength{\dtl@tmplength}{-#1}%
+  \settowidth{\dimen@}{#2}%
+  \addtolength{\dtl@tmplength}{-\dimen@}%
+  \addtolength{\dtl@tmplength}{-\datagidxlocationwidth}%
+  \settowidth{\dimen@}{\DTLgidxPreLocation}%
+  \addtolength{\dtl@tmplength}{-\dimen@}%
+  \begin{minipage}[t]{\dtl@tmplength}%
+    \DTLgidxSymbolDescription
+  \end{minipage}%
+  \DTLgidxPreLocation
+  \begin{minipage}[t]{\datagidxlocationwidth}%
+    \datagidxlocalign
+    \let\DTLgidxPreLocation\@empty
+    #3%
+  \end{minipage}%
+}
+\newcommand*{\datagidx@doifsymwidth}[3]{%
+  \setlength{\dtl@tmplength}{\linewidth}%
+  \addtolength{\dtl@tmplength}{-#1}%
+  \settowidth{\dimen@}{#2}%
+  \addtolength{\dtl@tmplength}{-\dimen@}%
+  \addtolength{\dtl@tmplength}{-\datagidxsymbolwidth}%
+  \settowidth{\dimen@}{\DTLgidxSymDescSep}%
+  \addtolength{\dtl@tmplength}{-\dimen@}%
+  \if@datagidxsymbolleft
+    \begin{minipage}[t]{\datagidxsymbolwidth}%
+      \datagidxsymalign
+      \let\DTLgidxSymDescSep\@empty
+      \DTLgidxSymbolDescLeft
+    \end{minipage}%
+    \DTLgidxSymDescSep
+    \begin{minipage}[t]{\dtl@tmplength}%
+      \let\DTLgidxSymDescSep\@empty
+      \DTLgidxSymbolDescRight
+      #3%
+    \end{minipage}%
+  \else
+    \begin{minipage}[t]{\dtl@tmplength}%
+      \let\DTLgidxSymDescSep\@empty
+      \DTLgidxSymbolDescRight
+    \end{minipage}%
+    \DTLgidxSymDescSep
+    \begin{minipage}[t]{\datagidxsymbolwidth}%
+      \datagidxsymalign
+      \let\DTLgidxSymDescSep\@empty
+      \DTLgidxSymbolDescLeft
+      #3%
+    \end{minipage}%
+  \fi
+}
+\newcommand*{\datagidxlocalign}{\raggedleft}
+\newcommand*{\datagidxsymalign}{\centering}
+\newcommand*{\datagidxsetstyle}[1]{%
+  \ifcsdef{datagidx@style@#1}%
+  {%
+    \csuse{datagidx@style@#1}%
+  }%
+  {%
+    \PackageError{datagidx}{Unknown style `#1'}{}%
+  }%
+}
+\newcommand*{\datagidx@style@index}{%
+  \renewcommand*{\datagidxstart}%
+  {%
+    \bgroup
+    \setlength{\parindent}{0pt}%
+    \setlength{\parskip}{0pt plus 0.3pt}%
+    \raggedright
+    \let\item\@idxitem
+    \ifdim\datagidxsymbolwidth>0pt\relax
+      \ifdim\datagidxlocationwidth>0pt\relax
+        \def\datagidx@item@body{%
+          \datagidx@doifsymlocwidth{0pt}%
+           {\DTLgidxNameFont{\DTLgidxNameCase{\Name}}}%
+           {%
+             \DTLgidxDoSeeOrLocation
+           }%
+         }%
+      \else
+        \def\datagidx@item@body{%
+          \datagidx@doiflocwidth{0pt}%
+           {\DTLgidxNameFont{\DTLgidxNameCase{\Name}}}%
+           {%
+             \DTLgidxDoSeeOrLocation
+           }%
+         }%
+      \fi
+    \else
+      \ifdim\datagidxlocationwidth>0pt\relax
+        \def\datagidx@item@body{%
+          \datagidx@doiflocwidth{0pt}%
+           {\DTLgidxNameFont{\DTLgidxNameCase{\Name}}}%
+           {%
+             \DTLgidxDoSeeOrLocation
+           }%
+         }%
+      \else
+        \def\datagidx@item@body{%
+          \DTLgidxSymbolDescription
+          \DTLgidxDoSeeOrLocation
+        }%
+      \fi
+    \fi
+  }%
+  \renewcommand*{\datagidxend}{\egroup}%
+  \renewcommand*{\datagidxgroupsep}{\ifdatagidxshowgroups\indexspace\fi}%
+  \renewcommand{\datagidxgroupheader}{%
+    \ifdatagidxshowgroups
+      \item
+       \makebox[\linewidth]%
+       {%
+         \textbf{\DTLgidxGroupHeaderTitle{\datagidxcurrentgroup}}%
+       }%
+       \DTLpar\nobreak\@afterheading
+    \fi
+  }%
+  \renewcommand*{\datagidxitem}{%
+    \ifdefempty\datagidxprevgroup
+    {%
+      \datagidxgroupheader
+    }%
+    {%
+      \ifdefequal\datagidxcurrentgroup\datagidxprevgroup
+      {%
+      }%
+      {%
+        \datagidxgroupsep
+        \datagidxgroupheader
+      }%
+    }%
+    \item
+    \datagidxtarget{\Label}%
+    {%
+      \DTLgidxNameFont{\DTLgidxNameCase{\Name}}%
+    }%
+    \DTLgidxPostName
+    \datagidx@item@body
+    \DTLgidxChildrenSeeAlso
+  }%
+  \renewcommand*{\datagidxchildstart}%
+  {%
+    \bgroup
+    \setlength{\parindent}{0pt}%
+    \setlength{\parskip}{0pt plus 0.3pt}%
+    \let\item\@idxitem
+  }%
+  \renewcommand*{\datagidxchildend}{\egroup}%
+  \renewcommand*{\datagidxchilditem}{%
+    \setlength{\dimen@}{\datagidxindent}%
+    \multiply\dimen@ by \datagidx@level\relax
+    \@idxitem\hspace*{\dimen@}%
+    \refstepcounter{DTLgidxChildCount}%
+    \datagidxtarget{\Label}%
+    {%
+      \DTLgidxChildStyle
+      {%
+        \DTLgidxNameFont{\DTLgidxNameCase{\Name}}%
+        \DTLgidxPostChildName
+      }%
+    }%
+    \DTLgidxSymbolDescription
+    \DTLgidxDoSeeOrLocation
+    \DTLgidxChildrenSeeAlso
+  }%
+  \renewcommand*{\datagidxseealsostart}%
+  {%
+    \bgroup
+      \setlength{\parindent}{0pt}%
+      \setlength{\parskip}{0pt plus 0.3pt}%
+      \setlength{\dimen@}{\datagidxindent}%
+      \advance\datagidx@level by 1\relax
+      \multiply\dimen@ by \datagidx@level\relax
+      \@idxitem\hspace*{\dimen@}%
+  }%
+  \renewcommand{\datagidxseealsoend}{\egroup}%
+}
+\datagidx@style@index
+\newcommand*{\datagidx@style@indexalign}{%
+  \renewcommand*{\datagidxstart}%
+  {%
+    \bgroup
+    \setlength{\parindent}{0pt}%
+    \setlength{\parskip}{0pt plus 0.3pt}%
+    \setlength{\datagidxnamewidth}{0pt}%
+    \DTLforeach*{\DTLgidxCurrentdb}%
+      {\Name=Name,\Location=Location,\See=See,\SeeAlso=SeeAlso,%
+       \Parent=Parent}%
+    {%
+       \DTLifnull{\Parent}%
+       {%
+         \datagidx@doifdisplayed
+         {%
+           \settowidth{\dimen@}{\DTLgidxNameFont{\DTLgidxNameCase{\Name}}}%
+           \ifdim\dimen@>\datagidxnamewidth\relax
+              \datagidxnamewidth=\dimen@\relax
+           \fi
+         }%
+       }%
+       {}%
+    }%
+    \settowidth{\dimen@}{\DTLgidxPostName}%
+    \addtolength{\datagidxnamewidth}{\dimen@}%
+    \setlength{\datagidxdescwidth}{\linewidth}%
+    \addtolength{\datagidxdescwidth}{-\datagidxnamewidth}%
+    \ifdim\datagidxsymbolwidth>0pt\relax
+      \addtolength{\datagidxdescwidth}{-\datagidxsymbolwidth}%
+      \settowidth{\dimen@}{\DTLgidxSymDescSep}%
+      \addtolength{\datagidxdescwidth}{-\dimen@}%
+    \fi
+    \ifdim\datagidxlocationwidth>0pt\relax
+      \addtolength{\datagidxdescwidth}{-\datagidxlocationwidth}%
+      \settowidth{\dimen@}{\DTLgidxPreLocation}%
+      \addtolength{\datagidxdescwidth}{-\dimen@}%
+    \fi
+    \ifdim\datagidxsymbolwidth>0pt\relax
+      \ifdim\datagidxlocationwidth>0pt\relax
+        \if@datagidxsymbolleft
+          \def\datagidx@item@body{%
+            \begin{minipage}[t]{\datagidxsymbolwidth}%
+              \datagidxsymalign
+              \let\DTLgidxSymDescSep\@empty
+              \DTLgidxSymbolDescLeft
+            \end{minipage}%
+            \DTLgidxSymDescSep
+            \begin{minipage}[t]{\datagidxdescwidth}%
+              \let\DTLgidxSymDescSep\@empty
+              \setlength{\parskip}{0pt plus 0.3pt}%
+              \DTLgidxSymbolDescRight
+            \end{minipage}%
+            \DTLgidxPreLocation
+            \begin{minipage}[t]{\datagidxlocationwidth}%
+              \datagidxlocalign
+              \let\DTLgidxPreLocation\@empty
+              \DTLgidxDoSeeOrLocation
+            \end{minipage}%
+           }%
+         \else
+          \def\datagidx@item@body{%
+            \begin{minipage}[t]{\datagidxdescwidth}%
+              \let\DTLgidxSymDescSep\@empty
+              \DTLgidxSymbolDescLeft
+            \end{minipage}%
+            \DTLgidxSymDescSep
+            \begin{minipage}[t]{\datagidxsymbolwidth}%
+              \datagidxsymalign
+              \let\DTLgidxSymDescSep\@empty
+              \setlength{\parskip}{0pt plus 0.3pt}%
+              \DTLgidxSymbolDescRight
+            \end{minipage}%
+            \DTLgidxPreLocation
+            \begin{minipage}[t]{\datagidxlocationwidth}%
+              \datagidxlocalign
+              \let\DTLgidxPreLocation\@empty
+              \DTLgidxDoSeeOrLocation
+            \end{minipage}%
+           }%
+         \fi
+      \else
+        \if@datagidxsymbolleft
+          \def\datagidx@item@body{%
+            \begin{minipage}[t]{\datagidxsymbolwidth}%
+              \datagidxsymalign
+              \let\DTLgidxSymDescSep\@empty
+              \DTLgidxSymbolDescLeft
+            \end{minipage}%
+            \DTLgidxSymDescSep
+            \begin{minipage}[t]{\datagidxdescwidth}%
+              \let\DTLgidxSymDescSep\@empty
+              \setlength{\parskip}{0pt plus 0.3pt}%
+              \DTLgidxSymbolDescRight
+              \DTLgidxDoSeeOrLocation
+            \end{minipage}%
+         }%
+        \else
+          \def\datagidx@item@body{%
+            \begin{minipage}[t]{\datagidxdescwidth}%
+              \let\DTLgidxSymDescSep\@empty
+              \DTLgidxSymbolDescLeft
+            \end{minipage}%
+            \DTLgidxSymDescSep
+            \begin{minipage}[t]{\datagidxsymbolwidth}%
+              \datagidxsymalign
+              \let\DTLgidxSymDescSep\@empty
+              \setlength{\parskip}{0pt plus 0.3pt}%
+              \DTLgidxSymbolDescRight
+              \DTLgidxDoSeeOrLocation
+            \end{minipage}%
+         }%
+        \fi
+      \fi
+    \else
+      \ifdim\datagidxlocationwidth>0pt\relax
+        \def\datagidx@item@body{%
+          \begin{minipage}[t]{\datagidxdescwidth}%
+           \setlength{\parskip}{0pt plus 0.3pt}%
+           \DTLgidxSymbolDescription
+          \end{minipage}%
+          \DTLgidxPreLocation
+          \begin{minipage}[t]{\datagidxlocationwidth}%
+          \datagidxlocalign
+           \let\DTLgidxPreLocation\@empty
+           \DTLgidxDoSeeOrLocation
+         }%
+      \else
+        \def\datagidx@item@body{%
+          \begin{minipage}[t]{\datagidxdescwidth}%
+           \setlength{\parskip}{0pt plus 0.3pt}%
+           \DTLgidxSymbolDescription
+           \DTLgidxDoSeeOrLocation
+          \end{minipage}%
+         }%
+      \fi
+    \fi
+  }%
+  \renewcommand*{\datagidxend}{\egroup}%
+  \renewcommand*{\datagidxgroupsep}{}%
+  \renewcommand*{\datagidxgroupheader}{}%
+  \renewcommand*{\datagidxitem}{%
+    \ifdefempty\datagidxprevgroup
+    {%
+      \datagidxgroupheader
+    }%
+    {%
+      \ifdefequal\datagidxcurrentgroup\datagidxprevgroup
+      {%
+      }%
+      {%
+        \datagidxgroupsep
+        \datagidxgroupheader
+      }%
+    }%
+    \hangindent0pt\relax
+    \parindent0pt\relax
+    \makebox[\datagidxnamewidth][l]%
+    {%
+      \datagidxtarget{\Label}%
+      {%
+        \DTLgidxNameFont{\DTLgidxNameCase{\Name}}%
+        \DTLgidxPostName
+      }%
+    }%
+    \datagidx@item@body
+    \par
+    \DTLgidxChildrenSeeAlso
+    \par
+  }%
+  \renewcommand*{\datagidxchildstart}%
+  {%
+    \bgroup
+    \setlength{\dimen@}{\datagidxindent}%
+    \multiply\dimen@ by \datagidx@level\relax
+    \setlength{\dtl@tmplength}{\linewidth}%
+    \addtolength{\dtl@tmplength}{-\dimen@}%
+    \setlength{\parindent}{0pt}%
+    \setlength{\parskip}{0pt plus 0.3pt}%
+    \edef\item{\noexpand\parshape=1 \the\dimen@ \the\dtl@tmplength}%
+    \setlength{\datagidxnamewidth}{0pt}%
+    \DTLforeach*{\DTLgidxCurrentdb}%
+      {\Name=Name,\Location=Location,\See=See,\SeeAlso=SeeAlso,%
+       \Parent=Parent}%
+    {%
+       \DTLifnull{\Parent}%
+       {%
+         \datagidx@doifdisplayed
+         {%
+           \settowidth{\dimen@}%
+           {%
+             \DTLgidxChildStyle
+             {%
+               \DTLgidxNameFont{\DTLgidxNameCase{\Name}}%
+             }%
+           }%
+           \ifdim\dimen@>\datagidxnamewidth\relax
+              \datagidxnamewidth=\dimen@\relax
+           \fi
+         }%
+       }%
+       {}%
+    }%
+    \settowidth{\dimen@}{\DTLgidxChildStyle\DTLgidxPostChildName}%
+    \addtolength{\datagidxnamewidth}{\dimen@}%
+    \setlength{\datagidxdescwidth}{\dtl@tmplength}%
+    \addtolength{\datagidxdescwidth}{-\datagidxnamewidth}%
+  }%
+  \renewcommand{\datagidxchildend}{\egroup}%
+  \renewcommand*{\datagidxchilditem}{%
+    \item
+    \refstepcounter{DTLgidxChildCount}%
+    \makebox[\datagidxnamewidth][l]%
+    {%
+      \datagidxtarget{\Label}%
+      {%
+        \DTLgidxChildStyle
+        {%
+          \DTLgidxNameFont{\DTLgidxNameCase{\Name}}%
+          \DTLgidxPostChildName
+        }%
+      }%
+    }%
+    \begin{minipage}[t]{\datagidxdescwidth}%
+     \setlength{\parskip}{0pt plus 0.3pt}%
+     \DTLgidxSymbolDescription
+     \DTLgidxDoSeeOrLocation
+     \DTLgidxChildrenSeeAlso
+    \end{minipage}%
+    \par
+  }%
+}
+\newlength\datagidxindent
+\setlength\datagidxindent{10\p@}
+\newlength\datagidxnamewidth
+\newlength\datagidxdescwidth
+\newcommand*{\datagidx@style@align}{%
+  \renewcommand*{\datagidxstart}%
+  {%
+    \bgroup
+    \setlength{\parindent}{0pt}%
+    \setlength{\parskip}{0pt plus 0.3pt}%
+    \setlength{\datagidxnamewidth}{0pt}%
+    \DTLforeach*{\DTLgidxCurrentdb}%
+      {\Name=Name,\Location=Location,\See=See,\SeeAlso=SeeAlso,%
+       \Parent=Parent}%
+    {%
+       \DTLifnull{\Parent}%
+       {%
+         \datagidx@doifdisplayed
+         {%
+           \settowidth{\dimen@}{\DTLgidxNameFont{\DTLgidxNameCase{\Name}}}%
+           \ifdim\dimen@>\datagidxnamewidth\relax
+              \datagidxnamewidth=\dimen@\relax
+           \fi
+         }%
+       }%
+       {}%
+    }%
+    \settowidth{\dimen@}{\DTLgidxPostName}%
+    \addtolength{\datagidxnamewidth}{\dimen@}%
+    \setlength{\datagidxdescwidth}{\linewidth}%
+    \addtolength{\datagidxdescwidth}{-\datagidxnamewidth}%
+    \ifdim\datagidxsymbolwidth>0pt\relax
+      \addtolength{\datagidxdescwidth}{-\datagidxsymbolwidth}%
+      \settowidth{\dimen@}{\DTLgidxSymDescSep}%
+      \addtolength{\datagidxdescwidth}{-\dimen@}%
+    \fi
+    \ifdim\datagidxlocationwidth>0pt\relax
+      \addtolength{\datagidxdescwidth}{-\datagidxlocationwidth}%
+      \settowidth{\dimen@}{\DTLgidxPreLocation}%
+      \addtolength{\datagidxdescwidth}{-\dimen@}%
+    \fi
+    \ifdim\datagidxsymbolwidth>0pt\relax
+      \ifdim\datagidxlocationwidth>0pt\relax
+        \if@datagidxsymbolleft
+          \def\datagidx@item@body{%
+            \begin{minipage}[t]{\datagidxsymbolwidth}%
+              \datagidxsymalign
+              \let\DTLgidxSymDescSep\@empty
+              \DTLgidxSymbolDescLeft
+            \end{minipage}%
+            \DTLgidxSymDescSep
+            \begin{minipage}[t]{\datagidxdescwidth}%
+              \let\DTLgidxSymDescSep\@empty
+              \setlength{\parskip}{0pt plus 0.3pt}%
+              \DTLgidxSymbolDescRight
+            \end{minipage}%
+            \DTLgidxPreLocation
+            \begin{minipage}[t]{\datagidxlocationwidth}%
+              \datagidxlocalign
+              \let\DTLgidxPreLocation\@empty
+              \DTLgidxDoSeeOrLocation
+              \DTLgidxChildrenSeeAlso
+            \end{minipage}%
+           }%
+         \else
+          \def\datagidx@item@body{%
+            \begin{minipage}[t]{\datagidxdescwidth}%
+              \let\DTLgidxSymDescSep\@empty
+              \DTLgidxSymbolDescLeft
+            \end{minipage}%
+            \DTLgidxSymDescSep
+            \begin{minipage}[t]{\datagidxsymbolwidth}%
+              \datagidxsymalign
+              \let\DTLgidxSymDescSep\@empty
+              \setlength{\parskip}{0pt plus 0.3pt}%
+              \DTLgidxSymbolDescRight
+            \end{minipage}%
+            \DTLgidxPreLocation
+            \begin{minipage}[t]{\datagidxlocationwidth}%
+              \datagidxlocalign
+              \let\DTLgidxPreLocation\@empty
+              \DTLgidxDoSeeOrLocation
+              \DTLgidxChildrenSeeAlso
+            \end{minipage}%
+           }%
+         \fi
+      \else
+        \if@datagidxsymbolleft
+          \def\datagidx@item@body{%
+            \begin{minipage}[t]{\datagidxsymbolwidth}%
+              \datagidxsymalign
+              \let\DTLgidxSymDescSep\@empty
+              \DTLgidxSymbolDescLeft
+            \end{minipage}%
+            \DTLgidxSymDescSep
+            \begin{minipage}[t]{\datagidxdescwidth}%
+              \let\DTLgidxSymDescSep\@empty
+              \setlength{\parskip}{0pt plus 0.3pt}%
+              \DTLgidxSymbolDescRight
+              \DTLgidxDoSeeOrLocation
+              \DTLgidxChildrenSeeAlso
+            \end{minipage}%
+         }%
+        \else
+          \def\datagidx@item@body{%
+            \begin{minipage}[t]{\datagidxdescwidth}%
+              \let\DTLgidxSymDescSep\@empty
+              \DTLgidxSymbolDescLeft
+            \end{minipage}%
+            \DTLgidxSymDescSep
+            \begin{minipage}[t]{\datagidxsymbolwidth}%
+              \datagidxsymalign
+              \let\DTLgidxSymDescSep\@empty
+              \setlength{\parskip}{0pt plus 0.3pt}%
+              \DTLgidxSymbolDescRight
+              \DTLgidxDoSeeOrLocation
+              \DTLgidxChildrenSeeAlso
+           \end{minipage}%
+         }%
+        \fi
+      \fi
+    \else
+      \ifdim\datagidxlocationwidth>0pt\relax
+        \def\datagidx@item@body{%
+          \begin{minipage}[t]{\datagidxdescwidth}%
+           \setlength{\parskip}{0pt plus 0.3pt}%
+           \DTLgidxSymbolDescription
+          \end{minipage}%
+          \DTLgidxPreLocation
+          \begin{minipage}[t]{\datagidxlocationwidth}%
+          \datagidxlocalign
+           \let\DTLgidxPreLocation\@empty
+           \DTLgidxDoSeeOrLocation
+           \DTLgidxChildrenSeeAlso
+          \end{minipage}%
+         }%
+      \else
+        \def\datagidx@item@body{%
+          \begin{minipage}[t]{\datagidxdescwidth}%
+           \setlength{\parskip}{0pt plus 0.3pt}%
+           \DTLgidxSymbolDescription
+           \DTLgidxDoSeeOrLocation
+           \DTLgidxChildrenSeeAlso
+          \end{minipage}%
+         }%
+      \fi
+    \fi
+  }%
+  \renewcommand*{\datagidxend}{\egroup}%
+  \renewcommand*{\datagidxgroupsep}{\ifdatagidxshowgroups\indexspace\fi}%
+  \renewcommand{\datagidxgroupheader}{%
+    \ifdatagidxshowgroups
+      \item
+       \makebox[\linewidth]%
+       {%
+         \textbf{\DTLgidxGroupHeaderTitle{\datagidxcurrentgroup}}%
+       }%
+       \DTLpar\nobreak\@afterheading
+    \fi
+  }%
+  \renewcommand*{\datagidxitem}{%
+    \ifdefempty\datagidxprevgroup
+    {%
+      \datagidxgroupheader
+    }%
+    {%
+      \ifdefequal\datagidxcurrentgroup\datagidxprevgroup
+      {%
+      }%
+      {%
+        \datagidxgroupsep
+        \datagidxgroupheader
+      }%
+    }%
+    \hangindent0pt\relax
+    \parindent0pt\relax
+    \makebox[\datagidxnamewidth][l]%
+    {%
+      \datagidxtarget{\Label}%
+      {%
+        \DTLgidxNameFont{\DTLgidxNameCase{\Name}}%
+        \DTLgidxPostName
+      }%
+    }%
+     \datagidx@item@body
+    \par
+  }%
+  \renewcommand*{\datagidxchildstart}%
+  {%
+    \bgroup
+    \setlength{\parindent}{0pt}%
+    \setlength{\parskip}{0pt plus 0.3pt}%
+    \setlength{\datagidxnamewidth}{0pt}%
+    \DTLforeach*{\DTLgidxCurrentdb}%
+      {\Name=Name,\Location=Location,\See=See,\SeeAlso=SeeAlso,%
+       \Parent=Parent}%
+    {%
+       \DTLifnull{\Parent}%
+       {%
+         \datagidx@doifdisplayed
+         {%
+           \settowidth{\dimen@}%
+           {%
+             \DTLgidxChildStyle
+             {%
+               \DTLgidxNameFont{\DTLgidxNameCase{\Name}}%
+             }%
+           }%
+           \ifdim\dimen@>\datagidxnamewidth\relax
+              \datagidxnamewidth=\dimen@\relax
+           \fi
+         }%
+       }%
+       {}%
+    }%
+    \settowidth{\dimen@}{\DTLgidxChildStyle\DTLgidxPostChildName}%
+    \addtolength{\datagidxnamewidth}{\dimen@}%
+    \setlength{\datagidxdescwidth}{\linewidth}%
+    \addtolength{\datagidxdescwidth}{-\datagidxnamewidth}%
+  }%
+  \renewcommand{\datagidxchildend}{\egroup}%
+  \renewcommand*{\datagidxchilditem}{%
+    \hangindent0pt\relax
+    \parindent0pt\relax
+    \refstepcounter{DTLgidxChildCount}%
+    \makebox[\datagidxnamewidth][l]%
+    {%
+      \datagidxtarget{\Label}%
+      {%
+        \DTLgidxChildStyle
+        {%
+          \DTLgidxNameFont{\DTLgidxNameCase{\Name}}%
+          \DTLgidxPostChildName
+        }%
+      }%
+    }%
+    \begin{minipage}[t]{\datagidxdescwidth}%
+     \setlength{\parskip}{0pt plus 0.3pt}%
+     \DTLgidxSymbolDescription
+     \DTLgidxDoSeeOrLocation
+     \DTLgidxChildrenSeeAlso
+    \end{minipage}%
+    \par
+  }%
+}
+\newcommand*{\datagidx@style@gloss}{%
+  \renewcommand*{\datagidxstart}%
+  {%
+    \bgroup
+    \setlength{\parindent}{0pt}%
+    \setlength{\parskip}{0pt plus 0.3pt}%
+    \setlength{\datagidxnamewidth}{0pt}%
+    \DTLforeach*{\DTLgidxCurrentdb}%
+      {\Name=Name,\Location=Location,\See=See,\SeeAlso=SeeAlso,%
+       \Parent=Parent}%
+    {%
+       \DTLifnull{\Parent}%
+       {%
+         \datagidx@doifdisplayed
+         {%
+           \settowidth{\dimen@}{\DTLgidxNameFont{\DTLgidxNameCase{\Name}}}%
+           \ifdim\dimen@>\datagidxnamewidth\relax
+              \datagidxnamewidth=\dimen@\relax
+           \fi
+         }%
+       }%
+       {}%
+    }%
+    \settowidth{\dimen@}{\DTLgidxPostName}%
+    \addtolength{\datagidxnamewidth}{\dimen@}%
+    \setlength{\datagidxdescwidth}{\linewidth}%
+    \addtolength{\datagidxdescwidth}{-\datagidxnamewidth}%
+  }%
+  \renewcommand*{\datagidxend}{\egroup}%
+  \renewcommand*{\datagidxgroupsep}{\ifdatagidxshowgroups\indexspace\fi}%
+  \renewcommand{\datagidxgroupheader}{%
+    \ifdatagidxshowgroups
+      \item
+       \makebox[\linewidth]%
+       {%
+         \textbf{\DTLgidxGroupHeaderTitle{\datagidxcurrentgroup}}%
+       }%
+       \DTLpar\nobreak\@afterheading
+    \fi
+  }%
+  \renewcommand*{\datagidxitem}{%
+    \ifdefempty\datagidxprevgroup
+    {%
+      \datagidxgroupheader
+    }%
+    {%
+      \ifdefequal\datagidxcurrentgroup\datagidxprevgroup
+      {%
+      }%
+      {%
+        \datagidxgroupsep
+        \datagidxgroupheader
+      }%
+    }%
+    \hangindent0pt\relax
+    \parindent0pt\relax
+    \makebox[\datagidxnamewidth][l]%
+    {%
+      \datagidxtarget{\Label}%
+      {%
+        \DTLgidxNameFont{\DTLgidxNameCase{\Name}}%
+        \DTLgidxPostName
+      }%
+    }%
+    \begin{minipage}[t]{\datagidxdescwidth}%
+     \setlength{\parskip}{0pt plus 0.3pt}%
+     \@tempswatrue
+     \ifdefempty{\Description}%
+     {%
+       \ifdefempty{\Symbol}%
+       {%
+         \ifdefempty{\Location}{\@tempswafalse}{}%
+       }%
+       {}%
+     }%
+     {}%
+     \if@tempswa
+       \DTLgidxSymbolDescription
+       \DTLgidxDoSeeOrLocation
+     \else
+       \mbox{}%
+     \fi
+     \DTLgidxChildrenSeeAlso
+    \end{minipage}%
+    \par
+  }%
+  \renewcommand*{\datagidxchildstart}%
+  {%
+    \bgroup
+    \def\datagidx@childsep{}%
+    \setcounter{DTLgidxChildCount}{0}%
+  }%
+  \renewcommand{\datagidxchildend}{\DTLgidxPostChild\egroup}%
+  \renewcommand*{\datagidxchilditem}{%
+    \datagidx@childsep
+    \refstepcounter{DTLgidxChildCount}%
+    \datagidxtarget{\Label}%
+    {%
+      \DTLgidxChildStyle
+      {%
+        \DTLgidxNameFont{\DTLgidxNameCase{\Name}}%
+        \DTLgidxPostChildName
+      }%
+    }%
+    \DTLgidxSymbolDescription
+    \DTLgidxDoSeeOrLocation
+    \DTLgidxChildrenSeeAlso
+    \let\datagidx@childsep\DTLgidxChildSep
+  }%
+}
+\newcommand*{\DTLgidxChildSep}{ }
+\newcommand*{\DTLgidxPostChild}{}
+\ifdef\chapter
+{%
+  \newcommand\DTLgidxDictHead{%
+    \chapter{\DTLgidxGroupHeaderTitle{\datagidxcurrentgroup}}%
+  }%
+}%
+{%
+  \newcommand\DTLgidxDictHead{%
+    \section{\DTLgidxGroupHeaderTitle{\datagidxcurrentgroup}}%
+  }%
+}
+\newcommand*{\DTLgidxCategoryNameFont}[1]{#1}
+\newcommand*{\DTLgidxCategorySep}{\space}
+\newcommand*{\DTLgidxSubCategorySep}{\space}
+\newcommand*{\datagidxdictindent}{1em}
+\newcommand{\DTLgidxDictPostItem}{\par}
+\newcommand*{\datagidx@style@dict}{%
+  \renewcommand*{\datagidxstart}%
+  {%
+    \bgroup
+    \setlength{\parindent}{0pt}%
+    \setlength{\parskip}{0pt plus 0.3pt}%
+    \dimen@=\linewidth
+    \advance\dimen@ by -\datagidxdictindent\relax
+    \dtl@tmplength=\datagidxdictindent\relax
+    \xdef\datagidxdictparshape{%
+      \noexpand\parshape=2 0pt \the\linewidth\space
+       \the\dtl@tmplength\space \the\dimen@\relax
+    }%
+    \datagidx@level=1\relax
+    \raggedright
+  }%
+  \renewcommand*{\datagidxend}{\egroup}%
+  \renewcommand*{\datagidxgroupsep}{}%
+  \renewcommand{\datagidxgroupheader}{%
+    \ifdatagidxshowgroups
+      \datagidxend
+      \datagidx@postend
+      \DTLgidxDictHead
+      \datagidx@prestart
+      \datagidxstart
+    \fi
+  }%
+  \renewcommand*{\datagidxitem}{%
+    \ifdefempty\datagidxprevgroup
+    {%
+      \datagidxgroupheader
+    }%
+    {%
+      \ifdefequal\datagidxcurrentgroup\datagidxprevgroup
+      {%
+      }%
+      {%
+        \datagidxgroupsep
+        \datagidxgroupheader
+      }%
+    }%
+    \datagidxdictparshape
+    \datagidxtarget{\Label}%
+    {%
+      \DTLgidxNameFont{\DTLgidxNameCase{\Name}}%
+    }%
+    \DTLgidxPostName
+    \let\datagidx@catsep\@empty
+    \let\datagidx@subcatsep\@empty
+    \DTLgidxSymbolDescription
+    \DTLgidxChildrenSeeAlso
+    \DTLgidxDictPostItem
+  }%
+  \renewcommand*{\datagidxchildstart}%
+  {%
+    \bgroup
+  }%
+  \renewcommand*{\datagidxchildend}{\egroup}%
+  \renewcommand*{\datagidxchilditem}{%
+    \ifnum\datagidx@level=2\relax
+      \datagidx@catsep
+      \let\datagidx@catsep\DTLgidxCategorySep
+      \let\datagidx@subcapsep\@empty
+      \datagidxtarget{\Label}%
+      {%
+        \DTLgidxChildStyle
+        {%
+          \DTLgidxCategoryNameFont{\DTLgidxNameCase{\Name}}%
+          \DTLgidxPostChildName
+        }%
+      }%
+      \setcounter{DTLgidxChildCount}{0}%
+    \else
+      \datagidx@subcatsep
+      \let\datagidx@subcatsep\DTLgidxSubCategorySep
+      \refstepcounter{DTLgidxChildCount}%
+      \DTLgidxChildCountLabel
+      \DTLgidxPostChildName
+    \fi
+    \DTLgidxSymbolDescription
+    \DTLgidxDoSeeOrLocation
+    \DTLgidxChildrenSeeAlso
+  }%
+  \renewcommand*{\datagidxseealsostart}%
+  {%
+    \bgroup
+      \setlength{\parindent}{0pt}%
+      \setlength{\parskip}{0pt plus 0.3pt}%
+      \setlength{\dimen@}{\datagidxindent}%
+      \advance\datagidx@level by 1\relax
+      \multiply\dimen@ by \datagidx@level\relax
+      \@idxitem\hspace*{\dimen@}%
+  }%
+  \renewcommand{\datagidxseealsoend}{\egroup}%
+}
+\newcommand*{\dtldofirstlocation}{%
+  \@for\dtl@thisloc:=\Location\do{%
+    \ifdefempty\dtl@thisloc
+    {}%
+    {%
+       \expandafter\datagidx@getlocation\dtl@thisloc
+       \datagidxlink{\datagidx@current@target}%
+       {%
+         \datagidx@formatlocation
+            \datagidx@current@format\datagidx@current@locationstring
+       }%
+      \@endfortrue
+    }%
+  }%
+}
+\newcommand*{\datagidx@formatlocation}[2]{%
+  \ifdefempty{#1}%
+  {#2}%
+  {%
+    \ifcsdef{#1}%
+    {%
+      \csuse{#1}{#2}%
+    }%
+    {%
+     \PackageWarning{datagidx}{Unknown format `#1'}%
+      #2%
+    }%
+  }%
+}
+\newcommand*{\dtldolocationlist}{%
+ \DTLifnull{\Location}%
+ {}%
+ {%
+    \def\datagidx@prev@location{-1}%
+    \def\datagidx@prev@locationstring{}%
+    \def\datagidx@prev@format{}%
+    \def\datagidx@prev@locationformat{}%
+    \def\datagidx@prev@prefix{}%
+    \def\datagidx@prev@target{}%
+    \def\datagidx@location@sep{}%
+    \def\datagidx@location@start{-1}%
+    \expandafter\forcsvlist\expandafter\datagidx@parse@location
+      \expandafter{\Location}%
+    \do@prevlocation % tidy up loose ends
+  }%
+}
+\newif\if@dtl@sequential
+\newcommand*\datagidx@getlocdo[1]{%
+  \ifdefempty\datagidx@current@location
+  {}%
+  {%
+    \eappto\datagidx@current@prefix{%
+      \datagidx@current@location\datagidx@compositor
+    }%
+  }%
+  \def\datagidx@current@location{#1}%
+}
+\def\datagidx@getlocation[#1]#2#3{%
+  \def\datagidx@current@locationstring{#2}%
+  \bgroup
+    \datagidx@escapelocationformat
+    \xdef\datagidx@current@locationformat{#2}%
+    \datagidx@clearlocationformat
+    \xdef\datagidx@current@location{#2}%
+  \egroup
+  \let\datagidx@list\datagidx@current@location
+  \def\datagidx@current@prefix{}%
+  \def\datagidx@current@location{}%
+  \let\do\datagidx@getlocdo
+  \expandafter\datagidx@docomplist
+   \expandafter{\datagidx@list}%
+  \def\datagidx@current@format{#1}%
+  \def\datagidx@current@target{#3}%
+}
+\newcommand*{\datagidx@parse@location}[1]{%
+  \datagidx@getlocation#1\relax
+  \ifdefequal{\datagidx@prev@locationstring}{\datagidx@current@locationstring}%
+  {%
+    \ifdefequal{\datagidx@prev@format}{\datagidx@current@format}%
+    {%
+    }%
+    {%
+      \ifdefempty{\datagidx@current@format}%
+      {%
+      }%
+      {%
+        \ifdefempty{\datagidx@prev@format}%
+        {%
+           \let\datagidx@prev@format\datagidx@current@format
+        }%
+        {%
+           \PackageWarning{datagidx}%
+           {%
+              Conflicting location formats `\datagidx@prev@format' and
+              `\datagidx@current@format' for location `\datagidx@current@location'%
+           }%
+        }%
+      }%
+    }%
+  }%
+  {%
+    \@datagidx@parse@location
+  }%
+}
+\newcommand*{\@datagidx@parse@location}{%
+  \@dtl@sequentialtrue
+  \ifdefequal{\datagidx@prev@format}{\datagidx@current@format}%
+  {%
+    \ifdefequal{\datagidx@prev@locationformat}{\datagidx@current@locationformat}%
+    {%
+      \ifdefequal{\datagidx@prev@prefix}{\datagidx@current@prefix}%
+      {%
+      }%
+      {%
+        \@dtl@sequentialfalse
+      }%
+    }%
+    {%
+      \@dtl@sequentialfalse
+    }%
+  }%
+  {%
+    \@dtl@sequentialfalse
+  }%
+  \if@dtl@sequential
+    \ifnumequal{\datagidx@prev@location+1}{\datagidx@current@location}%
+    {%
+       \ifdefequal
+         \datagidx@current@locationformat
+         \datagidx@prev@locationformat
+      {%
+        \@dtl@sequentialtrue
+      }%
+      {%
+             \@dtl@sequentialfalse
+      }%
+    }%
+    {%
+       \@dtl@sequentialfalse
+    }%
+  \fi
+  \if@dtl@sequential
+     \ifnumequal{\datagidx@location@start}{-1}%
+     {%
+       \let\datagidx@location@start\datagidx@prev@location
+       \let\datagidx@location@startval\datagidx@prev@locationstring
+       \let\datagidx@location@format\datagidx@prev@format
+       \let\datagidx@location@target\datagidx@prev@target
+     }%
+     {%
+     }%
+  \else
+    \do@prevlocation
+  \fi
+  \let\datagidx@prev@location\datagidx@current@location
+  \let\datagidx@prev@format\datagidx@current@format
+  \let\datagidx@prev@prefix\datagidx@current@prefix
+  \let\datagidx@prev@locationformat\datagidx@current@locationformat
+  \let\datagidx@prev@locationstring\datagidx@current@locationstring
+  \let\datagidx@prev@target\datagidx@current@target
+}
+\newcommand*{\DTLgidxLocationSep}{, }
+\newcommand*{\DTLgidxLocationF}[2]{%
+  #1\DTLgidxLocationSep#2%
+}
+\newcommand*{\DTLgidxLocationFF}[2]{%
+  #1--#2%
+}
+\newcommand*{\do@prevlocation}{%
+  \ifnumequal{\datagidx@location@start}{-1}%
+  {%
+     \ifdefempty{\datagidx@prev@locationstring}%
+     {}%
+     {%
+       \datagidx@location@sep
+       \datagidxlink{\datagidx@prev@target}%
+       {%
+         \datagidx@formatlocation
+           \datagidx@prev@format\datagidx@prev@locationstring
+       }%
+       \def\datagidx@location@sep{\DTLgidxLocationSep}%
+     }%
+  }%
+  {%
+    \datagidx@location@sep
+    \do@locrange
+    \def\datagidx@location@sep{\DTLgidxLocationSep}%
+    \def\datagidx@location@start{-1}%
+  }%
+}
+\newcommand*{\do@locrange}{%
+  \ifnumgreater{\datagidx@prev@location}{\datagidx@location@start+1}%
+  {%
+     \DTLgidxLocationFF
+       {%
+         \datagidxlink{\datagidx@location@target}%
+         {%
+           \datagidx@formatlocation
+             \datagidx@location@format\datagidx@location@startval
+         }%
+       }%
+       {%
+         \datagidxlink{\datagidx@prev@target}%
+         {%
+           \datagidx@formatlocation
+             \datagidx@prev@format\datagidx@prev@locationstring
+         }%
+       }%
+  }%
+  {%
+     \DTLgidxLocationF
+       {%
+         \datagidxlink{\datagidx@location@target}%
+         {%
+           \datagidx@formatlocation
+             \datagidx@location@format\datagidx@location@startval
+         }%
+       }%
+       {%
+         \datagidxlink{\datagidx@prev@target}%
+         {%
+           \datagidx@formatlocation
+             \datagidx@prev@format\datagidx@prev@locationstring
+         }%
+       }%
+  }%
+}
+\newcommand*{\datagidx@defaultdatabase}{}
+\newcommand*{\DTLgidxSetDefaultDB}[1]{%
+  \renewcommand*{\datagidx@defaultdatabase}{#1}%
+}
+\define@key{newgloss}{heading}{\renewcommand*{\datagidx@heading}{#1}}
+\define@key{newgloss}{postheading}{%
+  \renewcommand*{\datagidx@postheading}{#1}%
+}
+\define@choicekey{newgloss}{balance}[\val\nr]{true,false}[true]{%
+ \ifcase\nr\relax
+   \renewcommand*{\datagidx@multicols}{multicols}%
+ \or
+   \renewcommand*{\datagidx@multicols}{multicols*}%
+ \fi
+}
+\define@key{newgloss}{sort}{\renewcommand*{\datagidx@sort}{#1}}
+\newcommand*{\datagidx@style}{index}
+\define@key{newgloss}{style}{\renewcommand*{\datagidx@style}{#1}}
+\newif\ifdatagidxshowgroups
+\newcommand*{\datagidx@showgroups}{false}
+\define@choicekey{newgloss}{showgroups}{true,false}[true]%
+{%
+  \renewcommand{\datagidx@showgroups}{#1}%
+}%
+\ifundef\newgidx
+{%
+  \newcommand*{\newgidx}{\datagidx@newgidx}
+}%
+{}
+\@onlypreamble\newgidx
+\newcommand*{\datagidx@highopt@newgidx}[3][]{%
+  \edef\datagidx@indexfilename{\datagidxhighoptfilename{#2}}%
+  \IfFileExists{\datagidx@indexfilename}%
+  {%
+    \input{\datagidx@indexfilename}%
+    \bgroup
+      \setkeys{newgloss}{#1}%
+      \datagidx@newgidx@update{#2}{#3}%
+    \egroup
+  }%
+  {%
+    \datagidx@newgidx[#1]{#2}{#3}%
+  }%
+}
+\newcommand*{\loadgidx}[3][]{%
+  \input{#2}%
+  \bgroup
+    \setkeys{newgloss}{sort={},#1}%
+    \expandafter\datagidx@newgidx@update\expandafter
+      {\dtllastloadeddb}{#3}%
+  \egroup
+  \edef\datagidx@defaultdatabase{\dtllastloadeddb}%
+  \dtlforcolumn{\Label}{\dtllastloadeddb}{Label}%
+  {%
+     \csxdef{datagidxentry@\Label}{\dtllastloadeddb}%
+  }%
+}
+\@onlypreamble\loadgidx
+\newcommand*{\datagidx@newgidx}[3][]{%
+\bgroup
+  \setkeys{newgloss}{#1}%
+  \ifdefempty{\datagidx@defaultdatabase}%
+  {\xdef\datagidx@defaultdatabase{#2}}%
+  {}%
+  \DTLgnewdb{#2}%
+  \DTLaddcolumn{#2}{Label}%
+  \DTLaddcolumn{#2}{Location}%
+  \DTLaddcolumn{#2}{CurrentLocation}%
+  \DTLaddcolumn{#2}{FirstId}%
+  \DTLaddcolumn{#2}{Name}%
+  \DTLaddcolumn{#2}{Text}%
+  \DTLaddcolumn{#2}{Parent}%
+  \DTLaddcolumn{#2}{Child}%
+  \DTLaddcolumn{#2}{Description}%
+  \DTLaddcolumn{#2}{Used}%
+  \DTLaddcolumn{#2}{Symbol}%
+  \DTLaddcolumn{#2}{Long}%
+  \DTLaddcolumn{#2}{Short}%
+  \DTLaddcolumn{#2}{See}%
+  \DTLaddcolumn{#2}{SeeAlso}%
+  \datagidx@newgidx@update{#2}{#3}%
+\egroup
+}
+\newcommand*{\datagidx@newgidx@update}[2]{%
+  \DTLnewrow{datagidx}%
+  \DTLnewdbentry{datagidx}{Glossary}{#1}%
+  \DTLnewdbentry{datagidx}{Title}{#2}%
+  {%
+    \dtlexpandnewvalue
+    \DTLnewdbentry{datagidx}{Heading}{\expandonce\datagidx@heading}%
+    \DTLnewdbentry{datagidx}{PostHeading}{\expandonce\datagidx@postheading}%
+    \DTLnewdbentry{datagidx}{MultiCols}{\expandonce\datagidx@multicols}%
+    \DTLnewdbentry{datagidx}{Sort}{\expandonce\datagidx@sort}%
+    \DTLnewdbentry{datagidx}{Style}{\expandonce\datagidx@style}%
+    \DTLnewdbentry{datagidx}{ShowGroups}{\expandonce\datagidx@showgroups}%
+  }%
+}
+\newcommand*{\newterm@label}{}
+\define@key{newterm}{label}{\renewcommand*{\newterm@label}{#1}}
+\newcommand*{\newterm@parent}{}
+\define@key{newterm}{parent}{\renewcommand*{\newterm@parent}{#1}}
+\newcommand*{\newterm@text}{}
+\define@key{newterm}{text}{\renewcommand*{\newterm@text}{#1}}
+\newcommand*{\newterm@description}{}
+\define@key{newterm}{description}{%
+  \renewcommand*{\newterm@description}{#1}%
+}
+\define@key{newterm}{plural}{\def\newterm@plural{#1}}
+\newcommand*{\newterm@sort}{}
+\define@key{newterm}{sort}{\renewcommand*{\newterm@sort}{#1}}
+\newcommand*{\newterm@symbol}{}
+\define@key{newterm}{symbol}{\renewcommand*{\newterm@symbol}{#1}}
+\newcommand*{\newterm@database}{}
+\define@key{newterm}{database}{\renewcommand*{\newterm@database}{#1}}
+\newcommand*{\newterm@long}{}
+\define@key{newterm}{long}{%
+  \renewcommand*{\newterm@long}{#1}%
+  \def\newterm@longplural{#1s}%
+}
+\newcommand*{\newterm@short}{}
+\define@key{newterm}{short}{%
+  \renewcommand*{\newterm@short}{#1}%
+  \def\newterm@shortplural{#1s}%
+}
+\define@key{newterm}{longplural}{%
+  \def\newterm@longplural{#1}%
+}
+\define@key{newterm}{shortplural}{%
+  \def\newterm@shortplural{#1}%
+}
+\newcommand*{\newterm@see}{}
+\define@key{newterm}{see}{%
+  \renewcommand*{\newterm@see}{#1}%
+}
+\newcommand*{\newterm@seealso}{}
+\define@key{newterm}{seealso}{%
+  \renewcommand*{\newterm@seealso}{#1}%
+}
+\newcommand*{\newterm@defaultshook}{}
+\newcommand*{\newterm@extrafields}{}
+\newcommand*{\DTLgidxAssignList}{%
+  \Name=Name,\Description=Description,\Used=Used,\Symbol=Symbol,%
+  \Long=Long,\Short=Short,\LongPlural=LongPlural,\ShortPlural=ShortPlural,%
+  \Location=Location,\See=See,\SeeAlso=SeeAlso,%
+  \Text=Text,\Plural=Plural,\CurrentLocation=CurrentLocation,%
+  \Label=Label,\Parent=Parent,\Children=Child,\FirstId=FirstId,\Sort=Sort%
+}
+\newcommand*{\datagidxtermkeys}{%
+  name,description,symbol,long,short,see,seealso,text,plural,%
+  label,parent,sort%
+}
+\newcommand*\@datagidx@fieldkey@Name{name}%
+\newcommand*\@datagidx@fieldkey@Description{description}%
+\newcommand*\@datagidx@fieldkey@Symbol{symbol}%
+\newcommand*\@datagidx@fieldkey@Long{long}%
+\newcommand*\@datagidx@fieldkey@Short{short}%
+\newcommand*\@datagidx@fieldkey@See{see}%
+\newcommand*\@datagidx@fieldkey@SeeAlso{seealso}%
+\newcommand*\@datagidx@fieldkey@Text{text}%
+\newcommand*\@datagidx@fieldkey@Plural{plural}%
+\newcommand*\@datagidx@fieldkey@Label{label}%
+\newcommand*\@datagidx@fieldkey@Parent{parent}%
+\newcommand*\@datagidx@fieldkey@Sort{sort}%
+\newcommand*{\newtermaddfield}[4][]{%
+  \ifstrempty{#1}%
+  {%
+    \dtlforcolumn{\datagidx@thisidx}{datagidx}{Glossary}%
+    {%
+      \DTLaddcolumn{\datagidx@thisidx}{#2}%
+    }%
+  }%
+  {%
+    \@for\datagidx@thisidx:=#1\do
+    {%
+      \DTLaddcolumn{\datagidx@thisidx}{#2}%
+    }%
+  }%
+  \expandafter\gdef\csname newterm@#3\endcsname{}%
+  \define@key{newterm}{#3}%
+  {%
+    \expandafter\def\csname newterm@#3\endcsname{##1}%
+  }%
+  \gappto\newterm@defaultshook
+  {%
+    \expandafter\protected@edef\csname newterm@#3\endcsname{#4}%
+  }%
+  \gappto\newterm@extrafields
+  {%
+     \protected@edef\datagidx@value{\csname newterm@#3\endcsname}%
+     \DTLnewdbentry{\newterm@database}{#2}{\expandonce\datagidx@value}%
+  }%
+  \xappto\DTLgidxAssignList
+  {%
+    ,\expandafter\noexpand\csname#2\endcsname=#2%
+  }%
+  \xappto\datagidxtermkeys{,#3}%
+  \expandafter\xdef\csname @datagidx@fieldkey@#2\endcsname{#3}%
+  \xappto\datagidxgetchildfields
+  {%
+    \noexpand\dtlgetentryfromcurrentrow
+     {\expandafter\noexpand\csname#2\endcsname}%
+     {\noexpand\dtlcolumnindex{\noexpand\DTLgidxCurrentdb}{#2}}%
+  }%
+}
+\newcommand*{\newtermlabelhook}{}
+\newcommand*{\DTLgidxNoFormat}[1]{#1}
+\newcommand*{\DTLgidxGobble}[1]{}
+\newcommand*{\DTLgidxStripBackslash}[1]{%
+  \expandafter\@gobble\string#1%
+}
+\newcommand*{\DTLgidxName}[2]{%
+  #1\space #2%
+}
+\newcommand*{\DTLgidxNameNum}[1]{\@Roman{#1}}
+\newcommand*{\datagidx@namenum}[1]{\two@digits{#1}}
+\newcommand*{\DTLgidxPlace}[2]{%
+  #2%
+}
+\newcommand*{\DTLgidxSubject}[2]{%
+  #2%
+}
+\newcommand*{\DTLgidxOffice}[2]{%
+  #2 (#1)%
+}
+\newcommand*{\DTLgidxIgnore}[1]{#1}
+\newcommand*{\DTLgidxMac}[1]{#1}
+\newcommand*{\datagidx@mac}[1]{Mac}
+\newcommand*{\DTLgidxSaint}[1]{#1}
+\newcommand*{\datagidx@saint}[1]{Saint}
+\newcommand*{\DTLgidxRank}[2]{#1~#2}
+\newcommand*{\datagidx@rank}[2]{#2.}
+\newcommand*{\DTLgidxParticle}[2]{#1~#2}
+\newcommand*{\datagidx@particle}[2]{#2.}
+\newcommand*{\datagidx@bothoftwo}[2]{#1#2}
+\newcommand*{\datagidx@person}[2]{#2\noexpand\datatoolpersoncomma #1}
+\newcommand*{\datagidx@place}[2]{#2\noexpand\datatoolplacecomma #1}
+\newcommand*{\datagidx@subject}[2]{#2\noexpand\datatoolsubjectcomma #1}
+\newcommand*{\datagidx@paren}[1]{\noexpand\datatoolparenstart #1}
+\newcommand*{\datagidx@invert}[2]{#2, #1}
+\newcommand*{\DTLgidxParen}[1]{\space(#1)}
+\newcommand*{\datagidxwordifygreek}{%
+  \def\alpha{alpha}%
+  \def\beta{beta}%
+  \def\gamma{gamma}%
+  \def\delta{delta}%
+  \def\epsilon{epsilon}%
+  \def\varepsilon{epsilon}%
+  \def\zeta{zeta}%
+  \def\eta{eta}%
+  \def\theta{theta}%
+  \def\vartheta{theta}%
+  \def\iota{iota}%
+  \def\kappa{kappa}%
+  \def\lambda{lambda}%
+  \def\mu{mu}%
+  \def\nu{nu}%
+  \def\xi{xi}%
+  \def\pi{pi}%
+  \def\varpi{pi}%
+  \def\rho{rho}%
+  \def\varrho{rho}%
+  \def\sigma{sigma}%
+  \def\varsigma{sigma}%
+  \def\tau{tau}%
+  \def\upsilon{upsilon}%
+  \def\phi{phi}%
+  \def\varphi{phi}%
+  \def\chi{chi}%
+  \def\psi{psi}%
+  \def\omega{omega}%
+  \def\Gamma{Gamma}%
+  \def\Delta{Delta}%
+  \def\Theta{Theta}%
+  \def\Lambda{Lambda}%
+  \def\Xi{Xi}%
+  \def\Pi{Pi}%
+  \def\Sigma{Sigma}%
+  \def\Upsilon{Upsilon}%
+  \def\Phi{Phi}%
+  \def\Psi{Psi}%
+  \def\Omega{Omega}%
+}
+\newcommand*{\datagidxstripaccents}{%
+ \expandafter\def\csname \encodingdefault-cmd\endcsname##1##2##3{##3}%
+ \expandafter\def\csname OT1-cmd\endcsname##1##2##3{##3}%
+ \expandafter\def\csname T1-cmd\endcsname##1##2##3{##3}%
+ \expandafter\def\csname PD1-cmd\endcsname##1##2##3{##3}%
+ \def\IeC##1{\@gobbletwo##1}%
+}
+\ifdef\newterm
+{%
+}%
+{%
+  \newcommand{\newterm}{\datagidx@newterm}
+}
+\@onlypreamble\newterm
+\newcommand{\datagidx@setfieldvalues}[2]{%
+ \def\newterm@name{#2}%
+ \renewcommand*\newterm@label{#2}%
+ \renewcommand*\newterm@text{#2}%
+ \undef\newterm@plural
+ \renewcommand*{\newterm@description}{}%
+ \renewcommand*{\newterm@sort}{#2}%
+ \renewcommand*{\newterm@symbol}{}%
+ \let\newterm@database\datagidx@defaultdatabase
+ \renewcommand*{\newterm@short}{#2}%
+ \undef\newterm@shortplural
+ \renewcommand*{\newterm@long}{#2}%
+ \undef\newterm@longplural
+ \renewcommand*{\newterm@see}{}%
+ \renewcommand*{\newterm@seealso}{}%
+ \renewcommand*{\newterm@parent}{}%
+ \let\datagidx@orgfield\field
+ \def\field##1{\expandafter\noexpand\csname newterm@##1\endcsname}%
+ \newterm@defaultshook
+ \let\field\datagidx@orgfield
+ \setkeys{newterm}{#1}%
+ \bgroup
+   \let\glsadd\@gobble
+   \let\MakeUppercase\DTLgidxNoFormat
+   \let\MakeTextUppercase\DTLgidxNoFormat
+   \let\MakeLowercase\DTLgidxNoFormat
+   \let\MakeTextLowercase\DTLgidxNoFormat
+   \let\acronymfont\DTLgidxNoFormat
+   \let\textrm\DTLgidxNoFormat
+   \let\texttt\DTLgidxNoFormat
+   \let\textsf\DTLgidxNoFormat
+   \let\textsc\DTLgidxNoFormat
+   \let\textbf\DTLgidxNoFormat
+   \let\textmd\DTLgidxNoFormat
+   \let\textit\DTLgidxNoFormat
+   \let\textsl\DTLgidxNoFormat
+   \let\emph\DTLgidxNoFormat
+   \let\textsuperscript\DTLgidxNoFormat
+   \let~\space
+   \ifdef\andname
+   {%
+     \let\&\andname
+   }%
+   {%
+     \def\&{and}%
+   }%
+   \let\ensuremath\DTLgidxNoFormat
+   \let\DTLgidxParen\@gobble
+   \let\DTLgidxName\@secondoftwo
+   \let\DTLgidxPlace\datagidx@invert
+   \let\DTLgidxSubject\datagidx@invert
+   \let\DTLgidxOffice\@secondoftwo
+   \let\DTLgidxParticle\datagidx@bothoftwo
+   \datagidxwordifygreek
+   \datagidxstripaccents
+   \newtermlabelhook
+   \protected@xdef\newterm@label{\newterm@label}%
+   \let\DTLgidxName\datagidx@person
+   \let\DTLgidxPlace\datagidx@place
+   \let\DTLgidxSubject\datagidx@subject
+   \let\DTLgidxOffice\datagidx@person
+   \let\DTLgidxParen\datagidx@paren
+   \let\DTLgidxMac\datagidx@mac
+   \let\DTLgidxSaint\datagidx@saint
+   \let\DTLgidxIgnore\@gobble
+   \let\DTLgidxRank\datagidx@rank
+   \let\DTLgidxParticle\datagidx@particle
+   \let\DTLgidxNameNum\datagidx@namenum
+   \protected@xdef\newterm@sort{\newterm@sort}%
+ \egroup
+}
+\newcommand*{\datagidx@add@term}[1]{%
+  \global\cslet{datagidxentry@\newterm@label}{\newterm@database}%
+  \DTLnewrow{\newterm@database}%
+  \DTLnewdbentry{\newterm@database}{Name}{#1}%
+  \DTLnewdbentry{\newterm@database}{Used}{0}%
+  {%
+    \dtlexpandnewvalue
+    \DTLnewdbentry{\newterm@database}{Text}{\expandonce\newterm@text}%
+    \DTLnewdbentry{\newterm@database}{Description}{\expandonce\newterm@description}%
+    \DTLnewdbentry{\newterm@database}{Label}{\expandonce\newterm@label}%
+    \DTLnewdbentry{\newterm@database}{Sort}{\expandonce\newterm@sort}%
+    \DTLnewdbentry{\newterm@database}{Symbol}{\expandonce\newterm@symbol}%
+    \DTLnewdbentry{\newterm@database}{Short}{\expandonce\newterm@short}%
+    \DTLnewdbentry{\newterm@database}{Long}{\expandonce\newterm@long}%
+    \ifundef\newterm@plural
+    {%
+      \DTLnewdbentry{\newterm@database}{Plural}{\expandonce\newterm@text s}%
+    }%
+    {%
+      \DTLnewdbentry{\newterm@database}{Plural}{\expandonce\newterm@plural}%
+    }%
+    \ifundef\newterm@shortplural
+    {%
+      \DTLnewdbentry{\newterm@database}{ShortPlural}{\expandonce\newterm@short s}%
+    }%
+    {%
+      \DTLnewdbentry{\newterm@database}{ShortPlural}{\expandonce\newterm@shortplural}%
+    }%
+    \ifundef\newterm@longplural
+    {%
+      \DTLnewdbentry{\newterm@database}{LongPlural}{\expandonce\newterm@long s}%
+    }%
+    {%
+      \DTLnewdbentry{\newterm@database}{LongPlural}{\expandonce\newterm@longplural}%
+    }%
+    \ifdefempty{\newterm@see}%
+     {}%
+     {\DTLnewdbentry{\newterm@database}{See}{\newterm@see}}%
+    \ifdefempty{\newterm@seealso}%
+     {}%
+     {\DTLnewdbentry{\newterm@database}{SeeAlso}{\newterm@seealso}}%
+    \newterm@extrafields
+    \ifdefempty{\newterm@parent}%
+     {}%
+     {%
+       \iftermexists{\newterm@parent}%
+       {%
+         \edef\newterm@parentdatabase{\csuse{datagidxentry@\newterm@parent}}%
+         \ifthenelse{\equal{\newterm@parentdatabase}{\newterm@database}}
+         {%
+           \DTLnewdbentry{\newterm@database}{Parent}{\newterm@parent}%
+           \datagidx@addchild{\newterm@database}{\newterm@parent}{\newterm@label}%
+         }%
+         {%
+           \PackageError{datagidx}%
+           {%
+             Parent entry `\newterm@parent' must belong to the
+             same database as child entry `\newterm@label'%
+           }%
+           {%
+             Parent entry is in database
+             `\newterm@parentdatabase' and child entry is in
+             database `\newterm@database'%
+           }%
+         }%
+       }%
+       {%
+         \PackageError{datagidx}%
+         {%
+            Can't assign parent to `\newterm@label':
+            `\newterm@parent' doesn't exist%
+         }%
+         {}%
+       }%
+     }%
+  }%
+  \global\let\datagidxlastlabel\newterm@label
+  \postnewtermhook
+}%
+\newcommand*{\postnewtermhook}{}
+\newcommand*{\newtermfield}[1]{\csuse{newterm@#1}}
+\newcommand{\ifnewtermfield}[3]{%
+  \ifcsdef{newterm@#1}
+  {%
+    \ifcsempty{newterm@#1}{#3}{#2}%
+  }%
+  {%
+    #3%
+  }%
+}
+\newcommand{\datagidx@newterm}[2][]{%
+  \datagidx@setfieldvalues{#1}{#2}%
+  \DTLifdbexists{\newterm@database}%
+  {%
+    \iftermexists{\newterm@label}%
+    {%
+      \PackageError{datagidx}{Term `\newterm@label' already
+        exists in database `\newterm@database'}{}%
+    }%
+    {%
+       \datagidx@add@term{#2}%
+    }%
+  }%
+  {%
+    \PackageError{datagidx}%
+    {Glossary/index data base `\newterm@database' doesn't exist}%
+    {%
+      You must define the glossary/index data base before you can
+      add any terms to it.%
+    }%
+  }%
+}
+\newcommand{\datagidx@highopt@newterm}[2][]{%
+  \datagidx@setfieldvalues{#1}{#2}%
+  \DTLifdbexists{\newterm@database}%
+  {%
+    \edef\dtl@dogetrow{%
+      \noexpand\dtlgetrowindex
+      {\noexpand\dtl@rowidx}%
+      {\newterm@database}%
+      {%
+        \dtlcolumnindex{\newterm@database}{Label}%
+      }%
+      {\newterm@label}}%
+    \dtl@dogetrow
+    \ifx\dtl@rowidx\dtlnovalue
+       \datagidx@add@term{#2}%
+       \csdef{datagidx@do@highopt@sort@\newterm@database}{\datagidx@sort}%
+    \else
+      \global\cslet{datagidxentry@\newterm@label}{\newterm@database}%
+      \global\let\datagidxlastlabel\newterm@label
+    \fi
+  }%
+  {%
+    \PackageError{datagidx}%
+    {Glossary/index data base `\newterm@database' doesn't exist}%
+    {%
+      You must define the glossary/index data base before you can
+      add any terms to it.%
+    }%
+  }%
+}
+\newcommand*{\datagidx@addchild}[3]{%
+  \edef\dtl@dogetrow{%
+    \noexpand\dtlgetrowforvalue
+    {#1}%
+    {%
+      \dtlcolumnindex{\newterm@database}{Label}%
+    }%
+    {#2}}%
+  \dtl@dogetrow
+  \dtlgetentryfromcurrentrow
+    {\datagidx@child}%
+    {\dtlcolumnindex{#1}{Child}}%
+  \ifx\datagidx@child\dtlnovalue
+    \edef\datagidx@child{#3}%
+  \else
+    \edef\datagidx@child{\datagidx@child,#3}%
+  \fi
+  \edef\do@update{\noexpand\dtlupdateentryincurrentrow
+    {Child}{\datagidx@child}}%
+  \do@update
+  \dtlrecombine
+}
+\newcommand{\newacro}[3][]{%
+  \newterm
+    [%
+      description={\capitalisewords{#3}},%
+      short={\acronymfont{#2}},%
+      long={#3},%
+      text={\DTLgidxAcrStyle{#3}{\acronymfont{#2}}},%
+      plural={\DTLgidxAcrStyle{#3s}{\acronymfont{#2s}}},%
+      sort={#2},%
+      #1%
+    ]%
+    {\MakeTextUppercase{#2}}%
+}
+\newcommand*{\acronymfont}[1]{#1}
+\newcommand*{\DTLgidxAcrStyle}[2]{#1 (#2)}
+\newcommand{\iftermexists}[3]{%
+  \ifcsdef{datagidxentry@#1}{#2}{#3}%
+}
+\newcommand*{\datagidxdb}[1]{%
+  \csuse{datagidxentry@#1}%
+}
+\newcommand*{\ifentryused}[3]{%
+  \letcs{\newterm@database}{datagidxentry@#1}%
+  \edef\dtl@dogetrow{%
+    \noexpand\dtlgetrowforvalue
+    {\newterm@database}%
+    {%
+      \dtlcolumnindex{\newterm@database}{Label}%
+    }%
+    {#1}}%
+  \dtl@dogetrow
+  \dtlgetentryfromcurrentrow
+    {\datagidx@value}%
+    {\dtlcolumnindex{\newterm@database}{Used}}%
+  \ifnum\datagidx@value=1\relax
+    #2%
+  \else
+    #3%
+  \fi
+}
+\newcommand*{\glsreset}[1]{%
+  \letcs{\newterm@database}{datagidxentry@#1}%
+  \edef\do@getrow{%
+    \noexpand\dtlgetrowforvalue
+    {\newterm@database}%
+    {\dtlcolumnindex{\newterm@database}{Label}}%
+    {#1}%
+  }%
+  \do@getrow
+  \dtlreplaceentryincurrentrow
+    {0}{\dtlcolumnindex{\newterm@database}{Used}}%
+  \dtlrecombine
+}
+\newcommand*{\glsunset}[1]{%
+  \letcs{\newterm@database}{datagidxentry@#1}%
+  \edef\do@getrow{%
+    \noexpand\dtlgetrowforvalue
+    {\newterm@database}%
+    {\dtlcolumnindex{\newterm@database}{Label}}%
+    {#1}%
+  }%
+  \do@getrow
+  \dtlreplaceentryincurrentrow
+    {1}{\dtlcolumnindex{\newterm@database}{Used}}%
+  \dtlrecombine
+}
+\newcommand*{\glsresetall}[1]{%
+  \def\datagidx@list{}%
+  \dtlforcolumn{\datagidx@label}{#1}{Label}%
+  {%
+    \ifdefempty\datagidx@list
+    {%
+      \let\datagidx@list\datagidx@label
+    }%
+    {%
+      \eappto\datagidx@list{,\datagidx@label}%
+    }%
+  }%
+  \@for\datagidx@thislabel:=\datagidx@list\do
+  {%
+    \glsreset{\datagidx@thislabel}%
+  }%
+}
+\newcommand*{\glsunsetall}[1]{%
+  \def\datagidx@list{}%
+  \dtlforcolumn{\datagidx@label}{#1}{Label}%
+  {%
+    \ifdefempty\datagidx@list
+    {%
+      \let\datagidx@list\datagidx@label
+    }%
+    {%
+      \eappto\datagidx@list{,\datagidx@label}%
+    }%
+  }%
+  \@for\datagidx@thislabel:=\datagidx@list\do
+  {%
+    \glsunset{\datagidx@thislabel}%
+  }%
+}
+\newcount\datagidx@anchorcount
+\newcommand*{\datagidx@formatanchor}[1]{%
+  \ifnum#1<10000
+   0%
+    \ifnum#1<1000
+     0%
+      \ifnum#1<100
+       0%
+        \ifnum#1<10
+         0%
+        \fi
+      \fi
+    \fi
+  \fi
+  \number#1%
+}
+\newcommand*{\@datagidx@escloc}[2]{%
+  \expandafter\string\csname#1\endcsname{\noexpand\number#2}%
+}
+\newcommand*{\datagidx@escapelocation}{%
+  \def\@arabic{\@datagidx@escloc{@arabic}}%
+  \def\@roman{\@datagidx@escloc{@roman}}%
+  \def\@Roman{\@datagidx@escloc{@Roman}}%
+  \def\@alph{\@datagidx@escloc{@alph}}%
+  \def\@Alph{\@datagidx@escloc{@Alph}}%
+}
+\newcommand*{\datagidx@escapelocationformat}{%
+  \def\@arabic##1{arabic}%
+  \def\@roman##1{roman}%
+  \def\@Roman##1{Roman}%
+  \def\@alph##1{alph}%
+  \def\@Alph##1{Alph}%
+}
+\newcommand*{\datagidx@clearlocationformat}{%
+  \let\@arabic\@firstofone
+  \let\@roman\@firstofone
+  \let\@Roman\@firstofone
+  \let\@alph\@firstofone
+  \let\@Alph\@firstofone
+}
+\newcommand*{\DTLgidxAddLocationType}[1]{%
+  \gappto\datagidx@escapelocation{%
+    \expandafter\def\csname#1\endcsname{\@datagidx@escloc{#1}}%
+  }%
+  \gappto\datagidx@escapelocationformat{%
+    \expandafter\def\csname#1\endcsname##1{#1}%
+  }%
+  \gappto\datagidx@clearlocationformat{%
+    \expandafter\let\csname#1\endcsname\@firstofone
+  }%
+}
+\@onlypreamble\DTLgidxAddLocationType
+\newcommand*{\datagidx@target}[4]{%
+  \global\advance\datagidx@anchorcount by 1\relax
+  \edef\@datagidx@target{datagidx.\datagidx@formatanchor\datagidx@anchorcount}%
+  \ifstrempty{#3}
+  {%
+    \datagidx@write@usedentry{#1}{}%
+  }%
+  {%
+    \bgroup
+      \datagidx@escapelocation
+      \def\@arabic{\noexpand\@arabic}%
+      \def\@roman{\noexpand\@roman}%
+      \def\@Roman{\noexpand\@Roman}%
+      \def\@alph{\noexpand\@alph}%
+      \def\@Alph{\noexpand\@Alph}%
+      \protected@edef\@datagidx@dowriteaux{%
+         \noexpand\datagidx@write@usedentry{#1}%
+              {[#2]{#3}{\@datagidx@target}}%
+      }%
+      \@datagidx@dowriteaux
+    \egroup
+  }%
+  \ifdef\hypertarget
+  {%
+    \datagidxshowifdraft
+    {%
+      [\@datagidx@target]%
+      \discretionary{}{}{}%
+    }%
+    \bgroup
+      \let\glsadd\@gobble
+      \settoheight\dimen@{#4}%
+      \raisebox{\dimen@}%
+      {%
+        \datagidxtarget{\@datagidx@target}{}%
+      }%
+    \egroup
+  }%
+  {%
+  }%
+  \datagidxshowifdraft{[#1]\discretionary{}{}{}}%
+  #4%
+}
+\DeclareRobustCommand*{\glsdispentry}[2]{%
+  \DTLgidxFetchEntry{\datagidx@dispentryval}{#1}{#2}%
+  \datagidx@dispentryval
+}
+\DeclareRobustCommand*{\Glsdispentry}[2]{%
+  \DTLgidxFetchEntry{\datagidx@dispentryval}{#1}{#2}%
+  \xmakefirstuc\datagidx@dispentryval
+}
+\newcommand*{\DTLgidxFetchEntry}[3]{%
+  \ifcsdef{datagidxentry@#2}%
+  {%
+  \letcs{\newterm@database}{datagidxentry@#2}%
+  \edef\do@getrow{%
+    \noexpand\dtlgetrowforvalue
+    {\newterm@database}%
+    {\dtlcolumnindex{\newterm@database}{Label}}%
+    {#2}%
+  }%
+  \do@getrow
+  \dtlgetentryfromcurrentrow
+    {#1}%
+    {\dtlcolumnindex{\newterm@database}{#3}}%
+  }%
+  {%
+    \PackageError{datagidx}{No term `#2' defined}{}%
+  }%
+}
+\newcommand*{\datagidx@parse@formatlabel}[1]{%
+  \datagidx@parse@format@label@#1\@endparse@formatlabel@
+}
+\newcommand*\datagidx@parse@format@label@{%
+  \@ifnextchar[{\datagidx@parse@formatlabel@}{\datagidx@parse@formatlabel@[]}%
+}
+\def\datagidx@parse@formatlabel@[#1]#2\@endparse@formatlabel@{%
+  \def\datagidx@format{#1}%
+  \def\datagidx@label{#2}%
+}
+\newcommand*{\@datagidx@use@entry}[1]{%
+  \ifcsundef{datagidxentry@\datagidx@label}
+  {%
+    \PackageError{datagidx}{Entry `\datagidx@label' doesn't exist}{}%
+  }%
+  {%
+    \letcs{\newterm@database}{datagidxentry@\datagidx@label}%
+    \edef\do@getrow{%
+      \noexpand\dtlgetrowforvalue
+      {\newterm@database}%
+      {\dtlcolumnindex{\newterm@database}{Label}}%
+      {\datagidx@label}%
+    }%
+    \do@getrow
+    \dtlgetentryfromcurrentrow
+      {\datagidx@id}%
+      {\dtlcolumnindex{\newterm@database}{FirstId}}%
+    \DTLifnull\datagidx@id
+    {%
+      \count@=\datagidx@anchorcount\relax
+      \advance\count@ by 1\relax
+      \dtlappendentrytocurrentrow{FirstId}{\datagidx@formatanchor\count@}%
+    }%
+    {}%
+    \dtlreplaceentryincurrentrow
+      {1}{\dtlcolumnindex{\newterm@database}{Used}}%
+    \dtlgetentryfromcurrentrow
+      {\datagidx@parent}%
+      {\dtlcolumnindex{\newterm@database}{Parent}}%
+    \dtlrecombine
+    \datagidx@markparent{\newterm@database}{\datagidx@parent}%
+    \datagidx@target{\datagidx@label}{\datagidx@format}%
+      {\csuse{the\DTLgidxCounter}}{#1}%
+  }%
+}
+\newcommand*{\DTLgidxCounter}{page}
+\newcommand*{\datagidx@markparent}[2]{%
+  \ifx#2\dtlnovalue
+  \else
+    \datagidx@target{#2}{}{}{}%
+    \edef\do@getrow{%
+      \noexpand\dtlgetrowforvalue
+      {#1}%
+      {\dtlcolumnindex{#1}{Label}}%
+      {#2}}%
+    \do@getrow
+  \dtlgetentryfromcurrentrow
+    {\datagidx@id}%
+    {\dtlcolumnindex{\newterm@database}{FirstId}}%
+  \DTLifnull\datagidx@id
+  {%
+    \dtlappendentrytocurrentrow{FirstId}{\datagidx@formatanchor\datagidx@anchorcount}%
+  }%
+  {}%
+    \dtlgetentryfromcurrentrow
+      {\datagidx@parent}%
+      {\dtlcolumnindex{#1}{Parent}}%
+  \dtlrecombine
+    \datagidx@markparent{#1}{\datagidx@parent}%
+  \fi
+}
+\newcommand*{\datagidx@write@usedentry}[2]{%
+  \datagidx@do@highopt@update{#1}%
+  \protected@write{\@auxout}{}%
+    {%
+      \string\datagidx@usedentry{#1}{#2}%
+    }%
+  \protected@edef\datagidx@do@usedentry{%
+    \noexpand\datagidx@xusedentry{CurrentLocation}{#1}{#2}%
+  }%
+  \expandafter\ifstrequal\expandafter{\DTLgidxCounter}{page}%
+  {%
+     \expandafter\afterpage\expandafter{\datagidx@do@usedentry}%
+  }%
+  {
+    \datagidx@do@usedentry
+  }%
+}
+\newcommand*{\datagidx@xusedentry}[3]{%
+  \protected@edef\@datagidx@do@xusedentry{%
+     \noexpand\datagidx@usedentry[#1]{#2}{#3}%
+  }%
+  \@datagidx@do@xusedentry
+}
+\newcommand*{\datagidx@usedentry}[3][Location]{%
+  \ifcsundef{datagidxentry@#2}%
+  {%
+    \PackageWarning{datagidx}{No term `#2' defined. Ignoring}%
+  }%
+  {%
+    \letcs{\newterm@database}{datagidxentry@#2}%
+    \edef\do@getrow{%
+      \noexpand\dtlgetrowforvalue
+      {\newterm@database}%
+      {\dtlcolumnindex{\newterm@database}{Label}}%
+      {#2}%
+    }%
+    \do@getrow
+    \dtlgetentryfromcurrentrow
+      {\datagidx@loc}%
+      {\dtlcolumnindex{\newterm@database}{#1}}%
+    \ifx\datagidx@loc\dtlnovalue
+      \def\datagidx@loc{#3}%
+      \dtlappendentrytocurrentrow{#1}{\expandonce\datagidx@loc}%
+    \else
+      \ifdefempty{\datagidx@loc}%
+      {%
+        \def\datagidx@loc{#3}%
+      }%
+      {%
+        \ifstrempty{#3}%
+        {}%
+        {%
+          \appto\datagidx@loc{,#3}%
+        }%
+      }%
+      \expandafter\dtlreplaceentryincurrentrow\expandafter
+        {\datagidx@loc}%
+        {\dtlcolumnindex{\newterm@database}{#1}}%
+    \fi
+    \dtlrecombine
+  }%
+}
+\newcommand*{\datagidx@save@loc}[2]{%
+ \bgroup
+  \datagidx@escapelocation
+  \xdef\datagidx@tmp{#2}%
+ \egroup
+ \expandafter\xdef\csname datagidx@prev@loc@#1\endcsname{\datagidx@tmp}%
+}
+\newcommand*{\glsadd}[1]{%
+  \NoCaseChange{\@glsadd{#1}}%
+}
+\DeclareRobustCommand*{\@glsadd}[1]{%
+  \ifcsundef{datagidxentry@\datagidx@label}%
+  {%
+    \PackageError{datagidx}{Term `\datagidx@label' doesn't exist}{}%
+  }%
+  {%
+    \datagidx@parse@formatlabel{#1}%
+    \datagidx@target{\datagidx@label}{\datagidx@format}%
+      {\csuse{the\DTLgidxCounter}}{}%
+    \letcs{\newterm@database}{datagidxentry@\datagidx@label}%
+    \edef\do@getrow{%
+      \noexpand\dtlgetrowforvalue
+      {\newterm@database}%
+      {\dtlcolumnindex{\newterm@database}{Label}}%
+      {\datagidx@label}%
+    }%
+    \do@getrow
+    \dtlreplaceentryincurrentrow
+      {1}{\dtlcolumnindex{\newterm@database}{Used}}%
+    \dtlgetentryfromcurrentrow
+      {\datagidx@id}%
+      {\dtlcolumnindex{\newterm@database}{FirstId}}%
+    \DTLifnull\datagidx@id
+    {%
+      \dtlappendentrytocurrentrow{FirstId}{\datagidx@formatanchor\datagidx@anchorcount}%
+    }%
+    {}%
+    \dtlrecombine
+  }%
+}
+\newcount\datagidx@count
+\newcommand*{\glsaddall}[1]{%
+  \DTLifdbexists{#1}%
+  {%
+     \edef\datagidx@rowcount{\number\DTLrowcount{#1}}%
+     \datagidx@count=0\relax
+     \loop
+       \advance\datagidx@count by 1\relax
+       \dtlgetrow{#1}{\datagidx@count}%
+      \dtlgetentryfromcurrentrow
+        {\datagidx@label}%
+        {\dtlcolumnindex{#1}{Label}}%
+    \bgroup
+      \undef\hypertarget
+      \datagidx@target{\datagidx@label}{}{}{}%
+    \egroup
+       \dtlreplaceentryincurrentrow
+        {1}{\dtlcolumnindex{#1}{Used}}%
+      \dtlgetentryfromcurrentrow
+        {\datagidx@id}%
+        {\dtlcolumnindex{#1}{FirstId}}%
+      \DTLifnull\datagidx@id
+      {%
+        \dtlappendentrytocurrentrow{FirstId}{\datagidx@formatanchor\datagidx@anchorcount}%
+      }%
+      {}%
+      \dtlrecombine
+     \ifnum\datagidx@count<\datagidx@rowcount
+     \repeat
+  }%
+  {%
+    \PackageError{datagidx}{Database `#1' doesn't exist}{}%
+  }%
+}
+\DeclareRobustCommand*{\glslink}[2]{%
+  \datagidx@parse@formatlabel{#1}%
+  \datagidxlink{\datagidx@label}%
+  {%
+    \@datagidx@use@entry{#2}%
+  }%
+}
+\DeclareRobustCommand*{\useentry}[2]{%
+  \datagidx@parse@formatlabel{#1}%
+  \DTLgidxFetchEntry{\datagidx@value}{\datagidx@label}{#2}%
+  \datagidxlink{\datagidx@label}%
+  {%
+    \@datagidx@use@entry{\datagidx@value}%
+  }%
+}
+\DeclareRobustCommand*{\Useentry}[2]{%
+  \datagidx@parse@formatlabel{#1}%
+  \DTLgidxFetchEntry{\datagidx@value}{\datagidx@label}{#2}%
+  \datagidxlink{\datagidx@label}%
+  {%
+    \@datagidx@use@entry{\xmakefirstuc{\datagidx@value}}%
+  }%
+}
+\DeclareRobustCommand*{\USEentry}[2]{%
+  \datagidx@parse@formatlabel{#1}%
+  \DTLgidxFetchEntry{\datagidx@value}{\datagidx@label}{#2}%
+  \datagidxlink{\datagidx@label}%
+  {%
+    \@datagidx@use@entry{\MakeTextUppercase{\datagidx@value}}%
+  }%
+}
+\DeclareRobustCommand*{\useentrynl}[2]{%
+  \datagidx@parse@formatlabel{#1}%
+  \DTLgidxFetchEntry{\datagidx@value}{\datagidx@label}{#2}%
+  \@datagidx@use@entry{\datagidx@value}%
+}
+\DeclareRobustCommand*{\Useentrynl}[2]{%
+  \datagidx@parse@formatlabel{#1}%
+  \DTLgidxFetchEntry{\datagidx@value}{\datagidx@label}{#2}%
+  \@datagidx@use@entry{\xmakefirstuc{\datagidx@value}}%
+}
+\DeclareRobustCommand*{\USEentrynl}[2]{%
+  \datagidx@parse@formatlabel{#1}%
+  \DTLgidxFetchEntry{\datagidx@value}{\datagidx@label}{#2}%
+  \@datagidx@use@entry{\MakeTextUppercase{\datagidx@value}}%
+}
+\DeclareRobustCommand*{\gls}[1]{\useentry{#1}{Text}}
+\DeclareRobustCommand*{\glspl}[1]{\useentry{#1}{Plural}}
+\DeclareRobustCommand*{\Gls}[1]{\Useentry{#1}{Text}}
+\DeclareRobustCommand*{\Glspl}[1]{\Useentry{#1}{Plural}}
+\DeclareRobustCommand*{\glsnl}[1]{\useentrynl{#1}{Text}}
+\DeclareRobustCommand*{\glsplnl}[1]{\useentrynl{#1}{Plural}}
+\DeclareRobustCommand*{\Glsnl}[1]{\Useentrynl{#1}{Text}}
+\DeclareRobustCommand*{\Glsplnl}[1]{\Useentrynl{#1}{Plural}}
+\DeclareRobustCommand*{\glssym}[1]{\useentry{#1}{Symbol}}
+\DeclareRobustCommand*{\Glssym}[1]{\Useentry{#1}{Symbol}}
+\newcommand*{\DTLgidxFormatAcr}[3]{%
+  \DTLgidxAcrStyle{\glsdispentry{#1}{#2}}{\useentry{#1}{#3}}%
+}
+\newcommand*{\DTLgidxFormatAcrUC}[3]{%
+  \DTLgidxAcrStyle{\Glsdispentry{#1}{#2}}{\useentry{#1}{#3}}%
+}
+\DeclareRobustCommand*{\acr}[1]{%
+  \ifentryused{#1}%
+  {\useentry{#1}{Short}}%
+  {\DTLgidxFormatAcr{#1}{Long}{Short}}%
+}
+\DeclareRobustCommand*{\acrpl}[1]{%
+  \ifentryused{#1}%
+  {\useentry{#1}{ShortPlural}}%
+  {\DTLgidxFormatAcr{#1}{LongPlural}{ShortPlural}}%
+}
+\DeclareRobustCommand*{\Acr}[1]{%
+  \ifentryused{#1}%
+  {\Useentry{#1}{Short}}%
+  {\DTLgidxFormatAcrUC{#1}{Long}{Short}}%
+}
+\DeclareRobustCommand*{\Acrpl}[1]{%
+  \ifentryused{#1}%
+  {\Useentry{#1}{ShortPlural}}%
+  {\DTLgidxFormatAcrUC{#1}{LongPlural}{ShortPlural}}%
+}
+\define@key{printterms}{database}{\renewcommand*{\newterm@database}{#1}}
+\define@choicekey{printterms}{postdesc}[\val\nr]%
+ {none,dot}%
+ {%
+   \datagidx@setpostdesc\nr
+ }
+\define@choicekey{printterms}{prelocation}[\val\nr]%
+ {none,enspace,space,dotfill,hfill}%
+ {%
+   \datagidx@setprelocation\nr
+ }
+\define@choicekey{printterms}{location}[\val\nr]%
+ {hide,list,first}%
+ {\datagidx@setlocation\nr}
+\define@choicekey{printterms}{symboldesc}[\val\nr]%
+ {symbol,desc,(symbol) desc,desc (symbol),symbol desc,desc symbol}%
+ {\datagidx@formatsymdesc\nr}
+\define@key{printterms}{columns}%
+{%
+  \DTLgidxSetColumns{#1}%
+}
+\define@choicekey{printterms}{namecase}[\val\nr]%
+ {nochange,uc,lc,firstuc,capitalise}%
+ {%
+   \datagidx@setnamecase\nr
+ }
+\define@key{printterms}{namefont}%
+{%
+  \renewcommand*{\DTLgidxNameFont}[1]{{#1{##1}}}%
+}
+\define@key{printterms}{postname}
+{%
+  \renewcommand*{\DTLgidxPostName}{#1}%
+}
+\define@choicekey{printterms}{see}[\val\nr]%
+  {comma,brackets,dot,space,nosep,semicolon,location}%
+  {\datagidx@setsee\nr}
+\define@choicekey{printterms}{child}[\val\nr]%
+ {named,noname}%
+ {%
+   \datagidx@setchildstyle\nr
+ }
+\define@key{printterms}{symbolwidth}%
+{%
+  \setlength{\datagidxsymbolwidth}{#1}%
+}
+\define@key{printterms}{locationwidth}%
+{%
+  \setlength{\datagidxlocationwidth}{#1}%
+}
+\define@choicekey{printterms}{childsort}[\val\nr]%
+ {true,false}[true]%
+ {%
+   \datagidx@setchildsort\nr
+ }
+\define@choicekey{printterms}{showgroups}{true,false}[true]{%
+ \appto\newterm@styles{showgroups={#1},}%
+}
+\define@key{printterms}{style}{\appto\newterm@styles{style={#1},}}
+\define@key{printterms}{heading}{\appto\newterm@styles{heading={#1},}}
+\define@key{printterms}{postheading}{%
+  \appto\newterm@styles{postheading={#1},}%
+}
+\define@key{printterms}{sort}{\appto\newterm@styles{sort={#1},}}
+\define@choicekey{printterms}{balance}[\val\nr]{true,false}[true]{%
+  \ifcase\nr\relax
+    \appto\newterm@styles{balance=true,}%
+  \or
+    \appto\newterm@styles{balance=false,}%
+  \fi
+}
+\newcommand*{\printterms@condition}{\boolean{true}}
+\define@key{printterms}{condition}{\renewcommand*{\printterms@condition}{#1}}
+\newcommand{\printterms}[1][]{%
+\bgroup
+  \let\newterm@database\datagidx@defaultdatabase
+  \let\newterm@styles\@empty
+  \setkeys{printterms}{#1}%
+  \DTLifdbexists{\newterm@database}%
+  {%
+    \edef\DTLgidxCurrentdb{\newterm@database}%
+    \edef\do@getrow{\noexpand\dtlgetrowforvalue
+      {datagidx}%
+      {\dtlcolumnindex{datagidx}{Glossary}}%
+      {\newterm@database}%
+    }%
+    \do@getrow
+    \dtlgetentryfromcurrentrow
+      {\datagidx@title}%
+      {\dtlcolumnindex{datagidx}{Title}}%
+    \dtlgetentryfromcurrentrow
+      {\datagidx@heading}%
+      {\dtlcolumnindex{datagidx}{Heading}}%
+    \dtlgetentryfromcurrentrow
+      {\datagidx@postheading}%
+      {\dtlcolumnindex{datagidx}{PostHeading}}%
+    \dtlgetentryfromcurrentrow
+      {\datagidx@multicols}%
+      {\dtlcolumnindex{datagidx}{MultiCols}}%
+    \dtlgetentryfromcurrentrow
+      {\datagidx@sort}%
+      {\dtlcolumnindex{datagidx}{Sort}}%
+    \dtlgetentryfromcurrentrow
+      {\datagidx@style}%
+      {\dtlcolumnindex{datagidx}{Style}}%
+    \dtlgetentryfromcurrentrow
+      {\datagidx@showgroups}%
+      {\dtlcolumnindex{datagidx}{ShowGroups}}%
+    \edef\dtl@do@setkeys{\noexpand\setkeys{newgloss}{\expandonce\newterm@styles}}%
+    \dtl@do@setkeys
+    \ifnum\datagidx@columns>1\relax
+       \edef\datagidx@prestart{%
+        \noexpand\begin{\datagidx@multicols}{\datagidx@columns}%
+       }%
+       \edef\datagidx@postend{%
+        \noexpand\end{\datagidx@multicols}%
+       }%
+    \else
+       \def\datagidx@prestart{}%
+       \def\datagidx@postend{}%
+    \fi
+    \let\@dtl@dbname\DTLgidxCurrentdb
+    \csuse{datagidxshowgroups\datagidx@showgroups}%
+    \datagidxsetstyle{\datagidx@style}%
+    \def\datagidx@labellist{}%
+    \datagidx@heading{\datagidx@title}%
+    \datagidx@postheading
+    \datagidx@do@sort
+    \datagidx@prestart
+    \datagidxstart
+    \let\DTLgidxName\datagidx@invert
+    \let\DTLgidxPlace\datagidx@invert
+    \let\DTLgidxSubject\datagidx@invert
+    \let\DTLgidxOffice\datagidx@invert
+      \DTLgidxForeachEntry
+      {%
+         \datagidxitem
+      }%
+    \datagidxend
+    \datagidx@postend
+  }%
+  {%
+    \PackageError{datagidx}%
+    {Glossary/index data base `\newterm@database' doesn't exist}%
+    {%
+      You must define the glossary/index data base before you can
+      use it.%
+    }%
+  }%
+\egroup
+}
+\def\datagidx@getgroup#1#2\datagidx@endgetgroup{%
+  \dtl@setcharcode{#1}{\count@}%
+  \dtlifintclosedbetween{\count@}{48}{57}%
+  {%
+    \gdef\datagidxcurrentgroup{Numbers}%
+  }%
+  {%
+    \dtlifintclosedbetween{\count@}{97}{122}%
+    {%
+      \advance\count@ by -96\relax
+      \xdef\datagidxcurrentgroup{\@Alph\count@}%
+    }%
+    {%
+      \dtlifintclosedbetween{\count@}{65}{90}%
+      {%
+        \gdef\datagidxcurrentgroup{#1}%
+      }%
+      {%
+        \gdef\datagidxcurrentgroup{Symbols}%
+      }%
+    }%
+  }%
+}
+\newcommand*{\DTLgidxGroupHeaderTitle}[1]{%
+  \ifcsdef{datagidx#1name}
+  {%
+    \csuse{datagidx#1name}%
+  }%
+  {%
+    #1%
+  }%
+}
+\newcommand{\DTLgidxForeachEntry}[1]{%
+  \def\datagidxprevgroup{}%
+  \edef\datagidx@doforeachentry{%
+    \noexpand\DTLforeach*[\expandonce\printterms@condition]{\DTLgidxCurrentdb}%
+     {\expandonce\DTLgidxAssignList}
+  }%
+  \datagidx@doforeachentry
+  {%
+    \DTLifnull{\Parent}%
+    {%
+      \DTLifnull\Location
+      {%
+         \DTLifnull\CurrentLocation
+         {%
+         }%
+         {%
+           \global\let\@datagidx@dorerun@warn\@data@rerun@warn
+         }%
+      }%
+      {%
+        \ifcsdef{datagidx@prev@loc@\Label}%
+        {%
+          \protected@edef\@prev@location{%
+             \csname datagidx@prev@loc@\Label\endcsname}%
+          \@onelevel@sanitize\@prev@location
+          \protected@edef\@cur@location{\CurrentLocation}%
+          \@onelevel@sanitize\@cur@location
+          \ifdefequal{\@prev@location}{\@cur@location}%
+          {}%
+          {%
+            \global\let\@datagidx@dorerun@warn\@data@rerun@warn
+          }%
+        }%
+        {%
+           \global\let\@datagidx@dorerun@warn\@data@rerun@warn
+        }%
+      }%
+      \datagidx@doifdisplayed
+      {%
+        \edef\datagidx@dowrite{%
+          \noexpand\protected@write\noexpand\@auxout{}%
+          {%
+            \string\datagidx@save@loc{\Label}{\CurrentLocation}%
+          }%
+        }%
+        \datagidx@dowrite
+        \datagidx@level=1\relax
+        \expandafter\datagidx@getgroup\Sort{}\datagidx@endgetgroup
+        #1%
+        \global\let\datagidxprevgroup\datagidxcurrentgroup
+      }%
+    }%
+    {}%
+  }%
+}
+\newcommand{\datagidx@doifdisplayed}[1]{%
+  \DTLifnull{\Location}%
+  {%
+     \DTLifnull{\See}
+     {%
+       \DTLifnull{\SeeAlso}{}%
+       {%
+         #1%
+       }%
+     }%
+     {%
+       \@for\dtl@thislabel:=\See\do
+       {%
+           \iftermexists{\dtl@thislabel}%
+           {%
+             \ifentryused{\dtl@thislabel}%
+             {%
+               #1%
+               \@endfortrue
+             }%
+             {}%
+           }%
+           {%
+           }%
+       }%
+     }%
+  }%
+  {%
+    #1%
+  }%
+}%
+\newcount\datagidx@level
+\endinput
+%%
+%% End of file `datagidx.sty'.
