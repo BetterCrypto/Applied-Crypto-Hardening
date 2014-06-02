@@ -1,15 +1,15 @@
 %\subsection{HTTP Strict Transport Security}
 HTTP Strict Transport Security (HSTS) is a web security policy mechanism. HSTS is realized through HTTP header by which a web server declares that complying user agents (web browsers) should interact with it by using \emph{only} secure HTTPS connections\footnote{\url{https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security}}. 
 
-HSTS header is bound to DNS name or domain by which the server was accessed. For example if server serves content for two domains and it is HTTPS enabled only for one domain, the browser won't enforce HSTS for the latter. 
+HSTS header is bound to a DNS name or domain by which the server was accessed. For example if server serves content for two domains and it is HTTPS enabled only for one domain, the browser won't enforce HSTS for the latter. 
 
-HSTS reduces the risk of unintentional mistakes (such as missing HTTPS links within one domain or its subdomains) as well as the active man-in-the-middle attacks (such as SSL striping or impersonation attacks with \emph{untrusted} certificate). 
+HSTS reduces the risk of active man-in-the-middle attacks such as SSL stripping, and impersonation attacks with \emph{untrusted} certificate. HSTS also helps to avoid unintentional mistakes such as insecure links to a secure web site (missing HTTPS links\footnote{Thus, it might be useful for fixing HTTPS mixed-content related errors, see \url{https://community.qualys.com/blogs/securitylabs/2014/03/19/https-mixed-content-still-the-easiest-way-to-break-ssl}.}), and mistyped HTTPS URLs.  
 
 After the web browser receives a HSTS header in a \emph{correctly}\footnote{Website must load without SSL/TLS browser warnings (certificate is issued by a trusted CA, contains correct DNS name, it is time valid, etc.)} prepared SSL session it will automatically use secure HTTPS links for accessing the server. This prevents unencrypted HTTP access (SSL striping, mistyped HTTPS URLs, etc.) when the server is accessed later by the client. 
 
 When a server (that previously emitted a HSTS header) starts using untrusted certificate, complying user agent must show an error message and \emph{block the server connection}. Thus impersonation MITM attack with \emph{untrusted} certificate cannot occur.
 
-For the first time setup HSTS header needs a trusted secure connection over HTTPS. This limitation can be addressed by compiling a list of STS enabled sites  directly into a browser\footnote{List of the preloaded sites can be found at \url{http://dev.chromium.org/sts}. This list is managed by Google/Chrome but it is also used by Firefox \url{https://wiki.mozilla.org/Privacy/Features/HSTS_Preload_List}}. 
+For the initial setup HSTS header needs a trusted secure connection over HTTPS. This limitation can be addressed by compiling a list of STS enabled sites  directly into a browser\footnote{List of the preloaded sites can be found at \url{http://dev.chromium.org/sts}. This list is managed by Google/Chrome but it is also used by Firefox \url{https://wiki.mozilla.org/Privacy/Features/HSTS_Preload_List}}. 
 
 \subsubsection{HSTS Header Directives}
 \label{subsubsection:HSTS Header Directives}
