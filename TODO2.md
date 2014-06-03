@@ -3,7 +3,8 @@
 
 # Formatting
 
-subsection headers -> ask Krono
+ * subsection headers -> ask Krono
+ * black bars on the side -> ask Krono on how to avoid overfull boxes ?
 
 # Config files
 Make sure that all config files links from the PDF work and that the examples are OK
