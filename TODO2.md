@@ -36,3 +36,8 @@ Engineering security book
 How to test: this is nice to have everywhere but we should have some text describing a) the test explicitly and b) the expected outcome / output
 
 
+## Mail Servers
+The Exim section is quite advanced with specifying different modes. However, we did not do that in postfix etc,... so... in effect the different modes are confusing for readers because it does not follow the regular structure. So, how can we incorporate these advanced recommendations in a well known structure of the document?
+---> talk with Wolfgang about it
+
+
