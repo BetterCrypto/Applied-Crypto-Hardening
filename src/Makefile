@@ -14,6 +14,8 @@ pdf:
 	bibtex applied-crypto-hardening
 	makeglossaries applied-crypto-hardening
 	${LATEX} applied-crypto-hardening
+	# re-do for refs
+	${LATEX} applied-crypto-hardening
 	while grep -s "Rerun to get cross-references right" \
         applied-crypto-hardening.log ; do \
 	    ${LATEX} applied-crypto-hardening ; \
