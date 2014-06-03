@@ -28,3 +28,10 @@ Add link to Peter Gutman's rant on why X509 is B\*-sh\*t
 Engineering security book
 
 
+
+# Practical settings section
+## General remark
+
+How to test: this is nice to have everywhere but we should have some text describing a) the test explicitly and b) the expected outcome / output
+
+
