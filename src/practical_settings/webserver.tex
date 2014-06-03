@@ -148,7 +148,7 @@ Instead of using the IIS Crypto Tool the configuration can be set
 using the Windows Registry. The following Registry keys apply to the
 newer Versions of Windows (Windows 7, Windows Server 2008, Windows
 Server 2008 R2, Windows Server 2012 and Windows Server 2012 R2). For detailed
-information about the older versions see the Microsoft knowlagebase
+information about the older versions see the Microsoft knowledgebase
 article. \footnote{\url{http://support.microsoft.com/kb/245030/en-us}}
 \begin{lstlisting}[breaklines]
   [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel] 
@@ -181,8 +181,8 @@ article. \footnote{\url{http://support.microsoft.com/kb/245030/en-us}}
 
 \subsubsection{Settings}
 When trying to avoid RC4 and CBC (BEAST-Attack) and requiring perfect
-forward secrecy, Microsoft Internet Information Server (IIS) supports
-ECDSA, but does not support RSA for key exchange (consider ECC suite
+forward secrecy, Microsoft SChannel (SSL/TLS, Auth,.. Stack) supports
+ECDSA but lacks support RSA for signatures (see ECC suite
 B doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}}).
 
 Since \verb|ECDHE_RSA_*| is not supported, a SSL certificate based on
