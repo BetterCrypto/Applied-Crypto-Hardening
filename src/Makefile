@@ -1,7 +1,7 @@
 NOW := $(shell date)
 
 TEXMFHOME ?={./texmf,$(shell kpsewhich -var-value TEXMFHOME)}
-LATEX = TEXMFHOME=${TEXMFHOME} pdflatex
+LATEX = TEXMFHOME=${TEXMFHOME} pdflatex -synctex=1
 
 all:	pdf html md
 
