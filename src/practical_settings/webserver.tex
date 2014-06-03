@@ -59,7 +59,7 @@ Please read section \ref{section:DH} for more information on Diffie Hellman key 
 \subsubsection{Additional settings}
 As for any other webserver, you might want to automatically redirect \emph{http://}
 traffic toward \emph{https://}. It is also recommended to set the environment variable
-\emph{HTTPS}, so the PHP applications run by the webserver can easily detect,
+\emph{HTTPS}, so the PHP applications run by the webserver can easily detect
 that HTTPS is in use.
 
 \configfile{11-hsts.conf}{}{https auto-redirect configuration}
@@ -148,7 +148,7 @@ Instead of using the IIS Crypto Tool the configuration can be set
 using the Windows Registry. The following Registry keys apply to the
 newer Versions of Windows (Windows 7, Windows Server 2008, Windows
 Server 2008 R2, Windows Server 2012 and Windows Server 2012 R2). For detailed
-information about the older versions see the Microsoft knowlagebase
+information about the older versions see the Microsoft knowledgebase
 article. \footnote{\url{http://support.microsoft.com/kb/245030/en-us}}
 \begin{lstlisting}[breaklines]
   [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel] 
@@ -180,13 +180,12 @@ article. \footnote{\url{http://support.microsoft.com/kb/245030/en-us}}
 
 
 \subsubsection{Settings}
-When trying to avoid RC4 and CBC (BEAST-Attack) and requiring perfect
-forward secrecy, Microsoft Internet Information Server (IIS) supports
-ECDSA, but does not support RSA for key exchange (consider ECC suite
+When trying to avoid RC4 (RC4 biases) as well as CBC (BEAST-Attack) by using GCM and to support perfect
+forward secrecy, Microsoft SChannel (SSL/TLS, Auth,.. Stack) supports
+ECDSA but lacks support for RSA signatures (see ECC suite
 B doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}}).
 
-Since \verb|ECDHE_RSA_*| is not supported, a SSL certificate based on
-elliptic curves needs to be used.
+Since one is stuck with ECDSA, an elliptic curve certificate needs to be used.
 
 The configuration of cipher suites MS IIS will use, can be configured in one
 of the following ways:
@@ -298,11 +297,11 @@ but the very same certificate as you use for the real service. In case you
 provide several virtual servers via SNI, the certificate for the catchall page
 needs to include all their names.
 
-\subsubsection{lighttpd}
-% hack.
-\gdef\currentsubsectionname{lighttpd}
-
-\todo{someone needs to write that section or we just omit it}
+%\subsubsection{lighttpd}
+%% hack.
+%\gdef\currentsubsectionname{lighttpd}
+%
+%\todo{someone needs to write that section or we just omit it}
 
 \subsubsection{nginx}
 % hack.

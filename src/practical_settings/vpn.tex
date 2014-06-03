@@ -34,10 +34,11 @@ table~\ref{tab:IPSEC_psk_len} gives the minimum lengths in characters.
 
 
 \ctable[%
+pos=ht,
 caption={PSK lengths},
 label=tab:IPSEC_psk_len,
 ]{lc}{}{
-\FL    IKE Hash & PSK length
+\FL    IKE Hash & PSK length (chars)
 \ML    SHA256 & 43
 \NN    SHA384 & 64
 \NN    SHA512 & 86
@@ -65,12 +66,12 @@ label=tab:IPSEC_suites,
     \texttt{Suite-B-GCM-128} \newline \texttt{VPN-B} &
     All Suite-B variants use NIST elliptic curves
 \LL}
-\paragraph{IKE or Phase 1:}
+\paragraph{Phase 1:}
 
 Alternatively to the pre-defined cipher suites, you can define your
 own, as described in this and the next section.
 
-IKE or Phase 1 is the mutual authentication and key exchange phase;
+Phase 1 is the mutual authentication and key exchange phase;
 table~\ref{tab:IPSEC_ph1_params} shows the parameters.
 
 Use only ``main mode``, as ``aggressive mode`` has known security
@@ -88,8 +89,8 @@ label=tab:IPSEC_ph1_params,
 %\NN    Lifetime & \todo{need recommendations; 1 day seems to be common practice} &
 \LL}
 
-\paragraph{ESP or Phase 2:}
-ESP or Phase 2 is where the actual data are protected; recommended
+\paragraph{Phase 2:}
+Phase 2 is where the parameters that protect the actual data are negotiated; recommended
 parameters are shown in table \ref{tab:IPSEC_ph2_params}.
 
 \ctable[%
@@ -117,7 +118,7 @@ label=tab:IPSEC_ph2_params,
 \subsection{Check Point FireWall-1}
 
 % Attention, only example...
-Checkpoint firewall is a \gls{firewall} that ....
+%Checkpoint firewall is a \gls{firewall} that ....
 
 \subsubsection{Tested with Versions}
 \begin{itemize*}
@@ -410,8 +411,7 @@ Legacy ASA models (e.g. 5505, 5510, 5520, 5540, 5550) do not offer the possibili
 \end{itemize*}
 
 \subsubsection{Settings}
-NB: The available algorithms depend on your kernel configuration (when using protostack=netkey) and/or
-build-time options.
+Note: the available algorithms depend on your kernel configuration (when using protostack=netkey) and/or build-time options.
 
 To list the supported algorithms
 \begin{lstlisting}
@@ -468,7 +468,7 @@ $ ipsec auto --status | less
 and look for 'IKE algorithms wanted/found' and 'ESP algorithms wanted/loaded'.
 
 \subsubsection{References}
-\todo{more specific References}
+%\todo{more specific References??}
 \begin{itemize*}
   \item \url{https://www.openswan.org/}
 \end{itemize*}
