@@ -40,8 +40,8 @@ Therefore we suggest:
 	\item Encrypt and secure the KDCs backups.
 	\item Replicate your primary KDC to at least one secondary KDC.
 	\item Prefer easy-to-secure replication (propagation in Kerberos terms) methods.Especially avoid LDAP replication and database backends. LDAP enlarges the attack surface of your KDC and facilitates unauthorized access to the principal database e.g. by ACL misconfiguration.
-	\item Use DNSSEC. \todo{link to DNSSEC section as soon as there is one} If that is not possible, at least ensure that all servers and clients in a realm use a trustworthy DNS server contacted via secure network links.
-	\item Use NTP on a trustworthy server via secure network links. \todo{link to NTP section as soon as there is one}
+	\item Use DNSSEC. If that is not possible, at least ensure that all servers and clients in a realm use a trustworthy DNS server contacted via secure network links.
+	\item Use NTP on a trustworthy server via secure network links. 
 	\item Avoid services that require the user to enter a password which is then checked against Kerberos. Prefer services that are able to use authentication via service tickets, usually not requiring the user to enter a password except for the initial computer login to obtain a ticket-granting-ticket (TGT). This limits the ability of attackers to spy out passwords through compromised services.
 \end{itemize}
 
@@ -54,9 +54,11 @@ The encryption algorithms (commonly abbreviated 'etypes' or 'enctypes') in Kerbe
 
 Along the lines of cipher string B, the following etypes are recommended: aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac.
 
-\todo{say something about salt types, eg discourage the null salt type?}
+% XXX ask the author XXX
+%\todo{say something about salt types, eg discourage the null salt type?}
 
 \ctable[%
+pos=ht,
 caption={Commonly supported Kerberos encryption types by implementation. Algorithm names according to RFC3961, except where aliases can be used or the algorithm is named differently altogether as stated~\cite{rfc3962,rfc6803,rfc3961,rfc4120,rfc4120,krb519,JavaJGSS,ShishiEnctypes}.},
 label=tab:Kerberos_enctypes,
 ]{rl|llll}{%
@@ -96,13 +98,17 @@ The configuration samples below assume new installations without preexisting pri
 
 For existing installations:
 \begin{itemize}
-	\item Be aware that for existing setups, the master\_key\_type can not be changed easily since it requires a manual conversion of the database. When in doubt, leave it as it is. \todo{database conversion howto}
+	\item Be aware that for existing setups, the master\_key\_type can not be changed easily since it requires a manual conversion of the database. When in doubt, leave it as it is. 
+% XXX ask the author XXX
+%\todo{database conversion howto}
 	\item When changing the list of supported\_enctypes, principals where all enctypes are no longer supported will cease to work.
 	\item Be aware that Kerberos 4 is obsolete and should not be used.
 	\item Principals with weak enctypes pose an increased risk for password bruteforce attacks if an attacker gains access to the database.
 \end{itemize}
 
-To get rid of principals with unsupported or weak enctypes, a password change is usually the easiest way. Service principals can simply be recreated. \todo{force password change for old enctypes howto?}
+To get rid of principals with unsupported or weak enctypes, a password change is usually the easiest way. Service principals can simply be recreated. 
+% XXX ask the author XXX
+%\todo{force password change for old enctypes howto?}
 
 \subsubsection{MIT krb5}
 % hack.
@@ -111,15 +117,18 @@ To get rid of principals with unsupported or weak enctypes, a password change is
 In \verb#/etc/krb5kdc/kdc.conf# set the following in your realm's
 configuration:
 \configfile{kdc.conf}{14-15}{Encryption flags for MIT krb5 KDC}
-\todo{TODO: recommendations for lifetime, proxiable, forwardable}
+% XXX ask the author XXX
+%\todo{TODO: recommendations for lifetime, proxiable, forwardable}
 
 In \verb#/etc/krb5.conf# set in the [libdefaults] section:
 
 \configfile{krb5.conf}{1-1,22-25}{Encryption flags for MIT krb5 client}
-\todo{verify MIT client config}
+% XXX ask the author XXX
+%\todo{verify MIT client config}
 
-\subsubsection{Heimdal Kerberos 5}
-\todo{research and write Heimdal Kerberos section}
+%\subsubsection{Heimdal Kerberos 5}
+% XXX ask the author XXX
+%\todo{research and write Heimdal Kerberos section}
 
 % In \verb#/etc/krb5.conf# set in the \[libdefaults\] section:
 % \begin{lstlisting}[breaklines]
@@ -129,11 +138,11 @@ In \verb#/etc/krb5.conf# set in the [libdefaults] section:
 % 	default\_tgs\_etypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
 % \end{lstlisting}
 
-\subsubsection{GNU Shishi}
-\todo{research and write GNU Shishi section}
-
-\subsubsection{Microsoft ActiveDirectory}
-\todo{research and write MS AD section}
+%\subsubsection{GNU Shishi}
+%\todo{research and write GNU Shishi section}
+%
+%\subsubsection{Microsoft ActiveDirectory}
+%\todo{research and write MS AD section}
 
 % encryption type setting for a user account: http://blogs.msdn.com/b/openspecification/archive/2011/05/31/windows-configurations-for-kerberos-supported-encryption-type.aspx
 % hunting down DES: http://blogs.technet.com/b/askds/archive/2010/10/19/hunting-down-des-in-order-to-securely-deploy-kerberos.aspx
