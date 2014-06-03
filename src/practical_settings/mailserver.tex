@@ -110,10 +110,10 @@ cyrus-imapd loads hardcoded 1024 bit DH parameters using get\_rfc2409\_prime\_10
 
 To prevent unencrypted connections on the STARTTLS ports you can set
 \configfile{imapd.conf}{131-131}{Force encrypted connections in cyrus}
-This way MUAs can only authenticate after STARTTLS if you only provide plaintext and SASL PLAIN login methods. Therefore providing CRAM-MD5 or DIGEST-MD5 methods is not recommended.
+This way MUAs can only authenticate with plain text authentication schemes after issuing the STARTTLS command. Providing CRAM-MD5 or DIGEST-MD5 methods is not recommended.
 
 To support POP3/IMAP on ports 110/143 with STARTTLS and POP3S/IMAPS on ports
-995/993 add, check the SERVICES setction in \texttt{cyrus.conf}
+995/993 check the SERVICES section in \texttt{cyrus.conf}
 \configfile{cyrus.conf}{28-28,31-34,71-71}{STARTTLS for POP3/IMAP and POP3S/IMAPS in cyrus}
 
 
