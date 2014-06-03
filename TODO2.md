@@ -5,6 +5,7 @@
 
  * subsection headers -> ask Krono
  * black bars on the side -> ask Krono on how to avoid overfull boxes ?
+ * the code section portions include ligatures (search for "certificate" in code sections and see it). This can be improved. Ligatures make sense in normal text
 
 # Config files
 Make sure that all config files links from the PDF work and that the examples are OK
