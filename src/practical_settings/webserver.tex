@@ -180,13 +180,12 @@ article. \footnote{\url{http://support.microsoft.com/kb/245030/en-us}}
 
 
 \subsubsection{Settings}
-When trying to avoid RC4 and CBC (BEAST-Attack) and requiring perfect
+When trying to avoid RC4 (RC4 biases) as well as CBC (BEAST-Attack) by using GCM and to support perfect
 forward secrecy, Microsoft SChannel (SSL/TLS, Auth,.. Stack) supports
-ECDSA but lacks support RSA for signatures (see ECC suite
+ECDSA but lacks support for RSA signatures (see ECC suite
 B doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}}).
 
-Since \verb|ECDHE_RSA_*| is not supported, a SSL certificate based on
-elliptic curves needs to be used.
+Since one is stuck with ECDSA, a SSL certificate based on elliptic curves needs to be used.
 
 The configuration of cipher suites MS IIS will use, can be configured in one
 of the following ways:
