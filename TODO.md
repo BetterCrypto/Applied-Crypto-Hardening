@@ -21,8 +21,9 @@ http://packages.debian.org/wheezy-backports/openvpn
 I think we should add the supported SSL / TLS versions from Microsoft IIS.
 http://twitter.com/gegch/status/439156512599322625
 
-
-
+2014-05-23 23:14
+@BetterCrypto @MacLemon speaking of feedback, generating CSRs, revocation certs, and managing them would be a welcome addition
+http://twitter.com/yawnbox/status/469948745589612544
 
 
 
