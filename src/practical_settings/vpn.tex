@@ -66,12 +66,12 @@ label=tab:IPSEC_suites,
     \texttt{Suite-B-GCM-128} \newline \texttt{VPN-B} &
     All Suite-B variants use NIST elliptic curves
 \LL}
-\paragraph{IKE or Phase 1:}
+\paragraph{Phase 1:}
 
 Alternatively to the pre-defined cipher suites, you can define your
 own, as described in this and the next section.
 
-IKE or Phase 1 is the mutual authentication and key exchange phase;
+Phase 1 is the mutual authentication and key exchange phase;
 table~\ref{tab:IPSEC_ph1_params} shows the parameters.
 
 Use only ``main mode``, as ``aggressive mode`` has known security
@@ -89,8 +89,8 @@ label=tab:IPSEC_ph1_params,
 %\NN    Lifetime & \todo{need recommendations; 1 day seems to be common practice} &
 \LL}
 
-\paragraph{ESP or Phase 2:}
-ESP or Phase 2 is where the actual data are protected; recommended
+\paragraph{Phase 2:}
+Phase 2 is where the parameters that protect the actual data are negotiated; recommended
 parameters are shown in table \ref{tab:IPSEC_ph2_params}.
 
 \ctable[%
