@@ -3,29 +3,28 @@
 
 # Formatting
 
- * subsection headers -> ask Krono
- * black bars on the side -> ask Krono on how to avoid overfull boxes ?
- * the code section portions include ligatures (search for "certificate" in code sections and see it). This can be improved. Ligatures make sense in normal text
+ - [x] subsection headers -> ask Krono
+ - [x] black bars on the side -> ask Krono on how to avoid overfull boxes ?
+ - [x] the code section portions include ligatures (search for "certificate" in code sections and see it). This can be improved. Ligatures make sense in normal text
 
 # Config files
-Make sure that all config files links from the PDF work and that the examples are OK
+ - [ ] Make sure that all config files links from the PDF work and that the examples are OK
 
 
 ## HTML version
 
-
 # Theory section
 ## PKI section
 
-Review paragraph about theory of operation 
+ - [ ] Review paragraph about theory of operation 
 
-Commands are practical... keep them.
+ - [ ] Commands are practical... keep them.
 
-propose an openssl.cnf?
+ - [ ] propose an openssl.cnf?
 
-ejabberd - how to make proper ssl certificates
+ - [ ] ejabberd - how to make proper ssl certificates
 
-Add link to Peter Gutman's rant on why X509 is B\*-sh\*t
+ - [ ] Add link to Peter Gutman's rant on why X509 is B\*-sh\*t
   this one?
   https://www.cs.auckland.ac.nz/~pgut001/pubs/x509guide.txt
 
