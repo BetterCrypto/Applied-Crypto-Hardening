@@ -52,6 +52,7 @@
 
 % Page foot
 \setkomafont{pagefoot}{\normalfont\sffamily\footnotesize}
+\setkomafont{pagehead}{\normalfont\sffamily\footnotesize}
 \ifoot%
 [Applied Crypto Hardening\ifdraft{ % Space!
   \textbullet{} \draftInfo}{}]%
@@ -61,6 +62,11 @@
 \ofoot%
 [page \thepage\ of \pageref{LastPage}]%
 {page \thepage\ of \pageref{LastPage}}
+\automark[subsection]{section}
+\ihead{\leftmark}
+\chead[]{}
+\ohead{\rightmark}
+\pagestyle{scrheadings}
 
 % Epigraph / dictum
 \newcommand*{\epigraph}[3][]{\dictum[#3]{#2}\bigskip}
