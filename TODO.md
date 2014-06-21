@@ -25,6 +25,20 @@ http://twitter.com/gegch/status/439156512599322625
 @BetterCrypto @MacLemon speaking of feedback, generating CSRs, revocation certs, and managing them would be a welcome addition
 http://twitter.com/yawnbox/status/469948745589612544
 
+2014-06-20
+Some links go to the website instead of within the PDF.
+
+
+@mindfuckup: @BetterCrypto I noticed that the links in the BetterCrypto PDF are broken. (→ https://bettercrypto.org/static/configuration/Webservers/nginx/default) Is there no online version available?
+http://twitter.com/mindfuckup/status/480329385221054464
+
+@mindfuckup: @BetterCrypto @MacLemon I use Evince, the TOC works fine but the icon on the right are linking to the external site: https://github.com/BetterCrypto/Applied-Crypto-Hardening/blob/master/src/applied-crypto-hardening.tex#L20
+http://twitter.com/mindfuckup/status/480336371425767424
+
+https://github.com/BetterCrypto/Applied-Crypto-Hardening/blob/master/src/applied-crypto-hardening.tex#L20
+
+
+
 
 
 BIG TOPICS
