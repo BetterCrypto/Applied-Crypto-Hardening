@@ -22,14 +22,14 @@ The last point being out-of-scope for this section, we will only cover the first
 \end{itemize*}
 
 \subsubsection{Settings}
-ejabberd is one of the popular Jabber server. In order to be compliant
+ejabberd is one of the popular Jabber servers. In order to be compliant
 with the manifesto, you should adapt your configuration\footnote{\url{http://www.process-one.net/docs/ejabberd/guide_en.html}}:
 
 \configfile{ejabberd.cfg}{108-109,111-111,120-126,172-172,179-179,184-184}{%
   TLS setup for ejabberd}
 % 
 \subsubsection{Additional settings}
-Older Versions of ejabberd ($ < $ 2.0.0) need to be patched\footnote{\url{http://hyperstruct.net/2007/06/20/installing-the-startcom-ssl-certificate-in-ejabberd/}} to be able to parse all of the certificates in the CA chain.
+Older versions of ejabberd ($ < $ 2.0.0) need to be patched\footnote{\url{http://hyperstruct.net/2007/06/20/installing-the-startcom-ssl-certificate-in-ejabberd/}} to be able to parse all of the certificates in the CA chain.
 
 Newer versions of ejabberd now support specifying the cipher string in the config file. See the commit message: \url{https://github.com/processone/ejabberd/commit/1dd94ac0d06822daa8c394ea2da20d91c8209124}. However, this change did not yet make it into the stable release at the time of this writing. 
 
