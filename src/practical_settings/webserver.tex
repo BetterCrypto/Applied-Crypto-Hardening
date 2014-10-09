@@ -5,16 +5,29 @@ Note that any cipher suite starting with EECDH can be omitted, if in doubt.
 (Compared to the theory section, EECDH in Apache and ECDHE in OpenSSL are
 synonyms~\footnote{https://www.mail-archive.com/openssl-dev@openssl.org/msg33405.html})
 
-\subsubsection{Tested with Versions}
+\subsubsection{Tested with Version}
 \begin{itemize*}
   \item Apache 2.2.22 linked against OpenSSL 1.0.1e, Debian Wheezy
   \item Apache 2.4.6 linked against OpenSSL 1.0.1e, Debian Jessie
+  \item Apache 2.2.15 linked against OpenSSL 1.0.1e, CentOS 6.5
 \end{itemize*}
 
-\subsubsection{Settings}
+\paragraph{Settings}
 Enabled modules \emph{SSL} and \emph{Headers} are required.
 
 \configfile{default-ssl}{162-170}{SSL configuration for an Apache vhost}
+
+\subsubsection{Tested with Version}
+\begin{itemize*}
+ \item Apache 2.2.12 linked against OpenSSL 0.9.8j, SLES 11 SP 3
+\end{itemize*}
+
+\paragraph{Settings}
+Enabled modules \emph{SSL} and \emph{Headers} are required.
+\configfile{vhost-ssl.conf.sles}{200-207}{SSL configuration for an Apache vhost}
+
+Ensure that SSL Compression is disabled in \emph{/etc/sysconfig/apache2}, as you cannot use \emph{SSLCompression off} in the VHost configuration:
+\configfile{sysconfig-apache2.sles}{288}{SSL Compression Setting in sysconfig}
 
 \subsubsection{Additional settings}
 You might want to redirect everything to \emph{https://} if possible. In Apache
