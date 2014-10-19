@@ -11,6 +11,7 @@ agenda.tex: agenda.md
 
 slides.tex: agenda.md
 	pandoc  --listings -T "Bettercrypto AH workshop" -s -f markdown_github+pandoc_title_block+raw_tex -t beamer -o slides.tex agenda.md
+	#pandoc  -T "Bettercrypto AH workshop" -s -f markdown_github+pandoc_title_block+raw_tex+implicit_figures -t beamer -o slides.tex agenda.md
 
 pdf: agenda.pdf slides.pdf
 

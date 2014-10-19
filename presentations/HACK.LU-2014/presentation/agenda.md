@@ -7,14 +7,9 @@
 
 # Part 1:  Intro to the project
 
-## Welcome 
 
-![Neboltai](img/neboltai.png)
+![logo](img/logo)
 
-%{\centering
-%  \includegraphics[width=.7\textwidth]{img/neboltai.png}\par
-%  \vbox{\emph{Do not talk unencrypted}}
-%}
 
 ---
 # Overview 
@@ -36,7 +31,8 @@
 
   * Participants should have a basic knowledge of System administration and be
 familiar with configuring Apache, nginx, etc.
-  * Basic knowledge of crypto will help.
+  * know git/github
+  * a basic knowledge of crypto will help.
 
 # Motivation
 
@@ -157,9 +153,7 @@ Methods:
   * Public review
   * commits get **discussed**
   * recommendations **need** references (like wikipedia)
-  * Every commit gets logged
-  * We need your review!
-
+  * Every commit gets logged & we need your review!
 
 # How to commit
 
@@ -175,6 +169,10 @@ How?
   4. don't be cross if something does not get accepted. 
   5. be ready for discussion
  
+# History part
+
+XXX FIXME David add stuff XXX
+
 # Theory part
 
 \[
@@ -211,8 +209,90 @@ i \hbar \frac{\partial}{\partial t}\Psi = \hat H \Psi
   * Some theoretical attacks on AES-256
 
 
+# (Perfect) Forward Secrecy
+
+Motivation:
+
+* Three letter agency (TLA) stores all ssl traffic
+* Someday TLA gains access to ssl-private key (Brute Force, Physical Force)
+* TLA can decrypt all stored traffic
+
+Solution:
+* **Ephemeral** session keys via Diffie Hellman (**DHE**)
+
+# Review of Diffie Hellman
+
+Let g be a primitive root mod p. p is a Prime.
+
+Alice to Bob: \[ X = g^x \mod p  \]
+Bob to Alice:  \[ Y = g^y \mod p  \]
+Alice calculates: \[  k_1 = Y^x \mod p \]
+Bob calculates:   \[ k_2 = X^y \mod p  
+\text{. Therefore, } k_1 = k_2 \]
+
+Proof:
+\[ k_1 = Y^x = (g^y)^x = g^{(x*y)} = (g^x)^y = X^y = k_2  \mod p \qed \]
+
+
+# Reality 
+
+\centerline{\includegraphics[width=2cm]{img/xkcd-TLA.png}}
+
+# Well...
+
+We still recommend perfect forward secrecy.
+
+ * Ephemeral: new key for each execution of a key exchange process
+ * SSL private-Key only for authentication
+ * Alternative new ssl private key every x days months
+ * Pro:
+    - Highest Security against future attacks
+ * Contra: 
+    - Elliptic Curve
+    - Processing costs
+
+# (P)RNGs
+
+  * (P)RNGs **are** important!
+  * Nadia Heninger et al / Lenstra et al
+,,… to identify apparently vulnerable devices from 27 manufacturers.''
+![mining P's and Q's](img/mining-ps-and-qs.png)
+  * Entropy after startup: embedded devices quite bad
+
+
+# (P)RNGs - recommendations
+  * Look out for known weak RNG
+    * Dual EC_DRBG is weak (slow, used in RSA-toolkit)
+    * Intel RNG ? Recommendation: add System-Entropy (Network). Entropy only goes up.
+  * Use tools (e.g. haveged/HaveGE http://dl.acm.org/citation.cfm?id=945516)
+  * RTFM 
+    * when is the router key generated
+    * Default Keys ?
+  * Re-generate keys from time to time
+
+
+
+# Cipher suites
+
+# Some general thoughts on settings
+
+* General:
+  * Disable SSL 2.0 (weak algorithms)
+  * Disable SSL 3.0 (BEAST vs IE/XP)
+  * Enable TLS 1.0 or better
+  * Disable TLS-Compression (SSL-CRIME Attack)
+  * Implement HSTS (HTTP Strict Transport Security)
+* Variant A: fewer supported clients
+* Variant B: more clients, weaker settings
 
 
 
 
+# Attacks
+
+Overview:
+  * BEAST
+  * ...
+
+XXX FIXME: azet .... XXX
 
