@@ -10,6 +10,7 @@
 %%    I need dis
 %%%
 \RequirePackage{etoolbox}
+\RequirePackage{ifplatform}
 
 % for convenienc
 \newwrite\configfileout
@@ -57,15 +58,27 @@
     \edef\configfilename{\expandafter\detokenize\expandafter{\configfilen@me}}
     \def\configfilepres{\expandafter\protect\expandafter\path\expandafter{\configfilename}}
     \immediate\write\configfileout{\configfilename}
-    \lstinputlisting[%
-      linerange={#3},%
-      %autounindent,%
-      frame=single,%
-      caption={[#4\\\configfilepres]%
-          #4\\\mbox{\protect\href{\@configurationbaseurl\configfilename}{%
-              {\upshape [\configfilepres]}%
-        }}}
-      #1]{\configfilename}%
+    \ifwindows%
+        \lstinputlisting[%
+          linerange={#3},%
+          %autounindent,%
+          frame=single,%
+          caption={[#4\\\configfilepres]%
+              #4\\\mbox{\protect\href{\@configurationbaseurl\configfilename}{%
+                  {\upshape [\configfilepres]}%
+            }}}
+          #1]{\configfilename.}%
+    \else%
+        \lstinputlisting[%
+          linerange={#3},%
+          %autounindent,%
+          frame=single,%
+          caption={[#4\\\configfilepres]%
+              #4\\\mbox{\protect\href{\@configurationbaseurl\configfilename}{%
+                  {\upshape [\configfilepres]}%
+            }}}
+          #1]{\configfilename}%
+    \fi%
     \marginpar{\vspace*{-2\baselineskip}\protect\href{\@configurationbaseurl\configfilename}{%
         \includegraphics[height=2\baselineskip]{img/ConfigIcns}}}
   \else%
