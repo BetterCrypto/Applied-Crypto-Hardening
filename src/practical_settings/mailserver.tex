@@ -1,6 +1,6 @@
 % hack.
 \gdef\currentsectionname{MailServers}
-This section documents the most common mail (SMTP) and IMAPs/POPs servers. Another option to secure IMAPs/POPs servers is to place them behind an stunnel server. 
+This section documents the most common mail (SMTP) and IMAPs/POPs servers. Another option to secure IMAPs/POPs servers is to place them behind an stunnel server.
 
 
 %% ----------------------------------------------------------------------
@@ -47,17 +47,18 @@ mode, because the alternative is plain text transmission.
 \subsection{Dovecot}
 
 
-\subsubsection{Tested with Version} 
+\subsubsection{Tested with Version}
 \begin{itemize*}
   \item Dovecot 2.1.7, Debian Wheezy (without ``ssl\_prefer\_server\_ciphers'' setting)
   \item Dovecot 2.2.9, Debian Jessie
   \item 2.0.19apple1 on OS X Server 10.8.5 (without ``ssl\_prefer\_server\_ciphers'' setting)
+  \item Dovecot 2.2.9 on Ubuntu 14.04 trusty
 \end{itemize*}
 
 \subsubsection{Settings}
 % Example: http://dovecot.org/list/dovecot/2013-October/092999.html
 
-\configfile{10-ssl.conf}{51-55}{Dovecot SSL configuration}
+\configfile{10-ssl.conf}{48-55}{Dovecot SSL configuration}
 
 \subsubsection{Additional info}
 Dovecot 2.0, 2.1: Almost as good as dovecot 2.2. Dovecot does not ignore unknown configuration parameters. Does not support
@@ -153,11 +154,11 @@ openssl s_client -crlf -connect SERVER.TLD:993
 %% I found no research that would show that long-term use of a
 %% parameter set would weaken the DH exchange. Also notice that IPSEC
 %% uses fixed parameter sets only.
-%& 
+%&
 %% also notice the following comment from  src/tls/tls_dh.c:
 %% * Compiled-in EDH primes (the compiled-in generator is always 2). These are
 %% * used when no parameters are explicitly loaded from a site-specific file.
-%% * 
+%% *
 %% * 512-bit parameters are used for export ciphers, and 1024-bit parameters are
 %% * used for non-export ciphers. An ~80-bit strong EDH key exchange is really
 %% * too weak to protect 128+ bit keys, but larger DH primes are
@@ -380,4 +381,3 @@ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 %\subsection{Exchange}
 
 %\todo{FIXME: write this section}
-

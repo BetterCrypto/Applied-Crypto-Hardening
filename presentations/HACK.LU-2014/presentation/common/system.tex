@@ -1,0 +1,98 @@
+%%%
+%%% system.tex
+%%% Necessary packages and sytem changes
+%%%
+% Document Encoding. important.
+\usepackage[utf8]{inputenc}
+
+% changes font encoding to T1
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+
+% For searchable pdfs
+\input glyphtounicode
+\pdfgentounicode=1
+
+\usepackage{fixltx2e}
+
+% Setup KOMA script
+\usepackage{scrhack}
+\KOMAoptions{paper=a4%
+  ,fontsize=10pt%
+  ,DIV=12%
+  ,parskip=true%
+}
+
+% Language
+\usepackage[english]{babel}
+
+% Color
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{color}
+
+% Packages for fonts
+\usepackage{lmodern}
+\usepackage[defaultsans]{opensans}
+\usepackage[final,babel=true]{microtype}[2011/08/18]
+
+\usepackage{pifont}
+\newcommand{\yes}{\textcolor{green}{\ding{51}}}
+\newcommand{\no}{\textcolor{red}{\ding{55}}}
+
+% Figures and graphics
+\usepackage[final]{graphicx}
+\usepackage{epstopdf}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{placeins}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+
+% Tables
+\usepackage{longtable}
+\usepackage{booktabs}
+\renewcommand{\arraystretch}{1.25}
+\usepackage{multicol}
+
+% Verbatims and listings
+\usepackage{fancyvrb}
+\usepackage[final]{listings}
+
+% The page
+\usepackage[footsepline]{scrpage2}
+\usepackage{lastpage}
+
+% Misc
+\usepackage{gitinfo}
+\usepackage{catchfile}
+%\usepackage{hyperref}
+
+% for development
+\usepackage{ifdraft}
+\ifdraft{%
+  %% Heavy debugging
+  %\usepackage{showframe}
+  \usepackage{blindtext}
+  \usepackage{eso-pic}
+  \newsavebox{\draftPageLine}
+  \newsavebox{\draftWatermark}
+  \AddToShipoutPicture{%
+    \AtPageLowerLeft{\usebox{\draftWatermark}}
+    \AtPageUpperLeft{%
+      \raisebox{-\height}[\height][0pt]{\usebox{\draftPageLine}}}%
+    \AtPageLowerLeft{%
+      \raisebox{\depth}[\height][0pt]{\usebox{\draftPageLine}}}%
+  }
+  % \AtEndDocument{\listoftodos}
+}{
+  \let\blindtext\relax
+  \let\Blindtext\relax
+  \let\blinddocument\relax
+  \let\Blinddocument\relax
+}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../applied-crypto-hardening"
+%%% End: 
