@@ -427,3 +427,83 @@ _WISHLIST_:
 
 # How to test - Tools
 
+  * openssl s_client  (or gnutls-cli)
+  * **ssllabs.com**: checks for servers as well as clients
+  * xmpp.net
+  * sslscan
+  * SSLyze
+
+
+# Tools: openssl s_client
+
+   openssl s_client -showcerts –connect git.bettercrypto.org:443
+
+![openssl s_client](img/openssl-s_client.png)
+
+# Tools: sslscan
+
+![sslscan](img/sslscan.png)
+
+
+# Tools: ssllabs.com
+
+![ssllabs.com](img/ssllabs.png)
+
+
+# Tools: sslllabs.com (2)
+
+![ssllabs.com](img/ssllabs2.png)
+
+
+# Tools: sslllabs.com (3)
+
+![ssllabs.com](img/ssllabs3.png)
+
+
+# Wrap-up
+
+
+# Current state as of 2014/10/06
+
+  * OK: More or less solid basis with Variant (A) and (B)
+( Some minor modifications needed - maybe)
+  * Public draft was presented at the CCC Dec 2013. 
+Well received. Good feedback (Dan Bernstein, ...)
+
+# What's still needed?
+
+  * Need to convert to HTML and have the whole guide on the web
+  * fix the @@cipherstringB@@ macro in the configuration/ dir
+  * re-review  the configuration/* files. Maybe crap slipped in 
+due to large commits :(
+  * _WISHLIST_: config generator
+  * _WISHLIST_: automatic compatibility testing
+  * long term maintenance / upkeep strategy
+
+
+# How to participate?
+
+1. We need: cryptologists, sysadmins, hackers
+1. Read the document, find bugs
+1. Subscribe to the mailing list
+1. look at the TODO.md file
+1. Understand the cipher strings Variant (A) and (B) before proposing some changes
+
+# How to participate? (2)
+1. If you add content to a subsection, make a sample config with variant (B)
+1. **use the @@cipherstringB@@ macro !** 
+1. add a template in the configuration-template/ directory. 
+It will get copied to configuration/ via sed "s/@@cipherStringB@@/$cipherstringB/g"
+1. Master git repo (git.bettercrypto.org) is world-readable. 
+1. Use https://github.com/BetterCrypto/Applied-Crypto-Hardening for pull requests
+Master git repo gets synced against github
+
+# How to participate? (3)
+
+ We need: 
+  * Add content to an subsection from the TODO list -> send us diffs
+  * Reviewers!
+
+Accept that  your commit might be under quite some scrutiny, that's the game.
+
+
