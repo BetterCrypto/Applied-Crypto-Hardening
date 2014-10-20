@@ -14,6 +14,7 @@
 ---
 # Overview 
 
+Part 1:
   1. Intro & Motivation
   2. How we got started, how we work, what's there, what's missing, 
      how to use the guide
@@ -21,9 +22,12 @@
   4. Theory
   4. 10:10 __break__
   5. Theory (cont.)
+  5. Practical settings
+Part 2:
   6. Attacks
   7. Current trends (IETF, ...)
   7. wrap up
+  8. next steps
   9. 11:45 __lunch__
     
 
@@ -311,10 +315,6 @@ We still recommend perfect forward secrecy.
   * Re-generate keys from time to time
 
 
-# Attacks
-
-... next PDF... :)
-
 # Cipher suites
 
   * What is a SSLCipherSuite?
@@ -405,6 +405,7 @@ _WISHLIST_:
 
   * Everything as HTML (easier to copy & paste)
   * Config generator on the website
+  * Automatic testing suite
 
 
 
@@ -459,8 +460,20 @@ _WISHLIST_:
 
 ![ssllabs.com](img/ssllabs3.png)
 
+# /End of Part 1
+
+
+# Begin Part 2: Attacks, current topics, reactions from the Internet community
+
+-> azet
+
+
+
 
 # Wrap-up
+
+
+![Wrap-up](img/wrap-up.jpg)
 
 
 # Current state as of 2014/10/06
@@ -473,8 +486,8 @@ Well received. Good feedback (Dan Bernstein, ...)
 # What's still needed?
 
   * Need to convert to HTML and have the whole guide on the web
-  * fix the @@cipherstringB@@ macro in the configuration/ dir
-  * re-review  the configuration/* files. Maybe crap slipped in 
+  * fix the \texttt{@@@CIPHERSTRINGB@@@} macro in the configuration/ dir
+  * re-review  the configuration/\* files. Maybe crap slipped in 
 due to large commits :(
   * _WISHLIST_: config generator
   * _WISHLIST_: automatic compatibility testing
@@ -485,25 +498,45 @@ due to large commits :(
 
 1. We need: cryptologists, sysadmins, hackers
 1. Read the document, find bugs
+1. Master git repo (git.bettercrypto.org) is world-readable. 
 1. Subscribe to the mailing list
 1. look at the TODO.md file
 1. Understand the cipher strings Variant (A) and (B) before proposing some changes
 
 # How to participate? (2)
 1. If you add content to a subsection, make a sample config with variant (B)
-1. **use the @@cipherstringB@@ macro !** 
-1. add a template in the configuration-template/ directory. 
-It will get copied to configuration/ via sed "s/@@cipherStringB@@/$cipherstringB/g"
-1. Master git repo (git.bettercrypto.org) is world-readable. 
-1. Use https://github.com/BetterCrypto/Applied-Crypto-Hardening for pull requests
-Master git repo gets synced against github
+1. **use the \texttt{@@@CIPHERSTRINGB@@@} macro !** :
+  * edit config snippets in \texttt{configuration/\*}
+  * \texttt{make config} to copy over the template from \texttt{configuration/} to \texttt{stage/}
+  * \texttt{make config} basically does: \texttt{sed -i "s/@@@CIPHERSTRINGB@@@/\$cipherstringB/g"}
+1. Use the github.com repo for pull requests
+1. **important:** please do many smaller commits! It's easier to review and merge.
 
 # How to participate? (3)
-
- We need: 
+We need: 
   * Add content to an subsection from the TODO list -> send us diffs
   * Reviewers!
 
 Accept that  your commit might be under quite some scrutiny, that's the game.
+  * **C**ompletely
+  * **O**pen
+  * **S**ource
+  * **H**eaders
+  * **E**ngineering and
+  * **R**esearch
 
+# Links
+
+  * Website: www.bettercrypto.org
+  * Master (read-only) Git repo: https://git.bettercrypto.org
+  * Public github repo for PRs: https://github.com/BetterCrypto/Applied-Crypto-Hardening
+  * Mailing list: http://lists.cert.at/cgi-bin/mailman/listinfo/ach 
+  * IRC: #bettercrypto on freenode
+
+
+
+
+# Thanks
+
+\centerline{Thanks}
 
