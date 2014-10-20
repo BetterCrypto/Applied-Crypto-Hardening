@@ -171,12 +171,54 @@ How?
  
 # History part
 
+Pre-history
+  * Scytale (7h century BC)
+  * Caesar 
+  * Vigenère (in a cifra del. Sig. Giovan Battista Bellaso, 1533)
+
+![Scytale](img/scytale.png)
+
+How you can loose your head
+  * Mary Queen of Scots (1542 - 1587)
+    * Queen of Scotland until 1567
+    * Try to regain the throne 
+    * Was found guilty of plotting to assassinate Queen Elizabeth I of England
+    * Prooven after his code get broken...
+
+![Mary](img/mary.jpg)
+
+How it change a war
+  * II World War
+    * Enigma in use by German Army
+    * Broken by the first comuter (Alan Turing)
+    * Sign the end of U-Boat supremacy on the sea
+
+![Enigmae](img/enigma.jpg)
+
+A sort of Steganography 
+  * Navajos Code Talkers (Pacific War - US Navy)
+
+![Navajo](img/navajo.jpg)
+
+Nowadays
+  * Asymetric cryptography
+    * RSA (River - Shamir - Adleman) - 1977
+    * GPG (Phil Zimmerman) - 1991
+  * AES (Rijdael) - 1998
+
+Famous names
+  * Cryptography was an hot topic for a lot of people
+    * Thomas Jefferson (1790) - ciphering cylinder (used for 150 years)
+    * Charles Babbage - break the Vigenère Cipher (1854, unknown until 20th Century)
+    * Gilbert S. Vernam (AT&T, 1917) - polyalphatic cipher with random key without repetition
+      * Only ciphersuite impossible to break both in theory and in practice!
+
 XXX FIXME David add stuff XXX
 
 # Theory part
 
 \[
-i \hbar \frac{\partial}{\partial t}\Psi = \hat H \Psi
+ \hbar \frac{\partial}{\partial t}\Psi = \hat H \Psi
 \]
 
 
