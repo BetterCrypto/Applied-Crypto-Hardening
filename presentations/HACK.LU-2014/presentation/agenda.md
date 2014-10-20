@@ -313,7 +313,7 @@ We still recommend perfect forward secrecy.
 
 # Attacks
 
-\input{"attacks.tex"}
+... next PDF... :)
 
 # Cipher suites
 
