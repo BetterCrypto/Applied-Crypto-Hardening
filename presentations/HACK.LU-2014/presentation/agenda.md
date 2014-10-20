@@ -313,14 +313,7 @@ We still recommend perfect forward secrecy.
 
 # Attacks
 
-Overview:
-  * BEAST
-  * ...
-
-XXX FIXME: azet .... XXX
-
-
-
+\input{"attacks.tex"}
 
 # Cipher suites
 
