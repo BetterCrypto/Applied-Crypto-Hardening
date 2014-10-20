@@ -491,6 +491,7 @@ Well received. Good feedback (Dan Bernstein, ...)
 due to large commits :(
   * _WISHLIST_: config generator
   * _WISHLIST_: automatic compatibility testing
+  * _WISHLIST_: automatic internet-wide measurement (massscan, zmap, ...)
   * long term maintenance / upkeep strategy
 
 
