@@ -213,7 +213,6 @@ Pre-history
     * Gilbert S. Vernam (AT&T, 1917) - polyalphatic cipher with random key without repetition
       * Only ciphersuite impossible to break both in theory and in practice!
 
-
 # Theory part
 
 \[
