@@ -271,8 +271,7 @@ Let g be a primitive root mod p. p is a Prime.
 Alice to Bob: \[ X = g^x \mod p  \]
 Bob to Alice:  \[ Y = g^y \mod p  \]
 Alice calculates: \[  k_1 = Y^x \mod p \]
-Bob calculates:   \[ k_2 = X^y \mod p  
-\text{. Therefore, } k_1 = k_2 \]
+Bob calculates:   \[ k_2 = X^y \mod p .  \text{. Therefore, } k_1 = k_2 \]
 
 Proof:
 \[ k_1 = Y^x = (g^y)^x = g^{(x*y)} = (g^x)^y = X^y = k_2  \mod p \qed \]
@@ -399,6 +398,7 @@ Only clients which support TLS1.2 are covered by these cipher suites (Chrome 30,
 
 _WISHLIST_:
 
+  * Section on generating CSRs (\texttt{-sha256} etc)
   * Mail: Exchange, Sendmail
   * SIP
   * RDP
@@ -524,6 +524,9 @@ Accept that  your commit might be under quite some scrutiny, that's the game.
   * **H**eaders
   * **E**ngineering and
   * **R**esearch
+
+
+
 
 # Links
 
