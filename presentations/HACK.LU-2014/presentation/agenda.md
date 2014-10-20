@@ -271,23 +271,6 @@ We still recommend perfect forward secrecy.
   * Re-generate keys from time to time
 
 
-
-# Cipher suites
-
-# Some general thoughts on settings
-
-* General:
-  * Disable SSL 2.0 (weak algorithms)
-  * Disable SSL 3.0 (BEAST vs IE/XP)
-  * Enable TLS 1.0 or better
-  * Disable TLS-Compression (SSL-CRIME Attack)
-  * Implement HSTS (HTTP Strict Transport Security)
-* Variant A: fewer supported clients
-* Variant B: more clients, weaker settings
-
-
-
-
 # Attacks
 
 Overview:
@@ -295,4 +278,104 @@ Overview:
   * ...
 
 XXX FIXME: azet .... XXX
+
+
+
+
+# Cipher suites
+
+  * What is a SSLCipherSuite?
+  * vs. SSLProtocol
+
+  * Example:
+
+	SSLProtocol All -SSLv2 -SSLv3
+	SSLCipherSuite 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA'
+
+# Some general thoughts on settings
+
+  * General:
+    * Disable SSL 2.0 (weak algorithms)
+    * Disable SSL 3.0 (BEAST vs IE/XP)
+    * Enable TLS 1.0 or better
+    * Disable TLS-Compression (SSL-CRIME Attack)
+    * Implement HSTS (HTTP Strict Transport Security)
+  * Variant A: fewer supported clients
+  * Variant B: more clients, weaker settings
+
+
+
+# Variant **A**
+
+    EECDH+aRSA+AES256:EDH+aRSA+AES256:!SSLv3
+
+![Variant A](img/variantA.png)
+
+Compatibility: 
+
+Only clients which support TLS1.2 are covered by these cipher suites (Chrome 30, Win 7 and Win 8.1, Opera 17, OpenSSL >= 1.0.1e, Safari 6 / iOS 6.0.1, Safari 7 / OS X 10.9) 
+
+# Variant **B**
+
+  * weaker ciphers, many clients 
+
+![Variant B](img/variantB.png)
+
+# Variant B compatibility
+
+![Compatibility](img/variantBcompatibility.png)
+
+# Choosing your own CipherSuite string
+
+  * Rolling your own cipher suite string involves a trade-off between:
+    * Compatibility (server <-> client), vs.
+    * Known weak ciphers/hashes/MACs
+    * The choice ECC or not, vs.
+    * Support by different ssl libs (gnutls, openssl,...) vs.
+    * Different versions of ssl libs
+  * In case of ssl lib version issues: do you want to re-compile the whole server for a newer version?
+  * Be aware of these issues before choosing your own cipher suite. Have test suites!
+
+
+# Choosing your own CipherSuite string (2)
+
+  * Complexity 
+  * It is a multi-dimensional optimisation problem
+  * Consider strong alternativesto de-facto standards (pros/cons - CAMELLIA vs. AES)
+  * _WISHLIST_: generator for settings? click-dropdown boxes on the webserver -> gernate config
+
+# Practical settings
+
+![Tools](img/rusty_tools.jpg)
+
+# What we have so far
+
+* Web server: Apache, nginx, MS IIS, lighttpd
+* Mail: Dovecot, cyrus, Postfix, Exim
+* DBs: Mysql, Oracle, Postgresql, DB2
+* VPN: OpenVPN, IPSec, Checkpoint, ...
+* Proxies: Squid, Pound
+* GnuPG
+* SSH
+* IM servers (jabber, irc)
+* _DANE_
+* _Configuration code snippets_
+
+
+# What are we missing
+
+_WISHLIST_:
+
+  * Mail: Exchange, Sendmail
+  * SIP
+  * RDP
+
+  * Everything as HTML (easier to copy & paste)
+  * Config generator on the website
+
+
+
+
+# Example Apache
+
 
