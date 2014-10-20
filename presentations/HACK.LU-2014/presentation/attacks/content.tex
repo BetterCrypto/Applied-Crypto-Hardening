@@ -477,6 +477,33 @@ Applications to SSL, IPSEC, WTLS...''
 \end{frame}
 
 \begin{frame}{POODLE}
-  2014. POODLE
+  2014. POODLE: Padding Oracle On Downgraded Legacy Encryption - OpenSSL/Google
+  \begin{itemize}
+    \item MITM attacker downgrades to SSLv3 (once again)
+    \item attacker does block duplication
+    \item takes on average 256 requests to decrypt 1 byte (!)
+    \item disabling SSLv3 or using the FALLBACK\_SCSV TLS extension (draft) mitigates this issue entirely
+  \end{itemize}
+  \tiny
+  \url{https://www.openssl.org/~bodo/ssl-poodle.pdf}
 \end{frame}
 
+\begin{frame}{Implementation Issues}
+  There are tons of other issues with TLS stacks and software implementations that have not been discussed.
+  \newline
+  \newline
+  OpenSSL alone published 24 security advisories in 2014 until today.
+
+  \begin{itemize}
+    \item Apple's GOTO fail
+    \item GnuTLS GOTO fail
+    \item various GnuTLS vulnerabilities
+    \item wrong use of OpenSSL API in server and client software
+  \end{itemize}
+  ...\\
+  Clearly; a lot of people current have their eyes on this very topic.
+\end{frame}
+
+\begin{frame}{Implementation Issues}
+  For this crowd: It's up to you to find them and improve existing implementations, protocols and standards.
+\end{frame}
