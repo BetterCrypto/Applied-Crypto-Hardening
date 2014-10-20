@@ -1,0 +1,97 @@
+%% Author:  Aaron <azet@azet.org> Zauner
+%% License: https://creativecommons.org/licenses/by-nc-nd/4.0/
+
+%% theme and colorscheme
+\documentclass[hyperref={draft}]{beamer}
+\usecolortheme[dark,accent=white]{modifiedsolarized}
+\beamertemplatetransparentcovered
+\setbeamertemplate{navigation symbols}{}
+
+%% packages
+\usepackage[light,math]{iwona}
+\usepackage[T1]{fontenc}
+\usepackage{textpos}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{appendixnumberbeamer}
+
+%% footer
+\setbeamertemplate{footline}[text line]{%
+  \parbox{\linewidth}{\vspace*{-15pt}
+          \insertdate \hfill \inserttitle \newline
+          \insertshortauthor \hfill \insertframenumber/\inserttotalframenumber
+         }}
+\setbeamertemplate{navigation symbols}{}
+
+%% title
+\title{Bettercrypto - Applied Crypto Hardening for Sysadmins}
+\subtitle{Attacks}
+
+%% author and affilliation
+\author[Aaron Zauner]{Aaron Zauner\\
+        \textit{azet@azet.org}}
+\institute{BetterCrypto.org}
+
+%% venue and date
+\date{Hack.lu - 21/10/2014}
+
+
+%% main
+\begin{document}
+
+% enables straight single quote
+\makeatletter
+\let \@sverbatim \@verbatim
+\def \@verbatim {\@sverbatim \verbatimplus}
+{\catcode`'=13 \gdef \verbatimplus{\catcode`'=13 \chardef '=13 }} 
+\makeatother
+
+% enables backticks in verbatim
+\makeatletter
+{\catcode`\`=13
+\xdef\@verbatim{\unexpanded\expandafter{\@verbatim}\chardef\noexpand`=18 }
+}
+\makeatother
+
+{
+\setbeamertemplate{footline}{}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+}
+\addtocounter{framenumber}{-1}
+
+{
+\setbeamertemplate{footline}{}
+
+\begin{frame}
+  \tableofcontents
+\end{frame}
+
+}
+\addtocounter{framenumber}{-1}
+
+
+%\addtobeamertemplate{frametitle}{}{%
+%  \begin{tikzpicture}[remember picture,overlay]
+%    \node[anchor=north east,yshift=1pt] at (current page.north east) {
+%      \includegraphics[height=30px]{lambda}
+%    };
+%  \end{tikzpicture}
+%}
+
+
+\IfFileExists{contentgenerated.tex}{\input{"contentgenerated.tex"}}{\input{"content.tex"}}
+
+
+%% appendix
+%\appendix
+%\begin{frame}{Bonus Slides}
+%blablabla
+%\end{frame}
+
+
+\end{document}
+
