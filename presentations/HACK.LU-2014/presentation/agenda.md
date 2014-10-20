@@ -418,4 +418,19 @@ _WISHLIST_:
 
 # Example Apache
 
+  * Selecting cipher suites:
+
+![Example Apache](img/exampleApache.png)
+
+  * Additionally mod\_rewrite:
+
+![Example Apache rewrite](img/exampleApache-rewrite.png)
+
+
+# Testing
+
+![Testing](img/medical-test.jpg)
+
+
+# How to test - Tools
 
