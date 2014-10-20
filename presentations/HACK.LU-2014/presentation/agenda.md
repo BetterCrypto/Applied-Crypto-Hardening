@@ -14,27 +14,23 @@
 ---
 # Overview 
 
-Part 1:
-  1. Intro & Motivation
-  2. How we got started, how we work, what's there, what's missing, 
-     how to use the guide
+  1. **Part 1:** Intro & Motivation
+  2. How we got started, how we work, what's there, what's missing, how to use the guide
   3. History of Crypto in a nutshell
   4. Theory
   4. 10:10 __break__
   5. Theory (cont.)
   5. Practical settings
-Part 2:
-  6. Attacks
+  6. **Part 2:** Attacks
   7. Current trends (IETF, ...)
   7. wrap up
   8. next steps
-  9. 11:45 __lunch__
+  9. 11:45 __lunch__ 
     
 
 # Prerequisites
 
-  * Participants should have a basic knowledge of System administration and be
-familiar with configuring Apache, nginx, etc.
+  * Participants should have a basic knowledge of System administration and be familiar with configuring Apache, nginx, etc.
   * know git/github
   * a basic knowledge of crypto will help.
 
@@ -217,7 +213,7 @@ Pre-history
     * Gilbert S. Vernam (AT&T, 1917) - polyalphatic cipher with random key without repetition
       * Only ciphersuite impossible to break both in theory and in practice!
 
-# Theory part
+# Theory 
 
 \[
  \hbar \frac{\partial}{\partial t}\Psi = \hat H \Psi
@@ -272,9 +268,7 @@ Alice to Bob: \[ X = g^x \mod p  \]
 Bob to Alice:  \[ Y = g^y \mod p  \]
 Alice calculates: \[  k_1 = Y^x \mod p \]
 Bob calculates:   \[ k_2 = X^y \mod p .  \text{. Therefore, } k_1 = k_2 \]
-
-Proof:
-\[ k_1 = Y^x = (g^y)^x = g^{(x*y)} = (g^x)^y = X^y = k_2  \mod p \qed \]
+Proof: \[ k_1 = Y^x = (g^y)^x = g^{(x*y)} = (g^x)^y = X^y = k_2  \mod p \qed \]
 
 
 # Reality 
@@ -375,6 +369,7 @@ Only clients which support TLS1.2 are covered by these cipher suites (Chrome 30,
   * It is a multi-dimensional optimisation problem
   * Consider strong alternativesto de-facto standards (pros/cons - CAMELLIA vs. AES)
   * _WISHLIST_: generator for settings? click-dropdown boxes on the webserver -> gernate config
+  * _WISHLIST_: right now we only support OpenSSL CipherSuite names/configs. What about gnutls, etc.?
 
 # Practical settings
 
@@ -404,6 +399,7 @@ _WISHLIST_:
   * RDP
 
   * Everything as HTML (easier to copy & paste)
+  * gnutls setttings
   * Config generator on the website
   * Automatic testing suite
 
@@ -485,7 +481,7 @@ Well received. Good feedback (Dan Bernstein, ...)
 
 # What's still needed?
 
-  * Need to convert to HTML and have the whole guide on the web
+  * Need to convert to HTML/restructured text (RST) and have the whole guide on the web
   * fix the \texttt{@@@CIPHERSTRINGB@@@} macro in the configuration/ dir
   * re-review  the configuration/\* files. Maybe crap slipped in 
 due to large commits :(
@@ -498,7 +494,7 @@ due to large commits :(
 # How to participate?
 
 1. We need: cryptologists, sysadmins, hackers
-1. Read the document, find bugs
+1. Read the document, find bugs!
 1. Master git repo (git.bettercrypto.org) is world-readable. 
 1. Subscribe to the mailing list
 1. look at the TODO.md file
