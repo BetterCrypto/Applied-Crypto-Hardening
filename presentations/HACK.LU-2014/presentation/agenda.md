@@ -1,5 +1,5 @@
 % Bettercrypto - Applied Crypto Hardening for Sysadmins
-% L. Aaron Kaplan <kaplan@cert.at> ;  David Durvaux <david.durvaux@gmail.com>; Aaron Zauner <azet@azet.org>
+% L. Aaron Kaplan <kaplan@cert.at> ;  David Durvaux <david@autopsit.org>; Aaron Zauner <azet@azet.org>
 % 2014/10/21
 ---------------------------
 
@@ -120,7 +120,7 @@ a.k.a.:\par
 
 # Who?
 
-Wolfgang Breyha (uni VIE), David Durvaux (CERT.be), Tobias Dussa (KIT-CERT), L. Aaron Kaplan (CERT.at), Christian Mock (coretec), Daniel Kovacic (A-Trust), Manuel Koschuch (FH Campus Wien), Adi Kriegisch (VRVis), Ramin Sabet (A-Trust), Aaron Zauner (azet.org), Pepi Zawodsky (maclemon.at), IAIK, A-Sit, ...  
+Wolfgang Breyha (uni VIE), David Durvaux, Tobias Dussa (KIT-CERT), L. Aaron Kaplan (CERT.at), Christian Mock (coretec), Daniel Kovacic (A-Trust), Manuel Koschuch (FH Campus Wien), Adi Kriegisch (VRVis), Ramin Sabet (A-Trust), Aaron Zauner (azet.org), Pepi Zawodsky (maclemon.at), IAIK, A-Sit, ...  
 
 
 # Contents so far
