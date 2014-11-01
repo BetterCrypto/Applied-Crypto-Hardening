@@ -10,6 +10,7 @@
 %%    I need dis
 %%%
 \RequirePackage{etoolbox}
+\RequirePackage{ifplatform}
 
 % for convenienc
 \newwrite\configfileout
@@ -57,6 +58,7 @@
     \edef\configfilename{\expandafter\detokenize\expandafter{\configfilen@me}}
     \def\configfilepres{\expandafter\protect\expandafter\path\expandafter{\configfilename}}
     \immediate\write\configfileout{\configfilename}
+    \ifwindows\def\dummy@ext{.}\else\let\dummy@ext\empty\fi%
     \lstinputlisting[%
       linerange={#3},%
       %autounindent,%
@@ -65,7 +67,7 @@
           #4\\\mbox{\protect\href{\@configurationbaseurl\configfilename}{%
               {\upshape [\configfilepres]}%
         }}}
-      #1]{\configfilename}%
+      #1]{\configfilename\dummy@ext}%
     \marginpar{\vspace*{-2\baselineskip}\protect\href{\@configurationbaseurl\configfilename}{%
         \includegraphics[height=2\baselineskip]{img/ConfigIcns}}}
   \else%
