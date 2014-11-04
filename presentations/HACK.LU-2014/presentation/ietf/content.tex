@@ -1,0 +1,60 @@
+
+\begin{frame}{post-Snowden}
+  \begin{itemize}
+  \item After the Snowden Leaks appeared in press the IETF began discussion on how
+`'pervaisive monitoring'' can be prevented
+  \item In September 2013 the `'PERPASS'' (pervaisive, passive monitoring) mailing list was started
+  \item People started working on drafts to circumvent `'pervaisive monitoring'': http://down.dsg.cs.tcd.ie/misc/perpass.txt
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{itemize}
+    \item IETF 89 was accompanied by a meeting on the topic (STRINT) with invited speakers on privacy, security and cryptography: https://www.w3.org/2014/strint/
+    \item `'strenghtening the internet against pervaisive monitoring''
+    \item a lot of good feedback and ideas
+    \item main takeaways: threat modeling, CFRG was tasked with TLS-WG guidance on choices of ciphers and which curves/parameters (ECC) to use
+  \end{itemize}
+\tiny
+\url{http://tools.ietf.org/html/draft-iab-strint-report-00}
+\end{frame}
+
+
+\begin{frame}{New WGs and documents being worked on }
+  \begin{itemize}
+    \item UTA-WG (utilizing TLS in applications): working BCPs on how to properly use/implement TLS
+    \item TLS-WG (transport layer security): TLS 1.3, chacha20-poly1305, DJB curves (ECC), FALLBACK\_SCSV extension,..
+    \item TCPINC (TCP increased security): working on standardization of opportunistic encryption on the TCP layer (similar to tcpcrypt)
+    \item DPRIVE (DNS private exchange): working on DNS privacy features
+    \item IAB (internet architecture board): threat model, see: https://tools.ietf.org/html/draft-iab-privsec-confidentiality-threat
+    \item TRANS (Public Notary Transparency): fight malicious certificate authorities with certificate transparency, see: www.certificate-transparency.org
+  \end{itemize}
+...
+\end{frame}
+
+\begin{frame}{Curves Curves Curves}
+  \begin{itemize}
+    \item CFRG (cryptography forum research group within IRTF) is working on a standardized set of curves and curve parameters for IETF WGs: expected by the end of 2014
+    \item + Curve25519 (dan bernstein, et al.)
+    \item + NUMS (microsoft)
+    \item + ed448goldilocks (michael hamburg)
+  \end{itemize}
+In comparison to NIST curves: most new proposals are plugable into existing standards and can be reused within protocols and IETF documents.
+\newline
+\newline
+Good summary (by the Brainpool authors, so a bit biased): http://eprint.iacr.org/2014/832.pdf
+\end{frame}
+
+\begin{frame}
+  \begin{itemize}
+    \item Certificate Transparency is now being worked on as an IETF standard: https://datatracker.ietf.org/wg/trans/charter/
+    \item discussion on mandatory encryption in HTTP2 (HTTPBIS-WG)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+..A lot more going on within IETF, but I can barely keep up with TLS-WG due to work currently..
+\newline
+\newline
+Questions?
+\end{frame}

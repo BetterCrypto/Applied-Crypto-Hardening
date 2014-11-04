@@ -1,0 +1,164 @@
+%%%
+%%% style.tex
+%%% Stylistic configuration
+%%%
+
+% Colors
+\definecolor{green}{RGB}{32,113,10}
+\definecolor{orange}{RGB}{251,111,16}
+\definecolor{red}{RGB}{247,56,0}
+\definecolor{blue}{RGB}{0,28,128}
+\definecolor{lightgreen}{RGB}{187,218,216}
+\definecolor{intersectgreen}{RGB}{103,133,155}
+\definecolor{darkblue}{RGB}{76,87,117}
+\definecolor{Brown}{cmyk}{0,0.81,1,0.60}
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
+\definecolor{lightlightgray}{gray}{0.9}
+
+% Draft stuff
+\ifdraft{
+  % Ensure that everything is neatly set up for us
+  \AtBeginDocument{
+    \def\draftInfo{%
+      Draft revision\gitVtags: \gitAbbrevHash{} %
+      (\gitCommitterIsoDate) \gitCommitterName}
+    \sbox{\draftWatermark}{%
+      \includegraphics[width=\paperwidth]{img/draft}}
+    \sbox{\draftPageLine}{%
+      \colorbox{black!10}{%
+        % enlarge box vertically by 2/3 lines
+        \raisebox{0pt}%
+        [\dimexpr .33\baselineskip + \height]%
+        [\dimexpr .33\baselineskip + \depth]{%
+          \makebox[\paperwidth]{\color{black!50}\draftInfo}}}}
+  }
+}{}
+
+
+%%% Fonts
+% Fonts are loaded, now is the right time for mictorype.
+\microtypesetup{stretch=9,shrink=15,step=3,tracking=smallcaps,letterspace=75}
+% makes default font sans-serif
+ \renewcommand{\familydefault}{\sfdefault}
+
+% Captions
+\setcapindent{1em}
+\addtokomafont{caption}{\small\itshape}
+\addtokomafont{captionlabel}{\bfseries}
+
+% Section headers
+\addtokomafont{disposition}{\color{darkblue}\bfseries}
+
+% Page foot
+\setkomafont{pagefoot}{\normalfont\sffamily\footnotesize}
+\ifoot%
+[Applied Crypto Hardening\ifdraft{ % Space!
+  \textbullet{} \draftInfo}{}]%
+{Applied Crypto Hardening \ifdraft{ % Space!
+    \textbullet{} \draftInfo}{}}
+\cfoot[]{}
+\ofoot%
+[page \thepage\ of \pageref{LastPage}]%
+{page \thepage\ of \pageref{LastPage}}
+
+% Epigraph / dictum
+\newcommand*{\epigraph}[3][]{\dictum[#3]{#2}\bigskip}
+\renewcommand*{\dictumrule}{}
+\renewcommand*{\dictumauthorformat}[1]{--- #1}
+\addtokomafont{dictumtext}{\itshape}
+\setkomafont{dictumauthor}{\normalfont}
+\renewcommand{\dictumwidth}{8cm}
+
+% Graphics
+%tell TeX where to look for graphics/logos
+\graphicspath{ {/img/} }
+
+% This block is for listings
+\usepackage[framemethod=TikZ]{mdframed} % mdframed is used to draw a grey box
+\mdfdefinestyle{listingstyle}{
+  backgroundcolor=black!10,outerlinewidth=0,outerlinecolor=black,
+  innerleftmargin=9pt,innerrightmargin=0,innertopmargin=9pt,innerbottommargin=2pt
+}
+%\usepackage{amssymb}% for \curvearrowright
+% Insert a grey box behind the listing for uniform background color (The \cipherstring would the listing and the background would turn white)
+\BeforeBeginEnvironment{lstlisting}{\vspace{0.2cm}\begin{mdframed}[style=listingstyle]}
+\AfterEndEnvironment{lstlisting}{\end{mdframed}}
+% Listings
+\lstset{
+  basicstyle=\ttfamily,
+  keywordstyle=\color{OliveGreen},
+  commentstyle=\color{gray},
+  backgroundcolor=\color{lightlightgray},
+  upquote=true,
+  showstringspaces=false,
+  tabsize=2,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false,
+  inputencoding=utf8,
+  breakatwhitespace=false,
+  showspaces=false,
+  columns=fullflexible,                   % Column format: no spaces are inserted for monospaced appearance
+  breakindent=10pt,
+  morekeywords={__global__, __device__},% 
+  escapechar=\`,
+  escapeinside={\%*}{*)},                 % Escape TeX commands inside %* and *)
+%  prebreak=\mbox{$\curvearrowright$},     % Disply curved arrow before linebreak
+  prebreak=\small\symbol{'134},
+}
+
+% red warning box (for SSH section)
+\mdfdefinestyle{warningboxstyle}{
+  backgroundcolor=pink!20,
+  innerleftmargin=9pt,innerrightmargin=9pt,innertopmargin=9pt,innerbottommargin=9pt
+}
+
+% Hyperref styles
+%\hypersetup{%
+%  breaklinks,%
+%  colorlinks,%
+%  linkcolor=darkblue,citecolor=blue,urlcolor=blue,%
+%  breaklinks=true,%
+%  unicode,%
+%  pdfnewwindow=true,%
+%  final
+%}
+%\urlstyle{same}
+
+% Bibliography
+\bibliographystyle{alphalink}
+
+% Disable single lines at the start of a paragraph (Schusterjungen)
+\clubpenalty = 10000
+% Disable single lines at the end of a paragraph (Hurenkinder)
+\widowpenalty = 10000 
+\displaywidowpenalty = 10000 % formulas
+\setlength{\textfloatsep}{\baselineskip}
+\setlength{\floatsep}{\baselineskip}
+
+\frenchspacing
+\raggedbottom
+
+% customized spaces between text and footnotes
+\setlength{\skip\footins}{2\baselineskip}
+
+% Better float parameters: (from the TeX FAQ)
+\renewcommand{\topfraction}{.85}
+\renewcommand{\bottomfraction}{.7}
+\renewcommand{\textfraction}{.15}
+\renewcommand{\floatpagefraction}{.66}
+\renewcommand{\dbltopfraction}{.66}
+\renewcommand{\dblfloatpagefraction}{.66}
+\setcounter{topnumber}{9}
+\setcounter{bottomnumber}{9}
+\setcounter{totalnumber}{20}
+\setcounter{dbltopnumber}{9}
+
+% Starred lists (\begin{itemize*}) for less space between items
+\usepackage{mdwlist}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../applied-crypto-hardening"
+%%% End: 

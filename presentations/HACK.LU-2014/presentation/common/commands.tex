@@ -1,0 +1,27 @@
+%%%
+%%% commands.tex
+%%% Document-specific commands
+%%%
+
+% Outputs red TODOs in the document. Requires \usepackage{color}.
+%
+% Usage: \todo{Document the TODO command.}
+%
+% Comment out second line to disable.
+\AtBeginDocument{\providecommand{\todo}[1]{}}
+\newcommand*{\todo}[1]{{\color{Red} TODO: {#1}}}
+
+% Creating a horizontal rule
+\newcommand*{\HorRule}{%
+  \color{darkblue}%
+  \rule{\linewidth}{1pt}%
+}
+
+%%% CIPHERSTRING
+\usepackage{seqsplit} % Use Sequence split. Basically it inserts between every character pair a box with zero width to allow linebreaks everywhere. Better solution wanted, but is there any better?
+\CatchFileDef{\cipherStringB}{common/cipherStringB.tex}{\endlinechar=-1 }%
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../applied-crypto-hardening"
+%%% End: 

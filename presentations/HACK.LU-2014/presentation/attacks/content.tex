@@ -1,0 +1,509 @@
+
+\begin{frame}{Internet Dark Ages}
+
+  \begin{itemize}
+    \item SSLv1 engineered at Netscape, never released to the public
+    \item Kipp Hickman of Netscape introduces SSLv2 as an IETF draft back in 1995:
+      \newline
+      \newline
+      \texttt{The SSL Protocol is designed to provide privacy between two communicating applications (a client and a server). Second, the protocol is designed to authenticate the server, and optionally the client. [...]}
+  \end{itemize}
+  \vspace{50px}
+
+  \tiny\url{http://tools.ietf.org/html/draft-hickman-netscape-ssl-00}
+
+\end{frame}
+
+\begin{frame}{Internet Dark Ages}
+  \begin{itemize}
+    \item SSLv2 was fundamentally broken and badly designed. Basically full loss of Confidentiallity and integrity of on-wire data thus susceptible to MITM attacks, see: \url{http://osvdb.org/56387}
+    \item CipherSpec is sent in the clear
+    \item Size of Block-cipher padding is sent in the clear
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Internet Dark Ages}
+  \begin{itemize}
+    \item SSLv3 was introduced in 1996 by Paul Kocher, Phil Karlton and Alan Freier, utilizing an algoritm by Taher ElGamal, a known cryptographer and Chief Scientist at Netscape at the time: \url{https://tools.ietf.org/html/rfc6101}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Internet Dark Ages}
+  On a side note; back then the choice algorithms was limited and export ciphers (low security) common as recommended by NSA and mandated by US law. Google: ``Bernstein vs. United States''
+  \begin{itemize}
+    \item encryption algorithms (Confidentiality): NULL, FORTEZZA-CBC (NSA), IDEA-CBC, RC2-CBC-40 (40bit security), RC4-128, DES40-CBC (40bit security), DES-CBC (56bit security), Triple-DES-EDE-CBC
+    \item hash functions (integrity): NULL, MD5 and SHA
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Internet Dark Ages}
+  David Wagner and Bruce Schneier publish a paper entitled ``Analysis of the SSL 3.0 protocol'':
+  \begin{itemize}
+    \item Keyexchange algorithm rollback
+    \item Protocol fallback to SSLv2
+    \item Protocol leaks known plaintexts - may be used in cryptanalysis 
+    \item Replay attacks on Anonymous DH (don't use it anyway!)
+  \end{itemize}
+
+  \vspace{50px}
+
+  \tiny\url{https://www.schneier.com/paper-ssl.pdf}
+\end{frame}
+
+\begin{frame}{TLS appears}
+  1999. The SSL protocol is renamed to TLS (version 1) with little improvements over SSLv3. The spec. is almost identical.
+  \begin{itemize}
+    \item Diffie-Hellman, DSS and Triple-DES are now required by implementors
+    \item most SSLv3 security issues are still present in TLS 1.0
+  \end{itemize}
+  (RFC2246)
+\end{frame}
+
+\begin{frame}{TLS gets padding attacks}
+  2002. Vaudenay publishes a paper entitled ``Security Flaws Induced by CBC Padding
+Applications to SSL, IPSEC, WTLS...'' 
+  \begin{itemize}
+    \item Side-channel attack on CBC mode padding
+    \item valid/invalid padding causes different reactions
+    \item can be used to influence decryption operations
+    \item introduces ``padding oracle attacks'' in SSL
+  \end{itemize}
+
+  \vspace{50px}
+
+  \tiny\url{http://www.iacr.org/cryptodb/archive/2002/EUROCRYPT/2850/2850.pdf}
+\end{frame}
+
+\begin{frame}{TLS gets extended}
+  2003. TLS extensions get specified in RFC3546.
+  \begin{itemize}
+    \item General: Extended Handshake, ClientHello and ServerHello
+    \item Server Name Indication (SNI) for virtual hosting\\(SNI leaks metadata!)
+    \item Certificate Status Request (CSR) support via OCSP
+    \item (...)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{TLS gets timing attacks}
+  2003. Brumley and Boneh publish a paper entitled ``Remote timing attacks are practical''.
+  \newline
+  \newline
+  Timing attack on RSA in SSL/TLS implementations (OpenSSL):
+  \begin{itemize}
+    \item Send specially crafted ClientKeyExchange message
+    \item Mesure time between ClienyKeyExchange and Alert response
+    \item do a bit of statistics
+    \item retrieve Private Key
+  \end{itemize}
+
+  \vspace{50px}
+
+  \tiny\url{http://dl.acm.org/citation.cfm?id=1251354}
+\end{frame}
+
+\begin{frame}{TLS gets padding oracle password retrieval}
+  2003. Canvel, Hiltgen, Vaudenay, Vuagnoux publish ``Password Interception in a SSL/TLS Channel''.
+  \newline
+  \newline
+  Extend earlier work of Vaudenay and successfully intercept IMAP passwords in TLS channels.
+
+  \vspace{95px}
+
+  \tiny\url{http://www.iacr.org/cryptodb/archive/2003/CRYPTO/1069/1069.pdf}
+\end{frame}
+
+\begin{frame}{TLS gets chosen plaintext attacks}
+  2004 \& 2006. Bard demonstrates Chosen-Plaintext Attacks against SSL and TLS1.0
+  \newline
+  \newline
+  Attack on CBC:
+  \begin{itemize}
+    \item CBC exchanges an Initialization Vector (IV) during Handshake
+    \item these IVs turn out to be predictable
+    \item PINs and Passwords can be decrypted
+    \item VPNs/Proxies can also be used to accomplish this task
+  \end{itemize}
+  
+  \vspace{50px}
+
+  \tiny
+  \url{https://eprint.iacr.org/2004/111}\\
+  \url{https://eprint.iacr.org/2006/136}
+\end{frame}
+
+\begin{frame}{TLS gets updated}
+  2006. A new TLS protocol version is standardized: TLS 1.1
+  \begin{itemize}
+    \item EXPORT ciphers removed
+    \item Session resumption 
+    \item Protection against the CBC attacks by Bard
+    \item IANA TLS parameters standardized
+    \item (...)
+  \end{itemize}
+   (RFC4346)
+\end{frame}
+
+\begin{frame}{TLS gets modern crypto}
+  2008. A new TLS protocol version is standardized: TLS 1.2
+  \begin{itemize}
+    \item MD5/SHA1 removed as pseudorandom function (PRF)
+    \item configurable PRFs in ciphersuites (e.g. SHA256)
+    \item Authenticated encryption: CCM, GCM
+    \item AES ciphersuites
+    \item (...)
+  \end{itemize}
+   (RFC5246)
+\end{frame}
+
+\begin{frame}{Rouge CA Certificates}
+  2008. Sotirov, Stevens, Appelbaum, Lenstra, Molnar, Osvik and de Weger present a paper based on earlier work by Lenstra et al. at 25c3 entitled ``MD5 considered harmful today''
+
+  \begin{itemize}
+    \item MD5 Hash-collision of a CA Certificate
+    \item Create colliding (rouge) CA Certificates
+    \item Generate any Certificate for MITM you want
+  \end{itemize}
+
+  \vspace{60px}
+
+  \tiny
+  \url{http://www.win.tue.nl/hashclash/rogue-ca/}\\
+  \url{https://www.youtube.com/watch?v=PQcWyDgGUVg}\\
+\end{frame}
+
+\begin{frame}{sslstrip}
+  2009. Moxie Marlinspike releases \emph{sslstrip} at BlackHat DC 2009.
+
+  \begin{itemize}
+    \item Client connects to server
+    \item Attacker intercepts session via MITM
+    \item Attacker sends HTTP 301 (moved permanently)
+    \item Attacker forwards requests to/from server via SSL/TLS
+    \item Client receives data via unencrypted channel
+    \item Attacker reads plaintext
+  \end{itemize}
+  
+  \vspace{50px}
+
+  \tiny
+  \url{http://www.thoughtcrime.org/software/sslstrip}\\
+  \url{http://vimeo.com/50018478}
+\end{frame}
+
+\begin{frame}{Null-prefix attacks against Certificates}
+  2009. Moxie Marlinspike publishes ``Null prefix Attacks against SSL/TLS Certificates''.
+
+  \begin{itemize}
+    \item Specially crafted domain strings trick CA checking
+    \item null-terminate stuff in a domain name
+    \item ex.: \texttt{www.paypal.com\textbackslash0.thoughtcrime.org} is valid
+    \item ex.: \texttt{*\textbackslash0.thoughtcrime.org} is valid
+    \item CA ignores prefix 
+    \item Client does not -> Certificate valid for prefix
+  \end{itemize}
+  Moxie updated his \emph{sslsniff} project to carry out this attack.
+  
+  \vspace{30px}
+
+  \tiny
+  \url{http://www.thoughtcrime.org/papers/null-prefix-attacks.pdf}\\
+  \url{http://thoughtcrime.org/software/sslsniff}
+\end{frame}
+
+
+\begin{frame}{SSLv2 Forbidden}
+  2011. IETF publishes and standardized a RFC to prohibit negotiation and thus compatibility of SSLv2 in TLS1.0-1.2 entirely. 
+  
+  \vspace{140px}
+
+  \tiny
+  \url{https://tools.ietf.org/html/rfc6176}
+\end{frame}
+
+\begin{frame}{Comodo}
+  2011. Comodo CA: Attacker issues 9 certificates via reseller account for popular domains (google.com, yahoo.com, live.com, skype.com [...])
+  
+  \vspace{160px}
+
+  \tiny
+  \url{https://www.comodo.com/Comodo-Fraud-Incident-2011-03-23.html}
+\end{frame}
+
+\begin{frame}{BEAST}
+  2011. Doung and Rizzo publish the BEAST attack at ekoparty and demo a live attack on PayPal. Based on Bards earlier work on predictable IVs in CBC:
+  \begin{itemize}
+    \item Phishing gets victim to visit a certain website
+    \item Script on said website makes request to genuine site
+    \item Attacker records encrypted cookie information
+    \item Tries to guess session-cookie with known CBC attack
+  \end{itemize}
+  Same Origin Policy (SOP) forbids this attack in client software. If SOP can be bypassed (as shown by the authors with Java's SOP) this attack is still practical.
+  
+  \vspace{30px}
+
+  \tiny
+  \url{http://vnhacker.blogspot.co.at/2011/09/beast.html}
+\end{frame}
+
+
+\begin{frame}{Trustwave}
+  2012. Trustwave CA: Trustwave sells subordinate CAs to big corporations to be used for Deep Packet Inspection.
+  \newline
+  \newline
+  A sub-CA can issue and fake any certificate for MITM attacks.
+
+
+  \vspace{80px}
+
+  \tiny
+  \url{http://blog.spiderlabs.com/2012/02/clarifying-the-trustwave-ca-policy-update.html}
+  \url{http://arstechnica.com/business/2012/02/critics-slam-ssl-authority-for-minting-cert-used-to-impersonate-sites/}
+\end{frame}
+
+\begin{frame}{DigiNotar}
+  2012. DigiNotar CA: Attackers compromise DigiNotar in it's entirety.
+
+  \begin{itemize}
+    \item attackers generate tons of certificates
+    \item Google Chromes certificate store detects mismatches
+    \item DigiNotar acknowledges breach
+    \item DigiNotar files for bankrupcy
+    \item FOX-IT never gets paid for the investigation
+  \end{itemize}
+
+
+  \vspace{30px}
+
+  \tiny
+  \url{https://en.wikipedia.org/wiki/DigiNotar}\\
+  \url{http://cryptome.org/0005/diginotar-insec.pdf}\\
+  \url{http://nakedsecurity.sophos.com/2011/09/05/operation-black-tulip-fox-its-report-on-the-diginotar-breach}\
+
+\end{frame}
+
+\begin{frame}{Certificate validation in non-browser software}
+  2012. Georgiev, Iyengar, Jana, Anubhai, Boneh and Shmatikov publish a paper entitled ``The most dangerous code in the world: validating SSL certificates in non-browser software''
+  \newline
+  \newline
+  Certificate validation vulnerabilities in:
+  \begin{itemize}
+    \item OpenSSL
+    \item GnuTLS
+    \item JSSE
+    \item EC2 Java libraries \& Amazon SDKs
+    \item PayPal SDKs
+    \item eCommerce/WebShop software
+    \item ..cURL, PHP, Python, tons of Java middleware
+  \end{itemize}
+
+  \tiny
+  \url{https://crypto.stanford.edu/~dabo/pubs/abstracts/ssl-client-bugs.html}
+\end{frame}
+
+\begin{frame}{CRIME}
+  2012. Doung and Rizzo publish an attack against TLS Compression and SPDY titled CRIME.
+
+  \begin{itemize}
+    \item MITM attacker sees length of compressed ciphertext
+    \item compression has direct affect on the length
+    \item attacker makes client compress/encrypt data (or uses known data) with secret data
+    \item attacker compares
+    \item correct guesses yield shorter messages due to compression
+    \item repeat until done
+  \end{itemize}
+  This is only feasible for small amounts of data, e.g. session strings, cookies and so forth.
+  
+  \vspace{10px}
+
+  \tiny
+  \url{https://isecpartners.com/blog/2012/september/details-on-the-crime-attack.aspx}
+\end{frame}
+
+\begin{frame}{TIME}
+  2013. Be'ery and Shulman present TIME at BlackHat Europe. Extend on the CRIME Attack:
+  \begin{itemize}
+    \item Attacker generates HTTP requests (XSS, injection,..)
+    \item Attacker exploits SOP design flaw and measures RTT differences
+    \item determines correct or failed guesses by SOP timing leak
+  \end{itemize}
+  
+  \vspace{70px}
+
+  \tiny
+  \url{https://media.blackhat.com/eu-13/briefings/Beery/bh-eu-13-a-perfect-crime-beery-wp.pdf}\\
+  \url{https://www.youtube.com/watch?v=rTIpFfTp3-w}
+\end{frame}
+
+\begin{frame}{Lucky13}
+  2013. AlFardan and Paterson present a novel attack against CBC for TLS and DTLS based on timing analysis.
+  \begin{itemize}
+    \item Attacker intercepts and modifies a message including padding
+    \item Attacker tempers with the padding of the message
+    \item MAC computation takes longer during decryption process
+    \item Attacker repeats and measures
+    \item Attacker performs padding oracle attack described earlier
+    \item (Extremely latency sensitive attack)
+  \end{itemize}
+
+  \vspace{50px}
+
+  \tiny
+  \url{http://www.isg.rhul.ac.uk/tls/Lucky13.html}\\
+  \url{http://www.isg.rhul.ac.uk/tls/TLStiming.pdf}
+\end{frame}
+
+\begin{frame}{RC4 Biases}
+  2013. AlFardan, Bernstein, Paterson, Poettering and Schuldt publish a generic attack on the RC4 cipher for TLS and WPA.
+  \begin{itemize}
+    \item Statistical biases in the first 257 bytes of ciphertext
+    \item Recovery of the first 200 bytes after $2^{28}$ to $2^{32}$ encryption operations of the same plaintext
+    \item A broadcast attack: mounted on unique keys
+    \item May also be mounted with a single key with repeating target plaintexts
+    \item Only feasible for large amounts of data and very time consuming
+  \end{itemize}
+  
+  \vspace{20px}
+
+  \tiny
+  \url{http://www.isg.rhul.ac.uk/tls}\\
+  \url{http://www.isg.rhul.ac.uk/tls/RC4biases.pdf}
+\end{frame}
+
+\begin{frame}{NIST curves}
+  2013 \& 2014. Daniel J. Bernstein and Tanja Lange voice concern about the NIST Elliptic Cuves that are widely implemented and used in TLS for ECDH and ECDSA
+  \begin{itemize}
+    \item NIST curves defined on recommendations by NSA's Jerry Solinas
+    \item Unclear why these curves and their parameters were chosen
+    \item NIST cites efficiency: more efficient and secure curves available
+    \item Possible mathematical backdoor through previous analysis and carefully chosen and unexplained parameters
+    \item Start SafeCurves project (ongoing)
+  \end{itemize}
+  
+
+  \tiny
+  \url{http://www.hyperelliptic.org/tanja/vortraege/20130531.pdf}\\
+  \url{http://cr.yp.to/talks/2013.09.16/slides-djb-20130916-a4.pdf}\\
+  \url{http://safecurves.cr.yp.to}\\
+  \url{https://archive.org/details/ShmooCon2014_SafeCurves}
+\end{frame}
+
+\begin{frame}{BREACH}
+  2013. Gluck, Harris and Prado demonstrate yet another attack based on CRIME at BlackHat USA.
+  \newline
+  \newline
+  Very similar to CRIME but the attack works based on information leaks from HTTP compression instead of TLS compression.
+  
+  \vspace{80px}
+
+  \tiny
+  \url{http://breachattack.com}\\
+  \url{https://www.youtube.com/watch?v=CoNKarq1IYA}
+\end{frame}
+
+\begin{frame}{Unused Certificates in Truststores}
+  2014. Perl, Fahl, Smith publish a paper entitled ``You Won't Be Needing These Any More: On Removing Unused Certificates From Trust Stores''
+  \begin{itemize}
+    \item Compared 48 mio. HTTP certificates
+    \item 140 CA Certificates are unused in all major trust stores
+    \item Of 426 trusted root certificates only 66\% are even used
+  \end{itemize}
+
+  
+  \vspace{70px}
+
+  \tiny
+  \url{http://fc14.ifca.ai/papers/fc14_submission_100.pdf}
+\end{frame}
+
+\begin{frame}{Triple Handshakes Considered Harmful}
+  2014. Bhargavan, Delignat-Lavaud, Pironti, Langley and Ray present an attack one day before the IETF'89 meeting in London.
+  \begin{itemize}
+    \item Limited to client-certificate authentication with renegotiation
+    \item MITM attack on renegotiation with a three-way handshake
+    \item Variations of the attack also discussed on their website
+    \item Can't possibly fit this into one slide, homework: understand the attack by reading their excellent description on the website
+  \end{itemize}
+
+  
+  \vspace{50px}
+
+  \tiny
+  \url{https://secure-resumption.com}\\
+  \url{https://secure-resumption.com/IETF-triple-handshakes.pdf}
+\end{frame}
+
+\begin{frame}{Frankencerts}
+  2014. Brubaker, Jana, Ray, Khurshid and Shmatikovy publish a paper entitled ``Using Frankencerts for Automated Adversarial Testing of Certificate Validation in SSL/TLS Implementations''
+  \begin{itemize}
+    \item Fuzzing of X.509 related code in all major implementations shows serious weaknesses in certificate validation and handling
+    \item OpenSSL, NSS, GnuTLS, MatrixSSL, PolarSSL, CyaSSL, cyptlib [...]
+  \end{itemize}
+
+  
+  \vspace{50px}
+
+  \tiny
+  \url{https://www.cs.utexas.edu/~shmat/shmat_oak14.pdf}\\
+  \url{https://github.com/sumanj/frankencert}
+\end{frame}
+
+\begin{frame}{Heartbleed}
+  2014. Heartbleed is independently discovered by Codenomicon and a Google Security engineer.
+  \newline
+  \newline
+  Faulty implementation in OpenSSL of the TLS Heartbleed extension leaks memory content over the wire. This has been all over the media and discussed in detail all over the internet. People have successfully extracted sensitive information (password files et cetera) from victim memory.
+  \newline
+  \newline
+  I wrote an nmap plugin to scan for Heartbleed: \url{https://github.com/azet/nmap-heartbleed}
+
+  \vspace{30px}
+
+  \tiny
+  \url{http://heartbleed.com}
+\end{frame}
+
+\begin{frame}{Virtual Host Confusion}
+  2014. At BlackHat Delignat-Lavaud presents an attack based on SSLv3 downgrade and sharing of session caches
+  \begin{itemize}
+    \item Attacker forces downgrade to SSLv3
+    \item For SSLv3: larger deployments share session caches
+    \item attacker exploits a server vulnerability where session caches are reused
+    \item attacker requests different subdomain with SSLv3 using the same session
+    \item vulnerable server will allow connection w/o authentication
+    \item www.company.com vs git.company.com
+  \end{itemize}
+  \tiny
+  \url{https://bh.ht.vc}
+\end{frame}
+
+\begin{frame}{POODLE}
+  2014. POODLE: Padding Oracle On Downgraded Legacy Encryption - OpenSSL/Google
+  \begin{itemize}
+    \item MITM attacker downgrades to SSLv3 (once again)
+    \item attacker does block duplication
+    \item takes on average 256 requests to decrypt 1 byte (!)
+    \item disabling SSLv3 or using the FALLBACK\_SCSV TLS extension (draft) mitigates this issue entirely
+  \end{itemize}
+  \tiny
+  \url{https://www.openssl.org/~bodo/ssl-poodle.pdf}
+\end{frame}
+
+\begin{frame}{Implementation Issues}
+  There are tons of other issues with TLS stacks and software implementations that have not been discussed.
+  \newline
+  \newline
+  OpenSSL alone published 24 security advisories in 2014 until today.
+
+  \begin{itemize}
+    \item Apple's GOTO fail
+    \item GnuTLS GOTO fail
+    \item various GnuTLS vulnerabilities
+    \item wrong use of OpenSSL API in server and client software
+  \end{itemize}
+  ...\\
+  Clearly; a lot of people current have their eyes on this very topic.
+\end{frame}
+
+\begin{frame}{Implementation Issues}
+  For this crowd: It's up to you to find them and improve existing implementations, protocols and standards.
+\end{frame}

@@ -42,6 +42,6 @@ network: freenode
 
 # IMPORTANT
 
-If you reviewed the document and/or made some changes, please add your name to `src/acknowledgements.tex` (the list of names is sorted alphabetically by last name).
-
-Please also read the [FAQ](FAQ.md)!!
+ * If you reviewed the document and/or made some changes, please add your name to `src/acknowledgements.tex` (the list of names is sorted alphabetically by last name).
+ * Send many smaller commits (pull requests) and not one big one! Big ones tend to be delayed. It's hard to process a huge commit. We need to review everything, please remember.
+ * Please also read the [FAQ](FAQ.md)!!

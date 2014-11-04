@@ -1,0 +1,165 @@
+% Beamer Color Theme using the Solarized Palette,
+% http://ethanschoonover.com/solarized.
+%
+% Copyright 2012 Jeffrey B. Arnold
+% 
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+%
+% modified to be even darker/or black and white by azet@azet.org @ 24/03/2014
+%
+
+\ProvidesPackage{modifiedsolarized}[2013/10/11 1.0.1 Solarized color theme for beamer]
+\RequirePackage{etoolbox}
+\RequirePackage{kvoptions}
+
+%% This is ugly. First time using options and conditionals in LaTeX
+\SetupKeyvalOptions{
+  family=solarized,
+  prefix=solarized@,
+}
+\DeclareBoolOption[false]{dark}
+\DeclareComplementaryOption{light}{dark}
+\DeclareStringOption[yellow]{accent}[yellow]
+\ProcessKeyvalOptions*
+
+% Solarized palette
+\definecolor{solarizedBase03}{HTML}{000000}
+\definecolor{solarizedBase02}{HTML}{073642}
+\definecolor{solarizedBase01}{HTML}{586e75}
+\definecolor{solarizedBase00}{HTML}{657b83}
+\definecolor{solarizedBase0}{HTML}{FFFFFF}%{839496}
+\definecolor{solarizedBase1}{HTML}{FFFFFF}%{93a1a1}
+\definecolor{solarizedBase2}{HTML}{EEE8D5}
+\definecolor{solarizedBase3}{HTML}{FDF6E3}
+\definecolor{solarizedYellow}{HTML}{B58900}
+\definecolor{solarizedOrange}{HTML}{CB4B16}
+\definecolor{solarizedRed}{HTML}{DC322F}
+\definecolor{solarizedMagenta}{HTML}{D33682}
+\definecolor{solarizedViolet}{HTML}{6C71C4}
+\definecolor{solarizedBlue}{HTML}{268BD2}
+\definecolor{solarizedCyan}{HTML}{2AA198}
+\definecolor{solarizedGreen}{HTML}{859900}
+\definecolor{solarizedWhite}{HTML}{FFFFFF}
+
+% Set Accent color
+% Ugly. Should be done with a switch
+\ifdefstring{\solarized@accent}{yellow}{
+  \colorlet{solarizedAccent}{solarizedYellow}
+}{}
+\ifdefstring{\solarized@accent}{orange}{
+  \colorlet{solarizedAccent}{solarizedOrange}
+}{}
+\ifdefstring{\solarized@accent}{red}{
+  \colorlet{solarizedAccent}{solarizedRed}
+}{}
+\ifdefstring{\solarized@accent}{magenta}{
+  \colorlet{solarizedAccent}{solarizedMagenta}
+}{}
+\ifdefstring{\solarized@accent}{violet}{
+  \colorlet{solarizedAccent}{solarizedViolet}
+}{}
+\ifdefstring{\solarized@accent}{blue}{
+  \colorlet{solarizedAccent}{solarizedBlue}
+}{}
+\ifdefstring{\solarized@accent}{cyan}{
+  \colorlet{solarizedAccent}{solarizedCyan}
+}{}
+\ifdefstring{\solarized@accent}{green}{
+  \colorlet{solarizedAccent}{solarizedGreen}
+}{}
+\ifdefstring{\solarized@accent}{white}{
+  \colorlet{solarizedAccent}{solarizedWhite}
+}{}
+
+%% Set base colors for dark or light versions
+%% Dark
+% Switch between light and dark themes using the method in the CSS
+% stylesheet http://ethanschoonover.com/solarized
+\ifboolexpe{ bool {solarized@dark}}{
+  \colorlet{solarizedRebase03}{solarizedBase03}
+  \colorlet{solarizedRebase02}{solarizedBase02}
+  \colorlet{solarizedRebase01}{solarizedBase01}
+  \colorlet{solarizedRebase00}{solarizedBase00}
+  \colorlet{solarizedRebase0}{solarizedBase0}
+  \colorlet{solarizedRebase1}{solarizedBase1}
+  \colorlet{solarizedRebase2}{solarizedBase2}
+  \colorlet{solarizedRebase3}{solarizedBase3}
+}{
+  %% Light
+  \colorlet{solarizedRebase03}{solarizedBase3}
+  \colorlet{solarizedRebase02}{solarizedBase2}
+  \colorlet{solarizedRebase01}{solarizedBase1}
+  \colorlet{solarizedRebase00}{solarizedBase0}
+  \colorlet{solarizedRebase0}{solarizedBase00}
+  \colorlet{solarizedRebase1}{solarizedBase01}
+  \colorlet{solarizedRebase2}{solarizedBase02}
+  \colorlet{solarizedRebase3}{solarizedBase03}
+}
+
+\mode<presentation>
+
+\setbeamercolor{normal text}{fg=solarizedRebase0, bg=solarizedRebase03}
+\setbeamercolor{alerted text}{fg=solarizedAccent}
+% based css pre element 
+\setbeamercolor{example text}{fg=solarizedRebase1, bg=solarizedRebase02}
+
+% Header and footer from CSS 
+\setbeamercolor{footline}{bg=solarizedRebase02,fg=solarizedRebase01}
+\setbeamercolor{headline}{bg=solarizedRebase01,fg=solarizedRebase1}
+
+% Titles
+\setbeamercolor*{titlelike}{fg=solarizedAccent}
+\setbeamercolor*{frametitle}{fg=solarizedAccent}
+\setbeamercolor*{title}{fg=solarizedAccent}
+
+% Structure elements use css style for header 
+\setbeamercolor*{structure}{bg=solarizedRebase01, fg=solarizedRebase1}
+
+% Do not mess with subtle colors in palette. I don't like it. 
+\setbeamercolor*{palette primary}{bg=solarizedRebase01, fg=solarizedRebase1}
+\setbeamercolor*{palette secondary}{bg=solarizedRebase01, fg=solarizedRebase1}
+\setbeamercolor*{palette tertiary}{bg=solarizedRebase01, fg=solarizedRebase1}
+\setbeamercolor*{palette quaternary}{bg=solarizedRebase01, fg=solarizedRebase1}
+
+% Make Blocks slightly lighter/darker
+\setbeamercolor{block title}{fg=solarizedAccent, bg=solarizedRebase02}
+%\setbeamercolor{block title alerted}{}
+%\setbeamercolor{block title example}{}
+
+\setbeamercolor{block body}{parent=normal text, bg=solarizedRebase02}
+% \setbeamercolor{block body alerted}{}
+% \setbeamercolor{block body example}{}
+
+% same as footline
+% Set Sidebar and footline to use the css style for footer
+\setbeamercolor*{sidebar}{parent=headline}
+\setbeamercolor*{palette sidebar primary}{fg=solarizedRebase01, fg=solarizedRebase1}
+\setbeamercolor*{palette sidebar secondary}{fg=solarizedRebase01, fg=solarizedRebase1}
+\setbeamercolor*{palette sidebar tertiary}{fg=solarizedRebase01, fg=solarizedRebase1}
+\setbeamercolor*{palette sidebar quaternary}{fg=solarizedRebase01, fg=solarizedRebase1}
+
+% border-color for headings
+\setbeamercolor{separation line}{fg=solarizedRebase0}
+\setbeamercolor{fine separation line}{fg=solarizedRebase0}
+
+\setbeamercolor*{section in sidebar shaded}{parent=palette sidebar primary}
+% a.hover.navlink in CSS
+\setbeamercolor*{section in sidebar}{parent=palette sidebar primary, fg=solarizedRebase02}
+\setbeamercolor*{subsection in sidebar}{parent=section in sidebar}
+\setbeamercolor*{subsection in sidebar shaded}{parent=section in sidebar shaded}
+
+\mode
+<all>
+
