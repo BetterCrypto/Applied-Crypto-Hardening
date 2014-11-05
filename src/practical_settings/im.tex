@@ -19,7 +19,7 @@ The last point being out-of-scope for this section, we will only cover the first
 \subsection{Prosody}
 \subsubsection{Settings}
 Prosody is a Jabber server which is written in Lua. 
-The following configuration is suggested to disable SSLv2 and SSLv3 and require a TLS connection.
+The following configuration is suggested to disable SSLv2 and SSLv3 and require a TLS connection. In addition this configuration removes RC4, SHA1 and MD5.
 
 \configfile{prosody.cfg.lua}{90-98,103-104}{% 
   TLS setup for Prosody}

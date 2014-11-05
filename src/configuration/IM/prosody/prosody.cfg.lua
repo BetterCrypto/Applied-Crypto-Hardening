@@ -92,7 +92,7 @@ ssl = {
 	certificate = "/etc/ssl/jabber/root.crt";
 	dhparam = "/etc/ssl/jabber/dhparam.pem";
 	options = {"no_sslv2", "no_sslv3","no_tlsv1" };
-	ciphers = "HIGH+kEDH:HIGH+kEECDH:HIGH:!RC4:!SHA1:!PSK:!SRP:!3DES:!aNULL";
+	ciphers = "HIGH+kEDH:HIGH+kEECDH:HIGH:!RC4:!SHA1:!MD5:!PSK:!SRP:!3DES:!aNULL";
 	depth = "1";
 	curve = "secp384r1";
 }
