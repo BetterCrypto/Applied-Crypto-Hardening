@@ -165,14 +165,14 @@ VirtualHost "example.org"
 	-- set in the global section (if any).
 	-- Note that old-style SSL on port 5223 only supports one certificate, and will always
 	-- use the global one.
-	ssl = {
-		key = "/etc/ssl/ejabberd/privkey.pem";
-		certificate = "/etc/ssl/ejabberd/root.crt";
-		options = {"no_sslv2", "no_sslv3" };
-		dhparam = "/etc/jabber/cert/dhparam.pem";
+--	ssl = {
+--		key = "/etc/ssl/ejabberd/privkey.pem";
+--		certificate = "/etc/ssl/ejabberd/root.crt";
+--		options = {"no_sslv2", "no_sslv3" };
+--		dhparam = "/etc/jabber/cert/dhparam.pem";
 
 
-	}
+--	}
 ------ Components ------
 -- You can specify components to add hosts that provide special services,
 -- like multi-user conferences, and transports.
