@@ -62,3 +62,5 @@ clean:
 	rm -rf applied-crypto-hardening/
 	rm -rf gitHeadInfo.gin
 	rm -f applied-crypto-hardening.txt
+	rm configfiles.txt
+	rm applied-crypto-hardening.synctex.gz
