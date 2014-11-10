@@ -80,7 +80,7 @@ a.k.a.:\par
 
 # But where?
 
-  * Ca. August 2013: Adi Kriegisch asks Aaron where he could find good recommendations on SSL settings.
+  * Ca. August 2013: Adi Kriegisch asks Aaron Kaplan where he could find good recommendations on SSL settings.
   * Does that exist? At that time:
     - no ssllabs cookbook
     - only theoretical recommendations (ENISA, eCrypt II, NIST)
