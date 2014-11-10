@@ -270,52 +270,6 @@ Set-WebConfiguration -Location "$WebSiteName/$WebApplicationName" `
 See appendix \ref{cha:tools}
 
 %%---------------------------------------------------------------------- 
-\subsection{Supporting older clients}
-% hack.
-\gdef\currentsectionname{Webservers-legacy}
-
-Older clients like Internet Explorer on Windows XP (actually the Windows XP
-crypto stack), Java 6 and Java 7 aren't supported by the recommended Variant B
-cipher string.
-To catch most of those old clients you might use their inability to understand
-SNI to create a catchall page with a default SSL server. On the default page
-you should provide information about upgrading their browser to the user.
-This will not work with Java 7 because Java 7 understands SNI.
-
-\subsubsection{Apache}
-% hack.
-\gdef\currentsubsectionname{Apache}
-
-Create a default SSL server:
-
-\configfile{ports.conf}{12-13}{SNI for SSL on Apache}
-\configfile{000-default-ssl}{2-14}{SNI catchall on Apache}
-
-The catchall virtual server needs to be the first server in the config.
-You also should not use snakeoil certificates (as in the snipplet above)
-but the very same certificate as you use for the real service. In case you
-provide several virtual servers via SNI, the certificate for the catchall page
-needs to include all their names.
-
-%\subsubsection{lighttpd}
-%% hack.
-%\gdef\currentsubsectionname{lighttpd}
-%
-%\todo{someone needs to write that section or we just omit it}
-
-\subsubsection{nginx}
-% hack.
-\gdef\currentsubsectionname{nginx}
-
-Create a default SSL server:
-\configfile{default}{125-139}{SNI catchall on nginx}
-
-The real service then needs to be in its own server definition omitting the
-\texttt{default} keyword in the \texttt{listen} directive.
-You should not use snakeoil certificates (as in the snipplet above) but the
-very same certificate as you use for the real service. In case you provide
-several virtual servers via SNI, the certificate for the catchall page needs
-to include all their names.
 
 %%% Local Variables: 
 %%% mode: latex
