@@ -44,8 +44,8 @@ epub:
 	pandoc -f latex -t epub -o applied-crypto-hardening.epub applied-crypto-hardening.tex
 
 upload:
-	rsync -avz --progress --no-p --no-g --no-t applied-crypto-hardening.pdf www.bettercrypto.org:/var/www/static/
-	rsync -avz --progress --no-p --no-g --no-t configuration www.bettercrypto.org:/var/www/static/
+	rsync -avz --progress --no-p --no-g --no-t applied-crypto-hardening.pdf www.bettercrypto.org:/var/www/bettercrypto.org/static
+	rsync -avz --progress --no-p --no-g --no-t configuration www.bettercrypto.org:/var/www/bettercrypto.org/static
 
 www:	pdf upload
 
