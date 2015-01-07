@@ -136,7 +136,7 @@ listen:
     shaper: c2s_shaper
     access: c2s
     # Set the cipher order of the server, in OpenSSL syntax
-    ciphers: "HIGH+kEDH:HIGH+kEECDH:HIGH:!PSK:!SRP:!3DES:!aNULL:!MD5:!RC4"
+    ciphers: "EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA"
     # TODO Is this cipher order fine?
   - 
     port: 5269
@@ -208,7 +208,7 @@ s2s_protocol_options:
   # Again, prefer our known good cipher ordering to the potentially bad one
   # of the other server
 
-s2s_ciphers: "HIGH+kEDH:HIGH+kEECDH:HIGH:!PSK:!SRP:!3DES:!aNULL:!MD5:!RC4"
+s2s_ciphers: "EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA"
 # TODO Is this cipher order fine?
 
 

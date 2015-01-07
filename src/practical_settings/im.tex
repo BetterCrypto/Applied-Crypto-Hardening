@@ -45,7 +45,7 @@ with the manifesto, you should adapt your configuration\footnote{\url{http://www
 It is possible to explicitly specify a cipher string for TLS connections.
 \configfile{ejabberd.yml}{104-107,113-114,119-119,123-123,125-125,127-127,134-137,139-139,141-143,192-192,200-200,204-207,211-211}{Specifying a cipher order and enforcing it}
 
-Note that we are setting the SSL option cipher\_server\_preference. This enforces our cipher order when negotiating which ciphers are used, as the cipher order of some clients chooses weak ciphers over stronger ciphers.\footnote{\url{https://blog.thijsalkema.de/me/blog//blog/2013/09/02/the-state-of-tls-on-xmpp-3/}}
+Note that we are setting the SSL option cipher\_server\_preference. This enforces our cipher order when negotiating which ciphers are used, as the cipher order of some clients chooses weak ciphers over stronger ciphers.\footnote{\url{https://blog.thijsalkema.de/me/blog//blog/2013/09/02/the-state-of-tls-on-xmpp-3/}} The cipher suite is chosen as per the recommendations in \autoref{section:recommendedciphers}, choosing the more compatible set due to the poor cipher availability in some clients.
 
 Other options you may want to take a look at are:
 \begin{itemize}
