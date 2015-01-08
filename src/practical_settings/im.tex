@@ -31,7 +31,7 @@ The following configuration is suggested to disable SSLv2 and SSLv3 and require 
 
 \subsubsection{Tested with Versions}
 \begin{itemize*}
-  \item 14.12 (Ubuntu 14.04.1 LTS)
+  \item 14.12 (Ubuntu 14.04.1 LTS x64, Debian 7 x64)
 \end{itemize*}
 
 \subsubsection{Settings}
@@ -49,15 +49,12 @@ Note that we are setting the SSL option cipher\_server\_preference. This enforce
 
 Other options you may want to take a look at are:
 \begin{itemize}
-\item The log level logs all login, including username and IP address, by default. Change the \texttt{loglevel} setting to avoid this:\\
-\configfile{14.12/ejabberd.yml}{31-39}{Changing the logging behaviour}
-\item By default, ejabberd provides an administration website (look for the ejabberd\_http module). Consider disabling it or adding TLS protection:\\
-\configfile{14.12/ejabberd.yml}{174-175,178-180,182-182,184-185}{Adding TLS to the web interface}
-\item By default, registration is open to everyone. Look for the \texttt{register} setting:\\
-\configfile{14.12/ejabberd.yml}{474-474,514-517}{Changing registration settings}
-\item By default, passwords are stored in plain text. Change this to hashed using the setting:\\
-\configfile{14.12/ejabberd.yml}{251-251,255-256}{Changing password storage to hashed}
+\item By default, ejabberd provides an administration website (look for the ejabberd\_http module). Enable TLS protection for it like this:
 
+\configfile{14.12/ejabberd.yml}{174-175,178-180,182-182,184-185}{Adding TLS to the web interface}
+\item By default, passwords are stored in plain text. Change this to hashed using the setting:
+
+\configfile{14.12/ejabberd.yml}{251-251,255-256}{Changing password storage to hashed}
 Alternatively, you can use a database backend to store authentication data, the details of which are out of the scope of this document.
 \end{itemize}
 
@@ -68,7 +65,7 @@ Alternatively, you can use a database backend to store authentication data, the 
 \subsubsection{Settings}
 ejabberd is one of the popular Jabber servers. In order to be compliant
 with the manifesto, you should adapt your configuration\footnote{\url{http://www.process-one.net/docs/ejabberd/guide_en.html}}:
-\configfile{2.1.10/ejabberd.cfg}{108-109,111-111,120-126,172-172,179-179,184-184}{%
+\configfile{2.1.10/ejabberd.cfg}{108-109,111-111,120-126,172-172,179-179,184-184}{
 TLS setup for ejabberd}
 %
 \subsubsection{Additional settings}
