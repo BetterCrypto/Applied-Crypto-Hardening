@@ -47,16 +47,9 @@ It is possible to explicitly specify a cipher string for TLS connections.
 
 Note that we are setting the SSL option cipher\_server\_preference. This enforces our cipher order when negotiating which ciphers are used, as the cipher order of some clients chooses weak ciphers over stronger ciphers.\footnote{\url{https://blog.thijsalkema.de/me/blog//blog/2013/09/02/the-state-of-tls-on-xmpp-3/}}
 
-Other options you may want to take a look at are:
-\begin{itemize}
-\item By default, ejabberd provides an administration website (look for the ejabberd\_http module). Enable TLS protection for it like this:
+By default, ejabberd provides an administration website (look for the ejabberd\_http module). Enable TLS protection for it like this:
 
 \configfile{14.12/ejabberd.yml}{174-175,178-180,182-182,184-185}{Adding TLS to the web interface}
-\item By default, passwords are stored in plain text. Change this to hashed using the setting:
-
-\configfile{14.12/ejabberd.yml}{251-251,255-256}{Changing password storage to hashed}
-Alternatively, you can use a database backend to store authentication data, the details of which are out of the scope of this document.
-\end{itemize}
 
 \subsubsection{Tested with Versions}
 \begin{itemize*}
