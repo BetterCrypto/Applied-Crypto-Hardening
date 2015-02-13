@@ -116,3 +116,32 @@ Disabling protocols and ciphers in a forward proxy environment could lead to une
 
 \subsubsection{Settings}
 \configfile{pound.cfg}{31}{HTTPS Listener in Pound}
+
+
+%% ---------------------------------------------------------------------- 
+\subsection{stunnel}
+% See https://www.stunnel.org/
+
+\subsubsection{Tested with Versions}
+\begin{itemize*}
+  \item stunnel 4.53-1.1ubuntu1 on Ubuntu 14.04 Trusty with OpenSSL 1.0.1f, without disabling Secure Client-Initiated Renegotiation
+  \item stunnel 5.02-1 on Ubuntu 14.04 Trusty with OpenSSL 1.0.1f
+  \item stunnel 4.53-1.1 on Debian Wheezy with OpenSSL 1.0.1e, without disabling Secure Client-Initiated Renegotiation
+\end{itemize*}
+
+\subsubsection{Settings}
+\configfile{stunnel.conf}{48-55}{HTTPS Listener in Pound}
+
+\subsubsection{Additional information}
+Secure Client-Initiated Renegotiation can only be disabled for stunnel versions >= 4.54, when the renegotiation parameter has been added (See changelog).
+
+\subsubsection{References} 
+\begin{itemize*}
+  \item stunnel documentation: \url{https://www.stunnel.org/static/stunnel.html}
+  \item stunnel changelog: \url{https://www.stunnel.org/sdf_ChangeLog.html}
+\end{itemize*}
+
+
+\subsubsection{How to test} 
+See appendix \ref{cha:tools}
+
