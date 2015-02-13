@@ -14,7 +14,7 @@ synonyms~\footnote{https://www.mail-archive.com/openssl-dev@openssl.org/msg33405
 \subsubsection{Settings}
 Enabled modules \emph{SSL} and \emph{Headers} are required.
 
-\configfile{default-ssl}{162-170}{SSL configuration for an Apache vhost}
+\configfile{default-ssl}{42-43,52-52,62-62,162-170}{SSL configuration for an Apache vhost}
 
 \subsubsection{Additional settings}
 You might want to redirect everything to \emph{https://} if possible. In Apache
@@ -46,7 +46,7 @@ See appendix \ref{cha:tools}
 
 
 \subsubsection{Settings}
-\configfile{10-ssl.conf}{3-14}{SSL configuration for lighttpd}
+\configfile{10-ssl.conf}{3-15}{SSL configuration for lighttpd}
 
 Starting with lighttpd version 1.4.29 Diffie-Hellman and Elliptic-Curve Diffie-Hellman key agreement protocols are supported.
 By default, elliptic curve "prime256v1" (also "secp256r1") will be used, if no other is given.
