@@ -1,0 +1,22 @@
+%%---------------------------------------------------------------------- 
+\warningbox{%
+Please be advised that any change in the SSH-Settings of your client might cause problems connecting to a server.}
+\subsection{OpenSSH}
+When connecting to an SSH-Server, the client sends a list of supported Ciphers. The server compares the received list item by item to its own, starting with the first client item.
+The first matching cipher is used. The same way of negotiation is used for MACs and key exchange methods.
+This is unfortunate, because client cipher priority supersedes the servers priority listing.
+
+\subsubsection{Tested with Version} OpenSSH 6.6.1p1 (Ubuntu)
+\subsubsection{Settings}
+\configfile{6.6/ssh_config}{47-47,49-51}{Important OpenSSH 6.6 security
+settings for a client}
+
+%\subsubsection{Justification for special settings (if needed)}
+\subsubsection{References}
+The OpenSSH ssh\_config  man page is the best reference: \url{http://www.openssh.org/cgi-bin/man.cgi?query=ssh_config}
+
+\subsubsection{How to test}
+Connect the client with verbose logging enabled to a SSH server
+\begin{lstlisting}
+$ ssh -vvv myserver.com
+\end{lstlisting}and observe the key exchange in the output.
