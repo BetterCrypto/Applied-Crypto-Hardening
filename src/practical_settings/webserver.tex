@@ -130,6 +130,75 @@ See appendix \ref{cha:tools}
 
 
 %%---------------------------------------------------------------------- 
+\subsection{Cherokee}
+
+\subsubsection{Tested with Version}
+\begin{itemize*}
+    \item Cherokee/1.2.104 on Debian Wheezy with OpenSSL 1.0.1e 11 Feb 2013
+\end{itemize*}
+
+\subsubsection{Settings}
+
+The configuration of the cherokee webserver is performed by an admin interface available via the web. It then writes the configuration to \texttt{/etc/cherokee/cherokee.conf}, the important lines of such a configuration file can be found at the end of this section.
+
+\begin{itemize*}
+    \item General Settings
+    \begin{itemize*}
+        \item Network
+        \begin{itemize*}
+            \item \emph{SSL/TLS back-end}: \emph{OpenSSL/libssl}
+        \end{itemize*}
+        \item Ports to listen
+        \begin{itemize*}
+            \item Port: 443, TLS: TLS/SSL port
+        \end{itemize*}
+    \end{itemize*}
+    \item Virtual Servers, For each vServer on tab \emph{Security}:
+    \begin{itemize*}
+        \item \emph{Required SSL/TLS Values}: Fill in the correct paths for \emph{Certificate} and \emph{Certificate key}
+        \item Advanced Options
+        \begin{itemize*}
+            \item \emph{Ciphers}: \texttt{EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:\newline EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:\newline+SSLv3:!aNULL!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:\newline!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA}
+            \item \emph{Server Preference}: Prefer
+            \item \emph{Compression}: Disabled
+        \end{itemize*}
+    \end{itemize*}
+    \item Advanced: TLS
+    \begin{itemize*}
+        \item SSL version 2 and SSL version 3: No
+        \item TLS version 1, TLS version 1.1 and TLS version 1.2: Yes
+    \end{itemize*}
+\end{itemize*}
+
+\subsubsection{Additional settings}
+For each vServer on the Security tab it is possilbe to set the Diffie Hellman length to up to 4096 bits. We recommend to use \textgreater 1024 bits.
+More information about Diffie-Hellman and which curves are recommended can be found in section \ref{section:DH}.
+
+In Advanced: TLS it is possible to set the path to a Diffie Hellman parameters file for 512, 1024, 2048 and 4096 bits.
+
+HSTS can be configured on host-basis in section \emph{vServers} / \emph{Security} / \emph{HTTP Strict Transport Security (HSTS)}:
+\begin{itemize*}
+    \item \emph{Enable HSTS}: Accept
+    \item \emph{HSTS Max-Age}: 15768000
+    \item \emph{Include Subdomains}: depends on your setup
+\end{itemize*}
+
+To redirect HTTP to HTTPS, configure a new rule per Virtual Server in the \emph{Behavior} tab. The rule is \emph{SSL/TLS} combined with a \emph{NOT} operator. As \emph{Handler} define \emph{Redirection} and use \texttt{/(.*)\$} as \emph{Regular Expression} and \emph{https://\$\{host\}/\$1} as \emph{Substitution}.
+
+\configfile{cherokee.conf}{3-4,12-12,17-19,26-32,52-57}{SSL configuration for cherokee}
+
+\subsubsection{References}
+\begin{itemize*}
+  \item Cookbook: SSL, TLS and certificates: \url{http://cherokee-project.com/doc/cookbook_ssl.html}
+  \item Cookbook: Redirecting all traffic from HTTP to HTTPS: \url{http://cherokee-project.com/doc/cookbook_http_to_https.html}
+\end{itemize*}
+
+
+\subsubsection{How to test}
+See appendix \ref{cha:tools}
+
+
+%%----------------------------------------------------------------------
 \subsection{MS IIS}
 \label{sec:ms-iis}
 
