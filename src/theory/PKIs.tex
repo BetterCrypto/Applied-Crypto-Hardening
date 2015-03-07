@@ -64,7 +64,7 @@ to you.  In this case, you can generate a private key and a corresponding
 certificate request as follows:
 
 \begin{lstlisting}
-% openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize>
+% openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize> -sha256
 Country Name (2 letter code) [AU]:DE
 State or Province Name (full name) [Some-State]:Bavaria
 Locality Name (eg, city) []:Munich
@@ -125,7 +125,7 @@ With OpenSSL, you can self-sign a previously created certificate with this comma
 
 You can also create a self-signed certificate in just one command:
 \begin{lstlisting}
-openssl req -new -x509 -keyout privkey.pem -out cacert.pem -days 1095 -nodes -newkey rsa:<keysize>
+openssl req -new -x509 -keyout privkey.pem -out cacert.pem -days 1095 -nodes -newkey rsa:<keysize> -sha256
 \end{lstlisting}
 
 The resulting certificate will by default not be trusted by anyone at all,
