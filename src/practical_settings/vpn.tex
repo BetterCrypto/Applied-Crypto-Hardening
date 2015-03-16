@@ -195,108 +195,103 @@ Please note that these settings restrict the available algorithms for
 
 %% cipherstrings current 2013-12-09
 % ---------------------------------------------------------------------- 
+\subsection{OpenVPN}
 
-%
-% atm openvpn only supports cbc mode, removed by azet 18/2/2015
-%
+\subsubsection{Tested with Versions}
+\begin{itemize*}
+  \item OpenVPN 2.3.2 from Debian ``wheezy-backports'' linked against openssl (libssl.so.1.0.0) 
+  \item OpenVPN 2.2.1 from Debian Wheezy linked against openssl
+    (libssl.so.1.0.0) 
+  \item OpenVPN 2.3.2 for Windows
+\end{itemize*}
 
-%\subsection{OpenVPN}
-%
-%\subsubsection{Tested with Versions}
-%\begin{itemize*}
-%  \item OpenVPN 2.3.2 from Debian ``wheezy-backports'' linked against openssl (libssl.so.1.0.0) 
-%  \item OpenVPN 2.2.1 from Debian Wheezy linked against openssl
-%    (libssl.so.1.0.0) 
-%  \item OpenVPN 2.3.2 for Windows
-%\end{itemize*}
-%
-%\subsubsection{Settings}
-%
-%\paragraph{General}
-%We describe a configuration with certificate-based authentication; see
-%below for details on the \verb|easyrsa| tool to help you with that.
-%
-%OpenVPN uses TLS only for authentication and key exchange. The
-%bulk traffic is then encrypted and authenticated with the OpenVPN
-%protocol using those keys.
-%
-%Note that while the \verb|tls-cipher| option takes a list of ciphers
-%that is then negotiated as usual with TLS, the \verb|cipher|
-%and \verb|auth| options both take a single argument that must match on
-%client and server.
-%
-%\paragraph{Server Configuration}
-%%~\\
-%% the cipherlist here is config B without the ECDHE strings, because
-%% it must fit in 256 bytes...
-%% DO NOT CHANGE TO THE CIPHERSTRING MACRO!
-%\configfile{server.conf}{248-250}{Cipher configuration for OpenVPN (Server)}
-%
-%\paragraph{Client Configuration}
-%Client and server have to use compatible configurations, otherwise they can't communicate.
-%The \verb|cipher| and \verb|auth| directives have to be identical.
-%
-%% the cipherlist here is config B without the ECDHE strings, because
-%% it must fit in 256 bytes...
-%% DO NOT CHANGE TO THE CIPHERSTRING MACRO!
-%\configfile{client.conf}{44-45,115-121}{Cipher and TLS configuration for OpenVPN (Server)}
-%
-%\subsubsection{Justification for special settings}
-%OpenVPN 2.3.1 changed the values that the \verb|tls-cipher| option
-%expects from OpenSSL to IANA cipher names. That means from that
-%version on you will get ``Deprecated TLS cipher name'' warnings for
-%the configurations above. You cannot use the selection strings from
-%section \ref{section:recommendedciphers} directly from 2.3.1 on, which
-%is why we give an explicit cipher list here.
-%
-%In addition, there is a 256 character limit on configuration file line
-%lengths; that limits the size of cipher suites, so we dropped all
-%ECDHE suites.
-%
-%The configuration shown above is compatible with all tested versions.
-%
-%
-%\subsubsection{References}
-%\begin{itemize*}
-%  \item OpenVPN Documentation: \emph{Security Overview} \url{https://openvpn.net/index.php/open-source/documentation/security-overview.html}
-%\end{itemize*}
-%
-%%\subsubsection{How to test}
-%
-%
-%\subsubsection{Additional settings}
-%
-%\paragraph{Key renegotiation interval}
-%The default for renegotiation of encryption keys is one hour
-%(\verb|reneg-sec 3600|). If you
-%transfer huge amounts of data over your tunnel, you might consider
-%configuring a shorter interval, or switch to a byte- or packet-based
-%interval (\verb|reneg-bytes| or \verb|reneg-pkts|).
-%
-%\paragraph{Fixing ``easy-rsa''}
-%When installing an OpenVPN server instance, you are probably using
-%\emph{easy-rsa} to generate keys and certificates.
-%The file \verb|vars| in the easyrsa installation directory has a
-%number of settings that should be changed to secure values:
-%
-%\configfile{vars}{53-53,56-56,59-59}{Sane default values for OpenVPN (easy-rsa)}
-%
-%
-%This will enhance the security of the key generation by using RSA keys
-%with a length of 4096 bits, and set a lifetime of one year for the
-%server/client certificates and five years for the CA certificate. \textbf{NOTE: 4096 bits is only an example of how to do this with easy-rsa.} See also section \ref{section:keylengths} for a discussion on keylengths.
-%
-%In addition, edit the \verb|pkitool| script and replace all occurrences
-%of \verb|sha1| with \verb|sha256|, to sign the certificates with
-%SHA256.
-%
-%\subsubsection{Limitations}
-%Note that the ciphersuites shown by \verb|openvpn --show-tls| are \emph{known}, but not necessarily \emph{supported} \footnote{\url{https://community.openvpn.net/openvpn/ticket/304}}.
-%
-%Which cipher suite is actually used can be seen in the logs:
-%
-%\verb|Control Channel: TLSv1, cipher TLSv1/SSLv3 DHE-RSA-CAMELLIA256-SHA, 2048 bit RSA|
-%
+\subsubsection{Settings}
+
+\paragraph{General}
+We describe a configuration with certificate-based authentication; see
+below for details on the \verb|easyrsa| tool to help you with that.
+
+OpenVPN uses TLS only for authentication and key exchange. The
+bulk traffic is then encrypted and authenticated with the OpenVPN
+protocol using those keys.
+
+Note that while the \verb|tls-cipher| option takes a list of ciphers
+that is then negotiated as usual with TLS, the \verb|cipher|
+and \verb|auth| options both take a single argument that must match on
+client and server.
+
+\paragraph{Server Configuration}
+~\\
+% the cipherlist here is config B without the ECDHE strings, because
+% it must fit in 256 bytes...
+% DO NOT CHANGE TO THE CIPHERSTRING MACRO!
+\configfile{server.conf}{248-250}{Cipher configuration for OpenVPN (Server)}
+
+\paragraph{Client Configuration}
+Client and server have to use compatible configurations, otherwise they can't communicate.
+The \verb|cipher| and \verb|auth| directives have to be identical.
+
+% the cipherlist here is config B without the ECDHE strings, because
+% it must fit in 256 bytes...
+% DO NOT CHANGE TO THE CIPHERSTRING MACRO!
+\configfile{client.conf}{44-45,115-121}{Cipher and TLS configuration for OpenVPN (Server)}
+
+\subsubsection{Justification for special settings}
+OpenVPN 2.3.1 changed the values that the \verb|tls-cipher| option
+expects from OpenSSL to IANA cipher names. That means from that
+version on you will get ``Deprecated TLS cipher name'' warnings for
+the configurations above. You cannot use the selection strings from
+section \ref{section:recommendedciphers} directly from 2.3.1 on, which
+is why we give an explicit cipher list here.
+
+In addition, there is a 256 character limit on configuration file line
+lengths; that limits the size of cipher suites, so we dropped all
+ECDHE suites.
+
+The configuration shown above is compatible with all tested versions.
+
+
+\subsubsection{References}
+\begin{itemize*}
+  \item OpenVPN Documentation: \emph{Security Overview} \url{https://openvpn.net/index.php/open-source/documentation/security-overview.html}
+\end{itemize*}
+
+%\subsubsection{How to test}
+
+
+\subsubsection{Additional settings}
+
+\paragraph{Key renegotiation interval}
+The default for renegotiation of encryption keys is one hour
+(\verb|reneg-sec 3600|). If you
+transfer huge amounts of data over your tunnel, you might consider
+configuring a shorter interval, or switch to a byte- or packet-based
+interval (\verb|reneg-bytes| or \verb|reneg-pkts|).
+
+\paragraph{Fixing ``easy-rsa''}
+When installing an OpenVPN server instance, you are probably using
+\emph{easy-rsa} to generate keys and certificates.
+The file \verb|vars| in the easyrsa installation directory has a
+number of settings that should be changed to secure values:
+
+\configfile{vars}{53-53,56-56,59-59}{Sane default values for OpenVPN (easy-rsa)}
+
+
+This will enhance the security of the key generation by using RSA keys
+with a length of 4096 bits, and set a lifetime of one year for the
+server/client certificates and five years for the CA certificate. \textbf{NOTE: 4096 bits is only an example of how to do this with easy-rsa.} See also section \ref{section:keylengths} for a discussion on keylengths.
+
+In addition, edit the \verb|pkitool| script and replace all occurrences
+of \verb|sha1| with \verb|sha256|, to sign the certificates with
+SHA256.
+
+\subsubsection{Limitations}
+Note that the ciphersuites shown by \verb|openvpn --show-tls| are \emph{known}, but not necessarily \emph{supported} \footnote{\url{https://community.openvpn.net/openvpn/ticket/304}}.
+
+Which cipher suite is actually used can be seen in the logs:
+
+\verb|Control Channel: TLSv1, cipher TLSv1/SSLv3 DHE-RSA-CAMELLIA256-SHA, 2048 bit RSA|
+
 
 % ---------------------------------------------------------------------- 
 \subsection{PPTP}
