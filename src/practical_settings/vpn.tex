@@ -220,6 +220,11 @@ that is then negotiated as usual with TLS, the \verb|cipher|
 and \verb|auth| options both take a single argument that must match on
 client and server.
 
+OpenVPN duplexes the tunnel into a data and a control channel. The control
+channel is a usual TLS connection, the data channel currently uses 
+encrypt-then-mac CBC, see \url{https://github.com/BetterCrypto/Applied-Crypto-Hardening/pull/91#issuecomment-75365286}
+
+
 \paragraph{Server Configuration}
 ~\\
 % the cipherlist here is config B without the ECDHE strings, because
