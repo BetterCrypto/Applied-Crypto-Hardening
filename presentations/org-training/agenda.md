@@ -340,12 +340,14 @@ We still recommend perfect forward secrecy.
   * General:
     * Disable SSL 2.0 (weak algorithms)
     * Disable SSL 3.0 (BEAST vs IE/XP)
-    * Disable RC4 cipher (RFC)
+    * [Disable RC4 cipher](https://www.ietf.org/rfc/rfc7465.txt) (RFC7465)
     * Enable TLS 1.0 or better
     * Disable TLS-Compression (SSL-CRIME Attack)
     * Implement HSTS (HTTP Strict Transport Security)
   * Variant A: fewer supported clients
   * Variant B: more clients, weaker settings
+
+  Attacks only get better.
 
 
 
@@ -464,7 +466,7 @@ _WISHLIST_:
 
 # Tools: ssllabs.com
 
-![ssllabs.com](img/ssllabs.png)
+![ssllabs.com](img/SSLLabs_bettercrypto.org.png)
 
 
 # Tools: sslllabs.com (2)
