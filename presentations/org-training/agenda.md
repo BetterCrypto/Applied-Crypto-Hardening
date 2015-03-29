@@ -442,7 +442,7 @@ Only clients which support TLS1.2 are covered by these cipher suites (Chrome 30,
 * GnuPG
 * SSH
 * IM servers (jabber, irc)
-* _DANE_
+* _DANE_ (this section is still WIP)
 * _Configuration code snippets_
 
 
