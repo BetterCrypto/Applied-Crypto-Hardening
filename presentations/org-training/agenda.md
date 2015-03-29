@@ -519,10 +519,9 @@ _WISHLIST_:
 ![Wrap-up](img/wrap-up.jpg)
 
 
-# Current state as of 2014/10/06
+# Current state as of 2015-03-29
 
-  * OK: More or less solid basis with Variant (A) and (B)
-( Some minor modifications needed - maybe)
+  * OK: Solid basis with Variant (A) and (B)
   * Public draft was presented at the CCC Dec 2013. 
 Well received. Good feedback (Dan Bernstein, ...)
 
