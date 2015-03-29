@@ -498,7 +498,7 @@ _WISHLIST_:
 
 # Tools: ssllabs.com
 
-![ssllabs.com](img/SSLLabs_bettercrypto.org.png)
+![ssllabs.com](img/SSLLabs_bettercrypto_org.png)
 
 
 # Tools: sslllabs.com (2)
