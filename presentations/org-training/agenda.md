@@ -45,6 +45,12 @@ Please note:
   * If politicians in other countries did not know how to do this, now they know!
   * If criminals did not know how to do this, now they know!
 
+# Motivation (3)
+![Klaus Landefeld](img/Klaus_Landefeld.jpg)  
+Ende-zu-Ende-Verschlüsselung das Einzige, das funktioniert. Leitungen verschlüsseln auch schwierig, gibt keine Standards. Und Problem mit ausländischen Anbietern bleibt. Bereits beim Endkunden verschlüsseln, alles andere wird nicht helfen.  
+— Klaus Landefeld, 2015-03-26
+NSA Untersuchungssausschuß im deutschen Bundestag
+
 # The reaction
 
 \centering { \textbf{Don't give them anything for free}\par
