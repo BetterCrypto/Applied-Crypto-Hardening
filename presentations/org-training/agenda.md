@@ -41,7 +41,7 @@
 
 Please note:
 
-  * the leaks also revealed to non-democratic countries precise recipies on how to do country wide or even Internet-wide surveillance, traffic inspection and -modification, etc.
+  * the leaks also revealed to all countries worldwide precise recipies on how to do country wide or even Internet-wide surveillance, traffic inspection and -modification, etc.
   * If politicians in other countries did not know how to do this, now they know!
   * If criminals did not know how to do this, now they know!
 
@@ -181,6 +181,38 @@ How?
 \centering { \textbf{A large organisation has its own needs} }
 
 (Taking notes on infrastructure, legacy systems, inventory, etc.)
+
+# What's needed in your organisation? 
+(interactive session)
+
+Some points to get us thinking:
+  * What are the issues you have encounted with running more crypto?
+  * Which legacy systems exist? Can they be updated ? 
+  * How can you test all of your systems if they use strong crypto?
+  * Is there an inventory of all services and servers?
+  * Which services can be tested from outside? 
+  * Which only from inside? 
+  * Which interfaces exist to outside organisations using crypto? 
+  * ..... interfaces to ... , which should use crypto?
+
+
+# What's needed in your organisation? (2)
+(continued) 
+  * Are there any protection rings / classifications on different sets of information?
+  * Are there any automatic processes using SSL/crypto which can get disturbed by 
+updates?
+  * How to test these processes if they work?
+  * ***Key-roll-overs***: are there procedures for this? What happens when upgrading to 4k?
+  * Do not underestimate the amount of work for key-management
+
+
+# Proposed meta-strategy
+  * practice key-roll-overs
+  * practice identifying all services which run crypto
+  * practice testing them against known good standards automatically (nagios, ...)
+ 
+Turns out, key management as well as crypto management can be seen similarly to regular
+patch management: it needs periodic attention.
 
 # Part 3
 
