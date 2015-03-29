@@ -355,6 +355,8 @@ We still recommend perfect forward secrecy.
     * when is the router key generated
     * Default Keys ?
   * Re-generate keys from time to time
+  * Do not generate keys on fresh VMs.
+  * Always generate new keys when refreshing certificates
 
 
 # Cipher suites
@@ -366,6 +368,8 @@ We still recommend perfect forward secrecy.
 
 	SSLProtocol All -SSLv2 -SSLv3
 	SSLCipherSuite 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA'
+	
+	Names are not consistent between official IANA strings and most libraries. They are easily mixed up, always double check.
 
 # Some general thoughts on settings
 
@@ -498,7 +502,7 @@ _WISHLIST_:
 
 # Tools: ssllabs.com
 
-![ssllabs.com](img/SSLLabs_bettercrypto.org.png)
+![ssllabs.com](img/SSLLabs_bettercrypto_org.png)
 
 
 # Tools: sslllabs.com (2)
@@ -555,10 +559,9 @@ etc.
 ![Wrap-up](img/wrap-up.jpg)
 
 
-# Current state as of 2014/10/06
+# Current state as of 2015-03-29
 
-  * OK: More or less solid basis with Variant (A) and (B)
-( Some minor modifications needed - maybe)
+  * OK: Solid basis with Variant (A) and (B)
   * Public draft was presented at the CCC Dec 2013. 
 Well received. Good feedback (Dan Bernstein, ...)
 
