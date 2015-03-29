@@ -377,14 +377,15 @@ We still recommend perfect forward secrecy.
     * Disable SSL 2.0 (weak algorithms)
     * Disable SSL 3.0 (BEAST vs IE/XP)
     * [Disable RC4 cipher](https://www.ietf.org/rfc/rfc7465.txt) (RFC7465)
+    * Disable EXPORT suites (FREAK Attack)
     * Enable TLS 1.0 or better
     * Disable TLS-Compression (SSL-CRIME Attack)
     * Implement HSTS (HTTP Strict Transport Security)
+    * Implement OCSP stapling (Security and performance improvement)
   * Variant A: fewer supported clients
   * Variant B: more clients, weaker settings
 
   Attacks only get better.
-
 
 
 # Variant **A**
