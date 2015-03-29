@@ -511,7 +511,43 @@ _WISHLIST_:
 ![ssllabs.com](img/ssllabs3.png)
 
 
+# Tools: masscan
 
+[masscan](https://github.com/robertdavidgraham/masscan)
+
+"TCP port scanner, spews SYN packets asynchronously, scanning entire Internet in under 5 minutes."
+
+* Idea: if you have a very large network range, use masscan (***be sure to rate-limit!***) to discover all 
+open ports 443, 993, 143, 25
+* Now you have an inventory of SSL-speaking ports
+* Use SSLyze to test these internally
+
+# Tools: SSLyze
+
+[SSLyze](https://github.com/nabla-c0d3/sslyze/releases) is a "Fast and full-featured SSL scanner"
+
+A tool to test internally which cipherstrings are supported.
+The tool offers these features (amonst others):
+  * get a list of targets (ip:port) from a file
+  * XML output
+  * heartbleed test
+  * OCSP stapling test
+  * SSLv2-TLS1.2 testing
+  * finding preferred and supported cipherstrings
+  * STARTTLS testing (IMAP, pop, ...)
+  * XMPP testing
+  * SNI support
+  * HSTS testing
+etc.
+
+# Tools: SSLyze (1)
+
+[sslyze-screenshot1](img/sslyze-scan-sample1.png)
+
+
+# Tools: SSLyze (2)
+
+[sslyze-screenshot2](img/sslyze-scan-sample2.png)
 
 # Wrap-up
 
