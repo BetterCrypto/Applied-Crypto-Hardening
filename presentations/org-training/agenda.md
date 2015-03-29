@@ -546,12 +546,12 @@ etc.
 
 # Tools: SSLyze (1)
 
-[sslyze-screenshot1](img/sslyze-scan-sample1.png)
+![sslyze-screenshot1](img/sslyze-scan-sample1.png)
 
 
 # Tools: SSLyze (2)
 
-[sslyze-screenshot2](img/sslyze-scan-sample2.png)
+![sslyze-screenshot2](img/sslyze-scan-sample2.png)
 
 # Wrap-up
 
@@ -564,51 +564,12 @@ etc.
   * OK: Solid basis with Variant (A) and (B)
   * Public draft was presented at the CCC Dec 2013. 
 Well received. Good feedback (Dan Bernstein, ...)
-
-# What's still needed?
-
-  * Need to convert to HTML/restructured text (RST) and have the whole guide on the web
-  * fix the \texttt{@@@CIPHERSTRINGB@@@} macro in the configuration/ dir
-  * re-review  the configuration/\* files. Maybe crap slipped in 
-due to large commits :(
-  * _WISHLIST_: config generator
-  * _WISHLIST_: automatic compatibility testing
-  * _WISHLIST_: automatic internet-wide measurement (massscan, zmap, ...)
-  * long term maintenance / upkeep strategy
-
-
-# How to participate?
-
-1. We need: cryptologists, sysadmins, hackers
-1. Read the document, find bugs!
-1. Master git repo (git.bettercrypto.org) is world-readable. 
-1. Subscribe to the mailing list
-1. look at the TODO.md file
-1. Understand the cipher strings Variant (A) and (B) before proposing some changes
-
-# How to participate? (2)
-1. If you add content to a subsection, make a sample config with variant (B)
-1. **use the \texttt{@@@CIPHERSTRINGB@@@} macro !** :
-  * edit config snippets in \texttt{configuration/\*}
-  * \texttt{make config} to copy over the template from \texttt{configuration/} to \texttt{stage/}
-  * \texttt{make config} basically does: \texttt{sed -i "s/@@@CIPHERSTRINGB@@@/\$cipherstringB/g"}
-1. Use the github.com repo for pull requests
-1. **important:** please do many smaller commits! It's easier to review and merge.
-
-# How to participate? (3)
-We need: 
-  * Add content to an subsection from the TODO list -> send us diffs
-  * Reviewers!
-
-Accept that  your commit might be under quite some scrutiny, that's the game.
-  * **C**ompletely
-  * **O**pen
-  * **S**ource
-  * **H**eaders
-  * **E**ngineering and
-  * **R**esearch
-
-
+  * more work needs to be done:
+   * certificate pinning
+   * Dane
+   * SPDY
+   * etc.
+  * This is a process which should be done regularly
 
 
 # Links
