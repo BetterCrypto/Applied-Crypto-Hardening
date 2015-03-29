@@ -1,6 +1,6 @@
 % Bettercrypto - Applied Crypto Hardening for Sysadmins
 % L. Aaron Kaplan <kaplan@cert.at> ; Maclemon (Zawodsky Pepi) <pepi@maclemon.at>
-% 2015/03/30
+% 2015-03-30
 ---------------------------
 
 
