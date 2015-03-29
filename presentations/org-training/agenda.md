@@ -1,6 +1,6 @@
 % Bettercrypto - Applied Crypto Hardening for Sysadmins
 % L. Aaron Kaplan <kaplan@cert.at> ; Maclemon (Zawodsky Pepi) <pepi@maclemon.at>
-% 2015/03/30
+% 2015-03-30
 ---------------------------
 
 
@@ -372,6 +372,7 @@ We still recommend perfect forward secrecy.
   * General:
     * Disable SSL 2.0 (weak algorithms)
     * Disable SSL 3.0 (BEAST vs IE/XP)
+    * Disable RC4 cipher (RFC)
     * Enable TLS 1.0 or better
     * Disable TLS-Compression (SSL-CRIME Attack)
     * Implement HSTS (HTTP Strict Transport Security)
