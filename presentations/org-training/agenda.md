@@ -16,7 +16,7 @@
 
   1. **Part 1:** Intro to bettercrypto & Motivation
   2. How we got started, how we work, what's there, what's missing, how to use the guide
-  2. Q&A round: what's needed for the organisation?
+  2. Brainstorming round: what's needed for the organisation?
   3. **Part 2:** Background
   3. History of Crypto in a nutshell
   4. Theory
@@ -24,6 +24,7 @@
   5. Theory (cont.)
   5. Practical settings
   6. **Part 3:** Testing, tools, finding a process for improvement
+  6. Brainstorming round: finding an internal testing strategy
   7. wrap up & next steps
     
 
@@ -182,7 +183,7 @@ How?
 
 (Taking notes on infrastructure, legacy systems, inventory, etc.)
 
-# What's needed in your organisation? 
+# Brainstorming: what's needed in your organisation? 
 (interactive session)
 
 Some points to get us thinking:
@@ -553,6 +554,19 @@ etc.
 # Tools: SSLyze (2)
 
 ![sslyze-screenshot2](img/sslyze-scan-sample2.png)
+
+# Brainstorming: finding an internal testing strategy
+
+Some questions to think about:
+  * Which tests are non-intrusive? Which should be avoided?
+  * Do we need a full inventory? Can we generate the inventory?
+Does the inventory match the scanned results (hosts & ports)?
+  * Should any  mismatch raise alarms?
+  * Once we identified all ips:ports - do we need to know hostnames? (SNI)?
+  * Defining a common base-line level which MUST be supported
+  * automatic testing against that base-line level? How?
+  * Integration into existing monitoring solutions?
+
 
 # Wrap-up
 
