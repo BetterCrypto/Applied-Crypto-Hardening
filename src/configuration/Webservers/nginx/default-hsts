@@ -26,7 +26,7 @@ server {
 
 	# Make site accessible from http://localhost/
 	server_name localhost;
-	return 301 https://$host$request_uri;
+	return 301 https://www.domain.com$request_uri;
 }
 
 
