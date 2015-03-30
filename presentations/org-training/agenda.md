@@ -1,5 +1,5 @@
 % Bettercrypto - Applied Crypto Hardening for Sysadmins
-% L. Aaron Kaplan <kaplan@cert.at> ; Maclemon (Zawodsky Pepi) <pepi@maclemon.at>
+% L. Aaron Kaplan <kaplan@cert.at> ;\vspace{\baselineskip} Pepi Zawodsky <pepi.zawodsky@maclemon.at>
 % 2015-03-30
 ---------------------------
 
@@ -32,7 +32,7 @@
 
   * Participants should have a basic knowledge of System administration and be familiar with configuring Apache, nginx, etc.
   * know git/github
-  * a basic knowledge of crypto will help.
+  * a basic knowledge of cryptography will help.
 
 # Motivation
 
@@ -47,14 +47,15 @@ Please note:
   * If criminals did not know how to do this, now they know!
 
 # Motivation (3)
-
+\begin{flushright}
 \includegraphics[width=3cm]{img/Klaus_Landefeld.jpg}
+\end{flushright}
 
-
-Ende-zu-Ende-Verschlüsselung das Einzige, das funktioniert. Leitungen verschlüsseln auch schwierig, gibt keine Standards. Und Problem mit ausländischen Anbietern bleibt. Bereits beim Endkunden verschlüsseln, alles andere wird nicht helfen.  
-
-— Klaus Landefeld, 2015-03-26
-NSA Untersuchungssausschuß im deutschen Bundestag
+Ende-zu-Ende-Verschlüsselung ist das Einzige, das funktioniert. Leitungen verschlüsseln ist auch schwierig, es gibt keine Standards. Und das Problem mit ausländischen Anbietern bleibt. Bereits beim Endkunden verschlüsseln, alles andere wird nicht helfen.  
+	 \begin{flushright}
+— Klaus Landefeld, Beirat DE-CIX Management GmbH
+2015-03-26, NSA Untersuchungssausschuß im deutschen Bundestag
+	 \end{flushright}
 
 # The reaction
 
@@ -85,7 +86,10 @@ spoken words tend to:
 \centering { \textbf{Crypto is the only thing that might still help}
 \par
 a.k.a.:\par
-	``\textit{The Bottom Line Is That Encryption Does Work}'', Edward Snowden
+	``\textit{The Bottom Line Is That Encryption Does Work}'' 
+	 \begin{flushright}
+	 — Edward Snowden
+	 \end{flushright}
 }
 
 # But where?
@@ -106,17 +110,15 @@ a.k.a.:\par
 # Project plan  (srsly)
 
   * Do at least something against the **Cryptocalypse**
-  * Check SSL, SSH, PGP crypto SeIngs in the most common services and certificates:
-    –  Apache, Nginx, lighthNp
-	–  IMAP/POP servers (dovecot, cyrus, ...) –  openssl.conf
+  * Check SSL, SSH, PGP crypto Settings in the most common services and certificates:
+    –  Apache, nginx, lighttpd
+	–  IMAP/POP servers (dovecot, cyrus, …) –  openssl.conf
 	–  Etc.
-  * Write down our experinces as guide
+  * Write down our experiences as guide
   * Create easy, copy & paste-able settings which are "OK" (as far as we know) for sysadmins.
   * Keep the guide short. There are many good recommendations out there written by cryptographers for cryptographers
   * Many eyes must check this!
   * Make it open source
-
-  
 
 
 # Why is this relevant for you?
@@ -126,11 +128,12 @@ a.k.a.:\par
 
   * However good crypto is hard to achieve
   * Crypto does not solve all problems, but it helps
+  * There are no secure defaults
 
 
 # Who?
 
-Wolfgang Breyha (uni VIE), David Durvaux, Tobias Dussa (KIT-CERT), L. Aaron Kaplan (CERT.at), Christian Mock (coretec), Daniel Kovacic (A-Trust), Manuel Koschuch (FH Campus Wien), Adi Kriegisch (VRVis), Ramin Sabet (A-Trust), Aaron Zauner (azet.org), Pepi Zawodsky (maclemon.at), IAIK, A-Sit, ...  
+Wolfgang Breyha (uni VIE), David Durvaux, Tobias Dussa (KIT-CERT), L. Aaron Kaplan (CERT.at), Christian Mock (coretec), Daniel Kovacic (A-Trust), Manuel Koschuch (FH Campus Wien), Adi Kriegisch (VRVis), Ramin Sabet (A-Trust), Aaron Zauner (azet.org), Pepi Zawodsky (maclemon.at), IAIK, A-Sit, and many more…  
 
 
 # Contents so far
@@ -221,9 +224,9 @@ updates?
   * practice key-roll-overs
   * practice identifying all services which run crypto
   * practice testing them against known good standards automatically (nagios, ...)
+  * practive crypto config changes
  
-Turns out, key management as well as crypto management can be seen similarly to regular
-patch management: it needs periodic attention.
+Turns out, key management as well as crypto management can be seen similarly to regular patch management: it needs periodic attention.
 
 # Part 3
 
@@ -243,14 +246,14 @@ Pre-history
     * Queen of Scotland until 1567
     * Try to regain the throne 
     * Was found guilty of plotting to assassinate Queen Elizabeth I of England
-    * Prooven after his code get broken...
+    * Proven after her code get broken…
 
 ![Mary](img/mary.jpg)
 
 # How it can change a war
-  * II World War
+  * World War II
     * Enigma in use by German Army
-    * Broken by the first comuter (Alan Turing)
+    * Broken by the first computer (Alan Turing)
     * Sign the end of U-Boat supremacy on the sea
 
 ![Enigmae](img/enigma.jpg)
@@ -261,17 +264,17 @@ Pre-history
 ![Navajo](img/navajo.jpg)
 
 # Nowadays
-  * Asymetric cryptography
-    * RSA (River - Shamir - Adleman) - 1977
+  * Asymmetric cryptography
+    * RSA (Rivest - Shamir - Adleman) - 1977
     * GPG (Phil Zimmerman) - 1991
-  * AES (Rijdael) - 1998
+  * AES (Rijndael) - 1998
 
 # Famous names
   * Cryptography was an hot topic for a lot of people
     * Thomas Jefferson (1790) - ciphering cylinder (used for 150 years)
     * Charles Babbage - break the Vigenère Cipher (1854, unknown until 20th Century)
-    * Gilbert S. Vernam (AT&T, 1917) - polyalphatic cipher with random key without repetition
-      * Only ciphersuite impossible to break both in theory and in practice!
+    * Gilbert S. Vernam (AT&T, 1917) - polyalphabetic cipher with random key without repetition
+      * Only cipher suite impossible to break both in theory and in practice!
 
 # Theory 
 
@@ -289,7 +292,7 @@ Pre-history
   * Might have to change settings tomorrow
   * Most Applications only work with NIST-Curves
   * Bottom line: we leave the choice of ECC yes or no to the reader. You might have to adapt again.
-  * However, many server operators tend towards ECC  (speed)
+  * However, many server operators tend towards ECC for speed
 
 # Keylengths
 
@@ -311,11 +314,10 @@ Pre-history
 
 # (Perfect) Forward Secrecy
 
-Motivation:
-
-* Three letter agency (TLA) stores all ssl traffic
-* Someday TLA gains access to ssl-private key (Brute Force, Physical Force)
-* TLA can decrypt all stored traffic
+Problem:
+* Three letter agency (TLA) records all encrypted traffic
+* Someday TLA gains access to private-key (Brute Force, Physical Force)
+* TLA can decrypt all recorded traffic
 
 Solution:
 * **Ephemeral** session keys via Diffie Hellman (**DHE**)
@@ -335,37 +337,37 @@ Proof: \[ k_1 = Y^x = (g^y)^x = g^{(x \times y)} = (g^x)^y = X^y = k_2  \mod p \
 
 \centerline{\includegraphics[width=10cm]{img/xkcd-TLA.png}}
 
-# Well...
+# Well…
 
-We still recommend perfect forward secrecy.
+We recommend perfect forward secrecy.
 
  * Ephemeral: new key for each execution of a key exchange process
- * SSL private-Key only for authentication
- * Alternative new ssl private key every x days months
+ * TLS private-key only for authentication
+ * Alternative new private key every x days/months
  * Pro:
-    - Highest Security against future attacks
+    - Highest security against future attacks
  * Contra: 
-    - Elliptic Curve
-    - Processing costs
+    - Elliptic Curves needed for broad client support
+    - slight processing overhead
 
 # (P)RNGs
 
   * (P)RNGs **are** important!
   * Nadia Heninger et al / Lenstra et al
-,,… to identify apparently vulnerable devices from 27 manufacturers.''
+“… to identify apparently vulnerable devices from 27 manufacturers.”
 ![mining P's and Q's](img/mining-ps-and-qs.png)
-  * Entropy after startup: embedded devices quite bad
+  * Entropy after startup: embedded devices and VMs very bad
 
 
 # (P)RNGs - recommendations
   * Look out for known weak RNG
     * Dual EC_DRBG is weak (slow, used in RSA-toolkit)
-    * Intel RNG ? Recommendation: add System-Entropy (Network). Entropy only goes up.
+    * Intel RNG ? Recommendation: add System-Entropy (Network). Entropy only increases.
   * Use tools (e.g. haveged/HaveGE http://dl.acm.org/citation.cfm?id=945516)
   * RTFM 
     * when is the router key generated
-    * Default Keys ?
-  * Re-generate keys from time to time
+    * Default Keys?
+  * Re-generate keys regularly
   * Do not generate keys on fresh VMs.
   * Always generate new keys when refreshing certificates
 
@@ -378,15 +380,15 @@ We still recommend perfect forward secrecy.
   * Example:
 
 	SSLProtocol All -SSLv2 -SSLv3
-	SSLCipherSuite 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA'
+	SSLCipherSuite 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA'  
 	
 	Names are not consistent between official IANA strings and most libraries. They are easily mixed up, always double check.
 
 # Some general thoughts on settings
 
   * General:
-    * Disable SSL 2.0 (weak algorithms)
-    * Disable SSL 3.0 (BEAST vs IE/XP)
+    * Disable SSL 2.0 (weak protocol and algorithms)
+    * Disable SSL 3.0 (BEAST, POODLE)
     * [Disable RC4 cipher](https://www.ietf.org/rfc/rfc7465.txt) (RFC7465)
     * Disable EXPORT suites (FREAK Attack)
     * Enable TLS 1.0 or better
@@ -407,11 +409,12 @@ We still recommend perfect forward secrecy.
 
 Compatibility: 
 
-Only clients which support TLS1.2 are covered by these cipher suites (Chrome 30, Win 7 and Win 8.1, Opera 17, OpenSSL >= 1.0.1e, Safari 6 / iOS 6.0.1, Safari 7 / OS X 10.9) 
+Only clients which support TLS1.2 are covered by these cipher suites (Chrome 30, Win 7 and Win 8.1, Opera 17, OpenSSL >= 1.0.1e, Safari 6/iOS 5, Safari 7/OS X 10.9)
+Excellent for controlled environments, like intranet.
 
 # Variant **B**
 
-  * weaker ciphers, many clients 
+  * weaker ciphers, broad client support
 
 ![Variant B](img/variantB.png)
 
@@ -435,8 +438,8 @@ Only clients which support TLS1.2 are covered by these cipher suites (Chrome 30,
 
   * Complexity 
   * It is a multi-dimensional optimisation problem
-  * Consider strong alternativesto de-facto standards (pros/cons - CAMELLIA vs. AES)
-  * _WISHLIST_: generator for settings? click-dropdown boxes on the webserver -> gernate config
+  * Consider strong alternatives to de-facto standards (pros/cons - CAMELLIA vs. AES)
+  * _WISHLIST_: generator for settings? click-dropdown boxes on the webserver -> generate config
   * _WISHLIST_: right now we only support OpenSSL CipherSuite names/configs. What about gnutls, etc.?
 
 # Practical settings
@@ -448,7 +451,7 @@ Only clients which support TLS1.2 are covered by these cipher suites (Chrome 30,
 * Web server: Apache, nginx, MS IIS, lighttpd
 * Mail: Dovecot, cyrus, Postfix, Exim
 * DBs: Mysql, Oracle, Postgresql, DB2
-* VPN: OpenVPN, IPSec, Checkpoint, ...
+* VPN: OpenVPN, IPSec, Checkpoint, …
 * Proxies: Squid, Pound
 * GnuPG
 * SSH
@@ -466,8 +469,8 @@ _WISHLIST_:
   * SIP
   * RDP
 
-  * Everything as HTML (easier to copy & paste)
-  * gnutls setttings
+  * Everything as HTML/TXT (easier to copy & paste)
+  * gnutls settings
   * Config generator on the website
   * Automatic testing suite
 
@@ -492,13 +495,13 @@ _WISHLIST_:
 
 # How to test - Tools
 
-  * openssl s_client  (or gnutls-cli)
+  * openssl s_client (or gnutls-cli)
   * **ssllabs.com**: checks for servers as well as clients
   * xmpp.net
   * sslscan: for internal scans
   * SSLyze: for internal scans
   * masscan: for internal scans
-  * zmap: for internal scans
+  * nmap: for internal scans
 
 
 # Tools: openssl s_client
@@ -542,19 +545,18 @@ open ports 443, 993, 143, 25
 
 [SSLyze](https://github.com/nabla-c0d3/sslyze/releases) is a "Fast and full-featured SSL scanner"
 
-A tool to test internally which cipherstrings are supported.
-The tool offers these features (amonst others):
+A tool to test internally which cipher strings are supported.
+The tool offers these features (amongst others):
   * get a list of targets (ip:port) from a file
   * XML output
   * heartbleed test
   * OCSP stapling test
   * SSLv2-TLS1.2 testing
-  * finding preferred and supported cipherstrings
+  * finding preferred and supported cipher strings
   * STARTTLS testing (IMAP, pop, ...)
   * XMPP testing
   * SNI support
   * HSTS testing
-etc.
 
 # Tools: SSLyze (1)
 
@@ -572,7 +574,7 @@ Some questions to think about:
   * Do we need a full inventory? Can we generate the inventory?
 Does the inventory match the scanned results (hosts & ports)?
   * Should any  mismatch raise alarms?
-  * Once we identified all ips:ports - do we need to know hostnames? (SNI)?
+  * Once we identified all IPs:ports - do we need to know hostnames? (SNI)?
   * Defining a common base-line level which MUST be supported
   * automatic testing against that base-line level? How?
   * Integration into existing monitoring solutions?
@@ -591,19 +593,20 @@ Does the inventory match the scanned results (hosts & ports)?
 Well received. Good feedback (Dan Bernstein, ...)
   * more work needs to be done:
    * certificate pinning
-   * Dane
-   * SPDY
+   * DANE
+   * SPDY, HTTP/2
    * etc.
   * This is a process which should be done regularly
 
 
 # Links
 
-  * Website: www.bettercrypto.org
+  * Website: https://www.bettercrypto.org
   * Master (read-only) Git repo: https://git.bettercrypto.org
   * Public github repo for PRs: https://github.com/BetterCrypto/Applied-Crypto-Hardening
   * Mailing list: http://lists.cert.at/cgi-bin/mailman/listinfo/ach 
   * IRC: #bettercrypto on freenode
+  * Twitter: @bettercrypto
 
 
 
