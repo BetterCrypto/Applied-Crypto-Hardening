@@ -17,25 +17,55 @@ append_dot_mydomain = no
 
 readme_directory = no
 
-readme_directory = no
-
-# TLS parameters
-smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
-smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
-# use 0 for Postfix >= 2.9, and 1 for earlier versions
-smtpd_tls_loglevel = 0
-# enable opportunistic TLS support in the SMTP server and client
-smtpd_tls_security_level = may
-smtp_tls_security_level = may
-smtp_tls_loglevel = 1
-# if you have authentication enabled, only offer it after STARTTLS
-smtpd_tls_auth_only = yes
+## General TLS options
 tls_ssl_options = NO_COMPRESSION
 
-smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
-smtpd_tls_mandatory_ciphers=high
-tls_high_cipherlist=EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
-smtpd_tls_eecdh_grade=ultra
+## Server-side TLS
+# Server certificate
+smtpd_tls_cert_file = /etc/ssl/certs/ssl-cert-snakeoil.pem
+# Server key
+smtpd_tls_key_file = /etc/ssl/private/ssl-cert-snakeoil.key
+# TLS Logging
+# Use 0 for Postfix >= 2.9, and 1 for earlier versions
+smtpd_tls_loglevel = 0
+# Enable opportunistic TLS support in the SMTP server
+smtpd_tls_security_level = may
+# Optional: If you have SMTP AUTH enabled, offer it after STARTTLS only
+# in order to protect SASL's unencrypted PLAIN and LOGIN mechanisms
+smtpd_tls_auth_only = yes
+
+## Submission server TLS
+# Disable unwanted protocols
+mua_tls_mandatory_protocols = !SSLv2, !SSLv3
+# Demand high ciphers
+mua_tls_mandatory_ciphers=high
+# Limit the cipher list
+mua_high_cipherlist=EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
+# TODO
+mua_tls_eecdh_grade=ultra
+
+## Client-side TLS
+# Enable opportunistic TLS support in the SMTP client
+smtp_tls_security_level = may
+# Client certificate
+smtp_tls_cert_file = /etc/ssl/certs/ssl-cert-snakeoil.pem
+# Client key
+smtp_tls_key_file = /etc/ssl/private/ssl-cert-snakeoil.key
+# Log when remote server offers STARTTLS (useful to identify partners for
+# policies)
+smtp_tls_note_starttls_offer = yes
+# TODO
+smtp_tls_loglevel = 1
+
+
+## Client-side DANE TLS
+# Enable opportunistic and identified TLS support in the SMTP client
+smtp_tls_security_level = dane
+# Require DNSSEC DNS lookups
+smtp_dns_support_level = dnssec
+
+
+
 
 smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache

@@ -1,0 +1,364 @@
+The Domain Name System is of fundamental importance to end users and many
+services. It's availability and authenticity of its data are critical. DNS
+servers fall into two parts -- resolver and authoritative name server.
+Resolvers only resolve DNS queries, whereas authoritative name servers may also
+serve DNS data to others.
+
+Authoritative name server are more vulnerable than resolvers, because they get
+exposed to remote systems. A malicious attacker will typically try to decrease
+a DNS services availability or forge the data it serves. Serving data also
+requires a larger code base in the server's components, which by definition
+makes an authoritative name server more complex and more vulnerable to bugs and
+malicious code.
+
+Overall it takes greater caution to run an authoritative name server than a
+local resolver. Unless you serve your own domain there's no need to run an
+authoritative name server.
+
+\subsection{resolv.conf}
+
+The resolver configuration file \verb|/etc/resolv.conf| specifies which
+resolvers (\verb|nameserver|) your system library will query in order to resolve
+hostnames and IP addresses. You may specify more than one nameserver using the
+\verb|nameserver| option. They will be read as list from top to bottom.
+
+Always add more than one nameserver in case the first one or the second one
+fails. It does not make sense to list more than three \verb|nameserver| options.
+Mailservers, for example, will not try more than three name servers in a row
+when they try to resolve a destination.
+
+A good order to sort the list of \verb|nameserver| options is by proximity
+first and by availability second.
+
+A local, caching resolver should always be listed first \verb|nameserver| in
+\verb|/etc/resolv.conf|. Properly configured it will deliver query results
+fastest, because it runs on the same system and is not subject to network or
+service latency due to high load.
+
+Even more important it is also the trustworthiest source of DNS information. DNS
+data could be forged on a remote system that is not under your control without
+your notice. It might also get tampered while it is in transit to your host.
+These things are harder to manipulate if the application serving the data is on
+your system.
+
+\configfile{resolv.conf}{1-6}{List local resolver first}
+
+\paragraph{DNSSEC} Take special care of the name servers you list if you plan to
+use DNSSEC to secure your services!
+
+A properly configured DNSSEC-enabled resolver will verify the data it retrieves.
+The fact it can't verify data from a DNSSEC-domain may be an indicator the DNS
+server queried or its data has been compromised.
+
+Regular resolvers and DNSSEC-capable resolvers that don't verify omit this fact
+and serve the result to the application that initiated the DNS query. A
+verifying resolver will not -- it will protect the service and its users and
+keep the data away.
+
+Make sure your \verb|nameserver| list in \verb|/etc/resolv.conf| consists of
+DNSSEC-capable resolvers only. If only one resolver in the
+\verb|nameserver| list does not verify DNS data, the whole verification chain is
+broken.
+
+\subparagraph{Background on DNSSEC validation signalling}
+
+To understand the need for only DNSSEC-validating resolver in the
+\verb|/etc/resolv.conf|, it is important to understand how
+DNSSEC-validation results are signalled to the client. 
+
+A DNS-resolver with enabled DNSSEC-validation will always try to
+validate the received DNS data, unless the client has set the CD-Flag
+(CD=checking disabled) in the query. 
+
+If the client has send the query with an DO-flag set (DO=DNSSEC OK),
+the client has indicated that it does unterstand the extended DNSSEC
+signalling. The DNS-resolver will set the AD-flag (AD=Authenticated
+Data) in an successful validated DNS response to the client. DNSSEC
+aware clients can now make a security decision on the trustworthiness
+of the data (AD-Flag=more trustworthy).
+
+If the client has not send the query with a DO-flag (legacy DNS
+client), the DNS-resolver will still send successfull validated
+DNS-data in an response to the client, but will not set any extra
+flags other than permitted by the original DNS.
+
+In both cases (DNSSEC-aware client or legacy client), if the DNS-data
+does not validate, the DNS-resolver will \emph{NOT} return the
+DNS-data to the client, instead it will return a SERVFAIL error
+condition. 
+
+Because SERVFAIL is an generic error condition, the client will not be
+able to tell if the data is bad (compromised) or if the DNS-resolver
+has some technical issues. The client will therefor fallback to the
+next DNS-resolver in \verb|/etc/resolv.conf| and retry the query.
+
+If there is only one non-DNSSEC-validating DNS-resolver listed in
+\verb|/etc/resolv.conf|, the bad data will be returned by that
+DNS-resolver and the DNSSEC security is broken.
+
+\subparagraph{Example}
+
+The following example shows a dig-reply indicating the domain queried is
+DNSSEC-enabled. This is indicated by the \verb|ad|-flag (authenticated data) in
+the HEADER-section. The \verb|+dnssec| switch sets the \verb|DO|-Flag
+in the outgoing query, indicating to the DNS-resolver that this client
+does unterstand DNSSEC and that the \verb|ad|-flag should be returned.
+
+\begin{lstlisting}
+$ dig +dnssec example.com
+
+; <<>> DiG 9.9.5-P2 <<>> +dnssec example.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 49123
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
+\end{lstlisting}
+
+\textbf{Note:} The example above requires a DNSSEC-enabled
+resolver. Legacy (non-DNSSEC-validating) resolvers cannot tell
+\verb|dig| the domain in question has been authenticated.
+
+\subparagraph{on the future of DNS stub resolver configuration on
+  Unix}
+
+As IP-Network-configuration becomes more enhanced over time (DHCP,
+DHCPv6, IPv6-RA, mDNS), operating-system vendors move away from a
+simple \verb|/etc/resolv.conf| text file towards more ``integrated''
+network configuration databases (for example \verb|systemd-networkd|
+on Linux, \verb|netadm|/\verb|netcfg| on Solaris, \verb|configd| on
+MacOS X).
+
+With these new network configuration systems, care must be taken that
+all configured DNS-resolver have DNSSEC-validation
+enabled. Unfortunatly, this becomes more difficult with network based
+provisioning that is itself not authenticated (DHCP, IPv6-RA ...).
+
+\subsection{DNS-Resolver}
+
+A DNS-Resolver is a DNS-Server configured to accept DNS-queries from
+client machines with the ``Recursion-Desired''-Flag set. Some
+DNS-Server products allow the DNS-Resolver function to run in the same
+process as an authoritative DNS-Server (hosting DNS-Zones), for
+example BIND 9 and Microsoft DNS. Other DNS-Server products implement
+a dedicated DNS-Resolver, for example Unbound.
+
+For a DNSSEC deployment, it is recommended best practice to dedicated
+DNS-resolver that are separate from any authoritative
+DNS-data. A DNS-Server can only validate (check) DNSSEC signed data
+that is being received from an external server, it cannot validate its
+own authoritative data.
+
+\subsubsection{BIND 9}
+
+The BIND 9 DNS-Server is a DNS-Resolver and DNS-authoritative Server
+from ISC (\url{http://www.isc.org}. BIND 9 is available under the
+liberal ISC License and part of almost all Linux/Unix-Distributions.
+
+\paragraph{Version 9.7.x-9.8.x}
+
+To enable DNSSEC validation in BIND 9 Versions 9.7 to 9.8, the
+trust-anchor of the DNS root-zone ``.'' must be configured in the BIND
+9 configuration file \verb|named.conf|. The trust-anchor is a copy of
+the Key-Signing-Key (KSK) used to sign the DNS root-zone:
+
+\begin{lstlisting}
+// this is the trust-anchor for the DNS root-zone "."
+managed-keys {
+    "." initial-key 257 3 8
+    "AwEAAagAIKlVZrpC6Ia7gEzahOR+9W29euxhJhVVLOyQbSEW0O8gcCjF
+     FVQUTf6v58fLjwBd0YI0EzrAcQqBGCzh/RStIoO8g0NfnfL2MTJRkxoX
+     bfDaUeVPQuYEhg37NZWAJQ9VnMVDxP/VHL496M/QZxkjf5/Efucp2gaD
+     X6RS6CXpoY68LsvPVjR0ZSwzz1apAzvN9dlzEheX7ICJBBtuA6G3LQpz
+     W5hOA2hzCTMjJPJ8LbqF6dsV6DoBQzgul0sGIcGOYl7OyQdXfZ57relS
+     Qageu+ipAdTTJ25AsRTAoub8ONGcLmqrAmRLKBP1dfwhYB4N7knNnulq
+     QxA+Uk1ihz0=";
+};
+
+options {
+  directory "/var/named";
+  // enable DNSSEC
+  dnssec-enabled yes;
+  // enable DNSSEC-validation
+  dnssec-validation yes;
+  // enable the build-in DLV trust anchor
+  dnssec-lookaside auto;
+  // more options following
+};
+\end{lstlisting}
+
+DLV (DNSSEC-lookaside validation) is an alternative validation path
+for DNSSEC signed domains that cannot be secured via a chain-of-trust
+to the root zone (mainly because their parent ccTLD has not yet been
+DNSSEC signed).
+
+DLV is specified in RFC 5074
+(\url{http://tools.ietf.org/rfc/rfc5074.txt}), and the main DLV
+registry is operated by ISC (\url{http://dlv.isc.org}). Only BIND 9
+and Unbound DNS-Resolver support the alternative DLV lookup path for
+DNSSEC.
+
+Enabling DLV is recommended but not required.
+
+BIND 9 will automatically updated the trust-anchor via the RFC 5011
+(\url{http://tools.ietf.org/rfc/rfc5011.txt}) mechanism.
+
+\paragraph{Version 9.9.0+}
+
+BIND 9 starting with BIND 9.9.0 comes with the trust-anchor for the
+root-DNS-zone preinstalled (in a file named \verb|bind.keys|), the
+trust-anchors does not need to be configured in the \verb|named.conf|
+file.
+
+\begin{lstlisting}
+options {
+  directory "/var/named";
+  // enable DNSSEC
+  dnssec-enabled yes;
+  // enable DNSSEC-validation via the
+  // build in trust-anchor
+  dnssec-validation auto;
+  // enable the build-in DLV trust anchor
+  dnssec-lookaside auto;
+  // more options following
+};
+\end{lstlisting}
+
+\subsubsection{Unbound}
+
+Unbound is a validating, recursive, and caching DNS resolver from
+NLnetLabs. It is licensed under the BSD-License. Unbound has been
+designed with security and DNSSEC in mind. Sourcecode and
+documentation can be found at \url{http://unbound.net}.
+
+Unbound has DNSSEC validation enabled by default, however care must be
+taken that Unbound has a valid trust-anchor for the Internet
+root-DNS-zone. Without a valid trust-anchor, DNSSEC validation will
+not be possible.
+
+The smallest possible Unbound DNSSEC configuration is:
+\begin{lstlisting}
+server:
+    # The following line will configure unbound to perform cryptographic
+    # DNSSEC validation using the root trust anchor.
+    auto-trust-anchor-file: "/var/lib/unbound/root.key"
+\end{lstlisting}
+
+Unbound comes with an tool to securly fetch (via TLS from the IANA
+website) the Internet root-DNS-trust anchor. This tool us usually run
+from the start-script that starts the Unbound DNS-Resolver:
+\begin{lstlisting}
+# unbound-anchor -v
+/var/lib/unbound/root.key has content
+success: the anchor is ok
+\end{lstlisting}
+
+The Unbound trust-anchor-file is a text file that contains the
+Root-Zone KSK as well as information on the freshness of the data:
+\begin{lstlisting}
+# cat /var/lib/unbound/root.key
+; autotrust trust anchor file
+;;id: . 1
+;;last_queried: 1405160756 ;;Sat Jul 12 12:25:56 2014
+;;last_success: 1405160756 ;;Sat Jul 12 12:25:56 2014
+;;next_probe_time: 1405202059 ;;Sat Jul 12 23:54:19 2014
+;;query_failed: 0
+;;query_interval: 43200
+;;retry_time: 8640
+.       172800  IN      DNSKEY  257 3 8 AwEAAagAIKlVZrpC6Ia7gEzahOR+9W29euxhJhVV... ;{id = 19036 (ksk), size = 2048b} ;;state=2 [  VALID  ] ;;count=0 ;;lastchange=1350651872 ;;Fri Oct 19 15:04:32 2012
+\end{lstlisting}
+
+For roaming users (Laptops, Smartphones and Pads) there is a special
+version of Unbound bundled with a tool that monitors the ability to
+use DNSSEC (which is not possible is certain captive WLAN
+portals). This bundle is called ``DNSSEC-trigger''
+(\url{http://nlnetlabs.nl/projects/dnssec-trigger/}) and is available
+for Linux, Windows and MacOS X.
+
+\subsubsection{Microsoft DNS}
+
+\subsubsection{dnsmasq}
+
+\subsection{authoritative DNS-Server}
+
+\subsubsection{Transaction signatures - TSIG and SIG(0)}
+
+\paragraph{TSIG}
+what is TSIG, choice of key algorithms and sizes, generating keys,
+configuration, test
+
+\paragraph{SIG(0)}
+what is SIG(0), choice of key algorithms and sizes, generating keys,
+configuration, test
+
+\subsubsection{signed DNS zones - DNSSEC}
+
+\paragraph{recommended DNS design for DNSSEC}
+
+split of DNS-resolver and authoritative server, mutual exlusive AA-
+and AD-Flags
+
+\paragraph{Parameters for DNSSEC signing}
+
+Choice of algorithms, key-length, key-rollover interval, RFC 6781
+
+\paragraph{DNSSEC troubleshooting}
+
+links, tools and tips for DNSSEC troubleshooting
+
+\paragraph{BIND 9}
+
+how to sign a Zone with BIND 9
+
+\subparagraph{key generation}
+
+how to generate DNSSEC keys with \verb|dnssec-keygen|
+
+\subparagraph{manual/offline signing}
+
+howto sign a zone manually with \verb|dnssec-signzone|
+
+\subparagraph{DNSSEC automation for dynamic zones}
+
+howto sign a dynamic zone with \verb|rndc sign| and update the zone
+content with \verb|update-policy local;| and \verb|nsupdate|.
+
+\subparagraph{inline-signing of static zones}
+
+howto sign a static zone with \verb|rndc sign| and update the zone
+content with a text editor
+
+\subparagraph{BIND 9 and Hardware Security Modules}
+
+How to interface BIND 9 with an HSM or SoftHSM to securly store DNSSEC
+key material
+
+\paragraph{Knot-DNS}
+
+how to sign a zone with Know-DNS
+
+\paragraph{NSD}
+
+how to sign a zone for NSD with the ldns tools
+
+\paragraph{PowerDNS}
+
+how to sign a zone with PowerDNS, how PowerDNS automatically signs
+data from a database store
+
+\paragraph{Y.A.D.I.F.A}
+
+how to serve a DNSSEC signed zone from the Y.A.D.I.F.A. DNS-Server.
+
+\paragraph{Bundy}
+
+how to server a DNSSEC signed zone from the BUNDY DNS-Server
+
+\paragraph{Microsoft Windows DNS Server}
+
+how to sign a zone with the Windows DNS server
+
+\paragraph{OpenDNSSEC}
+
+how to manage DNSSEC-maintenance and key-rollovers with the OpenDNSSEC
+tool
+

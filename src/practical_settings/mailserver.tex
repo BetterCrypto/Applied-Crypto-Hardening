@@ -146,8 +146,14 @@ openssl s_client -crlf -connect SERVER.TLD:993
   \item Postfix 2.9.6, Debian Wheezy
 \end{itemize*}
 
+TLS in Postfix may take place in two Postfix programs - the \verb|smtpd| SMTP server and the \verb|smtp| SMTP client. This compartmentalized architecture is reflected in the following subsections. We'll start with the \verb|smtpd| SMTP server first.
 
-\subsubsection{Settings}
+\subsubsection{TLS in Postfix' smtpd SMTP Server}
+As discussed in section \ref{subsection:smtp_general} "any encrypted mail transport is better than forcing a remote client to resort to plaintext transport" simply because the server offered a limited cipher suite and the client couldn't find any cipher to use. Thus, unless you setup a dedicated and controlled SMTP server (e.g. on submission port \verb|587|), you should not restrict the list of supported ciphers for a publicly referenced MX host listening on the default Port \verb|25|.
+
+In order to enable opportunistic TLS for a publicly referenced SMTP server add the following configuration to Postfix' \verb|main.cf|:
+
+\configfile{main.cf}{20-35}{Opportunistic TLS in Postfix}
 
 %% I (cm) consider the generation of own DH parameters to be voodoo until
 %% someone can explain the contrary. They are, after all, public, and
@@ -179,28 +185,66 @@ openssl s_client -crlf -connect SERVER.TLD:993
 %%   smtpd_tls_dh1024_param_file = /etc/postfix/dh_param_1024.pem
 %% \end{lstlisting}
 
-\paragraph{MX and SMTP client configuration:}
-As discussed in section \ref{subsection:smtp_general}, because of opportunistic encryption we do not
-restrict the list of ciphers. There are still some steps needed to
-enable TLS, all in \verb|main.cf|:
-
-\configfile{main.cf}{22-33}{Opportunistic TLS in Postfix}
-
 \paragraph{MSA:}
-For the MSA \verb|smtpd| process, we first define the ciphers that are
-acceptable for the ``mandatory'' security level, again in
-\verb|main.cf|:
+Things change if you plan to run a dedicated \verb|smtpd| SMTP server listening on the submission port \verb|587|. This port is special because MUAs should use it to submit mail. In order to do so they MUST authenticate (SMTP AUTH).
 
-\configfile{main.cf}{35-37}{MSA TLS configuration in Postfix}
+The most widely supported AUTH mechanisms in MUAs are PLAIN and LOGIN. These mechanisms allow AUTH passwords to be stored in crypted backends, but they are transmitted base64 encoded only and SHOULD be protected by an encrypted transport layer. Since the clients are more or less well-known you may limit the cipher suite in this controlled environment.
+ 
+The following MSA configuration demands TLS (mandatory TLS) from all clients connecting and limits the cipher suite at the same time. The configuration needs to be added in two Postfix configuration files:
 
-Then, we configure the MSA smtpd in \verb|master.cf| with two
-additional options that are only used for this instance of smtpd:
+The first settings in Postfix \verb|main.cf| establish new configuration parameters and assigns TLS options as desired. All configuration names begin with \verb|mua_| which are non-default names on purpose. They create a namespace that cannot collide with Postfix own \verb|smtpd_| parameter names adressing the \verb|smtpd| SMTP server -- they will never accidentally influence TLS behaviour of other SMTP servers, e.g. the one listening on port \verb|25|.
 
-\configfile{master.cf}{12-14}{MSA smtpd service configuration in Postfix}
+\configfile{main.cf}{37-45}{MSA TLS configuration in Postfix}
 
-For those users who want to use EECDH key exchange, it is possible to customize this via:
-\configfile{main.cf}{38-38}{EECDH customization in Postfix}
-The default value since Postfix 2.8 is ``strong''.
+The second file that needs to be edited is Postfix \verb|master.cf|. The changes enable the Postfix submission service, create options for mandatory TLS and server-side cipher control and finally map settings from \verb|main.cf| onto the newly created submission server.
+
+\configfile{master.cf}{12-18}{MSA smtpd service configuration in Postfix}
+
+%% commented until PFS has been described
+%% For those users who want to use EECDH key exchange, it is possible to customize this via:
+%% \configfile{main.cf}{45-45}{EECDH customization in Postfix}
+%% The default value since Postfix 2.8 is ``strong''.
+
+%% \subsubsection{Settings for Opportunistic TLS using DANE}
+%% 
+%% If the DNS-domain the Postfix smtp client connects to is DNSSEC-enabled and if that domain offers a TLSA ressource record 
+%% 
+%% As of version 2.11 Postfix may also automatically identify 
+%% 
+%% supports DNS-Based Authentication of Named Entities (DANE) via DNSSEC-enabled domains.
+
+\subsubsection{TLS in Postfix' smtp SMTP Client}
+
+Enabling opportunistic TLS in the Postfix \verb|smtp| client is simple. Set \verb|smtp_tls_security_level| to \verb|may| and you are done. Additionally, if you want to and if your certificate has been signed for client usage also and not only server usage, provide the paths to your x509 certificate and key. When a server asks your Postfix \verb|smtp| client to identify itself with a TLS client certificate Postfix will send what you have provided during configuration.
+
+\textbf{Note:} Asking a client for its TLS certificate is not default behaviour. It has to be enabled on the SMTP server side explicitly. It often remains disabled because not all client are able to handle TLC client certificate requests properly. Postfix has not been reported to be among these erroneous clients.
+
+%% Mist klappt nicht \ref{section:DNS}
+
+\configfile{main.cf}{47-58}{TLS client configuration in Postfix}
+
+In the example above \verb|smtp_tls_note_starttls_offer| causes Postfix to log servers that offered \verb|STARTTLS|. This offers a convenient way to find out about destinations to whom explicit SMTP TLS policies could be written down in \verb|smtp_tls_policy_maps| (see also: \verb|postconf(5)|).
+
+Setting up policies in \verb|smtp_tls_policy_maps| is a first step towards identified TLS. Identified TLS requires to verify the servers identity and putting it down in \verb|smtp_tls_policy_maps| so Postfix' \verb|smtp| client is able to use the provided data to identify the server it communicates with.
+
+Usually this means to extract the servers' x509 certificate fingerprint, call the team that runs the server, verify the fingerprint and - once verified - write it down so Postfix can use it. This is costly and error-prone and only few people make that extra effort.
+
+\paragraph{DANE} DNS-Based Authentication of Named Entities (DANE) automates this task. It uses a DNSSEC-enabled domain to distribute the SMTP servers certificate via TLSA Ressource Records (see: ???). Postfix (2.11.1) is the world's first MTA to implement "SMTP security via opportunistic DANE TLS". Using TLSA RRs, distributed via a DNSSEC-enabled domain, it can automatically identify a remote server offering \verb|STARTTLS|. This adds another level of security, since it eliminates Man-in-the-Middle-attacks.
+
+\textbf{Note:} TLSA RRs allow to publish publicly signed certificates from CAs, but also self-signed ones. If you don't trust in CAs DNSSEC-enabled distribution of server identities is a good way to go.
+
+Enabling DANE TLS in Postfix' \verb|smtp| client is simple. It requires a DNSSEC-aware DNS Resolver as described in \ref{subsection:Resolver} and the following options in \verb|main.cf|:
+
+\configfile{main.cf}{61-65}{DANE TLS client configuration in Postfix}
+
+Once you've reloaded Postfix you will begin to notice logo lines indicating identified TLS like this:
+\begin{lstlisting}
+Jul 11 12:20:01 mail postfix/smtp[9067]: Verified TLS connection established to mail.sys4.de[194.126.158.139]:25: TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits)
+\end{lstlisting}
+
+This testifies Postfix was able to identify the remote server via DNS-Based Authentication of Named Entities.
+
+If you want to offer DANE to other mail servers you need to DNSSEC-enable your MX domain. This is described in \ref{chapter:DNS}.
 
 
 \subsubsection{Limitations}
