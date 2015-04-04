@@ -116,9 +116,11 @@ If you decide to trust NIST's ECC curve recommendation, you can add the followin
 
 \configfile{default-ec}{119-119}{SSL EC/DH settings for nginx}
 
-You might want to redirect everything to \emph{https://} if possible. In Nginx you can do this with the following setting (replace www.domain.com with your domain):
+You might want to redirect everything to \emph{https://} if possible. In Nginx you can do this with the following setting:
 
 \configfile{default-hsts}{29-29}{https auto-redirect in nginx}
+
+The variable \emph{\$server\_name} refers to the first \emph{server\_name} entry in your config file. If you specify more than one \emph{server\_name} only the first will be taken. Please be sure to not use the \emph{\$host} variable here because it contains data controlled by the user.
 
 \subsubsection{References}
 \begin{itemize*}
