@@ -143,11 +143,18 @@ openssl s_client -crlf -connect SERVER.TLD:993
 
 \subsubsection{Tested with Versions}
 \begin{itemize*}
-  \item Postfix 2.9.6, Debian Wheezy
+  \item Postfix 2.9.6, Debian Wheezy with OpenSSL 1.0.1e
 \end{itemize*}
 
 
 \subsubsection{Settings}
+
+Postfix has five internal lists of ciphers, and the possibility to switch
+between those with \emph{smtpd_tls_ciphers}. However, we leave this at its
+default value for server to server connections, as many mail servers only
+support outdated protocols and ciphers. We consider bad encryption still better
+than plain text transmission. For connections to MUAs, TLS is mandatory and the
+ciphersuite is modified.
 
 %% I (cm) consider the generation of own DH parameters to be voodoo until
 %% someone can explain the contrary. They are, after all, public, and
@@ -180,16 +187,17 @@ openssl s_client -crlf -connect SERVER.TLD:993
 %% \end{lstlisting}
 
 \paragraph{MX and SMTP client configuration:}
-As discussed in section \ref{subsection:smtp_general}, because of opportunistic encryption we do not
-restrict the list of ciphers. There are still some steps needed to
-enable TLS, all in \verb|main.cf|:
+As discussed in section \ref{subsection:smtp_general}, because of opportunistic
+encryption we do not restrict the list of ciphers or protocols for communication
+with other mail servers to avoid transmission in plain text. There are still
+some steps needed to enable TLS, all in \verb|main.cf|:
 
 \configfile{main.cf}{22-33}{Opportunistic TLS in Postfix}
 
 \paragraph{MSA:}
-For the MSA \verb|smtpd| process, we first define the ciphers that are
-acceptable for the ``mandatory'' security level, again in
-\verb|main.cf|:
+For the MSA \verb|smtpd| process which communicates with mail clients, we first
+define the ciphers that are acceptable for the ``mandatory'' security level,
+again in \verb|main.cf|:
 
 \configfile{main.cf}{35-37}{MSA TLS configuration in Postfix}
 
@@ -201,7 +209,6 @@ additional options that are only used for this instance of smtpd:
 For those users who want to use EECDH key exchange, it is possible to customize this via:
 \configfile{main.cf}{38-38}{EECDH customization in Postfix}
 The default value since Postfix 2.8 is ``strong''.
-
 
 \subsubsection{Limitations}
 tls\_ssl\_options is supported from Postfix 2.11 onwards. You can
