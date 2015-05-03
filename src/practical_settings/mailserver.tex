@@ -151,7 +151,7 @@ openssl s_client -crlf -connect SERVER.TLD:993
 \subsubsection{Settings}
 
 Postfix has five internal lists of ciphers, and the possibility to switch
-between those with \emph{smtpd_tls_ciphers}. However, we leave this at its
+between those with \emph{smtpd\_tls\_ciphers}. However, we leave this at its
 default value for server to server connections, as many mail servers only
 support outdated protocols and ciphers. We consider bad encryption still better
 than plain text transmission. For connections to MUAs, TLS is mandatory and the
