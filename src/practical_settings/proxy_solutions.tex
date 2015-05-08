@@ -105,6 +105,23 @@ Disabling protocols and ciphers in a forward proxy environment could lead to une
 
 
 %% ---------------------------------------------------------------------- 
+\subsection{HAProxy}
+% See http://www.haproxy.org/
+
+HAProxy can be used as loadbalancer and proxy for TCP and HTTP-based applications. Since version 1.5 it supports SSL and IPv6.
+
+\subsubsection{Tested with Versions}
+\begin{itemize*}
+  \item HAProxy 1.5.11 with OpenSSL 1.0.1e on Debian Wheezy
+\end{itemize*}
+
+\subsubsection{Settings}
+\configfile{haproxy.cfg}{1-4}{global configuration}
+\configfile{haproxy.cfg}{21-25}{frontend configuration}
+\configfile{haproxy.cfg}{27-33}{backend configuration}
+
+
+%% ---------------------------------------------------------------------- 
 \subsection{Pound}
 % See http://www.apsis.ch/pound
 % See https://help.ubuntu.com/community/Pound
