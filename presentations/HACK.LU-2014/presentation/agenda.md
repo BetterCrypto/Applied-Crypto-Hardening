@@ -273,7 +273,7 @@ Proof: \[ k_1 = Y^x = (g^y)^x = g^{(x*y)} = (g^x)^y = X^y = k_2  \mod p \qed \]
 
 # Reality 
 
-\centerline{\includegraphics[width=2cm]{img/xkcd-TLA.png}}
+\centerline{\includegraphics[width=12cm]{img/xkcd-TLA.png}}
 
 # Well...
 
