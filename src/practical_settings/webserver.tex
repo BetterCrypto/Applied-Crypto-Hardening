@@ -1,4 +1,4 @@
-%%---------------------------------------------------------------------- 
+%%----------------------------------------------------------------------
 \subsection{Apache}
 
 Note that any cipher suite starting with EECDH can be omitted, if in doubt.
@@ -7,8 +7,9 @@ synonyms~\footnote{https://www.mail-archive.com/openssl-dev@openssl.org/msg33405
 
 \subsubsection{Tested with Versions}
 \begin{itemize*}
-  \item Apache 2.2.22 linked against OpenSSL 1.0.1e, Debian Wheezy
-  \item Apache 2.4.6 linked against OpenSSL 1.0.1e, Debian Jessie
+  \item Apache 2.2.22, Debian Wheezy with OpenSSL 1.0.1e
+  \item Apache 2.4.6, Debian Jessie with OpenSSL 1.0.1e
+  \item Apache 2.4.7, Ubuntu 14.04.2 Trusty with Openssl 1.0.1f
 \end{itemize*}
 
 \subsubsection{Settings}
@@ -34,7 +35,7 @@ you can do this with the following setting inside of a VirtualHost environment:
 See appendix \ref{cha:tools}
 
 
-%%---------------------------------------------------------------------- 
+%%----------------------------------------------------------------------
 \subsection{lighttpd}
 
 \subsubsection{Tested with Versions}
@@ -42,6 +43,7 @@ See appendix \ref{cha:tools}
   \item lighttpd/1.4.31-4 with OpenSSL 1.0.1e on Debian Wheezy
   \item lighttpd/1.4.33 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
   \item lighttpd/1.4.28-2 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
+  \item lighttpd/1.4.31, Ubuntu 14.04.2 Trusty with Openssl 1.0.1f
 \end{itemize*}
 
 
@@ -64,7 +66,7 @@ that HTTPS is in use.
 
 \configfile{11-hsts.conf}{}{https auto-redirect configuration}
 
-\subsubsection{Additional information} 
+\subsubsection{Additional information}
 The config option \emph{honor-cipher-order} is available since 1.4.30, the
 supported ciphers depend on the used OpenSSL-version (at runtime). ECDHE has to
 be available in OpenSSL at compile-time, which should be default. SSL
@@ -75,7 +77,7 @@ Support for other SSL-libraries like GnuTLS will be available in the upcoming
 2.x branch, which is currently under development.
 
 
-\subsubsection{References} 
+\subsubsection{References}
 \begin{itemize*}
   \item HTTPS redirection: \url{http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps}
   \item Lighttpd Docs SSL: \url{http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs\_SSL}
@@ -84,19 +86,20 @@ Support for other SSL-libraries like GnuTLS will be available in the upcoming
 \end{itemize*}
 
 
-\subsubsection{How to test} 
+\subsubsection{How to test}
 See appendix \ref{cha:tools}
 
 
-%%---------------------------------------------------------------------- 
+%%----------------------------------------------------------------------
 \subsection{nginx}
 
-\subsubsection{Tested with Version} 
+\subsubsection{Tested with Version}
 \begin{itemize*}
   \item 1.4.4 with OpenSSL 1.0.1e on OS X Server 10.8.5
   \item 1.2.1-2.2+wheezy2 with OpenSSL 1.0.1e on Debian Wheezy
   \item 1.4.4 with OpenSSL 1.0.1e on Debian Wheezy
   \item 1.2.1-2.2~bpo60+2 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
+  \item 1.4.6 with OpenSSL 1.0.1f on Ubuntu 14.04.2 LTS
 \end{itemize*}
 
 
@@ -119,7 +122,9 @@ You might want to redirect everything to \emph{https://} if possible. In Nginx y
 
 \configfile{default-hsts}{29-29}{https auto-redirect in nginx}
 
-\subsubsection{References} 
+The variable \emph{\$server\_name} refers to the first \emph{server\_name} entry in your config file. If you specify more than one \emph{server\_name} only the first will be taken. Please be sure to not use the \emph{\$host} variable here because it contains data controlled by the user.
+
+\subsubsection{References}
 \begin{itemize*}
   \item \url{http://nginx.org/en/docs/http/ngx_http_ssl_module.html}
   \item \url{http://wiki.nginx.org/HttpSslModule}
@@ -129,7 +134,7 @@ You might want to redirect everything to \emph{https://} if possible. In Nginx y
 See appendix \ref{cha:tools}
 
 
-%%---------------------------------------------------------------------- 
+%%----------------------------------------------------------------------
 \subsection{Cherokee}
 
 \subsubsection{Tested with Version}
@@ -220,15 +225,15 @@ Server 2008 R2, Windows Server 2012 and Windows Server 2012 R2). For detailed
 information about the older versions see the Microsoft knowledgebase
 article. \footnote{\url{http://support.microsoft.com/kb/245030/en-us}}
 \begin{lstlisting}[breaklines]
-  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel] 
-  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Ciphers] 
-  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\CipherSuites] 
-  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Hashes] 
-  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\KeyExchangeAlgorithms] 
-  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Protocols] 
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel]
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Ciphers]
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\CipherSuites]
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Hashes]
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\KeyExchangeAlgorithms]
+  [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Protocols]
 \end{lstlisting}
 
-\subsubsection{Tested with Version} 
+\subsubsection{Tested with Version}
 \begin{itemize*}
   \item Windows Server 2008
   \item Windows Server 2008 R2
@@ -262,7 +267,7 @@ of the following ways:
   \item Group Policy \footnote{\url{http://msdn.microsoft.com/en-us/library/windows/desktop/bb870930(v=vs.85).aspx}}
   \item Registry  \footnote{\url{http://support.microsoft.com/kb/245030 }}
   \item IIS Crypto~\footnote{\url{https://www.nartac.com/Products/IISCrypto/}}
-  \item Powershell 
+  \item Powershell
 \end{enumerate}
 
 
@@ -309,7 +314,7 @@ Clients not supported:
 
 \subsubsection{Additional settings}
 %Here you can add additional settings
-It's recommended to use Strict-Transport-Security: max-age=15768000 
+It's recommended to use Strict-Transport-Security: max-age=15768000
 for detailed information visit the
 \footnote{\url{http://www.iis.net/configreference/system.webserver/httpprotocol/customheaders}}
 Microsoft knowledgebase.
@@ -338,9 +343,9 @@ Set-WebConfiguration -Location "$WebSiteName/$WebApplicationName" `
 \subsubsection{How to test}
 See appendix \ref{cha:tools}
 
-%%---------------------------------------------------------------------- 
+%%----------------------------------------------------------------------
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../applied-crypto-hardening"
-%%% End: 
+%%% End:
