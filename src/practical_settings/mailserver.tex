@@ -390,3 +390,85 @@ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 %\subsection{Exchange}
 
 %\todo{FIXME: write this section}
+
+%% ----------------------------------------------------------------------
+\subsection{Cicso ESA/IronPort}
+\subsubsection{Tested with Version}
+\begin{itemize*}
+  \item AsyncOS 7.6.1
+  \item AsyncOS 8.5.6
+  \item AsyncOS 9.0.0 and 9.1.0
+\end{itemize*}
+
+\subsubsection{Settings}
+Import your certificate(s) via the WEBUI (Network -> Certificates) or in the CLI using the \texttt{certconfig} command.
+
+From AsyncOS 9.0 and up SSL parameters for inbound SMTP, outbound SMTP and GUI access can be configured from the WEBUI (System Administration -> SSL Configuration). For all versions prior to 9.0 you have to connect to the CLI and configure the SSL parameters there as shown below using incoming SMTP as example.
+\begin{lstlisting}{foo}
+ironport.example.com> sslconfig
+sslconfig settings:
+  GUI HTTPS method:  sslv3tlsv1
+  GUI HTTPS ciphers: RC4-SHA:RC4-MD5:ALL
+  Inbound SMTP method:  sslv3tlsv1
+  Inbound SMTP ciphers: RC4-SHA:RC4-MD5:ALL
+  Outbound SMTP method:  sslv3tlsv1
+  Outbound SMTP ciphers: RC4-SHA:RC4-MD5:ALL
+	
+Choose the operation you want to perform:
+- GUI - Edit GUI HTTPS ssl settings.
+- INBOUND - Edit Inbound SMTP ssl settings.
+- OUTBOUND - Edit Outbound SMTP ssl settings.
+- VERIFY - Verify and show ssl cipher list.
+[]> inbound
+
+Enter the inbound SMTP ssl method you want to use.
+1. SSL v2.
+2. SSL v3
+3. TLS v1
+4. SSL v2 and v3
+5. SSL v3 and TLS v1
+6. SSL v2, v3 and TLS v1
+[5]> 3
+
+Enter the inbound SMTP ssl cipher you want to use.
+[RC4-SHA:RC4-MD5:ALL]> EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA
+
+sslconfig settings:
+  GUI HTTPS method:  sslv3tlsv1
+  GUI HTTPS ciphers: RC4-SHA:RC4-MD5:ALL
+  Inbound SMTP method:  tlsv1
+  Inbound SMTP ciphers: EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
+  Outbound SMTP method:  sslv3tlsv1
+  Outbound SMTP ciphers: RC4-SHA:RC4-MD5:ALL
+\end{lstlisting}
+Note that starting with AsyncOS 9.0 SSLv3 is disabled by default whereas the default cipher set is still \texttt{RC4-SHA:RC4-MD5:ALL}. 
+
+After committing these changes in the CLI you have to activate TLS using the WEBUI. For incoming connections first select the appropriate certificate in the settings of each listener you want to have TLS enabled on (Network -> Listeners). Afterwards configure the necessary Mail Flow Policies for each listener to at least prefer TLS (Mail Policies -> Mail Flow Policies). 
+
+It's recommended to enable TLS in the default Mail Flow Policy because these settings will be inherited by newly created policies unless specifically overwritten.
+TLS can be enforced by creating a new policy with "`TLS required"' and a new sender group (Mail Policies -> HAT Overview) using this policy and defining the addresses of the sending mail servers. 
+
+TLS settings for outgoing connections have to be configured within the destination controls (Mail Policies -> Destination Controls). Again, it is recommended to set TLS to be preferred in the default profile. To enforce TLS for a specific destination domain, add an entry to the destination control table and set "`TLS Support"' to "`required"'.
+
+Don't forget to commit your changes.
+
+\subsubsection{Limitations}
+All current AsyncOS versions use OpenSSL 0.9.8. Therefore TLS 1.2 is not supported and some of the suggested ciphers won't work. According to Cisco, TLS 1.2 is on the roadmap for AsyncOS 9.5.\footnote{\url{https://twitter.com/CiscoEmailSec/status/562974300379308033}} You can check the supported ciphers using the CLI with the option \texttt{verify} from within the \texttt{sslconfig} command:
+\begin{lstlisting}{foo}
+[]> verify
+
+Enter the ssl cipher you want to verify.
+[]> EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA
+
+DHE-RSA-CAMELLIA256-SHA SSLv3 Kx=DH       Au=RSA  Enc=Camellia(256) Mac=SHA1
+DHE-RSA-CAMELLIA128-SHA SSLv3 Kx=DH       Au=RSA  Enc=Camellia(128) Mac=SHA1
+DHE-RSA-AES256-SHA      SSLv3 Kx=DH       Au=RSA  Enc=AES(256)  Mac=SHA1
+DHE-RSA-AES128-SHA      SSLv3 Kx=DH       Au=RSA  Enc=AES(128)  Mac=SHA1
+CAMELLIA128-SHA         SSLv3 Kx=RSA      Au=RSA  Enc=Camellia(128) Mac=SHA1
+AES128-SHA              SSLv3 Kx=RSA      Au=RSA  Enc=AES(128)  Mac=SHA1
+\end{lstlisting}
+
+\subsubsection{How to test}
+\begin{lstlisting}
+openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
+\end{lstlisting}
