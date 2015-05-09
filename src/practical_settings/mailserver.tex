@@ -401,9 +401,9 @@ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 \end{itemize*}
 
 \subsubsection{Settings}
-Import your certificate(s) via the WEBUI (Network -> Certificates) or in the CLI using the \texttt{certconfig} command.
+Import your certificate(s) using the WEBUI (Network -> Certificates).
 
-From AsyncOS 9.0 and up SSL parameters for inbound SMTP, outbound SMTP and GUI access can be configured from the WEBUI (System Administration -> SSL Configuration). For all versions prior to 9.0 you have to connect to the CLI and configure the SSL parameters there as shown below using incoming SMTP as example.
+From AsyncOS 9.0 and up SSL parameters for inbound SMTP, outbound SMTP and GUI access can be configured in one step via the WEBUI (System Administration -> SSL Configuration). For all versions prior to 9.0 you have to connect to the CLI and configure the SSL parameters separately as shown below using incoming SMTP as example.
 \begin{lstlisting}{foo}
 ironport.example.com> sslconfig
 sslconfig settings:
