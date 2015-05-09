@@ -1,4 +1,4 @@
-% ---------------------------------------------------------------------- 
+% ----------------------------------------------------------------------
 \subsection{IPsec}
 \label{section:IPSECgeneral}
 
@@ -194,14 +194,14 @@ Please note that these settings restrict the available algorithms for
 %\subsubsection{How to test}
 
 %% cipherstrings current 2013-12-09
-% ---------------------------------------------------------------------- 
+% ----------------------------------------------------------------------
 \subsection{OpenVPN}
 
 \subsubsection{Tested with Versions}
 \begin{itemize*}
-  \item OpenVPN 2.3.2 from Debian ``wheezy-backports'' linked against openssl (libssl.so.1.0.0) 
+  \item OpenVPN 2.3.2 from Debian ``wheezy-backports'' linked against openssl (libssl.so.1.0.0)
   \item OpenVPN 2.2.1 from Debian Wheezy linked against openssl
-    (libssl.so.1.0.0) 
+    (libssl.so.1.0.0)
   \item OpenVPN 2.3.2 for Windows
 \end{itemize*}
 
@@ -242,16 +242,20 @@ The \verb|cipher| and \verb|auth| directives have to be identical.
 \configfile{client.conf}{44-45,115-121}{Cipher and TLS configuration for OpenVPN (Server)}
 
 \subsubsection{Justification for special settings}
-OpenVPN 2.3.1 changed the values that the \verb|tls-cipher| option
-expects from OpenSSL to IANA cipher names. That means from that
-version on you will get ``Deprecated TLS cipher name'' warnings for
-the configurations above. You cannot use the selection strings from
-section \ref{section:recommendedciphers} directly from 2.3.1 on, which
+OpenVPN 2.3.1 \href{http://sourceforge.net/p/openvpn/openvpn/ci/3b23b18dddb8f8f4a6ac6959b844b63356b59e87}{changed}
+the values that the \verb|tls-cipher| option expects from OpenSSL to
+IANA cipher names. That means from that version on you will get
+``Deprecated TLS cipher name'' warnings for the configurations above.
+You cannot use the selection strings from section
+\ref{section:recommendedciphers} directly from 2.3.1 on, which
 is why we give an explicit cipher list here.
 
 In addition, there is a 256 character limit on configuration file line
 lengths; that limits the size of cipher suites, so we dropped all
 ECDHE suites.
+
+Another way to limit the ciphers being used is to use the \verb|tls-version-min|
+option. This reflects in the ciphers being available.
 
 The configuration shown above is compatible with all tested versions.
 
@@ -298,7 +302,7 @@ Which cipher suite is actually used can be seen in the logs:
 \verb|Control Channel: TLSv1, cipher TLSv1/SSLv3 DHE-RSA-CAMELLIA256-SHA, 2048 bit RSA|
 
 
-% ---------------------------------------------------------------------- 
+% ----------------------------------------------------------------------
 \subsection{PPTP}
 
 PPTP is considered insecure, Microsoft recommends to ``use a more secure VPN
@@ -309,7 +313,7 @@ authentication protocol for the price of USD~200\footnote{\url{https://www.cloud
 and given the resulting MD4 hash, all PPTP traffic for a user can
 be decrypted.
 
-% ---------------------------------------------------------------------- 
+% ----------------------------------------------------------------------
 \subsection{Cisco ASA}
 The following settings reflect our recommendations as best as possible on the Cisco ASA platform. These are - of course - just settings regarding SSL/TLS (i.e. Cisco AnyConnect) and IPsec. For further security settings regarding this platform the appropriate Cisco guides should be followed.
 
@@ -406,7 +410,7 @@ Legacy ASA models (e.g. 5505, 5510, 5520, 5540, 5550) do not offer the possibili
 % describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
 
 
-% ---------------------------------------------------------------------- 
+% ----------------------------------------------------------------------
 \subsection{Openswan}
 
 
@@ -446,7 +450,7 @@ phase2=esp
 # - aes_gcm_c-256 = AES_GCM_16
 # - aes_ctr-256
 # - aes_ccm_c-256 = AES_CCM_16
-# - aes-256 
+# - aes-256
 # additional ciphers configuration B:
 # - camellia-256
 # - aes-128
@@ -506,21 +510,21 @@ Old keys will not be deleted (but disabled), you have to delete them manually. A
 \end{itemize}
 
 
-% ---------------------------------------------------------------------- 
+% ----------------------------------------------------------------------
 %%\subsection{Juniper VPN}
 %%\todo{write this subsubsection. AK: ask Hannes}
 
 
 
 
-% ---------------------------------------------------------------------- 
+% ----------------------------------------------------------------------
 %\subsection{L2TP over IPSec}
 %\todo{write this subsubsection}
 
 
 
 
-% ---------------------------------------------------------------------- 
+% ----------------------------------------------------------------------
 %\subsection{Racoon}
 %\todo{write this subsubsection}
 
