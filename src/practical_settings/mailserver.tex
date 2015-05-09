@@ -443,12 +443,11 @@ sslconfig settings:
 \end{lstlisting}
 Note that starting with AsyncOS 9.0 SSLv3 is disabled by default whereas the default cipher set is still \texttt{RC4-SHA:RC4-MD5:ALL}. 
 
-After committing these changes in the CLI you have to activate TLS using the WEBUI. For incoming connections first select the appropriate certificate in the settings of each listener you want to have TLS enabled on (Network -> Listeners). Afterwards configure the necessary Mail Flow Policies for each listener to at least prefer TLS (Mail Policies -> Mail Flow Policies). 
-
+After committing these changes in the CLI you have to activate TLS using the WEBUI. For incoming connections first select the appropriate certificate in the settings of each listener you want to have TLS enabled on (Network -> Listeners). Afterwards configure the necessary Mail Flow Policies for each listener to at least prefer TLS (Mail Policies -> Mail Flow Policies). \\
 It's recommended to enable TLS in the default Mail Flow Policy because these settings will be inherited by newly created policies unless specifically overwritten.
 TLS can be enforced by creating a new policy with "`TLS required"' and a new sender group (Mail Policies -> HAT Overview) using this policy and defining the addresses of the sending mail servers. 
 
-TLS settings for outgoing connections have to be configured within the destination controls (Mail Policies -> Destination Controls). Again, it is recommended to set TLS to be preferred in the default profile. To enforce TLS for a specific destination domain, add an entry to the destination control table and set "`TLS Support"' to "`required"'.
+TLS settings for outgoing connections have to be configured within the destination controls (Mail Policies -> Destination Controls). Set TLS to be preferred in the default profile to enable it for all outgoing connections. To enforce TLS for a specific destination domain, add an entry to the destination control table and set "`TLS Support"' to "`required"'.
 
 Don't forget to commit your changes.
 
