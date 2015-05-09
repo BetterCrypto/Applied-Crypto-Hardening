@@ -133,15 +133,15 @@ HAProxy can be used as loadbalancer and proxy for TCP and HTTP-based application
 \end{lstlisting}
 Append the npn command in the frontend configuration of HAProxy.
 
-\paragraph*{Enable OCSP stampling:}
+\paragraph*{Enable OCSP stapling:}
 ~
-HAProxy supports since version 1.5.0 OCSP stampling. To enable it you have to generate the OCSP singing file in the same folder, with the same name as your certificate file plus the extension .ocsp. (e.g. your certificate file is named server.crt then the OCSP file have to be named server.crt.oscp)\\
+HAProxy supports since version 1.5.0 OCSP stapling. To enable it you have to generate the OCSP singing file in the same folder, with the same name as your certificate file plus the extension .ocsp. (e.g. your certificate file is named server.crt then the OCSP file have to be named server.crt.oscp)\\
 To generate the OCSP file use these commands:
 \begin{lstlisting}
 openssl x509 -in your.certificate.crt -noout -ocsp_uri # <- get your ocsp uri
 openssl ocsp -noverify -issuer ca.root.cert.crt -cert your.certificate.crt -url "YOUR OCSP URI" -respout your.certificate.crt.ocsp
 \end{lstlisting}
-Reload HAProxy and now OCSP stampling should be enabled.\\
+Reload HAProxy and now OCSP stapling should be enabled.\\
 Note: This OCSP signature file is only valid for a limited time. The simplest way of updating this file is by using cron.daily or something similar.
 
 \paragraph*{Enable \ac{HPKP}:}
