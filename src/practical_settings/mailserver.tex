@@ -403,7 +403,7 @@ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 \subsubsection{Settings}
 Import your certificate(s) using the WEBUI (Network -> Certificates).
 
-From AsyncOS 9.0 and up SSL parameters for inbound SMTP, outbound SMTP and GUI access can be configured in one step via the WEBUI (System Administration -> SSL Configuration). For all versions prior to 9.0 you have to connect to the CLI and configure the SSL parameters separately as shown below using incoming SMTP as example.
+From AsyncOS 9.0 and up SSL parameters for inbound SMTP, outbound SMTP and GUI access can be configured in one step via the WEBUI (System Administration -> SSL Configuration). For all versions prior to 9.0 you have to connect to the CLI and configure the SSL parameters separately as shown below using inbound SMTP as example.
 \begin{lstlisting}{foo}
 ironport.example.com> sslconfig
 sslconfig settings:
@@ -443,16 +443,16 @@ sslconfig settings:
 \end{lstlisting}
 Note that starting with AsyncOS 9.0 SSLv3 is disabled by default whereas the default cipher set is still \texttt{RC4-SHA:RC4-MD5:ALL}. 
 
-After committing these changes in the CLI you have to activate TLS using the WEBUI. For incoming connections first select the appropriate certificate in the settings of each listener you want to have TLS enabled on (Network -> Listeners). Afterwards configure the necessary Mail Flow Policies for each listener to at least prefer TLS (Mail Policies -> Mail Flow Policies). \\
+After committing these changes in the CLI you have to activate TLS using the WEBUI. For inbound connections first select the appropriate certificate in the settings of each listener you want to have TLS enabled on (Network -> Listeners). Afterward configure the necessary Mail Flow Policies for each listener to at least prefer TLS (Mail Policies -> Mail Flow Policies). \\
 It's recommended to enable TLS in the default Mail Flow Policy because these settings will be inherited by newly created policies unless specifically overwritten.
-TLS can be enforced by creating a new policy with "`TLS required"' and a new sender group (Mail Policies -> HAT Overview) using this policy and defining the addresses of the sending mail servers. 
+TLS can be enforced by creating a new policy with TLS ``required'' and a new sender group (Mail Policies -> HAT Overview) using this policy and defining the addresses of the sending mail servers for which you want to enforce encryption. 
 
-TLS settings for outgoing connections have to be configured within the destination controls (Mail Policies -> Destination Controls). Set TLS to be preferred in the default profile to enable it for all outgoing connections. To enforce TLS for a specific destination domain, add an entry to the destination control table and set "`TLS Support"' to "`required"'.
+TLS settings for outbound connections have to be configured within the destination controls (Mail Policies -> Destination Controls). Configure TLS to be preferred in the default profile to enable it for all outbound connections. To enforce TLS for a specific destination domain, add an entry to the destination control table and set ``TLS Support'' to ``required''.
 
 Don't forget to commit your changes.
 
 \subsubsection{Limitations}
-All current AsyncOS versions use OpenSSL 0.9.8. Therefore TLS 1.2 is not supported and some of the suggested ciphers won't work. According to Cisco, TLS 1.2 is on the roadmap for AsyncOS 9.5.\footnote{\url{https://twitter.com/CiscoEmailSec/status/562974300379308033}} You can check the supported ciphers using the CLI with the option \texttt{verify} from within the \texttt{sslconfig} command:
+All current AsyncOS versions use OpenSSL 0.9.8. Therefore TLS 1.2 is not supported and some of the suggested ciphers won't work. According to Cisco, implementation of TLS 1.2 is on the road map for AsyncOS 9.5.\footnote{\url{https://twitter.com/CiscoEmailSec/status/562974300379308033}} You can check the supported ciphers on the CLI by using the option \texttt{verify} from within the \texttt{sslconfig} command:
 \begin{lstlisting}{foo}
 []> verify
 
