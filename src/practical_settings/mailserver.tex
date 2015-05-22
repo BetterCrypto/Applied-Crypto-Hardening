@@ -403,7 +403,8 @@ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 \subsubsection{Settings}
 Import your certificate(s) using the WEBUI (Network -> Certificates).
 
-From AsyncOS 9.0 and up SSL parameters for inbound SMTP, outbound SMTP and GUI access can be configured in one step via the WEBUI (System Administration -> SSL Configuration). For all versions prior to 9.0 you have to connect to the CLI and configure the SSL parameters separately as shown below using inbound SMTP as example.
+From AsyncOS 9.0 and up, SSL parameters for inbound SMTP, outbound SMTP and GUI access can be configured in one step via the WEBUI (System Administration -> SSL Configuration, see figure \ref{fig:ach_ironport_ssl_settings} on page \pageref{fig:ach_ironport_ssl_settings}). \\
+For all versions prior to 9.0, you have to connect to the CLI and configure the SSL parameters separately, as shown below using inbound SMTP as example.
 \begin{lstlisting}{foo}
 ironport.example.com> sslconfig
 sslconfig settings:
@@ -441,15 +442,44 @@ sslconfig settings:
   Outbound SMTP method:  sslv3tlsv1
   Outbound SMTP ciphers: RC4-SHA:RC4-MD5:ALL
 \end{lstlisting}
-Note that starting with AsyncOS 9.0 SSLv3 is disabled by default whereas the default cipher set is still \texttt{RC4-SHA:RC4-MD5:ALL}. 
+Note that starting with AsyncOS 9.0 SSLv3 is disabled by default, whereas the default cipher set is still \texttt{RC4-SHA:RC4-MD5:ALL} (see figure \ref{fig:ach_ironport_ssl_settings} on page \pageref{fig:ach_ironport_ssl_settings}). 
 
-After committing these changes in the CLI you have to activate TLS using the WEBUI. For inbound connections first select the appropriate certificate in the settings of each listener you want to have TLS enabled on (Network -> Listeners). Afterward configure the necessary Mail Flow Policies for each listener to at least prefer TLS (Mail Policies -> Mail Flow Policies). \\
-It's recommended to enable TLS in the default Mail Flow Policy because these settings will be inherited by newly created policies unless specifically overwritten.
-TLS can be enforced by creating a new policy with TLS ``required'' and a new sender group (Mail Policies -> HAT Overview) using this policy and defining the addresses of the sending mail servers for which you want to enforce encryption. 
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/ach_ironport_ssl_settings.png}
+  \caption{Default SSL Settings}
+  \label{fig:ach_ironport_ssl_settings}
+\end{figure}
 
-TLS settings for outbound connections have to be configured within the destination controls (Mail Policies -> Destination Controls). Configure TLS to be preferred in the default profile to enable it for all outbound connections. To enforce TLS for a specific destination domain, add an entry to the destination control table and set ``TLS Support'' to ``required''.
+After committing these changes in the CLI, you have to activate the use of TLS in several locations. 
 
-Don't forget to commit your changes.
+For inbound connections, first select the appropriate certificate in the settings of each listener you want to have TLS enabled on (Network -> Listeners, see figure \ref{fig:ach_ironport_listener_cert} on page \pageref{fig:ach_ironport_listener_cert}). Afterwards, for each listener, configure all Mail Flow Policies which have their Connection Behavior set to ``Accept'' or ``Relay'' to at least prefer TLS (Mail Policies -> Mail Flow Policies, see figure \ref{fig:ach_ironport_mail_flow_tls} on page \pageref{fig:ach_ironport_mail_flow_tls}). \\
+It is recommended to also enable TLS in the default Mail Flow Policy, because these settings will be inherited by newly created policies, unless specifically overwritten. \\
+TLS can be enforced by creating a new Mail Flow Policy with TLS set to ``required'', creating a new Sender Group defining the addresses of the sending mail servers for which you want to enforce encryption (Mail Policies -> HAT Overview) and using this new Sender Group in conjunction with the newly created Mail Flow Policy. 
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/ach_ironport_listener_cert.png}
+  \caption{Listener Settings}
+  \label{fig:ach_ironport_listener_cert}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/ach_ironport_mail_flow_tls.png}
+  \caption{Mail Flow Policy Security Features}
+  \label{fig:ach_ironport_mail_flow_tls}
+\end{figure}
+
+TLS settings for outbound connections have to be configured within the Destination Controls (Mail Policies -> Destination Controls). Chose the appropriate SSL certificate within the global settings and configure TLS to be preferred in the default profile to enable it for all outbound connections. After these two steps the Destination Control overview page should look like figure \ref{fig:ach_ironport_dest_control} on page \pageref{fig:ach_ironport_dest_control}. 
+To enforce TLS for a specific destination domain, add an entry to the Destination Control Table and set ``TLS Support'' to ``required''.
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/ach_ironport_dest_control.png}
+  \caption{Destination Control overview}
+  \label{fig:ach_ironport_dest_control}
+\end{figure}
 
 \subsubsection{Limitations}
 All current AsyncOS versions use OpenSSL 0.9.8. Therefore TLS 1.2 is not supported and some of the suggested ciphers won't work. According to Cisco, implementation of TLS 1.2 is on the road map for AsyncOS 9.5.\footnote{\url{https://twitter.com/CiscoEmailSec/status/562974300379308033}} You can check the supported ciphers on the CLI by using the option \texttt{verify} from within the \texttt{sslconfig} command:
@@ -471,3 +501,5 @@ AES128-SHA              SSLv3 Kx=RSA      Au=RSA  Enc=AES(128)  Mac=SHA1
 \begin{lstlisting}
 openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 \end{lstlisting}
+
+\FloatBarrier % the preceding section has several figures. Floating them too far away might get confusing for readers.
