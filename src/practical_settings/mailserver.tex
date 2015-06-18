@@ -482,7 +482,7 @@ To enforce TLS for a specific destination domain, add an entry to the Destinatio
 \end{figure}
 
 \subsubsection{Limitations}
-All current AsyncOS versions use OpenSSL 0.9.8. Therefore TLS 1.2 is not supported and some of the suggested ciphers won't work. According to Cisco, implementation of TLS 1.2 is on the road map for AsyncOS 9.5.\footnote{\url{https://twitter.com/CiscoEmailSec/status/562974300379308033}} You can check the supported ciphers on the CLI by using the option \texttt{verify} from within the \texttt{sslconfig} command:
+All current General Deployment AsyncOS releases use OpenSSL 0.9.8. Therefore TLS 1.2 is not supported and some of the suggested ciphers won't work. Starting with AsyncOS 9.5, which is available as Limited Deployment Release as of June 2015, TLS 1.2 is supported.\footnote{\url{http://www.cisco.com/c/dam/en/us/td/docs/security/esa/esa9-5/ESA_9-5_Release_Notes.pdf}, Changed Behaviour, page 4} You can check the supported ciphers on the CLI by using the option \texttt{verify} from within the \texttt{sslconfig} command:
 \begin{lstlisting}{foo}
 []> verify
 
