@@ -42,6 +42,7 @@ We recommend to use the following settings for Mail Transfer Agents:
   \item correctly setup MX, A and PTR RRs without using CNAMEs at all.
   \item the hostname used as HELO/EHLO in outgoing mail shall match the PTR RR
   \item enable opportunistic TLS, using the STARTTLS mechanism on port 25
+  \item Implicit TLS on port 465 may be offered additionally
   \item use server and client certificates (most server certificates are client
     certificates as well)
   \item either the common name or at least an alternate subject name of the
@@ -56,7 +57,7 @@ For MSA operation we recommend:
   \item listen on submission port 587 with mandatory STARTTLS
   \item optionally listen on port 465 with Implicit TLS
   \item enforce SMTP AUTH even for local networks
-  \item make sure that SMTP AUTH is not allowed on unencrypted connections
+  \item ensure that SMTP AUTH is not allowed on unencrypted connections
   \item use the recommended cipher suites if all connecting MUAs support them
 \end{itemize*}
 
