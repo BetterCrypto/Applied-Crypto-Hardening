@@ -1,47 +1,75 @@
 % hack.
 \gdef\currentsectionname{MailServers}
-This section documents the most common mail (SMTP) and IMAPs/POPs servers. Another option to secure IMAPs/POPs servers is to place them behind an stunnel server.
+This section documents the most common mail servers. Mail servers may usually be
+grouped into three categories:
+\begin{itemize*}
+  \item the mail submission agent (MSA)
+  \item the mail transfer agent (MTA)/mail exchanger (MX)
+  \item the mail delivery agent (MDA)
+\end{itemize*}
 
+An e-mail client (mail user agent, MUA) submits mail to the MSA. This is usually
+been done using the Simple Mail Transfer Protocol (SMTP). Afterwards, the mail
+is transmitted by the MTA over the Internet to the MTA of the receiver. This
+happens again via SMTP. Finally, the mail client of the receiver will fetch mail
+from an MDA usually via the Internet Message Access Protocol (IMAP) or the Post
+Office Protocol (POP).
+
+As MSAs and MTAs both use SMTP as transfer protocols, both functionalities may
+often may be implemented with the same software. On the other hand, MDA software
+may or may not implement both IMAP and POP.
 
 %% ----------------------------------------------------------------------
-\subsection{SMTP in general}
-\label{subsection:smtp_general}
-SMTP usually makes use of opportunistic TLS. This means that an MTA will accept TLS connections when asked for it during handshake but will not require it. One should always support incoming opportunistic TLS and always try TLS handshake outgoing.
+\subsection{TLS usage in mail server protocols}
 
-Furthermore a mailserver can operate in three modes:
-\begin{itemize*}
-  \item As MSA (Mail Submission Agent) your mailserver receives mail from your clients MUAs (Mail User Agent).
-  \item As receiving MTA (Mail Transmission Agent, MX)
-  \item As sending MTA (SMTP client)
-\end{itemize*}
-We recommend the following basic setup for all modes:
+E-mail protocols support TLS in two different ways. It may be added as a
+protocol wrapper on a different port. This method is referred to as Implicit TLS
+or as protocol variants SMTPS, IMAPS and POP3S. The other method is to establish
+a cleartext session first and switch to TLS afterwards by issuing the STARTTLS
+command.
+
+SMTP between MTAs usually makes use of opportunistic TLS. This means that an
+MTA will accept TLS connections when asked for it but will not require it.
+MTAs should always try opportunistic TLS handshakes outgoing and always accept 
+incoming opportunistic TLS.
+
+%% ----------------------------------------------------------------------
+\subsection{Recommended configuration}
+% TODO: Check configurations for compliance
+
+We recommend to use the following settings for Mail Transfer Agents:
 \begin{itemize*}
   \item correctly setup MX, A and PTR RRs without using CNAMEs at all.
-  \item enable encryption (opportunistic TLS)
+  \item the hostname used as HELO/EHLO in outgoing mail shall match the PTR RR
+  \item enable opportunistic TLS, using the STARTTLS mechanism on port 25
+  \item Implicit TLS on port 465 may be offered additionally
+  \item use server and client certificates (most server certificates are client
+    certificates as well)
+  \item either the common name or at least an alternate subject name of the
+    certificate shall match the PTR RR (client mode) or the MX RR (server mode)
   \item do not use self signed certificates
-\end{itemize*}
-
-For SMTP client mode we additionally recommend:
-\begin{itemize*}
-  \item the hostname used as HELO must match the PTR RR
-  \item setup a client certificate (most server certificates are client certificates as well)
-  \item either the common name or at least an alternate subject name of your certificate must match the PTR RR
-  \item do not modify the cipher suite for client mode
+  \item accept all cipher suites, as the alternative would be to fall back to
+    cleartext transmission
 \end{itemize*}
 
 For MSA operation we recommend:
 \begin{itemize*}
-  \item listen on submission port 587
+  \item listen on submission port 587 with mandatory STARTTLS
+  \item optionally listen on port 465 with Implicit TLS
   \item enforce SMTP AUTH even for local networks
-  \item do not allow SMTP AUTH on unencrypted connections
-  \item optionally use the recommended cipher suites if (and only if) all your connecting MUAs support them
+  \item ensure that SMTP AUTH is not allowed on unencrypted connections
+  \item use the recommended cipher suites if all connecting MUAs support them
 \end{itemize*}
 
-
-% Note that (with the exception of MSA mode), it might be better to allow any cipher suite -- since any encryption is better than no encryption when it comes to opportunistic TLS.
-
-We strongly recommend to allow all cipher suites for anything but MSA
-mode, because the alternative is plain text transmission.
+For MDA operation we recommend:
+\begin{itemize*}
+  \item listen on the protocol port (143 for IMAP, 110 for POP3) with mandatory
+    STARTTLS
+  \item optionally listen on Implicit TLS ports (993 for IMAPS, 995 for POP3S)
+  \item enforce authentication even for local networks
+  \item make sure that authentication is not allowed on unencrypted connections
+  \item use the recommended cipher suites if all connecting MUAs support them
+\end{itemize*}
 
 %% ----------------------------------------------------------------------
 \subsection{Dovecot}
