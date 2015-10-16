@@ -9,13 +9,14 @@ synonyms~\footnote{https://www.mail-archive.com/openssl-dev@openssl.org/msg33405
 \begin{itemize*}
   \item Apache 2.2.22, Debian Wheezy with OpenSSL 1.0.1e
   \item Apache 2.4.6, Debian Jessie with OpenSSL 1.0.1e
+	\item Apache 2.4.10, Debian Jessie 8.2 with OpenSSL 1.0.1k
   \item Apache 2.4.7, Ubuntu 14.04.2 Trusty with Openssl 1.0.1f
 \end{itemize*}
 
 \subsubsection{Settings}
 Enabled modules \emph{SSL} and \emph{Headers} are required.
 
-\configfile{default-ssl}{42-43,52-52,62-62,162-170}{SSL configuration for an Apache vhost}
+\configfile{default-ssl}{42-43,52-52,62-62,162-177}{SSL configuration for an Apache vhost}
 
 \subsubsection{Additional settings}
 You might want to redirect everything to \emph{https://} if possible. In Apache
