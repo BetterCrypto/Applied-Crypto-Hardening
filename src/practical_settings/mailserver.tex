@@ -49,26 +49,31 @@ mode, because the alternative is plain text transmission.
 
 \subsubsection{Tested with Version}
 \begin{itemize*}
-  \item Dovecot 2.1.7, Debian Wheezy (without ``ssl\_prefer\_server\_ciphers'' setting)
+  \item Dovecot 2.1.7, Debian Wheezy (without: ``\texttt{ssl\_prefer\_server\_ciphers}``)
   \item Dovecot 2.2.9, Debian Jessie
-  \item 2.0.19apple1 on OS X Server 10.8.5 (without ``ssl\_prefer\_server\_ciphers'' setting)
+  \item Dovecot 2.2.13, Debian 8.2 Jessie
+  \item Dovecot 2.0.19apple1 on OS X Server 10.8.5 (without: ``\texttt{ssl\_prefer\_server\_ciphers}``)
   \item Dovecot 2.2.9 on Ubuntu 14.04 trusty
 \end{itemize*}
 
 \subsubsection{Settings}
 % Example: http://dovecot.org/list/dovecot/2013-October/092999.html
 
-\configfile{10-ssl.conf}{48-55}{Dovecot SSL configuration}
+\configfile{10-ssl.conf}{48-64}{Dovecot SSL configuration}
 
 \subsubsection{Additional info}
 Dovecot 2.0, 2.1: Almost as good as dovecot 2.2. Dovecot does not ignore unknown configuration parameters. Does not support
 ssl\_prefer\_server\_ciphers
 
 \subsubsection{Limitations}
-Dovecot currently does not support disabling TLS compression. Furthermore, DH
-parameters greater than 1024bit are not supported. The most recent version
-2.2.7 of Dovecot implements configurable DH parameter length
-\footnote{\url{http://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0}}.
+\begin{itemize}
+	\item Dovecot <2.2.14 does not support disabling TLS compression.\\ 
+		{\(\geq\)2.2.14}\footnote{\url{http://www.dovecot.org/doc/NEWS-2.2}} 
+		use: \texttt{ssl\_options = no\_compression}
+	\item Dovecot <2.2.7 uses fixed DH parameters.\\
+		{\(\geq\)2.2.7}\footnote{\url{http://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0}} 
+		greater DH-Parameters are supported: \texttt{ssl\_dh\_parameters\_length = 2048}. 
+\end{itemize}
 
 %\subsubsection{Justification for special settings (if needed)}
 
@@ -85,7 +90,19 @@ parameters greater than 1024bit are not supported. The most recent version
 % describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
 \begin{lstlisting}
 openssl s_client -crlf -connect SERVER.TLD:993
+openssl s_client -crlf -connect SERVER.TLD:995
+openssl s_client -crlf -starttls imap -connect SERVER.TLD:143
+openssl s_client -crlf -starttls pop3 -connect SERVER.TLD:110
 \end{lstlisting}
+
+SSLyze\footnote{\url{https://github.com/nabla-c0d3/sslyze/releases}} offers scanning for common vulnerabilities and displays Protocols and Cipher-Suites.
+\begin{lstlisting}
+sslyze.exe --regular SERVER.TLD:993
+sslyze.exe --regular SERVER.TLD:995
+sslyze.exe --regular --starttls=imap SERVER.TLD:143
+sslyze.exe --regular --starttls=pop3 SERVER.TLD:110
+\end{lstlisting}
+
 
 
 %% ----------------------------------------------------------------------
