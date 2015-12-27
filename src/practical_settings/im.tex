@@ -31,7 +31,9 @@ The following configuration is suggested to disable SSLv2 and SSLv3 and require 
 
 \subsubsection{Tested with Versions}
 \begin{itemize*}
-  \item 14.12 (Ubuntu 14.04.1 LTS x64, Debian 7 x64)
+  \item ejabberd 14.12, Debian 7 Wheezy
+  \item ejabberd 14.12, Ubuntu 14.04 Trusty
+  \item ejabberd 15.03, Ubuntu 14.04 Trusty
 \end{itemize*}
 
 \subsubsection{Settings}
@@ -45,7 +47,7 @@ with the manifesto, you should adapt your configuration\footnote{\url{http://www
 It is possible to explicitly specify a cipher string for TLS connections.
 \configfile{14.12/ejabberd.yml}{104-107,113-114,119-119,123-123,125-125,127-127,134-135,138-138,142-142,144-146,195-195,203-203,207-207,210-213,217-217}{Specifying a cipher order and enforcing it}
 
-Note that we are setting the SSL option cipher\_server\_preference. This enforces our cipher order when negotiating which ciphers are used, as the cipher order of some clients chooses weak ciphers over stronger ciphers.\footnote{\url{https://blog.thijsalkema.de/me/blog//blog/2013/09/02/the-state-of-tls-on-xmpp-3/}}
+Note that we are setting the SSL option \texttt{cipher\_server\_preference}. This enforces our cipher order when negotiating which ciphers are used, as the cipher order of some clients chooses weak ciphers over stronger ciphers.\footnote{\url{https://blog.thijsalkema.de/me/blog//blog/2013/09/02/the-state-of-tls-on-xmpp-3/}}
 
 Starting with version 15.03, it is possible to use custom Diffie-Hellman-Parameters. This allows us to negotiate stronger Diffie-Hellman-keys, and also helps us avoid problems with using common Diffie-Hellman-Parameters.\footnote{\url{https://weakdh.org}} You can generate your own parameter file by running:
 \begin{lstlisting}

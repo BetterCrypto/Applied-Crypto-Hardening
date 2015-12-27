@@ -140,7 +140,7 @@ listen:
     access: c2s
     # Set the cipher order of the server, in OpenSSL syntax
     ciphers: "EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA"
-    # TODO Is this cipher order fine?
+
   - 
     port: 5269
     module: ejabberd_s2s_in
@@ -215,7 +215,7 @@ s2s_protocol_options:
   # of the other server
 
 s2s_ciphers: "EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA"
-# TODO Is this cipher order fine?
+
 
 
 ##
