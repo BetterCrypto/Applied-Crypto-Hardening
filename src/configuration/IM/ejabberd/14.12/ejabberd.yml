@@ -133,6 +133,9 @@ listen:
       # The cipher order is defined using the "ciphers" option (see below)
       - "cipher_server_preference"
     max_stanza_size: 65536
+    # Optionally use your own Diffie-Hellman-Parameters
+    # Generate the file using "openssl dhparam -out dhparams.pem 4096"
+    dhfile: "/path/to/dhparams.pem"  # Available from version 15.06
     shaper: c2s_shaper
     access: c2s
     # Set the cipher order of the server, in OpenSSL syntax
@@ -199,6 +202,9 @@ s2s_use_starttls: required_trusted
 ##
 s2s_certfile: "/path/to/ssl.pem"
 
+## Custom DH parameters
+# Generate using "openssl dhparam -out dhparams.pem 4096"
+s2s_dhfile: "/etc/ejabberd/dhparams.pem"  # Available from version 15.03
 ## Custom OpenSSL options
 ##
 s2s_protocol_options:

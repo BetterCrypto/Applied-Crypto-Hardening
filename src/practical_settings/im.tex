@@ -38,18 +38,23 @@ The following configuration is suggested to disable SSLv2 and SSLv3 and require 
 ejabberd is one of the popular Jabber servers. In order to be compliant
 with the manifesto, you should adapt your configuration\footnote{\url{http://www.process-one.net/docs/ejabberd/guide_en.html}}:
 
-\configfile{14.12/ejabberd.yml}{104-107,113-113,114-114,119-119,123-123,125-125,127-127,135-137,141-143,192-192,200-200,204-206}{%
+\configfile{14.12/ejabberd.yml}{104-107,113-114,119-119,123-123,125-125,127-127,134-135,138-140,144-146,195-195,203-203,207-207,210-213}{%
   TLS setup for ejabberd}
 % 
 \subsubsection{Additional settings}
 It is possible to explicitly specify a cipher string for TLS connections.
-\configfile{14.12/ejabberd.yml}{104-107,113-114,119-119,123-123,125-125,127-127,134-137,139-139,141-143,192-192,200-200,204-207,211-211}{Specifying a cipher order and enforcing it}
+\configfile{14.12/ejabberd.yml}{104-107,113-114,119-119,123-123,125-125,127-127,134-135,138-138,142-142,144-146,195-195,203-203,207-207,210-213,217-217}{Specifying a cipher order and enforcing it}
 
 Note that we are setting the SSL option cipher\_server\_preference. This enforces our cipher order when negotiating which ciphers are used, as the cipher order of some clients chooses weak ciphers over stronger ciphers.\footnote{\url{https://blog.thijsalkema.de/me/blog//blog/2013/09/02/the-state-of-tls-on-xmpp-3/}}
 
+Starting with version 15.03, it is possible to use custom Diffie-Hellman-Parameters. This allows us to negotiate stronger Diffie-Hellman-keys, and also helps us avoid problems with using common Diffie-Hellman-Parameters.\footnote{\url{https://weakdh.org}} You can generate your own parameter file by running:
+\begin{lstlisting}
+openssl dhparam -out dhparams.pem 4096
+\end{lstlisting}
+
 By default, ejabberd provides an administration website (look for the ejabberd\_http module). Enable TLS protection for it like this:
 
-\configfile{14.12/ejabberd.yml}{174-175,178-180,182-182,184-185}{Adding TLS to the web interface}
+\configfile{14.12/ejabberd.yml}{177-178,181-183,185-185,187-188}{Adding TLS to the web interface}
 
 \subsubsection{Tested with Versions}
 \begin{itemize*}
