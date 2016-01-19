@@ -442,7 +442,7 @@ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 \begin{itemize*}
   \item AsyncOS 7.6.1
   \item AsyncOS 8.5.6
-  \item AsyncOS 9.0.0 and 9.1.0
+  \item AsyncOS 9.0.0, 9.5.0, 9.6.0, 9.7.0
 \end{itemize*}
 
 \subsubsection{Settings}
@@ -527,7 +527,7 @@ To enforce TLS for a specific destination domain, add an entry to the Destinatio
 \end{figure}
 
 \subsubsection{Limitations}
-All current General Deployment AsyncOS releases use OpenSSL 0.9.8. Therefore TLS 1.2 is not supported and some of the suggested ciphers won't work. Starting with AsyncOS 9.5, which is available as Limited Deployment Release as of June 2015, TLS 1.2 is supported.\footnote{\url{http://www.cisco.com/c/dam/en/us/td/docs/security/esa/esa9-5/ESA_9-5_Release_Notes.pdf}, Changed Behaviour, page 4} You can check the supported ciphers on the CLI by using the option \texttt{verify} from within the \texttt{sslconfig} command:
+All AsyncOS releases prior to version 9.5 use OpenSSL 0.9.8. Therefore TLS 1.2 is not supported in these versions and some of the suggested ciphers won't work. Starting with AsyncOS 9.5 TLS 1.2 is fully supported.\footnote{\url{http://www.cisco.com/c/dam/en/us/td/docs/security/esa/esa9-5/ESA_9-5_Release_Notes.pdf}, Changed Behaviour, page 4} You can check the supported ciphers on the CLI by using the option \texttt{verify} from within the \texttt{sslconfig} command:
 \begin{lstlisting}{foo}
 []> verify
 
