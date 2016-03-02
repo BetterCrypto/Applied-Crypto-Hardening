@@ -17,7 +17,7 @@ Office Protocol (POP).
 
 As MSAs and MTAs both use SMTP as transfer protocols, both functionalities may
 often may be implemented with the same software. On the other hand, MDA software
-may or may not implement both IMAP and POP.
+might or might not implement both IMAP and POP.
 
 %% ----------------------------------------------------------------------
 \subsection{TLS usage in mail server protocols}
@@ -50,6 +50,8 @@ We recommend to use the following settings for Mail Transfer Agents:
   \item do not use self signed certificates
   \item accept all cipher suites, as the alternative would be to fall back to
     cleartext transmission
+  \item an execption to the last sentence is that MTAs \textit{MUST NOT} 
+    enable SSLv2 protocol support, due to the DROWN attack\footnote{\url{https://drownattack.com/drown-attack-paper.pdf}}.
 \end{itemize*}
 
 For MSA operation we recommend:
@@ -58,7 +60,7 @@ For MSA operation we recommend:
   \item optionally listen on port 465 with Implicit TLS
   \item enforce SMTP AUTH even for local networks
   \item ensure that SMTP AUTH is not allowed on unencrypted connections
-  \item use the recommended cipher suites if all connecting MUAs support them
+  \item only use the recommended cipher suites if all connecting MUAs support them
 \end{itemize*}
 
 For MDA operation we recommend:
@@ -69,6 +71,7 @@ For MDA operation we recommend:
   \item enforce authentication even for local networks
   \item make sure that authentication is not allowed on unencrypted connections
   \item use the recommended cipher suites if all connecting MUAs support them
+  \item turn off SSLv2 (DROWN attack\footnote{\url{https://drownattack.com/drown-attack-paper.pdf}})
 \end{itemize*}
 
 %% ----------------------------------------------------------------------
@@ -245,7 +248,7 @@ For the MSA \verb|smtpd| process which communicates with mail clients, we first
 define the ciphers that are acceptable for the ``mandatory'' security level,
 again in \verb|main.cf|:
 
-\configfile{main.cf}{35-37}{MSA TLS configuration in Postfix}
+\configfile{main.cf}{36-45}{MSA TLS configuration in Postfix}
 
 Then, we configure the MSA smtpd in \verb|master.cf| with two
 additional options that are only used for this instance of smtpd:
@@ -253,7 +256,7 @@ additional options that are only used for this instance of smtpd:
 \configfile{master.cf}{12-14}{MSA smtpd service configuration in Postfix}
 
 For those users who want to use EECDH key exchange, it is possible to customize this via:
-\configfile{main.cf}{38-38}{EECDH customization in Postfix}
+\configfile{main.cf}{46-46}{EECDH customization in Postfix}
 The default value since Postfix 2.8 is ``strong''.
 
 \subsubsection{Limitations}
