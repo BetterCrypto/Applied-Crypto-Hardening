@@ -20,12 +20,12 @@ readme_directory = no
 # TLS parameters
 smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
 smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
-# use 0 for Postfix >= 2.9, and 1 for earlier versions
-smtpd_tls_loglevel = 0
+# log TLS connection info
+smtpd_tls_loglevel = 1
+smtp_tls_loglevel = 1
 # enable opportunistic TLS support in the SMTP server and client
 smtpd_tls_security_level = may
 smtp_tls_security_level = may
-smtp_tls_loglevel = 1
 # if you have authentication enabled, only offer it after STARTTLS
 smtpd_tls_auth_only = yes
 tls_ssl_options = NO_COMPRESSION
