@@ -1,0 +1,27 @@
+#!/bin/sh
+ 
+GITINFO_INDEX_FILENAME="gitHeadInfo.gin"
+GITINFO_GIT_LOG_PRETTY_FORMAT=$(cat <<'__EOS__'
+\usepackage[%
+        shash={%h},
+        lhash={%H},
+        authname={%an},
+        authemail={%ae},
+        authsdate={%ad},
+        authidate={%ai},
+        authudate={%at},
+        commname={%an},
+        commemail={%ae},
+        commsdate={%ad},
+        commidate={%ai},
+        commudate={%at},
+        refnames={%d}
+]{gitsetinfo}
+__EOS__
+)
+ 
+git log -1 --date=short \
+		--pretty=format:"${GITINFO_GIT_LOG_PRETTY_FORMAT}" \
+		HEAD  > ./${GITINFO_INDEX_FILENAME}
+
+

@@ -1,0 +1,15 @@
+Copyright: Aaron Kaplan <aaron@lo-res.org>
+
+Unless explicitly stated otherwise, all content of my talks
+is licensed under CC BY-NC-ND 4.0. LaTeX and Makefile hacks,
+as well as PanDoc integration is largely copied off the
+internet anyway. If you find something original you may use
+it with your own slides, with your own content under the
+terms of the MIT license.
+
+ - https://creativecommons.org/licenses/by-nc-nd/4.0
+ - http://opensource.org/licenses/MIT
+
+If you want to use a particular presentation for
+commercial purposes get in touch with me via e-mail.
+
