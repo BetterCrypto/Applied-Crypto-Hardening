@@ -3,14 +3,14 @@
 
 Q: I want to review the document. What do I need to do?
 
-A: `git clone` the document, make changes, send us a diff
+A: `git clone` the document, make changes, send us a diff.
 Do not forget to add your name to `src/acknowledgements.tex`!
 
 
 
 Q: Who is invited to review the document?
 
-A: Essentially everyone. The core group of editors consists of crypologists,
+A: Essentially everyone. The core group of editors consists of cryptologists,
 computer scientists and sysadmins.
 
 
