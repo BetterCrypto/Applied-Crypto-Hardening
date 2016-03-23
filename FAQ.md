@@ -36,5 +36,5 @@ A: Please get in contact with us on the mailing list!
 
 Q: Is there a webpage?
 
-A: yes, bettercrypto.org
+A: yes, https://bettercrypto.org
 
