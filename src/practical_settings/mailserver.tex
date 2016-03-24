@@ -16,7 +16,7 @@ from an MDA usually via the Internet Message Access Protocol (IMAP) or the Post
 Office Protocol (POP).
 
 As MSAs and MTAs both use SMTP as transfer protocols, both functionalities may
-often may be implemented with the same software. On the other hand, MDA software
+often be implemented with the same software. On the other hand, MDA software
 might or might not implement both IMAP and POP.
 
 %% ----------------------------------------------------------------------
@@ -30,7 +30,7 @@ command.
 
 SMTP between MTAs usually makes use of opportunistic TLS. This means that an
 MTA will accept TLS connections when asked for it but will not require it.
-MTAs should always try opportunistic TLS handshakes outgoing and always accept 
+MTAs should always try opportunistic TLS handshakes outgoing and always accept
 incoming opportunistic TLS.
 
 %% ----------------------------------------------------------------------
