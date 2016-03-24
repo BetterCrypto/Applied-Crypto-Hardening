@@ -440,7 +440,7 @@ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 %\todo{FIXME: write this section}
 
 %% ----------------------------------------------------------------------
-\subsection{Cicso ESA/IronPort}
+\subsection{Cisco ESA/IronPort}
 \subsubsection{Tested with Version}
 \begin{itemize*}
   \item AsyncOS 7.6.1
@@ -519,7 +519,7 @@ TLS can be enforced by creating a new Mail Flow Policy with TLS set to ``require
   \label{fig:ach_ironport_mail_flow_tls}
 \end{figure}
 
-TLS settings for outbound connections have to be configured within the Destination Controls (Mail Policies -> Destination Controls). Chose the appropriate SSL certificate within the global settings and configure TLS to be preferred in the default profile to enable it for all outbound connections. After these two steps the Destination Control overview page should look like figure \ref{fig:ach_ironport_dest_control} on page \pageref{fig:ach_ironport_dest_control}. 
+TLS settings for outbound connections have to be configured within the Destination Controls (Mail Policies -> Destination Controls). Choose the appropriate SSL certificate within the global settings and configure TLS to be preferred in the default profile to enable it for all outbound connections. After these two steps the Destination Control overview page should look like figure \ref{fig:ach_ironport_dest_control} on page \pageref{fig:ach_ironport_dest_control}. 
 To enforce TLS for a specific destination domain, add an entry to the Destination Control Table and set ``TLS Support'' to ``required''.
 
 \begin{figure}[p]
