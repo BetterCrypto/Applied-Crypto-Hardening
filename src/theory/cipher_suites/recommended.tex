@@ -1,11 +1,11 @@
 %%\subsection{Recommended cipher suites}
 
 In principle system administrators who want to improve their communication security
-have to make a difficult decision between effectively locking out some users and 
+have to make a difficult decision between effectively locking out some users and
 keeping high cipher suite security while supporting as many users as possible.
 The website \url{https://www.ssllabs.com/} gives administrators and security engineers
-a tool to test their setup and compare compatibility with clients. The authors made 
-use of ssllabs.com to arrive at a set of cipher suites which we will recommend 
+a tool to test their setup and compare compatibility with clients. The authors made
+use of ssllabs.com to arrive at a set of cipher suites which we will recommend
 throughout this document.
 
 %\textbf{Caution: these settings can only represent a subjective
@@ -55,7 +55,7 @@ This results in the OpenSSL string:
 \paragraph*{Compatibility:}
 
 At the time of this writing only Win 7 and Win 8.1 crypto stack,
-OpenSSL $\ge$ 1.0.1e, Safari 6 / iOS 6.0.1 and Safar 7 / OS X 10.9
+OpenSSL $\ge$ 1.0.1e, Safari 6 / iOS 6.0.1 and Safari 7 / OS X 10.9
 are covered by that cipher string.
 
 % XXX author: (Adi) this depends on the chosing your own cipher chapter XXX
@@ -110,7 +110,7 @@ This results in the OpenSSL string:
 \LL}
 \paragraph*{Compatibility: }
 
-Note that these cipher suites will not work with Windows XP's crypto stack (e.g. IE, Outlook), 
+Note that these cipher suites will not work with Windows XP's crypto stack (e.g. IE, Outlook),
 %%Java 6, Java 7 and Android 2.3. Java 7 could be made compatible by installing the "Java 
 %%Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files"
 %%(JCE) \footnote{\url{http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html}}.
@@ -122,15 +122,15 @@ DH-parameter length limitation (1024 bit).
 
 For a detailed explanation of the cipher suites chosen, please see
 \ref{section:ChoosingYourOwnCipherSuites}. In short, finding a single perfect cipher
-string is practically impossible and there must be a tradeoff between compatibility and security. 
+string is practically impossible and there must be a tradeoff between compatibility and security.
 On the one hand there are mandatory and optional ciphers defined in a few RFCs, 
 on the other hand there are clients and servers only implementing subsets of the 
 specification.
 
-Straight forward, the authors wanted strong ciphers, forward secrecy
+Straightforwardly, the authors wanted strong ciphers, forward secrecy
 \footnote{\url{http://nmav.gnutls.org/2011/12/price-to-pay-for-perfect-forward.html}}
 and the best client compatibility possible while still ensuring a cipher string that can be
-used on legacy installations (e.g. OpenSSL 0.9.8). 
+used on legacy installations (e.g. OpenSSL 0.9.8).
 
 Our recommended cipher strings are meant to be used via copy and paste and need to work
 "out of the box".
