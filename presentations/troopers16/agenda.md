@@ -7,7 +7,7 @@
 We start at the beginning. The year is 2013.
 
 * June: Snowden revelations
-* Summer: More leaks start apprearing
+* Summer: More leaks start appearing
 * ... People start talking about a Crypto-Apocalypse (OMG!)
 * August: Aaron Kaplan and Adi Kriegisch start discussing this
   topic/guide
@@ -28,15 +28,14 @@ BetterCrypto(.org) - Applied Crypto Hardening is born
   discussion, everything FOSS, public and auditable
 
 ## BetterCrypto (cont.)
-* Do at least something against the **Cryptocalypse**
+* Do at least something against the **Crypto-Apocalypse**
 * Check SSL, SSH, PGP crypto settings in the most common services and
   certificates:
   –  Apache, Nginx, lighthttpd
       –  IMAP/POP servers (dovecot, cyrus, ...) –  openssl.conf
       –  Etc.
 * Write down our experiences as guide
-* Create easy, copy & paste-able settings which are "OK" (as far as we
-  know) for sysadmins.
+* Create easy, copy & paste-able settings which are "OK" (as far as we know) for sysadmins.
 * Many eyes must check this!
 * FOSS
 
@@ -50,7 +49,7 @@ BetterCrypto(.org) - Applied Crypto Hardening is born
 
 ## Who?
 
-Wolfgang Breyha (uni VIE), David Durvaux, Tobias Dussa (KIT-CERT), L. Aaron Kaplan (CERT.at), Christian Mock (coretec), Daniel Kovacic (A-Trust), Manuel Koschuch (FH Campus Wien), Adi Kriegisch (VRVis), Ramin Sabet (A-Trust), Aaron Zauner (azet.org), Pepi Zawodsky (maclemon.at), IAIK, A-Sit, ... 
+Wolfgang Breyha (uni VIE), David Durvaux, Tobias Dussa (KIT-CERT), L. Aaron Kaplan (CERT.at), Christian Mock (coretec), Daniel Kovacic (A-Trust), Manuel Koschuch (FH Campus Wien), Adi Kriegisch (VRVis), Ramin Sabet (A-Trust), Aaron Zauner (azet.org), Pepi Zawodsky (maclemon.at), IAIK, A-Sit, ...
 
 * Sysadmins
 * Engineers
@@ -64,16 +63,16 @@ Wolfgang Breyha (uni VIE), David Durvaux, Tobias Dussa (KIT-CERT), L. Aaron Kapl
 About 100 pages. Rough Overview:
 
 * Intro
-* Disclaimer 
-* Methods 
+* Disclaimer
+* Methods
 * Theory
-  * Elliptic Curve Cryptography 
-  * Keylengths 
-  * Random Number Generators 
+  * Elliptic Curve Cryptography
+  * Keylengths
+  * Random Number Generators
   * Cipher suites – general overview & how to choose one
-* Recommendations on practical settings 
-* Tools 
-* Links 
+* Recommendations on practical settings
+* Tools
+* Links
 * Appendix
 
 ## Methods and Principles
@@ -92,11 +91,11 @@ Methods:
 * https://github.com/BetterCrypto/ (please clone this one & send PRs)
 
 1. discuss the changes first on the mailinglist
-2. clone 
-3. follow the templates 
+2. clone
+3. follow the templates
 3. send pull requests
 4. **split the commit into many smaller commits**
-5. don't be cross if something does not get accepted. 
+5. don't be cross if something does not get accepted.
 6. be ready for discussion
 
 ## What do we provide?
@@ -144,19 +143,19 @@ Solution:
 
 ## Keylengths
 
-  * http://www.keylength.com/ 
+  * http://www.keylength.com/
   * Recommended Keylengths, Hashing algorithms, etc.
   * Currently:
-    * RSA: >= 3248 bits (Ecrypt II)     
-    * ECC: >= 256       
+    * RSA: >= 3248 bits (Ecrypt II)
+    * ECC: >= 256
     * SHA 2+ (SHA 256,…)
     * AES 128 is good enough
 
 ## AES 128? Is that enough?
 
-\centering{,,On the choice between AES256 and AES128: I would never consider using AES256, just l
-ike I don’t wear a helmet when I sit inside my car. It’s too much bother for the epsilon improvem
-ent in security.''\par
+\centering{,,On the choice between AES256 and AES128: I would never consider using AES256, just
+like I don’t wear a helmet when I sit inside my car. It’s too much bother for the epsilon
+improvement in security.''\par
 — Vincent Rijmen in a personal mail exchange Dec 2013
 }
   * Some theoretical attacks on AES-256
@@ -171,17 +170,19 @@ ent in security.''\par
 
         SSLProtocol All -SSLv2 -SSLv3
         SSLCipherSuite
-'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA2
-56:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK
-:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA'  
+'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:
+EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:
++CAMELLIA256:+AES256:+CAMELLIA128:+AES128:
++SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:
+!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA
+:AES256-SHA:CAMELLIA128-SHA:AES128-SHA'
 
 ## CipherString and Suite
 
   * General:
     * Disable SSL 2.0 (weak protocol and algorithms)
     * Disable SSL 3.0 (BEAST, POODLE)
-    * [Disable RC4 cipher](https://www.ietf.org/rfc/rfc7465.txt)
-      (RFC7465)
+    * [Disable RC4 cipher](https://www.ietf.org/rfc/rfc7465.txt) (RFC7465)
     * Disable EXPORT suites (FREAK Attack)
     * Enable TLS 1.0 or better
     * Disable TLS-Compression (SSL-CRIME Attack)
@@ -197,11 +198,11 @@ ent in security.''\par
 
 ![Variant A](img/variantA.png)
 
-Compatibility: 
+Compatibility:
 
 Only clients which support TLS1.2 are covered by these cipher suites
-(Chrome 30, Win 7 and Win 8.1, Opera 17, OpenSSL >= 1.0.1e, Safari 6/iOS
-5, Safari 7/OS X 10.9)
+(Chrome 30, Win 7 and Win 8.1, Opera 17, OpenSSL >= 1.0.1e,
+Safari 6/iOS 5, Safari 7/OS X 10.9)
 Excellent for controlled environments, like intranet.
 
 ## Variant **B**
@@ -219,7 +220,6 @@ Excellent for controlled environments, like intranet.
   * Additionally mod\_rewrite:
 
 ![Example Apache rewrite](img/exampleApache-rewrite.png)
-
 
 ## Testing
 
@@ -277,7 +277,7 @@ The tool offers these features (amongst others):
 ![sslyze-screenshot2](img/sslyze-scan-sample2.png)
 
 ## Mitigated Attacks
-We've mitigated some high-profile TLS/SSL vulernabilities in the past years if you've deployed our guide. So far users have been pleased.
+We've mitigated some high-profile TLS/SSL vulnerabilities in the past years if you've deployed our guide. So far users have been pleased.
 
 ## Mitigated Attacks: CRIME
 * Requires TLS compression to perform attack.
@@ -306,7 +306,7 @@ We've mitigated some high-profile TLS/SSL vulernabilities in the past years if y
 ## Implementation specific attacks
 * We can't do a lot against implementation specific attacks
   * there have been quite a lot in the past years (OpenSSL, Apple, Microsoft, $APPLIANCEVENDOR,..)
-  * we try to provide a config guide, we're not auditors (up to sec. ngineers like you! ;))
+  * we try to provide a config guide, we're not auditors (up to sec. engineers like you! ;))
 
 ## Project statistics
 * 45 Contributors (git only) - ML as well (commited by others)
@@ -325,7 +325,7 @@ We've mitigated some high-profile TLS/SSL vulernabilities in the past years if y
 
 ## Discussion - PostQuantum
 
-* some experts believe that a **real** quantum computer (not D-Wave) is only 10-50 years away 
+* some experts believe that a **real** quantum computer (not D-Wave) is only 10-50 years away
 * new 'post-quantum crypto schemes' - no standard yet, we can't use them, almost no implementations
 * we currently have no plans to add anything in this direction, but might in the future
 
@@ -371,7 +371,7 @@ We'd like to provide a nice JavaScript-y webinterface for choosing your daemon v
   * Master (read-only) Git repo: https://git.bettercrypto.org
   * Public github repo for PRs:
     https://github.com/BetterCrypto/Applied-Crypto-Hardening
-  * Mailing list: http://lists.cert.at/cgi-bin/mailman/listinfo/ach 
+  * Mailing list: http://lists.cert.at/cgi-bin/mailman/listinfo/ach
   * IRC: #bettercrypto on freenode
   * Twitter: @bettercrypto
 
