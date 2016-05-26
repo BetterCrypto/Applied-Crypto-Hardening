@@ -8,6 +8,9 @@ all:	pdf html md
 once:
 	${LATEX} applied-crypto-hardening
 
+practical:
+	pandoc -f markdown -t html practical_settings.md practical_settings/webserver.md practical_settings/ssh.md practical_settings/mailserver.md practical_settings/vpn.md practical_settings/GPG.md practical_settings/ipmi.md practical_settings/im.md practical_settings/DBs.md practical_settings/proxy_solutions.md practical_settings/kerberos.md -o practical_settings.html
+
 pdf: 
 	./update-metadata-for-gitinfo
 	${LATEX} applied-crypto-hardening
