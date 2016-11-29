@@ -1,0 +1,157 @@
+Public Key Infrastructures
+==========================
+
+Public-Key Infrastructures try to solve the problem of verifying whether
+a public key belongs to a given entity, so as to prevent Man In The
+Middle attacks.
+
+There are two approaches to achieve that: *Certificate Authorities* and
+the *Web of Trust*.
+
+Certificate Authorities (CAs) sign end-entities’ certificates, thereby
+associating some kind of identity (e.g. a domain name or an email
+address) with a public key. CAs are used with TLS and S/MIME
+certificates, and the CA system has a big list of possible and real
+problems which are summarized in section [sec:hardeningpki] and .
+
+The Web of Trust is a decentralized system where people sign each others
+keys, so that there is a high chance that there is a “trust path” from
+one key to another. This is used with PGP keys, and while it avoids most
+of the problems of the CA system, it is more cumbersome.
+
+As alternatives to these public systems, there are two more choices:
+running a private CA, and manually trusting keys (as it is used with SSH
+keys or manually trusted keys in web browsers).
+
+The first part of this section addresses how to obtain a certificate in
+the CA system. The second part offers recommendations on how to improve
+the security of your PKI.
+
+Certificate Authorities
+-----------------------
+
+In order to get a certificate, you can find an external CA willing to
+issue a certificate for you, run your own CA, or use self-signed
+certificates. As always, there are advantages and disadvantages for
+every one of these options; a balance of security versus usability needs
+to be found.
+
+Certificates From an External Certificate Authority
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There is a fairly large number of commercial CAs that will issue
+certificates for money. Some of the most ubiquitous commercial CAs are
+Verisign, GoDaddy, and Teletrust. However, there are also CAs that offer
+certificates for free. The most notable examples are StartSSL, which is
+a company that offers some types of certificates for free, and CAcert,
+which is a non-profit volunteer-based organization that does not charge
+at all for issuing certificates. Finally, in the research and education
+field, a number of CAs exist that are generally well-known and
+well-accepted within the higher-education community.
+
+A large number of CAs is pre-installed in client software’s or operating
+system’s“trust stores”; depending on your application, you have to
+select your CA according to this, or have a mechanism to distribute the
+chosen CA’s root certificate to the clients.
+
+When requesting a certificate from a CA, it is vital that you generate
+the key pair yourself. In particular, the private key should never be
+known to the CA. If a CA offers to generate the key pair for you, you
+should not trust that CA.
+
+Generating a key pair and a certificate request can be done with a
+number of tools. On Unix-like systems, it is likely that the OpenSSL
+suite is available to you. In this case, you can generate a private key
+and a corresponding certificate request as follows:
+
+::
+
+    % openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize>
+    Country Name (2 letter code) [AU]:DE
+    State or Province Name (full name) [Some-State]:Bavaria
+    Locality Name (eg, city) []:Munich
+    Organization Name (eg, company) [Internet Widgits Pty Ltd]:Example
+    Organizational Unit Name (eg, section) []:Example Section
+    Common Name (e.g. server FQDN or YOUR name) []:example.com
+    Email Address []:admin@example.com
+
+    Please enter the following 'extra' attributes
+    to be sent with your certificate request
+    A challenge password []:
+    An optional company name []:
+
+Setting Up Your Own Certificate Authority
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In some situations it is advisable to run your own certificate
+authority. Whether this is a good idea depends on the exact
+circumstances. Generally speaking, the more centralized the control of
+the systems in your environment, the fewer pains you will have to go
+through to deploy your own CA. On the other hand, running your own CA
+maximizes the trust level that you can achieve because it minimizes
+external trust dependencies.
+
+Again using OpenSSL as an example, you can set up your own CA with the
+following commands on a Debian system:
+
+::
+
+    % cd /usr/lib/ssl/misc
+    % sudo ./CA.pl -newca
+
+Answer the questions according to your setup. Now that you have
+configured your basic settings and issued a new root certificate, you
+can issue new certificates as follows:
+
+::
+
+    % cd /usr/lib/ssl/misc
+    % sudo ./CA.pl -newreq
+
+Alternatively, software such as TinyCA  that acts as a “wrapper” around
+OpenSSL and tries to make life easier is available.
+
+Creating a Self-Signed Certificate
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the desired trust level is very high and the number of systems
+involved is limited, the easiest way to set up a secure environment may
+be to use self-signed certificates. A self-signed certificate is not
+issued by any CA at all, but is signed by the entity that it is issued
+to. Thus, the organizational overhead of running a CA is eliminated at
+the expense of having to establish all trust relationships between
+entities manually.
+
+With OpenSSL, you can self-sign a previously created certificate with
+this command:
+
+::
+
+    % openssl req -new -x509 -key privkey.pem -out cacert.pem -days 1095
+
+You can also create a self-signed certificate in just one command:
+
+::
+
+    openssl req -new -x509 -keyout privkey.pem -out cacert.pem -days 1095 -nodes -newkey rsa:<keysize>
+
+The resulting certificate will by default not be trusted by anyone at
+all, so in order to be useful, the certificate will have to be made
+known a priori to all parties that may encounter it.
+
+Hardening PKI
+-------------
+
+In recent years several CAs were compromised by attackers in order to
+get a hold of trusted certificates for malicious activities. In 2011 the
+Dutch CA Diginotar was hacked and all certificates were revoked .
+Recently Google found certificates issued to them, which were not used
+by the company . The concept of PKIs heavily depends on the security of
+CAs. If they get compromised the whole PKI system will fail. Some CAs
+tend to incorrectly issue certificates that were designated to do a
+different job than what they were intended to by the CA .
+
+Therefore several security enhancements were introduced by different
+organizations and vendors . Currently two methods are used, DANE  and
+Certificate Pinning . Google recently proposed a new system to detect
+malicious CAs and certificates called Certificate Transparency .

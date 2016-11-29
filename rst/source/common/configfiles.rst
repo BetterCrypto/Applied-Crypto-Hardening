@@ -1,0 +1,5 @@
+configfiles.txt
+
+configurationdirconfiguration
+
+configurationbaseurl
