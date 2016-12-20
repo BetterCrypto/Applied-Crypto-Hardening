@@ -28,17 +28,17 @@ cryptography-, software-, appliance- or administrative related questions that ma
 ### Before you open a Pull Request (PR) on GitHub
 
 1. [Search open and closed
-   issues](https://github.com/BetterCrypto/Applied-Crypto-hardening/pulls?utf8=%E2%9C%93&q=) for duplicates or previous discussions
+   pull requests](https://github.com/BetterCrypto/Applied-Crypto-hardening/pulls?utf8=%E2%9C%93&q=) for duplicates or previous discussions
    related to the changes you propose.
 2. Please take some time to read up on the [mailing list archives](https://lists.cert.at/pipermail/ach/) - over the years
    we've discussed quite a few topics in depth and you might just find
     the answer you were looking for or the reason we chose a certain
    configuration setting.
-3. Please take some time to write a meaningful PR title and describe
+3. Please  write a meaningful PR title and describe
    your proposed changes in the text-field. This can be done quickly
-   in a few sentences or bullet points. Remember: other people need
+   in a few sentences or bullet points. *Remember: other people need
    to review your changes and it'll make it easier for them if you make
-   clear what you're trying to achieve. Lastly,..
+   clear what you're trying to achieve.* Lastly,..
 4. If in doubt, just ask on the mailing list. For example, also; when opening large
    pull requests, refactoring whole sections of the document or if you're changing
    security critical settings in configuration files we recommend.
@@ -46,7 +46,7 @@ cryptography-, software-, appliance- or administrative related questions that ma
 
 ### Attribution
 
-Feel free to add your name/handle to `src/acknowledgements.tex` (alphabetical
+Feel free to add your name or handle to `src/acknowledgements.tex` (alphabetical
 order).
 
 ### Get started
