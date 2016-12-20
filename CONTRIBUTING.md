@@ -60,7 +60,8 @@ this document in 15 minutes or less.
 uncertain how to edit our guide correctly you might want to take a look at:
    * [Introduction to using TeX](http://www.math.harvard.edu/texman/)
    * [The Not So Short Introduction to LaTeX](https://tobi.oetiker.ch/lshort/lshort.pdf)
-   * ..or ask on our [mailing-list for help](mailto:ach@lists.cert.at).
+   * ..or ask on our [mailing-list for
+     help](https://lists.cert.at/cgi-bin/mailman/listinfo/ach).
 
 Thank you kindly! We hope you'll enjoy working with us on this document.
 
