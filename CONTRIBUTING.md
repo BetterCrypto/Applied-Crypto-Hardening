@@ -18,18 +18,18 @@ feedback or critique - but might also save you some valuable time.
   discussion.
 * The main (publicly read-only) repository is hosted at
 https://git.bettercrypto.org/ach-master.git
-* The [BetterCrypto
-  mailing-list](https://lists.cert.at/cgi-bin/mailman/listinfo/ach) is the appropriate place for discussion
+* The [Applied Crypto Hardening mailing-list](https://lists.cert.at/cgi-bin/mailman/listinfo/ach) is the appropriate place for discussion
   and source of information regarding larger changes throughout the document,
   it's style, policy & in-depth discourse on minor and major details of the
   guide we're working on. It's also a good place for general
 cryptography-, software-, appliance- or administrative related questions that may arise when reading or reviewing this document.
 
-### Before you open a Pull Request (PR) on GitHub:
+### Before you open a Pull Request (PR) on GitHub
 
-1. Search open and closed issues for duplicates or previous discussions
+1. [Search open and closed
+   issues](https://github.com/BetterCrypto/Applied-Crypto-hardening/pulls?utf8=%E2%9C%93&q=) for duplicates or previous discussions
    related to the changes you propose.
-2. Please take some time to read up on the mailing list - over the years
+2. Please take some time to read up on the [mailing list archives](https://lists.cert.at/pipermail/ach/) - over the years
    we've discussed quite a few topics in depth and you might just find
     the answer you were looking for or the reason we chose a certain
    configuration setting.
@@ -42,13 +42,9 @@ cryptography-, software-, appliance- or administrative related questions that ma
 Feel free to add your name/handle to `src/acknowledgements.tex` (alphabetical
 order).
 
+### Get started
 
-### Resources
-
-* [Search GitHub Pull Requests](https://github.com/BetterCrypto/Applied-Crypto-hardening/pulls?utf8=%E2%9C%93&q=)
-* [Mailing-list Archive](https://lists.cert.at/pipermail/ach/)
-
-
+Clone, branch and commit or start a discussion on our mailing-list!
 
 
 Thank you kindly! We hope you'll enjoy working with us on this document.
