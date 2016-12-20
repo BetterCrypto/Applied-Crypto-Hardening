@@ -37,6 +37,10 @@ cryptography-, software-, appliance- or administrative related questions that ma
    requests, refactor sections of the document or change security
    critical settings in recommended service configuration files.
 
+*If you're not yet familiar with working with git we recommend giving
+https://try.github.io a shot. You'll know enough about git to work on
+this document in 15 minutes or less.*
+
 ### Attribution
 
 Feel free to add your name/handle to `src/acknowledgements.tex` (alphabetical
