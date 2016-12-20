@@ -28,26 +28,32 @@ cryptography-, software-, appliance- or administrative related questions that ma
 ### Before you open a Pull Request (PR) on GitHub
 
 1. [Search open and closed
-   issues](https://github.com/BetterCrypto/Applied-Crypto-hardening/pulls?utf8=%E2%9C%93&q=) for duplicates or previous discussions
+   pull requests](https://github.com/BetterCrypto/Applied-Crypto-hardening/pulls?utf8=%E2%9C%93&q=) for duplicates or previous discussions
    related to the changes you propose.
 2. Please take some time to read up on the [mailing list archives](https://lists.cert.at/pipermail/ach/) - over the years
    we've discussed quite a few topics in depth and you might just find
     the answer you were looking for or the reason we chose a certain
    configuration setting.
-3. If in doubt, ask on the mailing list before you open large pull
-   requests, refactor sections of the document or change security
-   critical settings in recommended service configuration files.
+3. Please  write a meaningful PR title and describe
+   your proposed changes in the text-field. This can be done quickly
+   in a few sentences or bullet points. *Remember: other people need
+   to review your changes and it'll make it easier for them if you make
+   clear what you're trying to achieve.* Lastly,..
+4. If in doubt, just ask on the mailing list. For example, also; when opening large
+   pull requests, refactoring whole sections of the document or if you're changing
+   security critical settings in configuration files we recommend.
 
 
 ### Attribution
 
-Feel free to add your name/handle to `src/acknowledgements.tex` (alphabetical
+Feel free to add your name or handle to `src/acknowledgements.tex` (alphabetical
 order).
 
 ### Get started
 
 **Fork/clone, branch and commit or start a discussion on our mailing-list!**
 
+<<<<<<< HEAD
 * *If you're not yet familiar with working with git we recommend giving
 https://try.github.io a shot. You'll know enough about git to work on
 this document in 15 minutes or less.*
@@ -56,6 +62,17 @@ uncertain how to edit our guide correctly you might want to take a look at*:
    * [Introduction to using TeX](http://www.math.harvard.edu/texman/)
    * [The Not So Short Introduction to LaTeX](https://tobi.oetiker.ch/lshort/lshort.pdf)
    * ..or ask on our mailing-list for help.
+=======
+* If you're not yet familiar with using `git` we recommend giving
+https://try.github.io a shot. You'll know enough about `git` to work on
+this document in 15 minutes or less.
+* Although our `LaTeX` source is mostly self-explanatory, if you're
+uncertain how to edit our guide correctly you might want to take a look at:
+   * [Introduction to using TeX](http://www.math.harvard.edu/texman/)
+   * [The Not So Short Introduction to LaTeX](https://tobi.oetiker.ch/lshort/lshort.pdf)
+   * ..or ask on our [mailing-list for
+     help](https://lists.cert.at/cgi-bin/mailman/listinfo/ach).
+>>>>>>> 87cbacb2a7719cf6fe5b9144ae37fbad2fe3e2bd
 
 Thank you kindly! We hope you'll enjoy working with us on this document.
 
