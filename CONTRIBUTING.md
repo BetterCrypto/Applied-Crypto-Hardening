@@ -24,6 +24,7 @@ https://git.bettercrypto.org/ach-master.git
   guide we're working on. It's also a good place for general
 cryptography-, software-, appliance- or administrative related questions that may arise when reading or reviewing this document.
 
+
 ### Before you open a Pull Request (PR) on GitHub
 
 1. [Search open and closed
@@ -33,13 +34,15 @@ cryptography-, software-, appliance- or administrative related questions that ma
    we've discussed quite a few topics in depth and you might just find
     the answer you were looking for or the reason we chose a certain
    configuration setting.
-3. If in doubt, ask on the mailing list before you open large pull
-   requests, refactor sections of the document or change security
-   critical settings in recommended service configuration files.
+3. Please take some time to write a meaningful PR title and describe
+   your proposed changes in the text-field. This can be done quickly
+   in a few sentences or bullet points. Remember: other people need
+   to review your changes and it'll make it easier for them if you make
+   clear what you're trying to achieve. Lastly,..
+4. If in doubt, just ask on the mailing list. For example, also; when opening large
+   pull requests, refactoring whole sections of the document or if you're changing
+   security critical settings in configuration files we recommend.
 
-*If you're not yet familiar with working with git we recommend giving
-https://try.github.io a shot. You'll know enough about git to work on
-this document in 15 minutes or less.*
 
 ### Attribution
 
@@ -48,8 +51,16 @@ order).
 
 ### Get started
 
-Clone, branch and commit or start a discussion on our mailing-list!
+**Fork/clone, branch and commit or start a discussion on our mailing-list!**
 
+* *If you're not yet familiar with working with git we recommend giving
+https://try.github.io a shot. You'll know enough about git to work on
+this document in 15 minutes or less.*
+* *Although our LaTeX source is mostly self-explanatory, if you're
+uncertain how to edit our guide correctly you might want to take a look at*:
+   * [Introduction to using TeX](http://www.math.harvard.edu/texman/)
+   * [The Not So Short Introduction to LaTeX](https://tobi.oetiker.ch/lshort/lshort.pdf)
+   * ..or ask on our mailing-list for help.
 
 Thank you kindly! We hope you'll enjoy working with us on this document.
 
