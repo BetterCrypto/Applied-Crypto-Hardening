@@ -53,16 +53,6 @@ order).
 
 **Fork/clone, branch and commit or start a discussion on our mailing-list!**
 
-<<<<<<< HEAD
-* *If you're not yet familiar with working with git we recommend giving
-https://try.github.io a shot. You'll know enough about git to work on
-this document in 15 minutes or less.*
-* *Although our LaTeX source is mostly self-explanatory, if you're
-uncertain how to edit our guide correctly you might want to take a look at*:
-   * [Introduction to using TeX](http://www.math.harvard.edu/texman/)
-   * [The Not So Short Introduction to LaTeX](https://tobi.oetiker.ch/lshort/lshort.pdf)
-   * ..or ask on our mailing-list for help.
-=======
 * If you're not yet familiar with using `git` we recommend giving
 https://try.github.io a shot. You'll know enough about `git` to work on
 this document in 15 minutes or less.
@@ -72,7 +62,6 @@ uncertain how to edit our guide correctly you might want to take a look at:
    * [The Not So Short Introduction to LaTeX](https://tobi.oetiker.ch/lshort/lshort.pdf)
    * ..or ask on our [mailing-list for
      help](https://lists.cert.at/cgi-bin/mailman/listinfo/ach).
->>>>>>> 87cbacb2a7719cf6fe5b9144ae37fbad2fe3e2bd
 
 Thank you kindly! We hope you'll enjoy working with us on this document.
 
