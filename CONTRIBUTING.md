@@ -24,6 +24,7 @@ https://git.bettercrypto.org/ach-master.git
   guide we're working on. It's also a good place for general
 cryptography-, software-, appliance- or administrative related questions that may arise when reading or reviewing this document.
 
+
 ### Before you open a Pull Request (PR) on GitHub
 
 1. [Search open and closed
@@ -37,9 +38,6 @@ cryptography-, software-, appliance- or administrative related questions that ma
    requests, refactor sections of the document or change security
    critical settings in recommended service configuration files.
 
-*If you're not yet familiar with working with git we recommend giving
-https://try.github.io a shot. You'll know enough about git to work on
-this document in 15 minutes or less.*
 
 ### Attribution
 
@@ -48,8 +46,16 @@ order).
 
 ### Get started
 
-Clone, branch and commit or start a discussion on our mailing-list!
+**Fork/clone, branch and commit or start a discussion on our mailing-list!**
 
+* *If you're not yet familiar with working with git we recommend giving
+https://try.github.io a shot. You'll know enough about git to work on
+this document in 15 minutes or less.*
+* *Although our LaTeX source is mostly self-explanatory, if you're
+uncertain how to edit our guide correctly you might want to take a look at*:
+   * [Introduction to using TeX](http://www.math.harvard.edu/texman/)
+   * [The Not So Short Introduction to LaTeX](https://tobi.oetiker.ch/lshort/lshort.pdf)
+   * ..or ask on our mailing-list for help.
 
 Thank you kindly! We hope you'll enjoy working with us on this document.
 
