@@ -22,12 +22,18 @@ feedback or critique but might also save you some valuable time.
    requests, refactor sections of the document or change security
    critical settings in recommended service configuration files.
 
+### Attribution
+
+Feel free to add your name/handle to `src/acknowledgements.tex` (alphabetical
+order).
+
 ### Resources
 
-* Searching Pull Requests:
-  https://github.com/BetterCrypto/Applied-Crypto-hardening/pulls?utf8=%E2%9C%93&q=
-* Mailing list: https://lists.cert.at/cgi-bin/mailman/listinfo/ach
+* [Searching GitHub Pull Requests](https://github.com/BetterCrypto/Applied-Crypto-hardening/pulls?utf8=%E2%9C%93&q=)
+* [Mailing-list Archive](https://lists.cert.at/pipermail/ach/)
 
 
-Thank you!
+
+
+Thank you kindly! We hope you'll enjoy working with us on this document.
 
