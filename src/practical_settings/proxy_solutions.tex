@@ -148,14 +148,17 @@ Note: This OCSP signature file is only valid for a limited time. The simplest wa
 ~
 Get certificate informations:
 \begin{lstlisting}
-openssl x509 -in server.crt -pubkey -noout | openssl rsa -pubin -outform der | openssl dgst -sha256 -binary | base64
+openssl x509 -in server.crt -pubkey -noout | openssl rsa -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+\end{lstlisting}
+Get backup key informations (The current specification requires including a second pin for a backup key which isn't yet used in production):
+\begin{lstlisting}
+openssl rsa -in my-key-file.key -outform der -pubout | openssl dgst -sha256 -binary | openssl enc -base64
 \end{lstlisting}
 Then you append the returned string in the HAProxy configuration. Add the following line to the backend configuration:
 \begin{lstlisting}
-rspadd Public-Key-Pins:\ pin-sha256="YOUR_KEY";\ max-age=15768000;\ includeSubDomains
+rspadd Public-Key-Pins:\ pin-sha256="YOUR_KEY";\ pin-sha256="YOUR_BACKUP_KEY";\ max-age=15768000;\ includeSubDomains
 \end{lstlisting}
 Reload HAProxy and HPKP should now be enabled.\\
-Note: Keep in mind to generate a backup key in case of problems with your primary key file.
 
 \subsubsection{How to test}
 See appendix \ref{cha:tools}
