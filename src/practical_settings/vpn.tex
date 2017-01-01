@@ -275,6 +275,27 @@ transfer huge amounts of data over your tunnel, you might consider
 configuring a shorter interval, or switch to a byte- or packet-based
 interval (\verb|reneg-bytes| or \verb|reneg-pkts|).
 
+\paragraph{Insecure ciphers}
+
+Sweet32\footnote{\url{https://sweet32.info/}} is an attack on 64-bit block
+ciphers, such as \verb|3DES| and \verb|Blowfish| in OpenVPN. The following
+ciphers are affected, and should no longer be used:
+\begin{itemize*}
+  \item BF-*
+  \item DES* (including 3DES variants)
+  \item RC2-*
+\end{itemize*}
+The following ciphers are not affected:
+\begin{itemize*}
+  \item AES-*
+  \item CAMELLIA-*
+  \item SEED-*
+\end{itemize*}
+According to mitigation section on Sweet32 website\footnote{\url{https://sweet32.info/\#impact}}
+users users should change the cipher from the DES or Blowfish to AES
+(\verb|cipher AES-128-CBC|). If cipher change is not possible users can
+mitigate the attack by forcing frequent rekeying (\verb|reneg-bytes 64000000|).
+
 \paragraph{Fixing ``easy-rsa''}
 When installing an OpenVPN server instance, you are probably using
 \emph{easy-rsa} to generate keys and certificates.
