@@ -511,12 +511,12 @@ and look for 'IKE algorithms wanted/found' and 'ESP algorithms wanted/loaded'.
 
 \paragraph*{Defaults}\mbox{}\\
 tinc uses 2048 bit RSA keys, Blowfish-CBC, and SHA1 as default settings and suggests the usage of CBC mode ciphers.
-Any key length up to 8196 is supported and it does not need to be a power of two. OpenSSL Ciphers and Digests are supported by tinc.
+Any key length up to 8192 is supported and it does not need to be a power of two. OpenSSL Ciphers and Digests are supported by tinc.
 
 \paragraph*{Settings}\mbox{}\\
 Generate keys with
 \begin{lstlisting}[breaklines]
-tincd -n NETNAME -K8196
+tincd -n NETNAME -K8192
 \end{lstlisting}
 Old keys will not be deleted (but disabled), you have to delete them manually. Add the following lines to your tinc.conf on all machines
 \configfile{tinc.conf}{3-4}{Cipher and digest selection in tinc}
