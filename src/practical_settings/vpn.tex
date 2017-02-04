@@ -253,7 +253,14 @@ is why we give an explicit cipher list here.
 
 In addition, there is a 256 character limit on configuration file line
 lengths; that limits the size of cipher suites, so we dropped all
-ECDHE suites.
+ECDHE suites and most CAMELLIA variants.
+
+If maximal compatibility is required (and warnings are acceptable) following
+cipher list might be considered.
+
+\begin{lstlisting}
+tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
+\end{lstlisting}
 
 The configuration shown above is compatible with all tested versions.
 
