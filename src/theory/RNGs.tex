@@ -98,6 +98,11 @@ a system with a sufficient amount of entropy available and transfer the generate
 to the server.  This is especially advisable for small embedded devices
 or virtual machines.
 
+Alternatively such a system might obtain entropy over a network from
+\verb+Pollen+ server using \verb+Pollinate+ client over TLS-encrypted
+HTTPS or clear text HTTP connections. It seeds the PRNG with input
+from \url{https://entropy.ubuntu.com} or custom server on first boot.
+
 For embedded devices and virtual machines deploying additional userspace
 software that generates entropy and feeds this to kernel entropy pool
 (e.g. by writing to \verb+/dev/random+ on Linux) is recommended. Note
