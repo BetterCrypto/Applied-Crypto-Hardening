@@ -1,0 +1,138 @@
+# This is the ssh client system-wide configuration file. See
+# ssh_config(5) for more information. This file provides defaults for
+# users, and the values can be changed in per-user configuration files
+# or on the command line.
+
+# Configuration data is parsed as follows:
+# 1. command line options
+# 2. user-specific file
+# 3. system-wide file
+# Any configuration value is only changed the first time it is set.
+# Thus, host-specific definitions should be at the beginning of the
+# configuration file, and defaults at the end.
+
+# Site-wide defaults for some commonly used options. For a comprehensive
+# list of available options, their meanings and defaults, please see the
+# ssh_config(5) man page.
+
+#-----------------------------
+# Host
+#-----------------------------
+
+# Restricts the following declarations (up to the next Host keyword) to
+# be only for those hosts that match one of the patterns given after the
+# keyword.
+# A single ‘*’ as a pattern can be used to provide global defaults for
+# all hosts.
+Host *
+
+# Specifies the port number to connect on the remote host.
+# The default is 22.
+#Port 1022
+
+#-----------------------------
+# Authentication
+#-----------------------------
+
+# Specifies whether to use password authentication.
+# The default is "yes".
+PasswordAuthentication no
+
+# Specifies the order in which the client should try protocol 2
+# authentication methods.
+# The default is "gssapi-with-mic,hostbased,publickey,
+# keyboard-interactive,password".
+PreferredAuthentications publickey
+
+# Specifies a file from which the user's DSA, ECDSA or DSA
+# authentication identity is read.
+# The default is
+## ~/.ssh/id_dsa,
+## ~/.ssh/id_ecdsa,
+## ~/.ssh/id_ed25519 and
+## ~/.ssh/id_rsa
+# for protocol version 2.
+#IdentityFile ~/.ssh/id_ed25519
+#IdentityFile ~/.ssh/id_rsa
+
+# Specifies whether challenge-response authentication is allowed (e.g.
+# via PAM).
+# The default is "yes".
+ChallengeResponseAuthentication no
+
+#-----------------------------
+# Cryptography
+#-----------------------------
+
+# Specifies the available KEX (Key Exchange) algorithms.
+# The default is:
+## curve25519-sha256@libssh.org,
+## ecdh-sha2-nistp256,
+## ecdh-sha2-nistp384,
+## ecdh-sha2-nistp521,
+## diffie-hellman-group-exchange-sha256,
+## diffie-hellman-group-exchange-sha1,
+## diffie-hellman-group14-sha1.
+KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256
+
+# Specifies the ciphers allowed for protocol version 2 in order of
+# preference.
+# The default is
+## chacha20-poly1305@openssh.com,
+## aes128-ctr,
+## aes192-ctr,
+## aes256-ctr,
+## aes128-gcm@openssh.com,
+## aes256-gcm@openssh.com,
+## aes128-cbc,
+## aes192-cbc,
+## aes256-cbc,
+## 3des-cbc.
+Ciphers chacha20-poly1305@openssh.com,aes256-ctr,aes256-gcm@openssh.com,aes256-cbc
+
+# Specifies the available MAC (message authentication code) algorithms.
+# The default is: 
+## umac-64-etm@openssh.com,
+## umac-128-etm@openssh.com,
+## hmac-sha2-256-etm@openssh.com,
+## hmac-sha2-512-etm@openssh.com,
+## hmac-sha1-etm@openssh.com,
+## umac-64@openssh.com,
+## umac-128@openssh.com,
+## hmac-sha2-256,
+## hmac-sha2-512,
+## hmac-sha1.
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256
+
+#-----------------------------
+# Behavior
+#-----------------------------
+
+# Enables the sharing of multiple sessions over a single network connection.
+# When set to "yes", ssh(1) will listen for connections on a control socket
+# specified using the ControlPath argument.
+# The default is "no".
+ControlMaster auto
+
+# Specify the path to the control socket used for connection sharing
+ControlPath ~/.ssh/sockets/%r@%h:%p
+
+# If this flag is set to "yes", an ASCII art representation of the
+# remote host key fingerprint is printed in addition to the hex
+# fingerprint string at login and for unknown host keys.
+# The default is "no".
+VisualHostKey yes
+
+# Indicates that ssh(1) should hash host names and addresses when they
+# are added to ~/.ssh/known_hosts.
+# The default is "no".
+#HashKnownHosts yes
+
+# Specifies whether to use compression.
+# The default is "no".
+#Compression yes
+
+# Specifies what variables from the local environ(7) should be sent to
+# the server.
+# The default is not to send any environment variables.
+SendEnv LANG LC_*
