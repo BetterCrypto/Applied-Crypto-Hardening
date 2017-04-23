@@ -92,6 +92,13 @@ $ cat /proc/sys/kernel/random/entropy_avail
 
 \subsection{Recommendations}
 
+On Linux, if the \verb+getrandom(2)+ syscall is available, use that instead of reading
+from a device file. If \verb+getrandom(2)+ doesn't exist, always read from 
+\verb+/dev/urandom+, never \verb+/dev/random+. If you're developing an application that
+runs during the system boot or on embededded devices, poll \verb+/dev/random+ until 
+it's ready. This will tell you that \verb+/dev/urandom+ has been seeded by the kernel.
+Then, feel free to read from \verb+/dev/urandom+. Entropy doesn't run out.
+
 To avoid situations where a newly deployed server doesn't have enough
 entropy it is recommended to generate keys (e.g. for SSL or SSH) on
 a system with a sufficient amount of entropy available and transfer the generated keys
