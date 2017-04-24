@@ -8,5 +8,4 @@ Introduction
     related_publications
     howtoread
     disclaimer
-    
     methods

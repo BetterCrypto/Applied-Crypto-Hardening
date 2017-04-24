@@ -1,14 +1,22 @@
+.. role:: raw-latex(raw)
+   :format: latex
+..
+
 Random Number Generators
 ========================
 
-.. figure:: img/random_number.png
-   :alt: xkcd, source: https://imgs.xkcd.com/comics/random_number.png,
-   license: CC-BY-NC
+.. epigraph::
 
-   xkcd, source: https://imgs.xkcd.com/comics/random_number.png,
-   license: CC-BY-NC
+   “The generation of random numbers is too important to be left to chance.”
 
-[fig:dilbertRNG]
+   -- Robert R. Coveyou
+
+.. figure:: ../img/random_number.png
+   :width: 40.0%
+   :alt: xkcd, source: https://imgs.xkcd.com/comics/random_number.png, license: CC-BY-NC
+   :align: center
+
+   xkcd, source: https://imgs.xkcd.com/comics/random_number.png, license: CC-BY-NC
 
 A good source of random numbers is essential for many crypto operations.
 The key feature of a good random number generator is the
@@ -31,47 +39,47 @@ be generated.
 This typically occurs for embedded devices and virtual machines.
 Embedded devices lack some entropy sources other devices have, e.g.:
 
-No persistent clock, so boot-time is not contributing to the initial RNG
-state
-
-No hard-disk: No entropy from hard-disk timing, no way to store entropy
-between reboots
+ * No persistent clock, so boot-time is not contributing to the
+   initial RNG state
+ * No hard-disk: No entropy from hard-disk timing, no way to store
+   entropy between reboots
 
 Virtual machines emulate some hardware components so that the generated
 entropy is over-estimated. The most critical component that has been
 shown to return wrong results in an emulated environment is the timing
-source .
+source :cite:`Eng11,POL11`.
 
 Typically the most vulnerable time where low-entropy situations occur is
 shortly after a reboot. Unfortunately many operating system installers
-create cryptographic keys shortly after a reboot .
+create cryptographic keys shortly after a
+reboot :cite:`HDWH12`.
 
 Another problem is that OpenSSL seeds its internal random generator only
 seldomly from the hardware random number generator of the operating
 system. This can lead to situations where a daemon that is started at a
 time when entropy is low keeps this low-entropy situation for hours
-leading to predictable session keys .
+leading to predictable session keys :cite:`HDWH12`.
 
-Linux
+`Linux`
 -----
 
-On Linux there are two devices that return random bytes when read; the
+On `Linux` there are two devices that return random bytes when read; the
 ``/dev/random`` can block until sufficient entropy has been collected
 while ``/dev/urandom`` will not block and return whatever (possibly
 insufficient) entropy has been collected so far.
 
 Unfortunately most crypto implementations are using ``/dev/urandom`` and
 can produce predictable random numbers if not enough entropy has been
-collected .
+collected :cite:`HDWH12`.
 
-Linux supports the injection of additional entropy into the entropy pool
+`Linux` supports the injection of additional entropy into the entropy pool
 via the device ``/dev/random``. On the one hand this is used for keeping
 entropy across reboots by storing output of /dev/random into a file
 before shutdown and re-injecting the contents during the boot process.
 On the other hand this can be used for running a secondary entropy
 collector to inject entropy into the kernel entropy pool.
 
-On Linux you can check how much entropy is available with the command:
+On `Linux` you can check how much entropy is available with the command:
 
 ::
 
@@ -88,16 +96,19 @@ embedded devices or virtual machines.
 
 For embedded devices and virtual machines deploying additional userspace
 software that generates entropy and feeds this to kernel entropy pool
-(e.g. by writing to ``/dev/random`` on Linux) is recommended. Note that
+(e.g. by writing to ``/dev/random`` on `Linux`) is recommended. Note that
 only a process with root rights can update the entropy counters in the
 kernel; non-root or user processes can still feed entropy to the pool
-but cannot update the counters .
+but cannot update the
+counters :cite:`Wikipedia:/dev/random`.
 
-For Linux the ``haveged`` implementation  based on the HAVEGE  strong
-random number generator currently looks like the best choice. It can
-feed its generated entropy into the kernel entropy pool and recently has
-grown a mechanism to monitor the quality of generated random numbers .
-The memory footprint may be too high for small embedded devices, though.
+For `Linux` the ``haveged`` implementation :cite:`HAV13a`
+based on the HAVEGE :cite:`SS03` strong random number
+generator currently looks like the best choice. It can feed its
+generated entropy into the kernel entropy pool and recently has grown a
+mechanism to monitor the quality of generated random
+numbers :cite:`HAV13b`. The memory footprint may be too high
+for small embedded devices, though.
 
 For systems where – during the lifetime of the keys – it is expected
 that low-entropy situations occur, RSA keys should be preferred over DSA
@@ -106,4 +117,5 @@ are used for signing this may lead to repeated ephemeral keys. An
 attacker who can guess an ephemeral private key used in such a signature
 can compromise the DSA secret key. For RSA this can lead to discovery of
 encrypted plaintext or forged signatures but not to the compromise of
-the secret key .
+the secret key :cite:`HDWH12`.
+

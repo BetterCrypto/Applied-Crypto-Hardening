@@ -1,5 +1,9 @@
-Architectural overview 
------------------------
+.. role:: raw-latex(raw)
+   :format: latex
+..
+
+Architectural overview
+----------------------
 
 This section defines some terms which will be used throughout this
 guide.
@@ -15,7 +19,8 @@ Key exchange protocol:
     secret key by communicating over a public channel. The main property
     guaranteed here is that an eavesdropping adversary who sees all the
     messages sent over the communication line does not learn anything
-    about the resulting secret key.” 
+    about the resulting secret
+    key.” :cite:`katz2008introduction`
 
     Example: ``DHE``
 
@@ -44,10 +49,11 @@ Authenticated Encryption with Associated Data (AEAD):
 
     Example: ``AES256-GCM``
 
-A note on nomenclature:
-^^^^^^^^^^^^^^^^^^^^^^^
+    :raw-latex:`\makebox[\textwidth]{
+    \framebox[1.1\width]{ \texttt{DHE} }--\framebox[1.1\width]{ \texttt{RSA} }--\framebox[1.1\width]{ \texttt{AES256} }--\framebox[1.1\width]{ \texttt{SHA256} } }`
 
-there are two common naming schemes for cipher strings – IANA names (see
-appendix [cha:links]) and the more well known OpenSSL names. In this
-document we will always use OpenSSL names unless a specific service uses
-IANA names.
+.. note::
+   A note on nomenclature: there are two common naming schemes for
+   cipher strings – IANA names (see appendix :ref:`cha-links`) and the more
+   well known OpenSSL names. In this document we will always use OpenSSL names
+   unless a specific service uses IANA names.

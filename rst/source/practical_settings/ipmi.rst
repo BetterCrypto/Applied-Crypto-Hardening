@@ -1,5 +1,9 @@
+.. role:: raw-latex(raw)
+   :format: latex
+..
+
 IPMI, ILO and other lights out management solutions
-===================================================
+=====================================================
 
 We *strongly* recommend that any remote management system for servers
 such as ILO, iDRAC, IPMI based solutions and similar systems *never* be

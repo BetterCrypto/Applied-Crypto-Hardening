@@ -1,5 +1,5 @@
-
 .. include:: title.rst
+.. title:: Applied Crypto Hardening
 
 .. toctree::
     :numbered:
@@ -8,18 +8,13 @@
     introduction
     practical_settings
     theory
-
+    appendix
+    zreferences
 
 .. only:: builder_html
     Indices and tables
     ==================
-
-.. only:: builder_html
-
+    
     * :ref:`genindex`
     * :ref:`search`
-    * :ref:`glossary`
-
-.. only:: not builder_html
-
     * :ref:`glossary`

@@ -1,7 +1,9 @@
+
+.. _chapter-PracticalSettings:
+
 *************************
 Practical recommendations
 *************************
-
 
 .. toctree::
     :maxdepth: 2
@@ -16,3 +18,5 @@ Practical recommendations
     practical_settings/DBs
     practical_settings/proxy_solutions
     practical_settings/kerberos
+
+.. practical_settings/seclayer_tcp

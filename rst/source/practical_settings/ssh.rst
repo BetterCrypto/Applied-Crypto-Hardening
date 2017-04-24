@@ -1,5 +1,16 @@
+.. role:: raw-latex(raw)
+   :format: latex
+..
+
 SSH
 ===
+
+.. warning:: Please be advised that any change in the SSH-Settings of your
+   server might cause problems connecting to the server or starting/reloading
+   the SSH-Daemon itself. So every time you configure your SSH-Settings on a
+   remote server via SSH itself, ensure that you have a second open connection
+   to the server, which you can use to reset or adapt your changes!
+
 
 OpenSSH
 -------
@@ -7,12 +18,16 @@ OpenSSH
 Tested with Version
 ~~~~~~~~~~~~~~~~~~~
 
-OpenSSH 6.6p1 (Gentoo)
+   *  OpenSSH 6.6p1 (Gentoo)
+   *  OpenSSH 6.6p1-2 on Ubuntu 14.04.2 LTS
 
 Settings
 ~~~~~~~~
 
-**Note:** OpenSSH 6.6p1 now supports Curve25519
+:raw-latex:`\configfile{6.6/sshd_config}{9-14,28-29,45-45,65-67}{Important OpenSSH 6.6 security
+settings}`
+
+.. note:: OpenSSH 6.6p1 now supports Curve25519
 
 Tested with Version
 ~~~~~~~~~~~~~~~~~~~
@@ -22,21 +37,28 @@ OpenSSH 6.5 (Debian Jessie)
 Settings
 ~~~~~~~~
 
+:raw-latex:`\configfile{6.5/sshd_config}{9-14,28-29,45-45,65-67}{Important OpenSSH 6.5 security
+settings}`
+
 Tested with Version
 ~~~~~~~~~~~~~~~~~~~
 
-OpenSSH 6.0p1 (Debian wheezy)
+ * OpenSSH 6.0p1 (Debian wheezy)
 
 Settings
 ~~~~~~~~
 
-**Note:** Older \|Linux\| systems won’t support SHA2. PuTTY (Windows)
-does not support RIPE-MD160. Curve25519, AES-GCM and UMAC are only
-available upstream (OpenSSH 6.6p1). DSA host keys have been removed on
-purpose, the DSS standard does not support for DSA keys stronger than
-1024bit  [1]_ which is far below current standards (see section
-[section:keylengths]). Legacy systems can use this configuration and
-simply omit unsupported ciphers, key exchange algorithms and MACs.
+:raw-latex:`\configfile{6.0/sshd_config}{9-13,27-28,44-44,64-66}{Important OpenSSH 6.0 security
+settings}`
+
+.. note:: Older `Linux` systems won’t support SHA2. PuTTY (Windows) does not
+   support RIPE-MD160. Curve25519, AES-GCM and UMAC are only available upstream
+   (OpenSSH 6.6p1). DSA host keys have been removed on purpose, the DSS
+   standard does not support for DSA keys stronger than 1024bit [1]_ which is
+   far below current standards (see section
+   :ref:`section-keylengths`). Legacy systems can use this
+   configuration and simply omit unsupported ciphers, key exchange algorithms
+   and MACs.
 
 References
 ~~~~~~~~~~
@@ -61,7 +83,8 @@ Cisco ASA
 Tested with Versions
 ~~~~~~~~~~~~~~~~~~~~
 
-9.1(3)
+ *  9.1(3)
+
 
 Settings
 ~~~~~~~~
@@ -72,17 +95,18 @@ Settings
     ssh version 2
     ssh key-exchange group dh-group14-sha1
 
-Note: When the ASA is configured for SSH, by default both SSH versions 1
-and 2 are allowed. In addition to that, only a group1 DH-key-exchange is
-used. This should be changed to allow only SSH version 2 and to use a
-key-exchange with group14. The generated RSA key should be 2048 bit (the
-actual supported maximum). A non-cryptographic best practice is to
-reconfigure the lines to only allow SSH-logins.
+.. note:: When the ASA is configured for SSH, by default both SSH versions 1
+   and 2 are allowed. In addition to that, only a group1 DH-key-exchange is
+   used. This should be changed to allow only SSH version 2 and to use a
+   key-exchange with group14. The generated RSA key should be 2048 bit (the
+   actual supported maximum). A non-cryptographic best practice is to
+   reconfigure the lines to only allow SSH-logins.
 
 References
 ~~~~~~~~~~
 
-`http://www.cisco.com/en/US/docs/security/asa/asa91/configuration/general/admin\_management.html  <http://www.cisco.com/en/US/docs/security/asa/asa91/configuration/general/admin_management.html >`__
+ *  http://www.cisco.com/en/US/docs/security/asa/asa91/configuration/general/admin\_management.html 
+
 
 How to test
 ~~~~~~~~~~~
@@ -101,7 +125,9 @@ Cisco IOS
 Tested with Versions
 ~~~~~~~~~~~~~~~~~~~~
 
-15.0, 15.1, 15.2
+ * 15.0
+ * 15.1
+ * 15.2
 
 Settings
 ~~~~~~~~
@@ -116,18 +142,17 @@ Settings
     line vty 0 15
     transport input ssh
 
-Note: Same as with the ASA, also on IOS by default both SSH versions 1
-and 2 are allowed and the DH-key-exchange only use a DH-group of 768
-Bit. In IOS, a dedicated Key-pair can be bound to SSH to reduce the
-usage of individual keys-pairs. From IOS Version 15.0 onwards, 4096 Bit
-rsa keys are supported and should be used according to the paradigm “use
-longest supported key”. Also, do not forget to disable telnet vty
-access.
+.. note:: Same as with the ASA, also on IOS by default both SSH versions 1 and
+   2 are allowed and the DH-key-exchange only use a DH-group of 768 Bit. In
+   IOS, a dedicated Key-pair can be bound to SSH to reduce the usage of
+   individual keys-pairs. From IOS Version 15.0 onwards, 4096 Bit rsa keys are
+   supported and should be used according to the paradigm “use longest
+   supported key”. Also, do not forget to disable telnet vty access.
 
 References
 ~~~~~~~~~~
 
-http://www.cisco.com/en/US/docs/ios/sec_user_services/configuration/guide/sec_cfg_secure_shell.html
+ *  http://www.cisco.com/en/US/docs/ios/sec_user_services/configuration/guide/sec_cfg_secure_shell.html
 
 How to test
 ~~~~~~~~~~~

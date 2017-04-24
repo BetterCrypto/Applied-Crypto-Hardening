@@ -1,25 +1,30 @@
-Instant Messaging Systems
-=========================
-
 .. role:: math(raw)
    :format: html latex
 ..
 
+.. role:: raw-latex(raw)
+   :format: latex
+..
+
+Instant Messaging Systems
+=========================
+
+
+
+:raw-latex:`\gdef\currentsectionname{IM}`
+
 General server configuration recommendations
 --------------------------------------------
+
 
 For servers, we mostly recommend to apply what’s proposed by the
 *Peter’s manifesto*\  [1]_.
 
 In short:
 
-require the use of TLS for both client-to-server and server-to-server
-connections
-
-prefer or require TLS cipher suites that enable forward secrecy
-
-deploy certificates issued by well-known and widely-deployed
-certification authorities (CAs)
+ * require the use of TLS for both client-to-server and server-to-server connections
+ * prefer or require TLS cipher suites that enable forward secrecy
+ * deploy certificates issued by well-known and widely-deployed certification authorities (CAs)
 
 The last point being out-of-scope for this section, we will only cover
 the first two points.
@@ -30,7 +35,10 @@ ejabberd
 Tested with Versions
 ~~~~~~~~~~~~~~~~~~~~
 
-Debian Wheezy 2.1.10-4+deb7u1
+ * ejabberd 14.12, Debian 7 Wheezy
+ * ejabberd 14.12, Ubuntu 14.04 Trusty
+ * ejabberd 15.03, Ubuntu 14.04 Trusty
+ * ejabberd 16.01, Ubuntu 14.04 Trusty
 
 Settings
 ~~~~~~~~
@@ -38,41 +46,79 @@ Settings
 ejabberd is one of the popular Jabber servers. In order to be compliant
 with the manifesto, you should adapt your configuration [2]_:
 
+:raw-latex:`\configfile{14.12/ejabberd.yml}{104-107,113-114,119-119,123-123,125-125,127-127,134-135,138-140,144-146,195-195,203-203,207-207,210-213}{TLS setup for ejabberd}`
+
 Additional settings
 ~~~~~~~~~~~~~~~~~~~
 
-Older versions of ejabberd (:math:` < ` 2.0.0) need to be patched [3]_
-to be able to parse all of the certificates in the CA chain.
+It is possible to explicitly specify a cipher string for TLS
+connections.
+:raw-latex:`\configfile{14.12/ejabberd.yml}{104-107,113-114,119-119,123-123,125-125,127-127,134-135,138-138,142-142,144-146,195-195,203-203,207-207,210-213,217-217}{Specifying a cipher order and enforcing it}`
 
-Newer versions of ejabberd now support specifying the cipher string in
-the config file. See the commit message:
-https://github.com/processone/ejabberd/commit/1dd94ac0d06822daa8c394ea2da20d91c8209124.
-However, this change did not yet make it into the stable release at the
-time of this writing.
+Note that we are setting the SSL option ``cipher_server_preference``.
+This enforces our cipher order when negotiating which ciphers are used,
+as the cipher order of some clients chooses weak ciphers over stronger
+ciphers. [3]_
+
+Starting with version 15.03 [4]_, it is possible to use custom
+Diffie-Hellman-Parameters. This allows us to negotiate stronger
+Diffie-Hellman-keys, and also helps us avoid problems with using common
+Diffie-Hellman-Parameters. [5]_ You can generate your own parameter file
+by running:
+
+::
+
+    openssl dhparam -out dhparams.pem 4096
+
+By default, ejabberd provides an administration website (look for the
+ejabberd\_http module). Enable TLS protection for it like this:
+
+:raw-latex:`\configfile{14.12/ejabberd.yml}{177-178,181-183,185-185,187-188}{Adding TLS to the web interface}`
+
+Tested with Versions
+~~~~~~~~~~~~~~~~~~~~
+
+ * Debian Wheezy 2.1.10-4+deb7u1
+
+Settings
+~~~~~~~~
+
+Older versions of ejabberd use a different configuration file syntax. In
+order to be compliant with the manifesto, you should adapt your
+configuration [6]_ as follows:
+:raw-latex:`\configfile{2.1.10/ejabberd.cfg}{108-109,111-111,120-126,172-172,179-179,184-184}{
+TLS setup for ejabberd}`
+
+Additional settings
+~~~~~~~~~~~~~~~~~~~
+
+Older versions of ejabberd (< 2.0.0) need to be patched [7]_
+to be able to parse all of the certificates in the CA chain. Specifying
+a custom cipher string is only possible starting with version 13.12 (see
+configuration for version 14.12 above).
 
 References
 ~~~~~~~~~~
 
+-  `The ejabberd documentation:
+   http://www.process-one.net/en/ejabberd/docs/ <http://www.process-one.net/en/ejabberd/docs/>`__
+
 How to test
 ~~~~~~~~~~~
 
-https://xmpp.net is a practical website to test Jabber server
-configurations.
+ * https://xmpp.net is a useful website to test Jabber server configurations.
 
 Chat privacy - Off-the-Record Messaging (OTR)
 ---------------------------------------------
 
-The OTR protocol works on top of the Jabber protocol [4]_. It adds to
+The OTR protocol works on top of the Jabber protocol [8]_. It adds to
 popular chat clients (Adium, Pidgin...) the following properties for
 encrypted chats:
 
-Authentication
-
-Integrity
-
-Confidentiality
-
-Forward secrecy
+ * Authentication
+ * Integrity
+ * Confidentiality
+ * Forward secrecy
 
 It basically uses Diffie-Hellman, AES and SHA1. Communicating over an
 insecure instant messaging network, OTR can be used for end to end
@@ -85,15 +131,16 @@ Charybdis
 ---------
 
 There are numerous implementations of IRC servers. In this section, we
-choose *Charybdis* which serves as basis for *ircd-seven*\  [5]_,
+choose *Charybdis* which serves as basis for *ircd-seven*\  [9]_,
 developed and used by freenode. Freenode is actually the biggest IRC
-network [6]_. *Charybdis* is part of the *Debian* & *Ubuntu*
+network [10]_. *Charybdis* is part of the *Debian* & *Ubuntu*
 distributions.
+:raw-latex:`\configfile{ircd.conf}{12-12,15-15,24-24,44-44,60-60,63-63,66-66,74-75,83-83,132-132,138-138,144-144}{SSL relevant configuration for Charybdis/ircd-seven}`
 
 SILC
 ----
 
-SILC [7]_ is instant messaging protocol publicly released in 2000. SILC
+SILC [11]_ is instant messaging protocol publicly released in 2000. SILC
 is a per-default secure chat protocol thanks to a generalized usage of
 symmetric encryption. Keys are generated by the server meaning that if
 compromised, communication could be compromised.
@@ -107,17 +154,31 @@ The protocol is not really popular anymore.
    http://www.process-one.net/docs/ejabberd/guide_en.html
 
 .. [3]
-   http://hyperstruct.net/2007/06/20/installing-the-startcom-ssl-certificate-in-ejabberd/
+   https://blog.thijsalkema.de/me/blog//blog/2013/09/02/the-state-of-tls-on-xmpp-3/
 
 .. [4]
-   https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html
+   Early versions seem to have a few bugs - although officially
+   supported, it did not work in tests with version 15.06. Version 16.01
+   is confirmed to work.
 
 .. [5]
-   https://dev.freenode.net/redmine/projects/ircd-seven
+   https://weakdh.org
 
 .. [6]
-   http://irc.netsplit.de/networks/top10.php
+   http://www.process-one.net/docs/ejabberd/guide_en.html
 
 .. [7]
+   http://hyperstruct.net/2007/06/20/installing-the-startcom-ssl-certificate-in-ejabberd/
+
+.. [8]
+   https://otr.cypherpunks.ca/Protocol-v3-4.1.1.html
+
+.. [9]
+   https://dev.freenode.net/redmine/projects/ircd-seven
+
+.. [10]
+   http://irc.netsplit.de/networks/top10.php
+
+.. [11]
    http://www.silcnet.org/ and
    https://en.wikipedia.org/wiki/SILC_(protocol)

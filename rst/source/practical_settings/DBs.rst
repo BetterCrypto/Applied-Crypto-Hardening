@@ -29,11 +29,12 @@ Debian Wheezy and MySQL 5.5
 Settings
 ~~~~~~~~
 
+:raw-latex:`\configfile{my.cnf}{31-31,104-109}{SSL configuration fo MySQL}`
+
 References
 ~~~~~~~~~~
 
-| MySQL Documentation on SSL Connections.
-| https://dev.mysql.com/doc/refman/5.5/en/ssl-connections.html
+MySQL Documentation on SSL Connections. https://dev.mysql.com/doc/refman/5.5/en/ssl-connections.html
 
 How to test
 ~~~~~~~~~~~
@@ -90,8 +91,7 @@ following command shows only how to set the recommended ciphersuites.
 References
 ~~~~~~~~~~
 
-| IBM Db2 Documentation on *Supported cipher suites*.
-| http://pic.dhe.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=%2Fcom.ibm.db2.luw.admin.sec.doc%2Fdoc%2Fc0053544.html
+ * IBM Db2 Documentation on *Supported cipher suites*. http://pic.dhe.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=%2Fcom.ibm.db2.luw.admin.sec.doc%2Fdoc%2Fc0053544.html
 
 PostgreSQL
 ----------
@@ -99,31 +99,29 @@ PostgreSQL
 Tested with Versions
 ~~~~~~~~~~~~~~~~~~~~
 
-Debian Wheezy and PostgreSQL 9.1
-
-Linux Mint 14 nadia / Ubuntu 12.10 quantal with PostgreSQL 9.1+136 and
-OpenSSL 1.0.1c
+ * Debian Wheezy and PostgreSQL 9.1
+ * `Linux` Mint 14 nadia / Ubuntu 12.10 quantal with PostgreSQL 9.1+136 and OpenSSL 1.0.1c
 
 Settings
 ~~~~~~~~
 
+:raw-latex:`\configfile{9.1/postgresql.conf}{80-81}{Enabling SSL in PostgreSQL}`
+ 
 To start in SSL mode the server.crt and server.key must exist in the
 server’s data directory $PGDATA.
 
 Starting with version 9.2, you have the possibility to set the path
 manually.
 
+:raw-latex:`\configfile{9.3/postgresql.conf}{85-87}{Certificate locations in PostgreSQL \(\geq\) 9.2}`
+
+
 References
 ~~~~~~~~~~
 
-It’s recommended to read “Security and Authentication” in the
-manual [1]_.
-
-PostgreSQL Documentation on *Secure TCP/IP Connections with SSL*:
-http://www.postgresql.org/docs/9.1/static/ssl-tcp.html
-
-PostgreSQL Documentation on *host-based authentication*:
-http://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html
+ * It’s recommended to read “Security and Authentication” in the manual [1]_.
+ * PostgreSQL Documentation on *Secure TCP/IP Connections with SSL*: http://www.postgresql.org/docs/9.1/static/ssl-tcp.html
+ * PostgreSQL Documentation on *host-based authentication*: http://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html
 
 How to test
 ~~~~~~~~~~~

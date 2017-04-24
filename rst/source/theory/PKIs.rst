@@ -1,3 +1,7 @@
+.. role:: raw-latex(raw)
+   :format: latex
+..
+
 Public Key Infrastructures
 ==========================
 
@@ -12,12 +16,13 @@ Certificate Authorities (CAs) sign end-entities’ certificates, thereby
 associating some kind of identity (e.g. a domain name or an email
 address) with a public key. CAs are used with TLS and S/MIME
 certificates, and the CA system has a big list of possible and real
-problems which are summarized in section [sec:hardeningpki] and .
+problems which are summarized in section
+:ref:`sec-hardeningpki` and :cite:`https13`.
 
-The Web of Trust is a decentralized system where people sign each others
-keys, so that there is a high chance that there is a “trust path” from
-one key to another. This is used with PGP keys, and while it avoids most
-of the problems of the CA system, it is more cumbersome.
+The Web of Trust is a decentralized system where people sign each
+other’s keys, so that there is a high chance that there is a “trust
+path” from one key to another. This is used with PGP keys, and while it
+avoids most of the problems of the CA system, it is more cumbersome.
 
 As alternatives to these public systems, there are two more choices:
 running a private CA, and manually trusting keys (as it is used with SSH
@@ -66,7 +71,7 @@ and a corresponding certificate request as follows:
 
 ::
 
-    % openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize>
+    % openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize> -sha256
     Country Name (2 letter code) [AU]:DE
     State or Province Name (full name) [Some-State]:Bavaria
     Locality Name (eg, city) []:Munich
@@ -108,8 +113,11 @@ can issue new certificates as follows:
     % cd /usr/lib/ssl/misc
     % sudo ./CA.pl -newreq
 
-Alternatively, software such as TinyCA  that acts as a “wrapper” around
-OpenSSL and tries to make life easier is available.
+.. Alternatively, software such as
+.. TinyCA :cite:`Wikipedia:TinyCA` that acts as a “wrapper”
+.. around OpenSSL and tries to make life easier is available.
+
+.. NOTE: TinyCA is kind-of dead.
 
 Creating a Self-Signed Certificate
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -133,7 +141,7 @@ You can also create a self-signed certificate in just one command:
 
 ::
 
-    openssl req -new -x509 -keyout privkey.pem -out cacert.pem -days 1095 -nodes -newkey rsa:<keysize>
+    openssl req -new -x509 -keyout privkey.pem -out cacert.pem -days 1095 -nodes -newkey rsa:<keysize> -sha256
 
 The resulting certificate will by default not be trusted by anyone at
 all, so in order to be useful, the certificate will have to be made
@@ -144,14 +152,94 @@ Hardening PKI
 
 In recent years several CAs were compromised by attackers in order to
 get a hold of trusted certificates for malicious activities. In 2011 the
-Dutch CA Diginotar was hacked and all certificates were revoked .
-Recently Google found certificates issued to them, which were not used
-by the company . The concept of PKIs heavily depends on the security of
-CAs. If they get compromised the whole PKI system will fail. Some CAs
-tend to incorrectly issue certificates that were designated to do a
-different job than what they were intended to by the CA .
+Dutch CA Diginotar was hacked and all certificates were
+revoked :cite:`diginotar-hack`. Recently Google found
+certificates issued to them, which were not used by the
+company :cite:`googlecahack`. The concept of PKIs heavily
+depends on the security of CAs. If they get compromised the whole PKI
+system will fail. Some CAs tend to incorrectly issue certificates that
+were designated to do a different job than what they were intended to by
+the CA :cite:`gocode`.
 
 Therefore several security enhancements were introduced by different
-organizations and vendors . Currently two methods are used, DANE  and
-Certificate Pinning . Google recently proposed a new system to detect
-malicious CAs and certificates called Certificate Transparency .
+organizations and vendors :cite:`tschofenig-webpki`. Currently two methods are
+used, DANE :rfc:`6698` and Certificate
+Pinning :cite:`draft-ietf-websec-key-pinning`. Google recently proposed a new
+system to detect malicious CAs and certificates called Certificate
+Transparency :cite:`certtransparency`. In addition, :rfc:`6844` describes
+Certification Authorization Records, a mechanism for domain name owners to
+signal which Certificate Authorities are authorized to issue certificates for
+their domain.
+
+Certification Authorization Records
+-----------------------------------
+
+:rfc:`6844` describes Certification Authorization Records, a mechanism for
+domain name owners to signal which Certificate Authorities are
+authorized to issue certificates for their domain.
+
+When a CAA record is defined for a particular domain, it specifies that
+the domain owner requests Certificate Authorities to validate any
+request against the CAA record. If the certificate issuer is not listed
+in the CAA record, it should not issue the certificate.
+
+The RFC also permits Certificate Evaluators to test an issued
+certificate against the CAA record, but should exercise caution, as the
+CAA record may change during the lifetime of a certificate, without
+affecting its validity.
+
+CAA also supports an iodef property type which can be requested by a
+Certificate Authority to report certificate issue requests which are
+inconsistent with the issuer’s Certificate Policy.
+
+Configuration of CAA records
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+BIND supports CAA records as of version 9.9.6.
+
+A CAA record can be configured by adding it to the zone file:
+
+::
+
+    $ORIGIN example.com
+           CAA 0 issue "ca1.example"
+           CAA 0 iodef "mailto:security@example.com"
+
+If your organization uses multiple CA’s, you can configure multiple
+records:
+
+::
+
+          CAA 0 issue "ca1.example"
+          CAA 0 issue "ca2.example"
+
+“ca1.example” and “ca2.example” are unique identifiers for the CA you
+plan on using. These strings can be obtained from your Certificate
+Authority, and typically are its top level domain. An example is
+“letsencrypt.org” for the Let’s Encrypt CA operated by the Internet
+Security Research Group.
+
+Knot-DNS supports CAA records as of version 2.2.0.
+
+Validation of CAA records
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Once a CAA record is deployed, it can be validated using the following
+dig query:
+
+::
+
+    user@system:~$ dig CAA google.com
+     
+    ; <<>> DiG 9.10.3-P4-Debian <<>> CAA google.com
+     
+    ;; ANSWER SECTION:
+    google.com.          3600 IN   CAA  0 issue "symantec.com"
+
+On older versions of Dig, which do not support CAA records, you can
+query the record type manually:
+
+::
+
+    dig +short -t TYPE257 google.com
+    \# 19 0005697373756573796D616E7465632E636F6D

@@ -1,0 +1,412 @@
+@string {I_PolarSSL =
+    {PolarSSL}
+}
+@string {I_Stackexchange =
+    {\hyperref{http://stackexchange.com/}{}{}{Stackexchange}
+     \hyperref{http://stackexchange.com/}{}{}{Q\&A}
+     \hyperref{http://stackexchange.com/}{}{}{Site}}
+}
+@string {I_Wikipedia =
+    {\hyperref{https://wikipedia.org/}{}{}{Wikipedia}}
+}
+@string {I_Wolfram =
+    {\hyperref{http://mathworld.wolfram.com/}{}{}{Wolfram}
+     \hyperref{http://mathworld.wolfram.com/}{}{}{Research}
+     \hyperref{http://mathworld.wolfram.com/}{}{}{Mathworld}}
+}
+@string {J_TOMACS =
+    {\hyperref{https://tomacs.acm.org/}{}{}{ACM}
+     \hyperref{https://tomacs.acm.org/}{}{}{Transactions}
+     \hyperref{https://tomacs.acm.org/}{}{}{on}
+     \hyperref{https://tomacs.acm.org/}{}{}{Modeling}
+     \hyperref{https://tomacs.acm.org/}{}{}{and}
+     \hyperref{https://tomacs.acm.org/}{}{}{Computer}
+     \hyperref{https://tomacs.acm.org/}{}{}{Simulation}}
+}
+
+@string {I_MIT =
+	{\hyperref{http://web.mit.edu/}{}{}{MIT}}
+}
+
+@string {I_IETF =
+	{\hyperref{https://www.ietf.org/}{}{}{IETF}}
+}
+
+@string {I_ORACLE =
+	{\hyperref{http://www.oracle.com/}{}{}{Oracle}}
+}
+
+@string {I_GNU =
+	{\hyperref{https://www.gnu.org/}{}{}{GNU}}
+}
+
+@string {I_BLACKHAT =
+    {\hyperref{https://blackhat.com}{}{}{Blackhat}
+     \hyperref{https://blackhat.com}{}{}{USA}}
+}
+
+@inproceedings{HDWH12,
+   author    = {Nadia Heninger and Zakir Durumeric and Eric Wustrow
+                and J. Alex Halderman},
+   title     = {Mining Your {P}s and {Q}s: {D}etection of Widespread Weak Keys
+                in Network Devices},
+  booktitle  = {Proceedings of the 21st {USENIX} Security Symposium},
+  month      = aug,
+  year       = {2012},
+  url        = {https://factorable.net/weakkeys12.extended.pdf},
+}
+
+ @misc{ Wikipedia:/dev/random,
+   author = "Wikipedia",
+   title = "/dev/random --- Wikipedia{,} The Free Encyclopedia",
+   year = "2016",
+   url = "https://en.wikipedia.org/w/index.php?title=/dev/random&oldid=752512186",
+   note = "[Online; accessed 1-December-2016]"
+ }
+
+@article{SS03,
+   author    = {A. Seznec and N. Sendrier},
+   title     = {{HAVEGE}: a user-level software heuristic for generating
+                empirically strong random numbers},
+   journal   = J_TOMACS,
+   year      = {2003},
+   volume    = {13},
+   number    = {4},
+   month     = Oct,
+   pages     = {334-346},
+   url       = {http://www.irisa.fr/caps/projects/hipsor/scripts/down.php?id=13781296&ext=.pdf},
+}
+
+@misc{Eng11,
+   author    = {Jakob Engblom},
+   title     = {Evaluating {HAVEGE} Randomness},
+   year      = {2011},
+   month     = Feb,
+   note      = {Blog: Observations from Uppsala},
+   url       = {http://jakob.engbloms.se/archives/1374},
+}
+
+@techreport{POL11,
+   author = {Jacob Appelbaum and Marsh Ray and Oscar Koeroo},
+   key       = {POL},
+   title     = {Weak random number generation within virtualized environments},
+   institution = I_PolarSSL,
+   year      = {2011},
+   month     = Dec,
+   type      = {Security Advisory},
+   number    = {2011-02},
+   url       = {https://polarssl.org/tech-updates/security-advisories/polarssl-security-advisory-2011-02},
+}
+
+@misc{HAV13a,
+   key       = {HAV},
+   title     = {haveged -- A simple entropy daemon},
+   year      = {2013},
+   month     = Dec,
+   type      = {Software Homepage},
+   url       = {http://www.issihosts.com/haveged/},
+   note      = {Accessed 2013-12-06},
+}
+
+@misc{HAV13b,
+   key       = {HAV},
+   title     = {haveged -- A simple entropy daemon: Runtime Testing},
+   year      = {2013},
+   month     = Dec,
+   type      = {Technical Background},
+   url       = {http://www.issihosts.com/haveged/},
+   note      = {Accessed 2013-12-06},
+}
+
+@book{katz2008introduction,
+  title={Introduction to modern cryptography},
+  author={Katz, J. and Lindell, Y.},
+  isbn={9781584885511},
+  lccn={2007017861},
+  series={Chapman and Hall/CRC Cryptography and Network Security Series},
+  url={http://books.google.at/books?id=WIc\_AQAAIAAJ},
+  year={2008},
+  publisher={Chapman \& Hall/CRC}
+}
+
+@misc{DJBSC,
+  author = {Daniel J. Bernstein},
+   key       = {DJB},
+   title     = {SafeCurves: choosing safe curves for elliptic-curve cryptography},
+   year      = {2013},
+   month     = Dec,
+   type      = {Technical Background},
+   url       = {http://safecurves.cr.yp.to/rigid.html},
+   note      = {Accessed 2013-12-09},
+}
+
+@misc{Wikipedia:ExportCipher,
+   author = "Wikipedia",
+   title = "Export of cryptography from the United States --- Wikipedia{,} The Free Encyclopedia",
+   year = "2016",
+   url = "https://en.wikipedia.org/w/index.php?title=Export_of_cryptography_from_the_United_States&oldid=750316577",
+   note = "[Online; accessed 19-November-2016]"
+ }
+
+@techreport{ii2011ecrypt,
+   title     = {ECRYPT II Yearly Report on Algorithms and Keysizes},
+   author    = {Nigel Smart (Ed.)},
+   year      = {2012},
+   institution = {European Network of Excellence in Cryptology II},
+   url       = {http://www.ecrypt.eu.org/ecrypt2/documents/D.SPA.20.pdf},
+   pages     = {79-86},
+}
+
+@misc{Wikipedia:Tempest,
+   author = "Wikipedia",
+   title = "Tempest (codename) --- Wikipedia{,} The Free Encyclopedia",
+   year = "2016",
+   url = "https://en.wikipedia.org/w/index.php?title=Tempest_(codename)&oldid=750068410",
+   note = "[Online; accessed 17-November-2016]"
+ }
+
+@misc{Wikipedia:Discrete,
+   author = "Wikipedia",
+   title = "Discrete logarithm --- Wikipedia{,} The Free Encyclopedia",
+   year = "2016",
+   url = "https://en.wikipedia.org/w/index.php?title=Discrete_logarithm&oldid=750730405",
+   note = "[Online; accessed 21-November-2016]"
+ }
+
+@techreport{Wikipedia:Certificate,
+   key       = {Wikipedia:Certificate},
+   title     = {Certificate Policy},
+   institution = I_Wikipedia,
+   year      = {2013},
+   month     = Dec,
+   type      = {Wikipedia},
+   url       = {https://en.wikipedia.org/wiki/Certificate_Policy},
+   note      = {Accessed 2013-12-12},
+}
+
+@misc{Sch13,
+   author    = {Bruce Schneier},
+   title     = {The {NSA} Is Breaking Most Encryption on the Internet},
+   year      = {2013},
+   month     = Sep,
+   type      = {Blog: Schneier on Security},
+   url       = {https://www.schneier.com/blog/archives/2013/09/the_nsa_is_brea.html},
+}
+
+@misc{Sch13b,
+   author    = {Bruce Schneier},
+   title     = {The {NSA} Is Breaking Most Encryption on the Internet},
+   year      = {2013},
+   month     = Sep,
+   type      = {Answer to Blog Comment},
+   url       = {https://www.schneier.com/blog/archives/2013/09/the_nsa_is_brea.html\#c1675929},
+}
+
+@misc{BL13,
+   author    = {Daniel J. Bernstein and Tanja Lange},
+   title     = {Security dangers of the {NIST} curves},
+   year      = {2013},
+   month     = Sep,
+   note      = {Presentation slides},
+   url       = {http://cr.yp.to/talks/2013.09.16/slides-djb-20130916-a4.pdf},
+}
+
+@techreport{W13,
+   author    = {D. W.},
+   title     = {Should we trust the {NIST}-recommended {ECC} parameters?},
+   year      = {2013},
+   month     = Sep,
+   type      = {Stackexchange Question},
+   institution = I_Stackexchange,
+   url       = {http://crypto.stackexchange.com/questions/10263/should-we-trust-the-nist-recommended-ecc-parameters},
+}
+
+@inproceedings{McC90,
+   author    = {Kevin S. McCurley},
+   title     = {The Discrete Logarithm Problem},
+   booktitle = {Cryptology and Computational Number Theory, Proceedings of Symposia in Applied mathematics},
+   year      = {1990},
+   volume    = {42},
+   pages     = {49-74},
+   url       = {http://www.mccurley.org/papers/dlog.pdf},
+}
+
+@techreport{WR13,
+author={Weisstein, Eric W.},
+   key       = {Wolfram Research, Mathworld},
+   title     = {Elliptic Curve},
+   year      = {2013},
+   month     = Dec,
+   type      = {Math Dictionary Entry},
+   institution = I_Wolfram,
+   url       = {http://mathworld.wolfram.com/EllipticCurve.html},
+   note      = {Accessed 2013-12-12},
+}
+
+@misc{yarom2013flush+,
+  title      = {Flush+ Reload: a high resolution, low noise, L3 cache side-channel attack},
+  author     = {Yarom, Yuval and Falkner, Katrina},
+  year       = {2013},
+  publisher  = {Cryptology ePrint Archive, Report 2013/448, 2013. http://eprint. iacr. org/2013/448/. 3},
+  url        = {http://eprint.iacr.org/2013/448.pdf}
+}
+
+@techreport{TR02102,
+  title      = {BSI TR-02102 Kryptographische Verfahren},
+  author     = {Bundesamt für Sicherheit in der Informationstechnik (BSI)},
+  institution     = {Bundesamt für Sicherheit in der Informationstechnik (BSI)},
+  year       = {2013},
+  month      = Jan,
+  url        = {https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR02102/BSI-TR-02102_pdf}
+}
+
+@techreport{ENISA2013,
+  title      = {ENISA - Algorithms, Key Sizes and Parameters Report},
+  author     = {Vincent Rijmen and Nigel P. Smart and Bogdan Warinschi and Gaven Watson},
+  year       = {2013},
+  institution = {ENISA},
+  month      = {Oct},
+  url        = {http://www.enisa.europa.eu/activities/identity-and-trust/library/deliverables/algorithms-key-sizes-and-parameters-report},
+}
+
+@book{anderson2008security,
+  title      = {Security engineering},
+  author     = {Anderson, Ross},
+  year       = {2008},
+  publisher  = {Wiley.com},
+  url        = {http://www.cl.cam.ac.uk/~rja14/book.html},
+}
+
+@misc{tschofenig-webpki,
+  author = {{H. Tschofenig and E. Lear}},
+  title = {{Evolving the Web Public Key Infrastructure}},
+  url = {https://tools.ietf.org/html/draft-tschofenig-iab-webpki-evolution-01.txt},
+  year = 2013,
+  month = Nov,
+}
+
+@misc{diginotar-hack,
+  author = {{Elinor Mills}},
+  title = {{Fraudulent Google certificate points to Internet attack}},
+  url = {http://news.cnet.com/8301-27080\_3-20098894-245/fraudulent-google-certificate-points-to-internet-attack/},
+  year = 2011,
+  month = Aug,
+}
+
+@misc{googlecahack,
+  author = {{Damon Poeter}},
+  title = {{Fake Google Certificate Puts Gmail at Risk}},
+  url = {http://www.pcmag.com/article2/0,2817,2392063,00.asp},
+  year = 2011,
+  month = Aug,
+}
+
+@misc{draft-ietf-websec-key-pinning,
+  author = {{C. Evans and C. Palmer}},
+  title = {{Public Key Pinning Extension for HTTP}},
+  url ={https://tools.ietf.org/html/draft-ietf-websec-key-pinning-09},
+  year = 2013,
+  month = Nov,
+}
+
+@misc{gocode,
+  author = {{Adam Langley, et. al.}},
+  title = {{Go X.509 Verification Source Code}},
+  url = {https://code.google.com/p/go/source/browse/src/pkg/crypto/x509/verify.go#173},
+  year = 2013,
+  month = 12,
+}
+
+@misc{certtransparency,
+  author = {{Adam Langley, Ben Laurie, Emilia Kasper}},
+  title = {{Certificate Transparency}},
+  url = {http://www.certificate-transparency.org},
+%		\url{https://datatracker.ietf.org/doc/rfc6962/}",
+  year = 2013,
+  month = 07,
+}
+
+@misc{snowdenGuardianGreenwald,
+  author = {{Glenn Greenwald}},
+  title = {{Edward Snowden: NSA whistleblower answers reader questions}},
+  url = {http://www.theguardian.com/world/2013/jun/17/edward-snowden-nsa-files-whistleblower},
+  year = 2013,
+  month = 07,
+  day = 17,
+}
+
+@InProceedings{https13,
+	author = {Zakir Durumeric and James Kasten and Michael Bailey and J. Alex Halderman},
+	title = {Analysis of the {HTTPS} Certificate Ecosystem},
+	booktitle = {Proceedings of the 13th Internet Measurement Conference},
+	month = oct,
+	year = {2013},
+        url = {https://jhalderm.com/pub/papers/https-imc13.pdf},
+}
+
+%@techreport{Wikipedia:TinyCA,
+%   key       = {Wikipedia:TinyCA},
+%   title     = {TinyCA},
+%   institution = I_Wikipedia,
+%   year      = {2013},
+%   month     = Dec,
+%   type      = {Wikipedia},
+%   url       = {https://en.wikipedia.org/wiki/TinyCA},
+%   note      = {Accessed 2013-12-24},
+%}
+
+@techreport{MITKrbDoc:realm_config,
+	key = {MITKrbDoc:realm_config},
+	title = {Realm configuration decisions},
+	institution = I_MIT,
+	year = {2013},
+	type = {Documentation},
+	url = {http://web.mit.edu/kerberos/krb5-latest/doc/admin/realm_config.html},
+}
+
+@techreport{IETF:cat-krb-dns-locate-02,
+	key = {IETF:cat-krb-dns-locate-02},
+	title = {Distributing Kerberos KDC and Realm Information with DNS},
+	institution = I_IETF,
+	year = {2000},
+	month = Mar,
+	author = {Ken Hornstein and Jeffrey Altman},
+	type = {Internet Draft},
+	url = {https://www.ietf.org/proceedings/48/I-D/cat-krb-dns-locate-02.txt},
+}
+
+@techreport{krb519,
+	key = {krb519},
+	title = {Kerberos 5 Release 1.9},
+	institution = I_MIT,
+	year = {2010},
+	month = Dec,
+	type = {Release Notes},
+	url = {http://web.mit.edu/kerberos/krb5-1.9/},
+}
+
+@techreport{JavaJGSS,
+	key = {JavaJGSS},
+	title = {Java Generic Security Services: (Java GSS) and Kerberos},
+	institution = I_ORACLE,
+	type = {Documentation},
+	url = {http://docs.oracle.com/javase/7/docs/technotes/guides/security/jgss/jgss-features.html},
+}
+
+@techreport{ShishiEnctypes,
+	key = {ShishiEnctypes},
+	title = {GNU Shishi 1.0.2},
+	institution = I_GNU,
+	type = {Documentation},
+	url = {https://www.gnu.org/software/shishi/manual/shishi.html\#Cryptographic-Overview},
+}
+
+@techreport{AttKerbDepl,
+	key = {AttKerbDepl},
+	author = {Rachel Engel and Brad Hill and Scott Stender},
+	title = {Attacking Kerberos Deployments},
+	journal = I_BLACKHAT,
+	year = {2010},
+	type = {Slides},
+	url = {https://media.blackhat.com/bh-us-10/presentations/Stender_Engel_Hill/BlackHat-USA-2010-Stender-Engel-Hill-Attacking-Kerberos-Deployments-slides.pdf},
+}

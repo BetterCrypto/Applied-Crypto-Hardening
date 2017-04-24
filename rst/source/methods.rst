@@ -15,10 +15,10 @@ to the public Internet on the web page and the source code of this
 document is on a public git server, mirrored on GitHub.com and open for
 public scrutiny. However, write permissions to the document are only
 granted to vetted people. The list of reviewers can be found in the
-section “”. Every write operation to the document is logged via the
-“git” version control system and can thus be traced back to a specific
-author. We accept “git pull requests” on the github mirror [1]_ for this
-paper.
+section “:raw-latex:`\nameref{section:Reviewers}`”. Every write
+operation to the document is logged via the “git” version control system
+and can thus be traced back to a specific author. We accept “git pull
+requests” on the github mirror [1]_ for this paper.
 
 Public peer-review and multiple eyes checking of our guide is the best
 strategy we can imagine at the present moment  [2]_.

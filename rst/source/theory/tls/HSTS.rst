@@ -1,5 +1,9 @@
-HTTP Strict Transport Security
-------------------------------
+.. role:: raw-latex(raw)
+   :format: latex
+..
+
+HTTP Strict Transport Security (HSTS)
+-------------------------------------
 
 HTTP Strict Transport Security (HSTS) is a web security policy
 mechanism. HSTS is realized through HTTP header by which a web server
@@ -32,13 +36,16 @@ HTTPS. This limitation can be addressed by compiling a list of STS
 enabled sites directly into a browser [4]_.
 
 HSTS Header Directives
-~~~~~~~~~~~~~~~~~~~~~~
+======================
 
 HSTS header can be parametrized by two directives:
 
-max-age=<number-of-seconds>
+.. raw:: latex
 
-includeSubdomains
+   \begin{itemize}
+     \item max-age=<number-of-seconds> 
+   	\item includeSubdomains 
+   \end{itemize}
 
 *max-age* is a required directive. This directive indicates the number
 of seconds during which the user agent should enforce the HSTS policy
@@ -49,37 +56,38 @@ that the HSTS Policy applies to this HSTS Host as well as *any
 subdomains of the host’s domain name*.
 
 HSTS Client Support
-~~~~~~~~~~~~~~~~~~~
+===================
 
 HSTS is supported [5]_ by these web browsers:
 
-Firefox version >= v4.0
+.. raw:: latex
 
-Chrome version >= 4.0
-
-Android Browser >=4.4
-
-Opera version >= 12.0
-
-Opera mobile >= 16.0
-
-Safari >= 7.0
-
-Microsoft should add HSTS support in Internet Explorer 12 [6]_.
+   \begin{itemize}
+     \item Firefox version >= v4.0
+   	\item Chrome version >= 4.0
+   	\item Android Browser >=4.4
+   	\item Opera version >= 12.0 
+   	\item Opera mobile >= 16.0
+   	\item Safari >= 7.0
+   	\item Microsoft Internet Explorer >= 11 (with update provided 09. June 2015)
+   	\item Microsoft Edge >= 12
+   \end{itemize}
 
 HSTS Considerations
-~~~~~~~~~~~~~~~~~~~
+===================
 
 Before enabling HSTS it is recommended to consider following:
 
-Is it *required* to serve content or services over HTTP?
+.. raw:: latex
 
-Enabling *includeSubdomains* and SSL certificate management.
-
-Proper value of *max-age*.
+   \begin{itemize}
+     \item Is it \emph{required} to serve content or services over HTTP?
+   	\item Enabling \emph{includeSubdomains} and SSL certificate management.
+   	\item Proper value of \emph{max-age}. 
+   \end{itemize}
 
 It is recommended to serve all content using HTTPS, but there are
-exceptions to this rule as well. Consider running a private PKI [7]_.
+exceptions to this rule as well. Consider running a private PKI [6]_.
 CRLs and OCSP responses are published typically by HTTP protocol. If
 HSTS is enabled on the site where OCSP and CRLs are published the
 browser might fail fetching CRL or validating OCSP response.
@@ -96,31 +104,28 @@ Finally HSTS should be tested with lower *max-age* values and deployed
 with higher *max-age* values.
 
 Testing HSTS
-~~~~~~~~~~~~
+============
 
 HSTS can be tested either using locally or through the Internet.
 
 For local testing it is possible to utilize Chrome Web browser UI by
-typing chrome://net-internals/#hsts\  [8]_ in the address bar.
+typing chrome://net-internals/#hsts\  [7]_ in the address bar.
 
 Testing over the Internet can be conducted by Qualys SSL Labs test
 https://www.ssllabs.com/ssltest/. *Strict Transport Security (HSTS)*
 information is located in the *Protocol Details* section.
 
 References
-~~~~~~~~~~
+==========
 
-Websites Must Use HSTS in Order to Be Secure
-https://www.eff.org/deeplinks/2014/02/websites-hsts
+.. raw:: latex
 
-OWASP: HTTP Strict Transport Security:
-https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
-
-HSTS Browser Compatibility List:
-http://caniuse.com/stricttransportsecurity
-
-RFC 6797:HTTP Strict Transport Security (HSTS) - Examples:
-https://tools.ietf.org/html/rfc6797#section-6.2
+   \begin{itemize}
+   	\item Websites Must Use HSTS in Order to Be Secure \url{https://www.eff.org/deeplinks/2014/02/websites-hsts}
+   	\item OWASP: HTTP Strict Transport Security: \url{https://www.owasp.org/index.php/HTTP_Strict_Transport_Security}
+   	\item HSTS Browser Compatibility List: \url{http://caniuse.com/stricttransportsecurity}
+     \item RFC 6797:HTTP Strict Transport Security (HSTS) - Examples: \url{https://tools.ietf.org/html/rfc6797#section-6.2}
+   \end{itemize}
 
 .. [1]
    https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
@@ -145,11 +150,8 @@ https://tools.ietf.org/html/rfc6797#section-6.2
    http://caniuse.com/stricttransportsecurity
 
 .. [6]
-   http://status.modern.ie/httpstricttransportsecurityhsts
+   see :raw-latex:`\nameref{section:PKIs}`
 
 .. [7]
-   see
-
-.. [8]
    see
    http://blog.chromium.org/2011/06/new-chromium-security-features-june.html

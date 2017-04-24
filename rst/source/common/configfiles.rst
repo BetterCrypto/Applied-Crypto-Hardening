@@ -1,5 +1,0 @@
-configfiles.txt
-
-configurationdirconfiguration
-
-configurationbaseurl

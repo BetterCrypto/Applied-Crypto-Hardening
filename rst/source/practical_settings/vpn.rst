@@ -1,3 +1,7 @@
+.. role:: raw-latex(raw)
+   :format: latex
+..
+
 VPNs
 ====
 
@@ -32,8 +36,21 @@ The size of the PSK should not be shorter than the output size of the
 hash algorithm used in IKE [1]_.
 
 For a key composed of upper- and lowercase letters, numbers, and two
-additional symbols [2]_, table [tab:IPSEC\ :sub:`p`\ sk\ :sub:`l`\ en]
+additional symbols [2]_, table :ref:`tab-IPSEC_psk_len`
 gives the minimum lengths in characters.
+
+.. tabularcolumns:: lc
+.. _tab-IPSEC_psk_len:
+.. table:: PSK lengths
+   :align: center
+
+   ========  ==================
+   IKE Hash  PSK length (chars)
+   ========  ==================
+   SHA256    43
+   SHA384    64
+   SHA512    86
+   ========  ==================
 
 Cryptographic Suites:
 ^^^^^^^^^^^^^^^^^^^^^
@@ -42,11 +59,23 @@ IPSEC Cryptographic Suites are pre-defined settings for all the items of
 a configuration; they try to provide a balanced security level and make
 setting up VPNs easier.  [3]_
 
-When using any of those suites, make sure to enable \`\`Perfect Forward
-Secrecy\`\` for Phase 2, as this is not specified in the suites. The
+When using any of those suites, make sure to enable “Perfect Forward
+Secrecy“ for Phase 2, as this is not specified in the suites. The
 equivalents to the recommended ciphers suites in section
-[section:recommendedciphers] are shown in
-table [tab:IPSEC\ :sub:`s`\ uites].
+:ref:`section-recommendedciphers` are shown in
+table :ref:`tab-IPSEC_suites`.
+
+.. tabularcolumns:: >{\raggedright}p{3cm}>{\raggedright}p{3cm}l
+.. _tab-IPSEC_suites:
+.. table:: IPSEC Cryptographic Suites
+   :align: center
+
+   ===================  ===================  =============================================
+   Configuration A      Configuration B      Notes
+   ===================  ===================  =============================================
+   ``Suite-B-GCM-256``  ``Suite-B-GCM-128``  All Suite-B variants use NIST `elliptic curve`s
+                        ``VPN-B``
+   ===================  ===================  =============================================
 
 Phase 1:
 ^^^^^^^^
@@ -55,23 +84,56 @@ Alternatively to the pre-defined cipher suites, you can define your own,
 as described in this and the next section.
 
 Phase 1 is the mutual authentication and key exchange phase;
-table [tab:IPSEC\ :sub:`p`\ h1\ :sub:`p`\ arams] shows the parameters.
+table :ref:`tab-IPSEC_ph1_params` shows the parameters.
 
-Use only \`\`main mode\`\`, as \`\`aggressive mode\`\` has known
-security vulnerabilities  [4]_.
+Use only “main mode“, as “aggressive mode“ has known security
+vulnerabilities  [4]_.
+
+.. tabularcolumns:: lll
+.. _tab-IPSEC_ph1_params:
+.. table:: IPSEC Phase 1 parameters
+   :align: center
+
+   ==============  ===============  ============================
+   :raw-latex:`~`  Configuration A  Configuration B
+   ==============  ===============  ============================
+   Mode            Main Mode        Main Mode
+   Encryption      AES-256          AES, CAMELLIA (-256 or -128)
+   Hash            SHA2-\*           SHA2-\*, SHA1
+   DH Group        Group 14-18      Group 14-18
+   ==============  ===============  ============================
+
+.. Lifetime  \todo{need recommendations; 1 day seems to be common practice}
+
 
 Phase 2:
 ^^^^^^^^
 
 Phase 2 is where the parameters that protect the actual data are
 negotiated; recommended parameters are shown in table
-[tab:IPSEC:sub:`p`\ h2\ :sub:`p`\ arams].
+:ref:`tab-IPSEC_ph2_params`.
+
+
+.. tabularcolumns:: lll
+.. _tab-IPSEC_ph2_params:
+.. table:: IPSEC Phase 2 parameters
+   :align: center
+
+   =======================  =========================================  ==============================================================================
+   :raw-latex:`~`           Configuration A                            Configuration B
+   =======================  =========================================  ==============================================================================
+   Perfect Forward Secrecy  ✓                                          ✓
+   Encryption               AES-GCM-16, AES-CTR, AES-CCM-16, AES-256   aAES-GCM-16, AES-CTR, AES-CCM-16, AES-256, CAMELLIA-256, AES-128, CAMELLIA-128
+   Hash                     SHA2-\* (or none for AEAD)                 SHA2-\*, SHA1 (or none for AEAD)
+   DH Group                 Same as Phase 1                            Same as Phase 1
+   =======================  =========================================  ==============================================================================
+
+.. Lifetime              \todo{need recommendations; 1-8 hours is common}
 
 References
 ~~~~~~~~~~
 
-“A Cryptographic Evaluation of IPsec”, Niels Ferguson and Bruce
-Schneier: https://www.schneier.com/paper-ipsec.pdf
+ * `“A Cryptographic Evaluation of IPsec”, Niels Ferguson and Bruce Schneier: <https://www.schneier.com/paper-ipsec.pdf>`__
 
 Check Point FireWall-1
 ----------------------
@@ -79,50 +141,49 @@ Check Point FireWall-1
 Tested with Versions
 ~~~~~~~~~~~~~~~~~~~~
 
-R77 (should work with any currently supported version)
+ *  R77 (should work with any currently supported version)
 
 Settings
 ~~~~~~~~
 
-Please see section [section:IPSECgeneral] for guidance on parameter
-choice. In this section, we will configure a strong setup according to
-“Configuration A”.
+Please see section :ref:`section-IPSECgeneral` for guidance
+on parameter choice. In this section, we will configure a strong setup
+according to “Configuration A”.
 
 This is based on the concept of a “VPN Community”, which has all the
 settings for the gateways that are included in that community.
 Communities can be found in the “IPSEC VPN” tab of SmartDashboard.
 
+.. _fig-checkpoint_1:
 .. figure:: ../img/checkpoint_1.png
-   :alt: VPN Community encryption properties
+   :width: 59.2%
+   :align: center
 
    VPN Community encryption properties
 
-[fig:checkpoint:sub:`1`]
+Either choose one of the encryption suites in the properties dialog
+(figure :ref:`fig-checkpoint_1`), or proceed to “Custom
+Encryption...”, where you can set encryption and hash for Phase 1 and 2
+(figure :ref:`fig-checkpoint_2`).
 
-Either chose one of the encryption suites in the properties dialog
-(figure [fig:checkpoint:sub:`1`]), or proceed to “Custom Encryption...”,
-where you can set encryption and hash for Phase 1 and 2 (figure
 
-[fig:checkpoint:sub:`2`]).
-
+.. _fig-checkpoint_2:
 .. figure:: ../img/checkpoint_2.png
-   :alt: Custom Encryption Suite Properties
+   :width: 41.1%
+   :align: center
 
    Custom Encryption Suite Properties
 
-[fig:checkpoint:sub:`2`]
-
 The Diffie-Hellman groups and Perfect Forward Secrecy Settings can be
 found under “Advanced Settings” / “Advanced VPN Properties” (figure
+:ref:`fig-checkpoint_3`).
 
-[fig:checkpoint:sub:`3`]).
-
+.. _fig-checkpoint_3:
 .. figure:: ../img/checkpoint_3.png
-   :alt: Advanced VPN Properties
+   :width: 58.9%
+   :align: center
 
    Advanced VPN Properties
-
-[fig:checkpoint:sub:`3`]
 
 Additional settings
 ~~~~~~~~~~~~~~~~~~~
@@ -131,15 +192,14 @@ For remote Dynamic IP Gateways, the settings are not taken from the
 community, but set in the “Global Properties” dialog under “Remote
 Access” / “VPN Authentication and Encryption”. Via the “Edit...” button,
 you can configure sets of algorithms that all gateways support (figure
+:ref:`fig-checkpoint_4`).
 
-[fig:checkpoint:sub:`4`]).
-
+.. _fig-checkpoint_4:
 .. figure:: ../img/checkpoint_4.png
-   :alt: Remote Access Encryption Properties
+   :width: 47.4%
+   :align: center
 
    Remote Access Encryption Properties
-
-[fig:checkpoint:sub:`4`]
 
 Please note that these settings restrict the available algorithms for
 **all** gateways, and also influence the VPN client connections.
@@ -147,9 +207,7 @@ Please note that these settings restrict the available algorithms for
 References
 ~~~~~~~~~~
 
-Check Point `VPN R77 Administration
-Guide <https://sc1.checkpoint.com/documents/R77/CP_R77_VPN_AdminGuide/html_frameset.htm>`__
-(may require a UserCenter account to access)
+ *  Check Point `VPN R77 Administration Guide <https://sc1.checkpoint.com/documents/R77/CP_R77_VPN_AdminGuide/html_frameset.htm>`__ (may require a UserCenter account to access)
 
 OpenVPN
 -------
@@ -157,13 +215,10 @@ OpenVPN
 Tested with Versions
 ~~~~~~~~~~~~~~~~~~~~
 
-OpenVPN 2.3.2 from Debian “wheezy-backports” linked against openssl
-(libssl.so.1.0.0)
-
-OpenVPN 2.2.1 from Debian Wheezy linked against openssl
-(libssl.so.1.0.0)
-
-OpenVPN 2.3.2 for Windows
+ * OpenVPN 2.3.2 from Debian “wheezy-backports” linked against openssl
+    (libssl.so.1.0.0)
+ * OpenVPN 2.2.1 from Debian Wheezy linked against openssl (libssl.so.1.0.0)
+ * OpenVPN 2.3.2 for Windows
 
 Settings
 ~~~~~~~~
@@ -183,10 +238,15 @@ is then negotiated as usual with TLS, the ``cipher`` and ``auth``
 options both take a single argument that must match on client and
 server.
 
+OpenVPN duplexes the tunnel into a data and a control channel. The
+control channel is a usual TLS connection, the data channel currently
+uses encrypt-then-mac CBC, see
+https://github.com/BetterCrypto/Applied-Crypto-Hardening/pull/91#issuecomment-75365286
+
 Server Configuration
 ^^^^^^^^^^^^^^^^^^^^
 
-|  
+:raw-latex:`\configfile{server.conf}{248-250}{Cipher configuration for OpenVPN (Server)}`
 
 Client Configuration
 ^^^^^^^^^^^^^^^^^^^^
@@ -195,6 +255,8 @@ Client and server have to use compatible configurations, otherwise they
 can’t communicate. The ``cipher`` and ``auth`` directives have to be
 identical.
 
+:raw-latex:`\configfile{client.conf}{44-45,115-121}{Cipher and TLS configuration for OpenVPN (Server)}`
+
 Justification for special settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -202,8 +264,8 @@ OpenVPN 2.3.1 changed the values that the ``tls-cipher`` option expects
 from OpenSSL to IANA cipher names. That means from that version on you
 will get “Deprecated TLS cipher name” warnings for the configurations
 above. You cannot use the selection strings from section
-[section:recommendedciphers] directly from 2.3.1 on, which is why we
-give an explicit cipher list here.
+:ref:`section-recommendedciphers` directly from 2.3.1 on,
+which is why we give an explicit cipher list here.
 
 In addition, there is a 256 character limit on configuration file line
 lengths; that limits the size of cipher suites, so we dropped all ECDHE
@@ -214,8 +276,7 @@ The configuration shown above is compatible with all tested versions.
 References
 ~~~~~~~~~~
 
-OpenVPN Documentation: *Security Overview*
-https://openvpn.net/index.php/open-source/documentation/security-overview.html
+ *  OpenVPN Documentation: `Security Overview <https://openvpn.net/index.php/open-source/documentation/security-overview.html>`__
 
 Additional settings
 ~~~~~~~~~~~~~~~~~~~
@@ -236,11 +297,16 @@ When installing an OpenVPN server instance, you are probably using
 easyrsa installation directory has a number of settings that should be
 changed to secure values:
 
+:raw-latex:`\configfile{vars}{53-53,56-56,59-59}{Sane default values for OpenVPN (easy-rsa)}`
+
 This will enhance the security of the key generation by using RSA keys
 with a length of 4096 bits, and set a lifetime of one year for the
 server/client certificates and five years for the CA certificate.
-**NOTE: 4096 bits is only an example of how to do this with easy-rsa.**
-See also section [section:keylengths] for a discussion on keylengths.
+
+.. note:: 4096 bits is only an example of how to do this with easy-rsa.
+
+See also section :ref:`section-keylengths` for a discussion
+on keylengths.
 
 In addition, edit the ``pkitool`` script and replace all occurrences of
 ``sha1`` with ``sha256``, to sign the certificates with SHA256.
@@ -277,7 +343,7 @@ should be followed.
 Tested with Versions
 ~~~~~~~~~~~~~~~~~~~~
 
-9.1(3) - X-series model
+ *  9.1(3) - X-series model
 
 Settings
 ~~~~~~~~
@@ -367,9 +433,8 @@ proposals.
 References
 ~~~~~~~~~~
 
-http://www.cisco.com/en/US/docs/security/asa/roadmap/asaroadmap.html
-
-http://www.cisco.com/web/about/security/intelligence/nextgen_crypto.html
+ *  http://www.cisco.com/en/US/docs/security/asa/roadmap/asaroadmap.html
+ *  http://www.cisco.com/web/about/security/intelligence/nextgen_crypto.html
 
 Openswan
 --------
@@ -377,7 +442,7 @@ Openswan
 Tested with Version
 ~~~~~~~~~~~~~~~~~~~
 
-Openswan 2.6.39 (Gentoo)
+ *  Openswan 2.6.39 (Gentoo)
 
 Settings
 ~~~~~~~~
@@ -416,7 +481,7 @@ and look for ’algorithm ESP/IKE’ at the beginning.
     # - aes_gcm_c-256 = AES_GCM_16
     # - aes_ctr-256
     # - aes_ccm_c-256 = AES_CCM_16
-    # - aes-256 
+    # - aes-256
     # additional ciphers configuration B:
     # - camellia-256
     # - aes-128
@@ -449,7 +514,7 @@ wanted/loaded’.
 References
 ~~~~~~~~~~
 
-https://www.openswan.org/
+ *  https://www.openswan.org/
 
 tinc
 ----
@@ -457,30 +522,29 @@ tinc
 Tested with Version
 ~~~~~~~~~~~~~~~~~~~
 
-tinc 1.0.23 from Gentoo linked against OpenSSL 1.0.1e
-
-tinc 1.0.23 from Sabayon linked against OpenSSL 1.0.1e
+ *  tinc 1.0.23 from Gentoo linked against OpenSSL 1.0.1e
+ *  tinc 1.0.23 from Sabayon linked against OpenSSL 1.0.1e
 
 Defaults
 ^^^^^^^^
 
-
-tinc uses 2048 bit RSA keys, Blowfish-CBC, and SHA1 as default
-settings and suggests the usage of CBC mode ciphers. Any key length up
-to 8196 is supported and it does not need to be a power of two. OpenSSL
-Ciphers and Digests are supported by tinc.
+tinc uses 2048 bit RSA keys, Blowfish-CBC, and SHA1 as default settings and
+suggests the usage of CBC mode ciphers. Any key length up to 8196 is supported
+and it does not need to be a power of two. OpenSSL Ciphers and Digests are
+supported by tinc.
 
 Settings
 ^^^^^^^^
 
-Generate keys with
 
+Generate keys with
 ::
 
     tincd -n NETNAME -K8196
 
 Old keys will not be deleted (but disabled), you have to delete them
 manually. Add the following lines to your tinc.conf on all machines
+:raw-latex:`\configfile{tinc.conf}{3-4}{Cipher and digest selection in tinc}`
 
 References
 ^^^^^^^^^^
@@ -493,14 +557,16 @@ References
    http://www.tinc-vpn.org/pipermail/tinc/2014-January/003538.html <http://www.tinc-vpn.org/pipermail/tinc/2014-January/003538.html>`__
 
 .. [1]
-   It is used in a HMAC, see RFC2104  and the discussion starting in
+   It is used in a HMAC, see :rfc:`2104` and the
+   discussion starting in
    http://www.vpnc.org/ietf-ipsec/02.ipsec/msg00268.html.
 
 .. [2]
    64 possible values = 6 bits
 
 .. [3]
-   RFC6379 , RFC4308 
+   :rfc:`6379`,
+   :rfc:`4308`
 
 .. [4]
    http://ikecrack.sourceforge.net/
