@@ -11,7 +11,13 @@
     appendix
     zreferences
 
+.. toctree::
+    :hidden:
+    
+    glossary
+
 .. only:: builder_html
+
     Indices and tables
     ==================
     

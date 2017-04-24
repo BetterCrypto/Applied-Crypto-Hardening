@@ -1,4 +1,14 @@
 
+.. only:: builder_html
+
+   .. _glossary:
+
+   **********
+    Glossary
+   **********
+
+.. glossary::
+
 .. :raw-latex:`\doindex{elliptic curve}`
 .. :raw-latex:`\newacronym{API}{api}{application programming interface}`
 .. :raw-latex:`\newacronym{DH}{dh\alsoidx{Diffie--Hellman}}{Diffie--Hellman key exchange}`

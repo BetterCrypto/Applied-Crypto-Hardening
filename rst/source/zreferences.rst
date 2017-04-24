@@ -1,8 +1,9 @@
 
 .. only:: builder_html
-    ************
-     References 
-    ************
+
+   ************
+    References 
+   ************
 
 .. bibliography:: applied-crypto-hardening.bib security.bib  iacr_cryptodb.bib
    :style: plain
