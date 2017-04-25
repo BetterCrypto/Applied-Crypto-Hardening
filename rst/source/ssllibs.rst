@@ -11,7 +11,7 @@ depend on the version of the SSL library in use. Whenever you upgrade
 the SSL library, a recompile of all applications using that library is
 required to use the newly available features. Some features not only
 require a SSL library supporting it, but also the application using that
-feature. An example for that may be Apache supporting `elliptic curve`
+feature. An example for that may be Apache supporting elliptic curve
 cryptography only from version 2.4 onwards, no matter if OpenSSL
 supported it or not.
 

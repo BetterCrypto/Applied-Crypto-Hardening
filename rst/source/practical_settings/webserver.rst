@@ -1,7 +1,3 @@
-.. role:: raw-latex(raw)
-   :format: latex
-..
-
 :raw-latex:`\def\configfile#1#2#3{}`
 
 Webservers
@@ -22,7 +18,7 @@ Tested with Versions
  *  Apache 2.4.6, Debian Jessie with OpenSSL 1.0.1e
  *  Apache 2.4.10, Debian Jessie 8.2 with OpenSSL 1.0.1k
  *  Apache 2.4.7, Ubuntu 14.04.2 Trusty with Openssl 1.0.1f
- *  Apache 2.4.6, CentOS `Linux` 7 (Core) with OpenSSL 1.0.1e
+ *  Apache 2.4.6, CentOS Linux 7 (Core) with OpenSSL 1.0.1e
 
 Settings
 ~~~~~~~~
@@ -68,14 +64,14 @@ Settings
 
 Starting with lighttpd version 1.4.29 Diffie-Hellman and Elliptic-Curve
 Diffie-Hellman key agreement protocols are supported. By default,
-`elliptic curve` “prime256v1” (also “secp256r1”) will be used, if no other
+elliptic curve “prime256v1” (also “secp256r1”) will be used, if no other
 is given. To select special curves, it is possible to set them using the
 configuration options ``ssl.dh-file`` and ``ssl.ec-curve``.
 
 :raw-latex:`\configfile{10-ssl-dh.conf}{11-13}{SSL EC/DH configuration for lighttpd}`
 
 Please read section :ref:`section-DH` for more information
-on Diffie Hellman key exchange and `elliptic curve`s.
+on Diffie Hellman key exchange and elliptic curves.
 
 Additional settings
 ~~~~~~~~~~~~~~~~~~~
@@ -201,9 +197,10 @@ configuration file can be found at the end of this section.
 
   - Advanced Options
 
-    - *Ciphers*: \ttbox{\cipherStringB}
-    - *Server Preference*: Prefer
-    - *Compression*: Disabled
+    :Ciphers:
+       ``|cipherStringB|``
+    :Server Preference: Prefer
+    :Compression: Disabled
 
 - Advanced: TLS
 
@@ -299,7 +296,7 @@ using GCM and to support perfect forward secrecy, Microsoft SChannel
 (SSL/TLS, Auth,.. Stack) supports ECDSA but lacks support for RSA
 signatures (see ECC suite B doubts [4]_).
 
-Since one is stuck with ECDSA, an `elliptic curve` certificate needs to be
+Since one is stuck with ECDSA, an elliptic curve certificate needs to be
 used.
 
 The configuration of cipher suites MS IIS will use, can be configured in

@@ -1,7 +1,7 @@
+.. _acknowledgements:
 
-.. only:: not builder_html
-    Acknowledgements
-    ****************
+Acknowledgements
+****************
 
 We would like to express our thanks to the following reviewers and
 people who have generously offered their time and interest (in

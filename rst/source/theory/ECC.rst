@@ -2,7 +2,7 @@
    :format: latex
 ..
 
-A note on `elliptic curve` Cryptography
+A note on Elliptic Curve Cryptography
 =====================================
 
 .. epigraph::

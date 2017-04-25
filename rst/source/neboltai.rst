@@ -1,10 +1,15 @@
-.. role:: raw-latex(raw)
-   :format: latex
-..
 
+.. only:: not builder_html
 
-.. figure:: neboltai.png
-   :align: center
+   .. image:: neboltai.png
+      :width: 80%
+      :align: center
 
-   *Do not talk unencrypted*
+.. only:: builder_html
+
+   .. image:: neboltai.png
+      :width: 45%
+      :align: center
+
+.. centered:: *Do not talk unencrypted*
 

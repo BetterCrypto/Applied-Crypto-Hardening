@@ -44,7 +44,7 @@ RNGs
 ----
 
 - `ENT <http://www.fourmilab.ch/random/>`__ is a pseudo random number generator sequence tester.
-- `HaveGE <http://www.issihosts.com/haveged/>`__ is a tool which increases the Entropy of the `Linux` random number generator devices. It is based on the HAVEGE algorithm. http://dl.acm.org/citation.cfm?id=945516
+- `HaveGE <http://www.issihosts.com/haveged/>`__ is a tool which increases the Entropy of the Linux random number generator devices. It is based on the HAVEGE algorithm. http://dl.acm.org/citation.cfm?id=945516
 - `Dieharder <http://www.phy.duke.edu/~rgb/General/dieharder.php>`__ a random number generator testing tool.
 - `CAcert Random <http://www.cacert.at/random/>`__ another random number generator testing service.
 

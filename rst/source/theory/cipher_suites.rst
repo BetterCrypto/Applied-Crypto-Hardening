@@ -9,9 +9,8 @@ Cipher suites
    cipher_suites/architecture
    cipher_suites/forward
    cipher_suites/recommended
-
-.. cipher_suites/insecure
-.. cipher_suites/compatibility
-.. cipher_suites/choosing
+   cipher_suites/insecure
+   cipher_suites/compatibility
+   cipher_suites/choosing
 
 

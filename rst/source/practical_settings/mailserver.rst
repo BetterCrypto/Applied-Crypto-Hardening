@@ -183,7 +183,7 @@ ports 995/993 check the SERVICES section in ``cyrus.conf``
 Limitations
 ~~~~~~~~~~~
 
-cyrus-imapd currently (2.4.17, trunk) does not support `elliptic curve`
+cyrus-imapd currently (2.4.17, trunk) does not support elliptic curve
 cryptography. Hence, ECDHE will not work even if defined in your cipher
 list.
 
@@ -439,7 +439,7 @@ information.
 Limitations:
 ~~~~~~~~~~~~
 
-Exim currently (4.82) does not support `elliptic curve`s with OpenSSL.
+Exim currently (4.82) does not support elliptic curves with OpenSSL.
 This means that ECDHE is not used even if defined in your cipher list.
 There already is a working patch to provide support:
 http://bugs.exim.org/show_bug.cgi?id=1397

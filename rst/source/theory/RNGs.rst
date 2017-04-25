@@ -60,10 +60,10 @@ system. This can lead to situations where a daemon that is started at a
 time when entropy is low keeps this low-entropy situation for hours
 leading to predictable session keys :cite:`HDWH12`.
 
-`Linux`
+Linux
 -----
 
-On `Linux` there are two devices that return random bytes when read; the
+On Linux there are two devices that return random bytes when read; the
 ``/dev/random`` can block until sufficient entropy has been collected
 while ``/dev/urandom`` will not block and return whatever (possibly
 insufficient) entropy has been collected so far.
@@ -72,14 +72,14 @@ Unfortunately most crypto implementations are using ``/dev/urandom`` and
 can produce predictable random numbers if not enough entropy has been
 collected :cite:`HDWH12`.
 
-`Linux` supports the injection of additional entropy into the entropy pool
+Linux supports the injection of additional entropy into the entropy pool
 via the device ``/dev/random``. On the one hand this is used for keeping
 entropy across reboots by storing output of /dev/random into a file
 before shutdown and re-injecting the contents during the boot process.
 On the other hand this can be used for running a secondary entropy
 collector to inject entropy into the kernel entropy pool.
 
-On `Linux` you can check how much entropy is available with the command:
+On Linux you can check how much entropy is available with the command:
 
 ::
 
@@ -96,13 +96,13 @@ embedded devices or virtual machines.
 
 For embedded devices and virtual machines deploying additional userspace
 software that generates entropy and feeds this to kernel entropy pool
-(e.g. by writing to ``/dev/random`` on `Linux`) is recommended. Note that
+(e.g. by writing to ``/dev/random`` on Linux) is recommended. Note that
 only a process with root rights can update the entropy counters in the
 kernel; non-root or user processes can still feed entropy to the pool
 but cannot update the
 counters :cite:`Wikipedia:/dev/random`.
 
-For `Linux` the ``haveged`` implementation :cite:`HAV13a`
+For Linux the ``haveged`` implementation :cite:`HAV13a`
 based on the HAVEGE :cite:`SS03` strong random number
 generator currently looks like the best choice. It can feed its
 generated entropy into the kernel entropy pool and recently has grown a

@@ -1,3 +1,7 @@
+.. role:: raw-latex(raw)
+   :format: latex
+..
+
 Database Systems
 ================
 
@@ -100,7 +104,7 @@ Tested with Versions
 ~~~~~~~~~~~~~~~~~~~~
 
  * Debian Wheezy and PostgreSQL 9.1
- * `Linux` Mint 14 nadia / Ubuntu 12.10 quantal with PostgreSQL 9.1+136 and OpenSSL 1.0.1c
+ * Linux Mint 14 nadia / Ubuntu 12.10 quantal with PostgreSQL 9.1+136 and OpenSSL 1.0.1c
 
 Settings
 ~~~~~~~~

@@ -3,9 +3,8 @@ Introduction
 ************
 
 .. toctree::
-
-    whoshouldread
-    related_publications
-    howtoread
-    disclaimer
-    methods
+   whoshouldread
+   related_publications
+   howtoread
+   disclaimer
+   methods

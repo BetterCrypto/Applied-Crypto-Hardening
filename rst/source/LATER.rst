@@ -1,5 +1,0 @@
-Further research
-================
-
-UW
---

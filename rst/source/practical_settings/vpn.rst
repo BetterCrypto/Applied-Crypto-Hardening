@@ -1,7 +1,3 @@
-.. role:: raw-latex(raw)
-   :format: latex
-..
-
 VPNs
 ====
 
@@ -73,15 +69,15 @@ table :ref:`tab-IPSEC_suites`.
    ===================  ===================  =============================================
    Configuration A      Configuration B      Notes
    ===================  ===================  =============================================
-   ``Suite-B-GCM-256``  ``Suite-B-GCM-128``  All Suite-B variants use NIST `elliptic curve`s
+   ``Suite-B-GCM-256``  ``Suite-B-GCM-128``  All Suite-B variants use NIST elliptic curves
                         ``VPN-B``
    ===================  ===================  =============================================
 
 Phase 1:
 ^^^^^^^^
 
-Alternatively to the pre-defined cipher suites, you can define your own,
-as described in this and the next section.
+Alternatively to the pre-defined cipher suites, you can define your own, as
+described in this and the next section.
 
 Phase 1 is the mutual authentication and key exchange phase;
 table :ref:`tab-IPSEC_ph1_params` shows the parameters.

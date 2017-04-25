@@ -33,10 +33,10 @@ We arrived at this set of cipher suites by selecting:
 
 This results in the OpenSSL string:
 
-.. |cipherStringA| replace:: EDH+aRSA+AES256:EECDH+aRSA+AES256:!SSLv3
+.. parsed-literal::
 
-.. admonition::
-   `|cipherStringA|`
+   EDH+aRSA+AES256:EECDH+aRSA+AES256:!SSLv3
+
 
 
 .. tabularcolumns:: lllllll
@@ -77,9 +77,13 @@ We arrived at this set of cipher suites by selecting:
  *  TLS 1.2, TLS 1.1, TLS 1.0
  *  allowing SHA-1 (see the comments on SHA-1 in section :ref:`section-SHA`
 
-This results in the OpenSSL string: :raw-latex:`\ttbox{\cipherStringB}`
+This results in the OpenSSL string:
 
-.. todo{make a column for cipher chaining mode}
+.. parsed-literal::
+
+   |cipherStringB|
+
+.. todo:: make a column for cipher chaining mode
 
 .. tabularcolumns:: lllllll
 .. _tab-conf-b:

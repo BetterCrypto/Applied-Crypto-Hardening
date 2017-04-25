@@ -51,7 +51,7 @@ Settings
 :raw-latex:`\configfile{6.0/sshd_config}{9-13,27-28,44-44,64-66}{Important OpenSSH 6.0 security
 settings}`
 
-.. note:: Older `Linux` systems won’t support SHA2. PuTTY (Windows) does not
+.. note:: Older Linux systems won’t support SHA2. PuTTY (Windows) does not
    support RIPE-MD160. Curve25519, AES-GCM and UMAC are only available upstream
    (OpenSSH 6.6p1). DSA host keys have been removed on purpose, the DSS
    standard does not support for DSA keys stronger than 1024bit [1]_ which is
