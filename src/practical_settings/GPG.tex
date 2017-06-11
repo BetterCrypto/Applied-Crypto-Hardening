@@ -29,6 +29,13 @@ Avoid SHA-1 by prefering better hashing methodes. GnuPG. Edit \$HOME/.gnupg/gpg.
 
 Before you generate a new OpenPGP key, make sure there is enough entropy available (see subsection \ref{subsec:RNG-linux}).
 
+\subsection{Key Generation}
+Because of lack of forward secrecy\ac{PFS} in OpenPGP it is preferable to use large asymmetric keys for long term communication protection. A RSA key of 8192 bits should provide enough confidentiallity for the next 15+ years\ref{\url{https://www.keylength.com/}}.
+
+\configfile{new-key-generation.txt}{New key generation with GnuPG version 2.1}
+
+\configfile{params.txt}{Paramters for key generation with GnuPG version 2.1}
+
 \subsection{ECC - Ellyptic Curve Cryptography}
 Since the realease of GnuPG version 2.1 end-2014\footnote{\url{https://www.gnupg.org/faq/whats-new-in-2.1.html#ecc}} ECC is supported. Older versions though are still widely used therefore ECC is not yet applicable in practice. 
 

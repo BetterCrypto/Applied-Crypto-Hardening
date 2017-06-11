@@ -1,0 +1,9 @@
+Key-Type: RSA
+Key-Length: 8192  
+Subkey-Type: RSA
+Subkey-Length: 8192
+Name-Real: <your-name>
+Name-Email: <your-email-address>
+Passphrase: <password>
+Preferences: S9 S13 S8 S12 S7 S11 S10 H10 H9 H8 Z3 Z2 Z1 
+%commit
