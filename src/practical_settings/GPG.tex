@@ -16,16 +16,13 @@ When using GnuPG, there are a couple of things to take care of:
   \item preference of hash function (see section \ref{section:CipherSuites})
 \end{itemize*}
 
-Properly dealing with key material, passphrases and the web-of-trust is outside of the scope of this document. The GnuPG website\footnote{\url{http://www.gnupg.org}} has a good tutorial on PGP.
-
-This \href{https://www.debian-administration.org/users/dkg/weblog/48}{Debian How-to}\footnote{\url{https://www.debian-administration.org/users/dkg/weblog/48}} is a great resource on upgrading your old PGP key as well as on safe default settings. This section is built based on the Debian How-to.
+Properly dealing with key material, passphrases and the web-of-trust is outside of the scope of this document. The GnuPG
+website\footnote{\url{http://www.gnupg.org}} has a good tutorial on GnuPG.
 
 \subsubsection{Hashing}
 Avoid SHA-1 by preferring better hashing methods. GnuPG. Edit \$HOME/.gnupg/gpg.conf:
 
 \configfile{gpg.conf}{208-210}{Digest selection in GnuPG}
-
-Before you generate a new OpenPGP key, make sure there is enough entropy available (see subsection \ref{subsec:RNG-linux}).
 
 \subsection{Key Generation}
 \gdef\currentsectionname{GPG}
@@ -35,7 +32,10 @@ communication protection. A RSA key of 8192 bits should provide enough confident
 
 \configfile{new-key-generation.txt}{}{New key generation with GnuPG version 2.1}
 
-\configfile{params.txt}{}{Paramters for key generation with GnuPG version 2.1}
+\configfile{params.txt}{}{Parameters for key generation with GnuPG version 2.1}
+
+The preferences parameters S9 to Z1 correspond to AES256, CAMELLIA256, AES192, CAMELLIA192, AES, CAMELLIA128, TWOFISH,
+SHA512, SHA384, SHA256, BZIP2, ZLIB and ZIP. The parameters 3DES, SHA-1 and uncompressed are set automatically by GnuPG.
 
 \subsection{ECC - Elliptic Curve Cryptography}
 Since the release of GnuPG version 2.1 end-2014\footnote{\url{https://www.gnupg.org/faq/whats-new-in-2.1.html}} ECC is supported. Older versions though are still widely used therefore ECC is not yet applicable in practice. 
