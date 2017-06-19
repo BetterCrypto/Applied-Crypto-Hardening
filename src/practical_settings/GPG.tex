@@ -4,7 +4,7 @@
 
 The OpenPGP protocol\footnote{\url{https://tools.ietf.org/search/rfc4880}} defines a set of asymmetric- and symmetric encryption algorithms, signature methods and compression protocols. GnuPG\footnote{\url{https://gnupg.org/}}, a FOSS implementation of the OpenPGP standard, is widely used for mail encryption.
  
-GnuPG signs a message (SHA-2, RIPEMD or SHA-1), encrypts it symmetrically (AES, CAMELLIA, TWOFISH, BLOWFISH, 3DES, CAST5 or IDEA) and encrpts the symmetric key and the hash with Bob's public key asymmetrically (RSA, ELG, DSA, ECDH, ECDSA or EDDSA).
+GnuPG signs a message, encrypts it symmetrically and encrpts the symmetric key and the hash with Bob's public key asymmetrically.
 
 Research on SHA-1 conducted back in 2005\footnote{\url{https://www.schneier.com/blog/archives/2005/02/sha1\_broken.html}} as well as the first practical successful collision in early 2017\footnote{\url{https://shattered.io/}} has made clear that collision attacks are a real threat to the security of the SHA-1 hash function. Since SHA-1 is defined as a must implementation by the OpenPGP specification, GnuPG is still using it. Currently settings should be adapted to preferably avoid using SHA-1. 
 
