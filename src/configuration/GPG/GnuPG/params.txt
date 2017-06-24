@@ -6,6 +6,6 @@ Name-Real: <your-name>
 Name-Email: <your-email-address>
 Passphrase: <password>
 Expires: 2y
-%My preferences: AES256, CAMELLIA256, AES192, CAMELLIA192, AES128, CAMELLIA128, TWOFISH, SHA512, SHA384, SHA256, BZIP2, ZLIB and ZIP
+# My preferences: AES256, CAMELLIA256, AES192, CAMELLIA192, AES128, CAMELLIA128, TWOFISH, SHA512, SHA384, SHA256, BZIP2, ZLIB and ZIP
 Preferences: S9 S13 S8 S12 S7 S11 S10 H10 H9 H8 Z3 Z2 Z1 
 %commit
