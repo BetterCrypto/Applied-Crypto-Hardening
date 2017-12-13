@@ -1,7 +1,7 @@
 Key-Type: RSA
-Key-Length: 8192  
+Key-Length: 4096 
 Subkey-Type: RSA
-Subkey-Length: 8192
+Subkey-Length: 4096
 Name-Real: <your-name>
 Name-Email: <your-email-address>
 Passphrase: <password>
