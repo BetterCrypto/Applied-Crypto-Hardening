@@ -1,0 +1,1 @@
+gpg --batch --full-gen-key $HOME/Desktop/params.txt`
