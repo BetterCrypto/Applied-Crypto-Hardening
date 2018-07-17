@@ -159,23 +159,31 @@
 	# MSIE 7 and newer should be able to use keepalive
 	BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
 
-	SSLProtocol All -SSLv2 -SSLv3
-	SSLHonorCipherOrder On
-	SSLCompression off
+	# "Intermediate" configuration as defined by the Mozilla Foundation's SSL Configuration Generator
+	# https://mozilla.github.io/server-side-tls/ssl-config-generator/?server=apache-2.4.6&openssl=1.0.1e&hsts=yes&profile=intermediate
+	# Oldest compatible clients: Firefox 1, Chrome 1, IE 7, Opera 5, Safari 1, Windows XP IE8, Android 2.3, Java 7 SSL
+	Protocol 	    all -SSLv3
+	SSLCipherSuite	    ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS
 
-	# Add six earth month HSTS header for all users...
+	# "Modern" configuration as defined by the Mozilla Foundation's SSL Configuration Generator
+	# https://mozilla.github.io/server-side-tls/ssl-config-generator/?server=apache-2.4.18&openssl=1.0.2g&hsts=yes&profile=modern
+	# Oldest compatible clients: Firefox 27, Chrome 30, IE 11 on Windows 7, Edge, Opera 17, Safari 9, Android 5.0, and Java 8
+	#SSLProtocol	    all -SSLv3 -TLSv1 -TLSv1.1
+	#SSLCipherSuite	    ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
+
+	SSLHonorCipherOrder on
+	SSLCompression	    off
+	SSLSessionTickets   off
+
+	# Add six earth month HSTS header for all users.
 	Header always set Strict-Transport-Security "max-age=15768000"
-	# If you want to protect all subdomains, use the following header
+	# If you want to protect all subdomains, use the following instead.
 	# ALL subdomains HAVE TO support HTTPS if you use this!
-	# Strict-Transport-Security: "max-age=15768000 ; includeSubDomains"
+	#Header always set Strict-Transport-Security "max-age=15768000; includeSubDomains"
 
 	# HTTP Public Key Pinning (HPKP) for 90 days (60*60*24*90=7776000)
 	# At least use one Backup-Key and/or add whole CA, think of Cert-Updates!
 	Header always set Public-Key-Pins "pin-sha256=\"YOUR_HASH=\"; pin-sha256=\"YOUR_BACKUP_HASH=\"; max-age=7776000; report-uri=\"https://YOUR.REPORT.URL\""
 
-	SSLCipherSuite 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA'
-
-	
-	
 </VirtualHost>
 </IfModule>
