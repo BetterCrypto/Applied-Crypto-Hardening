@@ -1,0 +1,79 @@
+[[section:disclaimer]]
+== Disclaimer and scope
+
+{empty}[[sec:disclaimer-scope]][sec:disclaimer-scope]
+
+This guide specifically does not address physical security, protecting
+software and hardware against exploits, basic IT security housekeeping,
+information assurance techniques, traffic analysis attacks, issues with
+key-roll over and key management, securing client PCs and mobile devices
+(theft, loss), proper Operations
+Securityfootnote:[https://en.wikipedia.org/wiki/Operations_security],
+social engineering attacks, protection against tempest  attack
+techniques, thwarting different side-channel attacks (timing–, cache
+timing–, differential fault analysis, differential power analysis or
+power monitoring attacks), downgrade attacks, jamming the encrypted
+channel or other similar attacks which are typically employed to
+circumvent strong encryption. The authors can not overstate the
+importance of these other techniques. Interested readers are advised to
+read about these attacks in detail since they give a lot of insight into
+other parts of cryptography engineering which need to be dealt
+with.footnote:[An easy to read yet very insightful recent example is the
+"FLUSH+RELOAD" technique  for leaking cryptographic keys from one
+virtual machine to another via L3 cache timing attacks.]
+
+This guide does not talk much about the well-known insecurities of
+trusting a public-key infrastructure (PKI)footnote:[Interested readers
+are referred to https://bugzilla.mozilla.org/show_bug.cgi?id=647959 or
+http://www.h-online.com/security/news/item/Honest-Achmed-asks-for-trust-1231314.html
+which brings the problem of trusting PKIs right to the point]. Nor does
+this text fully explain how to run your own Certificate Authority (CA).
+
+Most of this zoo of information security issues are addressed in the
+very comprehensive book ``Security Engineering'' by Ross Anderson .
+
+For some experts in cryptography this text might seem too informal.
+However, we strive to keep the language as non-technical as possible and
+fitting for our target audience: system administrators who can
+collectively improve the security level for all of their users.
+
+This guide can only describe what the authors currently _believe_ to be
+the best settings based on their personal experience and after intensive
+cross checking with literature and experts. For a complete list of
+people who reviewed this paper, see the . Even though multiple
+specialists reviewed the guide, the authors can give _no guarantee
+whatsoever_ that they made the right recommendations. Keep in mind that
+tomorrow there might be new attacks on some ciphers and many of the
+recommendations in this guide might turn out to be wrong. Security is a
+process.
+
+We therefore recommend that system administrators keep up to date with
+recent topics in IT security and cryptography.
+
+In this sense, this guide is very focused on getting the cipher strings
+done right even though there is much more to do in order to make a
+system more secure. We the authors, need this document as much as the
+reader needs it.
+
+[[section:Scope]]
+=== Scope
+
+In this guide, we restricted ourselves to:
+
+Internet-facing services
+
+Commonly used services
+
+Devices which are used in business environments (this specifically
+excludes XBoxes, Playstations and similar consumer devices)
+
+OpenSSL
+
+We explicitly excluded:
+
+Specialized systems (such as medical devices, most embedded systems,
+industrial control systems, etc.)
+
+Wireless Access Points
+
+Smart-cards/chip cards

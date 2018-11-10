@@ -1,0 +1,25 @@
+== myservice
+
+=== Tested with Versions
+
+Version 0.1, Distro Version
+
+=== Settings
+
+....
+    %Here goes your setting string
+....
+
+=== Additional settings
+
+....
+    %copy \& paste additional settings
+....
+
+=== Justification for special settings (if needed)
+
+=== References
+
+short description: http://example.com/doc/ssl
+
+=== How to test

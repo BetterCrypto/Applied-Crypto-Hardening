@@ -1,0 +1,8 @@
+[[section:TLS]]
+== TLS and its support mechanisms
+
+[[subsection:HSTS]]
+=== HTTP Strict Transport Security (HSTS)
+
+[[subsection:HPKP]]
+=== HTTP Public Key Pinning (HPKP)
