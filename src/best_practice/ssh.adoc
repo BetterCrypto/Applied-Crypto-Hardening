@@ -1,26 +1,31 @@
+[[ssh]]
+= SSH
+
 == OpenSSH
 
 === Tested with Version
 
-OpenSSH 6.6p1 (Gentoo)
-
-OpenSSH 6.6p1-2 on Ubuntu 14.04.2 LTS
-
-OpenSSH 7.2p2 on Ubuntu 16.04.3 LTS
+* OpenSSH 6.6p1 (Gentoo)
+* OpenSSH 6.6p1-2 on Ubuntu 14.04.2 LTS
+* OpenSSH 7.2p2 on Ubuntu 16.04.3 LTS
 
 === Settings
 
-*Note:* OpenSSH 6.6p1 now supports Curve25519
+.Curve25519
+[NOTE]
+====
+OpenSSH 6.6p1 now supports Curve25519.
+====
 
 === Tested with Version
 
-OpenSSH 6.5 (Debian Jessie)
+* OpenSSH 6.5 (Debian Jessie)
 
 === Settings
 
 === Tested with Version
 
-OpenSSH 6.0p1 (Debian wheezy)
+* OpenSSH 6.0p1 (Debian wheezy)
 
 === Settings
 
@@ -36,32 +41,34 @@ algorithms and MACs.
 
 === References
 
-The OpenSSH sshd_config man page is the best reference:
-http://www.openssh.org/cgi-bin/man.cgi?query=sshd_config
+The OpenSSH http://www.openssh.org/cgi-bin/man.cgi?query=sshd_config[sshd_config — OpenSSH SSH daemon configuration file] man page is the best reference:
 
 === How to test
 
 Connect a client with verbose logging enabled to the SSH server
 
-....
+[source,terminal]
+----
 $ ssh -vvv myserver.com
-....
+----
 
 and observe the key exchange in the output.
+
 
 == Cisco ASA
 
 === Tested with Versions
 
-9.1(3)
+* 9.1(3)
 
 === Settings
 
-....
+[source,terminal]
+----
 crypto key generate rsa modulus 2048
 ssh version 2
 ssh key-exchange group dh-group14-sha1
-....
+----
 
 Note: When the ASA is configured for SSH, by default both SSH versions 1
 and 2 are allowed. In addition to that, only a group1 DH-key-exchange is
@@ -78,9 +85,10 @@ http://www.cisco.com/en/US/docs/security/asa/asa91/configuration/general/admin_m
 
 Connect a client with verbose logging enabled to the SSH server
 
-....
+[source,terminal]
+----
 $ ssh -vvv myserver.com
-....
+----
 
 and observe the key exchange in the output.
 
@@ -88,11 +96,14 @@ and observe the key exchange in the output.
 
 === Tested with Versions
 
-15.0, 15.1, 15.2
+* 15.0
+* 15.1
+* 15.2
 
 === Settings
 
-....
+[source,terminal]
+----
 crypto key generate rsa modulus 4096 label SSH-KEYS
 ip ssh rsa keypair-name SSH-KEYS
 ip ssh version 2
@@ -100,7 +111,7 @@ ip ssh dh min size 2048
 
 line vty 0 15
 transport input ssh
-....
+----
 
 Note: Same as with the ASA, also on IOS by default both SSH versions 1
 and 2 are allowed and the DH-key-exchange only use a DH-group of 768
@@ -118,8 +129,9 @@ http://www.cisco.com/en/US/docs/ios/sec_user_services/configuration/guide/sec_cf
 
 Connect a client with verbose logging enabled to the SSH server
 
-....
+[source,terminal]
+----
 $ ssh -vvv myserver.com
-....
+----
 
 and observe the key exchange in the output.

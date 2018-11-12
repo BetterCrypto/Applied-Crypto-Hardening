@@ -1,3 +1,5 @@
+= Proxy Solutions
+
 Within enterprise networks and corporations with increased levels of
 paranoia or at least some defined security requirements it is common
 *not* to allow direct connections to the public internet.
@@ -154,7 +156,7 @@ your primary key file.
 
 === How to test
 
-See appendix #cha:tools[[cha:tools]]
+See appendix <<tools>>
 
 == Pound
 
@@ -192,4 +194,4 @@ stunnel changelog: https://www.stunnel.org/sdf_ChangeLog.html
 
 === How to test
 
-See appendix #cha:tools[[cha:tools]]
+See appendix <<tools>>

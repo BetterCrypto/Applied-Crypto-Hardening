@@ -1,4 +1,4 @@
-[[section:DH]]
+[[dh]]
 == A note on Diffie Hellman Key Exchanges
 
 A common question is which Diffie Hellman (DH) Parameters should be used

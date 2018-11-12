@@ -1,4 +1,7 @@
-[[section:IPSECgeneral]]
+[[vpn]]
+= VPN
+
+[[IPSECgeneral]]
 == IPsec
 
 === Settings
@@ -38,9 +41,8 @@ setting up VPNs easier. footnote:[RFC6379 , RFC4308 ]
 
 When using any of those suites, make sure to enable “Perfect Forward
 Secrecy“ for Phase 2, as this is not specified in the suites. The
-equivalents to the recommended ciphers suites in section
-#section:recommendedciphers[[section:recommendedciphers]] are shown in
-table #tab:IPSEC_suites[[tab:IPSEC_suites]].
+equivalents to the recommended ciphers suites in section <<recommendedciphers>>
+are shown in table #tab:IPSEC_suites[[tab:IPSEC_suites]].
 
 ==== Phase 1:
 
@@ -73,7 +75,7 @@ R77 (should work with any currently supported version)
 
 === Settings
 
-Please see section #section:IPSECgeneral[0.1] for guidance on parameter
+Please see section <<IPSECgeneral>> for guidance on parameter
 choice. In this section, we will configure a strong setup according to
 ``Configuration A''.
 
@@ -81,28 +83,26 @@ This is based on the concept of a ``VPN Community'', which has all the
 settings for the gateways that are included in that community.
 Communities can be found in the ``IPSEC VPN'' tab of SmartDashboard.
 
-image:img/checkpoint_1.png[VPN Community encryption
-properties,scaledwidth=59.2%]
+image:img/checkpoint_1.png[VPN Community encryption properties,scaledwidth=59.2%]
 
-{empty}[[fig:checkpoint_1]][fig:checkpoint_1]
+{empty}<<fig:checkpoint_1>>
 
 Either choose one of the encryption suites in the properties dialog
-(figure #fig:checkpoint_1[[fig:checkpoint_1]]), or proceed to ``Custom
+(figure <<checkpoint_1>>, or proceed to ``Custom
 Encryption...'', where you can set encryption and hash for Phase 1 and 2
-(figure #fig:checkpoint_2[[fig:checkpoint_2]]).
+(figure <<checkpoint_2>>.
 
-image:img/checkpoint_2.png[Custom Encryption Suite
-Properties,scaledwidth=41.1%]
+image:img/checkpoint_2.png[Custom Encryption Suite Properties,scaledwidth=41.1%]
 
-{empty}[[fig:checkpoint_2]][fig:checkpoint_2]
+{empty}<<checkpoint_2>>
 
 The Diffie-Hellman groups and Perfect Forward Secrecy Settings can be
 found under ``Advanced Settings'' / ``Advanced VPN Properties'' (figure
-#fig:checkpoint_3[[fig:checkpoint_3]]).
+<<checkpoint_3>>.
 
 image:img/checkpoint_3.png[Advanced VPN Properties,scaledwidth=58.9%]
 
-{empty}[[fig:checkpoint_3]][fig:checkpoint_3]
+{empty}<<checkpoint_3>>
 
 === Additional settings
 
@@ -110,12 +110,11 @@ For remote Dynamic IP Gateways, the settings are not taken from the
 community, but set in the ``Global Properties'' dialog under ``Remote
 Access'' / ``VPN Authentication and Encryption''. Via the ``Edit...''
 button, you can configure sets of algorithms that all gateways support
-(figure #fig:checkpoint_4[[fig:checkpoint_4]]).
+(figure <<checkpoint_4>>).
 
-image:img/checkpoint_4.png[Remote Access Encryption
-Properties,scaledwidth=47.4%]
+image:img/checkpoint_4.png[Remote Access Encryption Properties,scaledwidth=47.4%]
 
-{empty}[[fig:checkpoint_4]][fig:checkpoint_4]
+{empty}<<checkpoint_4>>
 
 Please note that these settings restrict the available algorithms for
 *all* gateways, and also influence the VPN client connections.
@@ -176,9 +175,8 @@ identical.
 OpenVPN 2.3.1 changed the values that the `tls-cipher` option expects
 from OpenSSL to IANA cipher names. That means from that version on you
 will get ``Deprecated TLS cipher name'' warnings for the configurations
-above. You cannot use the selection strings from section
-#section:recommendedciphers[[section:recommendedciphers]] directly from
-2.3.1 on, which is why we give an explicit cipher list here.
+above. You cannot use the selection strings from section <<recommendedciphers>>
+directly from 2.3.1 on, which is why we give an explicit cipher list here.
 
 In addition, there is a 256 character limit on configuration file line
 lengths; that limits the size of cipher suites, so we dropped all ECDHE
@@ -233,15 +231,14 @@ _easy-rsa_ to generate keys and certificates. The file `vars` in the
 easyrsa installation directory has a number of settings that should be
 changed to secure values:
 
-This will enhance the security of the key generation by using RSA keys
-with a length of 4096 bits, and set a lifetime of one year for the
-server/client certificates and five years for the CA certificate. *NOTE:
-4096 bits is only an example of how to do this with easy-rsa.* See also
-section #section:keylengths[[section:keylengths]] for a discussion on
-keylengths.
+This will enhance the security of the key generation by using RSA keys with a
+length of 4096 bits, and set a lifetime of one year for the server/client
+certificates and five years for the CA certificate. *NOTE: 4096 bits is only an
+example of how to do this with easy-rsa.* See also section <<keylengths>> for a
+discussion on keylengths.
 
-In addition, edit the `pkitool` script and replace all occurrences of
-`sha1` with `sha256`, to sign the certificates with SHA256.
+In addition, edit the `pkitool` script and replace all occurrences of `sha1`
+with `sha256`, to sign the certificates with SHA256.
 
 === Limitations
 

@@ -1,4 +1,4 @@
-[[section:keylengths]]
+[[keylengths]]
 == Keylengths
 
 Recommendations on keylengths need to be adapted regularly. Since this
@@ -30,8 +30,7 @@ lengths based on recommendations by different standardization bodies and
 academic publications. Figure #fig:keylengths.com[1] shows a typical
 comparison of keylengths on this web site.
 
-image:img/keylengths_com.png[Screenshot of http://www.keylength.com for
-128 bit symmetric key size equivalents,scaledwidth=65.0%]
+image:img/keylengths_com.png[Screenshot for 128 bit symmetric key size equivalents,scaledwidth=65.0%]
 
 === Summary
 

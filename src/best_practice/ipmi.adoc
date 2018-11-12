@@ -1,4 +1,10 @@
-We _strongly_ recommend that any remote management system for servers
-such as ILO, iDRAC, IPMI based solutions and similar systems _never_ be
-connected to the public internet. Consider creating an unrouted
-management VLAN and access that only via VPN.
+[[ipmi]]
+= IPMI, ILO and other lights out management solutions
+
+Consider creating an unrouted management VLAN and access that only via VPN.
+
+[IMPORTANT]
+====
+We _strongly_ recommend that any remote management system for servers such as ILO, iDRAC, IPMI based solutions and similar systems _never_ be connected to the public internet.
+====
+

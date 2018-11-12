@@ -1,0 +1,66 @@
+[[gpg]]
+= PGP/GPG - Pretty Good Privacy
+
+The https://tools.ietf.org/search/rfc4880[OpenPGP protocol] defines a set of asymmetric- and symmetric encryption algorithms, signature methods and compression protocols. https://gnupg.org[GnuPG], a FOSS implementation of the OpenPGP standard, is widely used for mail encryption.
+
+GnuPG signs a message, encrypts it symmetrically and encrpts the symmetric key and the hash with Bob’s public key asymmetrically.
+
+Research on SHA-1 conducted back in 2005 (see: https://www.schneier.com/blog/archives/2005/02/sha1_broken.html[SHA-1 Broken]) as well as the first practical successful collision in early 2017 (see: https://shattered.io[SHAttered]) has made clear that collision attacks are a real threat to the security of the SHA-1 hash function.
+
+Since SHA-1 is defined as a must implementation by the OpenPGP specification, GnuPG is still using it. Currently settings should be adapted to preferably avoid using SHA-1.
+
+When using GnuPG, there are a couple of things to take care of:
+
+* keylengths (see: <<keylengths>>)
+* randomness (see: <<rngs>>)
+* preference of symmetric encryption algorithm (see: <<ciphersuites>>)
+* preference of hash function (see: <<ciphersuites>>)
+
+Properly dealing with key material, passphrases and the web-of-trust is outside of the scope of this document. The https://www.gnupg.org[GnuPG website] has a good tutorial on GnuPG.
+
+After 31 December 2017 GnuPG version 2.0.x is no longer supported and https://lists.gnupg.org/pipermail/gnupg-announce/2017q3/000413.html[shall not be used anymore]. Use the new long term version 2.1 instead.
+
+[[hashing]]
+== Hashing
+
+Avoid SHA-1 by preferring better hashing methods. GnuPG. Edit `$HOME/.gnupg/gpg.conf`:
+
+.Digest selection in GnuPG
+[source]
+----
+personal-digest-preferences SHA512
+cert-digest-algo SHA512
+default-preference-list AES256 CAMELLIA256 AES192 CAMELLIA192 AES CAMELLIA128 TWOFISH SHA512 SHA384 SHA256 BZIP2 ZLIB ZIP
+----
+
+== Key Generation
+
+Because of lack of forward secrecy (see: <<pfs>>) in OpenPGP it is preferable to use large asymmetric keys for long term communication protection. A RSA key of `4096` bits should provide enough confidentiality for the next 10 years (see: https://www.keylength.com[Cryptographic Key Length Recommendation]).
+
+.New key generation with GnuPG version 2.1
+[source,terminal]
+----
+$ gpg --batch --full-gen-key $HOME/Desktop/params.txt`
+----
+
+.Parameters for key generation with GnuPG version 2.1
+----
+Key-Type: RSA
+Key-Length: 4096
+Subkey-Type: RSA
+Subkey-Length: 4096
+Name-Real: <your-name>
+Name-Email: <your-email-address>
+Passphrase: <password>
+Expires: 2y
+# My preferences: AES256, CAMELLIA256, AES192, CAMELLIA192, AES128, CAMELLIA128, TWOFISH, SHA512, SHA384, SHA256, BZIP2, ZLIB and ZIP
+Preferences: S9 S13 S8 S12 S7 S11 S10 H10 H9 H8 Z3 Z2 Z1 # <1>
+----
+
+<1> The preferences parameters S9 to Z1 correspond to AES256, CAMELLIA256, AES192, CAMELLIA192, AES, CAMELLIA128, TWOFISH, SHA512, SHA384, SHA256, BZIP2, ZLIB and ZIP. The parameters 3DES, SHA-1 and uncompressed are set automatically by GnuPG.
+
+
+== ECC - Elliptic Curve Cryptography
+
+Since the release of https://www.gnupg.org/faq/whats-new-in-2.1.html[GnuPG version 2.1] end-2014 ECC is supported. Older versions though are still widely used therefore ECC is not yet applicable in practice.
+

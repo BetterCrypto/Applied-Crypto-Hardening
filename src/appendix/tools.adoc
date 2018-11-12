@@ -1,4 +1,4 @@
-[[cha:tools]]
+[[tools]]
 == Tools
 
 This section lists tools for checking the security settings.

@@ -4,6 +4,7 @@ bettercrypto.org
 :doctype: book
 
 // URIs
+:preface: preface/
 :introduction: introduction/
 :bestpractice: best_practice/
 :theory: theory/
@@ -26,75 +27,44 @@ bettercrypto.org
 
 // \configurationbaseurl{https://bettercrypto.org/static/}
 
-include::title.adoc[]
-include::neboltai.adoc[]
-include::acknowledgements.adoc[]
+include::{preface}title.adoc[]
+include::{preface}neboltai.adoc[]
+include::{preface}acknowledgements.adoc[]
 
 [abstract]
-include::abstract.adoc[]
+include::{preface}abstract.adoc[]
 
 
 Introduction
 ============
 // \label{chapter:Intro}
-include::{introduction}whoshouldread.adoc[]
+:leveloffset: 1
+include::{introduction}audience.adoc[]
 include::{introduction}related_publications.adoc[]
-include::{introduction}howtoread.adoc[]
+include::{introduction}how_to_read.adoc[]
 include::{introduction}disclaimer.adoc[]
 include::{introduction}motivation.adoc[]
 include::{introduction}methods.adoc[]
 include::{introduction}conventions.adoc[]
+:leveloffset: 0
 
 
 [[bestpractice]]
 Best Practice
 =============
 
-// \section{Webservers}
-// \label{sec:webservers}
-include::{bestpractice}webserver.adoc[]
-
-// \section{SSH}
-// \label{sec:ssh}
+:leveloffset: 1
+include::{bestpractice}webservers.adoc[]
 include::{bestpractice}ssh.adoc[]
-
-// \section{Mail Servers}
-// \label{sec:mail-servers}
-include::{bestpractice}mailserver.adoc[]
-
-// \section{VPNs}
-// \label{sec:vpns}
+include::{bestpractice}mailservers.adoc[]
 include::{bestpractice}vpn.adoc[]
-
-// \section{OpenPGP and GnuPG}
-// \label{sec:openpgp-gnupg}
-include::{bestpractice}GPG.adoc[]
-
-// %\section{seclayer-tcp}
-// include::{bestpractice}seclayer_tcp[]
-
-// \section{IPMI, ILO and other lights out management solutions}
-// \label{sec:ipmi-ilo-other}
+include::{bestpractice}pretty_good_privacy.adoc[]
 include::{bestpractice}ipmi.adoc[]
-
-// %%\section{SIP}
-// %%\todo{AK: ask Klaus. Write this section, Klaus??? }
-
-// \section{Instant Messaging Systems}
-// \label{sec:inst-mess-syst}
-include::{bestpractice}im.adoc[]
-
-// \section{Database Systems}
-// \label{sec:database-systems}
-include::{bestpractice}DBs[]
-
-// \section{Intercepting proxy solutions and reverse proxies}
-// \label{sec:interc-proxy-solut}
+include::{bestpractice}instant_messaging.adoc[]
+include::{bestpractice}databases.adoc[]
 include::{bestpractice}proxy_solutions.adoc[]
-
-// \section{Kerberos}
-// \label{sec:kerberos}
 include::{bestpractice}kerberos.adoc[]
+:leveloffset: 0
 
 
 
@@ -103,6 +73,7 @@ Theory
 // %\epigraph{``Number theorists are like lotus-eaters - having tasted this food they can never give it up.''}{Leopold Kronecker}
 // \label{chapter:Theory}
 
+:leveloffset: 1
 include::{theory}overview.adoc[]
 include::{theory}cipher_suites.adoc[]
 include::{theory}RNGs.adoc[]
@@ -112,6 +83,7 @@ include::{theory}SHA.adoc[]
 include::{theory}DH.adoc[]
 include::{theory}PKIs.adoc[]
 include::{theory}TLS.adoc[]
+:leveloffset: 0
 
 
 [appendix]
@@ -119,12 +91,14 @@ Appendix
 ========
 // \label{appendix}
 
+:leveloffset: 1
 include::{appendix}tools.adoc[]
 include::{appendix}links.adoc[]
-include::{appendix}suggestd_reading.adoc[]
+include::{appendix}suggested_reading.adoc[]
 include::{appendix}cipher_suite_names.adoc[]
 include::{appendix}further_research.adoc[]
 // include::{appendix}reviewers.adoc[]
 include::{appendix}bib.adoc[]
+:leveloffset: 0
 
 // \printindex[style=achindex]

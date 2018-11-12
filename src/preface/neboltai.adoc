@@ -1,0 +1,1 @@
+image:assets/neboltai.jpg[image]
