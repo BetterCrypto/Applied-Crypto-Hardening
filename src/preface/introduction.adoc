@@ -1,3 +1,36 @@
+[[introduction]]
+= Introduction
+
+
+[[audience]]
+== Audience
+
+Sysadmins. Sysadmins. Sysadmins. They are a force-multiplier.
+
+
+[[relatedpublications]]
+== Related publications
+// TODO: Fix citations
+
+Ecrypt II , ENISA’s report on Algorithms, key sizes and parameters  and BSI’s Technische Richtlinie TR-02102  are great publications which are more in depth than this guide. However, this guide has a different approach: it focuses on _copy & paste-able settings_ for system administrators, effectively breaking down the complexity in the above mentioned reports to an easy to use format for the intended target audience.
+
+
+[[how-read-this]]
+== How to Read this Guide
+
+This guide tries to accommodate two needs: first of all, having a handy reference on how to configure the most common services’ crypto settings and second of all, explain a bit of background on cryptography. This background is essential if the reader wants to choose his or her own cipher string settings.
+
+System administrators who want to copy & paste recommendations quickly without spending a lot of time on background reading on cryptography or cryptanalysis can do so, by simply searching for the corresponding section in <<bestpractice>>.
+
+It is important to know that in this guide the authors arrived at two recommendations: _Cipher string A_ and _Cipher string B_. While the former is a hardened recommendation the latter is a weaker one but provides wider compatibility. _Cipher strings A and B_ are described in <<recommendedciphers>>.
+
+However, for the quick copy & paste approach it is important to know that this guide assumes users are happy with _Cipher string B_.
+
+While <<bestpractice>> is intended to serve as a copy & paste reference, <<theory>> explains the reasoning behind _cipher string B_. In particular <<ciphersuites>> explains how to choose individual cipher strings. We advise the reader to actually read this section and challenge our reasoning in choosing _Cipher string B_ and to come up with a better or localized solution.
+
+// TODO: Verify eclipse image wasn't needed anymore
+
+
 [[disclaimer]]
 == Disclaimer
 // TODO Migrate and fix citations
@@ -48,4 +81,31 @@ We explicitly excluded:
 * Specialized systems (such as medical devices, most embedded systems, industrial control systems, etc.)
 * Wireless Access Points
 * Smart-cards/chip cards
+
+
+// [[motivation]]
+// == Motivation
+
+
+[[methods]]
+== Methods
+
+[quote, A. Kaplan's, 'His link:http://www.mavetju.org/mail/view_message.php?list=freebsd-current&id=947899&raw=yes[mail signature] for many years']
+____
+C.O.S.H.E.R - completely open source, headers, engineering and research.
+____
+
+For writing this guide, we chose to collect the most well researched facts about cryptography settings and let as many trusted specialists as possible review those settings. The review process is completely open and done on a public mailing list.
+
+The document is available (read-only) to the public Internet on the web page and the source code of this document is on a public git server, mirrored on GitHub.com and open for public scrutiny. However, write permissions to the document are only granted to vetted people. The list of reviewers can be found in <<acknowledgements>>.
+
+Every write operation to the document is logged via the `git` version control system and can thus be traced back to a specific author. We accept git pull requests on the link:https://github.com/BetterCrypto/Applied-Crypto-Hardening[github mirror] for this paper.
+
+Public peer-review and multiple eyes checking of our guide is the best strategy we can imagine at the present moment footnote:[http://www.wired.com/opinion/2013/10/how-to-design-and-defend-against-the-perfect-backdoor/].
+
+We invite the gentle reader to participate in this public review process.
+
+
+[[conventions]]
+== Conventions
 
