@@ -1,25 +1,70 @@
-== myservice
+[[myservice]]
+= myservice
 
-=== Tested with Versions
+// A short introduction on the software/service described in the following subsections
 
-Version 0.1, Distro Version
 
-=== Settings
+== Tested with Versions
 
-....
-    %Here goes your setting string
-....
+* Version 0.1, Distro Version 1
+* Version 0.1, Distro Version 2
+* Version 0.2, Distro Version 2
 
-=== Additional settings
 
-....
-    %copy \& paste additional settings
-....
+== Settings
 
-=== Justification for special settings (if needed)
+// Enclose configuration settings in a code block
+.A title describing the examples goal
+[source]
+----
+parameter = option
+----
+Download: link:examples/path/to/example.conf
 
-=== References
+[NOTE]
+.An optional title describing the note
+====
+Note this is a note.
+====
 
-short description: http://example.com/doc/ssl
+// Enclose command line examples in a code block and add "terminal"
+// The output will render it different from regular code blocks
+.A title describing the commands goal
+[source, terminal]
+----
+$ command --option -o
+----
 
-=== How to test
+
+== Additional settings
+
+// Add additional settings as required
+
+// Enclose configuration settings in a code block
+[source]
+----
+parameter = option
+----
+
+
+== Justification for special settings (if needed)
+
+// In case you have the need for further justifications why you chose this and
+// that setting or if the settings do not fit into the standard Variant A or
+// Variant B schema, please document this here
+
+
+== References
+
+* https://example.com[Linktext]
+
+// Add any further references or best practice documents here
+
+
+== How to test
+
+// describe here or point the admin to tools (can be a simple footnote or
+// \ref{} to  the tools section) which help the admin to test his settings.
+
+
+// vim: set ft=asciidoc:
