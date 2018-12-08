@@ -1,0 +1,17 @@
+#### SAMPLE SAMPLE SAMPLE
+#### 
+#### This is a sample .travis.yml file only.
+#### Need to agree with Patrick & co on how to automatically generate the PDF, ePub, HTML etc based on asciidoc
+
+language: python
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7-dev"  # 3.7 development branch
+# command to install dependencies
+install:
+  - pip install -r requirements.txt
+# command to run tests
+script:
+  - pytest
