@@ -1,7 +1,3 @@
-[[introduction]]
-= Introduction
-
-
 [[audience]]
 == Audience
 
@@ -106,6 +102,6 @@ Public peer-review and multiple eyes checking of our guide is the best strategy 
 We invite the gentle reader to participate in this public review process.
 
 
-[[conventions]]
-== Conventions
+// [[conventions]]
+// == Conventions
 

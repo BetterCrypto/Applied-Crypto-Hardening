@@ -1,1 +1,3 @@
-image:assets/neboltai.jpg[image]
+.Do not talk unencrypted
+image:neboltai.jpg[Neboltai]
+

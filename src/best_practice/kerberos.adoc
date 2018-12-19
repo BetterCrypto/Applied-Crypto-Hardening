@@ -1,17 +1,16 @@
-[[keberos]]
-= Kerberos
+== Kerberos
 
 This section discusses various implementations of the Kerberos 5 authentication protocol on Unix and Unix-like systems as well as on Microsoft Windows.
 
 
 [[kerberos_overview]]
-== Overview
+=== Overview
 
 Kerberos provides mutual authentication of two communicating parties, e.g. a user using a network service. The authentication process is mediated by a trusted third party, the Kerberos key distribution centre (KDC). Kerberos implements secure single-sign-on across a large number of network protocols and operating systems. Optionally, Kerberos can be used to create encrypted communications channels between the user and
 service.
 
 
-=== Recommended reading
+==== Recommended reading
 
 An understanding of the Kerberos protocol is necessary for properly implementing a Kerberos setup. Also, in the following section some knowledge about the inner workings of Kerberos is assumed. Therefore we strongly recommend reading the excellent introduction http://gost.isi.edu/publications/kerberos-neuman-tso.html[Kerberos: An Authentication Service for Computer Networks] first.
 
@@ -28,7 +27,7 @@ Only the Kerberos 5 protocol and implementation will be discussed. Kerberos 4 is
 
 
 [[kerberos_secure_setup]]
-=== Providing a suitable Setup for secure Kerberos Operations
+==== Providing a suitable Setup for secure Kerberos Operations
 
 The aim of Kerberos is to unify authentication across a wide range of services, for many different users and use cases and on many computer platforms. The resulting complexity and attack surface make it necessary to carefully plan and continuously evaluate the security of the overall ecosystem in which Kerberos is deployed. Several assumptions are made on which the security of a Kerberos infrastructure relies:
 
@@ -54,9 +53,9 @@ Therefore we suggest:
 
 
 [[kerberos_implementations]]
-== Implementations
+=== Implementations
 
-=== Cryptographic Algorithms in Kerberos Implementations
+==== Cryptographic Algorithms in Kerberos Implementations
 
 The encryption algorithms (commonly abbreviated ’etypes’ or ’enctypes’) in Kerberos exchanges are subject to negotiation between both sides of an exchange. Similarly, a ticket granting ticket (TGT), which is usually obtained on initial login, can only be issued if the principal contains a version of the password encrypted with an etype that is available both on the KDC and on the client where the login happens.
 
@@ -99,7 +98,7 @@ This means that the des3-cbc-sha1-kd or rc4-hmac algorithms should not be used, 
 Along the lines of cipher string B, the following etypes are recommended: aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac.
 
 
-=== Existing installations
+==== Existing installations
 
 The configuration samples below assume new installations without preexisting principals.
 
@@ -113,9 +112,9 @@ For existing installations:
 To get rid of principals with unsupported or weak enctypes, a password change is usually the easiest way. Service principals can simply be recreated.
 
 
-=== MIT krb5
+==== MIT krb5
 
-==== KDC configuration
+===== KDC configuration
 
 In `/etc/krb5kdc/kdc.conf` set the following in your realm’s configuration:
 
@@ -138,7 +137,7 @@ default_tkt_enctypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hm
 default_tgs_enctypes= aes256-cts-hmac-sha1-96 camellia256-cts-cmac aes128-cts-hmac-sha1-96 camellia128-cts-cmac
 ----
 
-==== Upgrading a MIT krb5 database to a new enctype
+===== Upgrading a MIT krb5 database to a new enctype
 
 To check if an upgrade is necessary, execute the following on the KDC in
 question:
@@ -207,4 +206,5 @@ Purging the following master key(s) from K/M@EXAMPLE.COM:
 KVNO: 1
 1 key(s) purged.
 ----
+
 

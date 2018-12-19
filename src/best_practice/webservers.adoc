@@ -1,11 +1,10 @@
-[[webservers]]
-= Webservers
+== Webservers
 
-== Apache
+=== Apache
 
 Note that any cipher suite starting with EECDH can be omitted, if in doubt. (Compared to the theory section, EECDH in Apache and ECDHE in OpenSSL are synonyms footnote:[https://www.mail-archive.com/openssl-dev@openssl.org/msg33405.html])
 
-=== Tested with Versions
+==== Tested with Versions
 
 * Apache 2.2.22, Debian Wheezy with OpenSSL 1.0.1e
 * Apache 2.4.6, Debian Jessie with OpenSSL 1.0.1e
@@ -14,12 +13,12 @@ Note that any cipher suite starting with EECDH can be omitted, if in doubt. (Com
 * Apache 2.4.6, CentOS Linux 7 (Core) with OpenSSL 1.0.1e
 * Apache 2.4.18, Ubuntu 16.04.3 LTS with OpenSSL 1.0.2g
 
-=== Settings
+==== Settings
 
 Enabled modules _SSL_ and _Headers_ are required.
 
 .SSL configuration for an Apache vhost
-[source]
+[source,apacheconf]
 ----
 SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
 SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
@@ -41,40 +40,40 @@ SSLCipherSuite 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:
 <3> CALL subdomains HAVE TO support HTTPS if you use this! At least use one Backup-Key and/or add whole CA, think of Cert-Updates!
 
 
-=== Additional settings
+==== Additional settings
 
 You might want to redirect everything to _https://_ if possible. In Apache you can do this with the following setting inside of a VirtualHost environment:
 
 .https auto-redirect vhost
-[source]
+[source,apacheconf]
 ----
 <VirtualHost *:80>
     Redirect permanent / https://SERVER_NAME/
 </VirtualHost>
 ----
 
-=== References
+==== References
 
 Apache2 Docs on SSL and TLS: https://httpd.apache.org/docs/2.4/ssl/
 
-=== How to test
+==== How to test
 
 See appendix <<tools>>
 
 
-== lighttpd
+=== lighttpd
 
-=== Tested with Versions
+==== Tested with Versions
 
 * lighttpd/1.4.31-4 with OpenSSL 1.0.1e on Debian Wheezy
 * lighttpd/1.4.33 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
 * lighttpd/1.4.28-2 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
 * lighttpd/1.4.31, Ubuntu 14.04.2 Trusty with Openssl 1.0.1f
 
-=== Settings
+==== Settings
 
 .SSL configuration for lighttpd
-[source]
+[source,lighttpd]
 ----
 $SERVER["socket"] == "0.0.0.0:443" {
     ssl.engine = "enable"
@@ -94,7 +93,7 @@ $SERVER["socket"] == "0.0.0.0:443" {
 Starting with lighttpd version 1.4.29 Diffie-Hellman and Elliptic-Curve Diffie-Hellman key agreement protocols are supported. By default, elliptic curve "prime256v1" (also "secp256r1") will be used, if no other is given. To select special curves, it is possible to set them using the configuration options `ssl.dh-file` and `ssl.ec-curve`.
 
 .SSL EC/DH configuration for lighttpd
-[source]
+[source,lighttpd]
 ----
 # use group16 dh parameters
 ssl.dh-file = "/etc/lighttpd/ssl/dh4096.pem"
@@ -103,12 +102,12 @@ ssl.ec-curve = "secp384r1"
 
 Please read section <<dh>> for more information on Diffie Hellman key exchange and elliptic curves.
 
-=== Additional settings
+==== Additional settings
 
 As for any other webserver, you might want to automatically redirect _http://_ traffic toward _https://_. It is also recommended to set the environment variable _HTTPS_, so the PHP applications run by the webserver can easily detect that HTTPS is in use.
 
 .https auto-redirect configuration
-[source]
+[source,lighttpd]
 ----
 $HTTP["scheme"] == "http" {
     # capture vhost name with regex condition -> %0 in redirect pattern
@@ -123,27 +122,27 @@ $HTTP["scheme"] == "http" {
 }
 ----
 
-=== Additional information
+==== Additional information
 
 The config option _honor-cipher-order_ is available since 1.4.30, the supported ciphers depend on the used OpenSSL-version (at runtime). ECDHE has to be available in OpenSSL at compile-time, which should be default. SSL compression should by deactivated by default at compile-time (if not, it’s active).
 
 Support for other SSL-libraries like GnuTLS will be available in the upcoming 2.x branch, which is currently under development.
 
-=== References
+==== References
 
 * HTTPS redirection: http://redmine.lighttpd.net/projects/1/wiki/HowToRedirectHttpToHttps
 * Lighttpd Docs SSL: http://redmine.lighttpd.net/projects/lighttpd/wiki/Docs_SSL
 * Release 1.4.30 (How to mitigate BEAST attack) http://redmine.lighttpd.net/projects/lighttpd/wiki/Release-1_4_30
 * SSL Compression disabled by default: http://redmine.lighttpd.net/issues/2445
 
-=== How to test
+==== How to test
 
 See appendix <<tools>>
 
 
-== nginx
+=== nginx
 
-=== Tested with Version
+==== Tested with Version
 
 * 1.4.4 with OpenSSL 1.0.1e on OS X Server 10.8.5
 * 1.2.1-2.2+wheezy2 with OpenSSL 1.0.1e on Debian Wheezy
@@ -151,10 +150,10 @@ See appendix <<tools>>
 * 1.2.1-2.2 bpo60+2 with OpenSSL 0.9.8o on Debian Squeeze (note that TLSv1.2 does not work in openssl 0.9.8 thus not all ciphers actually work)
 * 1.4.6 with OpenSSL 1.0.1f on Ubuntu 14.04.2 LTS
 
-=== Settings
+==== Settings
 
 .SSL settings for nginx
-[source]
+[source,nginx]
 ----
 ssl on;
 ssl_certificate cert.pem;
@@ -172,19 +171,19 @@ add_header Strict-Transport-Security max-age=15768000; # six months
 
 If you absolutely want to specify your own DH parameters, you can specify them via
 
-[source]
+[source,nginx]
 ----
 ssl_dhparam file;
 ----
 
 However, we advise you to read section <<dh>> and stay with the standard IKE/IETF parameters (as long as they are >1024 bits).
 
-=== Additional settings
+==== Additional settings
 
 If you decide to trust NIST’s ECC curve recommendation, you can add the following line to nginx’s configuration file to select special curves:
 
 .SSL EC/DH settings for nginx
-[source]
+[source,nginx]
 ----
 ssl_ecdh_curve secp384r1;
 ----
@@ -192,30 +191,30 @@ ssl_ecdh_curve secp384r1;
 You might want to redirect everything to _https://_ if possible. In Nginx you can do this with the following setting:
 
 .https auto-redirect in nginx
-[source]
+[source,nginx]
 ----
 return 301 https://$server_name$request_uri;
 ----
 
 The variable _$server_name_ refers to the first _server_name_ entry in your config file. If you specify more than one _server_name_ only the first will be taken. Please be sure to not use the _$host_ variable here because it contains data controlled by the user.
 
-=== References
+==== References
 
 * http://nginx.org/en/docs/http/ngx_http_ssl_module.html
 * http://wiki.nginx.org/HttpSslModule
 
-=== How to test
+==== How to test
 
 See appendix <<tools>>
 
 
-== Cherokee
+=== Cherokee
 
-=== Tested with Version
+==== Tested with Version
 
 * Cherokee/1.2.104 on Debian Wheezy with OpenSSL 1.0.1e 11 Feb 2013
 
-=== Settings
+==== Settings
 
 The configuration of the cherokee webserver is performed by an admin interface available via the web. It then writes the configuration to `/etc/cherokee/cherokee.conf`, the important lines of such a configuration file can be found at the end of this section.
 
@@ -238,7 +237,7 @@ EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AE
 ** SSL version 2 and SSL version 3: No
 ** TLS version 1, TLS version 1.1 and TLS version 1.2: Yes
 
-=== Additional settings
+==== Additional settings
 
 For each vServer on the Security tab it is possible to set the Diffie Hellman length to up to 4096 bits. We recommend to use >1024 bits. More information about Diffie-Hellman and which curves are recommended can be found in section <<dh>>.
 
@@ -277,21 +276,21 @@ vserver!1!ssl_dh_length = 2048
 ----
 
 
-=== References
+==== References
 
 * Cookbook: SSL, TLS and certificates: http://cherokee-project.com/doc/cookbook_ssl.html
 * Cookbook: Redirecting all traffic from HTTP to HTTPS: http://cherokee-project.com/doc/cookbook_http_to_https.html
 
-=== How to test
+==== How to test
 
 See appendix <<tools>>
 
 [[ms-iis]]
-== MS IIS
+=== MS IIS
 
 To configure SSL/TLS on Windows Server IIS Crypto can be used. footnote:[https://www.nartac.com/Products/IISCrypto/] Simply start the Programm, no installation required. The tool changes the registry keys described below. A restart is required for the changes to take effect.
 
-image:img/IISCryptoConfig.png[IIS Crypto Tool,scaledwidth=41.1%]
+image:IISCryptoConfig.png[IIS Crypto Tool,scaledwidth=41.1%]
 
 Instead of using the IIS Crypto Tool the configuration can be set using the Windows Registry. The following Registry keys apply to the newer Versions of Windows (Windows 7, Windows Server 2008, Windows Server 2008 R2, Windows Server 2012 and Windows Server 2012 R2). For detailed information about the older versions see the Microsoft knowledgebase article. footnote:[http://support.microsoft.com/kb/245030/en-us]
 
@@ -304,7 +303,7 @@ Instead of using the IIS Crypto Tool the configuration can be set using the Wind
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurityProviders\Schannel\Protocols]
 ....
 
-=== Tested with Version
+==== Tested with Version
 
 * Windows Server 2008
 * Windows Server 2008 R2
@@ -315,7 +314,7 @@ Instead of using the IIS Crypto Tool the configuration can be set using the Wind
 * Windows 8 and Internet Explorer 10 and upwards
 * Windows 8.1 and Internet Explorer 11
 
-=== Settings
+==== Settings
 
 When trying to avoid RC4 (RC4 biases) as well as CBC (BEAST-Attack) by using GCM and to support perfect forward secrecy, Microsoft SChannel (SSL/TLS, Auth,.. Stack) supports ECDSA but lacks support for RSA signatures (see ECC suite B doubtsfootnote:[http://safecurves.cr.yp.to/rigid.html]).
 
@@ -342,7 +341,7 @@ Clients not supported:
 2. WinXP
 3. Bing
 
-=== Additional settings
+==== Additional settings
 
 It’s recommended to use Strict-Transport-Security: max-age=15768000 for detailed information visit the footnote:[http://www.iis.net/configreference/system.webserver/httpprotocol/customheaders] Microsoft knowledgebase.
 
@@ -354,13 +353,15 @@ Set-WebConfiguration -Location "$WebSiteName/$WebApplicationName" `
     -Value "SslRequireCert"
 ....
 
-=== Justification for special settings (if needed)
+==== Justification for special settings (if needed)
 
-=== References
+==== References
 
 * http://support.microsoft.com/kb/245030/en-us
 * http://support.microsoft.com/kb/187498/en-us
 
-=== How to test
+==== How to test
 
 See appendix <<tools>>
+
+

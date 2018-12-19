@@ -1,4 +1,3 @@
-[[ellipticcurvecryptography]]
 == A note on Elliptic Curve Cryptography
 
 Elliptic Curve Cryptography (simply called ECC from now on) is a branch
@@ -39,3 +38,4 @@ the reader.
 and parameters if one chooses to adopt ECC configurations. Since there
 is much discussion on the security of ECC, flawed settings might very
 well compromise the security of the entire system!
+

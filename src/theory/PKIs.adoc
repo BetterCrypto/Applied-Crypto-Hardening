@@ -1,4 +1,3 @@
-[[section:PKIs]]
 == Public Key Infrastructures
 
 Public-Key Infrastructures try to solve the problem of verifying whether
@@ -231,3 +230,5 @@ query the record type manually:
 dig +short -t TYPE257 google.com
 \# 19 0005697373756573796D616E7465632E636F6D
 ....
+
+

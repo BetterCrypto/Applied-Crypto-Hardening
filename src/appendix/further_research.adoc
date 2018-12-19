@@ -1,4 +1,3 @@
-[[cha:further-research]]
 == Further research
 
 The following is a list of services, software packages, hardware devices
@@ -105,3 +104,5 @@ interfaces.footnote:[https://lists.cert.at/pipermail/ach/2014-November/001626.ht
 
 rsync: Best use it only via SSH for an optimum of security and easiest
 to maintain.
+
+

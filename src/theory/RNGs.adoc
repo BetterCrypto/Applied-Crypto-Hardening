@@ -1,7 +1,6 @@
-[[section:RNGs]]
 == Random Number Generators
 
-image:img/random_number.png[xkcd, source:
+image:random_number.png[xkcd, source:
 https://imgs.xkcd.com/comics/random_number.png, license:
 CC-BY-NC,scaledwidth=40.0%]
 
@@ -53,4 +52,6 @@ are used for signing this may lead to repeated ephemeral keys. An
 attacker who can guess an ephemeral private key used in such a signature
 can compromise the DSA secret key. For RSA this can lead to discovery of
 encrypted plaintext or forged signatures but not to the compromise of
-the secret key .
+the secret key.
+
+

@@ -1,104 +1,145 @@
-Applied Crypto Hardening
-========================
-bettercrypto.org
+Applied Crypto Hardening: bettercrypto.org
+==========================================
+Wolfgang Breyha, David Durvaux, Tobias Dussa, L. Aaron Kaplan, Florian Mendel, Christian Mock, Manuel Koschuch, Adi Kriegisch, Ulrich Pöschl, Ramin Sabet, Berg San, Ralf Schlatterbeck, Thomas Schreck, Alexander Würstlein, Aaron Zauner, Pepi Zawodsky
+v2.0, 2018-12-24: The Asciidoc Edition
 :doctype: book
-
+// Settings
+:stylesdir: ./assets
+:imagesdir: ./assets/images/
+:iconsdir: ./assets/icons/
+:icons: font
+:linkcss:
+:experimental:
+:reproducible:
+:listing-caption: Listing
+:partnums:
+:sectnums:
+:toc:
+:toclevels: 2
+ifdef::backend-pdf[]
+:title-logo-image: assets/images/logo.jpg
+endif::[]
+// :source-language: perl
+:source-highlighter: pygments
+:pygments-style: native
+:sectanchors:
+// :webfonts!:
 // URIs
-:preface: preface/
-:introduction: introduction/
-:bestpractice: best_practice/
-:theory: theory/
-:appendix: appendix/
+:bibliography-database: assets/bib/all-rfcs.bib assets/bib/security.bib
 
-// \RequirePackage{fix-cm}
-// % change to \iffalse this if you want to make a final version (and remove the DRAFT watermark)
-// \iffalse
-// \PassOptionsToPackage{final}{graphicx}
-// \PassOptionsToPackage{final}{listings}
-// \documentclass[draft]{scrreprt}
-// \else
-// \documentclass{scrreprt}
-// \fi
-// \input{common/system}
-// \input{common/lstautounindent}
-// \input{common/style}
-// \input{common/commands}
-// \input{common/configfiles}
 
-// \configurationbaseurl{https://bettercrypto.org/static/}
+[preface]
+= Preface
+include::preface/neboltai.adoc[]
 
-include::{preface}title.adoc[]
-include::{preface}neboltai.adoc[]
-include::{preface}acknowledgements.adoc[]
+[[acknowledgements]]
+include::preface/acknowledgements.adoc[]
+
 
 [abstract]
-include::{preface}abstract.adoc[]
+include::preface/abstract.adoc[]
 
 
-Introduction
-============
-// \label{chapter:Intro}
-:leveloffset: 1
-include::{introduction}audience.adoc[]
-include::{introduction}related_publications.adoc[]
-include::{introduction}how_to_read.adoc[]
-include::{introduction}disclaimer.adoc[]
-include::{introduction}motivation.adoc[]
-include::{introduction}methods.adoc[]
-include::{introduction}conventions.adoc[]
-:leveloffset: 0
+[[introduction]]
+= Introduction
+include::preface/introduction.adoc[]
 
 
 [[bestpractice]]
-Best Practice
-=============
+= Best Practice
 
-:leveloffset: 1
-include::{bestpractice}webservers.adoc[]
-include::{bestpractice}ssh.adoc[]
-include::{bestpractice}mailservers.adoc[]
-include::{bestpractice}vpn.adoc[]
-include::{bestpractice}pretty_good_privacy.adoc[]
-include::{bestpractice}ipmi.adoc[]
-include::{bestpractice}instant_messaging.adoc[]
-include::{bestpractice}databases.adoc[]
-include::{bestpractice}proxy_solutions.adoc[]
-include::{bestpractice}kerberos.adoc[]
-:leveloffset: 0
+[[webservers]]
+include::best_practice/webservers.adoc[]
+
+[[ssh]]
+include::best_practice/ssh.adoc[]
+
+[[mailservers]]
+include::best_practice/mailservers.adoc[]
+
+[[vpn]]
+include::best_practice/vpn.adoc[]
+
+[[pretty_good_privacy]]
+include::best_practice/pretty_good_privacy.adoc[]
+
+[[ipmi]]
+include::best_practice/ipmi.adoc[]
+
+[[instant_messaging]]
+include::best_practice/instant_messaging.adoc[]
+
+[[databases]]
+include::best_practice/databases.adoc[]
+
+[[proxy_solutions]]
+include::best_practice/proxy_solutions.adoc[]
+
+[[kerberos]]
+include::best_practice/kerberos.adoc[]
+
+[[theory]]
+= Theory
+// // %\epigraph{``Number theorists are like lotus-eaters - having tasted this food they can never give it up.''}{Leopold Kronecker}
+// // \label{chapter:Theory}
+// 
+// :leveloffset: 1
+
+[[overview]]
+include::theory/overview.adoc[]
+
+[[cipher_suites]]
+include::theory/cipher_suites.adoc[]
+
+[[rng]]
+include::theory/RNGs.adoc[]
+
+[[keylength]]
+include::theory/keylengths.adoc[]
+
+[[ecc]]
+include::theory/ECC.adoc[]
+
+[[sha]]
+include::theory/SHA.adoc[]
+
+[[dh]]
+include::theory/DH.adoc[]
+
+[[pki]]
+include::theory/PKIs.adoc[]
+
+[[tls]]
+include::theory/TLS.adoc[]
 
 
 
-Theory
-======
-// %\epigraph{``Number theorists are like lotus-eaters - having tasted this food they can never give it up.''}{Leopold Kronecker}
-// \label{chapter:Theory}
+[[appendix]]
+= Appendix
 
-:leveloffset: 1
-include::{theory}overview.adoc[]
-include::{theory}cipher_suites.adoc[]
-include::{theory}RNGs.adoc[]
-include::{theory}keylengths.adoc[]
-include::{theory}ECC.adoc[]
-include::{theory}SHA.adoc[]
-include::{theory}DH.adoc[]
-include::{theory}PKIs.adoc[]
-include::{theory}TLS.adoc[]
-:leveloffset: 0
+[[tools]]
+include::appendix/tools.adoc[]
 
+[[links]]
+include::appendix/links.adoc[]
 
-[appendix]
-Appendix
-========
-// \label{appendix}
+[[suggested_reading]]
+include::appendix/suggested_reading.adoc[]
 
-:leveloffset: 1
-include::{appendix}tools.adoc[]
-include::{appendix}links.adoc[]
-include::{appendix}suggested_reading.adoc[]
-include::{appendix}cipher_suite_names.adoc[]
-include::{appendix}further_research.adoc[]
-// include::{appendix}reviewers.adoc[]
-include::{appendix}bib.adoc[]
-:leveloffset: 0
+[[cipher_suite_names]]
+include::appendix/cipher_suite_names.adoc[]
 
-// \printindex[style=achindex]
+[[further_research]]
+include::appendix/further_research.adoc[]
+
+// [[reviewers]]
+// include::appendix/reviewers.adoc[]
+
+[colophon]
+[[bibliography]]
+include::appendix/bibliography.adoc[]
+
+[index]
+include::appendix/index.adoc[]
+
+// vim: set ft=asciidoc:

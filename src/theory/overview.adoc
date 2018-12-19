@@ -1,8 +1,9 @@
-[[theory]]
-= Theory
-
-[[sec:TheoryOverview]]
 == Overview
+
+[quote,Leopold Kronecker]
+____
+Number theorists are like lotus-eaters - having tasted this food they can never give it up.
+____
 
 This chapter provides the necessary background information on why
 chapter <<practicalsettings>>
@@ -44,3 +45,5 @@ PKIs (section <<pkis>>), Certificate Authorities
 and on hardening a PKI. Note that these last few topics deserve a book
 on their own. Hence this guide can only mention a few current topics in
 this area.
+
+

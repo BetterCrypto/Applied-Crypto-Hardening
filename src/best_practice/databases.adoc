@@ -1,32 +1,32 @@
-= Databases
+== Databases
 
-== Oracle
+=== Oracle
 
-=== Tested with Versions
+==== Tested with Versions
 
 We do not test this here, since we only reference other papers for Oracle so far.
 
-=== References
+==== References
 
 Technical safety requirements by _Deutsche Telekom AG_ (German). Please read section 17.12 or pages 129 and following (Req 396 and Req 397) about SSL and ciphersuites http://www.telekom.com/static/-/155996/7/technische-sicherheitsanforderungen-si
 
 // TODO: Fix dead link
 
 
-== MySQL
+=== MySQL
 
-=== Tested with Versions
+==== Tested with Versions
 
 * MySQL 5.5 on Debian Wheezy
 * MySQL 5.7.20 on Ubuntu 16.04.3
 
-=== Settings
+==== Settings
 
-=== References
+==== References
 
 MySQL Documentation on link:https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html[Configuring MySQL to Use Encrypted Connections].
 
-=== How to test
+==== How to test
 
 After restarting the server run the following query to see if the ssl settings are correct:
 
@@ -36,15 +36,15 @@ show variables like '%ssl%';
 ----
 
 
-== DB2
+=== DB2
 
-=== Tested with Version
+==== Tested with Version
 
 We do not test this here, since we only reference other papers for DB2 so far.
 
-=== Settings
+==== Settings
 
-==== ssl_cipherspecs:
+===== ssl_cipherspecs:
 
 In the link above the whole SSL-configuration is described in-depth. The following command shows only how to set the recommended ciphersuites.
 
@@ -72,20 +72,20 @@ TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,
 TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
 ----
 
-=== References
+==== References
 
 IBM Db2 Documentation on _Supported cipher suites_. +
 http://pic.dhe.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=%2Fcom.ibm.db2.luw.admin.sec.doc%2Fdoc%2Fc0053544.html
 
 
-== PostgreSQL
+=== PostgreSQL
 
-=== Tested with Versions
+==== Tested with Versions
 
 * Debian Wheezy and PostgreSQL 9.1
 * Linux Mint 14 nadia / Ubuntu 12.10 quantal with PostgreSQL 9.1+136 and OpenSSL 1.0.1c
 
-=== Settings
+==== Settings
 
 To start in SSL mode the `server.crt` and `server.key` must exist in the servers data directory `$PGDATA`.
 
@@ -94,7 +94,7 @@ To start in SSL mode the `server.crt` and `server.key` must exist in the servers
 Starting with version 9.2, you have the possibility to set the path manually.
 ====
 
-=== References
+==== References
 
 It’s recommended to read link:https://www.postgresql.org/docs/9.1/runtime-config-connection.html#RUNTIME-CONFIG-CONNECTION-SECURITY[Security and Authentication] in the manual.
 
@@ -102,7 +102,7 @@ PostgreSQL Documentation on link:http://www.postgresql.org/docs/9.1/static/ssl-t
 
 PostgreSQL Documentation on link:http://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html[host-based authentication].
 
-=== How to test
+==== How to test
 
 To test your ssl settings, run `psql` with the sslmode parameter:
 

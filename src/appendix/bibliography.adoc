@@ -1,0 +1,7 @@
+[bibliography]
+= Bibliography
+
+// This bibliography will be built automatically using asciidoctor-bibliography.
+
+bibliography::[]
+

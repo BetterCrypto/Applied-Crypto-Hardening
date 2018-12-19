@@ -1,4 +1,3 @@
-[[tools]]
 == Tools
 
 This section lists tools for checking the security settings.
@@ -83,3 +82,5 @@ generator testing service.
 
 See:
 https://www.ssllabs.com/downloads/SSL_TLS_Deployment_Best_Practices.pdf.
+
+

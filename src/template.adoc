@@ -1,25 +1,45 @@
-[[myservice]]
-= myservice
+== Myservice
+// A chapter always starts at level 2 (heading wise). Level 1 is reserved to
+// the part of the book the chapter belongs to.
 
-// A short introduction on the software/service described in the following subsections
+// Visit https://asciidoctor.org/docs/asciidoc-syntax-quick-reference/ for
+// AsciiDoc Formatting Options
 
-
-== Tested with Versions
-
-* Version 0.1, Distro Version 1
-* Version 0.1, Distro Version 2
-* Version 0.2, Distro Version 2
+A short introduction on the software/service described in the following subsections
 
 
-== Settings
+The examples and advice for Myservice have been tested and verified using the following setups:
+
+[options="header"]
+.Tested Myservice Versions
+|====
+| Program Version | OS/Distribution/Version | Comment
+| Version 0.1| Distro Version 1 | Comment
+| Version 0.1| Distro Version 2 | Comment
+| Version 0.2| Distro Version 2 | Comment
+|====
+
+
+=== Settings
+
+Here's a text with a cite:[crypto-1981-1535] to a document we have in our bibtex catalogue.
+// You can only see the citation instruction, but not the reference in this
+// document. In the book there's a section "Bibliography" at the end, where
+// cites you add in real chapters will show up.
+
 
 // Enclose configuration settings in a code block
 .A title describing the examples goal
 [source]
 ----
-parameter = option
+parameter = option                   // <1>
 ----
-Download: link:examples/path/to/example.conf
+// Use '//' before the reference icon above (here: <1>) and it will not be
+// selectable later in the output. People will be able to simply copy & paste
+// from the website.
+
+<1> A note explain the option above
+
 
 [NOTE]
 .An optional title describing the note
@@ -27,8 +47,8 @@ Download: link:examples/path/to/example.conf
 Note this is a note.
 ====
 
-// Enclose command line examples in a code block and add "terminal"
-// The output will render it different from regular code blocks
+// Enclose command line examples showing commands to type in a code block and
+// add "terminal" The output will render it different from regular code blocks
 .A title describing the commands goal
 [source, terminal]
 ----
@@ -36,7 +56,7 @@ $ command --option -o
 ----
 
 
-== Additional settings
+=== Additional settings
 
 // Add additional settings as required
 
@@ -47,21 +67,24 @@ parameter = option
 ----
 
 
-== Justification for special settings (if needed)
+=== Justification for special settings (if needed)
 
 // In case you have the need for further justifications why you chose this and
 // that setting or if the settings do not fit into the standard Variant A or
 // Variant B schema, please document this here
 
 
-== References
+=== References
 
+* https://example.com[]
+// The link will render with the link as "link text"
 * https://example.com[Linktext]
+// The link will render with "Linktext" as "link text"
 
 // Add any further references or best practice documents here
 
 
-== How to test
+=== How to test
 
 // describe here or point the admin to tools (can be a simple footnote or
 // \ref{} to  the tools section) which help the admin to test his settings.

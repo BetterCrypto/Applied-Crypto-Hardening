@@ -1,5 +1,4 @@
-[[reviewers]]
-== Acknowledgements
+= Acknowledgements
 
 We would like to express our thanks to the following reviewers and people who have generously offered their time and interest (in alphabetical order):
 
@@ -38,3 +37,4 @@ Wagner, Sebastian («sebix») +
 Zangerl, Alexander +
 
 The reviewers did review parts of the document in their area of expertise; all remaining errors in this document are the sole responsibility of the primary authors.
+

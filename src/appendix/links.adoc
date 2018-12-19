@@ -1,4 +1,3 @@
-[[cha:links]]
 == Links
 
 IANA official list of Transport Layer Security (TLS) Parameters:
@@ -65,3 +64,5 @@ https://en.wikipedia.org/wiki/Malleability_(cryptography)
 
 Ritter’s Crypto Glossary and Dictionary of Technical Cryptography
 http://www.ciphersbyritter.com/GLOSSARY.HTM
+
+

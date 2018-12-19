@@ -1,4 +1,4 @@
-= Proxy Solutions
+== Proxy Solutions
 
 Within enterprise networks and corporations with increased levels of
 paranoia or at least some defined security requirements it is common
@@ -31,9 +31,9 @@ insecure manner.
 Conclusion: Don’t forget to check your proxy solutions SSL-capabilities.
 Also do so for your reverse proxies!
 
-== Bluecoat
+=== Bluecoat
 
-=== Tested with Versions
+==== Tested with Versions
 
 SGOS 6.5.x
 
@@ -93,18 +93,18 @@ Disabling protocols and ciphers in a forward proxy environment could
 lead to unexpected results on certain (misconfigured?) webservers (i.e.
 ones accepting only SSLv2/3 protocol connections)
 
-== HAProxy
+=== HAProxy
 
 HAProxy can be used as loadbalancer and proxy for TCP and HTTP-based
 applications. Since version 1.5 it supports SSL and IPv6.
 
-=== Tested with Versions
+==== Tested with Versions
 
 HAProxy 1.5.11 with OpenSSL 1.0.1e on Debian Wheezy
 
-=== Settings
+==== Settings
 
-=== Additional Settings
+==== Additional Settings
 
 ==== Enable NPN Support:
 
@@ -154,21 +154,22 @@ Reload HAProxy and HPKP should now be enabled. +
 Note: Keep in mind to generate a backup key in case of problems with
 your primary key file.
 
-=== How to test
+==== How to test
 
 See appendix <<tools>>
 
-== Pound
+=== Pound
 
-=== Tested with Versions
+==== Tested with Versions
 
 Pound 2.6
 
-=== Settings
+==== Settings
 
-== stunnel
 
-=== Tested with Versions
+=== stunnel
+
+==== Tested with Versions
 
 stunnel 4.53-1.1ubuntu1 on Ubuntu 14.04 Trusty with OpenSSL 1.0.1f,
 without disabling Secure Client-Initiated Renegotiation
@@ -178,20 +179,22 @@ stunnel 5.02-1 on Ubuntu 14.04 Trusty with OpenSSL 1.0.1f
 stunnel 4.53-1.1 on Debian Wheezy with OpenSSL 1.0.1e, without disabling
 Secure Client-Initiated Renegotiation
 
-=== Settings
+==== Settings
 
-=== Additional information
+==== Additional information
 
 Secure Client-Initiated Renegotiation can only be disabled for stunnel
 versions >= 4.54, when the renegotiation parameter has been added (See
 changelog).
 
-=== References
+==== References
 
 stunnel documentation: https://www.stunnel.org/static/stunnel.html
 
 stunnel changelog: https://www.stunnel.org/sdf_ChangeLog.html
 
-=== How to test
+==== How to test
 
 See appendix <<tools>>
+
+

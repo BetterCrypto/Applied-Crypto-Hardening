@@ -1,5 +1,4 @@
-[[cipher-suite-name]]
-= Cipher Suite Name Cross-Reference
+== Cipher Suite Name Cross-Reference
 
 This table shows the cipher suite names as IANA defined them, the names OpenSSL uses, and the respective codes.
 
@@ -646,3 +645,4 @@ This table shows the cipher suite names as IANA defined them, the names OpenSSL 
 The list of IANA cipher suite names was retrieved from https://www.iana.org/assignments/tls-parameters/tls-parameters-4.csv on Tue Jun 3 22:36:58 2014.
 
 The list of OpenSSL Ciphers was generated with OpenSSL 1.0.1e 11 Feb 2013.
+

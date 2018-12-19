@@ -1,14 +1,13 @@
-[[section:CipherSuites]]
 == Cipher suites
 
-[[subsection:architecture]]
+[architecture]
 === Architectural overview 
 
-[[subsection:PFS]]
+[PFS]
 === Forward Secrecy
 
-[[section:recommendedciphers]]
+[recommendedciphers]
 === Recommended cipher suites
 
-[[subsection:compatibility]]
+[subsection:compatibility]
 === Compatibility

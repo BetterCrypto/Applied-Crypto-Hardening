@@ -1,5 +1,4 @@
-[[mailservers]]
-= Mailservers
+== Mailservers
 
 This section documents the most common mail servers. Mail servers may usually be grouped into three categories:
 
@@ -11,13 +10,15 @@ An email client (mail user agent, MUA) submits mail to the MSA. This is usually 
 
 As MSAs and MTAs both use SMTP as transfer protocols, both functionalities may often be implemented with the same software. On the other hand, MDA software might or might not implement both IMAP and POP.
 
-== TLS usage in mail server protocols
+
+=== TLS usage in mail server protocols
 
 Email protocols support TLS in two different ways. It may be added as a protocol wrapper on a different port. This method is referred to as Implicit TLS or as protocol variants SMTPS, IMAPS and POP3S. The other method is to establish a cleartext session first and switch to TLS afterwards by issuing the STARTTLS command.
 
 SMTP between MTAs usually makes use of opportunistic TLS. This means that an MTA will accept TLS connections when asked for it but will not require it. MTAs should always try opportunistic TLS handshakes outgoing and always accept incoming opportunistic TLS.
 
-== Recommended configuration
+
+=== Recommended configuration
 
 We recommend to use the following settings for Mail Transfer Agents:
 
@@ -49,9 +50,9 @@ For MDA operation we recommend:
 * turn off SSLv2 (see: https://drownattack.com/drown-attack-paper.pdf[DROWN attack])
 
 
-== Dovecot
+=== Dovecot
 
-=== Tested with Version
+==== Tested with Version
 
 * Dovecot 2.1.7, Debian Wheezy (without: “`ssl_prefer_server_ciphers`“)
 * Dovecot 2.2.9, Debian Jessie
@@ -60,22 +61,48 @@ For MDA operation we recommend:
 * Dovecot 2.2.9 on Ubuntu 14.04 trusty
 * Dovecot 2.2.31 on Ubuntu 16.04.3 LTS
 
-=== Settings
+==== Settings
 
-=== Additional info
+.Dovecot SSL Configuration
+[source]
+----
+# SSL protocols to use, disable SSL, use TLS only
+ssl_protocols = !SSLv3 !SSLv2
+
+# SSL ciphers to use
+ssl_cipher_list = EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA
+
+# Prefer the server's order of ciphers over client's. (Dovecot >=2.2.6 Required)
+ssl_prefer_server_ciphers = yes
+
+# Diffie-Hellman parameters length (Default is 1024, Dovecot >=2.2.7 Required)
+# ToDo: for ReGenerating DH-Parameters:
+# manually delete /var/lib/dovecot/ssl-parameters.dat and restart
+# Dovecot to regenerate /var/lib/dovecot/ssl-parameters.dat
+ssl_dh_parameters_length = 2048
+
+# Disable Compression (Dovecot >= 2.2.14 Required)
+# ssl_options = no_compression
+----
+
+
+==== Additional info
 
 Dovecot 2.0, 2.1: Almost as good as dovecot 2.2. Dovecot does not ignore unknown configuration parameters. Does not support `ssl_prefer_server_ciphers`.
 
-=== Limitations
+
+==== Limitations
 
 * Dovecot <2.2.14 does not support disabling TLS compression. + latexmath:[$\geq$]2.2.14footnote:[http://www.dovecot.org/doc/NEWS-2.2] use: `ssl_options = no_compression`
 * Dovecot <2.2.7 uses fixed DH parameters. + latexmath:[$\geq$]2.2.7footnote:[http://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0] greater DH-Parameters are supported: `ssl_dh_parameters_length = 2048`.
 
-=== References
+
+==== References
 
 http://wiki2.dovecot.org/SSL
 
-=== How to test
+
+==== How to test
 
 [source,terminal]
 ----
@@ -95,15 +122,25 @@ sslyze.exe --regular --starttls=imap SERVER.TLD:143
 sslyze.exe --regular --starttls=pop3 SERVER.TLD:110
 ----
 
-== cyrus-imapd
 
-=== Tested with Versions
+=== cyrus-imapd
+
+
+==== Tested with Versions
 
 * 2.4.17
 
-=== Settings
+
+==== Settings
 
 To activate SSL/TLS configure your certificate with
+
+.Activating TLS in cyrus
+[source]
+----
+tls_cert_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
+tls_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
+----
 
 Do not forget to add necessary intermediate certificates to the .pem file.
 
@@ -111,13 +148,40 @@ Limiting the ciphers provided may force (especially older) clients to connect wi
 
 If you still want to force strong encryption use
 
+.TLS cipher selection in cyrus
+[source]
+----
+tls_cipher_list: EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA
+----
+
+
 cyrus-imapd loads hardcoded 1024 bit DH parameters using get_rfc2409_prime_1024() by default. If you want to load your own DH parameters add them PEM encoded to the certificate file given in tls_cert_file. Do not forget to re-add them after updating your certificate.
 
-To prevent unencrypted connections on the STARTTLS ports you can set This way MUAs can only authenticate with plain text authentication schemes after issuing the STARTTLS command. Providing CRAM-MD5 or DIGEST-MD5 methods is not recommended.
+To prevent unencrypted connections on the STARTTLS ports you can set
+
+.Force encrypted connections in cyrus
+[source]
+----
+allowplaintext: no
+----
+
+This way MUAs can only authenticate with plain text authentication schemes after issuing the STARTTLS command. Providing CRAM-MD5 or DIGEST-MD5 methods is not recommended.
 
 To support POP3/IMAP on ports 110/143 with STARTTLS and POP3S/IMAPS on ports 995/993 check the SERVICES section in `cyrus.conf`
 
-=== Limitations
+.STARTTLS for POP3/IMAP and POP3S/IMAPS in cyrus
+[source]
+----
+SERVICES {
+    imap  cmd="imapd -U 30"    listen="imap"  prefork=0 maxchild=100
+    imaps cmd="imapd -s -U 30" listen="imaps" prefork=0 maxchild=100
+    pop3  cmd="pop3d -U 30"    listen="pop3"  prefork=0 maxchild=50
+    pop3s cmd="pop3d -s -U 30" listen="pop3s" prefork=0 maxchild=50
+}
+----
+
+
+==== Limitations
 
 cyrus-imapd currently (2.4.17, trunk) does not support elliptic curve cryptography. Hence, ECDHE will not work even if defined in your cipher list.
 
@@ -125,54 +189,115 @@ Currently there is no way to prefer server ciphers or to disable compression.
 
 There is a working patch for all three features: https://bugzilla.cyrusimap.org/show_bug.cgi?id=3823
 
-=== How to test
+
+==== How to test
 
 [source,terminal]
 ----
 openssl s_client -crlf -connect SERVER.TLD:993
 ----
 
-== Postfix
 
-=== Tested with Versions
+=== Postfix
+
+
+==== Tested with Versions
 
 * Postfix 2.9.6, Debian Wheezy with OpenSSL 1.0.1e
 * Postfix 2.11.0 on Ubuntu 14.04.02 with OpenSSL 1.0.1f
 * Postfix 3.1.0 on Ubuntu 16.04.3 LTS
 
-=== Settings
+
+==== Settings
 
 Postfix has five internal lists of ciphers, and the possibility to switch between those with _smtpd_tls_ciphers_. However, we leave this at its default value for server to server connections, as many mail servers only support outdated protocols and ciphers. We consider bad encryption still better than plain text transmission. For connections to MUAs, TLS is mandatory and the ciphersuite is modified.
 
-==== MX and SMTP client configuration:
+
+===== MX and SMTP client configuration:
 
 As discussed in section <<smtp_general>>, because of opportunistic encryption we do not restrict the list of ciphers or protocols for communication with other mail servers to avoid transmission in plain text. There are still some steps needed to enable TLS, all in `main.cf`:
 
-==== MSA:
+.Opportunistic TLS in Postfix
+[source]
+----
+# TLS parameters
+smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+# log TLS connection info
+smtpd_tls_loglevel = 1
+smtp_tls_loglevel = 1
+# enable opportunistic TLS support in the SMTP server and client
+smtpd_tls_security_level = may
+smtp_tls_security_level = may
+# if you have authentication enabled, only offer it after STARTTLS
+smtpd_tls_auth_only = yes
+tls_ssl_options = NO_COMPRESSION
+----
+
+
+===== MSA:
 
 For the MSA `smtpd` process which communicates with mail clients, we first define the ciphers that are acceptable for the ``mandatory'' security level, again in `main.cf`:
 
+.MSA TLS configuration in Postfix
+[source]
+----
+smtp_tls_mandatory_protocols = !SSLv2, !SSLv3
+smtp_tls_protocols = !SSLv2, !SSLv3
+lmtp_tls_mandatory_protocols = !SSLv2, !SSLv3
+lmtp_tls_protocols = !SSLv2, !SSLv3
+smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
+smtpd_tls_protocols = !SSLv2, !SSLv3
+smtpd_tls_mandatory_ciphers=high
+tls_high_cipherlist=EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA
+----
+
+
 Then, we configure the MSA smtpd in `master.cf` with two additional options that are only used for this instance of smtpd:
+
+.MSA smtpd service configuration in Postfix
+[source]
+----
+# ==========================================================================
+# service type  private unpriv  chroot  wakeup  maxproc command + args
+#               (yes)   (yes)   (no)    (never) (100)
+# ==========================================================================
+# ...
+submission inet n       -       -       -       -       smtpd
+    -o smtpd_tls_security_level=encrypt
+    -o tls_preempt_cipherlist=yes
+# ...
+----
 
 For those users who want to use EECDH key exchange, it is possible to customize this via: The default value since Postfix 2.8 is ``strong''.
 
-=== Limitations
+.EECDH customization in Postfix
+[source]
+----
+smtpd_tls_eecdh_grade = ultra
+----
+
+
+==== Limitations
 
 tls_ssl_options is supported from Postfix 2.11 onwards. You can leave the statement in the configuration for older versions, it will be ignored.
 
 tls_preempt_cipherlist is supported from Postfix 2.8 onwards. Again, you can leave the statement in for older versions.
 
-=== References
+
+==== References
 
 Refer to http://www.postfix.org/TLS_README.html for an in-depth discussion.
 
-=== Additional settings
+
+==== Additional settings
 
 Postfix has two sets of built-in DH parameters that can be overridden with the `smtpd_tls_dh512_param_file` and `smtpd_tls_dh1024_param_file` options. The ``dh512'' parameters are used for export ciphers, while the ``dh1024'' ones are used for all other ciphers.
 
 The ``bit length'' in those parameter names is just a name, so one could use stronger parameter sets; it should be possible to e.g. use the IKE Group14 parameters (see section #section:DH[[section:DH]]) without much interoperability risk, but we have not tested this yet.
 
-=== How to test
+
+==== How to test
 
 You can check the effect of the settings with the following command:
 
@@ -191,16 +316,19 @@ $ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | awk 
 openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 ----
 
-== Exim
 
-=== Tested with Versions
+=== Exim
+
+
+==== Tested with Versions
 
 * Exim 4.82, Debian Jessie
 * Exim 4.82, Ubuntu 14.04.2 with OpenSSL 1.0.1e
 
 It is highly recommended to read http://exim.org/exim-html-current/doc/html/spec_html/ch-encrypted_smtp_connections_using_tlsssl.html first.
 
-==== MSA mode (submission):
+
+===== MSA mode (submission):
 
 In the main config section of Exim add: Don’t forget to add intermediate certificates to the .pem file if needed.
 
@@ -222,7 +350,8 @@ log_selector = <whatever your log_selector already contains> +tls_certificate_ve
 
 to get even more TLS information logged.
 
-==== Server mode (incoming):
+
+===== Server mode (incoming):
 
 In the main config section of Exim add: don’t forget to add intermediate certificates to the .pem file if needed.
 
@@ -248,7 +377,8 @@ log_selector = <whatever your log_selector already contains> +tls_certificate_ve
 
 to get even more TLS information logged.
 
-==== Client mode (outgoing):
+
+===== Client mode (outgoing):
 
 Exim uses opportunistic encryption in the SMTP transport by default.
 
@@ -258,7 +388,8 @@ If you want to use a client certificate (most server certificates can be used as
 
 Do not limit ciphers without a very good reason. In the worst case you end up without encryption at all instead of some weak encryption. Please consult the Exim documentation if you really need to define ciphers.
 
-==== OpenSSL:
+
+===== OpenSSL:
 
 Exim already disables SSLv2 by default. We recommend to add
 
@@ -272,7 +403,8 @@ Note: +all is misleading here since OpenSSL only activates the most common worka
 
 You do not need to set dh_parameters. Exim with OpenSSL by default uses parameter initialization with the "2048-bit MODP Group with 224-bit Prime Order Subgroup" defined in section 2.2 of RFC 5114  (ike23). If you want to set your own DH parameters please read the TLS documentation of exim.
 
-==== GnuTLS:
+
+===== GnuTLS:
 
 GnuTLS is different in only some respects to OpenSSL:
 
@@ -280,30 +412,35 @@ tls_require_ciphers needs a GnuTLS priority string instead of a cipher list. It 
 
 There is no option like openssl_options
 
-==== Exim string expansion:
+
+===== Exim string expansion:
 
 Note that most of the options accept expansion strings. This way you can e.g. set cipher lists or STARTTLS advertisement conditionally. Please follow the link to the official Exim documentation to get more information.
 
-==== Limitations:
+
+===== Limitations:
 
 Exim currently (4.82) does not support elliptic curves with OpenSSL. This means that ECDHE is not used even if defined in your cipher list. There already is a working patch to provide support: http://bugs.exim.org/show_bug.cgi?id=1397
 
-=== How to test
+
+==== How to test
 
 ----
 openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 ----
 
 
-== Cisco ESA/IronPort
+=== Cisco ESA/IronPort
 
-=== Tested with Version
+
+==== Tested with Version
 
 * AsyncOS 7.6.1
 * AsyncOS 8.5.6
 * AsyncOS 9.0.0, 9.5.0, 9.6.0, 9.7.0
 
-=== Settings
+
+==== Settings
 
 Import your certificate(s) using the WEBUI (Network -> Certificates).
 
@@ -352,7 +489,7 @@ sslconfig settings:
 
 Note that starting with AsyncOS 9.0 SSLv3 is disabled by default, whereas the default cipher set is still `RC4-SHA:RC4-MD5:ALL` (see figure <<ach_ironport_ssl_settings>> on page ).
 
-image:img/ach_ironport_ssl_settings.png[Default SSL Settings,scaledwidth=80.0%]
+image:ach_ironport_ssl_settings.png[Default SSL Settings,scaledwidth=80.0%]
 
 {empty}<<ach_ironport_ssl_settings>>
 
@@ -361,23 +498,24 @@ After committing these changes in the CLI, you have to activate the use of TLS i
 For inbound connections, first select the appropriate certificate in the settings of each listener you want to have TLS enabled on (Network -> Listeners, see figure <<ach_ironport_ssl_settings>> on page ). Afterwards, for each listener, configure all Mail Flow Policies which have their Connection Behavior set to ``Accept'' or ``Relay'' to at least prefer TLS (Mail Policies -> Mail Flow Policies, see figure <<ach_ironport_ssl_settings>> on page ). +
 It is recommended to also enable TLS in the default Mail Flow Policy, because these settings will be inherited by newly created policies, unless specifically overwritten. + TLS can be enforced by creating a new Mail Flow Policy with TLS set to ``required'', creating a new Sender Group defining the addresses of the sending mail servers for which you want to enforce encryption (Mail Policies -> HAT Overview) and using this new Sender Group in conjunction with the newly created Mail Flow Policy.
 
-image:img/ach_ironport_listener_cert.png[Listener
+image:ach_ironport_listener_cert.png[Listener
 Settings,scaledwidth=80.0%]
 
 {empty}[[fig:ach_ironport_listener_cert]][fig:ach_ironport_listener_cert]
 
-image:img/ach_ironport_mail_flow_tls.png[Mail Flow Policy Security
+image:ach_ironport_mail_flow_tls.png[Mail Flow Policy Security
 Features,scaledwidth=80.0%]
 
 {empty}[[fig:ach_ironport_mail_flow_tls]][fig:ach_ironport_mail_flow_tls]
 
 TLS settings for outbound connections have to be configured within the Destination Controls (Mail Policies -> Destination Controls). Choose the appropriate SSL certificate within the global settings and configure TLS to be preferred in the default profile to enable it for all outbound connections. After these two steps the Destination Control overview page should look like figure <<ach_ironport_dest_control>> on page . To enforce TLS for a specific destination domain, add an entry to the Destination Control Table and set ``TLS Support'' to ``required''.
 
-image:img/ach_ironport_dest_control.png[Destination Control overview,scaledwidth=80.0%]
+image:ach_ironport_dest_control.png[Destination Control overview,scaledwidth=80.0%]
 
 {empty}[[fig:ach_ironport_dest_control]][fig:ach_ironport_dest_control]
 
-=== Limitations
+
+==== Limitations
 
 All AsyncOS releases prior to version 9.5 use OpenSSL 0.9.8. Therefore TLS 1.2 is not supported in these versions and some of the suggested ciphers won’t work. Starting with AsyncOS 9.5 TLS 1.2 is fully supported.footnote:[http://www.cisco.com/c/dam/en/us/td/docs/security/esa/esa9-5/ESA_9-5_Release_Notes.pdf, Changed Behaviour, page 4] You can check the supported ciphers on the CLI by using the option `verify` from within the `sslconfig` command:
 
@@ -396,9 +534,11 @@ CAMELLIA128-SHA         SSLv3 Kx=RSA      Au=RSA  Enc=Camellia(128) Mac=SHA1
 AES128-SHA              SSLv3 Kx=RSA      Au=RSA  Enc=AES(128)  Mac=SHA1
 ----
 
-=== How to test
+
+==== How to test
 
 ----
 openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 ----
+
 

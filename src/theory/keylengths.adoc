@@ -1,4 +1,3 @@
-[[keylengths]]
 == Keylengths
 
 Recommendations on keylengths need to be adapted regularly. Since this
@@ -30,7 +29,7 @@ lengths based on recommendations by different standardization bodies and
 academic publications. Figure #fig:keylengths.com[1] shows a typical
 comparison of keylengths on this web site.
 
-image:img/keylengths_com.png[Screenshot for 128 bit symmetric key size equivalents,scaledwidth=65.0%]
+image:keylengths_com.png[Screenshot for 128 bit symmetric key size equivalents,scaledwidth=65.0%]
 
 === Summary
 
@@ -51,3 +50,5 @@ however based on the NIST Special Publication 800-57
 footnote:[http://csrc.nist.gov/publications/PubsSPs.html#800-57-part1,
 pages 63 and 64], it is clear that 3DES can only be considered to
 provide for 80 bits / 112 bits security.
+
+

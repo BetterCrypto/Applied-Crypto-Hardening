@@ -1,4 +1,3 @@
-[[section:SHA]]
 == A note on SHA-1
 
 In the last years several weaknesses have been shown for SHA-1. In
@@ -17,3 +16,4 @@ clients is needed.
 Our configurations A and B reflect this. While configuration A does not
 include SHA-1, configuration B does and thus is more compatible with a
 wider range of clients.
+
