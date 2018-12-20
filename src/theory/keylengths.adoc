@@ -33,6 +33,8 @@ comparison of keylengths on this web site.
 
 image:keylengths_com.png[Screenshot for 128 bit symmetric key size equivalents,scaledwidth=65.0%]
 
+// TODO: fix refrence #fig
+
 === Summary
 
 For asymmetric public-key cryptography we consider any key length below
