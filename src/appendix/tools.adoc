@@ -6,53 +6,52 @@ This section lists tools for checking the security settings.
 
 Server checks via the web
 
-https://ssllabs.com[ssllabs.com] offers a great way to check your
-webserver for misconfigurations. See https://www.ssllabs.com/ssltest/.
-Furthermore, ssllabs.com has a good best practices tutorial, which
-focuses on avoiding the most common mistakes in SSL.
+https://ssllabs.com[ssllabs.com] offers a great way to check your webserver for
+misconfigurations. See https://www.ssllabs.com/ssltest/. Furthermore,
+_ssllabs.com_ has a good best practices tutorial, which focuses on avoiding the
+most common mistakes in SSL.
 
-SSL Server certificate installation issues
-https://www.sslshopper.com/ssl-checker.html
+SSL Server certificate installation issues https://www.sslshopper.com/ssl-checker.html
 
 Check SPDY protocol support and basic TLS setup http://spdycheck.org/
 
-XMPP/Jabber Server check (Client-to-Server and Server-to-Server)
-https://xmpp.net/
+XMPP/Jabber Server check (Client-to-Server and Server-to-Server) https://xmpp.net/
 
 Luxsci SMTP TLS Checker https://luxsci.com/extranet/tlschecker.html
 
+TODO: starttls site not available any more.
+
 Does your mail server support StartTLS? https://starttls.info/
+
+DNSsec and DANE support of your domain and e-mail server? https://dane.sys4.de
 
 http://checktls.com is a tool for testing arbitrary TLS services.
 
 http://tls.secg.org is a tool for testing interoperability of HTTPS
 implementations for ECC cipher suites.
 
-http://www.whynopadlock.com/ Testing for mixed SSL parts loaded via http
-that can totally lever your HTTPS.
+http://www.whynopadlock.com/ Testing for mixed SSL parts loaded via http that
+can totally lever your HTTPS.
 
-Browser checks
+=== Browser Checks
 
-Check your browser’s SSL capabilities: https://cc.dcsec.uni-hannover.de/
-and https://www.ssllabs.com/ssltest/viewMyClient.html.
+Check your browser’s SSL capabilities: https://cc.dcsec.uni-hannover.de/ and https://www.ssllabs.com/ssltest/viewMyClient.html.
 
 Check Browsers SSL/TLS support and vulnerability to attacks:
 https://www.howsmyssl.com
 
-Command line tools
+=== Command Line Tools
 
-https://sourceforge.net/projects/sslscan connects to a given SSL service
-and shows the cipher suites that are offered.
+https://sourceforge.net/projects/sslscan connects to a given SSL service and
+shows the cipher suites that are offered.
 
-http://www.bolet.org/TestSSLServer/ tests for BEAST and CRIME
-vulnerabilities.
+http://www.bolet.org/TestSSLServer/ tests for BEAST and CRIME vulnerabilities.
 
-https://github.com/drwetter/testssl.sh checks a server’s service on any
-port for the support of TLS/SSL ciphers, protocols as well as some
-cryptographic flaws (CRIME, BREACH, CCS, Heartbleed).
+https://github.com/drwetter/testssl.sh checks a server’s service on any port for
+the support of TLS/SSL ciphers, protocols as well as some cryptographic flaws
+(CRIME, BREACH, CCS, Heartbleed).
 
-https://github.com/iSECPartners/sslyze Fast and full-featured SSL
-scanner
+https://github.com/iSECPartners/sslyze Fast and full-featured SSL scanner.
 
 https://github.com/jvehent/cipherscan Fast TLS scanner (ciphers, order,
 protocols, key size and more)
@@ -61,26 +60,26 @@ http://nmap.org/ nmap security scanner
 
 http://www.openssl.net OpenSSL s_client
 
+Monitoring TLS services with Zabbix (sorry, German) https://blog.sys4.de/zertifikate-uberwachen-mit-zabbix-de.html
+
 === Key length
 
-http://www.keylength.com comprehensive online resource for comparison of
-key lengths according to common recommendations and standards in
-cryptography.
+http://www.keylength.com comprehensive online resource for comparison of key
+lengths according to common recommendations and standards in cryptography.
 
-=== RNGs
+=== Random Number Generators
 
 http://www.fourmilab.ch/random/[ENT] is a pseudo random number generator
 sequence tester.
 
-http://www.phy.duke.edu/~rgb/General/dieharder.php[Dieharder] a random
-number generator testing tool.
+http://www.phy.duke.edu/~rgb/General/dieharder.php[Dieharder] a random number
+generator testing tool.
 
-http://www.cacert.at/random/[CAcert Random] another random number
-generator testing service.
+http://www.cacert.at/random/[CAcert Random] another random number generator
+testing service.
 
 === Guides
 
-See:
-https://www.ssllabs.com/downloads/SSL_TLS_Deployment_Best_Practices.pdf.
+See: https://www.ssllabs.com/downloads/SSL_TLS_Deployment_Best_Practices.pdf.
 
 
