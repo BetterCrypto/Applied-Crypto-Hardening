@@ -2,15 +2,7 @@
 
 === Oracle
 
-==== Tested with Versions
-
-We do not test this here, since we only reference other papers for Oracle so far.
-
-==== References
-
-Technical safety requirements by _Deutsche Telekom AG_ (German). Please read section 17.12 or pages 129 and following (Req 396 and Req 397) about SSL and ciphersuites http://www.telekom.com/static/-/155996/7/technische-sicherheitsanforderungen-si
-
-// TODO: Fix dead link
+No information available / known.
 
 
 === MySQL
@@ -24,7 +16,7 @@ Technical safety requirements by _Deutsche Telekom AG_ (German). Please read sec
 
 ==== References
 
-MySQL Documentation on link:https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html[Configuring MySQL to Use Encrypted Connections].
+MySQL Documentation on https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html[Configuring MySQL to Use Encrypted Connections].
 
 ==== How to test
 
@@ -74,8 +66,8 @@ TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
 
 ==== References
 
-IBM Db2 Documentation on _Supported cipher suites_. +
-http://pic.dhe.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=%2Fcom.ibm.db2.luw.admin.sec.doc%2Fdoc%2Fc0053544.html
+IBM DB2 Documentation on _Supported cipher suites_. +
+https://www.ibm.com/support/knowledgecenter/SSEPGG_9.7.0/com.ibm.db2.luw.admin.sec.doc/doc/c0053544.html
 
 
 === PostgreSQL
@@ -96,11 +88,11 @@ Starting with version 9.2, you have the possibility to set the path manually.
 
 ==== References
 
-It’s recommended to read link:https://www.postgresql.org/docs/9.1/runtime-config-connection.html#RUNTIME-CONFIG-CONNECTION-SECURITY[Security and Authentication] in the manual.
+It’s recommended to read https://www.postgresql.org/docs/9.1/runtime-config-connection.html#RUNTIME-CONFIG-CONNECTION-SECURITY[Security and Authentication] in the manual.
 
-PostgreSQL Documentation on link:http://www.postgresql.org/docs/9.1/static/ssl-tcp.html[Secure TCP/IP Connections with SSL].
+PostgreSQL Documentation on https://www.postgresql.org/docs/9.1/ssl-tcp.html[Secure TCP/IP Connections with SSL].
 
-PostgreSQL Documentation on link:http://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html[host-based authentication].
+PostgreSQL Documentation on https://www.postgresql.org/docs/9.1/auth-pg-hba-conf.html[Client Authentication].
 
 ==== How to test
 
