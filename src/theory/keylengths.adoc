@@ -1,3 +1,4 @@
+[[keylengths]]
 == Keylengths
 
 Recommendations on keylengths need to be adapted regularly. Since this
