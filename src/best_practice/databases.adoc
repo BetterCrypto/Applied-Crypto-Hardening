@@ -16,7 +16,7 @@ No information available / known.
 
 ==== References
 
-MySQL Documentation on link:https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html[Configuring MySQL to Use Encrypted Connections].
+MySQL Documentation on https://dev.mysql.com/doc/refman/5.7/en/using-encrypted-connections.html[Configuring MySQL to Use Encrypted Connections].
 
 ==== How to test
 
