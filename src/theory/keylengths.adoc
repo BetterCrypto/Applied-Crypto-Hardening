@@ -12,7 +12,8 @@ designer/sysadmin always needs to consider the value of the information
 and how long it must be protected. In other words: consider the number
 of years the data needs to stay confidential.
 
-The ECRYPT II publication  gives a fascinating overview of strengths of
+The http://www.ecrypt.eu.org/ecrypt2/documents.html[ECRYPT II publication]
+gives a fascinating overview of strengths of
 symmetric keys in chapter 5 and chapter 7. Summarizing ECRYPT II, we
 recommend 128 bit of key strength for symmetric keys. In ECRYPT II, this
 is considered safe for security level 7, long term protection.
@@ -24,7 +25,7 @@ conclusion that for an equivalence of 128 bit symmetric size, you will
 need to use an 3248 bit RSA key .
 
 There are a couple of other studies comparing keylengths and their
-respective strengths. The website http://www.keylength.com/ compares
+respective strengths. The website https://www.keylength.com/ compares
 these papers and offers a good overview of approximations for key
 lengths based on recommendations by different standardization bodies and
 academic publications. Figure #fig:keylengths.com[1] shows a typical
@@ -48,8 +49,10 @@ inadequate for long term protection.
 
 We want to note that 3DES theoretically has 168 bits of security,
 however based on the NIST Special Publication 800-57
-footnote:[http://csrc.nist.gov/publications/PubsSPs.html#800-57-part1,
-pages 63 and 64], it is clear that 3DES can only be considered to
+footnote:[https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf,
+page 51], it is clear that 3DES can only be considered to
 provide for 80 bits / 112 bits security.
+
+// TODO: see issue 176
 
 
