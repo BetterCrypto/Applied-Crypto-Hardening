@@ -1,3 +1,4 @@
+[[pkis]]
 == Public Key Infrastructures
 
 Public-Key Infrastructures try to solve the problem of verifying whether
@@ -11,11 +12,12 @@ Certificate Authorities (CAs) sign end-entities’ certificates, thereby
 associating some kind of identity (e.g. a domain name or an email
 address) with a public key. CAs are used with TLS and S/MIME
 certificates, and the CA system has a big list of possible and real
-problems which are summarized in section #sec:hardeningpki[1.2] and .
+problems which are summarized in section <<hardeningpki>> and
+cite:[https13].
 
 The Web of Trust is a decentralized system where people sign each
-other’s keys, so that there is a high chance that there is a ``trust
-path'' from one key to another. This is used with PGP keys, and while it
+other’s keys, so that there is a high chance that there is a "trust
+path" from one key to another. This is used with PGP keys, and while it
 avoids most of the problems of the CA system, it is more cumbersome.
 
 As alternatives to these public systems, there are two more choices:
@@ -63,8 +65,9 @@ number of tools. On Unix-like systems, it is likely that the OpenSSL
 suite is available to you. In this case, you can generate a private key
 and a corresponding certificate request as follows:
 
-....
-% openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize> -sha256
+[source, terminal]
+----
+$ openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize> -sha256
 Country Name (2 letter code) [AU]:DE
 State or Province Name (full name) [Some-State]:Bavaria
 Locality Name (eg, city) []:Munich
@@ -77,7 +80,7 @@ Please enter the following 'extra' attributes
 to be sent with your certificate request
 A challenge password []:
 An optional company name []:
-....
+----
 
 [[sec:setupownca]]
 ==== Setting Up Your Own Certificate Authority
@@ -93,21 +96,23 @@ external trust dependencies.
 Again using OpenSSL as an example, you can set up your own CA with the
 following commands on a Debian system:
 
-....
-% cd /usr/lib/ssl/misc
-% sudo ./CA.pl -newca
-....
+[source, terminal]
+----
+$ cd /usr/lib/ssl/misc
+$ sudo ./CA.pl -newca
+----
 
 Answer the questions according to your setup. Now that you have
 configured your basic settings and issued a new root certificate, you
 can issue new certificates as follows:
 
-....
-% cd /usr/lib/ssl/misc
-% sudo ./CA.pl -newreq
-....
+[source, terminal]
+----
+$ cd /usr/lib/ssl/misc
+$ sudo ./CA.pl -newreq
+----
 
-Alternatively, software such as TinyCA  that acts as a ``wrapper''
+Alternatively, software such as TinyCA that acts as a "wrapper"
 around OpenSSL and tries to make life easier is available.
 
 [[sec:pki:selfsignedcert]]
@@ -124,36 +129,38 @@ entities manually.
 With OpenSSL, you can self-sign a previously created certificate with
 this command:
 
-....
-% openssl req -new -x509 -key privkey.pem -out cacert.pem -days 1095
-....
+[source, terminal]
+----
+$ openssl req -new -x509 -key privkey.pem -out cacert.pem -days 1095
+----
 
 You can also create a self-signed certificate in just one command:
 
-....
-openssl req -new -x509 -keyout privkey.pem -out cacert.pem -days 1095 -nodes -newkey rsa:<keysize> -sha256
-....
+[source, terminal]
+----
+$ openssl req -new -x509 -keyout privkey.pem -out cacert.pem -days 1095 -nodes -newkey rsa:<keysize> -sha256
+----
 
 The resulting certificate will by default not be trusted by anyone at
 all, so in order to be useful, the certificate will have to be made
 known a priori to all parties that may encounter it.
 
-[[sec:hardeningpki]]
+[[hardeningpki]]
 === Hardening PKI
 
 In recent years several CAs were compromised by attackers in order to
 get a hold of trusted certificates for malicious activities. In 2011 the
-Dutch CA Diginotar was hacked and all certificates were revoked .
+Dutch CA Diginotar was hacked and all certificates were revoked cite:[diginotar-hack].
 Recently Google found certificates issued to them, which were not used
-by the company . The concept of PKIs heavily depends on the security of
+by the company cite:[googlecahack]. The concept of PKIs heavily depends on the security of
 CAs. If they get compromised the whole PKI system will fail. Some CAs
 tend to incorrectly issue certificates that were designated to do a
-different job than what they were intended to by the CA .
+different job than what they were intended to by the CA cite:[gocode].
 
 Therefore several security enhancements were introduced by different
-organizations and vendors . Currently two methods are used, DANE  and
-Certificate Pinning . Google recently proposed a new system to detect
-malicious CAs and certificates called Certificate Transparency . In
+organizations and vendors cite:[tschofenig-webpki]. Currently two methods are used, DANE cite:[rfc6698] and
+Certificate Pinning cite:[draft-ietf-websec-key-pinning]. Google recently proposed a new system to detect
+malicious CAs and certificates called Certificate Transparency cite:[certtransparency]. In
 addition, RFC 6844 describes Certification Authorization Records, a
 mechanism for domain name owners to signal which Certificate Authorities
 are authorized to issue certificates for their domain.
@@ -186,24 +193,26 @@ BIND supports CAA records as of version 9.9.6.
 
 A CAA record can be configured by adding it to the zone file:
 
-....
+[source]
+----
 $ORIGIN example.com
        CAA 0 issue "ca1.example"
        CAA 0 iodef "mailto:security@example.com"
-....
+----
 
 If your organization uses multiple CA’s, you can configure multiple
 records:
 
-....
+[source]
+----
       CAA 0 issue "ca1.example"
       CAA 0 issue "ca2.example"
-....
+----
 
-``ca1.example'' and ``ca2.example'' are unique identifiers for the CA
+"ca1.example" and "ca2.example" are unique identifiers for the CA
 you plan on using. These strings can be obtained from your Certificate
 Authority, and typically are its top level domain. An example is
-``letsencrypt.org'' for the Let’s Encrypt CA operated by the Internet
+"letsencrypt.org" for the Let’s Encrypt CA operated by the Internet
 Security Research Group.
 
 Knot-DNS supports CAA records as of version 2.2.0.
@@ -214,21 +223,23 @@ Knot-DNS supports CAA records as of version 2.2.0.
 Once a CAA record is deployed, it can be validated using the following
 dig query:
 
-....
-user@system:~$ dig CAA google.com
+[source, terminal]
+----
+$ dig CAA google.com
  
 ; <<>> DiG 9.10.3-P4-Debian <<>> CAA google.com
  
 ;; ANSWER SECTION:
 google.com.          3600 IN   CAA  0 issue "symantec.com"
-....
+----
 
 On older versions of Dig, which do not support CAA records, you can
 query the record type manually:
 
-....
-dig +short -t TYPE257 google.com
+[source, terminal]
+----
+$ dig +short -t TYPE257 google.com
 \# 19 0005697373756573796D616E7465632E636F6D
-....
+----
 
 

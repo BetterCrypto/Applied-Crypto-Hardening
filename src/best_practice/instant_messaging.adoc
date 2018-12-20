@@ -1,8 +1,10 @@
 == Instant Messaging Systems
 
+
 === General server configuration recommendations
 
-For servers, we mostly recommend to apply what’s proposed by the https://github.com/stpeter/manifesto[Peter’s manifesto].
+For servers, we mostly recommend to apply what’s proposed by the
+https://github.com/stpeter/manifesto[Peter’s manifesto].
 
 In short:
 
@@ -15,6 +17,7 @@ The last point being out-of-scope for this section, we will only cover the first
 
 === ejabberd
 
+
 ==== Tested with Versions
 
 * ejabberd 14.12, Debian 7 Wheezy
@@ -22,9 +25,11 @@ The last point being out-of-scope for this section, we will only cover the first
 * ejabberd 15.03, Ubuntu 14.04 Trusty
 * ejabberd 16.01, Ubuntu 14.04 Trusty
 
+
 ==== Settings
 
-ejabberd is one of the popular Jabber servers. In order to be compliant with the manifesto, you should adapt your configurationfootnote:[https://docs.ejabberd.im/]:
+ejabberd is one of the popular Jabber servers. In order to be compliant with the
+manifesto, you should adapt your configuration:
 
 .TLS setup for ejabberd
 [source,yml]
@@ -37,11 +42,11 @@ listen:
         starttls: true
         starttls_required: true
         protocol_options:
-        - "no_sslv3"
-        - "no_tlsv1"
-        - "cipher_server_preference"
+            - "no_sslv3"
+            - "no_tlsv1"
+            - "cipher_server_preference"
         max_stanza_size: 65536
-        dhfile: "/path/to/dhparams.pem" # Available from version 15.06
+        dhfile: "/path/to/dhparams.pem" // <1>
         shaper: c2s_shaper
         access: c2s
     -
@@ -55,6 +60,8 @@ s2s_protocol_options:
     - "no_tlsv1"
     - "cipher_server_preference"
 ----
+<1> Available from version 15.06
+
 
 ==== Additional settings
 
@@ -71,18 +78,18 @@ listen:
         starttls: true
         starttls_required: true
         protocol_options:
-        - "no_sslv3"
-        - "no_tlsv1"
-        - "cipher_server_preference"
+            - "no_sslv3"
+            - "no_tlsv1"
+         - "cipher_server_preference"
         max_stanza_size: 65536
-        dhfile: "/path/to/dhparams.pem"    <1>
+        dhfile: "/path/to/dhparams.pem"   // <1>
         ciphers: "EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA"
     -
         port: 5269
         module: ejabberd_s2s_in
 s2s_use_starttls: required_trusted
 s2s_certfile: "/path/to/ssl.pem"
-s2s_dhfile: "/etc/ejabberd/dhparams.pem"    <2>
+s2s_dhfile: "/etc/ejabberd/dhparams.pem"  // <2>
 s2s_protocol_options:
     - "no_sslv3"
     - "no_tlsv1"
@@ -97,17 +104,28 @@ s2s_ciphers: "EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+C
 [NOTE]
 .Weak Ciphers
 ====
-Note that we are setting the SSL option `cipher_server_preference`. This enforces our cipher order when negotiating which ciphers are used, as the cipher order of https://blog.thijsalkema.de/blog/2013/09/02/the-state-of-tls-on-xmpp-3/[some clients chooses weak ciphers] over stronger ciphers.
+Note that we are setting the SSL option `cipher_server_preference`. This
+enforces our cipher order when negotiating which ciphers are used, as the cipher
+order of
+https://blog.thijsalkema.de/blog/2013/09/02/the-state-of-tls-on-xmpp-3/[some
+clients chooses weak ciphers] over stronger ciphers.
 ====
 
-Starting with version 15.03footnote:[Early versions seem to have a few bugs - although officially supported, it did not work in tests with version 15.06. Version 16.01 is confirmed to work.], it is possible to use custom Diffie-Hellman-Parameters. This allows us to negotiate stronger Diffie-Hellman-keys, and also helps us avoid problems with using common https://weakdh.org[weak Diffie-Hellman-Parameters]. You can generate your own parameter file by running:
+Starting with version 15.03footnote:[Early versions seem to have a few bugs -
+although officially supported, it did not work in tests with version 15.06.
+Version 16.01 is confirmed to work.], it is possible to use custom
+Diffie-Hellman-Parameters. This allows us to negotiate stronger
+Diffie-Hellman-keys, and also helps us avoid problems with using common
+https://weakdh.org[weak Diffie-Hellman-Parameters]. You can generate your own
+parameter file by running:
 
 [source,terminal]
 ----
 $ openssl dhparam -out dhparams.pem 4096
 ----
 
-By default, ejabberd provides an administration website (look for the ejabberd_http module). Enable TLS protection for it like this:
+By default, ejabberd provides an administration website (look for the
+ejabberd_http module). Enable TLS protection for it like this:
 
 [source,yml]
 ----
@@ -121,13 +139,17 @@ By default, ejabberd provides an administration website (look for the ejabberd_h
     tls: true
 ----
 
+
 ==== Tested with Versions
 
 * Debian Wheezy 2.1.10-4+deb7u1
 
+
 ==== Settings
 
-Older versions of ejabberd use a different configuration file syntax. In order to be compliant with the manifesto, you should adapt your configurationfootnote:[https://docs.ejabberd.im] as follows:
+Older versions of ejabberd use a different configuration file syntax. In order
+to be compliant with the manifesto, you should adapt your
+configurationfootnote:[https://docs.ejabberd.im] as follows:
 
 ----
 {listen,
@@ -145,35 +167,53 @@ Older versions of ejabberd use a different configuration file syntax. In order t
 {s2s_certfile, "/etc/ejabberd/ejabberd.pem"}.
 ----
 
+
 ==== Additional settings
 
-Older versions of ejabberd (latexmath:[$<$] 2.0.0) need to be patchedfootnote:[http://hyperstruct.net/2007/06/20/installing-the-startcom-ssl-certificate-in-ejabberd/] to be able to parse all of the certificates in the CA chain. Specifying a custom cipher string is only possible starting with version 13.12 (see configuration for version 14.12 above).
+Older versions of ejabberd (< 2.0.0) need to be
+https://hyperstruct.net/2007/06/20/installing-the-startcom-ssl-certificate-in-ejabberd/[patched]
+to be able to parse all of the certificates in the CA chain. Specifying a custom
+cipher string is only possible starting with version 13.12 (see configuration
+for version 14.12 above).
+
 
 ==== References
 
 * https://docs.ejabberd.im/[ejabberd, your superpowerful messaging framework]
 
+
 ==== How to test
 
-https://xmpp.net[IM Observatory] is a useful website to test Jabber server configurations.
+https://xmpp.net[IM Observatory] is a useful website to test Jabber server
+configurations.
+
 
 === Chat privacy - Off-the-Record Messaging (OTR)
 
-https://otr.cypherpunks.ca/Protocol-v3-4.1.1.html[Off-the-Record Messaging Protocol] works on top of the Jabber protocol. It adds to popular chat clients (Adium, Pidgin...) the following properties for encrypted chats:
+https://otr.cypherpunks.ca/Protocol-v3-4.1.1.html[Off-the-Record Messaging
+Protocol] works on top of the Jabber protocol. It adds to popular chat clients
+(Adium, Pidgin...) the following properties for encrypted chats:
 
 * Authentication
 * Integrity
 * Confidentiality
 * Forward secrecy
 
-It basically uses Diffie-Hellman, AES and SHA1. Communicating over an insecure instant messaging network, OTR can be used for end to end encryption.
+It basically uses Diffie-Hellman, AES and SHA1. Communicating over an insecure
+instant messaging network, OTR can be used for end to end encryption.
 
-There are no specific configurations required but the protocol itself is worth to be mentioned.
+There are no specific configurations required but the protocol itself is worth
+to be mentioned.
 
 
 === Charybdis
 
-There are numerous implementations of IRC servers. In this section, we choose _Charybdis_ which serves as basis for https://github.com/freenode/ircd-seven[ircd-seven], developed and used by freenode. Freenode is actually the biggest IRC network http://irc.netsplit.de/networks/top10.php[IRC-Netze - Top 10 im Jahresvergleich]. _Charybdis_ is part of the _Debian_ & _Ubuntu_ distributions.
+There are numerous implementations of IRC servers. In this section, we choose
+_Charybdis_ which serves as basis for
+https://github.com/freenode/ircd-seven[ircd-seven], developed and used by
+freenode. Freenode is actually the biggest IRC
+networkfootnote:[http://irc.netsplit.de/networks/top10.php[IRC-Netze - Top 10 im
+Jahresvergleich]]. _Charybdis_ is part of the _Debian_ & _Ubuntu_ distributions.
 
 .SSL relevant configuration for Charybdis/ircd-seven
 ----
@@ -195,8 +235,11 @@ listen {
 
 === SILC
 
-http://www.silcnet.org[SILC] is instant messaging protocol publicly released in 2000. SILC is a per-default https://en.wikipedia.org/wiki/SILC_(protocol)[secure chat protocol] thanks to a generalized usage of symmetric encryption. Keys are generated by the server meaning that if compromised, communication could be compromised.
+http://www.silcnet.org[SILC] is instant messaging protocol publicly released in
+2000. SILC is a per-default https://en.wikipedia.org/wiki/SILC_(protocol)[secure
+chat protocol] thanks to a generalized usage of symmetric encryption. Keys are
+generated by the server meaning that if compromised, communication could be
+compromised.
 
 The protocol is not really popular anymore.
-
 
