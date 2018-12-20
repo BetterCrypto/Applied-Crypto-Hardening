@@ -1,3 +1,5 @@
+[[sha]]
+
 == A note on SHA-1
 
 In the last years several weaknesses have been shown for SHA-1. In
