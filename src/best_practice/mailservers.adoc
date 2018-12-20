@@ -641,9 +641,11 @@ $ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 
 Import your certificate(s) using the WEBUI (Network -> Certificates).
 
-From AsyncOS 9.0 and up, SSL parameters for inbound SMTP, outbound SMTP and GUI access can be configured in one step via the WEBUI (System Administration -> SSL Configuration, see figure <<ach_ironport_ssl_settings>> on page
-). +
-For all versions prior to 9.0, you have to connect to the CLI and configure the SSL parameters separately, as shown below using inbound SMTP as example.
+From AsyncOS 9.0 and up, SSL parameters for inbound SMTP, outbound SMTP and GUI
+access can be configured in one step via the WEBUI (System Administration ->
+SSL Configuration, see figure <<ach_ironport_ssl_settings>>).  For all versions
+prior to 9.0, you have to connect to the CLI and configure the SSL parameters
+separately, as shown below using inbound SMTP as example.
 
 [source,terminal]
 ----
@@ -691,28 +693,53 @@ default cipher set is still `RC4-SHA:RC4-MD5:ALL` (see figure
 <<ach_ironport_ssl_settings>>).
 ====
 
-{empty}<<ach_ironport_ssl_settings>>
+.IronPort Default SSL Settings
+[#ach_ironport_ssl_settings]
+image::ach_ironport_ssl_settings.png[IronPort Default SSL Settings,scaledwidth=80.0%]
 
-After committing these changes in the CLI, you have to activate the use of TLS in several locations.
+After committing these changes in the CLI, you have to activate the use of TLS
+in several locations.
 
-For inbound connections, first select the appropriate certificate in the settings of each listener you want to have TLS enabled on (Network -> Listeners, see figure <<ach_ironport_ssl_settings>> on page ). Afterwards, for each listener, configure all Mail Flow Policies which have their Connection Behavior set to ``Accept'' or ``Relay'' to at least prefer TLS (Mail Policies -> Mail Flow Policies, see figure <<ach_ironport_ssl_settings>> on page ). +
-It is recommended to also enable TLS in the default Mail Flow Policy, because these settings will be inherited by newly created policies, unless specifically overwritten. + TLS can be enforced by creating a new Mail Flow Policy with TLS set to ``required'', creating a new Sender Group defining the addresses of the sending mail servers for which you want to enforce encryption (Mail Policies -> HAT Overview) and using this new Sender Group in conjunction with the newly created Mail Flow Policy.
+For inbound connections, first select the appropriate certificate in the
+settings of each listener you want to have TLS enabled on (Network ->
+Listeners, see figure <<ach_ironport_ssl_settings>>). Afterwards, for each
+listener, configure all Mail Flow Policies which have their Connection Behavior
+set to ``Accept'' or ``Relay'' to at least prefer TLS (Mail Policies -> Mail
+Flow Policies, see figure <<ach_ironport_ssl_settings>>). It is recommended to
+also enable TLS in the default Mail Flow Policy, because these settings will be
+inherited by newly created policies, unless specifically overwritten. + TLS can
+be enforced by creating a new Mail Flow Policy with TLS set to ``required'',
+creating a new Sender Group defining the addresses of the sending mail servers
+for which you want to enforce encryption (Mail Policies -> HAT Overview) and
+using this new Sender Group in conjunction with the newly created Mail Flow
+Policy.
 
-image:ach_ironport_listener_cert.png[Listener
-Settings,scaledwidth=80.0%]
+.IronPort Listener Settings
+[#ach_ironport_listener_cert]
+image::ach_ironport_listener_cert.png[IronPort Listener Settings,scaledwidth=80.0%]
 
-{empty}[[fig:ach_ironport_listener_cert]][fig:ach_ironport_listener_cert]
+// {empty}[[ach_ironport_listener_cert]][ach_ironport_listener_cert]
 
-image:ach_ironport_mail_flow_tls.png[Mail Flow Policy Security
-Features,scaledwidth=80.0%]
+.IronPort Mail Flow Policy Security Features
+[#ach_ironport_mail_flow_tls]
+image::ach_ironport_mail_flow_tls.png[IronPort Mail Flow Policy Security Features,scaledwidth=80.0%]
 
-{empty}[[fig:ach_ironport_mail_flow_tls]][fig:ach_ironport_mail_flow_tls]
+// {empty}[[ach_ironport_mail_flow_tls]][ach_ironport_mail_flow_tls]
 
-TLS settings for outbound connections have to be configured within the Destination Controls (Mail Policies -> Destination Controls). Choose the appropriate SSL certificate within the global settings and configure TLS to be preferred in the default profile to enable it for all outbound connections. After these two steps the Destination Control overview page should look like figure <<ach_ironport_dest_control>> on page . To enforce TLS for a specific destination domain, add an entry to the Destination Control Table and set ``TLS Support'' to ``required''.
+TLS settings for outbound connections have to be configured within the
+Destination Controls (Mail Policies -> Destination Controls). Choose the
+appropriate SSL certificate within the global settings and configure TLS to be
+preferred in the default profile to enable it for all outbound connections.
+After these two steps the Destination Control overview page should look like
+figure <<ach_ironport_dest_control>> on page . To enforce TLS for a specific
+destination domain, add an entry to the Destination Control Table and set ``TLS
+Support'' to ``required''.
 
-image:ach_ironport_dest_control.png[Destination Control overview,scaledwidth=80.0%]
+.IronPort Destination Control overview
+[#ach_ironport_dest_control]
+image::ach_ironport_dest_control.png[Destination Control overview,scaledwidth=80.0%]
 
-{empty}[[fig:ach_ironport_dest_control]][fig:ach_ironport_dest_control]
+// {empty}[[ach_ironport_dest_control]][ach_ironport_dest_control]
 
 
 ==== Limitations
