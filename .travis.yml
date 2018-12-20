@@ -15,8 +15,17 @@ addons:
       - ruby-dev
       - zlib1g-dev
 
+env:
+  - secure: "mVW60xjJ9bFgtW7oT+kndfgrV1TVStKL5XoyGCSMqZxj8CQAWsZiWSTB0CQvzSbVw/JBvHdc9ESmlUs/rgURI6Dh1fyVZn62CANtZApA+BO7KvOMKp2GqFotPOfFh6uWde6GsWTBzBC71toyS1e50fgM9/AOM6vpxdZS1AayLTE="
+
 install:
   - set -e
+  - openssl aes-256-cbc -d
+        -pass env:SSH_PRIVATE_KEY_DECRYPT_PASSWORD
+        -in tools/ci/id_rsa.aes-256-cbc.enc
+        -out ~/.ssh/id_rsa
+  - chmod 400 ~/.ssh/id_rsa
+  - cp tools/ci/known_hosts ~/.ssh/known_hosts
   - gem install bundler
   - bundle install
   - bundle outdated || true
@@ -37,3 +46,6 @@ script:
   - '[[ -z ${TRAVIS_BRANCH} ]] || tools/ci/copy-build.sh build/branches/${TRAVIS_BRANCH//\//-}'
   - '[[ -z ${TRAVIS_TAG} ]] || tools/ci/copy-build.sh build/tags/${TRAVIS_TAG//\//-}'
   - find build -type f | sort
+  - rsync --archive --progress
+        build/
+        travis@www.bettercrypto.org:/home/travis/public_html/build/
