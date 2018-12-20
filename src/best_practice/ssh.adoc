@@ -1,8 +1,31 @@
 == SSH
 
-foo
+This section documents the Secure Shell (SSH) protocol. SSH is used to
+remotely manage computer systems, secururly transfer files over
+untrusted networks and to create "ad-hoc" virtual-private networks.
+
+SSH is defined by the following Internet Standards (RFCs):
+
+[options="header"]
+.SSH Standards
+|====
+| RFC  | Title                                           | Link
+| 4251 | The Secure Shell (SSH) Protocol Architecture    | https://tools.ietf.org/html/rfc4251
+| 4252 | The Secure Shell (SSH) Authentication Protocol  | https://tools.ietf.org/html/rfc4252
+| 4253 | The Secure Shell (SSH) Transport Layer Protocol | https://tools.ietf.org/html/rfc4253
+| 6668 | SHA-2 Data Integrity Verification for the Secure Shell (SSH) Transport Layer Protocol | https://tools.ietf.org/html/rfc6668
+| 8268 | More Modular Exponentiation (MODP) Diffie-Hellman (DH) Key Exchange (KEX) Groups for Secure Shell (SSH) | https://tools.ietf.org/html/rfc8268
+| 8308 | Extension Negotiation in the Secure Shell (SSH) Protocol | https://tools.ietf.org/html/rfc8308
+| 8332 | Use of RSA Keys with SHA-256 and SHA-512 in the Secure Shell (SSH) Protocol | https://tools.ietf.org/html/rfc8332
+|====
+
 
 === OpenSSH
+
+https://www.openssh.com/[OpenSSH] is the most popular implementation
+of the SSH protocol. It is maintained by the
+https://openbsd.org[OpenBSD] project and portable versions are
+disitributed with many unix-like operating-systems and Windows Server.
 
 ==== Tested with Version
 
