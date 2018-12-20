@@ -19,27 +19,27 @@ HSTS also helps to avoid unintentional mistakes such as insecure links to a
 secure web site (missing HTTPS links
 footnote:[Thus, it might be useful for fixing HTTPS mixed-content related
 errors, see
-https://community.qualys.com/blogs/securitylabs/2014/03/19/https-mixed-content-still-the-easiest-way-to-break-ssl.]),
-and mistyped HTTPS URLs.
+https://community.qualys.com/blogs/securitylabs/2014/03/19/https-mixed-content-still-the-easiest-way-to-break-ssl.]), and mistyped HTTPS URLs.
 
 After the web browser receives a HSTS header in a _correctly_
 footnote:[Website must load without SSL/TLS browser warnings (certificate is
 issued by a trusted CA, contains correct DNS name, it is time valid, etc.).]
 prepared SSL session it will automatically use secure HTTPS links for accessing
 the server.
+
 This prevents unencrypted HTTP access (SSL striping, mistyped HTTPS URLs, etc.)
 when the server is accessed later by the client.
 
-When a server (that previously emitted a HSTS header) starts using an untrusted
-certificate, complying user agents must show an error message and
-_block the server connection_.
-Thus impersonation MITM attack with _untrusted_ certificates cannot occur.
+When a server (that previously emitted a HSTS header) starts using an
+untrusted certificate, complying user agents must show an error
+message and _block the server connection_.  Thus impersonation MITM
+attack with _untrusted_ certificates cannot occur.
 
 For the initial setup HSTS header needs a trusted secure connection over HTTPS.
 This limitation can be addressed by compiling a list of STS enabled sites
 directly into a browser.
-footnote:[List of the preloaded sites can be found at https://dev.chromium.org/sts.
-This list is managed by Google/Chrome but it is also used by Firefox
+footnote:[List of the preloaded sites can be found at https://www.chromium.org/hsts.
+This list is managed by Google/Chrome, but it is also used by Firefox
 https://wiki.mozilla.org/Privacy/Features/HSTS_Preload_List]
 
 ==== HSTS Header Directives
@@ -55,7 +55,7 @@ should enforce the HSTS policy (after the reception of the STS header field from
 a server).
 
 _includeSubdomains_ is an optional directive.
-This directive indicates that the HSTS Policy applies to this HSTS Host as well
+This directive indicates that the HSTS policy applies to this HSTS host as well
 as _any subdomains of the host's domain name_.
 
 ==== HSTS Client Support
@@ -105,7 +105,7 @@ HSTS can be tested either using locally or through the Internet.
 
 For local testing it is possible to utilize Chrome Web browser UI by typing
 chrome://net-internals/#hsts
-footnote:[see http://blog.chromium.org/2011/06/new-chromium-security-features-june.html]
+footnote:[see https://blog.chromium.org/2011/06/new-chromium-security-features-june.html]
 in the address bar.
 
 Testing over the Internet can be conducted by Qualys SSL Labs test
@@ -115,19 +115,16 @@ _Protocol Details_ section.
 
 ==== References
 
-* Websites Must Use HSTS in Order to Be Secure:
-https://www.eff.org/deeplinks/2014/02/websites-hsts
-* OWASP: HTTP Strict Transport Security:
-https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
+* Websites Must Use HSTS in Order to Be Secure: https://www.eff.org/deeplinks/2014/02/websites-hsts
+* OWASP: HTTP Strict Transport Security: https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
 * HSTS Browser Compatibility List: https://caniuse.com/stricttransportsecurity
-* RFC 6797:HTTP Strict Transport Security (HSTS) - Examples:
-https://tools.ietf.org/html/rfc6797#section-6.2
+* RFC 6797:HTTP Strict Transport Security (HSTS) - Examples: https://tools.ietf.org/html/rfc6797#section-6.2
 
 [[hpkp]]
 === HTTP Public Key Pinning (HPKP)
 
 Much like HTTP Strict Transport Security (HSTS), HTTP Public Key Pinning (HPKP)
-is a Trust On First Use (TOFU) mechanism.
+is a Trust-On-First-Use (TOFU) mechanism.
 It protects HTTPS websites from impersonation using certificates issued by
 compromised certificate authorities.
 The data for Pinning is supplied by an HTTP-Header sent by the WebServer.
@@ -150,16 +147,16 @@ HPKP header can be parametrized by following directives:
 It can and should be used several (at least two) times for specifying the public
 keys of your domain-certificates or CA-certificates.
 Operators can pin any one or more of the public keys in the certificate-chain,
-and indeed must pin to issuers not in the chain (as, for example, a Backup Pin).
+and indeed must pin to issuers not in the chain (as, for example, a backup-pin).
 Pinning to an intermediate issuer, or even to a trust anchor or root, still
 significantly reduces the number of issuers who can issue end-entity
 certificates for the Known Pinned Host, while still giving that host flexibility
 to change keys without a disruption of service.
-OpenSSL can be used to convert the Public Key of an X509-Certificate as follows:
+OpenSSL can be used to convert the public-key of an X509-certificate as follows:
 
-[source]
+[source,terminal]
 ----
-openssl x509 -in <certificate.cer> -pubkey -noout |
+$ openssl x509 -in <certificate.cer> -pubkey -noout |
  openssl rsa -pubin -outform der |
  openssl dgst -sha256 -binary |
  openssl enc -base64
@@ -172,29 +169,31 @@ converts it do DER (binary) format, calculates an SHA256 Hash and finally
 encodes it Base64.
 The output (including the ending Equal-Sign) is exactly whats needed for the
 _pin-sha256="<YOUR_PUBLICKEY_HASH=>"_ parameter.
-To generate the Hash for a prepared Backup-Key just create a
-Certificate-Signing-Request and replace "`+openssl x509+`" by
-"`+openssl req -in <backup-cert.csr> -pubkey -noout`+" as first OpenSSL
-command. +
-Instead of using OpenSSL even WebServices like
+
+To generate the hash for a prepared backup-key just create a
+certificate-signing-request and replace `openssl x509` by
+`openssl req -in <backup-cert.csr> -pubkey -noout` as first OpenSSL
+command.
+
+Instead of using OpenSSL even web-services like
 https://report-uri.io/home/pkp_hash/ can be used to get a suggestion for the
-possible Public-Key-Hashes for a given WebSite.
+possible Public-Key-Hashes for a given website.
 
 *max-age* is a required directive (when using the _Public-Key-Pins_ header).
 This directive specifies the number of seconds during which the user agent
-should regard the host (from whom the message was received) as a Known Pinned
-Host.
+should regard the host (from whom the message was received) as a "Known Pinned
+Host".
 
 *includeSubdomains* is an optional directive.
-This directive indicates that the same pinning applies to this Host as well as
+This directive indicates that the same pinning applies to this host as well as
 _any subdomains of the host's domain name_.
-Be careful - you need to use a Multi-Domain/Wildcard-Certificate or use the same
-Pub/Private-Keypair in all Subdomain-Certificates or need to pin to
-CA-Certificates signing all your Subdomain-Certificates.
+Be careful - you need to use a multi-domain/wildcard-certificate or use the same
+pub/private-keypair in all subdomain-certificates or need to pin to
+CA-certificates signing all your subdomain-certificates.
 
 *report-uri* is an optional directive.
-The presence of a report-uri directive indicates to the Browser that in the
-event of Pin Validation failure it should post a report to the report-uri
+The presence of a report-uri directive indicates to the web-browser that in the
+event of pin-validation failure, it should post a report to the report-uri
 (HTTP-Post is done using JSON, Syntax see {RFC-7469 Section 3}
 footnote:[https://tools.ietf.org/html/rfc7469\#section-3]).
 There are WebServices like https://report-uri.io/ out there which can be used to
@@ -206,12 +205,13 @@ HPKP is supported footnote:[https://caniuse.com/\#feat=publickeypinning] by
 these web browsers:
 
 * Firefox version >= 35
-* Chrome version >= 38
+* Chrome version between version 38 and 72
 * Android Browser >= 44
 * Opera version >= 25
 
-Currently (16. Oct 2015) there is no HPKP Support in: Apple Safari, Microsoft
-Internet Explorer and Edge.
+Currently (20. Dec 2018) there is no HPKP support in: Apple Safari,
+Microsoft Internet Explorer and Edge. HPKP Support has been removed
+from Google Chrome and Chromium from version 72 onwards.
 
 ==== HPKP Considerations
 
@@ -219,14 +219,14 @@ Before enabling HPKP it is recommended to consider following:
 
 * Which Public-Keys to use for Pinning (Certificate + Backup-Certificate, CAs,
 Intermediate-CAs)
-* Proper value of _max-age_.
-Start testing with a short Period, increase Period after deployment.
+* Proper value of _max-age_. Start testing with a short Period, increase Period after deployment.
 * Be careful when using _includeSubdomains_, are all your subdomains covered by
 the defined Public-Key-Hashes?
 
 The administrators are advised to watch for expiration of the SSL certificate
 and handle the renewal process with caution.
-If a SSL certificate is renewed without keeping the Public-Key (reusing the CSR)
+
+If a SSL certificate is renewed without keeping the public-key (reusing the CSR)
 for an HPKP enabled domain name, the connection to site will break (without
 providing override mechanism to the end user).
 
@@ -234,7 +234,7 @@ providing override mechanism to the end user).
 
 HPKP can be tested either using locally or through the Internet.
 
-There is a handy Bash-Script which uses OpenSSL for doing several SSL/TLS-Tests
+There is a handy bash-script which uses OpenSSL for doing several SSL/TLS-Tests
 available at https://testssl.sh/
 
 [source, terminal]
@@ -242,7 +242,7 @@ available at https://testssl.sh/
 wget -q https://testssl.sh/testssl.sh
 wget -q https://testssl.sh/mapping-rfc.txt
 chmod 755 ./testssl.sh
-./testssl.sh https://your-domain.com
+./testssl.sh https://example.com
 
 # Sample Output, just HSTS and HPKP Section (Full report is quite long!):
 Strict Transport Security    182 days=15724800 s, includeSubDomains
@@ -250,10 +250,10 @@ Public Key Pinning # of keys: 2, 90 days=7776000 s, just this domain
            matching host key: pG3WsstDsfMkRdF3hBClXRKYxxKUJIOu8DwabG8MFrU
 ----
 
-For local testing it is possible to utilize Google Chrome Web browser, just open
+For local testing it is possible to utilize Google Chrome web-browser, just open
 the Chrome net-internals-URL: chrome://net-internals/#hsts.
 
-For Mozilla Firefox there is an Plug-In provided by the "Secure Information
+For Mozilla Firefox there is an plug-in provided by the "Secure Information
 Technology Center Austria" available:
 https://demo.a-sit.at/firefox-plugin-highlighting-safety-information/
 
@@ -267,8 +267,6 @@ https://report-uri.io/home/pkp_analyse.
 
 ==== References
 
-* OWASP: Certificate and Public Key Pinning:
-https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning
+* OWASP: Certificate and Public Key Pinning: https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning
 * HPKP Browser Compatibility List: https://caniuse.com/\#feat=publickeypinning
-* RFC 7469:Public Key Pinning Extension for HTTP - Examples:
-https://tools.ietf.org/html/rfc7469\#section-2.1.5
+* RFC 7469:Public Key Pinning Extension for HTTP - Examples: https://tools.ietf.org/html/rfc7469\#section-2.1.5
