@@ -11,7 +11,8 @@ designer/sysadmin always needs to consider the value of the information
 and how long it must be protected. In other words: consider the number
 of years the data needs to stay confidential.
 
-The ECRYPT II publication  gives a fascinating overview of strengths of
+The http://www.ecrypt.eu.org/ecrypt2/documents.html[ECRYPT II publication]
+gives a fascinating overview of strengths of
 symmetric keys in chapter 5 and chapter 7. Summarizing ECRYPT II, we
 recommend 128 bit of key strength for symmetric keys. In ECRYPT II, this
 is considered safe for security level 7, long term protection.
