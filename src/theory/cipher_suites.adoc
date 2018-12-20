@@ -1,14 +1,34 @@
-[[ciphersuites]]
 == Cipher suites
+[[ciphersuites]]
+//TODO Team: section <<CipherSuites>> is currently a bit messy. Re-do it
 
-[architecture]
+
 === Architectural overview 
+[[architecture]]
+include::./theory/cipher_suites/architecture.adoc
 
-[PFS]
+
 === Forward Secrecy
+[[PFS]]
+include::./theory/cipher_suites/forward.adoc
 
-[recommendedciphers]
+
 === Recommended cipher suites
+[[recommendedciphers]]
+include::./theory/cipher_suites/recommended.adoc
 
-[subsection:compatibility]
+
+// === Known insecure and weak cipher suites
+// include::./theory/cipher_suites/insecure.adoc
+
+
 === Compatibility
+[[compatibility]]
+include::./theory/cipher_suites/compatibility.adoc
+
+
+//  XXX author: (Adi) can we either have this completed or removed? XXX
+// === Choosing your own cipher suites
+// [[ChoosingYourOwnCipherSuites]]
+// include::./theory/cipher_suites/choosing.tex"
+
