@@ -137,10 +137,10 @@ unknown configuration parameters. Does not support `ssl_prefer_server_ciphers`.
 
 [source,terminal]
 ----
-$ openssl s_client -crlf -connect SERVER.TLD:993
-$ openssl s_client -crlf -connect SERVER.TLD:995
-$ openssl s_client -crlf -starttls imap -connect SERVER.TLD:143
-$ openssl s_client -crlf -starttls pop3 -connect SERVER.TLD:110
+$ openssl s_client -crlf -connect example.com:993
+$ openssl s_client -crlf -connect example.com:995
+$ openssl s_client -crlf -starttls imap -connect example.com:143
+$ openssl s_client -crlf -starttls pop3 -connect example.com:110
 ----
 
 https://github.com/nabla-c0d3/sslyze/releases[SSLyze] offers scanning for
@@ -148,10 +148,10 @@ common vulnerabilities and displays Protocols and Cipher-Suites.
 
 [source,terminal]
 ----
-$ sslyze.exe --regular SERVER.TLD:993
-$ sslyze.exe --regular SERVER.TLD:995
-$ sslyze.exe --regular --starttls=imap SERVER.TLD:143
-$ sslyze.exe --regular --starttls=pop3 SERVER.TLD:110
+$ sslyze.exe --regular example.com:993
+$ sslyze.exe --regular example.com:995
+$ sslyze.exe --regular --starttls=imap example.com:143
+$ sslyze.exe --regular --starttls=pop3 example.com:110
 ----
 
 
@@ -238,7 +238,7 @@ There is a working https://bugzilla.cyrusimap.org/show_bug.cgi?id=3823[patch] fo
 
 [source,terminal]
 ----
-$ openssl s_client -crlf -connect SERVER.TLD:993
+$ openssl s_client -crlf -connect example.com:993
 ----
 
 
@@ -383,7 +383,7 @@ $ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | awk 
 
 [source,terminal]
 ----
-$ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
+$ openssl s_client -starttls smtp -crlf -connect example.com:25
 ----
 
 
@@ -617,7 +617,7 @@ working https://bugs.exim.org/show_bug.cgi?id=1397[patch] to provide support.
 
 [source]
 ----
-$ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
+$ openssl s_client -starttls smtp -crlf -connect example.com:25
 ----
 
 
@@ -774,7 +774,7 @@ AES128-SHA              SSLv3 Kx=RSA      Au=RSA  Enc=AES(128)  Mac=SHA1
 
 [source,terminal]
 ----
-$ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
+$ openssl s_client -starttls smtp -crlf -connect example.com:25
 ----
 
 
