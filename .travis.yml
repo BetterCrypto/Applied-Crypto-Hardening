@@ -14,12 +14,8 @@ addons:
 
 install:
   - set -e
-  - gem install --pre
-        asciidoctor-pdf
-        asciidoctor-bibliography
-        asciidoctor-diagram
-        concurrent-ruby
-        pygments.rb
+  - gem install bundler
+  - bundle install
 
 script:
   - set -e
