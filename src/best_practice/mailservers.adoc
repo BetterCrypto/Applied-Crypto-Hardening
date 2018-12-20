@@ -74,12 +74,17 @@ For MDA operation we recommend:
 
 ==== Tested with Version
 
-* Dovecot 2.1.7, Debian Wheezy (without: “`ssl_prefer_server_ciphers`“)
-* Dovecot 2.2.9, Debian Jessie
-* Dovecot 2.2.13, Debian 8.2 Jessie
-* Dovecot 2.0.19apple1 on OS X Server 10.8.5 (without: “`ssl_prefer_server_ciphers`“)
-* Dovecot 2.2.9 on Ubuntu 14.04 trusty
-* Dovecot 2.2.31 on Ubuntu 16.04.3 LTS
+[options="header"]
+.Tested Dovecot Versions
+|====
+| Program Version | OS/Distribution/Version | Comment
+| 2.1.7           | Debian Wheezy           | without `ssl_prefer_server_ciphers`
+| 2.2.9           | Debian Jessie           |
+| 2.2.13          | Debian 8.2 Jessie       |
+| 2.0.19apple1    | OS X Server 10.8.5      | without `ssl_prefer_server_ciphers`
+| 2.2.9           | Ubuntu 14.04 Trusty     |
+| 2.2.31          | Ubuntu 16.04.3 LTS      |
+|====
 
 ==== Settings
 
@@ -149,7 +154,12 @@ sslyze.exe --regular --starttls=pop3 SERVER.TLD:110
 
 ==== Tested with Versions
 
-* 2.4.17
+[options="header"]
+.Tested cyrus-imapd Versions
+|====
+| Program Version | OS/Distribution/Version | Comment
+| 2.4.17          |                         |
+|====
 
 
 ==== Settings
@@ -231,9 +241,14 @@ openssl s_client -crlf -connect SERVER.TLD:993
 
 ==== Tested with Versions
 
-* Postfix 2.9.6, Debian Wheezy with OpenSSL 1.0.1e
-* Postfix 2.11.0 on Ubuntu 14.04.02 with OpenSSL 1.0.1f
-* Postfix 3.1.0 on Ubuntu 16.04.3 LTS
+[options="header"]
+.Tested Postfix Versions
+|====
+| Program Version | OS/Distribution/Version | Comment
+| 2.9.6           | Debian Wheezy           | with OpenSSL 1.0.1e
+| 2.11.0          | Ubuntu 14.04.02         | with OpenSSL 1.0.1f
+| 3.1.0           | Ubuntu 16.04.3 LTS      |
+|====
 
 
 ==== Settings
@@ -370,8 +385,13 @@ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 
 ==== Tested with Versions
 
-* Exim 4.82, Debian Jessie
-* Exim 4.82, Ubuntu 14.04.2 with OpenSSL 1.0.1e
+[options="header"]
+.Tested Exim Versions
+|====
+| Program Version | OS/Distribution/Version | Comment
+| 4.82            | Debian Jessie           |
+| 4.82            | Ubuntu 14.04.2          | with OpenSSL 1.0.1e
+|====
 
 It is highly recommended to read http://exim.org/exim-html-current/doc/html/spec_html/ch-encrypted_smtp_connections_using_tlsssl.html first.
 
@@ -491,9 +511,17 @@ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 
 ==== Tested with Version
 
-* AsyncOS 7.6.1
-* AsyncOS 8.5.6
-* AsyncOS 9.0.0, 9.5.0, 9.6.0, 9.7.0
+[options="header"]
+.Tested Cisco ESA/IronPort Versions
+|====
+| Program Version | OS/Distribution/Version | Comment
+|                 | AsyncOS 7.6.1           |
+|                 | AsyncOS 8.5.6           |
+|                 | AsyncOS 9.0.0           |
+|                 | AsyncOS 9.5.0           |
+|                 | AsyncOS 9.6.0           |
+|                 | AsyncOS 9.7.0           |
+|====
 
 
 ==== Settings
