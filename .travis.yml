@@ -16,6 +16,7 @@ install:
   - set -e
   - gem install bundler
   - bundle install
+  - bundle outdated || true
 
 script:
   - set -e
