@@ -24,7 +24,7 @@ conclusion that for an equivalence of 128 bit symmetric size, you will
 need to use an 3248 bit RSA key .
 
 There are a couple of other studies comparing keylengths and their
-respective strengths. The website http://www.keylength.com/ compares
+respective strengths. The website https://www.keylength.com/ compares
 these papers and offers a good overview of approximations for key
 lengths based on recommendations by different standardization bodies and
 academic publications. Figure #fig:keylengths.com[1] shows a typical
