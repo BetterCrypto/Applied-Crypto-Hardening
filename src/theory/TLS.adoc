@@ -1,8 +1,274 @@
 == TLS and its support mechanisms
 
-[hsts]
+[[hsts]]
 === HTTP Strict Transport Security (HSTS)
 
-[hpkp]
+HTTP Strict Transport Security (HSTS) is a web security policy mechanism.
+HSTS is realized through HTTP header by which a web server declares that
+complying user agents (web browsers) should interact with it by using _only_
+secure HTTPS connections.
+footnote:[https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security]
+
+HSTS header is bound to a DNS name or domain by which the server was accessed.
+For example if server serves content for two domains and it is HTTPS enabled
+only for one domain, the browser won't enforce HSTS for the latter.
+
+HSTS reduces the risk of active man-in-the-middle attacks such as SSL stripping,
+and impersonation attacks with _untrusted_ certificate.
+HSTS also helps to avoid unintentional mistakes such as insecure links to a
+secure web site (missing HTTPS links
+footnote:[Thus, it might be useful for fixing HTTPS mixed-content related
+errors, see
+https://community.qualys.com/blogs/securitylabs/2014/03/19/https-mixed-content-still-the-easiest-way-to-break-ssl.]),
+and mistyped HTTPS URLs.
+
+After the web browser receives a HSTS header in a _correctly_
+footnote:[Website must load without SSL/TLS browser warnings (certificate is
+issued by a trusted CA, contains correct DNS name, it is time valid, etc.).]
+prepared SSL session it will automatically use secure HTTPS links for accessing
+the server.
+This prevents unencrypted HTTP access (SSL striping, mistyped HTTPS URLs, etc.)
+when the server is accessed later by the client.
+
+When a server (that previously emitted a HSTS header) starts using an untrusted
+certificate, complying user agents must show an error message and
+_block the server connection_.
+Thus impersonation MITM attack with _untrusted_ certificates cannot occur.
+
+For the initial setup HSTS header needs a trusted secure connection over HTTPS.
+This limitation can be addressed by compiling a list of STS enabled sites
+directly into a browser.
+footnote:[List of the preloaded sites can be found at https://dev.chromium.org/sts.
+This list is managed by Google/Chrome but it is also used by Firefox
+https://wiki.mozilla.org/Privacy/Features/HSTS_Preload_List]
+
+==== HSTS Header Directives
+
+HSTS header can be parametrized by two directives:
+
+* max-age=<number-of-seconds>
+* includeSubdomains
+
+_max-age_ is a required directive.
+This directive indicates the number of seconds during which the user agent
+should enforce the HSTS policy (after the reception of the STS header field from
+a server).
+
+_includeSubdomains_ is an optional directive.
+This directive indicates that the HSTS Policy applies to this HSTS Host as well
+as _any subdomains of the host's domain name_.
+
+==== HSTS Client Support
+
+HSTS is supported
+footnote:[https://caniuse.com/stricttransportsecurity] by these web browsers:
+
+* Firefox version >= v4.0
+* Chrome version >= 4.0
+* Android Browser >=4.4
+* Opera version >= 12.0
+* Opera mobile >= 16.0
+* Safari >= 7.0
+* Microsoft Internet Explorer >= 11 (with update provided 09. June 2015)
+* Microsoft Edge >= 12
+
+==== HSTS Considerations
+
+Before enabling HSTS it is recommended to consider following:
+
+* Is it _required_ to serve content or services over HTTP?
+* Enabling _includeSubdomains_ and SSL certificate management.
+* Proper value of _max-age_.
+
+It is recommended to serve all content using HTTPS, but there are exceptions to
+this rule as well.
+Consider running a private PKI
+footnote:[see <<pkis>>].
+CRLs and OCSP responses are published typically by HTTP protocol.
+If HSTS is enabled on the site where OCSP and CRLs are published the browser
+might fail fetching CRL or validating OCSP response.
+
+Similar reasoning goes for _includeSubdomains_.
+One needs to be sure that HTTPS can be enforced for all subdomains.
+Moreover the administrators are advised to watch for expiration of the SSL
+certificate and handle the renewal process with caution.
+If a SSL certificate is renewed after expiration or misses a (HSTS enabled)
+domain name, the connection to site will break (without providing override
+mechanism to the end user).
+
+Finally HSTS should be tested with lower _max-age_ values and deployed with
+higher _max-age_ values.
+
+==== Testing HSTS
+
+HSTS can be tested either using locally or through the Internet.
+
+For local testing it is possible to utilize Chrome Web browser UI by typing
+chrome://net-internals/#hsts
+footnote:[see http://blog.chromium.org/2011/06/new-chromium-security-features-june.html]
+in the address bar.
+
+Testing over the Internet can be conducted by Qualys SSL Labs test
+https://www.ssllabs.com/ssltest/.
+_Strict Transport Security (HSTS)_ information is located in the
+_Protocol Details_ section.
+
+==== References
+
+* Websites Must Use HSTS in Order to Be Secure:
+https://www.eff.org/deeplinks/2014/02/websites-hsts
+* OWASP: HTTP Strict Transport Security:
+https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
+* HSTS Browser Compatibility List: https://caniuse.com/stricttransportsecurity
+* RFC 6797:HTTP Strict Transport Security (HSTS) - Examples:
+https://tools.ietf.org/html/rfc6797#section-6.2
+
+[[hpkp]]
 === HTTP Public Key Pinning (HPKP)
 
+Much like HTTP Strict Transport Security (HSTS), HTTP Public Key Pinning (HPKP)
+is a Trust On First Use (TOFU) mechanism.
+It protects HTTPS websites from impersonation using certificates issued by
+compromised certificate authorities.
+The data for Pinning is supplied by an HTTP-Header sent by the WebServer.
+
+==== HPKP Header Directives
+
+HPKP provides two different types of headers:
+
+* Public-Key-Pins
+* Public-Key-Pins-Report-Only
+
+HPKP header can be parametrized by following directives:
+
+* pin-sha256="<YOUR_PUBLICKEY_HASH=>"
+* max-age=<number-of-seconds>
+* includeSubdomains
+* report-uri="<https://YOUR.URL/TO-REPORT>"
+
+*pin-sha256* is a required directive.
+It can and should be used several (at least two) times for specifying the public
+keys of your domain-certificates or CA-certificates.
+Operators can pin any one or more of the public keys in the certificate-chain,
+and indeed must pin to issuers not in the chain (as, for example, a Backup Pin).
+Pinning to an intermediate issuer, or even to a trust anchor or root, still
+significantly reduces the number of issuers who can issue end-entity
+certificates for the Known Pinned Host, while still giving that host flexibility
+to change keys without a disruption of service.
+OpenSSL can be used to convert the Public Key of an X509-Certificate as follows:
+
+[source]
+----
+openssl x509 -in <certificate.cer> -pubkey -noout |
+ openssl rsa -pubin -outform der |
+ openssl dgst -sha256 -binary |
+ openssl enc -base64
+writing RSA key
+pG3WsstDsfMkRdF3hBClXRKYxxKUJIOu8DwabG8MFrU=
+----
+
+This piped usage of OpenSSL first gets the Public-Key of <certificate.cer>,
+converts it do DER (binary) format, calculates an SHA256 Hash and finally
+encodes it Base64.
+The output (including the ending Equal-Sign) is exactly whats needed for the
+_pin-sha256="<YOUR_PUBLICKEY_HASH=>"_ parameter.
+To generate the Hash for a prepared Backup-Key just create a
+Certificate-Signing-Request and replace "`+openssl x509+`" by
+"`+openssl req -in <backup-cert.csr> -pubkey -noout`+" as first OpenSSL
+command. +
+Instead of using OpenSSL even WebServices like
+https://report-uri.io/home/pkp_hash/ can be used to get a suggestion for the
+possible Public-Key-Hashes for a given WebSite.
+
+*max-age* is a required directive (when using the _Public-Key-Pins_ header).
+This directive specifies the number of seconds during which the user agent
+should regard the host (from whom the message was received) as a Known Pinned
+Host.
+
+*includeSubdomains* is an optional directive.
+This directive indicates that the same pinning applies to this Host as well as
+_any subdomains of the host's domain name_.
+Be careful - you need to use a Multi-Domain/Wildcard-Certificate or use the same
+Pub/Private-Keypair in all Subdomain-Certificates or need to pin to
+CA-Certificates signing all your Subdomain-Certificates.
+
+*report-uri* is an optional directive.
+The presence of a report-uri directive indicates to the Browser that in the
+event of Pin Validation failure it should post a report to the report-uri
+(HTTP-Post is done using JSON, Syntax see {RFC-7469 Section 3}
+footnote:[https://tools.ietf.org/html/rfc7469\#section-3]).
+There are WebServices like https://report-uri.io/ out there which can be used to
+easily collect and visualize these reports.
+
+==== HPKP Client Support
+
+HPKP is supported footnote:[https://caniuse.com/\#feat=publickeypinning] by
+these web browsers:
+
+* Firefox version >= 35
+* Chrome version >= 38
+* Android Browser >= 44
+* Opera version >= 25
+
+Currently (16. Oct 2015) there is no HPKP Support in: Apple Safari, Microsoft
+Internet Explorer and Edge.
+
+==== HPKP Considerations
+
+Before enabling HPKP it is recommended to consider following:
+
+* Which Public-Keys to use for Pinning (Certificate + Backup-Certificate, CAs,
+Intermediate-CAs)
+* Proper value of _max-age_.
+Start testing with a short Period, increase Period after deployment.
+* Be careful when using _includeSubdomains_, are all your subdomains covered by
+the defined Public-Key-Hashes?
+
+The administrators are advised to watch for expiration of the SSL certificate
+and handle the renewal process with caution.
+If a SSL certificate is renewed without keeping the Public-Key (reusing the CSR)
+for an HPKP enabled domain name, the connection to site will break (without
+providing override mechanism to the end user).
+
+==== Testing HPKP
+
+HPKP can be tested either using locally or through the Internet.
+
+There is a handy Bash-Script which uses OpenSSL for doing several SSL/TLS-Tests
+available at https://testssl.sh/
+
+[source, terminal]
+----
+wget -q https://testssl.sh/testssl.sh
+wget -q https://testssl.sh/mapping-rfc.txt
+chmod 755 ./testssl.sh
+./testssl.sh https://your-domain.com
+
+# Sample Output, just HSTS and HPKP Section (Full report is quite long!):
+Strict Transport Security    182 days=15724800 s, includeSubDomains
+Public Key Pinning # of keys: 2, 90 days=7776000 s, just this domain
+           matching host key: pG3WsstDsfMkRdF3hBClXRKYxxKUJIOu8DwabG8MFrU
+----
+
+For local testing it is possible to utilize Google Chrome Web browser, just open
+the Chrome net-internals-URL: chrome://net-internals/#hsts.
+
+For Mozilla Firefox there is an Plug-In provided by the "Secure Information
+Technology Center Austria" available:
+https://demo.a-sit.at/firefox-plugin-highlighting-safety-information/
+
+Testing over the Internet can be conducted by Qualys SSL Labs test
+https://www.ssllabs.com/ssltest/.
+_Public Key Pinning (HPKP)_ information is located in the _Protocol Details_
+section.
+
+There is also a fast online HPKP-only check at
+https://report-uri.io/home/pkp_analyse.
+
+==== References
+
+* OWASP: Certificate and Public Key Pinning:
+https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning
+* HPKP Browser Compatibility List: https://caniuse.com/\#feat=publickeypinning
+* RFC 7469:Public Key Pinning Extension for HTTP - Examples:
+https://tools.ietf.org/html/rfc7469\#section-2.1.5

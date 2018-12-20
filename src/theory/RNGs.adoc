@@ -1,3 +1,4 @@
+[[rngs]]
 == Random Number Generators
 
 image:random_number.png[xkcd, source:
