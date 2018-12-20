@@ -6,23 +6,42 @@ Sysadmins. Sysadmins. Sysadmins. They are a force-multiplier.
 
 [[relatedpublications]]
 == Related publications
-// TODO: Fix citations
 
-Ecrypt II , ENISA’s report on Algorithms, key sizes and parameters  and BSI’s Technische Richtlinie TR-02102  are great publications which are more in depth than this guide. However, this guide has a different approach: it focuses on _copy & paste-able settings_ for system administrators, effectively breaking down the complexity in the above mentioned reports to an easy to use format for the intended target audience.
+TODO: Fix citations
+
+Ecrypt II, ENISA’s report on Algorithms, key sizes and parameters and BSI’s
+Technische Richtlinie TR-02102 are great publications which are more in depth
+than this guide. However, this guide has a different approach: it focuses on
+_copy & paste-able settings_ for system administrators, effectively breaking
+down the complexity in the above mentioned reports to an easy to use format for
+the intended target audience.
 
 
 [[how-read-this]]
 == How to Read this Guide
 
-This guide tries to accommodate two needs: first of all, having a handy reference on how to configure the most common services’ crypto settings and second of all, explain a bit of background on cryptography. This background is essential if the reader wants to choose his or her own cipher string settings.
+This guide tries to accommodate two needs: first of all, having a handy
+reference on how to configure the most common services’ crypto settings and
+second of all, explain a bit of background on cryptography. This background is
+essential if the reader wants to choose his or her own cipher string settings.
 
-System administrators who want to copy & paste recommendations quickly without spending a lot of time on background reading on cryptography or cryptanalysis can do so, by simply searching for the corresponding section in <<bestpractice>>.
+System administrators who want to copy & paste recommendations quickly without
+spending a lot of time on background reading on cryptography or cryptanalysis
+can do so, by simply searching for the corresponding section in <<bestpractice>>.
 
-It is important to know that in this guide the authors arrived at two recommendations: _Cipher string A_ and _Cipher string B_. While the former is a hardened recommendation the latter is a weaker one but provides wider compatibility. _Cipher strings A and B_ are described in <<recommendedciphers>>.
+It is important to know that in this guide the authors arrived at two
+recommendations: _Cipher string A_ and _Cipher string B_. While the former is a
+hardened recommendation a latter is a weaker one but provides wider
+compatibility. _Cipher strings A and B_ are described in <<recommendedciphers>>.
 
-However, for the quick copy & paste approach it is important to know that this guide assumes users are happy with _Cipher string B_.
+However, for the quick copy & paste approach it is important to know that this
+guide assumes users are happy with _Cipher string B_.
 
-While <<bestpractice>> is intended to serve as a copy & paste reference, <<theory>> explains the reasoning behind _cipher string B_. In particular <<ciphersuites>> explains how to choose individual cipher strings. We advise the reader to actually read this section and challenge our reasoning in choosing _Cipher string B_ and to come up with a better or localized solution.
+While <<bestpractice>> is intended to serve as a copy & paste reference,
+<<theory>> explains the reasoning behind _cipher string B_. In particular
+<<ciphersuites>> explains how to choose individual cipher strings. We advise the
+reader to actually read this section and challenge our reasoning in choosing
+_Cipher string B_ and to come up with a better or localized solution.
 
 // TODO: Verify eclipse image wasn't needed anymore
 
@@ -32,35 +51,64 @@ While <<bestpractice>> is intended to serve as a copy & paste reference, <<theor
 // TODO Migrate and fix citations
 
 [quote,William James]
-____
 A chain is no stronger than its weakest link, and life is after all a chain.
-____
 
-[quote,Edward Snowden, answering questions live on the Guardian’s website]
-____
-Encryption works. Properly implemented strong crypto systems are one of the few things that you can rely on. Unfortunately, endpoint security is so terrifically weak that NSA can frequently find ways around it.
-____
+[quote,Edward Snowden,answering questions live on the Guardian’s website]
+Encryption works. Properly implemented strong crypto systems are one of the few
+things that you can rely on. Unfortunately, endpoint security is so terrifically
+weak that NSA can frequently find ways around it.
 
-This guide specifically does not address physical security, protecting software and hardware against exploits, basic IT security housekeeping, information assurance techniques, traffic analysis attacks, issues with key-roll over and key management, securing client PCs and mobile devices (theft, loss), proper https://en.wikipedia.org/wiki/Operations_security[Operations Security], social engineering attacks, protection against tempest attack techniques, thwarting different side-channel attacks (timing–, cache timing–, differential fault analysis, differential power analysis or power monitoring attacks), downgrade attacks, jamming the encrypted channel or other similar attacks which are typically employed to circumvent strong encryption.
+This guide specifically does not address physical security, protecting software
+and hardware against exploits, basic IT security housekeeping, information
+assurance techniques, traffic analysis attacks, issues with key-roll over and
+key management, securing client PCs and mobile devices (theft, loss), proper
+https://en.wikipedia.org/wiki/Operations_security[Operations Security], social
+engineering attacks, protection against tempest attack techniques, thwarting
+different side-channel attacks (timing–, cache timing–, differential fault
+analysis, differential power analysis or power monitoring attacks), downgrade
+attacks, jamming the encrypted channel or other similar attacks which are
+typically employed to circumvent strong encryption.
 
-The authors can not overstate the importance of these other techniques. Interested readers are advised to read about these attacks in detail since they give a lot of insight into other parts of cryptography engineering which need to be dealt withfootnote:[An easy to read yet very insightful recent example is the "FLUSH+RELOAD" technique for leaking cryptographic keys from one virtual machine to another via L3 cache timing attacks.].
+The authors can not overstate the importance of these other techniques.
+Interested readers are advised to read about these attacks in detail since they
+give a lot of insight into other parts of cryptography engineering which need to
+be dealt withfootnote:[An easy to read yet very insightful recent example is the
+"FLUSH+RELOAD" technique for leaking cryptographic keys from one virtual machine
+to another via L3 cache timing attacks.].
 
-This guide does not talk much about the well-known insecurities of trusting a public-key infrastructure (PKI)footnote:[Interested readers are referred to https://bugzilla.mozilla.org/show_bug.cgi?id=647959 or http://www.h-online.com/security/news/item/Honest-Achmed-asks-for-trust-1231314.html which brings the problem of trusting PKIs right to the point]. Nor does this text fully explain how to run your own Certificate Authority (CA).
+This guide does not talk much about the well-known insecurities of trusting a
+public-key infrastructure (PKI)footnote:[Interested readers are referred to
+https://bugzilla.mozilla.org/show_bug.cgi?id=647959 or
+http://www.h-online.com/security/news/item/Honest-Achmed-asks-for-trust-1231314.html
+which brings the problem of trusting PKIs right to the point]. Nor does this
+text fully explain how to run your own Certificate Authority (CA).
 
-Most of this zoo of information security issues are addressed in the very comprehensive book ``Security Engineering'' by Ross Anderson.
+Most of this zoo of information security issues are addressed in the very
+comprehensive book _Security Engineering_ by Ross Anderson.
 
-For some experts in cryptography this text might seem too informal. However, we strive to keep the language as non-technical as possible and fitting for our target audience: system administrators who can collectively improve the security level for all of their users.
+For some experts in cryptography this text might seem too informal. However, we
+strive to keep the language as non-technical as possible and fitting for our
+target audience: system administrators who can collectively improve the security
+level for all of their users.
 
-This guide can only describe what the authors currently _believe_ to be the best settings based on their personal experience and after intensive cross checking with literature and experts. For a complete list of people who reviewed this paper, see the <<acknowledgements>>. Even though multiple specialists reviewed the guide, the authors can give _no guarantee whatsoever_ that they made the right recommendations. Keep in mind that tomorrow there might be new attacks on some ciphers and many of the recommendations in this guide might turn out to be wrong.
+This guide can only describe what the authors currently _believe_ to be the best
+settings based on their personal experience and after intensive cross checking
+with literature and experts. For a complete list of people who reviewed this
+paper, see the <<acknowledgements>>. Even though multiple specialists reviewed
+the guide, the authors can give _no guarantee whatsoever_ that they made the
+right recommendations. Keep in mind that tomorrow there might be new attacks on
+some ciphers and many of the recommendations in this guide might turn out to be
+wrong.
 
 [quote,Bruce Schneier]
-____
 Security is a process.
-____
 
-We therefore recommend that system administrators keep up to date with recent topics in IT security and cryptography.
+We therefore recommend that system administrators keep up to date with recent
+topics in IT security and cryptography.
 
-In this sense, this guide is very focused on getting the cipher strings done right even though there is much more to do in order to make a system more secure. We the authors, need this document as much as the reader needs it.
+In this sense, this guide is very focused on getting the cipher strings done
+right even though there is much more to do in order to make a system more
+secure. We the authors, need this document as much as the reader needs it.
 
 [[scope]]
 === Scope
@@ -69,12 +117,14 @@ In this guide, we restricted ourselves to:
 
 * Internet-facing services
 * Commonly used services
-* Devices which are used in business environments (this specifically excludes XBoxes, Playstations and similar consumer devices)
+* Devices which are used in business environments (this specifically excludes
+* XBoxes, Playstations and similar consumer devices)
 * OpenSSL
 
 We explicitly excluded:
 
-* Specialized systems (such as medical devices, most embedded systems, industrial control systems, etc.)
+* Specialized systems (such as medical devices, most embedded systems,
+* industrial control systems, etc.)
 * Wireless Access Points
 * Smart-cards/chip cards
 
@@ -91,13 +141,25 @@ ____
 C.O.S.H.E.R - completely open source, headers, engineering and research.
 ____
 
-For writing this guide, we chose to collect the most well researched facts about cryptography settings and let as many trusted specialists as possible review those settings. The review process is completely open and done on a public mailing list.
+For writing this guide, we chose to collect the most well researched facts about
+cryptography settings and let as many trusted specialists as possible review
+those settings. The review process is completely open and done on a public
+mailing list.
 
-The document is available (read-only) to the public Internet on the web page and the source code of this document is on a public git server, mirrored on GitHub.com and open for public scrutiny. However, write permissions to the document are only granted to vetted people. The list of reviewers can be found in <<acknowledgements>>.
+The document is available (read-only) to the public Internet on the web page and
+the source code of this document is on a public git server, mirrored on
+GitHub.com and open for public scrutiny. However, write permissions to the
+document are only granted to vetted people. The list of reviewers can be found in <<acknowledgements>>.
 
-Every write operation to the document is logged via the `git` version control system and can thus be traced back to a specific author. We accept git pull requests on the link:https://github.com/BetterCrypto/Applied-Crypto-Hardening[github mirror] for this paper.
+Every write operation to the document is logged via the `git` version control
+system and can thus be traced back to a specific author. We accept git pull
+requests on the
+link:https://github.com/BetterCrypto/Applied-Crypto-Hardening[github mirror] for
+this paper.
 
-Public peer-review and multiple eyes checking of our guide is the best strategy we can imagine at the present moment footnote:[http://www.wired.com/opinion/2013/10/how-to-design-and-defend-against-the-perfect-backdoor/].
+Public peer-review and multiple eyes checking of our guide is the best strategy
+we can imagine at the present moment
+footnote:[http://www.wired.com/opinion/2013/10/how-to-design-and-defend-against-the-perfect-backdoor/].
 
 We invite the gentle reader to participate in this public review process.
 
