@@ -22,10 +22,12 @@ script:
   - set -e
   - cd src
   - asciidoctor
+        --failure-level=WARN
         -r asciidoctor-diagram
         -r asciidoctor-bibliography
         applied-crypto-hardening.adoc
   - asciidoctor-pdf
+        --failure-level=WARN
         -r asciidoctor-diagram
         -r asciidoctor-bibliography
         applied-crypto-hardening.adoc
