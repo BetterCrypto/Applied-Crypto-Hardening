@@ -1,0 +1,93 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    Ascii85 (1.0.3)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
+    afm (0.2.2)
+    asciidoctor (1.5.8)
+    asciidoctor-bibliography (0.8.0)
+      asciidoctor (~> 1.5.6)
+      bibtex-ruby (~> 4.4.4)
+      citeproc-ruby (~> 1.1.7)
+      csl-styles (~> 1.0.1)
+      latex-decode (~> 0.2.2)
+      nokogiri (~> 1.8.1)
+    asciidoctor-diagram (1.5.11)
+      asciidoctor (~> 1.5.0)
+    asciidoctor-pdf (1.5.0.alpha.16)
+      asciidoctor (>= 1.5.0)
+      prawn (>= 1.3.0, < 2.3.0)
+      prawn-icon (= 1.3.0)
+      prawn-svg (>= 0.21.0, < 0.28.0)
+      prawn-table (= 0.2.2)
+      prawn-templates (>= 0.0.3, <= 0.1.1)
+      safe_yaml (~> 1.0.4)
+      thread_safe (~> 0.3.6)
+      treetop (= 1.5.3)
+    bibtex-ruby (4.4.7)
+      latex-decode (~> 0.0)
+    citeproc (1.0.9)
+      namae (~> 1.0)
+    citeproc-ruby (1.1.10)
+      citeproc (~> 1.0, >= 1.0.9)
+      csl (~> 1.5)
+    concurrent-ruby (1.1.4)
+    csl (1.5.0)
+      namae (~> 1.0)
+    csl-styles (1.0.1.9)
+      csl (~> 1.0)
+    css_parser (1.6.0)
+      addressable
+    hashery (2.1.2)
+    latex-decode (0.2.2)
+      unicode (~> 0.4)
+    mini_portile2 (2.3.0)
+    multi_json (1.13.1)
+    namae (1.0.1)
+    nokogiri (1.8.5)
+      mini_portile2 (~> 2.3.0)
+    pdf-core (0.7.0)
+    pdf-reader (2.2.0)
+      Ascii85 (~> 1.0.0)
+      afm (~> 0.2.1)
+      hashery (~> 2.0)
+      ruby-rc4
+      ttfunk
+    polyglot (0.3.5)
+    prawn (2.2.2)
+      pdf-core (~> 0.7.0)
+      ttfunk (~> 1.5)
+    prawn-icon (1.3.0)
+      prawn (>= 1.1.0, < 3.0.0)
+    prawn-svg (0.27.1)
+      css_parser (~> 1.3)
+      prawn (>= 0.11.1, < 3)
+    prawn-table (0.2.2)
+      prawn (>= 1.3.0, < 3.0.0)
+    prawn-templates (0.1.1)
+      pdf-reader (~> 2.0)
+      prawn (~> 2.2)
+    public_suffix (3.0.3)
+    pygments.rb (1.2.1)
+      multi_json (>= 1.0.0)
+    ruby-rc4 (0.1.5)
+    safe_yaml (1.0.4)
+    thread_safe (0.3.6)
+    treetop (1.5.3)
+      polyglot (~> 0.3)
+    ttfunk (1.5.1)
+    unicode (0.4.4.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  asciidoctor-bibliography
+  asciidoctor-diagram
+  asciidoctor-pdf (>= 1.5.0.alpha.16)
+  concurrent-ruby
+  pygments.rb
+
+BUNDLED WITH
+   1.17.2

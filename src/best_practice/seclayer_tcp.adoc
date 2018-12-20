@@ -1,3 +1,11 @@
-[seclayer]
-= Seclayer
+== Seclayer
 
+//  XXX ask the author XXX
+// TODO Ramin: please write this section or ask Posch
+// For the austrian citizen card....
+// 
+// [source]
+// ----
+// seclayer-tcp    3495/udp    # securitylayer over tcp
+// seclayer-tcp    3495/tcp    # securitylayer over tcp
+// ----
