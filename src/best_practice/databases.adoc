@@ -66,8 +66,8 @@ TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
 
 ==== References
 
-IBM Db2 Documentation on _Supported cipher suites_. +
-http://pic.dhe.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=%2Fcom.ibm.db2.luw.admin.sec.doc%2Fdoc%2Fc0053544.html
+IBM DB2 Documentation on _Supported cipher suites_. +
+https://www.ibm.com/support/knowledgecenter/SSEPGG_9.7.0/com.ibm.db2.luw.admin.sec.doc/doc/c0053544.html
 
 
 === PostgreSQL
