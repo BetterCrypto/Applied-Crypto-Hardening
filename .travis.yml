@@ -1,0 +1,34 @@
+# Copyright (C) 2018 Sebastian Pipping <sebastian@pipping.org>
+# Licensed under CC-BY-SA 3.0
+# https://creativecommons.org/licenses/by-sa/3.0/
+
+language: cpp
+dist: xenial
+
+addons:
+  apt:
+    packages:
+      - build-essential
+      - ruby-dev
+      - zlib1g-dev
+
+install:
+  - set -e
+  - gem install --pre
+        asciidoctor-pdf
+        asciidoctor-bibliography
+        asciidoctor-diagram
+        concurrent-ruby
+        pygments.rb
+
+script:
+  - set -e
+  - cd src
+  - asciidoctor
+        -r asciidoctor-diagram
+        -r asciidoctor-bibliography
+        applied-crypto-hardening.adoc
+  - asciidoctor-pdf
+        -r asciidoctor-diagram
+        -r asciidoctor-bibliography
+        applied-crypto-hardening.adoc
