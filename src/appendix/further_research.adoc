@@ -43,7 +43,7 @@ seclayer-tcp
 
 Commerical network equipment vendors
 
-RADIUS
+RADIUS: Radsec (RADIUS/TLS).
 
 Moxa , APC, und co... ICS . Ethernet to serial
 
@@ -82,6 +82,8 @@ IBM HTTP Server
 
 Elastic Load Balancing
 (ELB)footnote:[https://lists.cert.at/pipermail/ach/2014-May/001422.html]
+
+Monitoring: SNMPv3
 
 [[sec:uncovered]]
 === Software not covered by this guide
