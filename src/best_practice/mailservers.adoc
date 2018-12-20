@@ -1,21 +1,36 @@
 == Mailservers
 
-This section documents the most common mail servers. Mail servers may usually be grouped into three categories:
+This section documents the most common mail servers. Mail servers may usually
+be grouped into three categories:
 
 * Mail Submission Agent (MSA)
-* Mail Transfer Agent (MTA)/Mail Exchanger (MX)
+* Mail Transfer Agent (MTA) / Mail Exchanger (MX)
 * Mail Delivery Agent (MDA)
 
-An email client (mail user agent, MUA) submits mail to the MSA. This is usually been done using the Simple Mail Transfer Protocol (SMTP). Afterwards, the mail is transmitted by the MTA over the Internet to the MTA of the receiver. This happens again via SMTP. Finally, the mail client of the receiver will fetch mail from an MDA usually via the Internet Message Access Protocol (IMAP) or the Post Office Protocol (POP).
+An email client (mail user agent, MUA) submits mail to the MSA. This is usually
+been done using the Simple Mail Transfer Protocol (SMTP). Afterwards, the mail
+is transmitted by the MTA over the Internet to the MTA of the receiver. This
+happens again via SMTP. Finally, the mail client of the receiver will fetch
+mail from an MDA usually via the Internet Message Access Protocol (IMAP) or the
+Post Office Protocol (POP).
 
-As MSAs and MTAs both use SMTP as transfer protocols, both functionalities may often be implemented with the same software. On the other hand, MDA software might or might not implement both IMAP and POP.
+As MSAs and MTAs both use SMTP as transfer protocols, both functionalities may
+often be implemented with the same software. On the other hand, MDA software
+might or might not implement both IMAP and POP.
 
 
 === TLS usage in mail server protocols
 
-Email protocols support TLS in two different ways. It may be added as a protocol wrapper on a different port. This method is referred to as Implicit TLS or as protocol variants SMTPS, IMAPS and POP3S. The other method is to establish a cleartext session first and switch to TLS afterwards by issuing the STARTTLS command.
+Email protocols support TLS in two different ways. It may be added as a
+protocol wrapper on a different port. This method is referred to as Implicit
+TLS or as protocol variants SMTPS, IMAPS and POP3S. The other method is to
+establish a cleartext session first and switch to TLS afterwards by issuing the
+STARTTLS command.
 
-SMTP between MTAs usually makes use of opportunistic TLS. This means that an MTA will accept TLS connections when asked for it but will not require it. MTAs should always try opportunistic TLS handshakes outgoing and always accept incoming opportunistic TLS.
+SMTP between MTAs usually makes use of opportunistic TLS. This means that an
+MTA will accept TLS connections when asked for it but will not require it. MTAs
+should always try opportunistic TLS handshakes outgoing and always accept
+incoming opportunistic TLS.
 
 
 === Recommended configuration
@@ -26,11 +41,16 @@ We recommend to use the following settings for Mail Transfer Agents:
 * the hostname used as HELO/EHLO in outgoing mail shall match the PTR RR
 * enable opportunistic TLS, using the STARTTLS mechanism on port 25
 * Implicit TLS on port 465 may be offered additionally
-* use server and client certificates (most server certificates are client certificates as well)
-* either the common name or at least an alternate subject name of the certificate shall match the PTR RR (client mode) or the MX RR (server mode)
+* use server and client certificates (most server certificates are client
+  certificates as well)
+* either the common name or at least an alternate subject name of the
+  certificate shall match the PTR RR (client mode) or the MX RR (server mode)
 * do not use self signed certificates
-* accept all cipher suites, as the alternative would be to fall back to cleartext transmission
-* an execption to the last sentence is that MTAs _MUST NOT_ enable SSLv2 protocol support, due to the https://drownattack.com/drown-attack-paper.pdf[DROWN attack].
+* accept all cipher suites, as the alternative would be to fall back to
+  cleartext transmission
+* an execption to the last sentence is that MTAs **MUST NOT** enable SSLv2
+  protocol support, due to the
+  https://drownattack.com/drown-attack-paper.pdf[DROWN attack].
 
 For MSA operation we recommend:
 
@@ -112,7 +132,8 @@ $ openssl s_client -crlf -starttls imap -connect SERVER.TLD:143
 $ openssl s_client -crlf -starttls pop3 -connect SERVER.TLD:110
 ----
 
-https://github.com/nabla-c0d3/sslyze/releases[SSLyze] offers scanning for common vulnerabilities and displays Protocols and Cipher-Suites.
+https://github.com/nabla-c0d3/sslyze/releases[SSLyze] offers scanning for
+common vulnerabilities and displays Protocols and Cipher-Suites.
 
 [source,terminal]
 ----
@@ -144,7 +165,8 @@ tls_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
 
 Do not forget to add necessary intermediate certificates to the .pem file.
 
-Limiting the ciphers provided may force (especially older) clients to connect without encryption at all! Sticking to the defaults is recommended.
+Limiting the ciphers provided may force (especially older) clients to connect
+without encryption at all! Sticking to the defaults is recommended.
 
 If you still want to force strong encryption use
 
@@ -154,8 +176,10 @@ If you still want to force strong encryption use
 tls_cipher_list: EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA
 ----
 
-
-cyrus-imapd loads hardcoded 1024 bit DH parameters using get_rfc2409_prime_1024() by default. If you want to load your own DH parameters add them PEM encoded to the certificate file given in tls_cert_file. Do not forget to re-add them after updating your certificate.
+cyrus-imapd loads hardcoded 1024 bit DH parameters using
+get_rfc2409_prime_1024() by default. If you want to load your own DH parameters
+add them PEM encoded to the certificate file given in tls_cert_file. Do not
+forget to re-add them after updating your certificate.
 
 To prevent unencrypted connections on the STARTTLS ports you can set
 
@@ -165,9 +189,12 @@ To prevent unencrypted connections on the STARTTLS ports you can set
 allowplaintext: no
 ----
 
-This way MUAs can only authenticate with plain text authentication schemes after issuing the STARTTLS command. Providing CRAM-MD5 or DIGEST-MD5 methods is not recommended.
+This way MUAs can only authenticate with plain text authentication schemes
+after issuing the STARTTLS command. Providing CRAM-MD5 or DIGEST-MD5 methods is
+not recommended.
 
-To support POP3/IMAP on ports 110/143 with STARTTLS and POP3S/IMAPS on ports 995/993 check the SERVICES section in `cyrus.conf`
+To support POP3/IMAP on ports 110/143 with STARTTLS and POP3S/IMAPS on ports
+995/993 check the SERVICES section in 'cyrus.conf'
 
 .STARTTLS for POP3/IMAP and POP3S/IMAPS in cyrus
 [source]
@@ -183,7 +210,8 @@ SERVICES {
 
 ==== Limitations
 
-cyrus-imapd currently (2.4.17, trunk) does not support elliptic curve cryptography. Hence, ECDHE will not work even if defined in your cipher list.
+cyrus-imapd currently (2.4.17, trunk) does not support elliptic curve
+cryptography. Hence, ECDHE will not work even if defined in your cipher list.
 
 Currently there is no way to prefer server ciphers or to disable compression.
 
@@ -210,12 +238,20 @@ openssl s_client -crlf -connect SERVER.TLD:993
 
 ==== Settings
 
-Postfix has five internal lists of ciphers, and the possibility to switch between those with _smtpd_tls_ciphers_. However, we leave this at its default value for server to server connections, as many mail servers only support outdated protocols and ciphers. We consider bad encryption still better than plain text transmission. For connections to MUAs, TLS is mandatory and the ciphersuite is modified.
+Postfix has five internal lists of ciphers, and the possibility to switch
+between those with `smtpd_tls_ciphers`. However, we leave this at its default
+value for server to server connections, as many mail servers only support
+outdated protocols and ciphers. We consider bad encryption still better than
+plain text transmission. For connections to MUAs, TLS is mandatory and the
+ciphersuite is modified.
 
 
 ===== MX and SMTP client configuration:
 
-As discussed in section <<smtp_general>>, because of opportunistic encryption we do not restrict the list of ciphers or protocols for communication with other mail servers to avoid transmission in plain text. There are still some steps needed to enable TLS, all in `main.cf`:
+As discussed in section <<smtp_general>>, because of opportunistic encryption
+we do not restrict the list of ciphers or protocols for communication with
+other mail servers to avoid transmission in plain text. There are still some
+steps needed to enable TLS, all in 'main.cf':
 
 .Opportunistic TLS in Postfix
 [source]
@@ -237,7 +273,9 @@ tls_ssl_options = NO_COMPRESSION
 
 ===== MSA:
 
-For the MSA `smtpd` process which communicates with mail clients, we first define the ciphers that are acceptable for the ``mandatory'' security level, again in `main.cf`:
+For the MSA `smtpd` process which communicates with mail clients, we first
+define the ciphers that are acceptable for the ``mandatory'' security level,
+again in 'main.cf':
 
 .MSA TLS configuration in Postfix
 [source]
@@ -253,7 +291,8 @@ tls_high_cipherlist=EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EE
 ----
 
 
-Then, we configure the MSA smtpd in `master.cf` with two additional options that are only used for this instance of smtpd:
+Then, we configure the MSA smtpd in 'master.cf' with two additional options
+that are only used for this instance of smtpd:
 
 .MSA smtpd service configuration in Postfix
 [source]
@@ -269,7 +308,8 @@ submission inet n       -       -       -       -       smtpd
 # ...
 ----
 
-For those users who want to use EECDH key exchange, it is possible to customize this via: The default value since Postfix 2.8 is ``strong''.
+For those users who want to use EECDH key exchange, it is possible to customize
+this via: The default value since Postfix 2.8 is ``strong''.
 
 .EECDH customization in Postfix
 [source]
@@ -280,9 +320,11 @@ smtpd_tls_eecdh_grade = ultra
 
 ==== Limitations
 
-tls_ssl_options is supported from Postfix 2.11 onwards. You can leave the statement in the configuration for older versions, it will be ignored.
+`tls_ssl_options` is supported from Postfix 2.11 onwards. You can leave the
+statement in the configuration for older versions, it will be ignored.
 
-tls_preempt_cipherlist is supported from Postfix 2.8 onwards. Again, you can leave the statement in for older versions.
+`tls_preempt_cipherlist` is supported from Postfix 2.8 onwards. Again, you can
+leave the statement in for older versions.
 
 
 ==== References
@@ -292,9 +334,15 @@ Refer to http://www.postfix.org/TLS_README.html for an in-depth discussion.
 
 ==== Additional settings
 
-Postfix has two sets of built-in DH parameters that can be overridden with the `smtpd_tls_dh512_param_file` and `smtpd_tls_dh1024_param_file` options. The ``dh512'' parameters are used for export ciphers, while the ``dh1024'' ones are used for all other ciphers.
+Postfix has two sets of built-in DH parameters that can be overridden with the
+`smtpd_tls_dh512_param_file` and `smtpd_tls_dh1024_param_file` options. The
+``dh512'' parameters are used for export ciphers, while the ``dh1024'' ones are
+used for all other ciphers.
 
-The ``bit length'' in those parameter names is just a name, so one could use stronger parameter sets; it should be possible to e.g. use the IKE Group14 parameters (see section #section:DH[[section:DH]]) without much interoperability risk, but we have not tested this yet.
+The ``bit length'' in those parameter names is just a name, so one could use
+stronger parameter sets; it should be possible to e.g. use the IKE Group14
+parameters (see section <<DH>> without much
+interoperability risk, but we have not tested this yet.
 
 
 ==== How to test
@@ -336,7 +384,8 @@ Tell Exim to advertise STARTTLS in the EHLO answer to everyone:
 
 If you want to support legacy SMTPS on port 465, and STARTTLS on smtp(25)/submission(587) ports set
 
-It is highly recommended to limit SMTP AUTH to SSL connections only. To do so add to every authenticator defined.
+If you want to support legacy SMTPS on port 465, and STARTTLS on
+smtp(25)/submission(587) ports set
 
 Add the following rules on top of your acl_smtp_mail: This switches Exim to submission mode and allows addition of missing ``Message-ID'' and ``Date'' headers.
 
@@ -386,7 +435,9 @@ Client mode settings have to be done in the configuration section of the smtp tr
 
 If you want to use a client certificate (most server certificates can be used as client certificate, too) set This is recommended for MTA-MTA traffic.
 
-Do not limit ciphers without a very good reason. In the worst case you end up without encryption at all instead of some weak encryption. Please consult the Exim documentation if you really need to define ciphers.
+Do not limit ciphers without a very good reason. In the worst case you end up
+without encryption at all instead of some weak encryption. Please consult the
+Exim documentation if you really need to define ciphers.
 
 
 ===== OpenSSL:
@@ -401,16 +452,21 @@ to the main configuration.
 
 Note: +all is misleading here since OpenSSL only activates the most common workarounds. But that’s how SSL_OP_ALL is defined.
 
-You do not need to set dh_parameters. Exim with OpenSSL by default uses parameter initialization with the "2048-bit MODP Group with 224-bit Prime Order Subgroup" defined in section 2.2 of RFC 5114  (ike23). If you want to set your own DH parameters please read the TLS documentation of exim.
+You do not need to set dh_parameters. Exim with OpenSSL by default uses
+parameter initialization with the ``2048-bit MODP Group with 224-bit Prime Order
+Subgroup'' defined in section 2.2 of RFC 5114 FIXME (ike23). If you want to set your
+own DH parameters please read the TLS documentation of exim.
 
 
 ===== GnuTLS:
 
 GnuTLS is different in only some respects to OpenSSL:
 
-tls_require_ciphers needs a GnuTLS priority string instead of a cipher list. It is recommended to use the defaults by not defining this option. It highly depends on the version of GnuTLS used. Therefore it is not advisable to change the defaults.
-
-There is no option like openssl_options
+* `tls_require_ciphers` needs a GnuTLS priority string instead of a cipher list. It
+  is recommended to use the defaults by not defining this option. It highly
+  depends on the version of GnuTLS used. Therefore it is not advisable to change
+  the defaults.
+* There is no option like `openssl_options`
 
 
 ===== Exim string expansion:
@@ -517,7 +573,13 @@ image:ach_ironport_dest_control.png[Destination Control overview,scaledwidth=80.
 
 ==== Limitations
 
-All AsyncOS releases prior to version 9.5 use OpenSSL 0.9.8. Therefore TLS 1.2 is not supported in these versions and some of the suggested ciphers won’t work. Starting with AsyncOS 9.5 TLS 1.2 is fully supported.footnote:[http://www.cisco.com/c/dam/en/us/td/docs/security/esa/esa9-5/ESA_9-5_Release_Notes.pdf, Changed Behaviour, page 4] You can check the supported ciphers on the CLI by using the option `verify` from within the `sslconfig` command:
+All AsyncOS releases prior to version 9.5 use OpenSSL 0.9.8. Therefore TLS 1.2
+is not supported in these versions and some of the suggested ciphers won’t
+work. Starting with AsyncOS 9.5 TLS 1.2 is fully
+supported.
+footnote:[https://www.cisco.com/c/dam/en/us/td/docs/security/esa/esa9-5/ESA_9-5_Release_Notes.pdf,
+Changed Behaviour, page 4] You can check the supported ciphers on the CLI by
+using the option `verify` from within the `sslconfig` command:
 
 ----
 {foo}
