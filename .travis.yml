@@ -21,6 +21,7 @@ install:
 script:
   - set -e
   - cd src
+  - cp DUMMY.adoc applied-crypto-hardening.adoc  ## REVERT ME ##
   - asciidoctor
         --failure-level=WARN
         -r asciidoctor-diagram
