@@ -1,3 +1,4 @@
+[[EllipticCurveCryptography]]
 == A note on Elliptic Curve Cryptography
 
 Elliptic Curve Cryptography (simply called ECC from now on) is a
