@@ -2,15 +2,7 @@
 
 === Oracle
 
-==== Tested with Versions
-
-We do not test this here, since we only reference other papers for Oracle so far.
-
-==== References
-
-Technical safety requirements by _Deutsche Telekom AG_ (German). Please read section 17.12 or pages 129 and following (Req 396 and Req 397) about SSL and ciphersuites http://www.telekom.com/static/-/155996/7/technische-sicherheitsanforderungen-si
-
-// TODO: Fix dead link
+No information available / known.
 
 
 === MySQL
