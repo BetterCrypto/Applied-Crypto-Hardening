@@ -88,11 +88,11 @@ Starting with version 9.2, you have the possibility to set the path manually.
 
 ==== References
 
-It’s recommended to read link:https://www.postgresql.org/docs/9.1/runtime-config-connection.html#RUNTIME-CONFIG-CONNECTION-SECURITY[Security and Authentication] in the manual.
+It’s recommended to read https://www.postgresql.org/docs/9.1/runtime-config-connection.html#RUNTIME-CONFIG-CONNECTION-SECURITY[Security and Authentication] in the manual.
 
-PostgreSQL Documentation on link:http://www.postgresql.org/docs/9.1/static/ssl-tcp.html[Secure TCP/IP Connections with SSL].
+PostgreSQL Documentation on https://www.postgresql.org/docs/9.1/ssl-tcp.html[Secure TCP/IP Connections with SSL].
 
-PostgreSQL Documentation on link:http://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html[host-based authentication].
+PostgreSQL Documentation on https://www.postgresql.org/docs/9.1/auth-pg-hba-conf.html[Client Authentication].
 
 ==== How to test
 
