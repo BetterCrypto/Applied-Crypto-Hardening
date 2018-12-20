@@ -9,17 +9,17 @@ intercept and scan the traffic for potential threats within sessions.
 
 For encrypted traffic there are four options:
 
-Block the connection because it cannot be scanned for threats.
+* Block the connection because it cannot be scanned for threats.
 
-Bypass the threat-mitigation and pass the encrypted session to the
+* Bypass the threat-mitigation and pass the encrypted session to the
 client, which results in a situation where malicious content is
 transferred directly to the client without visibility to the security
 system.
 
-Intercept (i.e. terminate) the session at the proxy, scan there and
+* Intercept (i.e. terminate) the session at the proxy, scan there and
 re-encrypt the session towards the client (effectively MITM).
 
-Deploy special Certificate Authorities to enable Deep Packet Inspection
+* Deploy special Certificate Authorities to enable Deep Packet Inspection
 on the wire.
 
 While the latest solution might be the most "up to date", it arises a
@@ -45,7 +45,7 @@ choose from, when enabling SSL features.
 
 ==== Only allow TLS 1.0,1.1 and 1.2 protocols:
 
- 
+
 
 ....
 $conf t
@@ -57,7 +57,7 @@ $(config device-profile default)protocol tlsv1 tlsv1.1 tlsv1.2
 
 ==== Select your accepted cipher-suites:
 
- 
+
 
 ....
 $conf t
@@ -95,6 +95,18 @@ ones accepting only SSLv2/3 protocol connections)
 
 === HAProxy
 
+See https://www.haproxy.org/
+
+See https://timtaubert.de/blog/2014/11/the-sad-state-of-server-side-tls-session-resumption-implementations/
+
+See https://cbonte.github.io/haproxy-dconv/configuration-1.5.html#5.1-npn
+
+See https://cbonte.github.io/haproxy-dconv/configuration-1.5.html#3.2-tune.ssl.cachesize
+
+See https://kura.io/2014/07/02/haproxy-ocsp-stapling/
+
+See https://kura.io/2015/01/27/hpkp-http-public-key-pinning-with-haproxy/
+
 HAProxy can be used as loadbalancer and proxy for TCP and HTTP-based
 applications. Since version 1.5 it supports SSL and IPv6.
 
@@ -104,11 +116,40 @@ HAProxy 1.5.11 with OpenSSL 1.0.1e on Debian Wheezy
 
 ==== Settings
 
+.global configuration
+[source]
+----
+global
+    ssl-default-bind-ciphers EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
+    ssl-default-bind-options no-sslv3 no-tls-tickets #disable SSLv3
+    tune.ssl.default-dh-param 2048 #tune DH to 2048
+----
+
+.frontend configuration
+[source]
+----
+frontend public
+    bind *:80
+    bind *:443 ssl crt server.pem
+    mode http
+    redirect scheme https code 301 if !{ ssl_fc } # redirect HTTP to HTTPS
+----
+
+.backend configuration
+[source]
+----
+backend backend
+    mode http
+    server server 192.168.1.1:80 check
+    http-request set-header X-Forwarded-Port %[dst_port]
+    http-request add-header X-Forwarded-Proto https if { ssl_fc }
+    rspadd Strict-Transport-Security:\ max-age=15768000;\ includeSubDomains #enable HSTS header for this backend
+----
+
+
 ==== Additional Settings
 
 ==== Enable NPN Support:
-
- 
 
 ....
     bind *:443 ssl crt server.pem npn "http/1.1,http/1.0"
@@ -118,7 +159,7 @@ Append the npn command in the frontend configuration of HAProxy.
 
 ==== Enable OCSP stapling:
 
-  HAProxy supports since version 1.5.0 OCSP stapling. To enable it you
+HAProxy supports since version 1.5.0 OCSP stapling. To enable it you
 have to generate the OCSP singing file in the same folder, with the same
 name as your certificate file plus the extension .ocsp. (e.g. your
 certificate file is named server.crt then the OCSP file have to be named
@@ -126,8 +167,8 @@ server.crt.oscp) +
 To generate the OCSP file use these commands:
 
 ....
-openssl x509 -in your.certificate.crt -noout -ocsp_uri # <- get your ocsp uri
-openssl ocsp -noverify -issuer ca.root.cert.crt -cert your.certificate.crt -url "YOUR OCSP URI" -respout your.certificate.crt.ocsp
+$ openssl x509 -in your.certificate.crt -noout -ocsp_uri # <- get your ocsp uri
+$ openssl ocsp -noverify -issuer ca.root.cert.crt -cert your.certificate.crt -url "YOUR OCSP URI" -respout your.certificate.crt.ocsp
 ....
 
 Reload HAProxy and now OCSP stapling should be enabled. +
@@ -137,18 +178,19 @@ similar.
 
 ==== Enable HPKP:
 
-  Get certificate informations:
+Get certificate informations:
 
 ....
-openssl x509 -in server.crt -pubkey -noout | openssl rsa -pubin -outform der | openssl dgst -sha256 -binary | base64
+$ openssl x509 -in server.crt -pubkey -noout | openssl rsa -pubin -outform der | openssl dgst -sha256 -binary | base64
 ....
 
 Then you append the returned string in the HAProxy configuration. Add
 the following line to the backend configuration:
 
-....
+[source]
+----
 rspadd Public-Key-Pins:\ pin-sha256="YOUR_KEY";\ max-age=15768000;\ includeSubDomains
-....
+----
 
 Reload HAProxy and HPKP should now be enabled. +
 Note: Keep in mind to generate a backup key in case of problems with
@@ -164,22 +206,67 @@ See appendix <<tools>>
 
 Pound 2.6
 
+See http://www.apsis.ch/pound
+
+See https://help.ubuntu.com/community/Pound
+
 ==== Settings
+
+.HTTPS Listener in Pound
+[source]
+----
+# HTTP Listener, redirects to HTTPS
+ListenHTTP
+    Address 10.10.0.10
+    Port    80
+    Service
+        Redirect "https://some.site.tld"
+    End
+End
+## HTTPS Listener
+ListenHTTPS
+    Address      10.10.0.10
+    Port         443
+    AddHeader    "Front-End-Https: on"
+    Cert         "/path/to/your/cert.pem"
+    ## See 'man ciphers'.
+    Ciphers      "TLSv1.2:TLSv1.1:!SSLv3:!SSLv2:EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA"
+    Service
+        BackEnd
+            Address 10.20.0.10
+            Port 80
+        End
+    End
+End
+----
 
 
 === stunnel
 
 ==== Tested with Versions
 
-stunnel 4.53-1.1ubuntu1 on Ubuntu 14.04 Trusty with OpenSSL 1.0.1f,
-without disabling Secure Client-Initiated Renegotiation
+* stunnel 4.53-1.1ubuntu1 on Ubuntu 14.04 Trusty with OpenSSL 1.0.1f,
+  without disabling Secure Client-Initiated Renegotiation
 
-stunnel 5.02-1 on Ubuntu 14.04 Trusty with OpenSSL 1.0.1f
+* stunnel 5.02-1 on Ubuntu 14.04 Trusty with OpenSSL 1.0.1f
 
-stunnel 4.53-1.1 on Debian Wheezy with OpenSSL 1.0.1e, without disabling
-Secure Client-Initiated Renegotiation
+* stunnel 4.53-1.1 on Debian Wheezy with OpenSSL 1.0.1e, without disabling
+  Secure Client-Initiated Renegotiation
 
 ==== Settings
+
+.HTTPS Listener in stunnel
+[source]
+----
+ciphers = EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
+
+curve = secp384r1
+options = NO_SSLv2
+options = NO_SSLv3
+options = cipher_server_preference
+; Secure Client-Initiated Renegotiation can only be disabled wit stunnel >= 4.54
+;renegotiation = no
+----
 
 ==== Additional information
 
