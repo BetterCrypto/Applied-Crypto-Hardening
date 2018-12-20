@@ -1,7 +1,5 @@
 == VPN
 
-[[IPSECgeneral]]
-
 Virtual private networks (VPN) are the standard way of connecting private
 networks via external (i.e. public networks). Most common are VPN solutions
 for mobile users to connect to the company netwwork via the Internet.
@@ -19,23 +17,25 @@ Basically you have two options the encrypt the transport of the data. First you
 can use the features of the IP itself (IPSec) or you can use a seperate
 application.
 
-The asvantage of IPsec is that this is a Internet standard, so all
-implementations of the various vendors should be interoperable.
+The advantage of IPsec is that this is an Internet standard, so all
+implementations of the various vendors should be interoperable. So it is easy to
+set up a VPN with your customer or supplier without having devices from the same
+vendor.
 
-Application Layer VPNs use TLS and pack the data into a application specific
+Application layer VPNs use TLS and pack the data into an application specific
 transport.
 
 TODO: Descision support for IPsec vs. TLS
 
-=== IPsec
-
 [[IPSECgeneral]]
+=== IPsec
 
 [NOTE]
 .IKE version
 ====
 This document will only utilize Internet Key Exchange (IKE) version 2. Version 1
 was a pita and should not be used any more.
+====
 
 ==== Authentication:
 
@@ -49,7 +49,7 @@ If you need to use Pre-Shared Key (PSK) authentication:
 . Choose a _random_, _long enough_ PSK (see below)
 . Use a _separate_ PSK for any IPsec connection
 . Change the PSKs regularly
-. Think about the exchange of the PSKs. A plain SMS with the PSK is _not_
+. Think about the _secure_ exchange of the PSKs. A plain SMS with the PSK is _not_
 secure.
 
 The size of the PSK should not be shorter than the output size of the hash
@@ -82,8 +82,8 @@ recommended ciphers suites in section <<recommendedciphers>> are shown in table 
 
 IKEv2 does not split up the mutual authentication and the agreement of a shared
 session secret into two phases. In IKEv2 normally only 4 pakets are exchanged.
-The predifined cipher suites are used during the IKE communication during the
-encrypted communication.
+The predifined cipher suites are used during the IKE communication and finally
+during the encrypted communication.
 
 ==== References
 
@@ -91,6 +91,11 @@ encrypted communication.
 
 
 ==== Check Point Next Generation Firewall
+
+The company Check Point https://www.checkpoint.com[Check Point] is one of the
+pioneers of netowrk firewalls. The product Firewall-1 dates back to 1994 and
+implemented stateful for the first time. The product VPN-1 implements an IPsec
+VPN device. Later both products were merged into a single product.
 
 ===== Tested with Versions
 
@@ -106,11 +111,12 @@ TODO: Recent version R80.10
 ===== Settings
 
 Please see section <<IPSECgeneral>> for guidance on parameter choice. In this
-section, we will configure a strong setup according to "`Configuration A`".
+section, we will configure a strong setup according to the _VPN Administration
+Guide_ manual.
 
-This is based on the concept of a _VPN Community_, which has all the settings
-for the gateways that are included in that community. Communities can be found
-in the _IPSEC VPN_ tab of _SmartDashboard_.
+Check Point VPNs are based on the concept of _VPN Communities_, which include
+all settings for the gateways involved. Communities can be found in the _IPSEC
+VPN_ tab of the _SmartDashboard_.
 
 image:checkpoint_1.png[VPN Community encryption properties,scaledwidth=59.2%]
 
@@ -153,7 +159,15 @@ R77 Administration Guide] (may require a UserCenter account to access)
 
 === VPN Applications
 
+VPN applications are an alternative to IPsec setups.
+
 ==== OpenVPN
+
+OpenVPN started in the year 2002 and offers a simple VPN setup for several
+platforms including Linux, *BSD, and Windows. OpenVPN is distributed unter the
+GPL. 
+
+For details see https://openvpn.net[OpenVPN]
 
 ===== Tested with Versions
 
@@ -161,13 +175,13 @@ R77 Administration Guide] (may require a UserCenter account to access)
 .Tested OpenVPN Versions
 |====
 | Program Version | OS/Distribution/Version | Comment
-| OpenVPN 2.3.10 | Ubuntu Xenial 16.04.1 LTS linked against openssl (libssl.so.1.0.0)
-| OpenVPN 2.3.2 | Debian Wheezy-backports linked against openssl (libssl.so.1.0.0)
-| OpenVPN 2.2.1 | Debian Wheezy linked against openssl (libssl.so.1.0.0)
-| OpenVPN 2.3.2 | Windows
+| OpenVPN 2.2.1 | Debian Wheezy linked against openssl (libssl.so.1.0.0) |
+| OpenVPN 2.3.2 | Debian Wheezy-backports linked against openssl
+| OpenVPN 2.3.2 | Windows |
+(libssl.so.1.0.0) |
+| OpenVPN 2.3.10 | Ubuntu Xenial 16.04.1 LTS linked against openssl
+(libssl.so.1.0.0) |
 |====
-
-===== Settings
 
 ===== General
 
@@ -177,8 +191,8 @@ details on the _easyrsa_ tool to help you with that.
 OpenVPN uses TLS only for authentication and key exchange. The bulk traffic is
 then encrypted and authenticated with the OpenVPN protocol using those keys.
 
-Note that while the _tls-cipher_ option takes a list of ciphers that is then
-negotiated as usual with TLS, the _cipher_ and _auth_ options both take a single
+Note that while the `tls-cipher` option takes a list of ciphers that is then
+negotiated as usual with TLS, the `cipher` and `auth` options both take a single
 argument that must match on client and server.
 
 OpenVPN duplexes the tunnel into a data and a control channel. The control
@@ -189,20 +203,37 @@ discussion]
 
 ===== Server Configuration
 
-TODO
+Server configuration sniplet
+
+----
+tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
+cipher AES-256-CBC
+auth SHA384
+----
+
 
 ===== Client Configuration
 
 Client and server have to use compatible configurations, otherwise they can’t
-communicate. The _cipher_ and _auth_ directives have to be identical.
+communicate. The `cipher` and `auth` directives have to be identical.
+
+----
+tls-remote server.example.com
+# Attention: it must fit in 256 bytes, so not the infamous CipherStringB!
+tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
+cipher AES-256-CBC
+auth SHA384
+# https://openvpn.net/index.php/open-source/documentation/howto.html#mitm
+remote-cert-tls server
+----
 
 ==== Justification for special settings
 
-OpenVPN 2.3.1 changed the values that the _tls-cipher_ option expects from
+OpenVPN 2.3.1 changed the values that the `tls-cipher` option expects from
 OpenSSL to IANA cipher names. That means from that version on you will get
-_Deprecated TLS cipher name_ warnings for the configurations above. You cannot
+`Deprecated TLS cipher name` warnings for the configurations above. You cannot
 use the selection strings from section <<recommendedciphers>> directly from
-2.3.1 on, which is why we give an explicit cipher list here.
+version 2.3.1 on, which is why we give an explicit cipher list here.
 
 In addition, there is a 256 character limit on configuration file line lengths;
 that limits the size of cipher suites, so we dropped all ECDHE suites.
@@ -211,9 +242,8 @@ The configuration shown above is compatible with all tested versions.
 
 ==== References
 
-OpenVPN Documentation: _Security Overview_
-https://openvpn.net/index.php/open-source/documentation/security-overview.html[OpenVPN
-documentation]
+OpenVPN Documentation: _Security Overview_ in the OpenVPN
+https://openvpn.net/index.php/open-source/documentation/security-overview.html[documentation]
 
 ==== Additional settings
 
@@ -226,7 +256,7 @@ configuring a shorter interval, or switch to a byte- or packet-based interval
 
 ===== Insecure ciphers
 
-Sweet32.footnote:[https://sweet32.info[Sweet32]] is an attack on 64-bit block
+Sweet32footnote:[https://sweet32.info[Sweet32]] is an attack on 64-bit block
 ciphers, such as `3DES` and `Blowfish` in OpenVPN. The following ciphers are
 affected, and should no longer be used:
 
@@ -242,11 +272,17 @@ The following ciphers are not affected:
 
 According to mitigation section on Sweet32 websitefootnote:[https://sweet32.info/#impact] users users should change the cipher from the DES or Blowfish to AES (`cipher AES-128-CBC`). If cipher change is not possible users can mitigate the attack by forcing frequent rekeying (`reneg-bytes 64000000`).
 
-===== Fixing ``easy-rsa''
+===== Fixing easy-rsa
 
-When installing an OpenVPN server instance, you are probably using _easy-rsa_ to
-generate keys and certificates. The file `vars` in the easyrsa installation
+When installing an OpenVPN server instance, you are probably using _easy-rsa_
+tool to generate keys and certificates. The file `vars` in the _easyrsa_ installation
 directory has a number of settings that should be changed to secure values:
+
+----
+export KEY_SIZE=4096
+export CA_EXPIRE=1826
+export KEY_EXPIRE=365
+----
 
 This will enhance the security of the key generation by using RSA keys with a
 length of 4096 bits, and set a lifetime of one year for the server/client
@@ -254,10 +290,10 @@ certificates and five years for the CA certificate.
 
 [NOTE]
 ====
-4096 bits is only an example of how to do this with easy-rsa.
+4096 bits is only an example of how to do this with _easy-rsa_.
 ====
 
-See also section <<keylengths>> for a discussion on keylengths.
+See also section <<keylengths>> for a discussion on keylength.
 
 In addition, edit the `pkitool` script and replace all occurrences of `sha1`
 with `sha256`, to sign the certificates with SHA256.
@@ -272,7 +308,8 @@ Which cipher suite is actually used can be seen in the logs:
 
 === PPTP
 
-PPTP is considered insecure, Microsoft recommends to ``use a more secure VPN tunnel''footnote:[http://technet.microsoft.com/en-us/security/advisory/2743314].
+PPTP is considered insecure, Microsoft recommends to _use a more secure VPN
+tunnel_footnote:[http://technet.microsoft.com/en-us/security/advisory/2743314].
 
 There is a cloud service that cracks the underlying MS-CHAPv2 authentication protocol for the price of USD 200footnote:[https://www.cloudcracker.com/blog/2012/07/29/cracking-ms-chap-v2/], and given the resulting MD4 hash, all PPTP traffic for a user can be decrypted.
 
@@ -283,7 +320,7 @@ Cisco ASA platform. These are, of course, just settings regarding SSL/TLS (i.e.
 Cisco AnyConnect) and IPsec. For further security settings regarding this
 platform the appropriate Cisco guides should be followed.
 
-TODO: Change this to VTI based configuration
+TODO: Add the configuration of a VTI based configuration
 
 ==== Tested with Versions
 
@@ -291,7 +328,7 @@ TODO: Change this to VTI based configuration
 .Tested Cisco ASA
 |====
 | Program Version | OS/Distribution/Version | Comment
-| 9.1(3) | ASA X-series model
+| 9.1(3) | ASA X-series model |
 |====
 
 TODO: Verify with recent versions
@@ -397,17 +434,16 @@ TODO: Complete reqrite nescessary.
 .Tested Openswan
 |====
 | Program Version | OS/Distribution/Version | Comment
-| Version 2.6.39 | gentoo
+| Version 2.6.39 | gentoo |
 |====
 
 ==== Settings
 
 Note: the available algorithms depend on your kernel configuration (when using
-protostack=netkey) and/or build-time options.
+`protostack=netkey`) and/or build-time options.
 
 To list the supported algorithms
 
-.Configuration of ipsec.conf
 ----
 ....
 $ ipsec auto --status | less
