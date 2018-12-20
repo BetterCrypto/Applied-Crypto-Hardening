@@ -1,0 +1,266 @@
+// === Choosing your own cipher suites
+// [[ChoosingYourOwnCipherSuites]]
+
+[NOTE]
+.TODO
+====
+Adi...  you want to describe how to make your own selection of cipher suites here.
+====
+
+// SSL/TLS cipher suites consist of a key exchange algorithm, an authentication, a
+// stream cipher (or a block cipher with a chaining mode) and a message authentication
+// mechanism.
+//  ^^ commented out due to duplication (see previous section on architecture) - azet
+
+Many of the parts in a cipher suite are interchangeable. Like the key exchange
+algorithm in this example: `ECDHE-RSA-AES256-GCM-SHA384` and
+`DHE-RSA-AES256-GCM-SHA384`. To provide a decent level of security, all
+algorithms need to be safe (subject to the disclaimer in section
+<<disclaimer>>).
+
+Note: There are some very weak cipher suites in every crypto library, most of
+them for historic reasons or due to legacy standards. The crypto export embargo
+is a good example . For the following chapter support of these low-security
+algorithms is disabled by setting `!EXP:!LOW:!NULL` as part of the cipher
+string.
+
+[NOTE]
+.TODO
+====
+Team: do we need references for all cipher suites considered weak?
+====
+
+==== Key Exchange
+
+Many algorithms allow secure key exchange. Those are `RSA`, `DH`, `EDH`, `ECDSA`, `ECDH`,
+`EECDH` amongst others. During the key exchange, keys used for authentication and
+symmetric encryption are exchanged. For `RSA`, `DSA` and `ECDSA` those keys are
+derived from the server’s public key.
+
+[NOTE]
+.TODO
+====
+explain this section
+====
+
+[options="header"]
+.Key exchange algorithms
+|====
+|         | Key  | EC  | ephemeral
+|   RSA    | RSA           | no           | no
+|   DH     | RSA           | no           | no
+|   EDH    | RSA           | no           | yes
+|   ECDH   | both          | yes          | no
+|  EECDH  | both          | yes          | yes
+|  DSA    | DSA           | no           | no
+|  ECDSA  | DSA           | yes          | no
+|====
+// disabled: `!PSK:!SRP`
+
+*Ephemeral Key Exchange* uses different keys for authentication (the
+server’s RSA key) and encryption (a randomly created key). This
+advantage is called ``Forward Secrecy'' and means that even recorded
+traffic cannot be decrypted later when someone obtains the server key.
+
+All ephemeral key exchange schemes are based on the Diffie-Hellman
+algorithm and require pre-generated Diffie-Hellman parameter (which
+allow fast ephemeral key generation). It is important to note that the
+Diffie-Hellman parameter settings need to reflect at least the security
+(speaking in number of bits) as the RSA host key.
+
+*Elliptic Curves* (see section <<EllipticCurveCryptography>>) required by
+current TLS standards only consist of the so-called NIST-curves (`secp256r1` and
+`secp384r1`) which may be weak because the parameters that led to their
+generation were not properly explained by the authors . Disabling support for
+Elliptic Curves leads to no ephemeral key exchange being available for the
+Windows platform. When you decide to use Elliptic Curves despite the
+uncertainty, make sure to at least use the stronger curve of the two supported
+by all clients (`secp384r1`).
+
+Other key exchange mechanisms like Pre-Shared Key (PSK) are irrelevant
+for regular SSL/TLS use.
+
+
+==== Authentication
+
+RSA, DSA, DSS, ECDSA, ECDH
+
+During Key Exchange the server proved that he is in control of the
+private key associated with a certain public key (the server’s
+certificate). The client verifies the server’s identity by comparing the
+signature on the certificate and matching it with its trust database.
+For details about the trust model of SSL/TLS please see
+<<pkis>>.
+
+In addition to the server providing its identity, a client might do so
+as well. That way mutual trust can be established. Another mechanism
+providing client authentication is Secure Remote Password (SRP). All
+those mechanisms require special configuration.
+
+Other authentication mechanisms like Pre Shared Keys are not used in
+SSL/TLS. Anonymous sessions will not be discussed in this paper.
+
+`!PSK:!aNULL`
+
+
+==== Encryption
+
+AES, CAMELLIA, SEED, ARIA(?), FORTEZZA(?)...
+
+Other ciphers like IDEA, RC2, RC4, 3DES or DES are weak and therefore
+not recommended: `!DES:!3DES:!RC2:!RC4:!eNULL`
+
+
+== Message authentication
+
+SHA-1 (SHA), SHA-2 (SHA256, SHA384), AEAD
+
+Note that SHA-1 is considered broken and should not be used. SHA-1 is
+however the only still available message authentication mechanism
+supporting TLS1.0/SSLv3. Without SHA-1 most clients will be locked out.
+
+Other hash functions like MD2, MD4 or MD5 are unsafe and broken:
+`!MD2:!MD4:!MD5`
+
+
+== Combining cipher strings
+
+// //  reference 'man ciphers' and 'openssl ciphers' and show some simple examples
+// //  VERY IMPORTANT: hint at the IANA-list and the differences in implementations
+
+[NOTE]
+.TODO
+====
+Adi...  The text below was simply the old text, still left here for reference.}
+====
+
+// // //  NOTE: we do not need to list this all here, can move to an appendix
+// At the time of this writing, SSL is defined in RFCs: 	
+// 
+// \begin{itemize*}
+// \item RFC2246 - TLS1.0		
+// \item RFC3268 - AES		
+// \item RFC4132 - Camelia		
+// \item RFC4162 - SEED		
+// \item RFC4279 - PSK		
+// \item RFC4346 - TLS 1.1		
+// \item RFC4492 - ECC		
+// \item RFC4785 - PSK\_NULL		
+// \item RFC5246 - TLS 1.2		
+// \item RFC5288 - AES\_GCM		
+// \item RFC5289 - AES\_GCM\_SHA2\_ECC		
+// \item RFC5430 - Suite B		
+// \item RFC5487 - GCM\_PSK		
+// \item RFC5489 - ECDHE\_PSK		
+// \item RFC5932 - Camelia		
+// \item RFC6101 - SSL 3.0		
+// \item RFC6209 - ARIA		
+// \item RFC6367 - Camelia		
+// \item RFC6655 - AES\_CCM		
+// \item RFC7027 - Brainpool Curves		
+// \end{itemize*}
+
+// \subsubsection{Overview of SSL Server settings}
+// 
+// 
+// Most Server software (Webservers, Mail servers, etc.) can be configured to prefer certain cipher suites over others. 
+// We followed the recommendations by Ivan Ristic's SSL/TLS Deployment Best Practices\footnote{\url{https://www.ssllabs.com/projects/best-practices/index.html}} document (see section 2.2 "Use Secure Protocols") and arrived at a list of recommended cipher suites for SSL enabled servers.
+// 
+// Following Ivan Ristic's adivce we arrived at a categorisation of cipher suites.
+// 
+// \begin{center}
+// \begin{tabular}{lllll}
+// \cmidrule[\heavyrulewidth]{2-5}
+// & \textbf{Version}   & \textbf{KeyEx} & \textbf{Cipher}    & \textbf{MAC}       \\\cmidrule(lr){2-5}
+// \cellcolor{green}prefer  & TLS 1.2   & DHE\_DSS   & AES\_256\_GCM   & SHA384        \\
+//     &   & DHE\_RSA   & AES\_256\_CCM   & SHA256        \\
+//     &   & ECDHE\_ECDSA   & AES\_256\_CBC   &       \\
+//     &   & ECDHE\_RSA &   &       \\ 
+//     &   &   &   &       \\
+// \cellcolor{orange}consider    & TLS 1.1   & DH\_DSS    & AES\_128\_GCM   & SHA       \\
+//     & TLS 1.0   & DH\_RSA    & AES\_128\_CCM   &       \\
+//     &   & ECDH\_ECDSA    & AES\_128\_CBC   &       \\ 
+//     &   & ECDH\_RSA  & CAMELLIA\_256\_CBC  &       \\
+//     &   & RSA   & CAMELLIA\_128\_CBC  &       \\
+//     &   &   &   &       \\
+// \cellcolor{red}avoid   
+// & SSL 3.0   & NULL  & NULL  & NULL      \\
+//     &   & DH\_anon   & RC4\_128   & MD5       \\
+//     &   & ECDH\_anon & 3DES\_EDE\_CBC  &       \\
+//     &   &   & DES\_CBC   &       \\
+//     &   &   &   &       \\
+// \cellcolor{blue}{\color{white}special }
+// &   & PSK   & CAMELLIA\_256\_GCM  &       \\
+//     &   & DHE\_PSK   & CAMELLIA\_128\_GCM  &       \\
+//     &   & RSA\_PSK   & ARIA\_256\_GCM  &       \\
+//     &   & ECDHE\_PSK & ARIA\_256\_CBC  &       \\
+//     &   &   & ARIA\_128\_GCM  &       \\
+//     &   &   & ARIA\_128\_CBC  &       \\
+//     &   &   & SEED  &       \\
+// \cmidrule[\heavyrulewidth]{2-5}
+// \end{tabular}
+// \end{center}
+// 
+// A remark on the ``consider'' section: the BSI (Federal office for information security, Germany) recommends in its technical report TR-02102-2\footnote{\url{https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR02102/BSI-TR-02102-2_pdf.html}} to \textbf{avoid} non-ephemeral\footnote{Ephemeral keys are session keys which are destroyed upon termination of the encrypted session. In TLS/SSL, they are realized by the DHE cipher suites. } keys for any communication which might contain personal or sensitive data. In this document, we follow BSI's advice and therefore only keep cipher suites containing (EC)DH\textbf{E} (ephemeral) variants. System administrators, who can not use forward secrecy can still use the cipher suites in the ``consider'' section. We however, do not recommend them in this document.
+// 
+// // //  NOTE: s/forward secrecy/perfect forward secrecy???
+// 
+// Note that the entries marked as ``special'' are cipher suites which are not common to all clients (webbrowsers etc).
+// 
+// 
+// \subsubsection{Tested clients}
+//  
+// Next we tested the cipher suites above on the following clients:
+// 
+// // //  NOTE: we need to test with more systems!!
+// \begin{itemize*}
+// \item Chrome 30.0.1599.101 Mac OS X 10.9
+// \item Safari 7.0 Mac OS X 10.9
+// \item Firefox 25.0 Mac OS X 10.9
+// \item Internet Explorer 10 Windows 7
+// \item Apple iOS 7.0.3
+// \end{itemize*}
+// 
+// 
+// The result of testing the cipher suites with these clients gives us a preference order as shown in table \ref{table:prefOrderCipherSuites}. 
+// Should a client not be able to use a specific cipher suite, it will fall back to the next possible entry as given by the ordering.
+// 
+// \begin{table}[h]
+// \centering\small
+//     \begin{tabular}{cllcccc}
+//     \toprule
+//     \textbf{Pref}   & \textbf{Cipher Suite}                            & \textbf{ID}   & \multicolumn{4}{l}{\textbf{Supported by}}\\ 
+//     \cmidrule(lr){4-7}
+//                     & \textbf{OpenSSL Name}                            &               & Chrome & FF   & IE   & Safari \\
+//     \cmidrule(lr){1-7}
+//     \phantom{0}1    & \verb|TLS_DHE_RSA_WITH_AES_256_GCM_SHA384|     & \verb|0x009f| & \no    & \no  & \no  & \no    \\
+//                     & \verb|DHE-RSA-AES256-GCM-SHA384|                      &               & &&&\\\rowcolor{lightlightgray}
+//     \phantom{0}2    & \verb|TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384| & \verb|0xC024| & \no    & \no  & \no  & \yes   \\\rowcolor{lightlightgray}
+//                     & \verb|ECDHE-ECDSA-AES256-SHA384|                      &               & &&&\\
+//     \phantom{0}3    & \verb|TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384|   & \verb|0xC028| & \no    & \no  & \no  & \yes   \\
+//                     & \verb|ECDHE-RSA-AES256-SHA384|                        &               & &&&\\\rowcolor{lightlightgray}
+//     \phantom{0}4    & \verb|TLS_DHE_RSA_WITH_AES_256_CBC_SHA256|     & \verb|0x006B| & \yes   & \no  & \no  & \yes   \\\rowcolor{lightlightgray}
+//                     & \verb|DHE-RSA-AES256-SHA256|                          &               & &&&\\
+//     \phantom{0}5    & \verb|TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA|    & \verb|0xC00A| & \yes   & \yes & \yes & \yes   \\
+//                     & \verb|ECDHE-ECDSA-AES256-SHA|                         &               & &&&\\\rowcolor{lightlightgray}
+//     \phantom{0}6    & \verb|TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA|      & \verb|0xC014| & \yes   & \yes & \yes & \yes   \\\rowcolor{lightlightgray}
+//                     & \verb|ECDHE-RSA-AES256-SHA|                           &               & &&&\\
+//     \phantom{0}7    & \verb|TLS_DHE_RSA_WITH_AES_256_CBC_SHA|        & \verb|0x0039| & \yes   & \yes & \no  & \yes   \\
+//                     & \verb|DHE-RSA-AES256-SHA|                             &               & &&&\\\rowcolor{lightlightgray}
+//     \phantom{0}8    & \verb|TLS_DHE_DSS_WITH_AES_256_CBC_SHA|        & \verb|0x0038| & \no    & \yes & \yes & \no    \\\rowcolor{lightlightgray}
+//                     & \verb|DHE-DSS-AES256-SHA|                             &               & &&&\\
+//     \phantom{0}9    & \verb|TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA|   & \verb|0x0088| & \no    & \yes & \no  & \no    \\
+//                     & \verb|DHE-RSA-CAMELLIA256-SHA|                        &               & &&&\\\rowcolor{lightlightgray}
+//     \phantom{}10    & \verb|TLS_DHE_DSS_WITH_CAMELLIA_256_CBC_SHA|   & \verb|0x0087| & \no    & \yes & \no  & \no    \\\rowcolor{lightlightgray}
+//                     & \verb|DHE-DSS-CAMELLIA256-SHA|                        &               & &&&\\
+//    \bottomrule
+//     \end{tabular}
+// \caption{Preference order of cipher suites.  All suites are supported by OpenSSL.}
+// \label{table:prefOrderCipherSuites}
+// \end{table}
+// 
+// Note: the above table \ref{table:prefOrderCipherSuites} contains Elliptic curve key exchanges. There are currently strong doubts\footnote{\url{http://safecurves.cr.yp.to/rigid.html}} concerning ECC.
+// If unsure, remove the cipher suites starting with ECDHE in the table above.
+// 
+// 
+// Based on this ordering, we can now define the corresponding settings for servers. We will start with the most common web servers.
