@@ -48,8 +48,10 @@ inadequate for long term protection.
 
 We want to note that 3DES theoretically has 168 bits of security,
 however based on the NIST Special Publication 800-57
-footnote:[http://csrc.nist.gov/publications/PubsSPs.html#800-57-part1,
-pages 63 and 64], it is clear that 3DES can only be considered to
+footnote:[https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf,
+page 51], it is clear that 3DES can only be considered to
 provide for 80 bits / 112 bits security.
+
+// TODO: see issue 176
 
 
