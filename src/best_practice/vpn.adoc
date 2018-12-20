@@ -1,143 +1,234 @@
 == VPN
 
 [[IPSECgeneral]]
+
+Virtual private networks (VPN) are the standard way of connecting private
+networks via external (i.e. public networks). Most common are VPN solutions
+for mobile users to connect to the company netwwork via the Internet.
+Providers also advertise MPLS solutions to connect company networks at
+separate locations.
+
+Of course the transport of sensitive data over external networks should be 
+encrypted to protect the integrity and privacy. This document describes
+the different possibilities the encrypt the transport, the various 
+applications and their configuration.
+
+=== Technology
+
+Basically you have two options the encrypt the transport of the data. First you
+can use the features of the IP itself (IPSec) or you can use a seperate
+application.
+
+The asvantage of IPsec is that this is a Internet standard, so all
+implementations of the various vendors should be interoperable.
+
+Application Layer VPNs use TLS and pack the data into a application specific
+transport.
+
+TODO: Descision support for IPsec vs. TLS
+
 === IPsec
 
-==== Settings
+[[IPSECgeneral]]
 
-===== Assumptions:
+[NOTE]
+.IKE version
+====
+This document will only utilize Internet Key Exchange (IKE) version 2. Version 1
+was a pita and should not be used any more.
 
-We assume the use of IKE (v1 or v2) and ESP for this document.
+==== Authentication:
 
-===== Authentication:
+When using RSA key pairs for mutual authentication, a key size of 2048 bits or
+more should be used. The use of Certificate Authorities provides an additional
+layer of protection. Certificates can be revoked, plain key pairs have to be
+removed manually.
 
-IPSEC authentication should optimally be performed via RSA signatures, with a key size of 2048 bits or more. Configuring only the trusted CA that issued the peer certificate provides for additional protection against fake certificates.
+If you need to use Pre-Shared Key (PSK) authentication:
 
-If you need to use Pre-Shared Key authentication:
+. Choose a _random_, _long enough_ PSK (see below)
+. Use a _separate_ PSK for any IPsec connection
+. Change the PSKs regularly
+. Think about the exchange of the PSKs. A plain SMS with the PSK is _not_
+secure.
 
-1. Choose a *random*, *long enough* PSK (see below)
-2. Use a *separate* PSK for any IPSEC connection
-3. Change the PSKs regularly
+The size of the PSK should not be shorter than the output size of the hash
+algoriithm used in IKE.footnote:[The hash algorithm is used in a HMAC, see
+RFC2104 and the discussion starting in TODO link outdated http://www.vpnc.org/ietf-ipsec/02.ipsec/msg00268.html]
 
-The size of the PSK should not be shorter than the output size of the hash algorithm used in IKEfootnote:[It is used in a HMAC, see RFC2104  and the discussion starting in http://www.vpnc.org/ietf-ipsec/02.ipsec/msg00268.html.].
+For a key composed of upper- and lowercase letters, numbers, and two
+additional characters.footnote:[64 possible values = 6 bits].
+The table TODO: table number gives the minimum lengths in characters.
 
-For a key composed of upper- and lowercase letters, numbers, and two additional symbolsfootnote:[64 possible values = 6 bits], table #tab:IPSEC_psk_len[[tab:IPSEC_psk_len]] gives the minimum lengths in characters.
+.Table PSK lengths
+|===
+|IKE Hash | PSK length (chars)
 
-===== Cryptographic Suites:
+| SHA256 | 43
+| SHA384 | 64
+| SHA512 | 86
+|===
 
-IPSEC Cryptographic Suites are pre-defined settings for all the items of a configuration; they try to provide a balanced security level and make setting up VPNs easier. footnote:[RFC6379 , RFC4308 ]
 
-When using any of those suites, make sure to enable “Perfect Forward Secrecy“ for Phase 2, as this is not specified in the suites. The equivalents to the recommended ciphers suites in section <<recommendedciphers>> are shown in table #tab:IPSEC_suites[[tab:IPSEC_suites]].
+==== Cryptographic Suites:
 
-===== Phase 1:
+IPsec cryptographic suites are pre-defined settings for all the items of a
+configuration; they try to provide a balanced security level and make setting up
+VPNs easier.footnote:[RFC6379 , RFC4308]
 
-Alternatively to the pre-defined cipher suites, you can define your own, as described in this and the next section.
+When using any of those suites, make sure to enable “Perfect Forward Secrecy“
+for phase 2, as this is not specified in the suites. The equivalents to the
+recommended ciphers suites in section <<recommendedciphers>> are shown in table #tab:IPSEC_suites[[tab:IPSEC_suites]].
 
-Phase 1 is the mutual authentication and key exchange phase; table #tab:IPSEC_ph1_params[[tab:IPSEC_ph1_params]] shows the parameters.
-
-Use only “main mode“, as “aggressive mode“ has known security vulnerabilities footnote:[http://ikecrack.sourceforge.net/].
-
-===== Phase 2:
-
-Phase 2 is where the parameters that protect the actual data are negotiated; recommended parameters are shown in table #tab:IPSEC_ph2_params[[tab:IPSEC_ph2_params]].
+IKEv2 does not split up the mutual authentication and the agreement of a shared
+session secret into two phases. In IKEv2 normally only 4 pakets are exchanged.
+The predifined cipher suites are used during the IKE communication during the
+encrypted communication.
 
 ==== References
 
-``A Cryptographic Evaluation of IPsec'', Niels Ferguson and Bruce Schneier: https://www.schneier.com/paper-ipsec.pdf
+* https://www.schneier.com/paper-ipsec.pdf[Ferguson, N, and Schneir, B: A Cryptographic Evaluation of IPsec]
 
 
-=== Check Point FireWall-1
+==== Check Point Next Generation Firewall
 
-==== Tested with Versions
+===== Tested with Versions
 
-* R77 (should work with any currently supported version)
+[options="header"]
+.Tested Check Point Next Generation Firewall
+|====
+| Program Version | OS/Distribution/Version | Comment
+| R77 | Check Point Secure Platform | Comment
+|====
 
-==== Settings
+TODO: Recent version R80.10
 
-Please see section <<IPSECgeneral>> for guidance on parameter choice. In this section, we will configure a strong setup according to ``Configuration A''.
+===== Settings
 
-This is based on the concept of a ``VPN Community'', which has all the settings for the gateways that are included in that community. Communities can be found in the ``IPSEC VPN'' tab of SmartDashboard.
+Please see section <<IPSECgeneral>> for guidance on parameter choice. In this
+section, we will configure a strong setup according to "`Configuration A`".
+
+This is based on the concept of a _VPN Community_, which has all the settings
+for the gateways that are included in that community. Communities can be found
+in the _IPSEC VPN_ tab of _SmartDashboard_.
 
 image:checkpoint_1.png[VPN Community encryption properties,scaledwidth=59.2%]
 
-{empty}<<fig:checkpoint_1>>
+<<fig:checkpoint_1>>
 
-Either choose one of the encryption suites in the properties dialog (figure <<checkpoint_1>>, or proceed to ``Custom Encryption...'', where you can set encryption and hash for Phase 1 and 2 (figure <<checkpoint_2>>.
+Either choose one of the encryption suites in the properties dialog (figure
+<<checkpoint_1>>, or proceed to _Custom Encryption..._, where you can set
+encryption and hash for Phase 1 and 2 (figure <<checkpoint_2>>.
 
 image:checkpoint_2.png[Custom Encryption Suite Properties,scaledwidth=41.1%]
 
-{empty}<<checkpoint_2>>
+<<checkpoint_2>>
 
-The Diffie-Hellman groups and Perfect Forward Secrecy Settings can be found under ``Advanced Settings'' / ``Advanced VPN Properties'' (figure <<checkpoint_3>>.
+The Diffie-Hellman groups and Perfect Forward Secrecy Settings can be found
+under _Advanced Settings_ / _Advanced VPN Properties_ (figure <<checkpoint_3>>.
 
 image:checkpoint_3.png[Advanced VPN Properties,scaledwidth=58.9%]
 
-{empty}<<checkpoint_3>>
+<<checkpoint_3>>
 
-==== Additional settings
+===== Additional settings
 
-For remote Dynamic IP Gateways, the settings are not taken from the community, but set in the ``Global Properties'' dialog under ``Remote Access'' / ``VPN Authentication and Encryption''. Via the ``Edit...'' button, you can configure sets of algorithms that all gateways support (figure <<checkpoint_4>>).
+For remote Dynamic IP Gateways, the settings are not taken from the community,
+but set in the _Global Properties_ dialog under _Remote Access_ / _VPN
+Authentication and Encryption_. Via the _Edit..._ button, you can configure sets
+of algorithms that all gateways support (figure <<checkpoint_4>>).
 
 image:checkpoint_4.png[Remote Access Encryption Properties,scaledwidth=47.4%]
 
-{empty}<<checkpoint_4>>
+<<checkpoint_4>>
 
-Please note that these settings restrict the available algorithms for *all* gateways, and also influence the VPN client connections.
+Please note that these settings restrict the available algorithms for _all_
+gateways, any also influence the VPN client connections.
 
-==== References
+===== References
 
-Check Point https://sc1.checkpoint.com/documents/R77/CP_R77_VPN_AdminGuide/html_frameset.htm[VPN R77 Administration Guide] (may require a UserCenter account to access)
+Check Point
+https://sc1.checkpoint.com/documents/R77/CP_R77_VPN_AdminGuide/html_frameset.htm[VPN
+R77 Administration Guide] (may require a UserCenter account to access)
 
-=== OpenVPN
+=== VPN Applications
 
-==== Tested with Versions
+==== OpenVPN
 
-* OpenVPN 2.3.10 from Ubuntu Xenial 16.04.1 LTS linked against openssl (libssl.so.1.0.0)
-* OpenVPN 2.3.2 from Debian ``wheezy-backports'' linked against openssl (libssl.so.1.0.0)
-* OpenVPN 2.2.1 from Debian Wheezy linked against openssl (libssl.so.1.0.0)
-* OpenVPN 2.3.2 for Windows
+===== Tested with Versions
 
-==== Settings
+[options="header"]
+.Tested OpenVPN Versions
+|====
+| Program Version | OS/Distribution/Version | Comment
+| OpenVPN 2.3.10 | Ubuntu Xenial 16.04.1 LTS linked against openssl (libssl.so.1.0.0)
+| OpenVPN 2.3.2 | Debian Wheezy-backports linked against openssl (libssl.so.1.0.0)
+| OpenVPN 2.2.1 | Debian Wheezy linked against openssl (libssl.so.1.0.0)
+| OpenVPN 2.3.2 | Windows
+|====
+
+===== Settings
 
 ===== General
 
-We describe a configuration with certificate-based authentication; see below for details on the `easyrsa` tool to help you with that.
+We describe a configuration with certificate-based authentication; see below for
+details on the _easyrsa_ tool to help you with that.
 
-OpenVPN uses TLS only for authentication and key exchange. The bulk traffic is then encrypted and authenticated with the OpenVPN protocol using those keys.
+OpenVPN uses TLS only for authentication and key exchange. The bulk traffic is
+then encrypted and authenticated with the OpenVPN protocol using those keys.
 
-Note that while the `tls-cipher` option takes a list of ciphers that is then negotiated as usual with TLS, the `cipher` and `auth` options both take a single argument that must match on client and server.
+Note that while the _tls-cipher_ option takes a list of ciphers that is then
+negotiated as usual with TLS, the _cipher_ and _auth_ options both take a single
+argument that must match on client and server.
 
-OpenVPN duplexes the tunnel into a data and a control channel. The control channel is a usual TLS connection, the data channel currently uses encrypt-then-mac CBC, see https://github.com/BetterCrypto/Applied-Crypto-Hardening/pull/91#issuecomment-75365286
+OpenVPN duplexes the tunnel into a data and a control channel. The control
+channel is a usual TLS connection, the data channel currently uses
+encrypt-then-mac CBC, see
+https://github.com/BetterCrypto/Applied-Crypto-Hardening/pull/91#issuecomment-75365286[CRC
+discussion]
 
 ===== Server Configuration
 
-  +
+TODO
 
 ===== Client Configuration
 
-Client and server have to use compatible configurations, otherwise they can’t communicate. The `cipher` and `auth` directives have to be identical.
+Client and server have to use compatible configurations, otherwise they can’t
+communicate. The _cipher_ and _auth_ directives have to be identical.
 
 ==== Justification for special settings
 
-OpenVPN 2.3.1 changed the values that the `tls-cipher` option expects from OpenSSL to IANA cipher names. That means from that version on you will get ``Deprecated TLS cipher name'' warnings for the configurations above. You cannot use the selection strings from section <<recommendedciphers>> directly from 2.3.1 on, which is why we give an explicit cipher list here.
+OpenVPN 2.3.1 changed the values that the _tls-cipher_ option expects from
+OpenSSL to IANA cipher names. That means from that version on you will get
+_Deprecated TLS cipher name_ warnings for the configurations above. You cannot
+use the selection strings from section <<recommendedciphers>> directly from
+2.3.1 on, which is why we give an explicit cipher list here.
 
-In addition, there is a 256 character limit on configuration file line lengths; that limits the size of cipher suites, so we dropped all ECDHE suites.
+In addition, there is a 256 character limit on configuration file line lengths;
+that limits the size of cipher suites, so we dropped all ECDHE suites.
 
 The configuration shown above is compatible with all tested versions.
 
 ==== References
 
-OpenVPN Documentation: _Security Overview_ https://openvpn.net/index.php/open-source/documentation/security-overview.html
+OpenVPN Documentation: _Security Overview_
+https://openvpn.net/index.php/open-source/documentation/security-overview.html[OpenVPN
+documentation]
 
 ==== Additional settings
 
 ===== Key renegotiation interval
 
-The default for renegotiation of encryption keys is one hour (`reneg-sec 3600`). If you transfer huge amounts of data over your tunnel, you might consider configuring a shorter interval, or switch to a byte- or packet-based interval (`reneg-bytes` or `reneg-pkts`).
+The default for renegotiation of encryption keys is one hour (`reneg-sec 3600`).
+If you transfer huge amounts of data over your tunnel, you might consider
+configuring a shorter interval, or switch to a byte- or packet-based interval
+(`reneg-bytes` or `reneg-pkts`).
 
 ===== Insecure ciphers
 
-Sweet32footnote:[https://sweet32.info/] is an attack on 64-bit block ciphers, such as `3DES` and `Blowfish` in OpenVPN. The following ciphers are affected, and should no longer be used:
+Sweet32.footnote:[https://sweet32.info[Sweet32]] is an attack on 64-bit block
+ciphers, such as `3DES` and `Blowfish` in OpenVPN. The following ciphers are
+affected, and should no longer be used:
 
 * BF-*
 * DES* (including 3DES variants)
@@ -153,11 +244,23 @@ According to mitigation section on Sweet32 websitefootnote:[https://sweet32.info
 
 ===== Fixing ``easy-rsa''
 
-When installing an OpenVPN server instance, you are probably using _easy-rsa_ to generate keys and certificates. The file `vars` in the easyrsa installation directory has a number of settings that should be changed to secure values:
+When installing an OpenVPN server instance, you are probably using _easy-rsa_ to
+generate keys and certificates. The file `vars` in the easyrsa installation
+directory has a number of settings that should be changed to secure values:
 
-This will enhance the security of the key generation by using RSA keys with a length of 4096 bits, and set a lifetime of one year for the server/client certificates and five years for the CA certificate. *NOTE: 4096 bits is only an example of how to do this with easy-rsa.* See also section <<keylengths>> for a discussion on keylengths.
+This will enhance the security of the key generation by using RSA keys with a
+length of 4096 bits, and set a lifetime of one year for the server/client
+certificates and five years for the CA certificate.
 
-In addition, edit the `pkitool` script and replace all occurrences of `sha1` with `sha256`, to sign the certificates with SHA256.
+[NOTE]
+====
+4096 bits is only an example of how to do this with easy-rsa.
+====
+
+See also section <<keylengths>> for a discussion on keylengths.
+
+In addition, edit the `pkitool` script and replace all occurrences of `sha1`
+with `sha256`, to sign the certificates with SHA256.
 
 ==== Limitations
 
@@ -175,14 +278,29 @@ There is a cloud service that cracks the underlying MS-CHAPv2 authentication pro
 
 === Cisco ASA
 
-The following settings reflect our recommendations as best as possible on the Cisco ASA platform. These are - of course - just settings regarding SSL/TLS (i.e. Cisco AnyConnect) and IPsec. For further security settings regarding this platform the appropriate Cisco guides should be followed.
+The following settings reflect our recommendations as best as possible on the
+Cisco ASA platform. These are, of course, just settings regarding SSL/TLS (i.e.
+Cisco AnyConnect) and IPsec. For further security settings regarding this
+platform the appropriate Cisco guides should be followed.
+
+TODO: Change this to VTI based configuration
 
 ==== Tested with Versions
 
-9.1(3) - X-series model
+[options="header"]
+.Tested Cisco ASA
+|====
+| Program Version | OS/Distribution/Version | Comment
+| 9.1(3) | ASA X-series model
+|====
+
+TODO: Verify with recent versions
 
 ==== Settings
 
+.Configration for an IPsec tunnel on Cisco ASA
+[source]
+----
 ....
 crypto ipsec ikev2 ipsec-proposal AES-Fallback
  protocol esp encryption aes-256 aes-192 aes
@@ -247,16 +365,21 @@ ssl client-version tlsv1-only
 ssl encryption dhe-aes256-sha1 dhe-aes128-sha1 aes256-sha1 aes128-sha1
 ssl trust-point ASDM_TrustPoint0 Outside-DMZ
 ....
+----
+
 
 ==== Justification for special settings
 
-New IPsec policies have been defined which do not make use of ciphers that may be cause for concern. Policies have a "Fallback" option to support legacy devices.
+New IPsec policies have been defined which do not make use of ciphers that may
+be cause for concern. Policies have a fallback option to support legacy devices.
 
-3DES has been completely disabled as such Windows XP AnyConnect Clients will no longer be able to connect.
+3DES has been completely disabled as such Windows XP AnyConnect Clients will no
+longer be able to connect.
 
 The Cisco ASA platform does not currently support RSA Keys above 2048bits.
 
-Legacy ASA models (e.g. 5505, 5510, 5520, 5540, 5550) do not offer the possibility to configure for SHA256/SHA384/SHA512 nor AES-GCM for IKEv2 proposals.
+Legacy ASA models (e.g. 5505, 5510, 5520, 5540, 5550) do not offer the
+possibility to configure for SHA256/SHA384/SHA512 nor AES-GCM for IKEv2 proposals.
 
 ==== References
 
@@ -266,22 +389,34 @@ http://www.cisco.com/web/about/security/intelligence/nextgen_crypto.html
 
 === Openswan
 
+TODO: Complete reqrite nescessary.
+
 ==== Tested with Version
 
-Openswan 2.6.39 (Gentoo)
+[options="header"]
+.Tested Openswan
+|====
+| Program Version | OS/Distribution/Version | Comment
+| Version 2.6.39 | gentoo
+|====
 
 ==== Settings
 
-Note: the available algorithms depend on your kernel configuration (when using protostack=netkey) and/or build-time options.
+Note: the available algorithms depend on your kernel configuration (when using
+protostack=netkey) and/or build-time options.
 
 To list the supported algorithms
 
+.Configuration of ipsec.conf
+----
 ....
 $ ipsec auto --status | less
 ....
+----
 
 and look for ’algorithm ESP/IKE’ at the beginning.
 
+----
 ....
 aggrmode=no
 # ike format: cipher-hash;dhgroup
@@ -322,14 +457,17 @@ salifetime=8h
 pfs=yes
 auto=ignore
 ....
+----
 
 ==== How to test
 
 Start the vpn and using
 
+----
 ....
 $ ipsec auto --status | less
 ....
+----
 
 and look for ’IKE algorithms wanted/found’ and ’ESP algorithms wanted/loaded’.
 
@@ -340,35 +478,38 @@ https://www.openswan.org/
 === tinc
 
 ==== Tested with Version
-
-tinc 1.0.23 from Gentoo linked against OpenSSL 1.0.1e
-
-tinc 1.0.23 from Sabayon linked against OpenSSL 1.0.1e
+[options="header"]
+.Tested tinc
+|====
+| Program Version | OS/Distribution/Version | Comment
+| 1.0.23 | gentoo linked against OpenSSL 1.0.1e
+| 1.0.23 | Sabayon linked against OpenSSL 1.0.1e
+|====
 
 ===== Defaults
 
- +
-tinc uses 2048 bit RSA keys, Blowfish-CBC, and SHA1 as default settings and suggests the usage of CBC mode ciphers. Any key length up to 8192 is supported and it does not need to be a power of two. OpenSSL Ciphers and Digests are supported by tinc.
+`tinc` uses 2048 bit RSA keys, Blowfish-CBC, and SHA1 as default settings and
+suggests the usage of CBC mode ciphers. Any key length up to 8192 is supported
+and it does not need to be a power of two. OpenSSL Ciphers and Digests are
+supported by `tinci`.
 
 ===== Settings
 
- +
 Generate keys with
 
+----
 ....
 tincd -n NETNAME -K8192
 ....
+----
 
-Old keys will not be deleted (but disabled), you have to delete them manually. Add the following lines to your tinc.conf on all machines
+Old keys will not be deleted (but disabled), you have to delete them manually.
+Add the following lines to your tinc.conf on all machines
 
 ===== References
 
- +
-
 * tincd(8) man page
 * tinc.conf(5) man page
-* http://www.tinc-vpn.org/pipermail/tinc/2014-January/003538.html[tinc
-mailinglist:
-http://www.tinc-vpn.org/pipermail/tinc/2014-January/003538.html]
-
+* http://www.tinc-vpn.org/pipermail/tinc/2014-January/003538.html
+* http://www.tinc-vpn.org/pipermail/tinc/2014-January/003538.html[tinc mailing list]
 
