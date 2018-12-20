@@ -404,18 +404,66 @@ It is highly recommended to read http://exim.org/exim-html-current/doc/html/spec
 
 ===== MSA mode (submission):
 
-In the main config section of Exim add: Don’t forget to add intermediate certificates to the .pem file if needed.
+In the main config section of Exim add:
+
+[source]
+.Certificate selection in Exim (MSA)
+----
+tls_certificate = /etc/ssl/exim.crt
+tls_privatekey = /etc/ssl/exim.pem
+----
+
+Don’t forget to add intermediate
+certificates to the .pem file if needed.
 
 Tell Exim to advertise STARTTLS in the EHLO answer to everyone:
 
-If you want to support legacy SMTPS on port 465, and STARTTLS on smtp(25)/submission(587) ports set
+[source]
+.TLS advertise in Exim (MSA)
+----
+tls_advertise_hosts = *
+----
 
 If you want to support legacy SMTPS on port 465, and STARTTLS on
 smtp(25)/submission(587) ports set
 
-Add the following rules on top of your acl_smtp_mail: This switches Exim to submission mode and allows addition of missing ``Message-ID'' and ``Date'' headers.
+[source]
+.STARTTLS and SMTPS in Exim (MSA)
+----
+daemon_smtp_ports = smtp : smtps : submission
+tls_on_connect_ports = 465
+----
 
-It is not advisable to restrict the default cipher list for MSA mode if you don’t know all connecting MUAs. If you still want to define one please consult the Exim documentation or ask on the exim-users mailinglist.
+It is highly recommended to limit SMTP AUTH to SSL connections only. To do so
+add
+
+[source]
+.SSL-only authentication in Exim (MSA)
+----
+server_advertise_condition = ${if eq{$tls_cipher}{}{no}{yes}}
+----
+
+to every authenticator defined.
+
+Add the following rules on top of your acl_smtp_mail:
+
+[source]
+.Submission mode in Exim (MSA)
+----
+acl_smtp_mail = acl_check_mail
+acl_check_mail:
+
+  warn hosts = *
+    control = submission/sender_retain
+  accept
+----
+
+This switches Exim to submission mode and allows addition of missing
+``Message-ID'' and ``Date'' headers.
+
+It is not advisable to restrict the default cipher list for MSA mode if you
+don’t know all connecting MUAs. If you still want to define one please consult
+the Exim documentation or ask on the exim-users mailinglist.
 
 The cipher used is written to the logfiles by default. You may want to add
 
@@ -492,9 +540,20 @@ to get even more TLS information logged.
 
 Exim uses opportunistic encryption in the SMTP transport by default.
 
-Client mode settings have to be done in the configuration section of the smtp transport (driver = smtp).
+Client mode settings have to be done in the configuration section of the smtp
+transport (`driver = smtp`).
 
-If you want to use a client certificate (most server certificates can be used as client certificate, too) set This is recommended for MTA-MTA traffic.
+If you want to use a client certificate (most server certificates can be used
+as client certificate, too) set
+
+[source]
+.Certificate selection in Exim (Client)
+----
+tls_certificate = /etc/ssl/exim.crt
+tls_privatekey = /etc/ssl/exim.pem
+----
+
+This is recommended for MTA-MTA traffic.
 
 Do not limit ciphers without a very good reason. In the worst case you end up
 without encryption at all instead of some weak encryption. Please consult the
