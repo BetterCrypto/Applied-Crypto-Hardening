@@ -142,10 +142,10 @@ common vulnerabilities and displays Protocols and Cipher-Suites.
 
 [source,terminal]
 ----
-sslyze.exe --regular SERVER.TLD:993
-sslyze.exe --regular SERVER.TLD:995
-sslyze.exe --regular --starttls=imap SERVER.TLD:143
-sslyze.exe --regular --starttls=pop3 SERVER.TLD:110
+$ sslyze.exe --regular SERVER.TLD:993
+$ sslyze.exe --regular SERVER.TLD:995
+$ sslyze.exe --regular --starttls=imap SERVER.TLD:143
+$ sslyze.exe --regular --starttls=pop3 SERVER.TLD:110
 ----
 
 
@@ -225,14 +225,14 @@ cryptography. Hence, ECDHE will not work even if defined in your cipher list.
 
 Currently there is no way to prefer server ciphers or to disable compression.
 
-There is a working patch for all three features: https://bugzilla.cyrusimap.org/show_bug.cgi?id=3823
+There is a working https://bugzilla.cyrusimap.org/show_bug.cgi?id=3823[patch] for all three features.
 
 
 ==== How to test
 
 [source,terminal]
 ----
-openssl s_client -crlf -connect SERVER.TLD:993
+$ openssl s_client -crlf -connect SERVER.TLD:993
 ----
 
 
@@ -364,7 +364,7 @@ interoperability risk, but we have not tested this yet.
 
 You can check the effect of the settings with the following command:
 
-[source]
+[source,terminal]
 ----
 $ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | awk '{printf("%s %s %s %s\n", $12, $13, $14, $15)}' | sort | uniq -c | sort -n
       1 SSLv3 with cipher DHE-RSA-AES256-SHA
@@ -376,7 +376,7 @@ $ zegrep "TLS connection established from.*with cipher" /var/log/mail.log | awk 
 
 [source,terminal]
 ----
-openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
+$ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 ----
 
 
@@ -413,6 +413,7 @@ It is not advisable to restrict the default cipher list for MSA mode if you don�
 
 The cipher used is written to the logfiles by default. You may want to add
 
+[source]
 ----
 log_selector = <whatever your log_selector already contains> +tls_certificate_verified +tls_peerdn +tls_sni
 ----
@@ -422,24 +423,58 @@ to get even more TLS information logged.
 
 ===== Server mode (incoming):
 
-In the main config section of Exim add: don’t forget to add intermediate certificates to the .pem file if needed.
+In the main config section of Exim add:
+
+[source]
+.Certificate selection in Exim (Server)
+----
+tls_certificate = /etc/ssl/exim.crt
+tls_privatekey = /etc/ssl/exim.pem
+----
+
+Don’t forget to add intermediate certificates to the .pem file if needed.
 
 Tell Exim to advertise STARTTLS in the EHLO answer to everyone:
 
-Listen on smtp(25) port only
+[source]
+.TLS advertise in Exim (Server)
+----
+tls_advertise_hosts = *
+----
 
-It is not advisable to restrict the default cipher list for opportunistic encryption as used by SMTP. Do not use cipher lists recommended for HTTPS! If you still want to define one please consult the Exim documentation or ask on the exim-users mailinglist.
+Listen on smtp(25) port only:
+
+[source]
+.STARTTLS on SMTP in Exim (Server)
+----
+daemon_smtp_ports = smtp
+----
+
+It is not advisable to restrict the default cipher list for opportunistic
+encryption as used by SMTP. Do not use cipher lists recommended for HTTPS! If
+you still want to define one please consult the Exim documentation or ask on
+the exim-users mailinglist.
 
 If you want to request and verify client certificates from sending hosts set
 
-tls_try_verify_hosts only reports the result to your logfile. If you want to disconnect such clients you have to use
+[source]
+.TLS certificate verification in Exim (Server)
+----
+tls_verify_certificates = /etc/pki/tls/certs/ca-bundle.crt
+tls_try_verify_hosts = *
+----
 
+`tls_try_verify_hosts` only reports the result to your logfile. If you want to
+disconnect such clients you have to use
+
+[source]
 ----
 tls_verify_hosts = *
 ----
 
 The cipher used is written to the logfiles by default. You may want to add
 
+[source]
 ----
 log_selector = <whatever your log_selector already contains> +tls_certificate_verified +tls_peerdn +tls_sni
 ----
@@ -464,6 +499,7 @@ Exim documentation if you really need to define ciphers.
 
 Exim already disables SSLv2 by default. We recommend to add
 
+[source]
 ----
 openssl_options = +all +no_sslv2 +no_sslv3 +no_compression +cipher_server_preference
 ----
@@ -501,8 +537,9 @@ Exim currently (4.82) does not support elliptic curves with OpenSSL. This means 
 
 ==== How to test
 
+[source]
 ----
-openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
+$ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 ----
 
 
@@ -532,8 +569,8 @@ From AsyncOS 9.0 and up, SSL parameters for inbound SMTP, outbound SMTP and GUI 
 ). +
 For all versions prior to 9.0, you have to connect to the CLI and configure the SSL parameters separately, as shown below using inbound SMTP as example.
 
+[source,terminal]
 ----
-{foo}
 ironport.example.com> sslconfig
 sslconfig settings:
   GUI HTTPS method:  sslv3tlsv1
@@ -542,7 +579,7 @@ sslconfig settings:
   Inbound SMTP ciphers: RC4-SHA:RC4-MD5:ALL
   Outbound SMTP method:  sslv3tlsv1
   Outbound SMTP ciphers: RC4-SHA:RC4-MD5:ALL
-    
+
 Choose the operation you want to perform:
 - GUI - Edit GUI HTTPS ssl settings.
 - INBOUND - Edit Inbound SMTP ssl settings.
@@ -609,8 +646,8 @@ footnote:[https://www.cisco.com/c/dam/en/us/td/docs/security/esa/esa9-5/ESA_9-5_
 Changed Behaviour, page 4] You can check the supported ciphers on the CLI by
 using the option `verify` from within the `sslconfig` command:
 
+[source,terminal]
 ----
-{foo}
 []> verify
 
 Enter the ssl cipher you want to verify.
@@ -627,8 +664,9 @@ AES128-SHA              SSLv3 Kx=RSA      Au=RSA  Enc=AES(128)  Mac=SHA1
 
 ==== How to test
 
+[source,terminal]
 ----
-openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
+$ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 ----
 
 
