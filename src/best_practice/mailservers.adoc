@@ -110,10 +110,11 @@ ssl_dh_parameters_length = 2048
 # ssl_options = no_compression
 ----
 
-
-==== Additional info
-
-Dovecot 2.0, 2.1: Almost as good as dovecot 2.2. Dovecot does not ignore unknown configuration parameters. Does not support `ssl_prefer_server_ciphers`.
+[NOTE]
+====
+Dovecot 2.0, 2.1: Almost as good as dovecot 2.2. Dovecot does not ignore
+unknown configuration parameters. Does not support `ssl_prefer_server_ciphers`.
+====
 
 
 ==== Limitations
@@ -511,7 +512,11 @@ openssl_options = +all +no_sslv2 +no_sslv3 +no_compression +cipher_server_prefer
 
 to the main configuration.
 
-Note: +all is misleading here since OpenSSL only activates the most common workarounds. But that’s how SSL_OP_ALL is defined.
+[NOTE]
+====
+`+all` is misleading here since OpenSSL only activates the most common
+workarounds. But that’s how `SSL_OP_ALL` is defined.
+====
 
 You do not need to set dh_parameters. Exim with OpenSSL by default uses
 parameter initialization with the ``2048-bit MODP Group with 224-bit Prime Order
@@ -529,10 +534,13 @@ GnuTLS is different in only some respects to OpenSSL:
   the defaults.
 * There is no option like `openssl_options`
 
-
-===== Exim string expansion:
-
-Note that most of the options accept expansion strings. This way you can e.g. set cipher lists or STARTTLS advertisement conditionally. Please follow the link to the official Exim documentation to get more information.
+[TIP]
+.Exim string expansion
+====
+Most of the options accept expansion strings. This way you can e.g.
+set cipher lists or STARTTLS advertisement conditionally. Please follow the
+link to the official Exim documentation to get more information.
+====
 
 
 ===== Limitations:
@@ -613,9 +621,12 @@ sslconfig settings:
   Outbound SMTP ciphers: RC4-SHA:RC4-MD5:ALL
 ----
 
-Note that starting with AsyncOS 9.0 SSLv3 is disabled by default, whereas the default cipher set is still `RC4-SHA:RC4-MD5:ALL` (see figure <<ach_ironport_ssl_settings>> on page ).
-
-image:ach_ironport_ssl_settings.png[Default SSL Settings,scaledwidth=80.0%]
+[NOTE]
+====
+Starting with AsyncOS 9.0 SSLv3 is disabled by default, whereas the
+default cipher set is still `RC4-SHA:RC4-MD5:ALL` (see figure
+<<ach_ironport_ssl_settings>>).
+====
 
 {empty}<<ach_ironport_ssl_settings>>
 
