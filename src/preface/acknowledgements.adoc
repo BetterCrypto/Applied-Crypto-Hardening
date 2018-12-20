@@ -30,6 +30,7 @@ Roeckx, Kurt +
 Roesen, Jens +
 Rublik, Martin +
 Schüpany, Mathias +
+Schwartzkopff, Michael (VPN)+
 Schwarz, René («DigNative») +
 Seidl, Eva (PDF layout) +
 Van Horenbeeck, Maarten +
