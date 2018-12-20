@@ -349,6 +349,7 @@ UsePAM yes
 ----
 
 [Note]
+====
 Older *Linux* systems won’t support SHA2. PuTTY (Windows) does
 not support RIPE-MD160. Curve25519, AES-GCM and UMAC are only
 available upstream (OpenSSH 6.6p1). DSA host keys have been removed
@@ -359,6 +360,7 @@ far below current standards (see section
 #section:keylengths[[section:keylengths]]). Legacy systems can use
 this configuration and simply omit unsupported ciphers, key exchange
 algorithms and MACs.
+====
 
 ==== References
 
@@ -394,6 +396,7 @@ ssh key-exchange group dh-group14-sha1
 ----
 
 [Note]
+====
 When the ASA is configured for SSH, by default both SSH versions
 1 and 2 are allowed. In addition to that, only a group1
 DH-key-exchange is used. This should be changed to allow only SSH
@@ -401,6 +404,7 @@ version 2 and to use a key-exchange with group14. The generated RSA
 key should be 2048 bit (the actual supported maximum). A
 non-cryptographic best practice is to reconfigure the lines to only
 allow SSH-logins.
+====
 
 ==== References
 
@@ -439,6 +443,7 @@ transport input ssh
 ----
 
 [Note]
+====
 Same as with the ASA, also on IOS by default both SSH versions 1
 and 2 are allowed and the DH-key-exchange only use a DH-group of 768
 Bit. In IOS, a dedicated Key-pair can be bound to SSH to reduce the
@@ -446,6 +451,7 @@ usage of individual keys-pairs. From IOS Version 15.0 onwards, 4096
 Bit rsa keys are supported and should be used according to the
 paradigm "use longest supported key". Also, do not forget to disable
 telnet vty access.
+====
 
 ==== References
 
