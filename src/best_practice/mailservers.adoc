@@ -118,13 +118,18 @@ Dovecot 2.0, 2.1: Almost as good as dovecot 2.2. Dovecot does not ignore unknown
 
 ==== Limitations
 
-* Dovecot <2.2.14 does not support disabling TLS compression. + latexmath:[$\geq$]2.2.14footnote:[http://www.dovecot.org/doc/NEWS-2.2] use: `ssl_options = no_compression`
-* Dovecot <2.2.7 uses fixed DH parameters. + latexmath:[$\geq$]2.2.7footnote:[http://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0] greater DH-Parameters are supported: `ssl_dh_parameters_length = 2048`.
+* Dovecot <2.2.14 does not support disabling TLS compression. +
+  In >2.2.14 footnote:[https://www.dovecot.org/doc/NEWS-2.2] use:
+  `ssl_options = no_compression`
+
+* Dovecot <2.2.7 uses fixed DH parameters. +
+  In >2.2.7 footnote:[https://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0]
+  greater DH-Parameters are supported: `ssl_dh_parameters_length = 2048`.
 
 
 ==== References
 
-http://wiki2.dovecot.org/SSL
+* https://wiki2.dovecot.org/SSL
 
 
 ==== How to test
@@ -344,7 +349,7 @@ leave the statement in for older versions.
 
 ==== References
 
-Refer to http://www.postfix.org/TLS_README.html for an in-depth discussion.
+* Refer to https://www.postfix.org/TLS_README.html for an in-depth discussion.
 
 
 ==== Additional settings
