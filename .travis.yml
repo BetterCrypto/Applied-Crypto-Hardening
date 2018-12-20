@@ -29,3 +29,8 @@ script:
         -r asciidoctor-diagram
         -r asciidoctor-bibliography
         applied-crypto-hardening.adoc
+  - cd ..
+  - '[[ -z ${TRAVIS_COMMIT} ]] || tools/ci/copy-build.sh build/commits/${TRAVIS_COMMIT:0:1}/${TRAVIS_COMMIT:0:2}/${TRAVIS_COMMIT}'
+  - '[[ -z ${TRAVIS_BRANCH} ]] || tools/ci/copy-build.sh build/branches/${TRAVIS_BRANCH//\//-}'
+  - '[[ -z ${TRAVIS_TAG} ]] || tools/ci/copy-build.sh build/tags/${TRAVIS_TAG//\//-}'
+  - find build -type f | sort
