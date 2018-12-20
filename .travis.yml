@@ -20,11 +20,15 @@ env:
 
 install:
   - set -e
-  - openssl aes-256-cbc -d
-        -pass env:SSH_PRIVATE_KEY_DECRYPT_PASSWORD
-        -in tools/ci/id_rsa.aes-256-cbc.enc
-        -out ~/.ssh/id_rsa
-  - chmod 400 ~/.ssh/id_rsa
+  - if [[ ${TRAVIS_PULL_REQUEST} = false ]]; then
+        openssl aes-256-cbc -d
+            -pass env:SSH_PRIVATE_KEY_DECRYPT_PASSWORD
+            -in tools/ci/id_rsa.aes-256-cbc.enc
+            -out ~/.ssh/id_rsa
+        &&
+            chmod 400 ~/.ssh/id_rsa
+        ;
+    fi
   - cp tools/ci/known_hosts ~/.ssh/known_hosts
   - gem install bundler
   - bundle install
@@ -46,6 +50,9 @@ script:
   - '[[ -z ${TRAVIS_BRANCH} ]] || tools/ci/copy-build.sh build/branches/${TRAVIS_BRANCH//\//-}'
   - '[[ -z ${TRAVIS_TAG} ]] || tools/ci/copy-build.sh build/tags/${TRAVIS_TAG//\//-}'
   - find build -type f | sort
-  - rsync --archive --progress
-        build/
-        travis@www.bettercrypto.org:/home/travis/public_html/build/
+  - if [[ ${TRAVIS_PULL_REQUEST} = false ]]; then
+        rsync --archive --progress
+            build/
+            travis@www.bettercrypto.org:/home/travis/public_html/build/
+        ;
+    fi
