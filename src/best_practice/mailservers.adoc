@@ -399,7 +399,9 @@ $ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 | 4.82            | Ubuntu 14.04.2          | with OpenSSL 1.0.1e
 |====
 
-It is highly recommended to read http://exim.org/exim-html-current/doc/html/spec_html/ch-encrypted_smtp_connections_using_tlsssl.html first.
+It is highly recommended to read
+https://exim.org/exim-html-current/doc/html/spec_html/ch-encrypted_smtp_connections_using_tlsssl.html[Encrypted SMTP connections using TLS/SSL]
+first.
 
 
 ===== MSA mode (submission):
@@ -604,7 +606,9 @@ link to the official Exim documentation to get more information.
 
 ===== Limitations:
 
-Exim currently (4.82) does not support elliptic curves with OpenSSL. This means that ECDHE is not used even if defined in your cipher list. There already is a working patch to provide support: http://bugs.exim.org/show_bug.cgi?id=1397
+Exim currently (4.82) does not support elliptic curves with OpenSSL. This means
+that ECDHE is not used even if defined in your cipher list. There already is a
+working https://bugs.exim.org/show_bug.cgi?id=1397[patch] to provide support.
 
 
 ==== How to test
