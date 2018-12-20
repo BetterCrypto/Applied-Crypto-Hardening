@@ -348,21 +348,22 @@ Subsystem sftp /usr/lib/openssh/sftp-server
 UsePAM yes
 ----
 
-*Note:* Older |Linux| systems won’t support SHA2. PuTTY (Windows) does
- not support RIPE-MD160. Curve25519, AES-GCM and UMAC are only
- available upstream (OpenSSH 6.6p1). DSA host keys have been removed
- on purpose, the DSS standard does not support for DSA keys stronger
- than 1024bit
- footnote:[https://bugzilla.mindrot.org/show_bug.cgi?id=1647] which is
- far below current standards (see section
- #section:keylengths[[section:keylengths]]). Legacy systems can use
- this configuration and simply omit unsupported ciphers, key exchange
- algorithms and MACs.
+[Note]
+Older *Linux* systems won’t support SHA2. PuTTY (Windows) does
+not support RIPE-MD160. Curve25519, AES-GCM and UMAC are only
+available upstream (OpenSSH 6.6p1). DSA host keys have been removed
+on purpose, the DSS standard does not support for DSA keys stronger
+than 1024bit
+footnote:[https://bugzilla.mindrot.org/show_bug.cgi?id=1647] which is
+far below current standards (see section
+#section:keylengths[[section:keylengths]]). Legacy systems can use
+this configuration and simply omit unsupported ciphers, key exchange
+algorithms and MACs.
 
 ==== References
 
 The OpenSSH
-http://www.openssh.org/cgi-bin/man.cgi?query=sshd_config[sshd_config —
+https://www.openssh.org/cgi-bin/man.cgi?query=sshd_config[sshd_config —
 OpenSSH SSH daemon configuration file] man page is the best reference:
 
 ==== How to test
@@ -392,7 +393,8 @@ ssh version 2
 ssh key-exchange group dh-group14-sha1
 ----
 
-Note: When the ASA is configured for SSH, by default both SSH versions
+[Note]
+When the ASA is configured for SSH, by default both SSH versions
 1 and 2 are allowed. In addition to that, only a group1
 DH-key-exchange is used. This should be changed to allow only SSH
 version 2 and to use a key-exchange with group14. The generated RSA
@@ -402,7 +404,7 @@ allow SSH-logins.
 
 ==== References
 
-http://www.cisco.com/en/US/docs/security/asa/asa91/configuration/general/admin_management.html [http://www.cisco.com/en/US/docs/security/asa/asa91/configuration/general/admin_management.html ]
+https://www.cisco.com/en/US/docs/security/asa/asa91/configuration/general/admin_management.html[CLI Book 1: Cisco ASA Series General Operations CLI Configuration Guide, 9.1]
 
 ==== How to test
 
@@ -436,7 +438,8 @@ line vty 0 15
 transport input ssh
 ----
 
-Note: Same as with the ASA, also on IOS by default both SSH versions 1
+[Note]
+Same as with the ASA, also on IOS by default both SSH versions 1
 and 2 are allowed and the DH-key-exchange only use a DH-group of 768
 Bit. In IOS, a dedicated Key-pair can be bound to SSH to reduce the
 usage of individual keys-pairs. From IOS Version 15.0 onwards, 4096
