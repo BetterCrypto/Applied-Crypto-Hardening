@@ -59,9 +59,10 @@ inadequate for long term protection.
 We want to note that 3DES theoretically has 168 bits of security,
 however based on the NIST Special Publication 800-57
 footnote:[https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf,
-page 51], it is clear that 3DES can only be considered to
-provide for 80 bits / 112 bits security.
+page 51].
 
-// TODO: see issue 176
-
+Due to several https://en.wikipedia.org/wiki/Triple_DES#Security[security
+problems] the effective key length should be considered 80 bits. The NIST
+https://csrc.nist.gov/news/2017/update-to-current-use-and-deprecation-of-tdea[recommends]
+not to use 3DES any more and to migrate to AES as soon as possible.
 
