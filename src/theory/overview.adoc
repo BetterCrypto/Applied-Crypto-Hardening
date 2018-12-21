@@ -21,8 +21,8 @@ the question why certain settings were chosen still remains. To answer
 this part, we need to look at recommended keylengths, problems in
 specific algorithms and hash functions and other cryptographic
 parameters. As mentioned initially in section <<relatedPublications>>,
-the ENISA, ECRYPT 2 and BSI reports go much more into these topics
-and should be consulted in addition.
+the ENISA cite:[ENISA2013], ECRYPT 2 cite:[ii2011ecrypt] and BSI cite:[TR02102]
+reports go much more into these topics and should be consulted in addition.
 
 We try to answer the questions by explaining issues with random number
 generators (section <<rngs>>), keylengths (section <<keylengths>>),

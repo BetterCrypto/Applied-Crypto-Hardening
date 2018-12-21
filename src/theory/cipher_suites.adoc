@@ -5,17 +5,17 @@
 
 === Architectural overview 
 [[architecture]]
-include::./theory/cipher_suites/architecture.adoc
+include::cipher_suites/architecture.adoc[]
 
 
 === Forward Secrecy
 [[PFS]]
-include::./theory/cipher_suites/forward.adoc
+include::cipher_suites/forward.adoc[]
 
 
 === Recommended cipher suites
 [[recommendedciphers]]
-include::./theory/cipher_suites/recommended.adoc
+include::cipher_suites/recommended.adoc[]
 
 
 // === Known insecure and weak cipher suites
@@ -24,7 +24,7 @@ include::./theory/cipher_suites/recommended.adoc
 
 === Compatibility
 [[compatibility]]
-include::./theory/cipher_suites/compatibility.adoc
+include::cipher_suites/compatibility.adoc[]
 
 
 //  XXX author: (Adi) can we either have this completed or removed? XXX
