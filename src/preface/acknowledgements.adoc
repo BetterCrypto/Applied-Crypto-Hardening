@@ -1,3 +1,5 @@
+// [discrete] macro hides headline from TOC.
+[discrete]
 == Acknowledgements
 
 We would like to express our thanks to the following reviewers and people who

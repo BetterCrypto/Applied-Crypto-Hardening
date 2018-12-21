@@ -1,3 +1,5 @@
+// [discrete] macro hides headline from TOC.
+[discrete]
 == Abstract
 
 [quote,Ross Anderson, 'cite:[anderson2008security]']

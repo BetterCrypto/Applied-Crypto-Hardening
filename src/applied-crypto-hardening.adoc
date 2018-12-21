@@ -1,7 +1,7 @@
 Applied Crypto Hardening: bettercrypto.org
 ==========================================
 Wolfgang Breyha, David Durvaux, Tobias Dussa, L. Aaron Kaplan, Florian Mendel, Christian Mock, Manuel Koschuch, Adi Kriegisch, Ulrich Pöschl, Ramin Sabet, Berg San, Ralf Schlatterbeck, Thomas Schreck, Alexander Würstlein, Aaron Zauner, Pepi Zawodsky
-v2.0, 2018-12-24: The Asciidoc Edition
+v1.x, 2018-12-21: The Asciidoc Edition
 :doctype: book
 // Settings
 :stylesdir: ./assets
@@ -14,8 +14,9 @@ v2.0, 2018-12-24: The Asciidoc Edition
 :listing-caption: Listing
 :partnums:
 :sectnums:
-:toc:
+:toc: left
 :toclevels: 2
+:toc-title: Applied Crypto Hardening
 ifdef::backend-pdf[]
 :title-logo-image: assets/images/logo.jpg
 endif::[]
@@ -35,12 +36,9 @@ include::preface/neboltai.adoc[]
 [[acknowledgements]]
 include::preface/acknowledgements.adoc[]
 
-
 [abstract]
 include::preface/abstract.adoc[]
 
-
-[[introduction]]
 = Introduction
 include::preface/introduction.adoc[]
 
