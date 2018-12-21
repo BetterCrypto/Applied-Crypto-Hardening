@@ -294,6 +294,7 @@ platform the appropriate Cisco guides should be followed.
 
 ==== Settings
 
+[source]
 ----
 crypto ipsec ikev2 ipsec-proposal AES-Fallback
  protocol esp encryption aes-256 aes-192 aes
@@ -402,12 +403,14 @@ protostack=netkey) and/or build-time options.
 
 To list the supported algorithms
 
+[source,terminal]
 ----
 $ ipsec auto --status | less
 ----
 
 and look for ’algorithm ESP/IKE’ at the beginning.
 
+[source]
 ----
 aggrmode=no
 # ike format: cipher-hash;dhgroup
@@ -453,6 +456,7 @@ auto=ignore
 
 Start the vpn and using
 
+[source,terminal]
 ----
 $ ipsec auto --status | less
 ----
@@ -486,8 +490,9 @@ supported by tinc.
 
 Generate keys with
 
+[source,terminal]
 ----
-tincd -n NETNAME -K8192
+$ tincd -n NETNAME -K8192
 ----
 
 Old keys will not be deleted (but disabled), you have to delete them manually.
