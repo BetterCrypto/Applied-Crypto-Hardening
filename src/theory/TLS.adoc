@@ -237,12 +237,12 @@ HPKP can be tested either using locally or through the Internet.
 There is a handy bash-script which uses OpenSSL for doing several SSL/TLS-Tests
 available at https://testssl.sh/
 
-[source, terminal]
+[source,terminal]
 ----
-wget -q https://testssl.sh/testssl.sh
-wget -q https://testssl.sh/mapping-rfc.txt
-chmod 755 ./testssl.sh
-./testssl.sh https://example.com
+$ wget -q https://testssl.sh/testssl.sh
+$ wget -q https://testssl.sh/mapping-rfc.txt
+$ chmod 755 ./testssl.sh
+$ ./testssl.sh https://example.com
 
 # Sample Output, just HSTS and HPKP Section (Full report is quite long!):
 Strict Transport Security    182 days=15724800 s, includeSubDomains
@@ -270,3 +270,6 @@ https://report-uri.io/home/pkp_analyse.
 * OWASP: Certificate and Public Key Pinning: https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning
 * HPKP Browser Compatibility List: https://caniuse.com/\#feat=publickeypinning
 * RFC 7469:Public Key Pinning Extension for HTTP - Examples: https://tools.ietf.org/html/rfc7469\#section-2.1.5
+
+
+
