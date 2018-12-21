@@ -112,8 +112,9 @@ $ cd /usr/lib/ssl/misc
 $ sudo ./CA.pl -newreq
 ----
 
-Alternatively, software such as TinyCA that acts as a "wrapper"
-around OpenSSL and tries to make life easier is available.
+Alternatively, software such as https://sourceforge.net/projects/xca/[xca] that
+acts as a "wrapper" around OpenSSL and tries to make life easier is available.
+
 
 [[sec:pki:selfsignedcert]]
 ==== Creating a Self-Signed Certificate
