@@ -348,7 +348,7 @@ Subsystem sftp /usr/lib/openssh/sftp-server
 UsePAM yes
 ----
 
-[Note]
+[NOTE]
 ====
 Older *Linux* systems won’t support SHA2. PuTTY (Windows) does
 not support RIPE-MD160. Curve25519, AES-GCM and UMAC are only
@@ -395,7 +395,7 @@ ssh version 2
 ssh key-exchange group dh-group14-sha1
 ----
 
-[Note]
+[NOTE]
 ====
 When the ASA is configured for SSH, by default both SSH versions
 1 and 2 are allowed. In addition to that, only a group1
@@ -425,9 +425,13 @@ and observe the key exchange in the output.
 
 ==== Tested with Versions
 
-* 15.0
-* 15.1
-* 15.2
+.Tested Myservice Versions
+|====
+| Program Version | OS/Distribution/Version | Comment
+| 15.0 | IOS | 
+| 15.1 | IOS | 
+| 15.2 | IOS | 
+|====
 
 ==== Settings
 
@@ -442,7 +446,7 @@ line vty 0 15
 transport input ssh
 ----
 
-[Note]
+[NOTE]
 ====
 Same as with the ASA, also on IOS by default both SSH versions 1
 and 2 are allowed and the DH-key-exchange only use a DH-group of 768
@@ -455,7 +459,16 @@ telnet vty access.
 
 ==== References
 
-http://www.cisco.com/en/US/docs/ios/sec_user_services/configuration/guide/sec_cfg_secure_shell.html
+https://www.cisco.com/c/en/us/support/docs/security-vpn/secure-shell-ssh/4145-ssh.html[Cisco
+SSH]
+
+[NOTE]
+====
+This guide is a basic SSH reference for all routers and switches. Pleaes refer
+to the specific documentation of the device and IOS version that you are
+configuring.
+====
+
 
 ==== How to test
 
@@ -463,7 +476,7 @@ Connect a client with verbose logging enabled to the SSH server
 
 [source,terminal]
 ----
-$ ssh -vvv myserver.com
+$ ssh -vvv switch.example.net
 ----
 
 and observe the key exchange in the output.
