@@ -1,13 +1,13 @@
 == Virtual Private Networks
 
 Virtual Private Networks (VPN) provide means of connecting private networks over
-external / public transport networks. Since we do not control the transport
+external or public transport networks. Since we do not control the transport
 networks we have to to take care about data integrity and privacy.
 
 [NOTE]
 ====
-Some providers also offer VPNs for connecting company networks via MPLS or
-simular technologies. The provider promises you that nobody else has access to
+Some providers also offer VPN products for connecting company networks via MPLS
+or simular technologies. The provider promises you that nobody else has access to
 your data trnfserred over their lines. You have to decide if this promise
 does fit to your information security requirements. 
 ====
@@ -17,11 +17,12 @@ sent via external lines. First you could utilize the built-in security of the
 Internet Protocol (IPsec). The other way are specific applications that encrypt
 the data before sending it over the line.
 
-IPsec is an Internet standard (TODO RFC 6071). This guarantees the
-interoperability between implementations of different vendors. You can establish
-a secure connection with your customer or your supplier. On the other hand VPN
-applications mostly utilize TLS to secury the communication between the
-partners.
+IPsec is an Internet standard that is defined in
+https://wiki.strongswan.org/projects/strongswan/wiki/IpsecStandards[several
+RFCs]. This guarantees the interoperability between implementations of different
+vendors. You can establish a secure connection with your customer or your
+supplier. On the other hand VPN applications mostly utilize TLS to secure the
+communication between the partners.
 
 TODO: Descision criteria IPsec vs. VPN application.
 
@@ -29,32 +30,42 @@ TODO: Descision criteria IPsec vs. VPN application.
 === IPsec
 
 IPsec is the Internet standard to encrypt the transport of data between private
-networks.
+networks. In the extreme case the network on one side can be one IP address. So
+mobile devices or home office laptops can connect to the company network.
 
 ==== Technology
 
-We describe only the use the Internet Key Exchange (IKE) version 2 in this dodument.
-IKEv1 has some usage and security problems and should not be used any more.
-(TODO: reference).
+We describe only the use the Internet Key Exchange (IKE) version 2 in this document.
+IKEv1 has some
+https://en.wikipedia.org/wiki/Internet_Key_Exchange#Problems_with_IKE[usage and
+security problems] and should not be used any more.
 
 ==== Authentication
 
-IPsec authentication should optimally be performed via RSA signatures, with a
-key size of 2048 bits or more. Configuring only the trusted CA that issued the
-peer certificate provides for additional protection against fake certificates.
+The Internet Key Exchange protocol (KE) provides the mutual authenticaltion and
+agrees on a so called Security Association (SA) for the later encryted
+communication. The authentication can base on a private / public key pair,
+certificates, or a preshared key (PSK). In fact, certificates are nothing else
+than public keys certified by e third party (Certificate Authority).
+
+Authentication should optimally be performed via RSA signatures (or
+certificates), with a key size of 2048 bits or more. Configuring only the
+trusted CA that issued the peer certificate provides for additional protection
+against fake certificates.
 
 If you need to use Pre-Shared Key (PSK) authentication:
 
 * Choose a _random_, _long enough_ PSK (see below)
 * Use a _separate_ PSK for any IPsec connection
-* Change the PSKs regularly
-* Think aboute a _secure_ way to exchange the PSK. Sending an SMS it _not_
+* Change the PSKs on a regular basis.
+* Think aboute a _secure_ way to communicate the PSK. Sending an SMS it _not_
 secure.
 
 The size of the PSK should not be shorter than the output size of the hash
 algorithm used in IKE.footnote[It is used in a HMAC, see RFC2104  and the
-discussion starting in TODO: verify
-http://www.vpnc.org/ietf-ipsec/02.ipsec/msg00268.html.].
+discussion starting in
+https://www.ietf.org/proceedings/51/I-D/draft-ietf-ipsec-properties-00.txt[section
+5.3] of the Security Properties of the IPsec Protocol Suite Draft. 
 
 For a key composed only of upper- and lowercase letters, numbers, and two
 additional charactersfootnote:[64 possible values = 6 bits],
@@ -62,30 +73,36 @@ table #tab:IPSEC_psk_len[[tab:IPSEC_psk_len]] gives the minimum lengths in char
 
 ===== Cryptographic Suites:
 
-IPSEC Cryptographic Suites are pre-defined settings for all the items of a configuration; they try to provide a balanced security level and make setting up VPNs easier. footnote:[RFC6379 , RFC4308 ]
+IPsec Cryptographic Suites are pre-defined settings for all the items of a
+configuration; they try to provide a balanced security level and make setting up
+VPNs easier. footnote:[RFC6379 , RFC4308 ]
 
-When using any of those suites, make sure to enable “Perfect Forward Secrecy“ for Phase 2, as this is not specified in the suites. The equivalents to the recommended ciphers suites in section <<recommendedciphers>> are shown in table #tab:IPSEC_suites[[tab:IPSEC_suites]].
+When using any of those suites, make sure to enable “Perfect Forward Secrecy“
+for Phase 2, as this is not specified in the suites. The equivalents to the
+recommended ciphers suites in section <<recommendedciphers>> are shown in
+table #tab:IPSEC_suites[[tab:IPSEC_suites]].
 
-===== Phase 1:
+===== IKE Phase 1
 
-TODO: Phase 1 and 2 are phrases from IKEv1. Re-write for IKEv2.
+In IKEv2 the phases of negotiation are defined a little bit different than in
+the deprecated IKEv1. Phase 1 is now IKE_SA_INIT and phase 2 is called IKE_AUTH.
 
-Alternatively to the pre-defined cipher suites, you can define your own, as
-described in this and the next section.
-
-Phase 1 is the mutual authentication and key exchange phase;
-table #tab:IPSEC_ph1_params[[tab:IPSEC_ph1_params]] shows the parameters.
-
-Use only “main mode“, as “aggressive mode“ has known security vulnerabilities footnote:[http://ikecrack.sourceforge.net/].
+In the first phase (INIT) both parties agree upon encryption and integrity
+algorithms, Diffie-Hellman keys, and nounces. These parameters represent the
+IKE Security Association (IKE SA). With this SA the mutual authentication in the
+second phase can be encrypted.
 
 ===== Phase 2:
 
-Phase 2 is where the parameters that protect the actual data are negotiated;
-recommended parameters are shown in table #tab:IPSEC_ph2_params[[tab:IPSEC_ph2_params]].
+In phase 2 of IKEv2 both parties authenticate each others and agree upon keys
+that are used to encrypt the communication that follows. The parameters are
+agreed in phase two (keys, ...) are called the CHILD_SA (formerly knows an IPsec
+SA).
 
 ==== References
 
-Fergusen, N. and Schneier, B.: _A Cryptographic Evaluation of IPsec_: https://www.schneier.com/paper-ipsec.pdf
+https://www.schneier.com/paper-ipsec.pdf[Fergusen, N. and Schneier, B.: _A
+Cryptographic Evaluation of IPsec_]
 
 
 === Check Point Next Generation Firewall
