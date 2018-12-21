@@ -6,7 +6,7 @@ untrusted networks and to create "ad-hoc" virtual-private networks.
 
 SSH is defined by the following Internet Standards (RFCs):
 
-[options="header"]
+[cols="<10s,<60,<40",options="header"]
 .SSH Standards
 |====
 | RFC  | Title                                           | Link
