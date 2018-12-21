@@ -85,7 +85,7 @@ recommended parameters are shown in table #tab:IPSEC_ph2_params[[tab:IPSEC_ph2_p
 
 ==== References
 
-Fergusen, N. and Schneier, B.: _A Cryptographic Evaluation of IPsec_: https://www.schneier.com/paper-ipsec.pdf
+* Fergusen, N. and Schneier, B.: _A Cryptographic Evaluation of IPsec_: https://www.schneier.com/paper-ipsec.pdf
 
 
 === Check Point Next Generation Firewall
@@ -143,9 +143,9 @@ gateways, and also influence the VPN client connections.
 
 ==== References
 
-Check Point
-https://sc1.checkpoint.com/documents/R77/CP_R77_VPN_AdminGuide/html_frameset.htm[VPN
-R77 Administration Guide] (may require a UserCenter account to access)
+* Check Point
+  https://sc1.checkpoint.com/documents/R77/CP_R77_VPN_AdminGuide/html_frameset.htm[VPN
+  R77 Administration Guide] (may require a UserCenter account to access)
 
 === TLS Based Applications
 
@@ -206,7 +206,7 @@ The configuration shown above is compatible with all tested versions.
 
 ==== References
 
-OpenVPN Documentation: _Security Overview_ https://openvpn.net/index.php/open-source/documentation/security-overview.html
+* OpenVPN Documentation: _Security Overview_ https://openvpn.net/index.php/open-source/documentation/security-overview.html
 
 ==== Additional settings
 
@@ -380,9 +380,8 @@ proposals.
 
 ==== References
 
-http://www.cisco.com/en/US/docs/security/asa/roadmap/asaroadmap.html
-
-http://www.cisco.com/web/about/security/intelligence/nextgen_crypto.html
+* http://www.cisco.com/en/US/docs/security/asa/roadmap/asaroadmap.html
+* http://www.cisco.com/web/about/security/intelligence/nextgen_crypto.html
 
 === Openswan
 
@@ -464,7 +463,7 @@ and look for ’IKE algorithms wanted/found’ and ’ESP algorithms wanted/load
 
 ==== References
 
-https://www.openswan.org/
+* https://www.openswan.org/
 
 === tinc
 
