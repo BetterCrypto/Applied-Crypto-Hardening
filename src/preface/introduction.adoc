@@ -7,10 +7,9 @@ Sysadmins. Sysadmins. Sysadmins. They are a force-multiplier.
 [[relatedpublications]]
 == Related publications
 
-TODO: Fix citations
-
-Ecrypt II, ENISA’s report on Algorithms, key sizes and parameters and BSI’s
-Technische Richtlinie TR-02102 are great publications which are more in depth
+Ecrypt II cite:[ii2011ecrypt], ENISA’s report on Algorithms, key sizes and
+parameters cite:[ENISA2013] and BSI’s Technische Richtlinie TR-02102 cite:[TR02102]
+are great publications which are more in depth
 than this guide. However, this guide has a different approach: it focuses on
 _copy & paste-able settings_ for system administrators, effectively breaking
 down the complexity in the above mentioned reports to an easy to use format for
@@ -18,7 +17,7 @@ the intended target audience.
 
 
 [[how-read-this]]
-== How to Read this Guide
+== How to read this guide
 
 This guide tries to accommodate two needs: first of all, having a handy
 reference on how to configure the most common services’ crypto settings and
@@ -48,7 +47,6 @@ _Cipher string B_ and to come up with a better or localized solution.
 
 [[disclaimer]]
 == Disclaimer
-// TODO Migrate and fix citations
 
 [quote,William James]
 A chain is no stronger than its weakest link, and life is after all a chain.
@@ -63,12 +61,13 @@ and hardware against exploits, basic IT security housekeeping, information
 assurance techniques, traffic analysis attacks, issues with key-roll over and
 key management, securing client PCs and mobile devices (theft, loss), proper
 https://en.wikipedia.org/wiki/Operations_security[Operations Security], social
-engineering attacks, protection against tempest attack techniques, thwarting
+engineering attacks, protection against tempest cite:[Wikipedia:Tempest] attack techniques, thwarting
 different side-channel attacks (timing–, cache timing–, differential fault
 analysis, differential power analysis or power monitoring attacks), downgrade
 attacks, jamming the encrypted channel or other similar attacks which are
 typically employed to circumvent strong encryption.
 
+// TODO: add cite:[yarom2013flush] after 'technique' inside footnote
 The authors can not overstate the importance of these other techniques.
 Interested readers are advised to read about these attacks in detail since they
 give a lot of insight into other parts of cryptography engineering which need to
@@ -84,12 +83,15 @@ which brings the problem of trusting PKIs right to the point]. Nor does this
 text fully explain how to run your own Certificate Authority (CA).
 
 Most of this zoo of information security issues are addressed in the very
-comprehensive book _Security Engineering_ by Ross Anderson.
+comprehensive book _Security Engineering_ by Ross Anderson cite[anderson2008security].
 
 For some experts in cryptography this text might seem too informal. However, we
 strive to keep the language as non-technical as possible and fitting for our
 target audience: system administrators who can collectively improve the security
 level for all of their users.
+
+[quote, Bruce Schneier]
+Security is a process, not a product.
 
 This guide can only describe what the authors currently _believe_ to be the best
 settings based on their personal experience and after intensive cross checking
@@ -99,9 +101,6 @@ the guide, the authors can give _no guarantee whatsoever_ that they made the
 right recommendations. Keep in mind that tomorrow there might be new attacks on
 some ciphers and many of the recommendations in this guide might turn out to be
 wrong.
-
-[quote,Bruce Schneier]
-Security is a process.
 
 We therefore recommend that system administrators keep up to date with recent
 topics in IT security and cryptography.
@@ -136,10 +135,10 @@ We explicitly excluded:
 [[methods]]
 == Methods
 
-[quote, A. Kaplan's, 'His link:http://www.mavetju.org/mail/view_message.php?list=freebsd-current&id=947899&raw=yes[mail signature] for many years']
-____
+// TODO add link 'http://www.mavetju.org/mail/view_message.php?list=freebsd-current&id=947899&raw=yes' 
+// TODO find new link, this one is broken
+[quote, A. Kaplan's, 'His mail signature for many years']
 C.O.S.H.E.R - completely open source, headers, engineering and research.
-____
 
 For writing this guide, we chose to collect the most well researched facts about
 cryptography settings and let as many trusted specialists as possible review
@@ -154,7 +153,7 @@ document are only granted to vetted people. The list of reviewers can be found i
 Every write operation to the document is logged via the `git` version control
 system and can thus be traced back to a specific author. We accept git pull
 requests on the
-link:https://github.com/BetterCrypto/Applied-Crypto-Hardening[github mirror] for
+https://github.com/BetterCrypto/Applied-Crypto-Hardening[github mirror] for
 this paper.
 
 Public peer-review and multiple eyes checking of our guide is the best strategy
