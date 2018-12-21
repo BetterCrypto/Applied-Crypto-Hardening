@@ -17,7 +17,7 @@ v2.0, 2018-12-24: The Asciidoc Edition
 :toc:
 :toclevels: 2
 ifdef::backend-pdf[]
-:title-logo-image: assets/images/logo.jpg
+:title-logo-image: image:logo.svg[]
 endif::[]
 // :source-language: perl
 :source-highlighter: pygments
