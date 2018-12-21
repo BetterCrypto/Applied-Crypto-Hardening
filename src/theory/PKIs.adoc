@@ -65,7 +65,7 @@ number of tools. On Unix-like systems, it is likely that the OpenSSL
 suite is available to you. In this case, you can generate a private key
 and a corresponding certificate request as follows:
 
-[source, terminal]
+[source,terminal]
 ----
 $ openssl req -new -nodes -keyout <servername>.key -out <servername>.csr -newkey rsa:<keysize> -sha256
 Country Name (2 letter code) [AU]:DE
@@ -96,7 +96,7 @@ external trust dependencies.
 Again using OpenSSL as an example, you can set up your own CA with the
 following commands on a Debian system:
 
-[source, terminal]
+[source,terminal]
 ----
 $ cd /usr/lib/ssl/misc
 $ sudo ./CA.pl -newca
@@ -106,7 +106,7 @@ Answer the questions according to your setup. Now that you have
 configured your basic settings and issued a new root certificate, you
 can issue new certificates as follows:
 
-[source, terminal]
+[source,terminal]
 ----
 $ cd /usr/lib/ssl/misc
 $ sudo ./CA.pl -newreq
@@ -136,7 +136,7 @@ $ openssl req -new -x509 -key privkey.pem -out cacert.pem -days 1095
 
 You can also create a self-signed certificate in just one command:
 
-[source, terminal]
+[source,terminal]
 ----
 $ openssl req -new -x509 -keyout privkey.pem -out cacert.pem -days 1095 -nodes -newkey rsa:<keysize> -sha256
 ----
@@ -223,7 +223,7 @@ Knot-DNS supports CAA records as of version 2.2.0.
 Once a CAA record is deployed, it can be validated using the following
 dig query:
 
-[source, terminal]
+[source,terminal]
 ----
 $ dig CAA google.com
  
@@ -236,7 +236,7 @@ google.com.          3600 IN   CAA  0 issue "symantec.com"
 On older versions of Dig, which do not support CAA records, you can
 query the record type manually:
 
-[source, terminal]
+[source,terminal]
 ----
 $ dig +short -t TYPE257 google.com
 \# 19 0005697373756573796D616E7465632E636F6D
