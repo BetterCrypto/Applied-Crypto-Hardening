@@ -114,6 +114,7 @@ This results in the OpenSSL string:
 | 0x0035 | AES256-SHA                  | SSLv3         | RSA       | RSA    | AES(256)       | SHA1
 | 0x0041 | CAMELLIA128-SHA             | SSLv3         | RSA       | RSA    | Camellia(128)  | SHA1
 | 0x002F | AES128-SHA                  | SSLv3         | RSA       | RSA    | AES(128)       | SHA1
+|====
 
 [NOTE]
 .Compatibility
