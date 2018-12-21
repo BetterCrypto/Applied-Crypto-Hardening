@@ -67,7 +67,7 @@ analysis, differential power analysis or power monitoring attacks), downgrade
 attacks, jamming the encrypted channel or other similar attacks which are
 typically employed to circumvent strong encryption.
 
-// TODO: add cite:[yarom2013flush] after 'technique' inside footnote
+// TODO: add cite:[yarom2013flush+] after 'technique' inside footnote
 The authors can not overstate the importance of these other techniques.
 Interested readers are advised to read about these attacks in detail since they
 give a lot of insight into other parts of cryptography engineering which need to
