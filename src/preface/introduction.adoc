@@ -7,7 +7,7 @@ Sysadmins. Sysadmins. Sysadmins. They are a force-multiplier.
 [[relatedpublications]]
 == Related publications
 
-TODO: Fix citations
+// TODO: Fix citations
 
 Ecrypt II, ENISA’s report on Algorithms, key sizes and parameters and BSI’s
 Technische Richtlinie TR-02102 are great publications which are more in depth
