@@ -9,7 +9,7 @@ networks we have to to take care about data integrity and privacy.
 Some providers also offer VPNs for connecting company networks via MPLS or
 simular technologies. The provider promises you that nobody else has access to
 your data trnfserred over their lines. You have to decide if this promise
-does fit to your information security requirements. 
+does fit to your information security requirements.
 ====
 
 Basically there are two ways to ensure the privacy and integrity of the data
@@ -121,7 +121,7 @@ image:checkpoint_2.png[Custom Encryption Suite Properties,scaledwidth=41.1%]
 {empty}<<checkpoint_2>>
 
 The Diffie-Hellman groups and Perfect Forward Secrecy Settings can be found
-under `Advanced Settings` / `Advanced VPN Properties` (figure <<checkpoint_3>>. 
+under `Advanced Settings` / `Advanced VPN Properties` (figure <<checkpoint_3>>.
 
 image:checkpoint_3.png[Advanced VPN Properties,scaledwidth=58.9%]
 
@@ -187,7 +187,7 @@ https://github.com/BetterCrypto/Applied-Crypto-Hardening/pull/91#issuecomment-75
 ====== Client Configuration
 
 Client and server have to use compatible configurations, otherwise they can’t
-communicate. The `cipher` and `auth` directives have to be identical. 
+communicate. The `cipher` and `auth` directives have to be identical.
 
 ==== Justification for special settings
 
@@ -390,7 +390,7 @@ proposals.
 .Tested OpenS/WAN Versions
 |====
 | Program Version | OS/Distribution/Version | Comment
-| 2.6.39          | Gentoo                  | 
+| 2.6.39          | Gentoo                  |
 |====
 
 ==== Settings
@@ -433,7 +433,7 @@ phase2=esp
 # - aes_gcm_c-256 = AES_GCM_16
 # - aes_ctr-256
 # - aes_ccm_c-256 = AES_CCM_16
-# - aes-256 
+# - aes-256
 # additional ciphers configuration B:
 # - camellia-256
 # - aes-128
@@ -496,7 +496,7 @@ $ tincd -n NETNAME -K8192
 ----
 
 Old keys will not be deleted (but disabled), you have to delete them manually.
-Add the following lines to your tinc.conf on all machines 
+Add the following lines to your tinc.conf on all machines
 
 ===== References
 
