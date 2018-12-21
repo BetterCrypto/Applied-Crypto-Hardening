@@ -93,10 +93,10 @@ recommended parameters are shown in table #tab:IPSEC_ph2_params[[tab:IPSEC_ph2_p
 ==== Tested with Versions
 
 [options="header"]
-.Tested Check Point Versions
+.Tested CheckPoint Versions
 |====
 | Program Version | OS/Distribution/Version | Comment
-| R77 | Secure Platform |
+| R77             | Secure Platform         |
 |====
 
 ==== Settings
@@ -156,13 +156,11 @@ gateways, and also influence the VPN client connections.
 [options="header"]
 .Tested OpenVPN Versions
 |====
-| Program Version | OS/Distribution/Version | Comment
-| OpenVPN 2.3.10 | Ubuntu Xenial 16.04.1 LTS linked against openssl
-(libssl.so.1.0.0) | 
-| OpenVPN 2.3.2 | Debian `wheezy-backports` linked against openssl
-(libssl.so.1.0.0) | 
-| OpenVPN 2.2.1 | Debian `wheezy` linked against openssl (libssl.so.1.0.0) | 
-| OpenVPN 2.3.2 | Windows |
+| Program Version | OS/Distribution/Version   | Comment
+| 2.3.10          | Ubuntu Xenial 16.04.1 LTS | linked against openssl (libssl.so.1.0.0)
+| 2.3.2           | Debian Wheezy (backports) | linked against openssl (libssl.so.1.0.0)
+| 2.2.1           | Debian Wheezy             | linked against openssl (libssl.so.1.0.0)
+| 2.3.2           | Windows                   |
 |====
 
 ===== Settings
@@ -290,7 +288,7 @@ platform the appropriate Cisco guides should be followed.
 .Tested Cisco ASA Versions
 |====
 | Program Version | OS/Distribution/Version | Comment
-| 9.1(3) | X-series model |
+| 9.1(3)          | X-series model          |
 |====
 
 
@@ -391,7 +389,7 @@ proposals.
 .Tested OpenS/WAN Versions
 |====
 | Program Version | OS/Distribution/Version | Comment
-| 2.6.39 | gentoo | 
+| 2.6.39          | Gentoo                  | 
 |====
 
 ==== Settings
@@ -467,14 +465,14 @@ and look for ’IKE algorithms wanted/found’ and ’ESP algorithms wanted/load
 
 === tinc
 
-==== Tested with VersioA
+==== Tested with Versions
 
 [options="header"]
 .Tested tinc Versions
 |====
 | Program Version | OS/Distribution/Version | Comment
-| 1.0.23 | gentoo | linked against OpenSSL 1.0.1e
-| 1.0.23 | Sabayon | linked against OpenSSL 1.0.1e
+| 1.0.23          | Gentoo                  | linked against OpenSSL 1.0.1e
+| 1.0.23          | Sabayon                 | linked against OpenSSL 1.0.1e
 |====
 
 ===== Defaults
