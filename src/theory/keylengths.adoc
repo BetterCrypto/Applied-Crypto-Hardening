@@ -1,6 +1,13 @@
 [[keylengths]]
 == Keylengths
 
+[quote,Vincent Rijmen in a personal mail exchange Dec 2013]
+----
+On the choice between AES256 and AES128: I would never consider
+using AES256, just like I don't wear a helmet when I sit inside my car. It's
+too much bother for the epsilon improvement in security.
+----
+
 Recommendations on keylengths need to be adapted regularly. Since this
 document first of all is static and second of all, does not consider
 itself to be authoritative on keylengths, we would rather refer to
@@ -22,7 +29,7 @@ In the same ECRYPT II publication you can find a practical comparison of
 key size equivalence between symmetric key sizes and RSA, discrete log
 (DLOG) and EC keylengths. ECRYPT II arrives at the interesting
 conclusion that for an equivalence of 128 bit symmetric size, you will
-need to use an 3248 bit RSA key .
+need to use an 3248 bit RSA key cite:[ii2011ecrypt, chapter 7, page 30].
 
 There are a couple of other studies comparing keylengths and their
 respective strengths. The website https://www.keylength.com/ compares
@@ -52,9 +59,10 @@ inadequate for long term protection.
 We want to note that 3DES theoretically has 168 bits of security,
 however based on the NIST Special Publication 800-57
 footnote:[https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf,
-page 51], it is clear that 3DES can only be considered to
-provide for 80 bits / 112 bits security.
+page 51].
 
-// TODO: see issue 176
-
+Due to several https://en.wikipedia.org/wiki/Triple_DES#Security[security
+problems] the effective key length should be considered 80 bits. The NIST
+https://csrc.nist.gov/news/2017/update-to-current-use-and-deprecation-of-tdea[recommends]
+not to use 3DES any more and to migrate to AES as soon as possible.
 

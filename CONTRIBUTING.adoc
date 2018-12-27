@@ -1,0 +1,95 @@
+== Contributing to BetterCrypto: Applied Crypto Hardening
+
+First off: Thanks for helping out! Every reviewer, committer and person
+interested in discussing our document and changes is a valuable addition to the
+project. Everybody is invited to work on this document and share their
+experience and expertise with us or ask questions if something isn't clear to
+thema.
+
+Here's a few things we'd like you to consider when contributing to this project
+as some issues and discussions seem to creep up on us every now and again or
+have already been discussed at length in the past. This does not only make it
+easier for us to incorporate your changes, feedback or critique - but might also
+save you some valuable time.
+
+### General Information
+
+* GitHub is used for Pull Requests, Code Review and PR related
+  discussion.
+* The main (publicly read-only) repository is hosted at the https://github.com/BetterCrypto/Applied-Crypto-Hardening[Better Crytpto Repository]
+* The https://lists.cert.at/cgi-bin/mailman/listinfo/ach[Applied Crypto
+Hardening mailing-list] is the appropriate place for discussion and source of
+information regarding larger changes throughout the document, it's style,
+policy & in-depth discourse on minor and major details of the guide we're
+working on. It's also a good place for general cryptography-, software-,
+appliance- or administrative related questions that may arise when reading or
+reviewing this document.
+
+=== Before You Open a Pull Request on GitHub
+
+. Search
+https://github.com/BetterCrypto/Applied-Crypto-Hardening/pulls?utf8=%E2%9C%93&q=is%3Apr[open
+and closed pull requests] related to the changes you propose.
+. Please take some time to read up on the
+https://lists.cert.at/pipermail/ach[mailing list archives]. Over the years we've
+discussed quite a few topics in depth and you might just find the answer you
+were looking for or the reason we chose a certain configuration setting.
+. Please  write a meaningful Pull request title and describe your proposed changes in the text field. This can be done quickly in a few sentences or bullet points.
+. Finally: If in doubt, just ask on the mailing list. For example, when opening
+large pull requests, refactoring whole sections of the document or if you're
+changing security critical settings in configuration files we recommend.
+
+[NOTE]
+====
+Other people need to review your changes and good descriptions make it easier
+for them if you make clear what you're trying to achieve
+====
+
+
+### Attribution
+
+Feel free to add your name or handle to _src/acknowledgements.adoc_. The file is
+on alphabetical order.
+
+
+### Getting Started
+
+*Fork/clone, branch and commit or start a discussion on our mailing-list*
+
+* If you're not yet familiar with using `git` we recommend giving
+ https://try.github.io[try github] a shot. You'll know enough about `git` to
+ work on this document in 15 minutes or less.
+* Although our `ASCIIDOC` source is mostly self-explanatory, if you're uncertain
+ how to edit our guide correctly you might want to take a look at the following
+ docs
+** http://asciidoc.org/#_introduction[Short introduction]
+** https://asciidoctor.org/docs/asciidoc-writers-guide/[Asciidoc writers guide]
+** Full http://asciidoc.org/userguide.html[Users guide]
+** https://asciidoctor.org/docs/asciidoc-syntax-quick-reference[Cheat sheet]
+* ... or ask on our https://lists.cert.at/cgi-bin/mailman/listinfo/ach[mailing
+ list]
+* Read the style guide below.
+* Use the _src/template.adoc_ template.
+
+Thank you kindly! We hope you'll enjoy working with us on this document.
+
+== Style Guide
+
+The structure of a document is explained in the _src/template.adoc_ file. Please
+use this file as template for new chapters. The template tells you about the
+structure of a asciidoc file in this guide. The style guide section only explains
+conventions used that are used here.
+
+// TODO: Add more format suggestions below.
+
+=== Formated Text
+
+File or directory names are _slanted_. +
+`Commands` withing the text use a fixed font.
+
+=== References
+
+Please try to embed https://de.wikipedia.org/wiki/Uniform_Resource_Locator[URL]
+into the floating text and have a descriptive name for the link.
+
+

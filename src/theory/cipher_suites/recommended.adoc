@@ -46,7 +46,7 @@ This results in the OpenSSL string:
 //----
 // TODO make a column for cipher chaining mode} --> not really important, is it?
 
-[options="header"]
+[cols="<10s,<30,<10,<10,<10,<15,<10",options="header"]
 .Configuration A ciphers
 |====
 | ID     | OpenSSL Name                | Version       | KeyEx     | Auth   | Cipher         | MAC
@@ -56,7 +56,7 @@ This results in the OpenSSL string:
 | 0xC028 | ECDHE-RSA-AES256-SHA384     | TLSv1.2       | ECDH      | RSA    | AES(256) (CBC) | SHA384
 |====
 
-[Note]
+[NOTE]
 .Compatibility
 ====
 At the time of this writing only Win 7 and Win 8.1 crypto stack,
@@ -92,7 +92,8 @@ This results in the OpenSSL string:
 
 // todo make a column for cipher chaining mode
 
-[options="header"]
+
+[cols="<10s,<30,<10,<10,<10,<15,<10",options="header"]
 .Configuration B ciphers
 |====
 | ID     | OpenSSL Name                | Version       | KeyEx     | Auth   | Cipher         | MAC
@@ -114,8 +115,9 @@ This results in the OpenSSL string:
 | 0x0035 | AES256-SHA                  | SSLv3         | RSA       | RSA    | AES(256)       | SHA1
 | 0x0041 | CAMELLIA128-SHA             | SSLv3         | RSA       | RSA    | Camellia(128)  | SHA1
 | 0x002F | AES128-SHA                  | SSLv3         | RSA       | RSA    | AES(128)       | SHA1
+|====
 
-[Note]
+[NOTE]
 .Compatibility
 ====
 Note that these cipher suites will not work with Windows XP's crypto stack (e.g. IE, Outlook),
@@ -128,7 +130,7 @@ Note that these cipher suites will not work with Windows XP's crypto stack (e.g.
 ====
 
 
-[Note]
+[NOTE]
 .Explanation
 ====
 For a detailed explanation of the cipher suites chosen, please see
@@ -142,6 +144,7 @@ Straightforwardly, the authors wanted strong ciphers, forward secrecy
 footnote:[https://nikmav.blogspot.com/2011/12/price-to-pay-for-perfect-forward.html]
 and the best client compatibility possible while still ensuring a cipher string that can be
 used on legacy installations (e.g. OpenSSL 0.9.8).
+====
 
 Our recommended cipher strings are meant to be used via copy and paste and need to work
 "out of the box".

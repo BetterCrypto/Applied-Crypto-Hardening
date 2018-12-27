@@ -18,7 +18,7 @@ v1.x, 2018-12-21: The Asciidoc Edition
 :toclevels: 2
 :toc-title: Applied Crypto Hardening
 ifdef::backend-pdf[]
-:title-logo-image: assets/images/logo.jpg
+:title-logo-image: image:logo.svg[]
 endif::[]
 // :source-language: perl
 :source-highlighter: pygments
