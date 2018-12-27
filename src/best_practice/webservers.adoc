@@ -241,8 +241,6 @@ data controlled by the user.
 
 * https://nginx.org/en/docs/http/ngx_http_ssl_module.html[Module ngx_http_ssl_module]
 
-// TODO fix this link, wiki has changed, no obvious replacement * http://wiki.nginx.org/HttpSslModule
-
 
 ==== How to test
 

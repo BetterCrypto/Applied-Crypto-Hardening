@@ -9,7 +9,7 @@ networks we have to to take care about data integrity and privacy.
 Some providers also offer VPNs for connecting company networks via MPLS or
 simular technologies. The provider promises you that nobody else has access to
 your data trnfserred over their lines. You have to decide if this promise
-does fit to your information security requirements. 
+does fit to your information security requirements.
 ====
 
 Basically there are two ways to ensure the privacy and integrity of the data
@@ -85,7 +85,7 @@ recommended parameters are shown in table #tab:IPSEC_ph2_params[[tab:IPSEC_ph2_p
 
 ==== References
 
-Fergusen, N. and Schneier, B.: _A Cryptographic Evaluation of IPsec_: https://www.schneier.com/paper-ipsec.pdf
+* Fergusen, N. and Schneier, B.: _A Cryptographic Evaluation of IPsec_: https://www.schneier.com/paper-ipsec.pdf
 
 
 === Check Point Next Generation Firewall
@@ -93,10 +93,10 @@ Fergusen, N. and Schneier, B.: _A Cryptographic Evaluation of IPsec_: https://ww
 ==== Tested with Versions
 
 [options="header"]
-.Tested Check Point Versions
+.Tested CheckPoint Versions
 |====
 | Program Version | OS/Distribution/Version | Comment
-| R77 | Secure Platform |
+| R77             | Secure Platform         |
 |====
 
 ==== Settings
@@ -121,7 +121,7 @@ image:checkpoint_2.png[Custom Encryption Suite Properties,scaledwidth=41.1%]
 {empty}<<checkpoint_2>>
 
 The Diffie-Hellman groups and Perfect Forward Secrecy Settings can be found
-under `Advanced Settings` / `Advanced VPN Properties` (figure <<checkpoint_3>>. 
+under `Advanced Settings` / `Advanced VPN Properties` (figure <<checkpoint_3>>.
 
 image:checkpoint_3.png[Advanced VPN Properties,scaledwidth=58.9%]
 
@@ -143,9 +143,9 @@ gateways, and also influence the VPN client connections.
 
 ==== References
 
-Check Point
-https://sc1.checkpoint.com/documents/R77/CP_R77_VPN_AdminGuide/html_frameset.htm[VPN
-R77 Administration Guide] (may require a UserCenter account to access)
+* Check Point
+  https://sc1.checkpoint.com/documents/R77/CP_R77_VPN_AdminGuide/html_frameset.htm[VPN
+  R77 Administration Guide] (may require a UserCenter account to access)
 
 === TLS Based Applications
 
@@ -156,13 +156,11 @@ R77 Administration Guide] (may require a UserCenter account to access)
 [options="header"]
 .Tested OpenVPN Versions
 |====
-| Program Version | OS/Distribution/Version | Comment
-| OpenVPN 2.3.10 | Ubuntu Xenial 16.04.1 LTS linked against openssl
-(libssl.so.1.0.0) | 
-| OpenVPN 2.3.2 | Debian `wheezy-backports` linked against openssl
-(libssl.so.1.0.0) | 
-| OpenVPN 2.2.1 | Debian `wheezy` linked against openssl (libssl.so.1.0.0) | 
-| OpenVPN 2.3.2 | Windows |
+| Program Version | OS/Distribution/Version   | Comment
+| 2.3.10          | Ubuntu Xenial 16.04.1 LTS | linked against openssl (libssl.so.1.0.0)
+| 2.3.2           | Debian Wheezy (backports) | linked against openssl (libssl.so.1.0.0)
+| 2.2.1           | Debian Wheezy             | linked against openssl (libssl.so.1.0.0)
+| 2.3.2           | Windows                   |
 |====
 
 ===== Settings
@@ -189,7 +187,7 @@ https://github.com/BetterCrypto/Applied-Crypto-Hardening/pull/91#issuecomment-75
 ====== Client Configuration
 
 Client and server have to use compatible configurations, otherwise they can’t
-communicate. The `cipher` and `auth` directives have to be identical. 
+communicate. The `cipher` and `auth` directives have to be identical.
 
 ==== Justification for special settings
 
@@ -206,7 +204,7 @@ The configuration shown above is compatible with all tested versions.
 
 ==== References
 
-OpenVPN Documentation: _Security Overview_ https://openvpn.net/index.php/open-source/documentation/security-overview.html
+* OpenVPN Documentation: _Security Overview_ https://openvpn.net/index.php/open-source/documentation/security-overview.html
 
 ==== Additional settings
 
@@ -290,12 +288,13 @@ platform the appropriate Cisco guides should be followed.
 .Tested Cisco ASA Versions
 |====
 | Program Version | OS/Distribution/Version | Comment
-| 9.1(3) | X-series model |
+| 9.1(3)          | X-series model          |
 |====
 
 
 ==== Settings
 
+[source]
 ----
 crypto ipsec ikev2 ipsec-proposal AES-Fallback
  protocol esp encryption aes-256 aes-192 aes
@@ -380,9 +379,8 @@ proposals.
 
 ==== References
 
-http://www.cisco.com/en/US/docs/security/asa/roadmap/asaroadmap.html
-
-http://www.cisco.com/web/about/security/intelligence/nextgen_crypto.html
+* http://www.cisco.com/en/US/docs/security/asa/roadmap/asaroadmap.html
+* http://www.cisco.com/web/about/security/intelligence/nextgen_crypto.html
 
 === Openswan
 
@@ -392,7 +390,7 @@ http://www.cisco.com/web/about/security/intelligence/nextgen_crypto.html
 .Tested OpenS/WAN Versions
 |====
 | Program Version | OS/Distribution/Version | Comment
-| 2.6.39 | gentoo | 
+| 2.6.39          | Gentoo                  |
 |====
 
 ==== Settings
@@ -405,12 +403,14 @@ protostack=netkey) and/or build-time options.
 
 To list the supported algorithms
 
+[source,terminal]
 ----
 $ ipsec auto --status | less
 ----
 
 and look for ’algorithm ESP/IKE’ at the beginning.
 
+[source]
 ----
 aggrmode=no
 # ike format: cipher-hash;dhgroup
@@ -433,7 +433,7 @@ phase2=esp
 # - aes_gcm_c-256 = AES_GCM_16
 # - aes_ctr-256
 # - aes_ccm_c-256 = AES_CCM_16
-# - aes-256 
+# - aes-256
 # additional ciphers configuration B:
 # - camellia-256
 # - aes-128
@@ -456,6 +456,7 @@ auto=ignore
 
 Start the vpn and using
 
+[source,terminal]
 ----
 $ ipsec auto --status | less
 ----
@@ -464,18 +465,18 @@ and look for ’IKE algorithms wanted/found’ and ’ESP algorithms wanted/load
 
 ==== References
 
-https://www.openswan.org/
+* https://www.openswan.org/
 
 === tinc
 
-==== Tested with VersioA
+==== Tested with Versions
 
 [options="header"]
 .Tested tinc Versions
 |====
 | Program Version | OS/Distribution/Version | Comment
-| 1.0.23 | gentoo | linked against OpenSSL 1.0.1e
-| 1.0.23 | Sabayon | linked against OpenSSL 1.0.1e
+| 1.0.23          | Gentoo                  | linked against OpenSSL 1.0.1e
+| 1.0.23          | Sabayon                 | linked against OpenSSL 1.0.1e
 |====
 
 ===== Defaults
@@ -489,12 +490,13 @@ supported by tinc.
 
 Generate keys with
 
+[source,terminal]
 ----
-tincd -n NETNAME -K8192
+$ tincd -n NETNAME -K8192
 ----
 
 Old keys will not be deleted (but disabled), you have to delete them manually.
-Add the following lines to your tinc.conf on all machines 
+Add the following lines to your tinc.conf on all machines
 
 ===== References
 
