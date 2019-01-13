@@ -38,7 +38,7 @@ Blue Coat Systems was a well-known manufacturer of enterprise proxy appliances.
 In 2016 it was aquired by Symantec. The products are now known as Symantec
 ProxySG and Advanced Secure Gateway (ASG).
 
-The description below is for the original Blue Coat SG Operation System (SGOS).
+The description below is for the original Blue Coat SG Operating System (SGOS).
 
 BlueCoat Proxy SG Appliances can be used as forward and reverse proxies. The
 reverse proxy feature is rather under-developed, and while it is possible and
