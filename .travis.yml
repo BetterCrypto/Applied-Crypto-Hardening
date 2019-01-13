@@ -54,5 +54,6 @@ script:
         rsync --archive --progress
             build/
             travis@www.bettercrypto.org:/home/travis/public_html/build/
+        || true
         ;
     fi
