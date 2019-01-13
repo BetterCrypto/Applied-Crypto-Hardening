@@ -72,7 +72,7 @@ Interested readers are advised to read about these attacks in detail since they
 give a lot of insight into other parts of cryptography engineering which need to
 be dealt withfootnote:[An easy to read yet very insightful recent example is the
 "FLUSH+RELOAD" technique for leaking cryptographic keys from one virtual machine
-to another via L3 cache timing attacks. cite:[yarom2013flush\] ].
+to another via L3 cache timing attacks. cite:[yarom2013flush] ].
 
 This guide does not talk much about the well-known insecurities of trusting a
 public-key infrastructure (PKI)footnote:[Interested readers are referred to
