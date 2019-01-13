@@ -34,7 +34,7 @@ Also do so for your reverse proxies!
 
 === Bluecoat / Symantec
 
-Blue Coat Systems was a well knows manufacturer of enterprise proxy appliances.
+Blue Coat Systems was a well-known manufacturer of enterprise proxy appliances.
 In 2016 it was aquired by Symantec. The products are now known as Symantec
 ProxySG and Advanced Secure Gateway (ASG).
 
