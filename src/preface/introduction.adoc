@@ -7,6 +7,8 @@ Sysadmins. Sysadmins. Sysadmins. They are a force-multiplier.
 [[relatedpublications]]
 == Related publications
 
+Ecrypt II <<ii2011ecrypt>>
+
 Ecrypt II cite:[ii2011ecrypt], ENISA’s report on Algorithms, key sizes and
 parameters cite:[ENISA2013] and BSI’s Technische Richtlinie TR-02102 cite:[TR02102]
 are great publications which are more in depth
@@ -42,8 +44,6 @@ While <<bestpractice>> is intended to serve as a copy & paste reference,
 reader to actually read this section and challenge our reasoning in choosing
 _Cipher string B_ and to come up with a better or localized solution.
 
-// TODO: Verify eclipse image wasn't needed anymore
-
 
 [[disclaimer]]
 == Disclaimer
@@ -67,13 +67,12 @@ analysis, differential power analysis or power monitoring attacks), downgrade
 attacks, jamming the encrypted channel or other similar attacks which are
 typically employed to circumvent strong encryption.
 
-// TODO: add cite:[yarom2013flush+] after 'technique' inside footnote
 The authors can not overstate the importance of these other techniques.
 Interested readers are advised to read about these attacks in detail since they
 give a lot of insight into other parts of cryptography engineering which need to
 be dealt withfootnote:[An easy to read yet very insightful recent example is the
 "FLUSH+RELOAD" technique for leaking cryptographic keys from one virtual machine
-to another via L3 cache timing attacks.].
+to another via L3 cache timing attacks. cite:[yarom2013flush\] ].
 
 This guide does not talk much about the well-known insecurities of trusting a
 public-key infrastructure (PKI)footnote:[Interested readers are referred to
@@ -83,20 +82,20 @@ which brings the problem of trusting PKIs right to the point]. Nor does this
 text fully explain how to run your own Certificate Authority (CA).
 
 Most of this zoo of information security issues are addressed in the very
-comprehensive book _Security Engineering_ by Ross Anderson cite[anderson2008security].
+comprehensive book _Security Engineering_ by Ross Anderson cite:[anderson2008security].
 
 For some experts in cryptography this text might seem too informal. However, we
 strive to keep the language as non-technical as possible and fitting for our
 target audience: system administrators who can collectively improve the security
 level for all of their users.
 
-[quote, Bruce Schneier]
+[quote,Bruce Schneier]
 Security is a process, not a product.
 
 This guide can only describe what the authors currently _believe_ to be the best
 settings based on their personal experience and after intensive cross checking
 with literature and experts. For a complete list of people who reviewed this
-paper, see the <<acknowledgements>>. Even though multiple specialists reviewed
+paper, see the <acknowledgements>. Even though multiple specialists reviewed
 the guide, the authors can give _no guarantee whatsoever_ that they made the
 right recommendations. Keep in mind that tomorrow there might be new attacks on
 some ciphers and many of the recommendations in this guide might turn out to be
@@ -137,7 +136,8 @@ We explicitly excluded:
 
 // TODO add link 'http://www.mavetju.org/mail/view_message.php?list=freebsd-current&id=947899&raw=yes' 
 // TODO find new link, this one is broken
-[quote, A. Kaplan's, 'His mail signature for many years']
+
+[quote, A. Kaplan, 'His mail signature for many years']
 C.O.S.H.E.R - completely open source, headers, engineering and research.
 
 For writing this guide, we chose to collect the most well researched facts about
@@ -148,7 +148,7 @@ mailing list.
 The document is available (read-only) to the public Internet on the web page and
 the source code of this document is on a public git server, mirrored on
 GitHub.com and open for public scrutiny. However, write permissions to the
-document are only granted to vetted people. The list of reviewers can be found in <<acknowledgements>>.
+document are only granted to vetted people. The list of reviewers can be found in <acknowledgements>.
 
 Every write operation to the document is logged via the `git` version control
 system and can thus be traced back to a specific author. We accept git pull
@@ -160,7 +160,8 @@ Public peer-review and multiple eyes checking of our guide is the best strategy
 we can imagine at the present moment
 footnote:[http://www.wired.com/opinion/2013/10/how-to-design-and-defend-against-the-perfect-backdoor/].
 
-We invite the gentle reader to participate in this public review process.
+We invite the gentle reader to participate in this public review process. Please
+read the _CONTRIBUTING_ document.
 
 
 // [[conventions]]
