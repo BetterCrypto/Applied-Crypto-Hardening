@@ -31,35 +31,47 @@ insecure manner.
 Conclusion: Don’t forget to check your proxy solutions SSL-capabilities.
 Also do so for your reverse proxies!
 
-=== Bluecoat
+
+=== Bluecoat / Symantec
+
+Blue Coat Systems was a well-known manufacturer of enterprise proxy appliances.
+In 2016 it was acquired by Symantec. The products are now known as Symantec
+ProxySG and Advanced Secure Gateway (ASG).
+
+The description below is for the original Blue Coat SG Operating System (SGOS).
+
+BlueCoat Proxy SG Appliances can be used as forward and reverse proxies. The
+reverse proxy feature is rather under-developed, and while it is possible and
+supported, there only seems to be limited use of this feature "in the wild" -
+nonetheless there are a few cipher suites to choose from, when enabling SSL
+features.
+
 
 ==== Tested with Versions
 
-SGOS 6.5.x
+[options="header"]
+|====
+| Proxy Appliance | SGOS 6.5.x | Blue Coat, now Symantec
+|====
 
-BlueCoat Proxy SG Appliances can be used as forward and reverse proxies.
-The reverse proxy feature is rather under-developed, and while it is
-possible and supported, there only seems to be limited use of this
-feature "in the wild" - nonetheless there are a few cipher suites to
-choose from, when enabling SSL features.
 
 ==== Only allow TLS 1.0,1.1 and 1.2 protocols:
 
 
-
-....
+[source,terminal]
+----
 $conf t
 $(config)ssl
 $(config ssl)edit ssl-device-profile default
 $(config device-profile default)protocol tlsv1 tlsv1.1 tlsv1.2
   ok
-....
+----
+
 
 ==== Select your accepted cipher-suites:
 
-
-
-....
+[source,terminal]
+----
 $conf t
 Enter configuration commands, one per line.  End with CTRL-Z.
 $(config)proxy-services
@@ -78,20 +90,22 @@ Cipher#  Use        Description        Strength
 
 Select cipher numbers to use, separated by commas: 2,5,6
   ok
-....
+----
 
 The same protocols are available for forward proxy settings and should
 be adjusted accordingly: In your local policy file add the following
 section:
 
-....
+[source,terminal]
+----
 <ssl>
     DENY server.connection.negotiated_ssl_version=(SSLV2, SSLV3)
-....
+----
 
 Disabling protocols and ciphers in a forward proxy environment could
 lead to unexpected results on certain (misconfigured?) webservers (i.e.
 ones accepting only SSLv2/3 protocol connections)
+
 
 === HAProxy
 
