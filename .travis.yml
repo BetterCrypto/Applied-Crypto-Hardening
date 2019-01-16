@@ -51,7 +51,7 @@ script:
   - '[[ -z ${TRAVIS_TAG} ]] || tools/ci/copy-build.sh build/tags/${TRAVIS_TAG//\//-}'
   - find build -type f | sort
   - if [[ ${TRAVIS_PULL_REQUEST} = false ]]; then
-        rsync --archive --progress
+        rsync --archive --progress --rsh "ssh -p 1978"
             build/
             travis@www.bettercrypto.org:/home/travis/public_html/build/
         || true
