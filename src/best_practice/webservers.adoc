@@ -240,6 +240,7 @@ data controlled by the user.
 ==== References
 
 * https://nginx.org/en/docs/http/ngx_http_ssl_module.html[Module ngx_http_ssl_module]
+* https://nginx.org/en/docs/http/configuring_https_servers.html[Configuring HTTPS servers]
 
 
 ==== How to test
