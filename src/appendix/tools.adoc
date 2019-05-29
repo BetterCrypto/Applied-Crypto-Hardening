@@ -19,10 +19,6 @@ XMPP/Jabber Server check (Client-to-Server and Server-to-Server) https://xmpp.ne
 
 Luxsci SMTP TLS Checker https://luxsci.com/extranet/tlschecker.html
 
-TODO: starttls site not available any more.
-
-Does your mail server support StartTLS? https://starttls.info/
-
 DNSsec and DANE support of your domain and e-mail server? https://dane.sys4.de
 
 http://checktls.com is a tool for testing arbitrary TLS services.
