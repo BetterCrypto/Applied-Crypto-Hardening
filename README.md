@@ -31,11 +31,16 @@ Receive latest updates for a previously cloned repository (from within repo-dire
 ## GitHub
 Fork and issue pull requests. Those will be reviewed and if accepted pushed to the main repository hosted on git.bettercrypto.org.
 
-## MacTeX
-MacTeX misses `mweights.sty` and may cause a compile error.
+## Compiling
 
+You need the programm `asciidoctor` to compile the document. First install bundler and then the programs:
 ```bash
-sudo tlmgr install mweights
+bundle install --path vendor/bundle
+cd src
+# for HTML
+BUNDLE_PATH=../vendor/bundle/ bundle exec asciidoctor -r asciidoctor-diagram -r asciidoctor-bibliography applied-crypto-hardening.adoc
+# for PDF
+BUNDLE_PATH=../vendor/bundle/ bundle exec asciidoctor-pdf -r asciidoctor-diagram -r asciidoctor-bibliography applied-crypto-hardening.adoc
 ```
 
 ## IRC

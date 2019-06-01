@@ -56,10 +56,9 @@ order).
 * If you're not yet familiar with using `git` we recommend giving
 https://try.github.io a shot. You'll know enough about `git` to work on
 this document in 15 minutes or less.
-* Although our `LaTeX` source is mostly self-explanatory, if you're
+* Although our `AsciiDoc` source is mostly self-explanatory, if you're
 uncertain how to edit our guide correctly you might want to take a look at:
-   * [Introduction to using TeX](http://www.math.harvard.edu/texman/)
-   * [The Not So Short Introduction to LaTeX](https://tobi.oetiker.ch/lshort/lshort.pdf)
+   * [AsciiDoc Writer’s Guide](https://asciidoctor.org/docs/asciidoc-writers-guide/)
    * ..or ask on our [mailing-list for
      help](https://lists.cert.at/cgi-bin/mailman/listinfo/ach).
 

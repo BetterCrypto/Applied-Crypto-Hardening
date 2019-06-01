@@ -1,8 +1,6 @@
 .DS_Store
 old
 old/*
-foo
-src/*.log
-src/foosrc/missfont.log
 /src/configfiles.txt
 *~
+vendor/
