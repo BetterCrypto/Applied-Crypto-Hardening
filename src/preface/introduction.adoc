@@ -99,7 +99,7 @@ paper, see the <acknowledgements>. Even though multiple specialists reviewed
 the guide, the authors can give _no guarantee whatsoever_ that they made the
 right recommendations. Keep in mind that tomorrow there might be new attacks on
 some ciphers and many of the recommendations in this guide might turn out to be
-wrong.
+wrong. Security is a process.
 
 We therefore recommend that system administrators keep up to date with recent
 topics in IT security and cryptography.
@@ -115,14 +115,12 @@ In this guide, we restricted ourselves to:
 
 * Internet-facing services
 * Commonly used services
-* Devices which are used in business environments (this specifically excludes
-* XBoxes, Playstations and similar consumer devices)
+* Devices which are used in business environments (this specifically excludes XBoxes, Playstations and similar consumer devices)
 * OpenSSL
 
 We explicitly excluded:
 
-* Specialized systems (such as medical devices, most embedded systems,
-* industrial control systems, etc.)
+* Specialized systems such as medical devices, most embedded systems, industrial control systems (ICS), etc.
 * Wireless Access Points
 * Smart-cards/chip cards
 
@@ -148,7 +146,7 @@ mailing list.
 The document is available (read-only) to the public Internet on the web page and
 the source code of this document is on a public git server, mirrored on
 GitHub.com and open for public scrutiny. However, write permissions to the
-document are only granted to vetted people. The list of reviewers can be found in <acknowledgements>.
+document are only granted to vetted people. The list of reviewers can be found in <<acknowledgements>>.
 
 Every write operation to the document is logged via the `git` version control
 system and can thus be traced back to a specific author. We accept git pull
@@ -161,7 +159,7 @@ we can imagine at the present moment
 footnote:[http://www.wired.com/opinion/2013/10/how-to-design-and-defend-against-the-perfect-backdoor/].
 
 We invite the gentle reader to participate in this public review process. Please
-read the _CONTRIBUTING_ document.
+read the https://github.com/BetterCrypto/Applied-Crypto-Hardening/blob/master/CONTRIBUTING.md[Contributing] document.
 
 
 // [[conventions]]
