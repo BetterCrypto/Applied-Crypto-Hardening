@@ -1,12 +1,10 @@
 \chapter{Further research}
 \label{cha:further-research}
-The following is a list of services, software packages, hardware devices or protocols that we considered documenting but either did not manage to document yet or might be able to document later. We encourage input from the Internet community. 
+The following is a list of services, software packages, hardware devices or protocols that we considered documenting but either did not manage to document yet or might be able to document later. We encourage input from the Internet community.
 
 \begin{multicols}{3}
 \begin{itemize*}
-  \item whatsapp (might be problematic since a user/admin can't change anything)
   \item Lync
-  \item Skype (might be problematic since a user/admin can't change anything)
   \item Wi-Fi APs, 802.1X
   \item Tomcat
   \item SIP
@@ -21,31 +19,39 @@ The following is a list of services, software packages, hardware devices or prot
   \item NNTP
   \item NTPs tlsdate
   \item BGP / OSPF
-  \item SILC
   \item LDAP
   \item seclayer-tcp
   \item Commerical network equipment vendors
   \item RADIUS
   \item Moxa , APC, und co... ICS . Ethernet to serial
-  \item telnet (only sensible recommendation: \emph{DON't!!})
   \item rsyslog
   \item v6 spoofing (look at work by Ferndo Gont, Marc Heuse, et. al.)
   \item tinc
   \item racoon
   \item l2tp
-  \item rsync
   \item telnets
   \item ftps
-  \item webmin (probably the same recommendations as with Apache apply, but where does that need to be configured?)
-  \item plesk (same as webmin)
-  \item phpmyadmin (same as webmin)
   \item DSL modems (where to start?)
   \item UPnP, natPmp
-  \item SAML federated auth providers \footnote{e.g., all the REFEDS folks (\url{https://refeds.org/})), including InCommon (\url{http://www.incommon.org/federation/metadata.html}
-  \url{https://wiki.shibboleth.net/confluence/display/SHIB2/TrustManagement} }
+  \item SAML federated auth providers \footnote{e.g., all the REFEDS folks (\url{https://refeds.org/}), including InCommon (\url{http://www.incommon.org/federation/metadata.html} \url{https://wiki.shibboleth.net/confluence/display/SHIB2/TrustManagement})}
   \item Microsoft SQL Server
+  \item Microsoft Exchange
+  \item HAProxy\footnote{\url{https://lists.cert.at/pipermail/ach/2014-November/001601.html}}
+  \item HTTP Key Pinning (HTKP)
+  \item IBM HTTP Server
+  \item Elastic Load Balancing (ELB)\footnote{\url{https://lists.cert.at/pipermail/ach/2014-May/001422.html}}
 \end{itemize*}
 \end{multicols}
+
+\section{Software not covered by this guide}
+\label{sec:uncovered}
+
+\begin{itemize*}
+  \item telnet: Usage of telnet for anything other than fun projects is highly discouraged
+  \item Simple Network Management Protocol (SNMP): Remote Management Software should not be available from a routed network. There is an inestimable number of problems with these implementations. Popular vendors regularly have exploits or DDoS problems with their embedded remote management and are suffering from SNMP stacks.\footnote{\url{https://lists.cert.at/pipermail/ach/2014-May/001389.html}} Tunneling these services over SSH or stunnel with proper authentication can be used if needed.
+  \item Puppet DB: A Proxy or a tunnel is recommended if it needs to be facing public network interfaces.\footnote{\url{https://lists.cert.at/pipermail/ach/2014-November/001626.html}}
+  \item rsync: Best use it only via SSH for an optimum of security and easiest to maintain.
+\end{itemize*}
 
 %%% Local Variables: 
 %%% mode: latex

@@ -1,0 +1,16 @@
+\section{Let's Encrypt}
+\label{sec:hlets-encrypt}
+
+\subsection{Introduction}
+
+The classical method to get a recognized certificate was to buy a validation from one of the major vendors.  There was at least one free option but this was not always the most suitable option.  Buying a certificate had many advantages but also two major disadvantages for most users:
+
+\begin{itemize*}
+	\item It requires a relatively heavy key management process.  If not properly handled, key owner is at risk of facing a key being compromissed.  Let's Encrypt address the issue by limiting certificate validity to 90 days.
+	\item Key signing is rather expensive for a home user or small businesses.
+\end{itemize*}
+
+By offering short certificate requiring to be renewed frequently at not cost, Let's Encrypt offers a practical solution for non profesional users and even profesional one in some cases.  While the process is rather straightforward and well documented, this section will cover the deployement of secure connections with authentication certificates thanks to Let's Encrypt.
+
+\subsection{Requirements}
+

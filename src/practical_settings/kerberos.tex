@@ -98,9 +98,7 @@ The configuration samples below assume new installations without preexisting pri
 
 For existing installations:
 \begin{itemize}
-	\item Be aware that for existing setups, the master\_key\_type can not be changed easily since it requires a manual conversion of the database. When in doubt, leave it as it is. 
-% XXX ask the author XXX
-%\todo{database conversion howto}
+	\item Existing setups should be migrated to a new master key if the current master key is using a weak enctype.
 	\item When changing the list of supported\_enctypes, principals where all enctypes are no longer supported will cease to work.
 	\item Be aware that Kerberos 4 is obsolete and should not be used.
 	\item Principals with weak enctypes pose an increased risk for password bruteforce attacks if an attacker gains access to the database.
@@ -147,4 +145,56 @@ In \verb#/etc/krb5.conf# set in the [libdefaults] section:
 % encryption type setting for a user account: http://blogs.msdn.com/b/openspecification/archive/2011/05/31/windows-configurations-for-kerberos-supported-encryption-type.aspx
 % hunting down DES: http://blogs.technet.com/b/askds/archive/2010/10/19/hunting-down-des-in-order-to-securely-deploy-kerberos.aspx
 % supported subset of encryption types, extension documentation: http://msdn.microsoft.com/en-us/library/cc233855.aspx
-
+\paragraph{Upgrading a MIT krb5 database to a new enctype}
+To check if an upgrade is necessary, execute the following on the KDC in question:
+\begin{lstlisting}
+root@kdc.example.com:~# kdb5_util list_mkeys
+Master keys for Principal: K/M@EXAMPLE.COM
+KVNO: 1, Enctype: des-cbc-crc, Active on: Thu Jan 01 00:00:00 UTC 1970 *
+\end{lstlisting}
+In this case, an old unsafe enctype is in use as indicated by the star following the key line.
+To upgrade, proceed as follows. First create a new master key for the database with the appropriate enctype.
+You will be prompted for a master password that can later be used to decrypt the database. A stash-file
+containing this encryption key will also be written.
+\begin{lstlisting}
+root@kdc.example.com:~# kdb5_util add_mkey -s -e aes256-cts-hmac-sha1-96
+Creating new master key for master key principal 'K/M@EXAMPLE.COM'
+You will be prompted for a new database Master Password.
+It is important that you NOT FORGET this password.
+Enter KDC database master key:
+Re-enter KDC database master key to verify:
+\end{lstlisting}
+Verify that the new master key has been successfully created. Note the key version number (KVNO) of the new master key, in this case \verb#2#.
+\begin{lstlisting}
+root@kdc.example.com:~# kdb5_util list_mkeys
+Master keys for Principal: K/M@EXAMPLE.COM
+KVNO: 2, Enctype: aes256-cts-hmac-sha1-96, No activate time set
+KVNO: 1, Enctype: des-cbc-crc, Active on: Thu Jan 01 00:00:00 UTC 1970 *
+\end{lstlisting}
+Set the new master key as the active master key by giving its KVNO. The active master key will be indicated
+by an asterisk in the master key list.
+\begin{lstlisting}
+root@kdc.example.com:~# kdb5_util use_mkey 2
+root@kdc.example.com:~# kdb5_util list_mkeys
+Master keys for Principal: K/M@EXAMPLE.COM
+KVNO: 2, Enctype: aes256-cts-hmac-sha1-96, Active on: Wed May 13 14:14:18 UTC 2015 *
+KVNO: 1, Enctype: des-cbc-crc, Active on: Thu Jan 01 00:00:00 UTC 1970
+\end{lstlisting}
+Reencrypt all principals to the new master key.
+\begin{lstlisting}
+root@kdc.example.com:~# kdb5_util update_princ_encryption
+Re-encrypt all keys not using master key vno 2?
+(type 'yes' to confirm)? yes
+504 principals processed: 504 updated, 0 already current
+\end{lstlisting}
+After verifying that everything still works as desired it is possible to remove unused master
+keys.
+\begin{lstlisting}
+root@kdc.example.com:~# kdb5_util purge_mkeys
+Will purge all unused master keys stored in the 'K/M@EXAMPLE.COM' principal, are you sure?
+(type 'yes' to confirm)? yes
+OK, purging unused master keys from 'K/M@EXAMPLE.COM'...
+Purging the following master key(s) from K/M@EXAMPLE.COM:
+KVNO: 1
+1 key(s) purged.
+\end{lstlisting}

@@ -1,47 +1,78 @@
 % hack.
 \gdef\currentsectionname{MailServers}
-This section documents the most common mail (SMTP) and IMAPs/POPs servers. Another option to secure IMAPs/POPs servers is to place them behind an stunnel server.
+This section documents the most common mail servers. Mail servers may usually be
+grouped into three categories:
+\begin{itemize*}
+  \item the mail submission agent (MSA)
+  \item the mail transfer agent (MTA)/mail exchanger (MX)
+  \item the mail delivery agent (MDA)
+\end{itemize*}
 
+An e-mail client (mail user agent, MUA) submits mail to the MSA. This is usually
+been done using the Simple Mail Transfer Protocol (SMTP). Afterwards, the mail
+is transmitted by the MTA over the Internet to the MTA of the receiver. This
+happens again via SMTP. Finally, the mail client of the receiver will fetch mail
+from an MDA usually via the Internet Message Access Protocol (IMAP) or the Post
+Office Protocol (POP).
+
+As MSAs and MTAs both use SMTP as transfer protocols, both functionalities may
+often be implemented with the same software. On the other hand, MDA software
+might or might not implement both IMAP and POP.
 
 %% ----------------------------------------------------------------------
-\subsection{SMTP in general}
-\label{subsection:smtp_general}
-SMTP usually makes use of opportunistic TLS. This means that an MTA will accept TLS connections when asked for it during handshake but will not require it. One should always support incoming opportunistic TLS and always try TLS handshake outgoing.
+\subsection{TLS usage in mail server protocols}
 
-Furthermore a mailserver can operate in three modes:
-\begin{itemize*}
-  \item As MSA (Mail Submission Agent) your mailserver receives mail from your clients MUAs (Mail User Agent).
-  \item As receiving MTA (Mail Transmission Agent, MX)
-  \item As sending MTA (SMTP client)
-\end{itemize*}
-We recommend the following basic setup for all modes:
+E-mail protocols support TLS in two different ways. It may be added as a
+protocol wrapper on a different port. This method is referred to as Implicit TLS
+or as protocol variants SMTPS, IMAPS and POP3S. The other method is to establish
+a cleartext session first and switch to TLS afterwards by issuing the STARTTLS
+command.
+
+SMTP between MTAs usually makes use of opportunistic TLS. This means that an
+MTA will accept TLS connections when asked for it but will not require it.
+MTAs should always try opportunistic TLS handshakes outgoing and always accept
+incoming opportunistic TLS.
+
+%% ----------------------------------------------------------------------
+\subsection{Recommended configuration}
+% TODO: Check configurations for compliance
+
+We recommend to use the following settings for Mail Transfer Agents:
 \begin{itemize*}
   \item correctly setup MX, A and PTR RRs without using CNAMEs at all.
-  \item enable encryption (opportunistic TLS)
+  \item the hostname used as HELO/EHLO in outgoing mail shall match the PTR RR
+  \item enable opportunistic TLS, using the STARTTLS mechanism on port 25
+  \item Implicit TLS on port 465 may be offered additionally
+  \item use server and client certificates (most server certificates are client
+    certificates as well)
+  \item either the common name or at least an alternate subject name of the
+    certificate shall match the PTR RR (client mode) or the MX RR (server mode)
   \item do not use self signed certificates
-\end{itemize*}
-
-For SMTP client mode we additionally recommend:
-\begin{itemize*}
-  \item the hostname used as HELO must match the PTR RR
-  \item setup a client certificate (most server certificates are client certificates as well)
-  \item either the common name or at least an alternate subject name of your certificate must match the PTR RR
-  \item do not modify the cipher suite for client mode
+  \item accept all cipher suites, as the alternative would be to fall back to
+    cleartext transmission
+  \item an execption to the last sentence is that MTAs \textit{MUST NOT} 
+    enable SSLv2 protocol support, due to the DROWN attack\footnote{\url{https://drownattack.com/drown-attack-paper.pdf}}.
 \end{itemize*}
 
 For MSA operation we recommend:
 \begin{itemize*}
-  \item listen on submission port 587
+  \item listen on submission port 587 with mandatory STARTTLS
+  \item optionally listen on port 465 with Implicit TLS
   \item enforce SMTP AUTH even for local networks
-  \item do not allow SMTP AUTH on unencrypted connections
-  \item optionally use the recommended cipher suites if (and only if) all your connecting MUAs support them
+  \item ensure that SMTP AUTH is not allowed on unencrypted connections
+  \item only use the recommended cipher suites if all connecting MUAs support them
 \end{itemize*}
 
-
-% Note that (with the exception of MSA mode), it might be better to allow any cipher suite -- since any encryption is better than no encryption when it comes to opportunistic TLS.
-
-We strongly recommend to allow all cipher suites for anything but MSA
-mode, because the alternative is plain text transmission.
+For MDA operation we recommend:
+\begin{itemize*}
+  \item listen on the protocol port (143 for IMAP, 110 for POP3) with mandatory
+    STARTTLS
+  \item optionally listen on Implicit TLS ports (993 for IMAPS, 995 for POP3S)
+  \item enforce authentication even for local networks
+  \item make sure that authentication is not allowed on unencrypted connections
+  \item use the recommended cipher suites if all connecting MUAs support them
+  \item turn off SSLv2 (DROWN attack\footnote{\url{https://drownattack.com/drown-attack-paper.pdf}})
+\end{itemize*}
 
 %% ----------------------------------------------------------------------
 \subsection{Dovecot}
@@ -49,26 +80,32 @@ mode, because the alternative is plain text transmission.
 
 \subsubsection{Tested with Version}
 \begin{itemize*}
-  \item Dovecot 2.1.7, Debian Wheezy (without ``ssl\_prefer\_server\_ciphers'' setting)
+  \item Dovecot 2.1.7, Debian Wheezy (without: ``\texttt{ssl\_prefer\_server\_ciphers}``)
   \item Dovecot 2.2.9, Debian Jessie
-  \item 2.0.19apple1 on OS X Server 10.8.5 (without ``ssl\_prefer\_server\_ciphers'' setting)
+  \item Dovecot 2.2.13, Debian 8.2 Jessie
+  \item Dovecot 2.0.19apple1 on OS X Server 10.8.5 (without: ``\texttt{ssl\_prefer\_server\_ciphers}``)
   \item Dovecot 2.2.9 on Ubuntu 14.04 trusty
+  \item Dovecot 2.2.31 on Ubuntu 16.04.3 LTS
 \end{itemize*}
 
 \subsubsection{Settings}
 % Example: http://dovecot.org/list/dovecot/2013-October/092999.html
 
-\configfile{10-ssl.conf}{48-55}{Dovecot SSL configuration}
+\configfile{10-ssl.conf}{48-64}{Dovecot SSL configuration}
 
 \subsubsection{Additional info}
 Dovecot 2.0, 2.1: Almost as good as dovecot 2.2. Dovecot does not ignore unknown configuration parameters. Does not support
 ssl\_prefer\_server\_ciphers
 
 \subsubsection{Limitations}
-Dovecot currently does not support disabling TLS compression. Furthermore, DH
-parameters greater than 1024bit are not supported. The most recent version
-2.2.7 of Dovecot implements configurable DH parameter length
-\footnote{\url{http://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0}}.
+\begin{itemize}
+	\item Dovecot <2.2.14 does not support disabling TLS compression.\\ 
+		{\(\geq\)2.2.14}\footnote{\url{http://www.dovecot.org/doc/NEWS-2.2}} 
+		use: \texttt{ssl\_options = no\_compression}
+	\item Dovecot <2.2.7 uses fixed DH parameters.\\
+		{\(\geq\)2.2.7}\footnote{\url{http://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0}} 
+		greater DH-Parameters are supported: \texttt{ssl\_dh\_parameters\_length = 2048}. 
+\end{itemize}
 
 %\subsubsection{Justification for special settings (if needed)}
 
@@ -85,7 +122,19 @@ parameters greater than 1024bit are not supported. The most recent version
 % describe here or point the admin to tools (can be a simple footnote or \ref{} to  the tools section) which help the admin to test his settings.
 \begin{lstlisting}
 openssl s_client -crlf -connect SERVER.TLD:993
+openssl s_client -crlf -connect SERVER.TLD:995
+openssl s_client -crlf -starttls imap -connect SERVER.TLD:143
+openssl s_client -crlf -starttls pop3 -connect SERVER.TLD:110
 \end{lstlisting}
+
+SSLyze\footnote{\url{https://github.com/nabla-c0d3/sslyze/releases}} offers scanning for common vulnerabilities and displays Protocols and Cipher-Suites.
+\begin{lstlisting}
+sslyze.exe --regular SERVER.TLD:993
+sslyze.exe --regular SERVER.TLD:995
+sslyze.exe --regular --starttls=imap SERVER.TLD:143
+sslyze.exe --regular --starttls=pop3 SERVER.TLD:110
+\end{lstlisting}
+
 
 
 %% ----------------------------------------------------------------------
@@ -143,11 +192,20 @@ openssl s_client -crlf -connect SERVER.TLD:993
 
 \subsubsection{Tested with Versions}
 \begin{itemize*}
-  \item Postfix 2.9.6, Debian Wheezy
+  \item Postfix 2.9.6, Debian Wheezy with OpenSSL 1.0.1e
+  \item Postfix 2.11.0 on Ubuntu 14.04.02 with OpenSSL 1.0.1f
+  \item Postfix 3.1.0 on Ubuntu 16.04.3 LTS
 \end{itemize*}
 
 
 \subsubsection{Settings}
+
+Postfix has five internal lists of ciphers, and the possibility to switch
+between those with \emph{smtpd\_tls\_ciphers}. However, we leave this at its
+default value for server to server connections, as many mail servers only
+support outdated protocols and ciphers. We consider bad encryption still better
+than plain text transmission. For connections to MUAs, TLS is mandatory and the
+ciphersuite is modified.
 
 %% I (cm) consider the generation of own DH parameters to be voodoo until
 %% someone can explain the contrary. They are, after all, public, and
@@ -180,18 +238,19 @@ openssl s_client -crlf -connect SERVER.TLD:993
 %% \end{lstlisting}
 
 \paragraph{MX and SMTP client configuration:}
-As discussed in section \ref{subsection:smtp_general}, because of opportunistic encryption we do not
-restrict the list of ciphers. There are still some steps needed to
-enable TLS, all in \verb|main.cf|:
+As discussed in section \ref{subsection:smtp_general}, because of opportunistic
+encryption we do not restrict the list of ciphers or protocols for communication
+with other mail servers to avoid transmission in plain text. There are still
+some steps needed to enable TLS, all in \verb|main.cf|:
 
-\configfile{main.cf}{22-33}{Opportunistic TLS in Postfix}
+\configfile{main.cf}{20-31}{Opportunistic TLS in Postfix}
 
 \paragraph{MSA:}
-For the MSA \verb|smtpd| process, we first define the ciphers that are
-acceptable for the ``mandatory'' security level, again in
-\verb|main.cf|:
+For the MSA \verb|smtpd| process which communicates with mail clients, we first
+define the ciphers that are acceptable for the ``mandatory'' security level,
+again in \verb|main.cf|:
 
-\configfile{main.cf}{35-37}{MSA TLS configuration in Postfix}
+\configfile{main.cf}{34-44}{MSA TLS configuration in Postfix}
 
 Then, we configure the MSA smtpd in \verb|master.cf| with two
 additional options that are only used for this instance of smtpd:
@@ -199,9 +258,8 @@ additional options that are only used for this instance of smtpd:
 \configfile{master.cf}{12-14}{MSA smtpd service configuration in Postfix}
 
 For those users who want to use EECDH key exchange, it is possible to customize this via:
-\configfile{main.cf}{38-38}{EECDH customization in Postfix}
+\configfile{main.cf}{45-45}{EECDH customization in Postfix}
 The default value since Postfix 2.8 is ``strong''.
-
 
 \subsubsection{Limitations}
 tls\_ssl\_options is supported from Postfix 2.11 onwards. You can
@@ -253,6 +311,7 @@ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 \subsubsection{Tested with Versions}
 \begin{itemize*}
   \item Exim 4.82, Debian Jessie
+  \item Exim 4.82, Ubuntu 14.04.2 with OpenSSL 1.0.1e
 \end{itemize*}
 
 
@@ -346,7 +405,7 @@ Do not limit ciphers without a very good reason. In the worst case you end up wi
 \paragraph{OpenSSL:}
 Exim already disables SSLv2 by default. We recommend to add
 \begin{lstlisting}
-openssl_options = +all +no_sslv2 +no_compression +cipher_server_preference
+openssl_options = +all +no_sslv2 +no_sslv3 +no_compression +cipher_server_preference
 \end{lstlisting}
 to the main configuration.
 
@@ -381,3 +440,116 @@ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 %\subsection{Exchange}
 
 %\todo{FIXME: write this section}
+
+%% ----------------------------------------------------------------------
+\subsection{Cisco ESA/IronPort}
+\subsubsection{Tested with Version}
+\begin{itemize*}
+  \item AsyncOS 7.6.1
+  \item AsyncOS 8.5.6
+  \item AsyncOS 9.0.0, 9.5.0, 9.6.0, 9.7.0
+\end{itemize*}
+
+\subsubsection{Settings}
+Import your certificate(s) using the WEBUI (Network -> Certificates).
+
+From AsyncOS 9.0 and up, SSL parameters for inbound SMTP, outbound SMTP and GUI access can be configured in one step via the WEBUI (System Administration -> SSL Configuration, see figure \ref{fig:ach_ironport_ssl_settings} on page \pageref{fig:ach_ironport_ssl_settings}). \\
+For all versions prior to 9.0, you have to connect to the CLI and configure the SSL parameters separately, as shown below using inbound SMTP as example.
+\begin{lstlisting}{foo}
+ironport.example.com> sslconfig
+sslconfig settings:
+  GUI HTTPS method:  sslv3tlsv1
+  GUI HTTPS ciphers: RC4-SHA:RC4-MD5:ALL
+  Inbound SMTP method:  sslv3tlsv1
+  Inbound SMTP ciphers: RC4-SHA:RC4-MD5:ALL
+  Outbound SMTP method:  sslv3tlsv1
+  Outbound SMTP ciphers: RC4-SHA:RC4-MD5:ALL
+	
+Choose the operation you want to perform:
+- GUI - Edit GUI HTTPS ssl settings.
+- INBOUND - Edit Inbound SMTP ssl settings.
+- OUTBOUND - Edit Outbound SMTP ssl settings.
+- VERIFY - Verify and show ssl cipher list.
+[]> inbound
+
+Enter the inbound SMTP ssl method you want to use.
+1. SSL v2.
+2. SSL v3
+3. TLS v1
+4. SSL v2 and v3
+5. SSL v3 and TLS v1
+6. SSL v2, v3 and TLS v1
+[5]> 3
+
+Enter the inbound SMTP ssl cipher you want to use.
+[RC4-SHA:RC4-MD5:ALL]> EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA
+
+sslconfig settings:
+  GUI HTTPS method:  sslv3tlsv1
+  GUI HTTPS ciphers: RC4-SHA:RC4-MD5:ALL
+  Inbound SMTP method:  tlsv1
+  Inbound SMTP ciphers: EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
+  Outbound SMTP method:  sslv3tlsv1
+  Outbound SMTP ciphers: RC4-SHA:RC4-MD5:ALL
+\end{lstlisting}
+Note that starting with AsyncOS 9.0 SSLv3 is disabled by default, whereas the default cipher set is still \texttt{RC4-SHA:RC4-MD5:ALL} (see figure \ref{fig:ach_ironport_ssl_settings} on page \pageref{fig:ach_ironport_ssl_settings}).
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/ach_ironport_ssl_settings.png}
+  \caption{Default SSL Settings}
+  \label{fig:ach_ironport_ssl_settings}
+\end{figure}
+
+After committing these changes in the CLI, you have to activate the use of TLS in several locations.
+
+For inbound connections, first select the appropriate certificate in the settings of each listener you want to have TLS enabled on (Network -> Listeners, see figure \ref{fig:ach_ironport_listener_cert} on page \pageref{fig:ach_ironport_listener_cert}). Afterwards, for each listener, configure all Mail Flow Policies which have their Connection Behavior set to ``Accept'' or ``Relay'' to at least prefer TLS (Mail Policies -> Mail Flow Policies, see figure \ref{fig:ach_ironport_mail_flow_tls} on page \pageref{fig:ach_ironport_mail_flow_tls}). \\
+It is recommended to also enable TLS in the default Mail Flow Policy, because these settings will be inherited by newly created policies, unless specifically overwritten. \\
+TLS can be enforced by creating a new Mail Flow Policy with TLS set to ``required'', creating a new Sender Group defining the addresses of the sending mail servers for which you want to enforce encryption (Mail Policies -> HAT Overview) and using this new Sender Group in conjunction with the newly created Mail Flow Policy. 
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/ach_ironport_listener_cert.png}
+  \caption{Listener Settings}
+  \label{fig:ach_ironport_listener_cert}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/ach_ironport_mail_flow_tls.png}
+  \caption{Mail Flow Policy Security Features}
+  \label{fig:ach_ironport_mail_flow_tls}
+\end{figure}
+
+TLS settings for outbound connections have to be configured within the Destination Controls (Mail Policies -> Destination Controls). Choose the appropriate SSL certificate within the global settings and configure TLS to be preferred in the default profile to enable it for all outbound connections. After these two steps the Destination Control overview page should look like figure \ref{fig:ach_ironport_dest_control} on page \pageref{fig:ach_ironport_dest_control}. 
+To enforce TLS for a specific destination domain, add an entry to the Destination Control Table and set ``TLS Support'' to ``required''.
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/ach_ironport_dest_control.png}
+  \caption{Destination Control overview}
+  \label{fig:ach_ironport_dest_control}
+\end{figure}
+
+\subsubsection{Limitations}
+All AsyncOS releases prior to version 9.5 use OpenSSL 0.9.8. Therefore TLS 1.2 is not supported in these versions and some of the suggested ciphers won't work. Starting with AsyncOS 9.5 TLS 1.2 is fully supported.\footnote{\url{http://www.cisco.com/c/dam/en/us/td/docs/security/esa/esa9-5/ESA_9-5_Release_Notes.pdf}, Changed Behaviour, page 4} You can check the supported ciphers on the CLI by using the option \texttt{verify} from within the \texttt{sslconfig} command:
+\begin{lstlisting}{foo}
+[]> verify
+
+Enter the ssl cipher you want to verify.
+[]> EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA
+
+DHE-RSA-CAMELLIA256-SHA SSLv3 Kx=DH       Au=RSA  Enc=Camellia(256) Mac=SHA1
+DHE-RSA-CAMELLIA128-SHA SSLv3 Kx=DH       Au=RSA  Enc=Camellia(128) Mac=SHA1
+DHE-RSA-AES256-SHA      SSLv3 Kx=DH       Au=RSA  Enc=AES(256)  Mac=SHA1
+DHE-RSA-AES128-SHA      SSLv3 Kx=DH       Au=RSA  Enc=AES(128)  Mac=SHA1
+CAMELLIA128-SHA         SSLv3 Kx=RSA      Au=RSA  Enc=Camellia(128) Mac=SHA1
+AES128-SHA              SSLv3 Kx=RSA      Au=RSA  Enc=AES(128)  Mac=SHA1
+\end{lstlisting}
+
+\subsubsection{How to test}
+\begin{lstlisting}
+openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
+\end{lstlisting}
+
+\FloatBarrier % the preceding section has several figures. Floating them too far away might get confusing for readers.

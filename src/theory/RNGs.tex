@@ -58,61 +58,6 @@ system. This can lead to situations where a daemon that is started at a
 time when entropy is low keeps this low-entropy situation for hours
 leading to predictable session keys~\cite{HDWH12}.
 
-\subsection{Linux}
-\label{subsec:RNG-linux}
-
-%\todo{Other architectures, BSD, Windows?}
-
-On Linux there are two devices that return random bytes when read; the
-\verb+/dev/random+ can block until sufficient entropy has been collected
-while \verb+/dev/urandom+ will not block and return whatever (possibly
-insufficient) entropy has been collected so far.
-
-Unfortunately most crypto implementations are using \verb+/dev/urandom+
-and can produce predictable random numbers if not enough entropy has
-been collected~\cite{HDWH12}.
-
-Linux supports the injection of additional entropy into the entropy pool
-via the device \verb+/dev/random+. On the one hand this is used for
-keeping entropy across reboots by storing output of /dev/random into a
-file before shutdown and re-injecting the contents during the boot
-process. On the other hand this can be used for running a secondary
-entropy collector to inject entropy into the kernel entropy pool.
-
-On Linux you can check how much entropy is available with the command:
-\begin{lstlisting}
-$ cat /proc/sys/kernel/random/entropy_avail
-\end{lstlisting}
-
-%% specifics for libraries
-%% Openssl uses /dev/urandom. See the paper: https://factorable.net/weakkeys12.conference.pdf (section 5.2)
-%% What about other libs? 
-%% What about other OSes? 
-
-
-\subsection{Recommendations}
-
-To avoid situations where a newly deployed server doesn't have enough
-entropy it is recommended to generate keys (e.g. for SSL or SSH) on
-a system with a sufficient amount of entropy available and transfer the generated keys
-to the server.  This is especially advisable for small embedded devices
-or virtual machines.
-
-For embedded devices and virtual machines deploying additional userspace
-software that generates entropy and feeds this to kernel entropy pool
-(e.g. by writing to \verb+/dev/random+ on Linux) is recommended. Note
-that only a process with root rights can update the entropy counters in the
-kernel; non-root or user processes can still feed entropy to the pool but
-cannot update the counters~\cite{Wikipedia:/dev/random}.
-
-For Linux the \verb+haveged+
-implementation~\cite{HAV13a} based on the HAVEGE~\cite{SS03}
-strong random number generator currently looks like the best choice. It
-can feed its generated entropy into the kernel entropy pool and recently
-has grown a mechanism to monitor the quality of generated random
-numbers~\cite{HAV13b}. The memory footprint may be too high for small
-embedded devices, though.
-
 For systems where -- during the lifetime of the keys -- it is expected
 that low-entropy situations occur, RSA keys should be preferred over DSA
 keys: For DSA, if there is ever insufficient entropy at the time keys

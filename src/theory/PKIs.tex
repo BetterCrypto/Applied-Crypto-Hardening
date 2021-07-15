@@ -15,7 +15,7 @@ certificates, and the CA system has a big list of possible and real
 problems which are summarized in section \ref{sec:hardeningpki} and~\cite{https13}.
 
 The Web of Trust is a decentralized system where people sign each
-others keys, so that there is a high chance that there is a ``trust
+other's keys, so that there is a high chance that there is a ``trust
 path'' from one key to another. This is used with PGP keys, and while
 it avoids most of the problems of the CA system, it is more
 cumbersome.
@@ -96,7 +96,7 @@ following commands on a Debian system:
 % sudo ./CA.pl -newca
 \end{lstlisting}
 
-Answer the questions according to your setup. Now that you have configured your basic settings and 
+Answer the questions according to your setup. Now that you have configured your basic settings and
 issued a new root certificate, you can issue new certificates as follows:
 
 \begin{lstlisting}
@@ -149,8 +149,8 @@ Therefore several security enhancements were introduced by different
 organizations and vendors~\cite{tschofenig-webpki}. Currently two
 methods are used, DANE~\cite{rfc6698} and Certificate
 Pinning~\cite{draft-ietf-websec-key-pinning}. Google recently proposed
-a new system to detect malicious CAs and certificates  called Certificate 
-Transparency~\cite{certtransparency}.
+a new system to detect malicious CAs and certificates called Certificate
+Transparency~\cite{certtransparency}. In addition, RFC 6844 describes Certification Authorization Records, a mechanism for domain name owners to signal which Certificate Authorities are authorized to issue certificates for their domain.
 
 % \subsubsection{DANE}
 % \label{sec:dane}
@@ -158,7 +158,61 @@ Transparency~\cite{certtransparency}.
 % \subsubsection{Certificate Pinning}
 % \label{sec:certpinning}
 
+\subsection{Certification Authorization Records}
+\label{sec:caarecords}
 
+RFC 6844 describes Certification Authorization Records, a mechanism for domain name owners to signal which Certificate Authorities are authorized to issue certificates for their domain.
+ 
+When a CAA record is defined for a particular domain, it specifies that the domain owner requests Certificate Authorities to validate any request against the CAA record. If the certificate issuer is not listed in the CAA record, it should not issue the certificate.
+ 
+The RFC also permits Certificate Evaluators to test an issued certificate against the CAA record, but should exercise caution, as the CAA record may change during the lifetime of a certificate, without affecting its validity.
+ 
+CAA also supports an iodef property type which can be requested by a Certificate Authority to report certificate issue requests which are inconsistent with the issuer’s Certificate Policy.
+
+\subsubsection{Configuration of CAA records}
+\label{sec:pki:caarecords:configuration}
+ 
+BIND supports CAA records as of version 9.9.6.
+ 
+A CAA record can be configured by adding it to the zone file:
+
+\begin{lstlisting}
+$ORIGIN example.com
+       CAA 0 issue "ca1.example"
+       CAA 0 iodef "mailto:security@example.com"
+\end{lstlisting}
+ 
+If your organization uses multiple CA’s, you can configure multiple records:
+
+\begin{lstlisting} 
+      CAA 0 issue "ca1.example"
+      CAA 0 issue "ca2.example"
+\end{lstlisting}
+ 
+“ca1.example” and “ca2.example” are unique identifiers for the CA you plan on using. These strings can be obtained from your Certificate Authority, and typically are its top level domain. An example is “letsencrypt.org” for the Let’s Encrypt CA operated by the Internet Security Research Group.
+ 
+Knot-DNS supports CAA records as of version 2.2.0.
+ 
+\subsubsection{Validation of CAA records}
+\label{sec:pki:caarecords:validation}
+ 
+Once a CAA record is deployed, it can be validated using the following dig query:
+ 
+\begin{lstlisting} 
+user@system:~$ dig CAA google.com
+ 
+; <<>> DiG 9.10.3-P4-Debian <<>> CAA google.com
+ 
+;; ANSWER SECTION:
+google.com.          3600 IN   CAA  0 issue "symantec.com"
+\end{lstlisting}
+
+On older versions of Dig, which do not support CAA records, you can query the record type manually:
+
+\begin{lstlisting} 
+dig +short -t TYPE257 google.com
+\# 19 0005697373756573796D616E7465632E636F6D
+\end{lstlisting}
 
 % This section deals with settings related to trusting CAs. However,
 % our main recommendations for PKIs is: if you are able to run your

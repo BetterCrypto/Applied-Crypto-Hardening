@@ -2,13 +2,13 @@
 \gdef\currentsectionname{GPG}
 \gdef\currentsubsectionname{GnuPG}
 
-The OpenPGP protocol
-\footnote{\url{https://tools.ietf.org/search/rfc4880}}
- uses asymmetric encryption to protect a session key which is used to encrypt a message. Additionally, it signs messages via asymmetric encryption and hash functions. %% what? - azet
-Research on SHA-1 conducted back in 2005\footnote{\url{https://www.schneier.com/blog/archives/2005/02/sha1\_broken.html}} has made clear that collision attacks are a real threat to the security of the SHA-1 hash function. PGP settings should be adapted to avoid using SHA-1.
+The OpenPGP protocol\footnote{\url{https://tools.ietf.org/search/rfc4880}} defines a set of asymmetric- and symmetric encryption algorithms, signature methods and compression protocols. GnuPG\footnote{\url{https://gnupg.org/}}, a FOSS implementation of the OpenPGP standard, is widely used for mail encryption.
+ 
+GnuPG signs a message, encrypts it symmetrically and encrpts the symmetric key and the hash with Bob's public key asymmetrically.
 
+Research on SHA-1 conducted back in 2005\footnote{\url{https://www.schneier.com/blog/archives/2005/02/sha1\_broken.html}} as well as the first practical successful collision in early 2017\footnote{\url{https://shattered.io/}} has made clear that collision attacks are a real threat to the security of the SHA-1 hash function. Since SHA-1 is defined as a must implementation by the OpenPGP specification, GnuPG is still using it. Currently settings should be adapted to preferably avoid using SHA-1. 
 
-When using PGP, there are a couple of things to take care of:
+When using GnuPG, there are a couple of things to take care of:
 \begin{itemize*}
   \item keylengths (see section \ref{section:keylengths})
   \item randomness (see section \ref{section:RNGs})
@@ -16,16 +16,33 @@ When using PGP, there are a couple of things to take care of:
   \item preference of hash function (see section \ref{section:CipherSuites})
 \end{itemize*}
 
-Properly dealing with key material, passphrases and the web-of-trust is outside of the scope of this document. The GnuPG website\footnote{\url{http://www.gnupg.org/}} has a good tutorial on PGP.
+Properly dealing with key material, passphrases and the web-of-trust is outside of the scope of this document. The GnuPG
+website\footnote{\url{http://www.gnupg.org}} has a good tutorial on GnuPG.
 
-This \href{https://www.debian-administration.org/users/dkg/weblog/48}{Debian How-to}\footnote{\url{https://www.debian-administration.org/users/dkg/weblog/48}} is a great resource on upgrading your old PGP key as well as on safe default settings. This section is built based on the Debian How-to.
+After 31 December 2017 GnuPG version 2.0.x is no longer supported and shall not be used
+anymore\footnote{\url{https://lists.gnupg.org/pipermail/gnupg-announce/2017q3/000413.html}}. Use the new long term
+version 2.1 instead.
 
 \subsubsection{Hashing}
-Avoid SHA-1 in GnuPG. Edit \$HOME/.gnupg/gpg.conf:
+Avoid SHA-1 by preferring better hashing methods. GnuPG. Edit \$HOME/.gnupg/gpg.conf:
 
 \configfile{gpg.conf}{208-210}{Digest selection in GnuPG}
 
-Before you generate a new PGP key, make sure there is enough entropy available (see subsection \ref{subsec:RNG-linux}).
+\subsection{Key Generation}
+\gdef\currentsectionname{GPG}
+\gdef\currentsubsectionname{GnuPG}
+Because of lack of forward secrecy \ref{subsection:PFS} in OpenPGP it is preferable to use large asymmetric keys for long term
+communication protection. A RSA key of 4096 bits should provide enough confidentiality for the next 10 years\footnote{\url{https://www.keylength.com}}.
+
+\configfile{new-key-generation.txt}{}{New key generation with GnuPG version 2.1}
+
+\configfile{params.txt}{}{Parameters for key generation with GnuPG version 2.1}
+
+The preferences parameters S9 to Z1 correspond to AES256, CAMELLIA256, AES192, CAMELLIA192, AES, CAMELLIA128, TWOFISH,
+SHA512, SHA384, SHA256, BZIP2, ZLIB and ZIP. The parameters 3DES, SHA-1 and uncompressed are set automatically by GnuPG.
+
+\subsection{ECC - Elliptic Curve Cryptography}
+Since the release of GnuPG version 2.1 end-2014\footnote{\url{https://www.gnupg.org/faq/whats-new-in-2.1.html}} ECC is supported. Older versions though are still widely used therefore ECC is not yet applicable in practice. 
 
 %\subsubsection{PGP / GPG Operations}
 

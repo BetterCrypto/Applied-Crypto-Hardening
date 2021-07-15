@@ -1,11 +1,17 @@
-%%---------------------------------------------------------------------- 
+%%----------------------------------------------------------------------
 \warningbox{%
 Please be advised that any change in the SSH-Settings of your server might cause problems connecting to the server or starting/reloading the SSH-Daemon itself.
 So every time you configure your SSH-Settings on a remote server via SSH itself, ensure that you have a second open connection to the server, which you can use to reset or adapt your changes!
 }
 \subsection{OpenSSH}
 
-\subsubsection{Tested with Version} OpenSSH 6.6p1 (Gentoo)
+\subsubsection{Tested with Version}
+\begin{itemize*}
+    \item OpenSSH 6.6p1 (Gentoo)
+    \item OpenSSH 6.6p1-2 on Ubuntu 14.04.2 LTS
+    \item OpenSSH 7.2p2 on Ubuntu 16.04.3 LTS
+\end{itemize*}
+
 \subsubsection{Settings}
 \configfile{6.6/sshd_config}{9-14,28-29,45-45,65-67}{Important OpenSSH 6.6 security
 settings}
@@ -13,7 +19,7 @@ settings}
 
 \subsubsection{Tested with Version} OpenSSH 6.5 (Debian Jessie)
 \subsubsection{Settings}
-\configfile{6.5/sshd_config}{9-14,28-29,45-45,65-67}{Important OpenSSH 6.4 security
+\configfile{6.5/sshd_config}{9-14,28-29,45-45,65-67}{Important OpenSSH 6.5 security
 settings}
 
 \subsubsection{Tested with Version} OpenSSH 6.0p1 (Debian wheezy)
@@ -28,7 +34,7 @@ support for DSA keys stronger than 1024bit
 \footnote{\url{https://bugzilla.mindrot.org/show_bug.cgi?id=1647}} which is far
 below current standards (see section \ref{section:keylengths}). Legacy systems
 can use this configuration and simply omit unsupported ciphers, key exchange
-algorithms and MACs.  
+algorithms and MACs.
 
 %\subsubsection{Justification for special settings (if needed)}
 \subsubsection{References}
@@ -41,7 +47,7 @@ $ ssh -vvv myserver.com
 \end{lstlisting}and observe the key exchange in the output.
 
 
-%%---------------------------------------------------------------------- 
+%%----------------------------------------------------------------------
 \subsection{Cisco ASA}
 \subsubsection{Tested with Versions}
 \begin{itemize*}
@@ -69,7 +75,7 @@ $ ssh -vvv myserver.com
 \end{lstlisting}and observe the key exchange in the output.
 
 
-%---------------------------------------------------------------------- 
+%----------------------------------------------------------------------
 \subsection{Cisco IOS}
 \subsubsection{Tested with Versions}
 \begin{itemize*}

@@ -1,3 +1,5 @@
+First off: you are welcome to help us! Every reviewer, committer and person interested in discussing our document and changes is a valuable addition to the project. Everybody is invited to work on this document and share their experience and expertise with us or ask questions if something isn't clear to them. Please read [CONTRIBUTING](CONTRIBUTING.md) document for more information.
+
 # HOW TO USE THIS
 
 ## git.bettercrypto.org

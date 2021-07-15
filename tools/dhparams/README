@@ -1,8 +1,10 @@
-Tools to convert the RFC-defined IKE DH groups into OpenSSL compatible
-PEM files that we can distribute.
+Tools to convert the RFC-defined IKE DH groups into OpenSSL and OpenSSH
+compatible PEM and moduli files that we can distribute.
 
-The files in this directory have been generated (as described below)
-from the RFCs and compared with the ones in Exim's "std-crypto.c".
+The files in this directory have been generated (as described below) from the
+RFCs.  The PEM files have been compared with the ones in Exim's
+"std-crypto.c".  The OpenSSH moduli files have been checked using `ssh-keygen`
+with the `-T` option.
 
 Prerequisite: gen_pkcs3 from the Exim sources, which we don't include
 here due to duplication and licensing issues (ACH is under CC, Exim
@@ -36,4 +38,4 @@ Works as follows:
 
 - run "make" (and make sure gen_pkcs3 is in $PATH)
 
-- collect <group>.pem files
+- collect <group>.pem files, moduli.openssh file

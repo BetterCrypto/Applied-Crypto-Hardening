@@ -162,12 +162,20 @@
 	SSLProtocol All -SSLv2 -SSLv3
 	SSLHonorCipherOrder On
 	SSLCompression off
+
 	# Add six earth month HSTS header for all users...
 	Header always set Strict-Transport-Security "max-age=15768000"
 	# If you want to protect all subdomains, use the following header
 	# ALL subdomains HAVE TO support HTTPS if you use this!
 	# Strict-Transport-Security: "max-age=15768000 ; includeSubDomains"
-	SSLCipherSuite 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA384:EECDH+aRSA+SHA256:EECDH:+CAMELLIA256:+AES256:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!ECDSA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA'
 
+	# HTTP Public Key Pinning (HPKP) for 90 days (60*60*24*90=7776000)
+	# At least use one Backup-Key and/or add whole CA, think of Cert-Updates!
+	Header always set Public-Key-Pins "pin-sha256=\"YOUR_HASH=\"; pin-sha256=\"YOUR_BACKUP_HASH=\"; max-age=7776000; report-uri=\"https://YOUR.REPORT.URL\""
+
+	SSLCipherSuite 'EDH+CAMELLIA:EDH+aRSA:EECDH+aRSA+AESGCM:EECDH+aRSA+SHA256:EECDH:+CAMELLIA128:+AES128:+SSLv3:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!DSS:!RC4:!SEED:!IDEA:!ECDSA:kEDH:CAMELLIA128-SHA:AES128-SHA'
+
+	
+	
 </VirtualHost>
 </IfModule>

@@ -141,7 +141,7 @@ Communities can be found in the ``IPSEC VPN'' tab of SmartDashboard.
   \label{fig:checkpoint_1}
 \end{figure}
 
-Either chose one of the encryption suites in the properties dialog
+Either choose one of the encryption suites in the properties dialog
 (figure \ref{fig:checkpoint_1}), or proceed to
 ``Custom Encryption...'', where you can set encryption and hash for
 Phase 1 and 2 (figure \ref{fig:checkpoint_2}).
@@ -195,13 +195,15 @@ Please note that these settings restrict the available algorithms for
 
 %% cipherstrings current 2013-12-09
 % ---------------------------------------------------------------------- 
+\FloatBarrier % the preceding section has several figures. Floating them too far away might get confusing for readers.
+
 \subsection{OpenVPN}
 
 \subsubsection{Tested with Versions}
 \begin{itemize*}
-  \item OpenVPN 2.3.2 from Debian ``wheezy-backports'' linked against openssl (libssl.so.1.0.0) 
-  \item OpenVPN 2.2.1 from Debian Wheezy linked against openssl
-    (libssl.so.1.0.0) 
+  \item OpenVPN 2.3.10 from Ubuntu Xenial 16.04.1 LTS linked against openssl (libssl.so.1.0.0)
+  \item OpenVPN 2.3.2 from Debian ``wheezy-backports'' linked against openssl (libssl.so.1.0.0)
+  \item OpenVPN 2.2.1 from Debian Wheezy linked against openssl (libssl.so.1.0.0)
   \item OpenVPN 2.3.2 for Windows
 \end{itemize*}
 
@@ -272,6 +274,27 @@ The default for renegotiation of encryption keys is one hour
 transfer huge amounts of data over your tunnel, you might consider
 configuring a shorter interval, or switch to a byte- or packet-based
 interval (\verb|reneg-bytes| or \verb|reneg-pkts|).
+
+\paragraph{Insecure ciphers}
+
+Sweet32\footnote{\url{https://sweet32.info/}} is an attack on 64-bit block
+ciphers, such as \verb|3DES| and \verb|Blowfish| in OpenVPN. The following
+ciphers are affected, and should no longer be used:
+\begin{itemize*}
+  \item BF-*
+  \item DES* (including 3DES variants)
+  \item RC2-*
+\end{itemize*}
+The following ciphers are not affected:
+\begin{itemize*}
+  \item AES-*
+  \item CAMELLIA-*
+  \item SEED-*
+\end{itemize*}
+According to mitigation section on Sweet32 website\footnote{\url{https://sweet32.info/\#impact}}
+users users should change the cipher from the DES or Blowfish to AES
+(\verb|cipher AES-128-CBC|). If cipher change is not possible users can
+mitigate the attack by forcing frequent rekeying (\verb|reneg-bytes 64000000|).
 
 \paragraph{Fixing ``easy-rsa''}
 When installing an OpenVPN server instance, you are probably using
@@ -488,12 +511,12 @@ and look for 'IKE algorithms wanted/found' and 'ESP algorithms wanted/loaded'.
 
 \paragraph*{Defaults}\mbox{}\\
 tinc uses 2048 bit RSA keys, Blowfish-CBC, and SHA1 as default settings and suggests the usage of CBC mode ciphers.
-Any key length up to 8196 is supported and it does not need to be a power of two. OpenSSL Ciphers and Digests are supported by tinc.
+Any key length up to 8192 is supported and it does not need to be a power of two. OpenSSL Ciphers and Digests are supported by tinc.
 
 \paragraph*{Settings}\mbox{}\\
 Generate keys with
 \begin{lstlisting}[breaklines]
-tincd -n NETNAME -K8196
+tincd -n NETNAME -K8192
 \end{lstlisting}
 Old keys will not be deleted (but disabled), you have to delete them manually. Add the following lines to your tinc.conf on all machines
 \configfile{tinc.conf}{3-4}{Cipher and digest selection in tinc}

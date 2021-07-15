@@ -105,6 +105,62 @@ Disabling protocols and ciphers in a forward proxy environment could lead to une
 
 
 %% ---------------------------------------------------------------------- 
+\subsection{HAProxy}
+% See http://www.haproxy.org/
+% See https://timtaubert.de/blog/2014/11/the-sad-state-of-server-side-tls-session-resumption-implementations/
+% See http://cbonte.github.io/haproxy-dconv/configuration-1.5.html#5.1-npn
+% See http://cbonte.github.io/haproxy-dconv/configuration-1.5.html#3.2-tune.ssl.cachesize
+% See https://kura.io/2014/07/02/haproxy-ocsp-stapling/
+% See https://kura.io/2015/01/27/hpkp-http-public-key-pinning-with-haproxy/
+
+HAProxy can be used as loadbalancer and proxy for TCP and HTTP-based applications. Since version 1.5 it supports SSL and IPv6.
+
+\subsubsection{Tested with Versions}
+\begin{itemize*}
+  \item HAProxy 1.5.11 with OpenSSL 1.0.1e on Debian Wheezy
+\end{itemize*}
+
+\subsubsection{Settings}
+\configfile{haproxy.cfg}{1-4}{global configuration}
+\configfile{haproxy.cfg}{21-25}{frontend configuration}
+\configfile{haproxy.cfg}{27-33}{backend configuration}
+
+\subsubsection{Additional Settings}
+\paragraph*{Enable \ac{NPN} Support:}
+~
+\begin{lstlisting}
+	bind *:443 ssl crt server.pem npn "http/1.1,http/1.0"
+\end{lstlisting}
+Append the npn command in the frontend configuration of HAProxy.
+
+\paragraph*{Enable OCSP stapling:}
+~
+HAProxy supports since version 1.5.0 OCSP stapling. To enable it you have to generate the OCSP singing file in the same folder, with the same name as your certificate file plus the extension .ocsp. (e.g. your certificate file is named server.crt then the OCSP file have to be named server.crt.oscp)\\
+To generate the OCSP file use these commands:
+\begin{lstlisting}
+openssl x509 -in your.certificate.crt -noout -ocsp_uri # <- get your ocsp uri
+openssl ocsp -noverify -issuer ca.root.cert.crt -cert your.certificate.crt -url "YOUR OCSP URI" -respout your.certificate.crt.ocsp
+\end{lstlisting}
+Reload HAProxy and now OCSP stapling should be enabled.\\
+Note: This OCSP signature file is only valid for a limited time. The simplest way of updating this file is by using cron.daily or something similar.
+
+\paragraph*{Enable \ac{HPKP}:}
+~
+Get certificate informations:
+\begin{lstlisting}
+openssl x509 -in server.crt -pubkey -noout | openssl rsa -pubin -outform der | openssl dgst -sha256 -binary | base64
+\end{lstlisting}
+Then you append the returned string in the HAProxy configuration. Add the following line to the backend configuration:
+\begin{lstlisting}
+rspadd Public-Key-Pins:\ pin-sha256="YOUR_KEY";\ max-age=15768000;\ includeSubDomains
+\end{lstlisting}
+Reload HAProxy and HPKP should now be enabled.\\
+Note: Keep in mind to generate a backup key in case of problems with your primary key file.
+
+\subsubsection{How to test}
+See appendix \ref{cha:tools}
+
+%% ---------------------------------------------------------------------- 
 \subsection{Pound}
 % See http://www.apsis.ch/pound
 % See https://help.ubuntu.com/community/Pound

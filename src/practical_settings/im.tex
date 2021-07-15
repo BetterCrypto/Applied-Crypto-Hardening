@@ -18,37 +18,65 @@ The last point being out-of-scope for this section, we will only cover the first
 
 \subsubsection{Tested with Versions}
 \begin{itemize*}
-  \item Debian Wheezy 2.1.10-4+deb7u1
+  \item ejabberd 14.12, Debian 7 Wheezy
+  \item ejabberd 14.12, Ubuntu 14.04 Trusty
+  \item ejabberd 15.03, Ubuntu 14.04 Trusty
+  \item ejabberd 16.01, Ubuntu 14.04 Trusty
 \end{itemize*}
 
 \subsubsection{Settings}
 ejabberd is one of the popular Jabber servers. In order to be compliant
 with the manifesto, you should adapt your configuration\footnote{\url{http://www.process-one.net/docs/ejabberd/guide_en.html}}:
 
-\configfile{ejabberd.cfg}{108-109,111-111,120-126,172-172,179-179,184-184}{%
+\configfile{14.12/ejabberd.yml}{104-107,113-114,119-119,123-123,125-125,127-127,134-135,138-140,144-146,195-195,203-203,207-207,210-213}{%
   TLS setup for ejabberd}
 % 
 \subsubsection{Additional settings}
+It is possible to explicitly specify a cipher string for TLS connections.
+\configfile{14.12/ejabberd.yml}{104-107,113-114,119-119,123-123,125-125,127-127,134-135,138-138,142-142,144-146,195-195,203-203,207-207,210-213,217-217}{Specifying a cipher order and enforcing it}
+
+Note that we are setting the SSL option \texttt{cipher\_server\_preference}. This enforces our cipher order when negotiating which ciphers are used, as the cipher order of some clients chooses weak ciphers over stronger ciphers.\footnote{\url{https://blog.thijsalkema.de/me/blog//blog/2013/09/02/the-state-of-tls-on-xmpp-3/}}
+
+Starting with version 15.03\footnote{Early versions seem to have a few bugs - although officially supported, it did not work in tests with version 15.06. Version 16.01 is confirmed to work.}, it is possible to use custom Diffie-Hellman-Parameters. This allows us to negotiate stronger Diffie-Hellman-keys, and also helps us avoid problems with using common Diffie-Hellman-Parameters.\footnote{\url{https://weakdh.org}} You can generate your own parameter file by running:
+\begin{lstlisting}
+openssl dhparam -out dhparams.pem 4096
+\end{lstlisting}
+
+By default, ejabberd provides an administration website (look for the ejabberd\_http module). Enable TLS protection for it like this:
+
+\configfile{14.12/ejabberd.yml}{177-178,181-183,185-185,187-188}{Adding TLS to the web interface}
+
+\subsubsection{Tested with Versions}
+\begin{itemize*}
+\item Debian Wheezy 2.1.10-4+deb7u1
+\end{itemize*}
+\subsubsection{Settings}
+Older versions of ejabberd use a different configuration file syntax.
+In order to be compliant with the manifesto, you should adapt your configuration\footnote{\url{http://www.process-one.net/docs/ejabberd/guide_en.html}} as follows:
+\configfile{2.1.10/ejabberd.cfg}{108-109,111-111,120-126,172-172,179-179,184-184}{
+TLS setup for ejabberd}
+%
+\subsubsection{Additional settings}
 Older versions of ejabberd ($ < $ 2.0.0) need to be patched\footnote{\url{http://hyperstruct.net/2007/06/20/installing-the-startcom-ssl-certificate-in-ejabberd/}} to be able to parse all of the certificates in the CA chain.
-
-Newer versions of ejabberd now support specifying the cipher string in the config file. See the commit message: \url{https://github.com/processone/ejabberd/commit/1dd94ac0d06822daa8c394ea2da20d91c8209124}. However, this change did not yet make it into the stable release at the time of this writing. 
-
+Specifying a custom cipher string is only possible starting with version 13.12 (see configuration for version 14.12 above).
 
 \subsubsection{References}
 
-\todo{ADD references!!}
+\begin{itemize}
+\item \href{http://www.process-one.net/en/ejabberd/docs/}{The ejabberd documentation: http://www.process-one.net/en/ejabberd/docs/}
+\end{itemize}
 
 
 \subsubsection{How to test}
 \begin{itemize*}
-  \item \url{https://xmpp.net} is a practical website to test Jabber server configurations.
+  \item \url{https://xmpp.net} is a useful website to test Jabber server configurations.
 \end{itemize*}
 
 
 %%---------------------------------------------------------------------- 
 \subsection{Chat privacy - Off-the-Record Messaging (OTR)}
 
-The OTR protocol works on top of the Jabber protocol\footnote{\url{https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html}}.  
+The OTR protocol works on top of the Jabber protocol\footnote{\url{https://otr.cypherpunks.ca/Protocol-v3-4.1.1.html}}.
 It adds to popular chat clients (Adium, Pidgin...) the following properties for encrypted chats:
 \begin{itemize*}
   \item Authentication
