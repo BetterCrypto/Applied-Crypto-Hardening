@@ -89,7 +89,7 @@ For MDA operation we recommend:
 \end{itemize*}
 
 \subsubsection{Settings}
-% Example: http://dovecot.org/list/dovecot/2013-October/092999.html
+% Example: https://dovecot.org/list/dovecot/2013-October/092999.html
 
 \configfile{10-ssl.conf}{48-64}{Dovecot SSL configuration}
 
@@ -100,10 +100,10 @@ ssl\_prefer\_server\_ciphers
 \subsubsection{Limitations}
 \begin{itemize}
 	\item Dovecot <2.2.14 does not support disabling TLS compression.\\
-		{\(\geq\)2.2.14}\footnote{\url{http://www.dovecot.org/doc/NEWS-2.2}}
+		{\(\geq\)2.2.14}\footnote{\url{https://www.dovecot.org/doc/NEWS-2.2}}
 		use: \texttt{ssl\_options = no\_compression}
 	\item Dovecot <2.2.7 uses fixed DH parameters.\\
-		{\(\geq\)2.2.7}\footnote{\url{http://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0}}
+		{\(\geq\)2.2.7}\footnote{\url{https://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0}}
 		greater DH-Parameters are supported: \texttt{ssl\_dh\_parameters\_length = 2048}.
 \end{itemize}
 
@@ -113,7 +113,7 @@ ssl\_prefer\_server\_ciphers
 
 \subsubsection{References}
 \begin{itemize*}
-  \item \url{http://wiki2.dovecot.org/SSL}
+  \item \url{https://wiki2.dovecot.org/SSL}
 \end{itemize*}
 
 % add any further references or best practice documents here
@@ -224,7 +224,7 @@ ciphersuite is modified.
 
 %% First, you need to generate Diffie Hellman parameters (please first take a look at the section \ref{section:RNGs}):
 
-%% \todo{FIXME: this is a really weak setting! See also: http://postfix.1071664.n5.nabble.com/postfix-hardening-what-can-we-do-td61874.html}
+%% \todo{FIXME: this is a really weak setting! See also: https://postfix.1071664.n5.nabble.com/postfix-hardening-what-can-we-do-td61874.html}
 %% \begin{lstlisting}
 %%   % openssl gendh -out /etc/postfix/dh_param_512.pem -2 512
 %%   % openssl gendh -out /etc/postfix/dh_param_1024.pem -2 1024
@@ -316,7 +316,7 @@ openssl s_client -starttls smtp -crlf -connect SERVER.TLD:25
 
 
 It is highly recommended to read
-\url{http://exim.org/exim-html-current/doc/html/spec_html/ch-encrypted_smtp_connections_using_tlsssl.html}
+\url{https://exim.org/exim-html-current/doc/html/spec_html/ch-encrypted_smtp_connections_using_tlsssl.html}
 first.
 
 \paragraph{MSA mode (submission):}
@@ -428,7 +428,7 @@ Note that most of the options accept expansion strings. This way you can e.g. se
 \paragraph{Limitations:}
 Exim currently (4.82) does not support elliptic curves with OpenSSL. This means that ECDHE is not used even if defined in your cipher list.
 There already is a working patch to provide support:
-\url{http://bugs.exim.org/show_bug.cgi?id=1397}
+\url{https://bugs.exim.org/show_bug.cgi?id=1397}
 
 \subsubsection{How to test}
 \begin{lstlisting}
@@ -532,7 +532,7 @@ To enforce TLS for a specific destination domain, add an entry to the Destinatio
 \end{figure}
 
 \subsubsection{Limitations}
-All AsyncOS releases prior to version 9.5 use OpenSSL 0.9.8. Therefore TLS 1.2 is not supported in these versions and some of the suggested ciphers won't work. Starting with AsyncOS 9.5 TLS 1.2 is fully supported.\footnote{\url{http://www.cisco.com/c/dam/en/us/td/docs/security/esa/esa9-5/ESA_9-5_Release_Notes.pdf}, Changed Behaviour, page 4} You can check the supported ciphers on the CLI by using the option \texttt{verify} from within the \texttt{sslconfig} command:
+All AsyncOS releases prior to version 9.5 use OpenSSL 0.9.8. Therefore TLS 1.2 is not supported in these versions and some of the suggested ciphers won't work. Starting with AsyncOS 9.5 TLS 1.2 is fully supported.\footnote{\url{https://www.cisco.com/c/dam/en/us/td/docs/security/esa/esa9-5/ESA_9-5_Release_Notes.pdf}, Changed Behaviour, page 4} You can check the supported ciphers on the CLI by using the option \texttt{verify} from within the \texttt{sslconfig} command:
 \begin{lstlisting}{foo}
 []> verify
 
