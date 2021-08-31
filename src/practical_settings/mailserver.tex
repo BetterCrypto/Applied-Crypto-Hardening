@@ -50,7 +50,7 @@ We recommend to use the following settings for Mail Transfer Agents:
   \item do not use self signed certificates
   \item accept all cipher suites, as the alternative would be to fall back to
     cleartext transmission
-  \item an execption to the last sentence is that MTAs \textit{MUST NOT} 
+  \item an execption to the last sentence is that MTAs \textit{MUST NOT}
     enable SSLv2 protocol support, due to the DROWN attack\footnote{\url{https://drownattack.com/drown-attack-paper.pdf}}.
 \end{itemize*}
 
@@ -99,12 +99,12 @@ ssl\_prefer\_server\_ciphers
 
 \subsubsection{Limitations}
 \begin{itemize}
-	\item Dovecot <2.2.14 does not support disabling TLS compression.\\ 
-		{\(\geq\)2.2.14}\footnote{\url{http://www.dovecot.org/doc/NEWS-2.2}} 
+	\item Dovecot <2.2.14 does not support disabling TLS compression.\\
+		{\(\geq\)2.2.14}\footnote{\url{http://www.dovecot.org/doc/NEWS-2.2}}
 		use: \texttt{ssl\_options = no\_compression}
 	\item Dovecot <2.2.7 uses fixed DH parameters.\\
-		{\(\geq\)2.2.7}\footnote{\url{http://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0}} 
-		greater DH-Parameters are supported: \texttt{ssl\_dh\_parameters\_length = 2048}. 
+		{\(\geq\)2.2.7}\footnote{\url{http://hg.dovecot.org/dovecot-2.2/rev/43ab5abeb8f0}}
+		greater DH-Parameters are supported: \texttt{ssl\_dh\_parameters\_length = 2048}.
 \end{itemize}
 
 %\subsubsection{Justification for special settings (if needed)}
@@ -464,7 +464,7 @@ sslconfig settings:
   Inbound SMTP ciphers: RC4-SHA:RC4-MD5:ALL
   Outbound SMTP method:  sslv3tlsv1
   Outbound SMTP ciphers: RC4-SHA:RC4-MD5:ALL
-	
+
 Choose the operation you want to perform:
 - GUI - Edit GUI HTTPS ssl settings.
 - INBOUND - Edit Inbound SMTP ssl settings.
@@ -505,7 +505,7 @@ After committing these changes in the CLI, you have to activate the use of TLS i
 
 For inbound connections, first select the appropriate certificate in the settings of each listener you want to have TLS enabled on (Network -> Listeners, see figure \ref{fig:ach_ironport_listener_cert} on page \pageref{fig:ach_ironport_listener_cert}). Afterwards, for each listener, configure all Mail Flow Policies which have their Connection Behavior set to ``Accept'' or ``Relay'' to at least prefer TLS (Mail Policies -> Mail Flow Policies, see figure \ref{fig:ach_ironport_mail_flow_tls} on page \pageref{fig:ach_ironport_mail_flow_tls}). \\
 It is recommended to also enable TLS in the default Mail Flow Policy, because these settings will be inherited by newly created policies, unless specifically overwritten. \\
-TLS can be enforced by creating a new Mail Flow Policy with TLS set to ``required'', creating a new Sender Group defining the addresses of the sending mail servers for which you want to enforce encryption (Mail Policies -> HAT Overview) and using this new Sender Group in conjunction with the newly created Mail Flow Policy. 
+TLS can be enforced by creating a new Mail Flow Policy with TLS set to ``required'', creating a new Sender Group defining the addresses of the sending mail servers for which you want to enforce encryption (Mail Policies -> HAT Overview) and using this new Sender Group in conjunction with the newly created Mail Flow Policy.
 
 \begin{figure}[p]
   \centering
@@ -521,7 +521,7 @@ TLS can be enforced by creating a new Mail Flow Policy with TLS set to ``require
   \label{fig:ach_ironport_mail_flow_tls}
 \end{figure}
 
-TLS settings for outbound connections have to be configured within the Destination Controls (Mail Policies -> Destination Controls). Choose the appropriate SSL certificate within the global settings and configure TLS to be preferred in the default profile to enable it for all outbound connections. After these two steps the Destination Control overview page should look like figure \ref{fig:ach_ironport_dest_control} on page \pageref{fig:ach_ironport_dest_control}. 
+TLS settings for outbound connections have to be configured within the Destination Controls (Mail Policies -> Destination Controls). Choose the appropriate SSL certificate within the global settings and configure TLS to be preferred in the default profile to enable it for all outbound connections. After these two steps the Destination Control overview page should look like figure \ref{fig:ach_ironport_dest_control} on page \pageref{fig:ach_ironport_dest_control}.
 To enforce TLS for a specific destination domain, add an entry to the Destination Control Table and set ``TLS Support'' to ``required''.
 
 \begin{figure}[p]
