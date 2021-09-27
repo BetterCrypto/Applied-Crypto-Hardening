@@ -339,7 +339,8 @@ The following settings reflect our recommendations as best as possible on the Ci
 
 \subsubsection{Tested with Versions}
 \begin{itemize*}
-  \item 9.1(3) - X-series model
+  \item 9.1(3) - X-series model (IPsec Configuration)
+  \item 9.8(2)38 - X-series model (SSL VPN Configuration)
 \end{itemize*}
 
 \subsubsection{Settings}
@@ -402,9 +403,14 @@ crypto ikev2 policy 4
 crypto ikev2 enable Outside-DMZ client-services port 443
 crypto ikev2 remote-access trustpoint ASDM_TrustPoint0
 
-ssl server-version tlsv1-only
-ssl client-version tlsv1-only
-ssl encryption dhe-aes256-sha1 dhe-aes128-sha1 aes256-sha1 aes128-sha1
+ssl client-version tlvs1
+ssl server-version tlsv1
+ssl cipher default fips
+ssl cipher tlsv1 fips
+ssl cipher tlsv1.1 fips
+ssl cipher tlsv1.2 high
+ssl cipher dtlsv1 fips
+ssl dh-group group24
 ssl trust-point ASDM_TrustPoint0 Outside-DMZ
 \end{lstlisting}
 
@@ -421,6 +427,7 @@ Legacy ASA models (e.g. 5505, 5510, 5520, 5540, 5550) do not offer the possibili
 \begin{itemize*}
   \item \url{http://www.cisco.com/en/US/docs/security/asa/roadmap/asaroadmap.html}
   \item \url{http://www.cisco.com/web/about/security/intelligence/nextgen_crypto.html}
+  \itme \url{https://www.cisco.com/c/en/us/td/docs/security/asa/asa98/configuration/vpn/asa-98-vpn-config/vpn-params.html}
 \end{itemize*}
 
 % add any further references or best practice documents here
